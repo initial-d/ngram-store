@@ -57,7 +57,9 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
     predictor="xor" tries previous-row XOR + zlib as a third block candidate
     and writes format version 2. Version 1 remains the default. Optional
     row_order is a full permutation of original IDs; its validation uses O(n)
-    memory and reading becomes nonsequential. Original query IDs stay unchanged.
+    memory and reading becomes nonsequential. Reordered identity exports stage an
+    additional 8 * nrows bytes to write the ID map sequentially, avoiding one
+    small seek/write per row on remote filesystems. Original query IDs stay unchanged.
     Optional representatives is an idempotent original-ID -> original-ID map.
     Only marked representative rows are read and packed, then the original-ID
     forwarding map is rewritten to dense physical IDs. This performs actual
@@ -99,6 +101,7 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
                 len(set(row_order)) != nrows):
             raise ValueError("row_order must be a permutation of all original row IDs")
     unique, blocks, seen, pending, physical = 0, [], {}, [], {}
+    reordered_map = bytearray(nrows * ROW.size) if row_order is not None and representatives is None else None
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryFile(dir=output.parent) as map_file, tempfile.TemporaryFile(dir=output.parent) as spool:
         def flush():
@@ -142,13 +145,16 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
                 if representatives is not None:
                     physical[original_id] = index
                 else:
-                    if row_order is not None:
-                        map_file.seek(original_id * ROW.size)
-                    map_file.write(ROW.pack(index))
+                    if reordered_map is not None:
+                        ROW.pack_into(reordered_map, original_id * ROW.size, index)
+                    else:
+                        map_file.write(ROW.pack(index))
             if os.fstat(stream.fileno()).st_size != nrows * row_bytes:
                 raise ValueError("source size changed while exporting")
         if pending:
             flush()
+        if reordered_map is not None:
+            map_file.write(reordered_map)
         if representatives is not None:
             for representative in representatives:
                 map_file.write(ROW.pack(physical[representative]))
