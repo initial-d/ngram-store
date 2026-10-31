@@ -9,6 +9,7 @@ from collections import Counter
 import hashlib
 import json
 from pathlib import Path
+import shutil
 
 import numpy as np
 
@@ -224,6 +225,61 @@ class CertifiedBagRows:
 
     def __exit__(self, *args):
         self.close()
+
+
+def export_certified_bags(rows, partition, output, *, native_library=None, block_rows=16):
+    """Export a separate aggregate-certified artifact; original row packers unchanged.
+
+    FP32 finite source rows only. Produces/verifies a native table, exact incidence
+    map and an explicit aggregate contract. Every decoded canonical row is byte
+    checked; source row bytes are allowed to change. Caller owns key registries
+    and must include them in complete application costs.
+    """
+    from .native_row_store import NativeRows, pack_native
+    rows = np.asarray(rows)
+    if rows.ndim != 2 or rows.shape[1] < 1 or rows.dtype != np.dtype('<f4'):
+        raise ValueError('2D little-endian float32 rows required')
+    means = partition.means(rows)
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=False)
+    try:
+        source = output / 'staging.f32'
+        digest = hashlib.sha256()
+        with source.open('wb') as stream:
+            for begin in range(0, len(rows), 4096):
+                raw = means[partition.mapping[begin:begin + 4096]].tobytes()
+                stream.write(raw)
+                digest.update(raw)
+        storage = pack_native(source, output / 'table.men', rows.shape[1] * 4, block_rows,
+                              representatives=partition.representatives().tolist(), predictor='xor')
+        decoded = hashlib.sha256()
+        with NativeRows(output / 'table.men', native_library) as native:
+            for begin in range(0, len(rows), 4096):
+                end = min(len(rows), begin + 4096)
+                actual = native.rows(range(begin, end))
+                if actual != means[partition.mapping[begin:end]].tobytes():
+                    raise ValueError('native canonical-row verification failed')
+                decoded.update(actual)
+        if decoded.hexdigest() != digest.hexdigest():
+            raise ValueError('canonical table hash mismatch')
+        source.unlink()
+        partition.save(output / 'domain.npz')
+        artifact_digest = hashlib.sha256()
+        with (output / 'table.men').open('rb') as stream:
+            for part in iter(lambda: stream.read(8 << 20), b''):
+                artifact_digest.update(part)
+        metadata = {'name': 'certified-groups', 'dtype': 'little-endian float32', 'dim': rows.shape[1],
+                    'source_row_byte_preserving': False, 'native_decodes_declared_rows_byte_exactly': True,
+                    'all_original_ids_checked': len(rows), 'decoded_sha256': digest.hexdigest(),
+                    'artifact_sha256': artifact_digest.hexdigest(), 'storage': storage,
+                    'partition': partition.summary(),
+                    'contract': 'certified bag aggregates in real arithmetic; FP rounding measured; reject uncertified bags'}
+        (output / 'manifest.json').write_text(json.dumps(metadata, indent=2) + '\n')
+        return {**metadata, 'artifact_and_certificate_bytes': sum(f.stat().st_size for f in output.iterdir()),
+                'omitted_application_costs': 'key registry, model word/output rows and compiled schedules'}
+    except BaseException:
+        shutil.rmtree(output)
+        raise
 
 
 def grouped_embedding_bag(dense_rows, partition, *, padding_idx=None, scale_gradient=True):

@@ -107,6 +107,24 @@ class PartitionTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'hash mismatch'):
                 CertifiedBagRows(tmp, library)
 
+    def test_public_exporter_checks_rows_and_cleans_failed_output(self):
+        from tools.cotraining_groups import export_certified_bags
+        from unittest.mock import patch
+        p = BagPartition.fit([[0, 1]], 2)
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'export'
+            with patch('tools.native_row_store.pack_native', side_effect=OSError('injected')):
+                with self.assertRaisesRegex(OSError, 'injected'):
+                    export_certified_bags(np.ones((2, 2), dtype='<f4'), p, output)
+            self.assertFalse(output.exists())
+            with self.assertRaisesRegex(ValueError, 'float32'):
+                export_certified_bags(np.ones((2, 2), dtype=np.float64), p, output)
+            output.mkdir()
+            (output / 'keep').write_text('original')
+            with self.assertRaises(FileExistsError):
+                export_certified_bags(np.ones((2, 2), dtype='<f4'), p, output)
+            self.assertEqual((output / 'keep').read_text(), 'original')
+
 
 @unittest.skipUnless(torch is not None and np is not None, 'optional NumPy/PyTorch required')
 class TrainingTest(unittest.TestCase):
