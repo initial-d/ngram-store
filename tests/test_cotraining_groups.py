@@ -150,6 +150,19 @@ class PartitionTest(unittest.TestCase):
 
 @unittest.skipUnless(torch is not None and np is not None, 'optional NumPy/PyTorch required')
 class TrainingTest(unittest.TestCase):
+    def test_factory_releases_source_table_instead_of_retaining_a_class_closure(self):
+        import gc
+        import weakref
+        source = torch.ones(5, 8)
+        reference = weakref.ref(source)
+        partition = BagPartition.fit([[0, 1, 2], [3, 4]], 5)
+        model = grouped_embedding_bag(source, partition)
+        del source
+        gc.collect()
+        self.assertIsNone(reference())
+        self.assertEqual(model.weight.shape, (2, 8))
+        torch.testing.assert_close(model(torch.tensor([[0, 1, 2]])), torch.full((1, 8), 3.))
+
     def test_sparse_sgd_preserves_bag_function_and_group_mean_trajectory(self):
         # Several distinct initial rows, repeated incidence, and changing targets.
         torch.manual_seed(19)

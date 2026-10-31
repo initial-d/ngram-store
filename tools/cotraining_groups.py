@@ -303,13 +303,12 @@ def grouped_embedding_bag(dense_rows, partition, *, padding_idx=None, scale_grad
         raise ValueError("padding ID must be a protected singleton")
 
     class GroupedBag(nn.Module):
-        def __init__(self):
+        def __init__(self, initial_weight):
             super().__init__()
             self.partition = partition
-            means = partition.means(dense_rows.detach().cpu().numpy())
-            self.weight = nn.Parameter(torch.from_numpy(means).to(dense_rows.device))
-            self.register_buffer("row_to_group", torch.tensor(partition.mapping.copy(), device=dense_rows.device))
-            self.register_buffer("group_sizes", torch.tensor(partition.sizes.copy(), device=dense_rows.device))
+            self.weight = nn.Parameter(initial_weight)
+            self.register_buffer("row_to_group", torch.tensor(partition.mapping.copy(), device=initial_weight.device))
+            self.register_buffer("group_sizes", torch.tensor(partition.sizes.copy(), device=initial_weight.device))
             if scale_gradient:
                 self.weight.register_hook(self._per_row_gradient)
 
@@ -318,7 +317,8 @@ def grouped_embedding_bag(dense_rows, partition, *, padding_idx=None, scale_grad
             index = gradient.indices()
             values = gradient.values() / self.group_sizes[index[0], None]
             return torch.sparse_coo_tensor(index, values, gradient.shape,
-                                           dtype=values.dtype, device=values.device).coalesce()
+                                           dtype=values.dtype, device=values.device,
+                                           is_coalesced=True, check_invariants=False)
 
         def forward(self, bags, *, check=True):
             if bags.ndim != 2 or bags.dtype != torch.long:
@@ -332,4 +332,7 @@ def grouped_embedding_bag(dense_rows, partition, *, padding_idx=None, scale_grad
         def expanded_rows(self):
             return self.weight[self.row_to_group]
 
-    return GroupedBag()
+    # Pass constructor data as an argument: capturing dense_rows in the local
+    # class would keep the entire original table alive after conversion.
+    initial_weight = torch.from_numpy(partition.means(dense_rows.detach().cpu().numpy())).to(dense_rows.device)
+    return GroupedBag(initial_weight)
