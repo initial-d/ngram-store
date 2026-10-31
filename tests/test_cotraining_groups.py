@@ -125,6 +125,28 @@ class PartitionTest(unittest.TestCase):
                 export_certified_bags(np.ones((2, 2), dtype='<f4'), p, output)
             self.assertEqual((output / 'keep').read_text(), 'original')
 
+    def test_raw_block_option_keeps_original_bits_and_default_artifact(self):
+        from tools.native_row_store import NativeRows, pack_native
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            library = tmp / 'librows.so'
+            root = Path(__file__).resolve().parents[1]
+            subprocess.run([os.environ.get('CC', 'cc'), '-std=c11', '-O2', '-fPIC', '-shared',
+                            str(root / 'native/meft_rows.c'), '-lz', '-o', str(library)], check=True)
+            # Compressible bytes plus signed zero/nonfinite payloads: row identity
+            # is a byte contract, independent of how numbers would compare.
+            raw = bytes.fromhex('000000800100c07f') * 64
+            source = tmp / 'raw'
+            source.write_bytes(raw)
+            first = pack_native(source, tmp / 'default', 8, predictor='xor', deduplicate=False)
+            pack_native(source, tmp / 'explicit', 8, predictor='xor', deduplicate=False, compress=True)
+            self.assertEqual((tmp / 'default').read_bytes(), (tmp / 'explicit').read_bytes())
+            result = pack_native(source, tmp / 'no-codec', 8, predictor='xor', deduplicate=False, compress=False)
+            self.assertGreater(first['compressed_blocks'], 0)
+            self.assertEqual(result['compressed_blocks'], 0)
+            with NativeRows(tmp / 'no-codec', library) as native:
+                self.assertEqual(native.rows(range(64)), raw)
+
 
 @unittest.skipUnless(torch is not None and np is not None, 'optional NumPy/PyTorch required')
 class TrainingTest(unittest.TestCase):

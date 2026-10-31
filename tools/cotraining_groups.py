@@ -227,7 +227,7 @@ class CertifiedBagRows:
         self.close()
 
 
-def export_certified_bags(rows, partition, output, *, native_library=None, block_rows=16):
+def export_certified_bags(rows, partition, output, *, native_library=None, block_rows=16, compress=True):
     """Export a separate aggregate-certified artifact; original row packers unchanged.
 
     FP32 finite source rows only. Produces/verifies a native table, exact incidence
@@ -251,7 +251,7 @@ def export_certified_bags(rows, partition, output, *, native_library=None, block
                 stream.write(raw)
                 digest.update(raw)
         storage = pack_native(source, output / 'table.men', rows.shape[1] * 4, block_rows,
-                              representatives=partition.representatives().tolist(), predictor='xor')
+                              representatives=partition.representatives().tolist(), predictor='xor', compress=compress)
         decoded = hashlib.sha256()
         with NativeRows(output / 'table.men', native_library) as native:
             for begin in range(0, len(rows), 4096):

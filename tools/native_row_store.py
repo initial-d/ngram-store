@@ -47,7 +47,8 @@ def _atomic_output(output):
 
 
 def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
-                predictor="none", row_order=None, *, representatives=None, max_block_bytes=None):
+                predictor="none", row_order=None, *, representatives=None, max_block_bytes=None,
+                compress=True):
     """Stream blocks into a spool; exact dedup index still grows with unique rows.
 
     deduplicate=False avoids the unbounded unique-row dictionary for large raw
@@ -67,6 +68,9 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
     atomic replacement. Failed construction/publication preserves the old file;
     readers already mmap-ing it continue reading the old inode. This covers this
     single file, not multi-file adapter metadata or concurrent-writer coordination.
+    compress=False emits raw blocks with the same forwarding/format contracts.
+    Useful when structural row sharing already saves capacity and codec decoding
+    is more expensive than its marginal byte reduction. True preserves defaults.
     max_block_bytes optionally caps decoded bytes per block, retaining at least
     one full row. Reduces sparse-miss amplification at a compression/metadata
     tradeoff; it does not bound RSS. None preserves the existing block_rows layout.
@@ -80,6 +84,8 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
         raise ValueError("partial input row")
     if predictor not in ("none", "xor"):
         raise ValueError("predictor must be none or xor")
+    if type(compress) is not bool:
+        raise ValueError("compress must be boolean")
     if representatives is not None:
         representatives = list(representatives)
         if (len(representatives) != nrows or
@@ -97,10 +103,10 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
     with tempfile.TemporaryFile(dir=output.parent) as map_file, tempfile.TemporaryFile(dir=output.parent) as spool:
         def flush():
             raw = b"".join(pending)
-            compressed = zlib.compress(raw)
+            compressed = zlib.compress(raw) if compress else raw
             codec = int(len(compressed) < len(raw))
             encoded = compressed if codec else raw
-            if predictor == "xor" and len(pending) > 1:
+            if compress and predictor == "xor" and len(pending) > 1:
                 # Python integers perform the same bytewise operation in C.
                 # A little-endian shift places the previous row at the current
                 # row's position, leaving the first row unchanged. All buffers
@@ -168,6 +174,7 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
             "zlib_blocks": sum(codec == 1 for _, _, _, codec in blocks),
             "xor_blocks": sum(codec == 2 for _, _, _, codec in blocks),
             "deduplicate": deduplicate, "predictor": predictor,
+            "compression": compress,
             "reordered": row_order is not None,
             "external_representatives": representatives is not None,
             "marked_rows": nrows if representatives is None else len(physical)}
