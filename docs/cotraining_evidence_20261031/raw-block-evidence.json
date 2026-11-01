@@ -1,0 +1,108 @@
+{
+  "source_commit": "6d385ca531d4e1682e5fc202297f406399d6e7a7",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/raw-source/tools/benchmark_cotraining_raw.py --task-dir /llm-align/duyimin/ngram-cotraining-20261031 --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "cpu",
+  "threads": 1,
+  "all_canonical_rows_byte_verified": 1855907,
+  "decoded_sha256": "2f66dd72320a90d594311ef8f0f166a871bb95025b30bb19ecec959d058dd72c",
+  "source_report_sha256": "2e97a0ba44ead2c27daf5ff2d3e0d94d94565cb13420828698c09a1a72a9149d",
+  "complete_subset_bytes": 436144429,
+  "limitations": [
+    "Same finite SGNS subset and certified aggregate domain; source row bytes change.",
+    "Paired trace on a shared CPU with warm OS pages; preprocessing excluded from query timings.",
+    "Precomputed known-word mean is a restricted serving baseline, not matched training/arbitrary n-gram lookup.",
+    "No full model quality/LLM/GPU claim; monetary/energy cost unmeasured."
+  ],
+  "query_bags_sha256": "cedaa2f0ac19ceedfea4eda07139204d8c179d84e3f33e213811168cd93f83fe",
+  "plan": {
+    "bags": 512,
+    "original_occurrences": 21747,
+    "group_occurrences": 15892,
+    "plan_bytes": 198904,
+    "partition_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb"
+  },
+  "aggregate_fidelity": {
+    "cosine": {
+      "count": 512,
+      "mean": 0.9999999999999991,
+      "p10": 0.9999999999999988,
+      "median": 0.9999999999999991,
+      "p90": 0.9999999999999993,
+      "minimum": 0.9999999999999982,
+      "maximum": 0.9999999999999997
+    },
+    "norm_ratio": {
+      "count": 512,
+      "mean": 0.9999999960733452,
+      "p10": 0.9999999920335677,
+      "median": 0.9999999967120409,
+      "p90": 0.9999999992483849,
+      "minimum": 0.9999999858496866,
+      "maximum": 0.9999999999928345
+    },
+    "joint099_fraction": 1.0,
+    "relative_l2": {
+      "count": 512,
+      "mean": 4.286624005147314e-08,
+      "p10": 3.718756941752171e-08,
+      "median": 4.2964126133127123e-08,
+      "p90": 4.846657510098726e-08,
+      "minimum": 2.9212716940801206e-08,
+      "maximum": 5.981101276800923e-08
+    },
+    "global_relative_l2": 4.318205631011731e-08
+  },
+  "raw_native_decompressions": 0,
+  "query_samples_seconds": {
+    "raw-mmap": [
+      0.03551509999670088,
+      0.0019312540534883738,
+      0.002333051059395075,
+      0.0018437420949339867,
+      0.0024156728759407997,
+      0.002604593988507986,
+      0.0023887839633971453,
+      0.0020272850524634123,
+      0.0026863079983741045
+    ],
+    "encoded-certified": [
+      0.5513637978583574,
+      0.5300170660484582,
+      0.5340196040924639,
+      0.5292615229263902,
+      0.529115763027221,
+      0.5285258130170405,
+      0.5324801609385759,
+      0.5297928052023053,
+      0.5301552820019424
+    ],
+    "raw-certified": [
+      0.025777886854484677,
+      0.015790852019563317,
+      0.015833454905077815,
+      0.015912445029243827,
+      0.015800280962139368,
+      0.01578233204782009,
+      0.01581173506565392,
+      0.01582591189071536,
+      0.01583436317741871
+    ],
+    "precomputed-known-words": [
+      0.0008108580950647593,
+      0.00019248295575380325,
+      0.00019918684847652912,
+      0.00018584798090159893,
+      0.00024179089814424515,
+      0.00017746700905263424,
+      0.00018640700727701187,
+      0.00019862898625433445,
+      0.0001863371580839157
+    ]
+  },
+  "complete_subset_and_plan_bytes": 436343333,
+  "status": "completed"
+}

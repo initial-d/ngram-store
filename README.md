@@ -55,6 +55,13 @@ mutable embeddings, then freeze and export the same IDs and rows. Cover the
 chosen vocabulary within resource limits; the native backend does not currently
 perform gradient updates. Existing frozen tables can be packed directly.
 
+An optional [certified co-training API](docs/cotraining_groups.md) groups rows
+with identical complete bag-incidence and multiplicity signatures. Shared
+parameters preserve the demonstrated sparse-SGD update within that domain;
+exported means preserve certified aggregates in real arithmetic. Individual
+source vectors change and incomplete-group queries are rejected. This model-side
+path has a separate contract from original-row byte-preserving storage.
+
 ## Quick start
 
 Linux/macOS require a C compiler and zlib development headers. From this checkout:
@@ -112,6 +119,7 @@ external data or GPU. It checks integration, not representative compression.
 | [1.85M trained-row capacity](docs/cpu_capacity_evidence_20261030/README.md) / [sparse blocks](docs/sparse_blocks_evidence_20261030/README.md) | Smaller blocks lower native miss latency 16–27× relative to the previous native layout; raw mmap remains faster |
 | [Large FP16/INT8 capacity and CPU controls](docs/quantized_capacity_evidence_20261031/README.md) | 54 fresh query workers; FP16 native saves 52.29% backend bytes versus raw FP32; INT8 native expands versus raw INT8, prompting an optional raw fallback; quantization is lossy |
 | [1.85M-row structural applicability](docs/large_structural_evidence_20261031/README.md) | 27 layouts and 108 fresh query workers; shared SGNS updates are almost collinear, final weights retain initialization; extra structural savings stay below 0.63%, INT8 remains larger than raw, and broad queries are slower |
+| [Certified co-training and independent planner controls](docs/cotraining_evidence_20261031/README.md) | 18 matched CPU training runs; 1.86M-row subset groups to 360k parameter rows without large-model retraining; raw certified queries improve 33.5× over encoded certified queries but trail raw mmap; isolated DATrie adds 11.1–11.8% on canonical small tables, while byte dedup is stronger |
 | [TinyEngram/Qwen trained integration](docs/tinyengram_qwen_evidence_20261030/README.md) / [CUDA controls](docs/qwen_cuda_performance_20261030/README.md) | Preserved trained outputs and measured CPU/device costs; native lookup remains slower than dense offload on these traces |
 
 Official DeepSeek Engram verification uses its small demonstration, not a

@@ -1,0 +1,168 @@
+{
+  "source_commit": "7925dbd1f30d9a9d2356c5b7bb78e2bc4f94e016",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/map-source/tools/benchmark_cotraining_layout.py --output-dir /llm-align/duyimin/ngram-cotraining-20261031/layout-large-sequential --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --partition-path /llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-groups/domain.npz",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "torch": "2.11.0+cu130",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "cpu",
+  "threads": 1,
+  "limitations": [
+    "Lossless layout of actual source rows, not aggregate projection or newly trained memory.",
+    "One finite SGNS family; source provenance retained, no convergence/LLM task claim.",
+    "Signatures only guide export order; no certificate is needed at lookup, original bytes restored.",
+    "Query samples follow byte verification with warm OS pages on shared CPU; not exclusive/cold latency.",
+    "Small source complete bytes include input table + output vectors + common keys; large source excludes unavailable word/output model.",
+    "No GPU touched; monetary/energy cost unmeasured."
+  ],
+  "runs": [
+    {
+      "shape": [
+        1855907,
+        256
+      ],
+      "source": {
+        "source_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+        "partition_file_sha256": "5a783049e5f2f6a4ce1b37b84bce3607ecc63864ca40b2903ecc1f1f79f4880b"
+      },
+      "partition": {
+        "original_rows": 1855907,
+        "group_rows": 360088,
+        "rows_in_nonsingleton_groups": 1696403,
+        "nonsingleton_groups": 200584,
+        "domain_bags": 142308,
+        "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+        "mapping_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 36276812,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 1900448768,
+            "artifact_bytes": 1788494457,
+            "unique_rows": 1855907,
+            "row_map_bytes": 14847256,
+            "n_rows": 1855907,
+            "row_bytes": 1024,
+            "block_rows": 8,
+            "blocks": 231989,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 231989,
+            "zlib_blocks": 231776,
+            "xor_blocks": 213,
+            "deduplicate": false,
+            "predictor": "xor",
+            "compression": true,
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 1855907
+          },
+          "artifact_sha256": "ff7abc982b7f2ea28ec65bf542dced85fcad65bdf5a43d6c4d888d7831f5d42e",
+          "all_source_rows_byte_exact": 1855907,
+          "decoded_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+          "build_and_verification_seconds": 173.9652785989456,
+          "complete_bytes": 1824771269,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.03395009390078485,
+                0.00034536607563495636,
+                0.0002365531399846077,
+                0.00023131398484110832,
+                0.00023278105072677135,
+                0.00023033702746033669,
+                0.00023138406686484814,
+                0.0002304071094840765,
+                0.00023131398484110832
+              ],
+              "ids_sha256": "477f8c96ddd9dcf55352f6582ace965b386979960b369d75151193fd6f9874d1"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0013200019020587206,
+                0.00022090901620686054,
+                0.0002138551790267229,
+                0.00021203793585300446,
+                0.0002119680866599083,
+                0.00020393682643771172,
+                0.00020239991135895252,
+                0.0002058220561593771,
+                0.0002833460457623005
+              ],
+              "ids_sha256": "d9815dc92c00b705e28f6c0681ec38dd931ae9654f9c6bba2294f60acbbd0b20"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 1900448768,
+            "artifact_bytes": 1787276587,
+            "unique_rows": 1855907,
+            "row_map_bytes": 14847256,
+            "n_rows": 1855907,
+            "row_bytes": 1024,
+            "block_rows": 8,
+            "blocks": 231989,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 231989,
+            "zlib_blocks": 230583,
+            "xor_blocks": 1406,
+            "deduplicate": false,
+            "predictor": "xor",
+            "compression": true,
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 1855907
+          },
+          "artifact_sha256": "f5bf85b69d670b68c7f6111a0b1841afeef94ab5024de183709d94be37250b54",
+          "all_source_rows_byte_exact": 1855907,
+          "decoded_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+          "build_and_verification_seconds": 632.5537144520786,
+          "complete_bytes": 1823553399,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.03374470002017915,
+                0.0002847430296242237,
+                0.00025547994300723076,
+                0.00025450182147324085,
+                0.00023180292919278145,
+                0.0002294990699738264,
+                0.00023983512073755264,
+                0.00022949790582060814,
+                0.00022998778149485588
+              ],
+              "ids_sha256": "477f8c96ddd9dcf55352f6582ace965b386979960b369d75151193fd6f9874d1"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0023211089428514242,
+                0.00022656493820250034,
+                0.00021951203234493732,
+                0.00021762587130069733,
+                0.0002172060776501894,
+                0.00020959391258656979,
+                0.0002081270795315504,
+                0.00020910496823489666,
+                0.00020910496823489666
+              ],
+              "ids_sha256": "d9815dc92c00b705e28f6c0681ec38dd931ae9654f9c6bba2294f60acbbd0b20"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.0006674096752232739
+    }
+  ],
+  "status": "completed",
+  "peak_rss_mib": 4218.8984375
+}

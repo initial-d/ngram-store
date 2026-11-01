@@ -1,0 +1,1932 @@
+{
+  "source_commit": "42ecfcbf57c4d9dad8e7750facefedbd5b3beb46",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/api-source/tools/finalize_cotraining_evidence.py --task-dir /llm-align/duyimin/ngram-cotraining-20261031 --corpus /llm-align/duyimin/ngram-cotraining-20261031/source/artifacts/native-ngram-20261018/corpus/tinyshakespeare.txt --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "category": "post-run materialization and strong known-word serving baseline audit",
+  "limitations": [
+    "Known-word precomputation does not retain arbitrary n-gram queries or dense SGD parameter trajectories.",
+    "SGNS scores on known centers/targets only; not semantics, perplexity or LLM memory.",
+    "Precomputed query timings are warm in-memory selection, not whole-model inference.",
+    "This is a post-run audit; no validation selection or confirmatory budget claim.",
+    "No GPU touched; monetary/energy cost unmeasured."
+  ],
+  "runs": [
+    {
+      "study": "cached-results",
+      "order": 4,
+      "seed": 3,
+      "materialized_common_bytes": 664830,
+      "source_checkpoint_sha256": "3f973b84bc7b03c54f3a38de9e88bb408fcdf9aa63d697a3839222ffe20632e0",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 583047,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1208499,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.000346343033015728,
+          0.00015658396296203136,
+          0.00017027300782501698,
+          0.00015225401148200035,
+          0.0001480639912188053,
+          0.00014659715816378593
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 4,
+      "seed": 7,
+      "materialized_common_bytes": 664830,
+      "source_checkpoint_sha256": "3882d321a3560e8dab0bf1c4693574f082d82480949e2b1b9e3be439dc57cd4e",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 583299,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1208751,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.0002876068465411663,
+          0.00018033082596957684,
+          0.00017125089652836323,
+          0.00016796821728348732,
+          0.0001703430898487568,
+          0.00017083203420042992
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 4,
+      "seed": 11,
+      "materialized_common_bytes": 664830,
+      "source_checkpoint_sha256": "63037d17958c7ef5cf74ef8ef7501ee8c247a4b2a26d6d14acd52cad3e44f9db",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 582819,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1208271,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00025869300588965416,
+          0.00017320713959634304,
+          0.0001693658996373415,
+          0.00017215893603861332,
+          0.000167410122230649,
+          0.00017132097855210304
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 8,
+      "seed": 3,
+      "materialized_common_bytes": 745410,
+      "source_checkpoint_sha256": "d4abf76ed3f1d22185e017a8f59304fd30ff6a1f988e7ede5373507c075f8338",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 583729,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1209181,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00026770192198455334,
+          0.0001944389659911394,
+          0.00017027300782501698,
+          0.00016887602396309376,
+          0.00016657100059092045,
+          0.00016747904010117054
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 8,
+      "seed": 7,
+      "materialized_common_bytes": 745410,
+      "source_checkpoint_sha256": "c811d142236e55794044dc2cce2cadca3e22d0eb6a56e0354ed56b74c81e1578",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 583728,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1209180,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00027915602549910545,
+          0.00017222901806235313,
+          0.00017655896954238415,
+          0.00016936520114541054,
+          0.0001684569288045168,
+          0.00016838684678077698
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 8,
+      "seed": 11,
+      "materialized_common_bytes": 745410,
+      "source_checkpoint_sha256": "71127fbc8423dc0b549e7a870961cee6ace20301e03b9688b9430c0e304f5b68",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 583620,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1209072,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.0002389268483966589,
+          0.00015756208449602127,
+          0.00015378999523818493,
+          0.00015378999523818493,
+          0.00015092710964381695,
+          0.00015232409350574017
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 12,
+      "seed": 3,
+      "materialized_common_bytes": 754899,
+      "source_checkpoint_sha256": "a57b06f51bcab49f06a470f997d1a2e3476a3cd82a3569989bd80e4366a80ef8",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 582757,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1208209,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.000274894991889596,
+          0.00015239394269883633,
+          0.00015658512711524963,
+          0.00014862301759421825,
+          0.00015127705410122871,
+          0.00015993695706129074
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 12,
+      "seed": 7,
+      "materialized_common_bytes": 754899,
+      "source_checkpoint_sha256": "040a58c47131fd3bbfe27f44ebfac1a3ad8d549eda3295adb853a66148868fe2",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 583770,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1209222,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00024228007532656193,
+          0.000165523961186409,
+          0.00016084499657154083,
+          0.0001703430898487568,
+          0.00015428010374307632,
+          0.00015092804096639156
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "cached-results",
+      "order": 12,
+      "seed": 11,
+      "materialized_common_bytes": 754899,
+      "source_checkpoint_sha256": "a2fe0de3d4561913b724c5e6e5208e9bf2163effbdb318dc0672d72618c659d7",
+      "precomputed": {
+        "raw_word_table_bytes": 614400,
+        "encoded_word_table_bytes": 583689,
+        "complete_raw_word_output_key_bytes": 1239852,
+        "complete_encoded_word_output_key_bytes": 1209141,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.0006519688758999109,
+          0.00046172086149454117,
+          0.00017125089652836323,
+          0.00016566389240324497,
+          0.00016796798445284367,
+          0.00016517401672899723
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      }
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 4,
+      "seed": 3,
+      "materialized_common_bytes": 357630,
+      "source_checkpoint_sha256": "e2a4c6a752b3fafbf55d97141c4024cdb417c52c24b54f43dc18320a770fae64",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 296456,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 614708,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00023787980899214745,
+          0.00010881316848099232,
+          0.0002914478536695242,
+          0.00010420405305922031,
+          0.00017795618623495102,
+          0.00010315491817891598
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.341550764896965,
+            "context_vs_negative_discrimination": 0.7535644590243464
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.341550834953523,
+            "context_vs_negative_discrimination": 0.7535644590243464
+          },
+          "delta": {
+            "loss_relative_change": 2.991887204650823e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.314508582931012,
+            "context_vs_negative_discrimination": 0.7630859436530955
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.314508623428992,
+            "context_vs_negative_discrimination": 0.7630859436530955
+          },
+          "delta": {
+            "loss_relative_change": 1.7497442161840127e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999993213222,
+          "p10": 0.9999999987945299,
+          "median": 0.9999999994270032,
+          "p90": 0.9999999997008107,
+          "minimum": 0.9999999973027964,
+          "maximum": 0.9999999998928683
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999996644620626,
+          "p10": 0.9999993131914668,
+          "median": 0.9999997364780616,
+          "p90": 0.9999999428120179,
+          "minimum": 0.9999973745952284,
+          "maximum": 0.9999999988642051
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.552924620575048e-05,
+          "p10": 2.4463106986953394e-05,
+          "median": 3.385627840638875e-05,
+          "p90": 4.9101607510888515e-05,
+          "minimum": 1.463813241298842e-05,
+          "maximum": 7.345751639733879e-05
+        },
+        "global_relative_l2": 3.778979724867877e-05
+      },
+      "actual_changed_input_rows": 6444,
+      "registered_input_rows": 6445
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 4,
+      "seed": 7,
+      "materialized_common_bytes": 357630,
+      "source_checkpoint_sha256": "4f9eecfacf561e78cc45d3123230386ffb414e947970c6a4755e257e67670600",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 296539,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 614791,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00016042497009038925,
+          8.709193207323551e-05,
+          8.46481416374445e-05,
+          8.520693518221378e-05,
+          8.325092494487762e-05,
+          8.325092494487762e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.354538890893309,
+            "context_vs_negative_discrimination": 0.7487548888866513
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.354538844072522,
+            "context_vs_negative_discrimination": 0.7487548888866513
+          },
+          "delta": {
+            "loss_relative_change": -1.98853318256198e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.31584262945762,
+            "context_vs_negative_discrimination": 0.7610839903836677
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3158426237423555,
+            "context_vs_negative_discrimination": 0.7610839903836677
+          },
+          "delta": {
+            "loss_relative_change": -2.467898552183101e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999992289753,
+          "p10": 0.9999999985902556,
+          "median": 0.9999999993602433,
+          "p90": 0.9999999997150892,
+          "minimum": 0.9999999955273267,
+          "maximum": 0.9999999999038632
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999996867221315,
+          "p10": 0.9999993193997679,
+          "median": 0.9999997753112905,
+          "p90": 0.9999999542303485,
+          "minimum": 0.9999964418529176,
+          "maximum": 0.9999999992105632
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.752991255033178e-05,
+          "p10": 2.387206015542407e-05,
+          "median": 3.5773047384820796e-05,
+          "p90": 5.3143656450316735e-05,
+          "minimum": 1.3866285999267467e-05,
+          "maximum": 9.459963591276233e-05
+        },
+        "global_relative_l2": 4.0370848506186816e-05
+      },
+      "actual_changed_input_rows": 6444,
+      "registered_input_rows": 6445
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 4,
+      "seed": 11,
+      "materialized_common_bytes": 357630,
+      "source_checkpoint_sha256": "e7c4ec1a659f503bdd9fd6973b1290d9ac398cfc15f1257e4f073a3be04e75b9",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 295977,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 614229,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00017222785390913486,
+          0.000100292032584548,
+          9.840610437095165e-05,
+          9.603193029761314e-05,
+          0.00011495803482830524,
+          0.00010448298417031765
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3501427852424968,
+            "context_vs_negative_discrimination": 0.7497314515148901
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3501427910923667,
+            "context_vs_negative_discrimination": 0.7497314515148901
+          },
+          "delta": {
+            "loss_relative_change": 2.489155104257179e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.307002130197361,
+            "context_vs_negative_discrimination": 0.7626464902596126
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.307002095523785,
+            "context_vs_negative_discrimination": 0.7626464902596126
+          },
+          "delta": {
+            "loss_relative_change": -1.5029711364356046e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999994612895,
+          "p10": 0.9999999990734184,
+          "median": 0.9999999995289757,
+          "p90": 0.999999999752937,
+          "minimum": 0.999999997645568,
+          "maximum": 0.9999999999240491
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999997663636478,
+          "p10": 0.9999995007182821,
+          "median": 0.9999998236108105,
+          "p90": 0.9999999675435859,
+          "minimum": 0.9999985188034601,
+          "maximum": 0.9999999998215896
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.177178699096267e-05,
+          "p10": 2.223019133270182e-05,
+          "median": 3.069658712395878e-05,
+          "p90": 4.305034605859965e-05,
+          "minimum": 1.2325236328515144e-05,
+          "maximum": 6.862345264026053e-05
+        },
+        "global_relative_l2": 3.378255046098349e-05
+      },
+      "actual_changed_input_rows": 6444,
+      "registered_input_rows": 6445
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 8,
+      "seed": 3,
+      "materialized_common_bytes": 438210,
+      "source_checkpoint_sha256": "6814e7781d8d02b75dc5a211909b9a14ba11f0890f26c7dc6ee3dbbcf1d972d3",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 297256,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 615508,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00027398718520998955,
+          0.00013339705765247345,
+          0.00013954308815300465,
+          0.0001581211108714342,
+          0.00012543494813144207,
+          0.000136679969727993
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3497364500217373,
+            "context_vs_negative_discrimination": 0.7493164123143288
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.349736529034999,
+            "context_vs_negative_discrimination": 0.7493164123143288
+          },
+          "delta": {
+            "loss_relative_change": 3.3626435635980556e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.315557479247218,
+            "context_vs_negative_discrimination": 0.760400396764453
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3155575267301174,
+            "context_vs_negative_discrimination": 0.760400396764453
+          },
+          "delta": {
+            "loss_relative_change": 2.0506033537870394e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999991426463,
+          "p10": 0.9999999983685826,
+          "median": 0.9999999993300236,
+          "p90": 0.9999999997196095,
+          "minimum": 0.9999999942331178,
+          "maximum": 0.9999999999403165
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999996637973932,
+          "p10": 0.9999992822888978,
+          "median": 0.9999997454836,
+          "p90": 0.9999999486042919,
+          "minimum": 0.9999967770672098,
+          "maximum": 0.9999999995748047
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.892389697670972e-05,
+          "p10": 2.3681717129421898e-05,
+          "median": 3.660688301149252e-05,
+          "p90": 5.7134040614739706e-05,
+          "minimum": 1.0929277515042203e-05,
+          "maximum": 0.00010739978641812532
+        },
+        "global_relative_l2": 4.32757987578044e-05
+      },
+      "actual_changed_input_rows": 14486,
+      "registered_input_rows": 14487
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 8,
+      "seed": 7,
+      "materialized_common_bytes": 438210,
+      "source_checkpoint_sha256": "641d448032c3e3055f52d71d45bfe591c6f5836d19ee6a26dca2f066c7f15ae3",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 297017,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 615269,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00047401408664882183,
+          0.00027293991297483444,
+          0.00012396788224577904,
+          0.00016608205623924732,
+          0.000124386977404356,
+          0.00012347986921668053
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3616142998471332,
+            "context_vs_negative_discrimination": 0.748339849869808
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3616143301987904,
+            "context_vs_negative_discrimination": 0.748339849869808
+          },
+          "delta": {
+            "loss_relative_change": 1.285208051093889e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3191749352190527,
+            "context_vs_negative_discrimination": 0.7601074279336899
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.319174925192783,
+            "context_vs_negative_discrimination": 0.7601074279336899
+          },
+          "delta": {
+            "loss_relative_change": -4.323205349265891e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999991936854,
+          "p10": 0.9999999984786204,
+          "median": 0.999999999344735,
+          "p90": 0.9999999997126854,
+          "minimum": 0.9999999958098726,
+          "maximum": 0.9999999999282521
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999996894038257,
+          "p10": 0.9999993110952835,
+          "median": 0.9999997669201441,
+          "p90": 0.9999999602018932,
+          "minimum": 0.999997487815764,
+          "maximum": 0.9999999999656398
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.8171295083201286e-05,
+          "p10": 2.3972686425913492e-05,
+          "median": 3.6204207692903126e-05,
+          "p90": 5.5163370453534365e-05,
+          "minimum": 1.197983007393728e-05,
+          "maximum": 9.154417542021194e-05
+        },
+        "global_relative_l2": 4.188184986259823e-05
+      },
+      "actual_changed_input_rows": 14486,
+      "registered_input_rows": 14487
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 8,
+      "seed": 11,
+      "materialized_common_bytes": 438210,
+      "source_checkpoint_sha256": "03163351f52851480d7942a2feaf68543d08ebdd15cedefb167fa4ebecba0e2a",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 294517,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 612769,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00018836208619177341,
+          0.00018361303955316544,
+          0.00011307303793728352,
+          0.00017362600192427635,
+          0.00022286409512162209,
+          0.0001036438625305891
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.344917917129351,
+            "context_vs_negative_discrimination": 0.7522949278818487
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.344917884842289,
+            "context_vs_negative_discrimination": 0.7522949278818487
+          },
+          "delta": {
+            "loss_relative_change": -1.3768951867554335e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3118218761919707,
+            "context_vs_negative_discrimination": 0.7627197325391535
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3118218801828334,
+            "context_vs_negative_discrimination": 0.7627197325391535
+          },
+          "delta": {
+            "loss_relative_change": 1.7262846707666313e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999992239134,
+          "p10": 0.9999999984944177,
+          "median": 0.9999999994125721,
+          "p90": 0.9999999997579585,
+          "minimum": 0.9999999950625093,
+          "maximum": 0.9999999999249396
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999997083706035,
+          "p10": 0.9999993442637085,
+          "median": 0.9999997843154877,
+          "p90": 0.9999999649193893,
+          "minimum": 0.9999978225662237,
+          "maximum": 0.9999999995917044
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.7030621911623683e-05,
+          "p10": 2.2004442526193947e-05,
+          "median": 3.4277115831329605e-05,
+          "p90": 5.487409917832809e-05,
+          "minimum": 1.2252444528792655e-05,
+          "maximum": 9.937343412597365e-05
+        },
+        "global_relative_l2": 4.127046745477408e-05
+      },
+      "actual_changed_input_rows": 14486,
+      "registered_input_rows": 14487
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 12,
+      "seed": 3,
+      "materialized_common_bytes": 447699,
+      "source_checkpoint_sha256": "0334d80a9da0bb5a3b76b3d598bcdded50e52bc2c3fa02e3e96a60e666114ae0",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 295742,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 613994,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00018689502030611038,
+          0.00011356198228895664,
+          0.00010504201054573059,
+          0.00010504201054573059,
+          0.00010930188000202179,
+          0.0001025970559567213
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.352059591205034,
+            "context_vs_negative_discrimination": 0.7492919981905288
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3520595510854037,
+            "context_vs_negative_discrimination": 0.7492919981905288
+          },
+          "delta": {
+            "loss_relative_change": -1.705723373657264e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3198050823666563,
+            "context_vs_negative_discrimination": 0.7601074280764806
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3198051172112173,
+            "context_vs_negative_discrimination": 0.7601074280764806
+          },
+          "delta": {
+            "loss_relative_change": 1.5020469312787554e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999991941756,
+          "p10": 0.9999999985894463,
+          "median": 0.9999999993327682,
+          "p90": 0.999999999683039,
+          "minimum": 0.9999999941981644,
+          "maximum": 0.9999999999005117
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.999999714073773,
+          "p10": 0.9999993574996588,
+          "median": 0.9999998021931658,
+          "p90": 0.9999999624650964,
+          "minimum": 0.9999966757873123,
+          "maximum": 0.9999999999841388
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.838771457641458e-05,
+          "p10": 2.5178822569819823e-05,
+          "median": 3.653106012259854e-05,
+          "p90": 5.31224546882082e-05,
+          "minimum": 1.410609666309978e-05,
+          "maximum": 0.00010772198072334691
+        },
+        "global_relative_l2": 4.1974187407156635e-05
+      },
+      "actual_changed_input_rows": 15188,
+      "registered_input_rows": 15189
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 12,
+      "seed": 7,
+      "materialized_common_bytes": 447699,
+      "source_checkpoint_sha256": "98f149176b13b9adf880a70318873e365f98009a6cb2ca51b211807702a87ba0",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 295625,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 613877,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.0002587619237601757,
+          0.000147645128890872,
+          0.00016314908862113953,
+          0.00015944801270961761,
+          0.00013633002527058125,
+          0.00012299115769565105
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.352770879981108,
+            "context_vs_negative_discrimination": 0.7506347717098834
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.352770860892633,
+            "context_vs_negative_discrimination": 0.7506347717098834
+          },
+          "delta": {
+            "loss_relative_change": -8.113189009506527e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.322877340760897,
+            "context_vs_negative_discrimination": 0.7588378966465825
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3228773094197095,
+            "context_vs_negative_discrimination": 0.7588378966465825
+          },
+          "delta": {
+            "loss_relative_change": -1.3492398753811585e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999994209952,
+          "p10": 0.999999998948524,
+          "median": 0.999999999525786,
+          "p90": 0.9999999997749414,
+          "minimum": 0.9999999964620976,
+          "maximum": 0.9999999999645112
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999997229410531,
+          "p10": 0.9999993937447083,
+          "median": 0.9999997970729393,
+          "p90": 0.9999999629785035,
+          "minimum": 0.9999972083195163,
+          "maximum": 0.9999999995634697
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.2408641960906436e-05,
+          "p10": 2.1217107061091296e-05,
+          "median": 3.080129133336843e-05,
+          "p90": 4.586160861529223e-05,
+          "minimum": 8.424848048210688e-06,
+          "maximum": 8.411857735550841e-05
+        },
+        "global_relative_l2": 3.5656845087842226e-05
+      },
+      "actual_changed_input_rows": 15188,
+      "registered_input_rows": 15189
+    },
+    {
+      "study": "dynamics-legacy",
+      "order": 12,
+      "seed": 11,
+      "materialized_common_bytes": 447699,
+      "source_checkpoint_sha256": "3788999fbcfaf4cf9737b482aecfdf25ca00e48fe19bb2f0d54c8ace2234f266",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 296265,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 614517,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00016601313836872578,
+          8.848891593515873e-05,
+          8.79999715834856e-05,
+          9.037507697939873e-05,
+          8.611497469246387e-05,
+          8.569611236453056e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3508718431075977,
+            "context_vs_negative_discrimination": 0.7497802794759991
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3508718486409634,
+            "context_vs_negative_discrimination": 0.7497802794759991
+          },
+          "delta": {
+            "loss_relative_change": 2.3537505278170556e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3103228281906922,
+            "context_vs_negative_discrimination": 0.761645513925032
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3103228434119956,
+            "context_vs_negative_discrimination": 0.761645513925032
+          },
+          "delta": {
+            "loss_relative_change": 6.588388057338079e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999993347585,
+          "p10": 0.9999999988138297,
+          "median": 0.9999999994380939,
+          "p90": 0.999999999759192,
+          "minimum": 0.9999999966747211,
+          "maximum": 0.9999999998971117
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999997246072809,
+          "p10": 0.9999994065579964,
+          "median": 0.9999997915318561,
+          "p90": 0.9999999615345786,
+          "minimum": 0.999998217298102,
+          "maximum": 0.9999999997947497
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 3.485727657311864e-05,
+          "p10": 2.1945763312889852e-05,
+          "median": 3.3525159309491084e-05,
+          "p90": 4.870782252271313e-05,
+          "minimum": 1.4345671198075005e-05,
+          "maximum": 8.155389417564098e-05
+        },
+        "global_relative_l2": 3.8128628060967544e-05
+      },
+      "actual_changed_input_rows": 15188,
+      "registered_input_rows": 15189
+    },
+    {
+      "study": "dynamics-average",
+      "order": 4,
+      "seed": 3,
+      "materialized_common_bytes": 357630,
+      "source_checkpoint_sha256": "c287ac5e4b0f563ebe11d1273110c491dda873cf9c3afbeb133105aab0324112",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 289132,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 607384,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.000291937030851841,
+          0.00012864801101386547,
+          0.00012864801101386547,
+          0.00012676184996962547,
+          0.000124386977404356,
+          0.00014806282706558704
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3767832009179983,
+            "context_vs_negative_discrimination": 0.7392089903551096
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.37678322604188,
+            "context_vs_negative_discrimination": 0.7392089903551096
+          },
+          "delta": {
+            "loss_relative_change": 1.057053999886648e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.342712863093766,
+            "context_vs_negative_discrimination": 0.7523437560721504
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3427128758266917,
+            "context_vs_negative_discrimination": 0.7523437560721504
+          },
+          "delta": {
+            "loss_relative_change": 5.435120131735971e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999482012,
+          "p10": 0.9999999998858922,
+          "median": 0.9999999999704418,
+          "p90": 0.9999999999924903,
+          "minimum": 0.999999998926698,
+          "maximum": 0.9999999999983379
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999998779029583,
+          "p10": 0.9999997442481527,
+          "median": 0.9999999038586043,
+          "p90": 0.999999983009889,
+          "minimum": 0.9999979485818992,
+          "maximum": 0.9999999996240544
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 8.852907462577761e-06,
+          "p10": 3.877331147612764e-06,
+          "median": 7.690508354264475e-06,
+          "p90": 1.510863277092919e-05,
+          "minimum": 1.8238262269397253e-06,
+          "maximum": 4.637680462062945e-05
+        },
+        "global_relative_l2": 1.0832409169134456e-05
+      },
+      "actual_changed_input_rows": 6444,
+      "registered_input_rows": 6445
+    },
+    {
+      "study": "dynamics-average",
+      "order": 4,
+      "seed": 7,
+      "materialized_common_bytes": 357630,
+      "source_checkpoint_sha256": "b17e9e8a96902a0c8ef92071898b040e90cd1290326226d9a207281fa066c055",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 291360,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 609612,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.0001732069067656994,
+          9.226100519299507e-05,
+          9.079393930733204e-05,
+          8.47869087010622e-05,
+          8.611404336988926e-05,
+          8.506607264280319e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.386173912742379,
+            "context_vs_negative_discrimination": 0.7367919982543754
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.386173933489772,
+            "context_vs_negative_discrimination": 0.7367919982543754
+          },
+          "delta": {
+            "loss_relative_change": 8.694837072553696e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3453805426033796,
+            "context_vs_negative_discrimination": 0.7510742247368398
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.345380567960092,
+            "context_vs_negative_discrimination": 0.7510742247368398
+          },
+          "delta": {
+            "loss_relative_change": 1.0811342487926368e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999572452,
+          "p10": 0.9999999999097818,
+          "median": 0.9999999999756499,
+          "p90": 0.9999999999928508,
+          "minimum": 0.9999999993381482,
+          "maximum": 0.9999999999983051
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999998825349051,
+          "p10": 0.9999997521906412,
+          "median": 0.9999999094348409,
+          "p90": 0.9999999841203309,
+          "minimum": 0.9999988915696228,
+          "maximum": 0.9999999995050675
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 8.092028127209036e-06,
+          "p10": 3.781539926754716e-06,
+          "median": 6.9795442695225145e-06,
+          "p90": 1.3437206303492964e-05,
+          "minimum": 1.8411608843054998e-06,
+          "maximum": 3.638309776521921e-05
+        },
+        "global_relative_l2": 9.826879148403086e-06
+      },
+      "actual_changed_input_rows": 6444,
+      "registered_input_rows": 6445
+    },
+    {
+      "study": "dynamics-average",
+      "order": 4,
+      "seed": 11,
+      "materialized_common_bytes": 357630,
+      "source_checkpoint_sha256": "4df22828da3592cb99cc2217e8f1aaa9f47b69be7120367b109896551d6cb051",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 288273,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 606525,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00015239394269883633,
+          9.372713975608349e-05,
+          8.660298772156239e-05,
+          8.520600385963917e-05,
+          8.513708598911762e-05,
+          8.520693518221378e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3725126309218467,
+            "context_vs_negative_discrimination": 0.740063482556252
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.372512607907993,
+            "context_vs_negative_discrimination": 0.740063482556252
+          },
+          "delta": {
+            "loss_relative_change": -9.70020286317208e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3363243090352626,
+            "context_vs_negative_discrimination": 0.7538085997493909
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.336324282317946,
+            "context_vs_negative_discrimination": 0.7538085997493909
+          },
+          "delta": {
+            "loss_relative_change": -1.1435619673427766e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.999999999954262,
+          "p10": 0.999999999899884,
+          "median": 0.9999999999735308,
+          "p90": 0.9999999999932299,
+          "minimum": 0.9999999992981189,
+          "maximum": 0.9999999999980989
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999998594685288,
+          "p10": 0.9999997252474548,
+          "median": 0.9999998836953998,
+          "p90": 0.999999976018207,
+          "minimum": 0.9999989231634909,
+          "maximum": 0.9999999994211851
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 8.323128137950064e-06,
+          "p10": 3.680692850252118e-06,
+          "median": 7.285363911833201e-06,
+          "p90": 1.4154630087015024e-05,
+          "minimum": 1.9542675488644743e-06,
+          "maximum": 3.747324929454482e-05
+        },
+        "global_relative_l2": 1.0108416004852687e-05
+      },
+      "actual_changed_input_rows": 6444,
+      "registered_input_rows": 6445
+    },
+    {
+      "study": "dynamics-average",
+      "order": 8,
+      "seed": 3,
+      "materialized_common_bytes": 438210,
+      "source_checkpoint_sha256": "02c000c8e5c6acc795c7ccee91a80c09eb2d6379ec4c7bc2eeed86b3d0553790",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 291287,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 609539,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.0001641970593482256,
+          9.316904470324516e-05,
+          8.848891593515873e-05,
+          8.513615466654301e-05,
+          8.513615466654301e-05,
+          9.93839930742979e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.386033950475394,
+            "context_vs_negative_discrimination": 0.7352539122748567
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.386033970018616,
+            "context_vs_negative_discrimination": 0.7352539122748567
+          },
+          "delta": {
+            "loss_relative_change": 8.190672362573537e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.348299960307486,
+            "context_vs_negative_discrimination": 0.7522705139645041
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3483000042760978,
+            "context_vs_negative_discrimination": 0.7522705139645041
+          },
+          "delta": {
+            "loss_relative_change": 1.8723592676295198e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999618797,
+          "p10": 0.9999999999108296,
+          "median": 0.9999999999837035,
+          "p90": 0.9999999999961917,
+          "minimum": 0.999999998633316,
+          "maximum": 0.9999999999991778
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999998777093349,
+          "p10": 0.9999997399544862,
+          "median": 0.9999999058334539,
+          "p90": 0.9999999833807773,
+          "minimum": 0.9999986407324758,
+          "maximum": 0.9999999998027423
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 7.1567945710068895e-06,
+          "p10": 2.769683757810253e-06,
+          "median": 5.7090706626928575e-06,
+          "p90": 1.3354514520805586e-05,
+          "minimum": 1.283115318990074e-06,
+          "maximum": 5.228169312037979e-05
+        },
+        "global_relative_l2": 9.710139131705657e-06
+      },
+      "actual_changed_input_rows": 14486,
+      "registered_input_rows": 14487
+    },
+    {
+      "study": "dynamics-average",
+      "order": 8,
+      "seed": 7,
+      "materialized_common_bytes": 438210,
+      "source_checkpoint_sha256": "d24baa3f830f5b2646af3db89b810a3d51b0184fd56258d94d483691475be633",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 290454,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 608706,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00016182195395231247,
+          9.512295946478844e-05,
+          9.128311648964882e-05,
+          8.939695544540882e-05,
+          8.56949482113123e-05,
+          8.611404336988926e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3956953173619695,
+            "context_vs_negative_discrimination": 0.736645513896292
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3956953063643596,
+            "context_vs_negative_discrimination": 0.736645513896292
+          },
+          "delta": {
+            "loss_relative_change": -4.590571256457565e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3522102590213763,
+            "context_vs_negative_discrimination": 0.7531250059355443
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3522102433926193,
+            "context_vs_negative_discrimination": 0.7531250059355443
+          },
+          "delta": {
+            "loss_relative_change": -6.644285677204209e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999542839,
+          "p10": 0.9999999998992112,
+          "median": 0.9999999999810523,
+          "p90": 0.9999999999957994,
+          "minimum": 0.9999999990072077,
+          "maximum": 0.9999999999989635
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.99999987497276,
+          "p10": 0.9999997583032502,
+          "median": 0.999999892110131,
+          "p90": 0.9999999792191119,
+          "minimum": 0.9999987914683357,
+          "maximum": 0.9999999999888092
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 7.776835089041154e-06,
+          "p10": 2.900483637639846e-06,
+          "median": 6.157896982074623e-06,
+          "p90": 1.419919611764977e-05,
+          "minimum": 1.4397677793113688e-06,
+          "maximum": 4.456503207101021e-05
+        },
+        "global_relative_l2": 1.0747227069491703e-05
+      },
+      "actual_changed_input_rows": 14486,
+      "registered_input_rows": 14487
+    },
+    {
+      "study": "dynamics-average",
+      "order": 8,
+      "seed": 11,
+      "materialized_common_bytes": 438210,
+      "source_checkpoint_sha256": "f1dc88f3799eaac58303d86d203387c4059c797c832e9bd48cf2992f017acd84",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 287037,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 605289,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00016084406524896622,
+          8.946703746914864e-05,
+          8.751219138503075e-05,
+          8.611497469246387e-05,
+          8.520693518221378e-05,
+          8.611497469246387e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.379622981257853,
+            "context_vs_negative_discrimination": 0.7382324278833039
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.379622956897947,
+            "context_vs_negative_discrimination": 0.7382324278833039
+          },
+          "delta": {
+            "loss_relative_change": -1.0236876346603196e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3479260987514863,
+            "context_vs_negative_discrimination": 0.7514648498181487
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3479260930398596,
+            "context_vs_negative_discrimination": 0.7514648498181487
+          },
+          "delta": {
+            "loss_relative_change": -2.43262632260155e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999654395,
+          "p10": 0.9999999999282138,
+          "median": 0.9999999999836676,
+          "p90": 0.9999999999961418,
+          "minimum": 0.9999999993687815,
+          "maximum": 0.9999999999989007
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999998258135018,
+          "p10": 0.9999996550192268,
+          "median": 0.9999998509184798,
+          "p90": 0.9999999733272463,
+          "minimum": 0.9999983618065402,
+          "maximum": 0.999999999610423
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 6.904601346387267e-06,
+          "p10": 2.78119941512317e-06,
+          "median": 5.718023887935588e-06,
+          "p90": 1.1982851216065517e-05,
+          "minimum": 1.5006028958468954e-06,
+          "maximum": 3.556850759924996e-05
+        },
+        "global_relative_l2": 9.273854031756336e-06
+      },
+      "actual_changed_input_rows": 14486,
+      "registered_input_rows": 14487
+    },
+    {
+      "study": "dynamics-average",
+      "order": 12,
+      "seed": 3,
+      "materialized_common_bytes": 447699,
+      "source_checkpoint_sha256": "40ae76a0a99a1c1bc6a9f1888a2e610cf16b7465bc9a4773b51923482c2c423a",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 289454,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 607706,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00016426690854132175,
+          9.12821851670742e-05,
+          8.604396134614944e-05,
+          8.618389256298542e-05,
+          9.27499495446682e-05,
+          8.653290569782257e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3918323828584107,
+            "context_vs_negative_discrimination": 0.7365722716185701
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.39183240600687,
+            "context_vs_negative_discrimination": 0.7365722716185701
+          },
+          "delta": {
+            "loss_relative_change": 9.678127632639644e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.351197901305568,
+            "context_vs_negative_discrimination": 0.7525146544994641
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3511978801398072,
+            "context_vs_negative_discrimination": 0.7525146544994641
+          },
+          "delta": {
+            "loss_relative_change": -9.002117939971299e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999667482,
+          "p10": 0.9999999999234009,
+          "median": 0.9999999999859626,
+          "p90": 0.9999999999967593,
+          "minimum": 0.9999999990126743,
+          "maximum": 0.999999999999249
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999999010963179,
+          "p10": 0.999999802077179,
+          "median": 0.99999992385494,
+          "p90": 0.9999999864723571,
+          "minimum": 0.9999980730364392,
+          "maximum": 0.9999999999239887
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 6.674325787240164e-06,
+          "p10": 2.5480974382291707e-06,
+          "median": 5.305893380454689e-06,
+          "p90": 1.2377485346263332e-05,
+          "minimum": 1.2330070691319711e-06,
+          "maximum": 4.4438043958597007e-05
+        },
+        "global_relative_l2": 9.083019695339842e-06
+      },
+      "actual_changed_input_rows": 15188,
+      "registered_input_rows": 15189
+    },
+    {
+      "study": "dynamics-average",
+      "order": 12,
+      "seed": 7,
+      "materialized_common_bytes": 447699,
+      "source_checkpoint_sha256": "2e914977781071ed18b8f1ae5a60dda9682ade758914f2751c9c24b7e6b6b29b",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 288013,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 606265,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.00016419682651758194,
+          9.323889389634132e-05,
+          8.562603034079075e-05,
+          8.464790880680084e-05,
+          8.841999806463718e-05,
+          8.758087642490864e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.393561506851256,
+            "context_vs_negative_discrimination": 0.7384033264870595
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.39356153812696,
+            "context_vs_negative_discrimination": 0.7384033264870595
+          },
+          "delta": {
+            "loss_relative_change": 1.3066597137623148e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3573611702377093,
+            "context_vs_negative_discrimination": 0.751147466970906
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.357361202390166,
+            "context_vs_negative_discrimination": 0.751147466970906
+          },
+          "delta": {
+            "loss_relative_change": 1.363917290220229e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999699609,
+          "p10": 0.9999999999400442,
+          "median": 0.9999999999860212,
+          "p90": 0.9999999999965449,
+          "minimum": 0.9999999992734431,
+          "maximum": 0.9999999999990761
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.999999884418972,
+          "p10": 0.9999997492690983,
+          "median": 0.9999999174148317,
+          "p90": 0.9999999808433458,
+          "minimum": 0.9999987282302044,
+          "maximum": 0.9999999995839369
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 6.412534812600479e-06,
+          "p10": 2.629943566222755e-06,
+          "median": 5.287981476802028e-06,
+          "p90": 1.0950941124395465e-05,
+          "minimum": 1.3599615430020888e-06,
+          "maximum": 3.8123712035593505e-05
+        },
+        "global_relative_l2": 8.72224338218861e-06
+      },
+      "actual_changed_input_rows": 15188,
+      "registered_input_rows": 15189
+    },
+    {
+      "study": "dynamics-average",
+      "order": 12,
+      "seed": 11,
+      "materialized_common_bytes": 447699,
+      "source_checkpoint_sha256": "a6bd992db5f3e92c93c1e5cffb4ae73a56a4b507b96252574d90a6d145dbdf98",
+      "precomputed": {
+        "raw_word_table_bytes": 307200,
+        "encoded_word_table_bytes": 289300,
+        "complete_raw_word_output_key_bytes": 625452,
+        "complete_encoded_word_output_key_bytes": 607552,
+        "aggregate_vectors_byte_exact_to_source_compose": true,
+        "warm_1200_word_selection_seconds": [
+          0.0001655931118875742,
+          8.897786028683186e-05,
+          8.939695544540882e-05,
+          8.520693518221378e-05,
+          8.69531650096178e-05,
+          9.18419100344181e-05
+        ],
+        "scope": "fixed known-word inference only; no original n-gram row lookup or matched SGD parameterization"
+      },
+      "matched_tied_training_quality": {
+        "validation": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3829596269497415,
+            "context_vs_negative_discrimination": 0.7387451232380045
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3829597083531553,
+            "context_vs_negative_discrimination": 0.7387451232380045
+          },
+          "delta": {
+            "loss_relative_change": 3.4160634987401295e-08,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "fdb2c1b7b5792a87845cdcd318fa515e98698c6eb5f2d0033c7fba3d97d3ec93"
+        },
+        "test": {
+          "original": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3475709904450923,
+            "context_vs_negative_discrimination": 0.7508544982065359
+          },
+          "tied": {
+            "pairs": 8192,
+            "sgns_loss_per_pair": 2.3475710050042835,
+            "context_vs_negative_discrimination": 0.7508544982065359
+          },
+          "delta": {
+            "loss_relative_change": 6.201810842654254e-09,
+            "discrimination_change": 0.0
+          },
+          "evaluation_sha256": "6e5d184cad094eedec44a9b89ce981a1a380acf15122ab1e867977048393ced1"
+        }
+      },
+      "matched_tied_training_aggregate_fidelity": {
+        "cosine": {
+          "count": 1200,
+          "mean": 0.9999999999666382,
+          "p10": 0.9999999999260817,
+          "median": 0.9999999999855735,
+          "p90": 0.9999999999965792,
+          "minimum": 0.999999998899653,
+          "maximum": 0.9999999999989163
+        },
+        "norm_ratio": {
+          "count": 1200,
+          "mean": 0.9999998995360257,
+          "p10": 0.99999979121776,
+          "median": 0.9999999246855463,
+          "p90": 0.9999999848426898,
+          "minimum": 0.9999990193213852,
+          "maximum": 0.9999999999309942
+        },
+        "joint099_fraction": 1.0,
+        "relative_l2": {
+          "count": 1200,
+          "mean": 6.655849232422395e-06,
+          "p10": 2.6194382679182768e-06,
+          "median": 5.371853760558348e-06,
+          "p90": 1.2159311328912149e-05,
+          "minimum": 1.476362273989514e-06,
+          "maximum": 4.691683738604439e-05
+        },
+        "global_relative_l2": 9.147494662903713e-06
+      },
+      "actual_changed_input_rows": 15188,
+      "registered_input_rows": 15189
+    }
+  ],
+  "large_materialized_common_bytes": 36276812,
+  "large_precomputed": {
+    "words": 142308,
+    "scope": "known-word n-gram-subset mean only; word/output model unavailable",
+    "complete_raw_word_table_and_key_bytes": 147378897,
+    "complete_encoded_word_table_and_key_bytes": 136194844,
+    "aggregate_fidelity": {
+      "cosine": {
+        "count": 512,
+        "mean": 0.9999999999999966,
+        "p10": 0.9999999999999944,
+        "median": 0.9999999999999969,
+        "p90": 0.9999999999999982,
+        "minimum": 0.9999999999999907,
+        "maximum": 0.9999999999999991
+      },
+      "norm_ratio": {
+        "count": 512,
+        "mean": 0.9999999928335587,
+        "p10": 0.9999999850454964,
+        "median": 0.9999999940961208,
+        "p90": 0.9999999990591925,
+        "minimum": 0.9999999704533081,
+        "maximum": 0.9999999999770954
+      },
+      "joint099_fraction": 1.0,
+      "relative_l2": {
+        "count": 512,
+        "mean": 8.176927954343601e-08,
+        "p10": 6.075804692609606e-08,
+        "median": 7.934715466986495e-08,
+        "p90": 1.0671337114738648e-07,
+        "minimum": 4.489752300794041e-08,
+        "maximum": 1.381038136150029e-07
+      },
+      "global_relative_l2": 7.770475550762625e-08
+    },
+    "warm_512_word_selection_seconds": [
+      0.0022941487841308117,
+      0.00015099719166755676,
+      4.546693526208401e-05,
+      5.7688914239406586e-05,
+      4.497799091041088e-05,
+      4.546693526208401e-05,
+      5.768914707005024e-05,
+      4.497799091041088e-05,
+      4.497799091041088e-05
+    ],
+    "all_precomputed_rows_byte_verified": 142308
+  },
+  "status": "completed"
+}

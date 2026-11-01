@@ -1,0 +1,18 @@
+{
+  "source_commit": "29b2c1f64eba6201dd3ef38e8d2931d8cb5ce534",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/isolation-source/tools/benchmark_cotraining_planner.py --checkpoint-root /llm-align/duyimin/ngram-cotraining-20261031/source/artifacts/heldout-compression-20261024 --output-dir /llm-align/duyimin/ngram-cotraining-20261031/planner-isolation --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so --structural-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/libstructural.so",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "native_library_sha256": "49aa8e7e82c83e3ec0b103af62eeb3638d98a18a780a35bb5c80e435fc791c51",
+  "structural_library_sha256": "bd5a2b28a05e873426d943d01334d0beaf253944a3e9565d4514a807f21efb25",
+  "limitations": [
+    "Nine existing finite SGNS checkpoints; no LLM/convergence claim.",
+    "All variants share a certified projection that changes source rows.",
+    "DATrie planning only; common JSON registry counted, no DATrie key-index storage/query claim.",
+    "Word/output rows, keys, manifests and certificates counted; schedules omitted equally.",
+    "CPU-only, shared host; no monetary/energy metering."
+  ],
+  "runs": []
+}

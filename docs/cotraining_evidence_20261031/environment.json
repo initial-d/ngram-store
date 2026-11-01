@@ -1,0 +1,239 @@
+{
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "cpu": {
+    "lscpu": [
+      {
+        "field": "\u67b6\u6784\uff1a",
+        "data": "x86_64"
+      },
+      {
+        "field": "CPU \u8fd0\u884c\u6a21\u5f0f\uff1a",
+        "data": "32-bit, 64-bit"
+      },
+      {
+        "field": "Address sizes:",
+        "data": "43 bits physical, 48 bits virtual"
+      },
+      {
+        "field": "\u5b57\u8282\u5e8f\uff1a",
+        "data": "Little Endian"
+      },
+      {
+        "field": "CPU:",
+        "data": "256"
+      },
+      {
+        "field": "\u5728\u7ebf CPU \u5217\u8868\uff1a",
+        "data": "0-254"
+      },
+      {
+        "field": "\u79bb\u7ebf CPU \u5217\u8868\uff1a",
+        "data": "255"
+      },
+      {
+        "field": "\u5382\u5546 ID\uff1a",
+        "data": "AuthenticAMD"
+      },
+      {
+        "field": "\u578b\u53f7\u540d\u79f0\uff1a",
+        "data": "AMD EPYC 7742 64-Core Processor"
+      },
+      {
+        "field": "CPU \u7cfb\u5217\uff1a",
+        "data": "23"
+      },
+      {
+        "field": "\u578b\u53f7\uff1a",
+        "data": "49"
+      },
+      {
+        "field": "\u6bcf\u4e2a\u6838\u7684\u7ebf\u7a0b\u6570\uff1a",
+        "data": "2"
+      },
+      {
+        "field": "\u6bcf\u4e2a\u5ea7\u7684\u6838\u6570\uff1a",
+        "data": "64"
+      },
+      {
+        "field": "\u5ea7\uff1a",
+        "data": "2"
+      },
+      {
+        "field": "\u6b65\u8fdb\uff1a",
+        "data": "0"
+      },
+      {
+        "field": "Frequency boost:",
+        "data": "disabled"
+      },
+      {
+        "field": "CPU \u6700\u5927 MHz\uff1a",
+        "data": "2250.0000"
+      },
+      {
+        "field": "CPU \u6700\u5c0f MHz\uff1a",
+        "data": "0.0000"
+      },
+      {
+        "field": "BogoMIPS\uff1a",
+        "data": "4500.00"
+      },
+      {
+        "field": "\u6807\u8bb0\uff1a",
+        "data": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate sme ssbd mba sev ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif umip rdpid overflow_recov succor smca"
+      },
+      {
+        "field": "\u865a\u62df\u5316\uff1a",
+        "data": "AMD-V"
+      },
+      {
+        "field": "L1d \u7f13\u5b58\uff1a",
+        "data": "4 MiB (128 instances)"
+      },
+      {
+        "field": "L1i \u7f13\u5b58\uff1a",
+        "data": "4 MiB (128 instances)"
+      },
+      {
+        "field": "L2 \u7f13\u5b58\uff1a",
+        "data": "64 MiB (128 instances)"
+      },
+      {
+        "field": "L3 \u7f13\u5b58\uff1a",
+        "data": "512 MiB (32 instances)"
+      },
+      {
+        "field": "NUMA \u8282\u70b9\uff1a",
+        "data": "8"
+      },
+      {
+        "field": "NUMA \u8282\u70b90 CPU\uff1a",
+        "data": "0-15,128-143"
+      },
+      {
+        "field": "NUMA \u8282\u70b91 CPU\uff1a",
+        "data": "16-31,144-159"
+      },
+      {
+        "field": "NUMA \u8282\u70b92 CPU\uff1a",
+        "data": "32-47,160-175"
+      },
+      {
+        "field": "NUMA \u8282\u70b93 CPU\uff1a",
+        "data": "48-63,176-191"
+      },
+      {
+        "field": "NUMA \u8282\u70b94 CPU\uff1a",
+        "data": "64-79,192-207"
+      },
+      {
+        "field": "NUMA \u8282\u70b95 CPU\uff1a",
+        "data": "80-95,208-223"
+      },
+      {
+        "field": "NUMA \u8282\u70b96 CPU\uff1a",
+        "data": "96-111,224-239"
+      },
+      {
+        "field": "NUMA \u8282\u70b97 CPU\uff1a",
+        "data": "112-127,240-254"
+      },
+      {
+        "field": "Vulnerability Itlb multihit:",
+        "data": "Not affected"
+      },
+      {
+        "field": "Vulnerability L1tf:",
+        "data": "Not affected"
+      },
+      {
+        "field": "Vulnerability Mds:",
+        "data": "Not affected"
+      },
+      {
+        "field": "Vulnerability Meltdown:",
+        "data": "Not affected"
+      },
+      {
+        "field": "Vulnerability Spec store bypass:",
+        "data": "Mitigation; Speculative Store Bypass disabled via prctl and seccomp"
+      },
+      {
+        "field": "Vulnerability Spectre v1:",
+        "data": "Mitigation; usercopy/swapgs barriers and __user pointer sanitization"
+      },
+      {
+        "field": "Vulnerability Spectre v2:",
+        "data": "Mitigation; Full AMD retpoline, IBPB conditional, IBRS_FW, STIBP conditional, RSB filling"
+      },
+      {
+        "field": "Vulnerability Srbds:",
+        "data": "Not affected"
+      },
+      {
+        "field": "Vulnerability Tsx async abort:",
+        "data": "Not affected"
+      }
+    ]
+  },
+  "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "native_library_sha256": "49aa8e7e82c83e3ec0b103af62eeb3638d98a18a780a35bb5c80e435fc791c51",
+  "structural_library_sha256": "bd5a2b28a05e873426d943d01334d0beaf253944a3e9565d4514a807f21efb25",
+  "cuda_visible_devices": "",
+  "sources": {
+    "source": {
+      "commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563",
+      "working_tree": "?? core\n",
+      "files": {
+        "tools/cotraining_groups.py": "ae03ff3959d6dea0b5f5134609a7b842d6f24d9f8891950f466ea1789b7af306",
+        "tools/native_row_store.py": "95d1d3b5e56c397d5e5f207702a1db018407eda62642887044003e16b2b3e8f8",
+        "native/meft_rows.c": "48c82769f3651635c091ef107254039de97b95a179520bd8e8ba874d08252258",
+        "native/meft_structural.cc": "3d74eadc98e4db0e49baf08eb9c8a76c48cccaecfa81fec850626c55e8fade0d"
+      }
+    },
+    "api-source": {
+      "commit": "42ecfcbf57c4d9dad8e7750facefedbd5b3beb46",
+      "working_tree": "?? core\n",
+      "files": {
+        "tools/cotraining_groups.py": "aaae9ebc5d36d0063f6d808d51d29c5d0d26c5596e273b1d4c1eb57323010636",
+        "tools/native_row_store.py": "95d1d3b5e56c397d5e5f207702a1db018407eda62642887044003e16b2b3e8f8",
+        "native/meft_rows.c": "48c82769f3651635c091ef107254039de97b95a179520bd8e8ba874d08252258",
+        "native/meft_structural.cc": "3d74eadc98e4db0e49baf08eb9c8a76c48cccaecfa81fec850626c55e8fade0d"
+      }
+    },
+    "raw-source": {
+      "commit": "6d385ca531d4e1682e5fc202297f406399d6e7a7",
+      "working_tree": "?? core\n",
+      "files": {
+        "tools/cotraining_groups.py": "e25cb0f9ede241bab8152d677c7e3dffe0814a2e73e75c224ce0701eeac554e3",
+        "tools/native_row_store.py": "731ae1fc233af51f52a56343c0fa7bdd5deaa65ab3472f08a8d86f32c5c5571d",
+        "native/meft_rows.c": "48c82769f3651635c091ef107254039de97b95a179520bd8e8ba874d08252258",
+        "native/meft_structural.cc": "3d74eadc98e4db0e49baf08eb9c8a76c48cccaecfa81fec850626c55e8fade0d"
+      }
+    },
+    "map-source": {
+      "commit": "7925dbd1f30d9a9d2356c5b7bb78e2bc4f94e016",
+      "working_tree": "?? core\n",
+      "files": {
+        "tools/cotraining_groups.py": "e25cb0f9ede241bab8152d677c7e3dffe0814a2e73e75c224ce0701eeac554e3",
+        "tools/native_row_store.py": "04ea63fa0d907f184231cc8578ac00af4ac15801e15854b27c5ab815bd6dcb62",
+        "native/meft_rows.c": "48c82769f3651635c091ef107254039de97b95a179520bd8e8ba874d08252258",
+        "native/meft_structural.cc": "3d74eadc98e4db0e49baf08eb9c8a76c48cccaecfa81fec850626c55e8fade0d"
+      }
+    },
+    "lifecycle-source": {
+      "commit": "80d3a011476da94e2715f971481d3bc2870ef804",
+      "working_tree": "?? core\n",
+      "files": {
+        "tools/cotraining_groups.py": "3e3d820f884ae649ae7b5ddc4bf459f398ad8070121b4786cc8b80b55e056e7a",
+        "tools/native_row_store.py": "04ea63fa0d907f184231cc8578ac00af4ac15801e15854b27c5ab815bd6dcb62",
+        "native/meft_rows.c": "48c82769f3651635c091ef107254039de97b95a179520bd8e8ba874d08252258",
+        "native/meft_structural.cc": "3d74eadc98e4db0e49baf08eb9c8a76c48cccaecfa81fec850626c55e8fade0d"
+      }
+    }
+  },
+  "cost": "shared CPU; no monetary/energy metering; no GPU process touched"
+}

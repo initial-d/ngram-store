@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-cotraining-20261031/api-source/tools/benchmark_cotraining_layout.py", line 133, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-cotraining-20261031/api-source/tools/benchmark_cotraining_layout.py", line 89, in main
+    cfg.output_dir.mkdir(parents=True, exist_ok=False)
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/llm-align/duyimin/ngram-cotraining-20261031/layout-large'

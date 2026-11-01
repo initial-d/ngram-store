@@ -1,0 +1,1336 @@
+{
+  "source_commit": "7ff4a90e9b45edae870ae2175c173f3c4e4651fa",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/api-source/tools/benchmark_cotraining_layout.py --output-dir /llm-align/duyimin/ngram-cotraining-20261031/layout-small --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so --checkpoint-root /llm-align/duyimin/ngram-cotraining-20261031/source/artifacts/heldout-compression-20261024",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "torch": "2.11.0+cu130",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "cpu",
+  "threads": 1,
+  "limitations": [
+    "Lossless layout of actual source rows, not aggregate projection or newly trained memory.",
+    "One finite SGNS family; source provenance retained, no convergence/LLM task claim.",
+    "Signatures only guide export order; no certificate is needed at lookup, original bytes restored.",
+    "Query samples follow byte verification with warm OS pages on shared CPU; not exclusive/cold latency.",
+    "Small source complete bytes include input table + output vectors + common keys; large source excludes unavailable word/output model.",
+    "No GPU touched; monetary/energy cost unmeasured."
+  ],
+  "runs": [
+    {
+      "shape": [
+        6445,
+        128
+      ],
+      "source": {
+        "source_sha256": "f3f9862abb36748dd605001800850bb9b76443025877dcc4fcfeba2bdcd1cd1a",
+        "checkpoint_sha256": "3f973b84bc7b03c54f3a38de9e88bb408fcdf9aa63d697a3839222ffe20632e0",
+        "order": 4,
+        "seed": 3
+      },
+      "partition": {
+        "original_rows": 6445,
+        "group_rows": 3903,
+        "rows_in_nonsingleton_groups": 3583,
+        "nonsingleton_groups": 1041,
+        "domain_bags": 1200,
+        "domain_sha256": "6aa2c5b0d98722f07ae88cd38f68a878abcbcbaad740757e6d962a021831b32b",
+        "mapping_sha256": "2e1b5550ccb197a082bc04ca8f839d7d1a63eafff5a82a2bcc504b7979bd6ecd",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 664830,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 3299840,
+            "artifact_bytes": 3147525,
+            "unique_rows": 6445,
+            "row_map_bytes": 51560,
+            "n_rows": 6445,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 403,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 403,
+            "zlib_blocks": 372,
+            "xor_blocks": 31,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 6445
+          },
+          "artifact_sha256": "ba157120f7c2c7d287305147de12e0448635e8afd62c217233454a4ccf8f19ae",
+          "all_source_rows_byte_exact": 6445,
+          "decoded_sha256": "f3f9862abb36748dd605001800850bb9b76443025877dcc4fcfeba2bdcd1cd1a",
+          "build_and_verification_seconds": 0.3073825079482049,
+          "complete_bytes": 3812355,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.01833580108359456,
+                0.00022055883891880512,
+                0.00021050195209681988,
+                0.00020589306950569153,
+                0.0001959057990461588,
+                0.00020295917056500912,
+                0.00019779102876782417,
+                0.00019639404490590096,
+                0.00020819716155529022
+              ],
+              "ids_sha256": "e174feaddfe2572ec9bef991b6c436b897ef2954acce59e660c279c8faff0bfa"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007347310893237591,
+                0.00018878118135035038,
+                0.00018354295752942562,
+                0.00018026004545390606,
+                0.0001798409502953291,
+                0.00017935200594365597,
+                0.00017746700905263424,
+                0.00017928285524249077,
+                0.00017739692702889442
+              ],
+              "ids_sha256": "f4ddd4a27c712f250482fda81c51c05bceec344ae1e9f7e817434a83e5994cb9"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 3299840,
+            "artifact_bytes": 3120610,
+            "unique_rows": 6445,
+            "row_map_bytes": 51560,
+            "n_rows": 6445,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 403,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 403,
+            "zlib_blocks": 167,
+            "xor_blocks": 236,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 6445
+          },
+          "artifact_sha256": "a215910640e0bb83451056ffeeb3c18849d79aeb1c9d7154cfde09ff3c7e737e",
+          "all_source_rows_byte_exact": 6445,
+          "decoded_sha256": "f3f9862abb36748dd605001800850bb9b76443025877dcc4fcfeba2bdcd1cd1a",
+          "build_and_verification_seconds": 0.3805995089933276,
+          "complete_bytes": 3785440,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.018340899841859937,
+                0.00021671690046787262,
+                0.00020868610590696335,
+                0.00020065507851541042,
+                0.00022139702923595905,
+                0.00019457819871604443,
+                0.00019583501853048801,
+                0.00019387993961572647,
+                0.00019353092648088932
+              ],
+              "ids_sha256": "e174feaddfe2572ec9bef991b6c436b897ef2954acce59e660c279c8faff0bfa"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007324260659515858,
+                0.00019206409342586994,
+                0.00018493994139134884,
+                0.00018172687850892544,
+                0.00018033012747764587,
+                0.00017977110110223293,
+                0.00019639404490590096,
+                0.00017928285524249077,
+                0.00017788494005799294
+              ],
+              "ids_sha256": "f4ddd4a27c712f250482fda81c51c05bceec344ae1e9f7e817434a83e5994cb9"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.007059940640365303
+    },
+    {
+      "shape": [
+        6445,
+        128
+      ],
+      "source": {
+        "source_sha256": "e102eab5848dd2205f5faea28225f6c4cd5c5bf3bb6366fd0d70faa1cb3fea3a",
+        "checkpoint_sha256": "3882d321a3560e8dab0bf1c4693574f082d82480949e2b1b9e3be439dc57cd4e",
+        "order": 4,
+        "seed": 7
+      },
+      "partition": {
+        "original_rows": 6445,
+        "group_rows": 3903,
+        "rows_in_nonsingleton_groups": 3583,
+        "nonsingleton_groups": 1041,
+        "domain_bags": 1200,
+        "domain_sha256": "6aa2c5b0d98722f07ae88cd38f68a878abcbcbaad740757e6d962a021831b32b",
+        "mapping_sha256": "2e1b5550ccb197a082bc04ca8f839d7d1a63eafff5a82a2bcc504b7979bd6ecd",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 664830,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 3299840,
+            "artifact_bytes": 3148311,
+            "unique_rows": 6445,
+            "row_map_bytes": 51560,
+            "n_rows": 6445,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 403,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 403,
+            "zlib_blocks": 381,
+            "xor_blocks": 22,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 6445
+          },
+          "artifact_sha256": "0119dcaf92b23a7603b9807d1e2d4d42ba9ccb4061cda2d4c7da1e05c8d25c03",
+          "all_source_rows_byte_exact": 6445,
+          "decoded_sha256": "e102eab5848dd2205f5faea28225f6c4cd5c5bf3bb6366fd0d70faa1cb3fea3a",
+          "build_and_verification_seconds": 0.3151827398687601,
+          "complete_bytes": 3813141,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.01901891897432506,
+                0.00021476298570632935,
+                0.00023180409334599972,
+                0.0001996760256588459,
+                0.00019960617646574974,
+                0.00019443780183792114,
+                0.00019499682821333408,
+                0.00019394909031689167,
+                0.00019255280494689941
+              ],
+              "ids_sha256": "ca1199b05aabd13f0e24f13ee3862e4268c0490fa9d1ce8a96d96096dd23da27"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007494678720831871,
+                0.00019681314006447792,
+                0.00018829293549060822,
+                0.000185009790584445,
+                0.00019688298925757408,
+                0.00018221605569124222,
+                0.0001812379341572523,
+                0.0001817280426621437,
+                0.00018068007193505764
+              ],
+              "ids_sha256": "dbeddbcce12864bfae4194be6c8bfd0b0206b2239793264de82fcda8fa0a43c5"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 3299840,
+            "artifact_bytes": 3121804,
+            "unique_rows": 6445,
+            "row_map_bytes": 51560,
+            "n_rows": 6445,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 403,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 403,
+            "zlib_blocks": 167,
+            "xor_blocks": 236,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 6445
+          },
+          "artifact_sha256": "3657e1b33e998f56c4950b22fac929861dc9d33b7e59b5be44b34688b71acf9b",
+          "all_source_rows_byte_exact": 6445,
+          "decoded_sha256": "e102eab5848dd2205f5faea28225f6c4cd5c5bf3bb6366fd0d70faa1cb3fea3a",
+          "build_and_verification_seconds": 0.36009834706783295,
+          "complete_bytes": 3786634,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.01878145895898342,
+                0.0002167180646210909,
+                0.00020721904002130032,
+                0.00020246999338269234,
+                0.0001944380346685648,
+                0.00019353092648088932,
+                0.000193112064152956,
+                0.00019583501853048801,
+                0.00019297213293612003
+              ],
+              "ids_sha256": "ca1199b05aabd13f0e24f13ee3862e4268c0490fa9d1ce8a96d96096dd23da27"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0008042929694056511,
+                0.00019918684847652912,
+                0.00019967718981206417,
+                0.00018256483599543571,
+                0.00019108597189188004,
+                0.00021720584481954575,
+                0.00020582298748195171,
+                0.00020065391436219215,
+                0.0002006541471928358
+              ],
+              "ids_sha256": "dbeddbcce12864bfae4194be6c8bfd0b0206b2239793264de82fcda8fa0a43c5"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.0069514869762224984
+    },
+    {
+      "shape": [
+        6445,
+        128
+      ],
+      "source": {
+        "source_sha256": "0442f3d60fa8655c54bf842922958446fdd2bc09341d893fb3d1e0de987f1677",
+        "checkpoint_sha256": "63037d17958c7ef5cf74ef8ef7501ee8c247a4b2a26d6d14acd52cad3e44f9db",
+        "order": 4,
+        "seed": 11
+      },
+      "partition": {
+        "original_rows": 6445,
+        "group_rows": 3903,
+        "rows_in_nonsingleton_groups": 3583,
+        "nonsingleton_groups": 1041,
+        "domain_bags": 1200,
+        "domain_sha256": "6aa2c5b0d98722f07ae88cd38f68a878abcbcbaad740757e6d962a021831b32b",
+        "mapping_sha256": "2e1b5550ccb197a082bc04ca8f839d7d1a63eafff5a82a2bcc504b7979bd6ecd",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 664830,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 3299840,
+            "artifact_bytes": 3147584,
+            "unique_rows": 6445,
+            "row_map_bytes": 51560,
+            "n_rows": 6445,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 403,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 403,
+            "zlib_blocks": 378,
+            "xor_blocks": 25,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 6445
+          },
+          "artifact_sha256": "7300121432d8e2cbc09fe1a058e0ece5c2d466ceff5fbe3f856d562fe4808d81",
+          "all_source_rows_byte_exact": 6445,
+          "decoded_sha256": "0442f3d60fa8655c54bf842922958446fdd2bc09341d893fb3d1e0de987f1677",
+          "build_and_verification_seconds": 0.3145786121021956,
+          "complete_bytes": 3812414,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.019673192873597145,
+                0.0002512189093977213,
+                0.00021092104725539684,
+                0.00022000004537403584,
+                0.00020393705926835537,
+                0.00019590510055422783,
+                0.00019346107728779316,
+                0.00019108597189188004,
+                0.00019115512259304523
+              ],
+              "ids_sha256": "244704f647e71d7808153cba5532d0bd2458c8000d102528ab476a8531c99e40"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007480010390281677,
+                0.00018975907005369663,
+                0.00018312386237084866,
+                0.00018361303955316544,
+                0.000210990896448493,
+                0.00018542888574302197,
+                0.00018410105258226395,
+                0.00017746607773005962,
+                0.00017977203242480755
+              ],
+              "ids_sha256": "f46d81ff47e2114d038a79a167dc5d1161529894d4c17c0afdee7d6f484ead46"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 3299840,
+            "artifact_bytes": 3120472,
+            "unique_rows": 6445,
+            "row_map_bytes": 51560,
+            "n_rows": 6445,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 403,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 403,
+            "zlib_blocks": 167,
+            "xor_blocks": 236,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 6445
+          },
+          "artifact_sha256": "fba3b4e49bb07dabfad4c807db85efead8c5394b6cde2524ce88242120892b70",
+          "all_source_rows_byte_exact": 6445,
+          "decoded_sha256": "0442f3d60fa8655c54bf842922958446fdd2bc09341d893fb3d1e0de987f1677",
+          "build_and_verification_seconds": 0.36892343079671264,
+          "complete_bytes": 3785302,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.01970636798068881,
+                0.00022558821365237236,
+                0.0002067300956696272,
+                0.0002086858730763197,
+                0.00022000004537403584,
+                0.00019681290723383427,
+                0.00019820989109575748,
+                0.0001944380346685648,
+                0.0001931111328303814
+              ],
+              "ids_sha256": "244704f647e71d7808153cba5532d0bd2458c8000d102528ab476a8531c99e40"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007376640569418669,
+                0.00019066710956394672,
+                0.0001873138826340437,
+                0.0001830549445003271,
+                0.0001844509970396757,
+                0.0001817271113395691,
+                0.0001977898646146059,
+                0.0001784448977559805,
+                0.0001798409502953291
+              ],
+              "ids_sha256": "f46d81ff47e2114d038a79a167dc5d1161529894d4c17c0afdee7d6f484ead46"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.00711150467918753
+    },
+    {
+      "shape": [
+        14487,
+        128
+      ],
+      "source": {
+        "source_sha256": "737fbcc1e9d48fa1acc45f63c2facf5e01e2ab69db344fa6842bbcc14ceacdba",
+        "checkpoint_sha256": "d4abf76ed3f1d22185e017a8f59304fd30ff6a1f988e7ede5373507c075f8338",
+        "order": 8,
+        "seed": 3
+      },
+      "partition": {
+        "original_rows": 14487,
+        "group_rows": 4247,
+        "rows_in_nonsingleton_groups": 11939,
+        "nonsingleton_groups": 1699,
+        "domain_bags": 1200,
+        "domain_sha256": "924101ca177b7339c0358c0c979fdb524a7baf4fc118c733e01cfcabb5dd4b8d",
+        "mapping_sha256": "b2bd4d9960c03576b9421f93988bc9a5f4cb4128cc2a2bdba22cfea53c53a191",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 745410,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7417344,
+            "artifact_bytes": 7001655,
+            "unique_rows": 14487,
+            "row_map_bytes": 115896,
+            "n_rows": 14487,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 906,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 906,
+            "zlib_blocks": 138,
+            "xor_blocks": 768,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 14487
+          },
+          "artifact_sha256": "0470b98f215dfca333f6f097a60a47b125395a8ef28273244c4911ddcfb721ab",
+          "all_source_rows_byte_exact": 14487,
+          "decoded_sha256": "737fbcc1e9d48fa1acc45f63c2facf5e01e2ab69db344fa6842bbcc14ceacdba",
+          "build_and_verification_seconds": 0.6864577301312238,
+          "complete_bytes": 7747065,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.025906675029546022,
+                0.00022907997481524944,
+                0.00020861602388322353,
+                0.00020868610590696335,
+                0.00020442507229745388,
+                0.00020393705926835537,
+                0.00020959391258656979,
+                0.00019632396288216114,
+                0.00019779102876782417
+              ],
+              "ids_sha256": "54794f005ad1dae3ecb4955e219efca7548aab8bef0b5a87a4df42fc26bb1eee"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007390619721263647,
+                0.0001953460741788149,
+                0.00020295893773436546,
+                0.00020302901975810528,
+                0.0002024711575359106,
+                0.00019583501853048801,
+                0.00018019089475274086,
+                0.00020917505025863647,
+                0.00017935293726623058
+              ],
+              "ids_sha256": "f4ddd4a27c712f250482fda81c51c05bceec344ae1e9f7e817434a83e5994cb9"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7417344,
+            "artifact_bytes": 6871478,
+            "unique_rows": 14487,
+            "row_map_bytes": 115896,
+            "n_rows": 14487,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 906,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 906,
+            "zlib_blocks": 133,
+            "xor_blocks": 773,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 14487
+          },
+          "artifact_sha256": "20a918fb5229f012615a8d6f3fa364606f29a65b4beaa7c05744de291288b4c1",
+          "all_source_rows_byte_exact": 14487,
+          "decoded_sha256": "737fbcc1e9d48fa1acc45f63c2facf5e01e2ab69db344fa6842bbcc14ceacdba",
+          "build_and_verification_seconds": 1.2060585860162973,
+          "complete_bytes": 7616888,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.026011157082393765,
+                0.00023753009736537933,
+                0.00021343515254557133,
+                0.00019869906827807426,
+                0.00019772094674408436,
+                0.00019492697902023792,
+                0.0001992571633309126,
+                0.0001934599131345749,
+                0.0001945081166923046
+              ],
+              "ids_sha256": "54794f005ad1dae3ecb4955e219efca7548aab8bef0b5a87a4df42fc26bb1eee"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007962619420140982,
+                0.00019450904801487923,
+                0.00018214713782072067,
+                0.00017879391089081764,
+                0.00017977203242480755,
+                0.00018018996343016624,
+                0.00017837504856288433,
+                0.00018354319036006927,
+                0.00017788494005799294
+              ],
+              "ids_sha256": "f4ddd4a27c712f250482fda81c51c05bceec344ae1e9f7e817434a83e5994cb9"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.016803395866692772
+    },
+    {
+      "shape": [
+        14487,
+        128
+      ],
+      "source": {
+        "source_sha256": "5a03dde6600570fb7779778867478babd3ff60f214ef60154367ec35a018f29d",
+        "checkpoint_sha256": "c811d142236e55794044dc2cce2cadca3e22d0eb6a56e0354ed56b74c81e1578",
+        "order": 8,
+        "seed": 7
+      },
+      "partition": {
+        "original_rows": 14487,
+        "group_rows": 4247,
+        "rows_in_nonsingleton_groups": 11939,
+        "nonsingleton_groups": 1699,
+        "domain_bags": 1200,
+        "domain_sha256": "924101ca177b7339c0358c0c979fdb524a7baf4fc118c733e01cfcabb5dd4b8d",
+        "mapping_sha256": "b2bd4d9960c03576b9421f93988bc9a5f4cb4128cc2a2bdba22cfea53c53a191",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 745410,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7417344,
+            "artifact_bytes": 7001434,
+            "unique_rows": 14487,
+            "row_map_bytes": 115896,
+            "n_rows": 14487,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 906,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 906,
+            "zlib_blocks": 141,
+            "xor_blocks": 765,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 14487
+          },
+          "artifact_sha256": "b8fb581c3077c308a9df438877925692026cd927b2524ae28db26774eb34b160",
+          "all_source_rows_byte_exact": 14487,
+          "decoded_sha256": "5a03dde6600570fb7779778867478babd3ff60f214ef60154367ec35a018f29d",
+          "build_and_verification_seconds": 0.6851315121166408,
+          "complete_bytes": 7746844,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.025875316001474857,
+                0.00023662298917770386,
+                0.00021385494619607925,
+                0.00021245703101158142,
+                0.00020721880719065666,
+                0.00019925693050026894,
+                0.00019723200239241123,
+                0.000198697904124856,
+                0.00019779102876782417
+              ],
+              "ids_sha256": "b2d029054f151500d00b60069f9930426cfd9b3011e709d107b2e5e2212648dc"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007362668402493,
+                0.0001878740731626749,
+                0.00018452107906341553,
+                0.00018270500004291534,
+                0.0001807499211281538,
+                0.00018214690499007702,
+                0.00017977203242480755,
+                0.00017886306159198284,
+                0.00017928308807313442
+              ],
+              "ids_sha256": "dbeddbcce12864bfae4194be6c8bfd0b0206b2239793264de82fcda8fa0a43c5"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7417344,
+            "artifact_bytes": 6871521,
+            "unique_rows": 14487,
+            "row_map_bytes": 115896,
+            "n_rows": 14487,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 906,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 906,
+            "zlib_blocks": 135,
+            "xor_blocks": 771,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 14487
+          },
+          "artifact_sha256": "a4a37a570becedcc3b07240db288a5ff76d40fdb5e8fc5716fff3ae5005c3ef1",
+          "all_source_rows_byte_exact": 14487,
+          "decoded_sha256": "5a03dde6600570fb7779778867478babd3ff60f214ef60154367ec35a018f29d",
+          "build_and_verification_seconds": 1.2160328400786966,
+          "complete_bytes": 7616931,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.02549028000794351,
+                0.00023271096870303154,
+                0.00020812684670090675,
+                0.00020302808843553066,
+                0.00020149210467934608,
+                0.0001940201036632061,
+                0.0001926219556480646,
+                0.00019346107728779316,
+                0.00019248295575380325
+              ],
+              "ids_sha256": "b2d029054f151500d00b60069f9930426cfd9b3011e709d107b2e5e2212648dc"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007376649882644415,
+                0.0001892000436782837,
+                0.0001849401742219925,
+                0.00018214690499007702,
+                0.00018165702931582928,
+                0.00018263515084981918,
+                0.00018116901628673077,
+                0.0001802598126232624,
+                0.00017886399291455746
+              ],
+              "ids_sha256": "dbeddbcce12864bfae4194be6c8bfd0b0206b2239793264de82fcda8fa0a43c5"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.016769796835976014
+    },
+    {
+      "shape": [
+        14487,
+        128
+      ],
+      "source": {
+        "source_sha256": "db5a68f33c1ae8aa1ae50af07ec01e091ed634804fc1b0b01dcd88099a633646",
+        "checkpoint_sha256": "71127fbc8423dc0b549e7a870961cee6ace20301e03b9688b9430c0e304f5b68",
+        "order": 8,
+        "seed": 11
+      },
+      "partition": {
+        "original_rows": 14487,
+        "group_rows": 4247,
+        "rows_in_nonsingleton_groups": 11939,
+        "nonsingleton_groups": 1699,
+        "domain_bags": 1200,
+        "domain_sha256": "924101ca177b7339c0358c0c979fdb524a7baf4fc118c733e01cfcabb5dd4b8d",
+        "mapping_sha256": "b2bd4d9960c03576b9421f93988bc9a5f4cb4128cc2a2bdba22cfea53c53a191",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 745410,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7417344,
+            "artifact_bytes": 7002091,
+            "unique_rows": 14487,
+            "row_map_bytes": 115896,
+            "n_rows": 14487,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 906,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 906,
+            "zlib_blocks": 138,
+            "xor_blocks": 768,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 14487
+          },
+          "artifact_sha256": "5f48ce48062144c2467c5a127b34f9163d027af4170ba194fd9c7edb18eac6cf",
+          "all_source_rows_byte_exact": 14487,
+          "decoded_sha256": "db5a68f33c1ae8aa1ae50af07ec01e091ed634804fc1b0b01dcd88099a633646",
+          "build_and_verification_seconds": 0.6763153669890016,
+          "complete_bytes": 7747501,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.025094209937378764,
+                0.0002241909969598055,
+                0.00021140999160706997,
+                0.00020254007540643215,
+                0.0001987679861485958,
+                0.00019723200239241123,
+                0.00019639404490590096,
+                0.00019639311358332634,
+                0.0001945081166923046
+              ],
+              "ids_sha256": "d721d554baab2873796f14c77735fc89d815c951041e3e1e3592916b419b4369"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007669280748814344,
+                0.0001940201036632061,
+                0.00018731504678726196,
+                0.00018493994139134884,
+                0.00018263515084981918,
+                0.0001831240952014923,
+                0.00018452084623277187,
+                0.00018214713782072067,
+                0.00018165702931582928
+              ],
+              "ids_sha256": "f46d81ff47e2114d038a79a167dc5d1161529894d4c17c0afdee7d6f484ead46"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7417344,
+            "artifact_bytes": 6872362,
+            "unique_rows": 14487,
+            "row_map_bytes": 115896,
+            "n_rows": 14487,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 906,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 906,
+            "zlib_blocks": 137,
+            "xor_blocks": 769,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 14487
+          },
+          "artifact_sha256": "b856e884e3edb9d362a302c32e7c0b11b1f3736b4a12610eb4f6643e005c8103",
+          "all_source_rows_byte_exact": 14487,
+          "decoded_sha256": "db5a68f33c1ae8aa1ae50af07ec01e091ed634804fc1b0b01dcd88099a633646",
+          "build_and_verification_seconds": 1.2094069190789014,
+          "complete_bytes": 7617772,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.026196027174592018,
+                0.0002308259718120098,
+                0.00021385401487350464,
+                0.00021106097847223282,
+                0.00020295893773436546,
+                0.00019925693050026894,
+                0.00019821012392640114,
+                0.00019408902153372765,
+                0.00019632396288216114
+              ],
+              "ids_sha256": "d721d554baab2873796f14c77735fc89d815c951041e3e1e3592916b419b4369"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.000729074003174901,
+                0.00019541592337191105,
+                0.00018584798090159893,
+                0.00018256600014865398,
+                0.00018165702931582928,
+                0.00019346107728779316,
+                0.00017879391089081764,
+                0.0001778160221874714,
+                0.00018075015395879745
+              ],
+              "ids_sha256": "f46d81ff47e2114d038a79a167dc5d1161529894d4c17c0afdee7d6f484ead46"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.016744625137834812
+    },
+    {
+      "shape": [
+        15189,
+        128
+      ],
+      "source": {
+        "source_sha256": "c1abb48f36247b86c96f70b52a921aee5a43ddf918fbd745c796a14b43984b34",
+        "checkpoint_sha256": "a57b06f51bcab49f06a470f997d1a2e3476a3cd82a3569989bd80e4366a80ef8",
+        "order": 12,
+        "seed": 3
+      },
+      "partition": {
+        "original_rows": 15189,
+        "group_rows": 4247,
+        "rows_in_nonsingleton_groups": 12642,
+        "nonsingleton_groups": 1700,
+        "domain_bags": 1200,
+        "domain_sha256": "88e933017a9fc5e78c26eb9745d1f67fab03e22f9f59eb15e0278c2eaadc62e7",
+        "mapping_sha256": "2a198e715826225168fc15327b23d59a1fdee30ffd65b4ef7fd0782ab2dc9609",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 754899,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7776768,
+            "artifact_bytes": 7326594,
+            "unique_rows": 15189,
+            "row_map_bytes": 121512,
+            "n_rows": 15189,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 950,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 950,
+            "zlib_blocks": 137,
+            "xor_blocks": 813,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 15189
+          },
+          "artifact_sha256": "e89a82984d72d8da5e8190a0e827578d79eca382417b039a2532ca67f4ccfbab",
+          "all_source_rows_byte_exact": 15189,
+          "decoded_sha256": "c1abb48f36247b86c96f70b52a921aee5a43ddf918fbd745c796a14b43984b34",
+          "build_and_verification_seconds": 0.7041432380210608,
+          "complete_bytes": 8081493,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.025903322035446763,
+                0.00023089605383574963,
+                0.00021385401487350464,
+                0.00020770798437297344,
+                0.00020679994486272335,
+                0.00020400597713887691,
+                0.00020107300952076912,
+                0.0002005149144679308,
+                0.00020435592159628868
+              ],
+              "ids_sha256": "2d5d89b2caace61a90c61aa03fa1c0366af80f53a2fa56a593c3ae14fc32fced"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007352200336754322,
+                0.0001901781652122736,
+                0.00019122520461678505,
+                0.00021189800463616848,
+                0.00018787290900945663,
+                0.00018640700727701187,
+                0.00018926989287137985,
+                0.00018403190188109875,
+                0.0001840321347117424
+              ],
+              "ids_sha256": "f4ddd4a27c712f250482fda81c51c05bceec344ae1e9f7e817434a83e5994cb9"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7776768,
+            "artifact_bytes": 7189898,
+            "unique_rows": 15189,
+            "row_map_bytes": 121512,
+            "n_rows": 15189,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 950,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 950,
+            "zlib_blocks": 141,
+            "xor_blocks": 809,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 15189
+          },
+          "artifact_sha256": "4dcfe763c905d5db7147a617256ccd985dbba40af79a0bf2285105b8c2a2dad9",
+          "all_source_rows_byte_exact": 15189,
+          "decoded_sha256": "c1abb48f36247b86c96f70b52a921aee5a43ddf918fbd745c796a14b43984b34",
+          "build_and_verification_seconds": 1.3402147570159286,
+          "complete_bytes": 7944797,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.026053201174363494,
+                0.00022845109924674034,
+                0.00020770798437297344,
+                0.00020337780006229877,
+                0.00019974587485194206,
+                0.000195974949747324,
+                0.0001930419821292162,
+                0.00019346107728779316,
+                0.00019297096878290176
+              ],
+              "ids_sha256": "2d5d89b2caace61a90c61aa03fa1c0366af80f53a2fa56a593c3ae14fc32fced"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007442289497703314,
+                0.00018836301751434803,
+                0.0001840321347117424,
+                0.00018263515084981918,
+                0.0001812379341572523,
+                0.0001797717995941639,
+                0.0001816579606384039,
+                0.00018452084623277187,
+                0.0001802598126232624
+              ],
+              "ids_sha256": "f4ddd4a27c712f250482fda81c51c05bceec344ae1e9f7e817434a83e5994cb9"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.01691469633148235
+    },
+    {
+      "shape": [
+        15189,
+        128
+      ],
+      "source": {
+        "source_sha256": "3aadb946a527935297624f91294e310e4dad639c7dac061b6d5ea7c298744ebf",
+        "checkpoint_sha256": "040a58c47131fd3bbfe27f44ebfac1a3ad8d549eda3295adb853a66148868fe2",
+        "order": 12,
+        "seed": 7
+      },
+      "partition": {
+        "original_rows": 15189,
+        "group_rows": 4247,
+        "rows_in_nonsingleton_groups": 12642,
+        "nonsingleton_groups": 1700,
+        "domain_bags": 1200,
+        "domain_sha256": "88e933017a9fc5e78c26eb9745d1f67fab03e22f9f59eb15e0278c2eaadc62e7",
+        "mapping_sha256": "2a198e715826225168fc15327b23d59a1fdee30ffd65b4ef7fd0782ab2dc9609",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 754899,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7776768,
+            "artifact_bytes": 7328436,
+            "unique_rows": 15189,
+            "row_map_bytes": 121512,
+            "n_rows": 15189,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 950,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 950,
+            "zlib_blocks": 125,
+            "xor_blocks": 825,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 15189
+          },
+          "artifact_sha256": "d3ea641dca9ad5774bf9db87a75ad14ccf0d277e360c3a45b70170fd3dfba757",
+          "all_source_rows_byte_exact": 15189,
+          "decoded_sha256": "3aadb946a527935297624f91294e310e4dad639c7dac061b6d5ea7c298744ebf",
+          "build_and_verification_seconds": 0.8026470721233636,
+          "complete_bytes": 8083335,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.026204128982499242,
+                0.00022901012562215328,
+                0.0002105720341205597,
+                0.00020400690846145153,
+                0.0002044260036200285,
+                0.00019639404490590096,
+                0.0001973719336092472,
+                0.00019485712982714176,
+                0.00019353115931153297
+              ],
+              "ids_sha256": "deb5dc272d2d7ecc022249996e5883239986ba2a708fc23f16166f956ff4c902"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007697218097746372,
+                0.00019394909031689167,
+                0.00019115605391561985,
+                0.00018682610243558884,
+                0.0001840321347117424,
+                0.0001845909282565117,
+                0.00018256600014865398,
+                0.00017977203242480755,
+                0.00018221605569124222
+              ],
+              "ids_sha256": "dbeddbcce12864bfae4194be6c8bfd0b0206b2239793264de82fcda8fa0a43c5"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7776768,
+            "artifact_bytes": 7193359,
+            "unique_rows": 15189,
+            "row_map_bytes": 121512,
+            "n_rows": 15189,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 950,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 950,
+            "zlib_blocks": 142,
+            "xor_blocks": 808,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 15189
+          },
+          "artifact_sha256": "36b2713c10f2b653f822e870fb6a5d4b1332ade803a5b61cd6937430e810bb34",
+          "all_source_rows_byte_exact": 15189,
+          "decoded_sha256": "3aadb946a527935297624f91294e310e4dad639c7dac061b6d5ea7c298744ebf",
+          "build_and_verification_seconds": 1.3061033990234137,
+          "complete_bytes": 7948258,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.02677284716628492,
+                0.00023131491616368294,
+                0.0002123869489878416,
+                0.00020302901975810528,
+                0.00020009512081742287,
+                0.0001982799731194973,
+                0.0001948568969964981,
+                0.00019492791034281254,
+                0.00019590510055422783
+              ],
+              "ids_sha256": "deb5dc272d2d7ecc022249996e5883239986ba2a708fc23f16166f956ff4c902"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007370361126959324,
+                0.00018968922086060047,
+                0.00018682493828237057,
+                0.0001829848624765873,
+                0.00018263491801917553,
+                0.00017977203242480755,
+                0.00018033012747764587,
+                0.00018026097677648067,
+                0.00017977086827158928
+              ],
+              "ids_sha256": "dbeddbcce12864bfae4194be6c8bfd0b0206b2239793264de82fcda8fa0a43c5"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.016710553255556038
+    },
+    {
+      "shape": [
+        15189,
+        128
+      ],
+      "source": {
+        "source_sha256": "fd83c0852cf7d56fc83529e1d8c0a0deb4d42ad81b42697600f981936dc84a7c",
+        "checkpoint_sha256": "a2fe0de3d4561913b724c5e6e5208e9bf2163effbdb318dc0672d72618c659d7",
+        "order": 12,
+        "seed": 11
+      },
+      "partition": {
+        "original_rows": 15189,
+        "group_rows": 4247,
+        "rows_in_nonsingleton_groups": 12642,
+        "nonsingleton_groups": 1700,
+        "domain_bags": 1200,
+        "domain_sha256": "88e933017a9fc5e78c26eb9745d1f67fab03e22f9f59eb15e0278c2eaadc62e7",
+        "mapping_sha256": "2a198e715826225168fc15327b23d59a1fdee30ffd65b4ef7fd0782ab2dc9609",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "common_bytes": 754899,
+      "variants": [
+        {
+          "name": "identity",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7776768,
+            "artifact_bytes": 7328378,
+            "unique_rows": 15189,
+            "row_map_bytes": 121512,
+            "n_rows": 15189,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 950,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 950,
+            "zlib_blocks": 132,
+            "xor_blocks": 818,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": false,
+            "external_representatives": false,
+            "marked_rows": 15189
+          },
+          "artifact_sha256": "22f3fad4f283465c6caec33a1397ffe451bdfb310efd1b44410c1e9f4905a644",
+          "all_source_rows_byte_exact": 15189,
+          "decoded_sha256": "fd83c0852cf7d56fc83529e1d8c0a0deb4d42ad81b42697600f981936dc84a7c",
+          "build_and_verification_seconds": 0.7101613979320973,
+          "complete_bytes": 8083277,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.026109982980415225,
+                0.00023746001534163952,
+                0.00021434295922517776,
+                0.00020959391258656979,
+                0.00020400714129209518,
+                0.0002048439346253872,
+                0.00019632396288216114,
+                0.00019583618268370628,
+                0.0001973018515855074
+              ],
+              "ids_sha256": "276fc9dea4b4b601aeec24069f375299da9bbcdc3e37f54da791929363d85ca5"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0007376640569418669,
+                0.00019017793238162994,
+                0.00018354295752942562,
+                0.00018780305981636047,
+                0.00018214690499007702,
+                0.00018221605569124222,
+                0.00018263491801917553,
+                0.00018165702931582928,
+                0.00017935293726623058
+              ],
+              "ids_sha256": "f46d81ff47e2114d038a79a167dc5d1161529894d4c17c0afdee7d6f484ead46"
+            }
+          }
+        },
+        {
+          "name": "incidence-layout",
+          "storage": {
+            "format": "MEFTNAT1",
+            "format_version": 2,
+            "input_bytes": 7776768,
+            "artifact_bytes": 7192747,
+            "unique_rows": 15189,
+            "row_map_bytes": 121512,
+            "n_rows": 15189,
+            "row_bytes": 512,
+            "block_rows": 16,
+            "blocks": 950,
+            "max_block_bytes": null,
+            "raw_blocks": 0,
+            "compressed_blocks": 950,
+            "zlib_blocks": 137,
+            "xor_blocks": 813,
+            "deduplicate": false,
+            "predictor": "xor",
+            "reordered": true,
+            "external_representatives": false,
+            "marked_rows": 15189
+          },
+          "artifact_sha256": "2c67b712b5794ef3ebb930a419526245f81c95eff7e07cd637f2096115104080",
+          "all_source_rows_byte_exact": 15189,
+          "decoded_sha256": "fd83c0852cf7d56fc83529e1d8c0a0deb4d42ad81b42697600f981936dc84a7c",
+          "build_and_verification_seconds": 1.2827785511035472,
+          "complete_bytes": 7947646,
+          "query": {
+            "uniform": {
+              "samples_seconds": [
+                0.02645485894754529,
+                0.00031652115285396576,
+                0.0003052069805562496,
+                0.0002781080547720194,
+                0.00027817790396511555,
+                0.00028998195193707943,
+                0.0002848131116479635,
+                0.0002895630896091461,
+                0.00028530205599963665
+              ],
+              "ids_sha256": "276fc9dea4b4b601aeec24069f375299da9bbcdc3e37f54da791929363d85ca5"
+            },
+            "hot": {
+              "samples_seconds": [
+                0.0008553469087928534,
+                0.0001982799731194973,
+                0.00018396205268800259,
+                0.00018508010543882847,
+                0.00018214713782072067,
+                0.00017795618623495102,
+                0.00018032989464700222,
+                0.00018026097677648067,
+                0.00018836185336112976
+              ],
+              "ids_sha256": "f46d81ff47e2114d038a79a167dc5d1161529894d4c17c0afdee7d6f484ead46"
+            }
+          }
+        }
+      ],
+      "extra_complete_saving": 0.016779209719028576
+    }
+  ],
+  "status": "completed",
+  "peak_rss_mib": 625.98828125
+}

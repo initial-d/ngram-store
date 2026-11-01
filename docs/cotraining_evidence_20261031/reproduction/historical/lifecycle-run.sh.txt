@@ -1,0 +1,42 @@
+set -euo pipefail
+TASK=/llm-align/duyimin/ngram-cotraining-20261031
+PY=/llm-align/duyimin/miniconda3/envs/gemma4/bin/python
+git -c advice.detachedHead=false clone --quiet --shared "$TASK/map-source" "$TASK/lifecycle-source"
+git -C "$TASK/lifecycle-source" fetch --quiet "$TASK/lifecycle.bundle" HEAD
+git -C "$TASK/lifecycle-source" checkout --quiet --detach FETCH_HEAD
+cd "$TASK/lifecycle-source"
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MPLCONFIGDIR="$TASK/mpl-cache"
+export PIP_CACHE_DIR="$TASK/pip-cache"
+"$PY" -m unittest discover -s tests > "$TASK/final-full-tests.txt" 2>&1
+"$PY" -m pip wheel . --no-deps --no-build-isolation --wheel-dir "$TASK/final-wheels" > "$TASK/final-wheel-build.txt" 2>&1
+"$PY" -m pip install --no-deps --target "$TASK/final-installed" "$TASK/final-wheels/"*.whl > "$TASK/final-wheel-install.txt" 2>&1
+cd "$TASK"
+PYTHONPATH="$TASK/final-installed" "$PY" "$TASK/lifecycle-source/examples/cotraining_groups.py" > "$TASK/final-installed-example.txt" 2>&1
+"$PY" - <<'PY' > "$TASK/environment.json"
+import hashlib,json,os,platform,subprocess,sys,torch,numpy
+from pathlib import Path
+root=Path('/llm-align/duyimin/ngram-cotraining-20261031')
+def digest(path):
+ h=hashlib.sha256()
+ with path.open('rb') as f:
+  for b in iter(lambda:f.read(8<<20),b''):h.update(b)
+ return h.hexdigest()
+sources={}
+for name in ['source','api-source','raw-source','map-source','lifecycle-source']:
+ p=root/name
+ sources[name]={'commit':subprocess.check_output(['git','-C',str(p),'rev-parse','HEAD'],text=True).strip(),
+  'working_tree':subprocess.check_output(['git','-C',str(p),'status','--porcelain'],text=True),
+  'files':{f:digest(p/f) for f in ['tools/cotraining_groups.py','tools/native_row_store.py','native/meft_rows.c','native/meft_structural.cc']}}
+print(json.dumps({'python':sys.version,'torch':torch.__version__,'numpy':numpy.__version__,
+ 'os':platform.platform(),'cpu':json.loads(subprocess.check_output(['lscpu','-J'],text=True)),
+ 'compiler':subprocess.check_output(['cc','--version'],text=True).splitlines()[0],
+ 'native_library_sha256':digest(root/'source/build/librows.so'),
+ 'structural_library_sha256':digest(root/'source/build/libstructural.so'),
+ 'cuda_visible_devices':os.environ['CUDA_VISIBLE_DEVICES'], 'sources':sources,
+ 'cost':'shared CPU; no monetary/energy metering; no GPU process touched'},indent=2))
+PY
+echo passed > "$TASK/final-install.status"

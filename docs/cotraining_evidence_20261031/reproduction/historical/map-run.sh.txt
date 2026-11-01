@@ -1,0 +1,43 @@
+set -euo pipefail
+TASK=/llm-align/duyimin/ngram-cotraining-20261031
+PY=/llm-align/duyimin/miniconda3/envs/gemma4/bin/python
+"$PY" - <<'PY'
+import json,os,signal,time
+from pathlib import Path
+root=Path('/llm-align/duyimin/ngram-cotraining-20261031')
+records=[]
+for proc in Path('/proc').iterdir():
+    if not proc.name.isdigit():
+        continue
+    try:
+        args=proc.joinpath('cmdline').read_bytes().decode().split('\0')
+        module=args[args.index('-m')+1] if '-m' in args else ''
+        output=args[args.index('--output-dir')+1] if '--output-dir' in args else ''
+        if module!='tools.benchmark_cotraining_layout' or output!=str(root/'layout-large'):
+            continue
+        environment=proc.joinpath('environ').read_bytes().split(b'\0')
+        if b'CUDA_VISIBLE_DEVICES=' not in environment:
+            raise RuntimeError('refusing to stop a process without the expected CPU-only environment')
+        records.append({'pid':int(proc.name),'command':args[:-1], 'cpu_only':True,
+                        'reason':'stop only our earlier layout export to apply sequential ID-map writes; preserve its partial artifacts'})
+        os.kill(int(proc.name),signal.SIGTERM)
+    except (FileNotFoundError,ProcessLookupError):
+        continue
+(root/'layout-first-attempt.json').write_text(json.dumps({'recorded_at_unix':time.time(),'interrupted_own_cpu_exports':records,
+ 'duplicate_launch_failure':'A second launcher encountered existing output; its failure log is preserved separately.'},indent=2)+'\n')
+PY
+git -c advice.detachedHead=false clone --quiet --shared "$TASK/raw-source" "$TASK/map-source"
+git -C "$TASK/map-source" fetch --quiet "$TASK/map.bundle" HEAD
+git -C "$TASK/map-source" checkout --quiet --detach FETCH_HEAD
+cd "$TASK/map-source"
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+(
+ "$PY" -m tools.benchmark_cotraining_layout --output-dir "$TASK/layout-large-sequential" --native-library "$TASK/source/build/librows.so" --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --partition-path "$TASK/large-results/certified-groups/domain.npz" > "$TASK/layout-large-sequential.log" 2>&1 && echo passed > "$TASK/layout-large-sequential.status" || echo failed > "$TASK/layout-large-sequential.status"
+) &
+(
+ "$PY" -m unittest discover -s tests > "$TASK/map-full-tests.txt" 2>&1 && echo passed > "$TASK/map-tests.status" || echo failed > "$TASK/map-tests.status"
+) &
+wait
