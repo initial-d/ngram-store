@@ -32,11 +32,30 @@ The within-group zero-sum residual does not affect those aggregates. Replacing
 rows by their group mean changes individual vectors and may change an
 uncertified query. Floating-point reduction/rounding is measured separately.
 
+The condition is also **necessary for a weight-independent guarantee**: if two
+members have different query counts, put `+1` and `-1` at those members of a
+one-dimensional source table and zero elsewhere. Their group mean is zero,
+but the query sum is their nonzero count difference. Thus equal per-member
+counts describe the largest universally safe bag domain for this projection in
+real arithmetic. A rejected query can still happen to agree on a particular
+trained table. This is an application of classical linear algebra, rather than
+a claim to invent semantic-preserving network reduction.
+
+`partition.explain_query(bag)` returns either a uniform certificate or a
+violating group and sparse algebraic counterexample. This diagnostic uses no
+source vectors and has no semantic-quality estimate. Exclude padding as the
+consumer does. An incomplete group may require scanning the ID map in bounded
+chunks; use diagnostics outside the hot query path. The unchanged `certifies`
+method and compiled native schedule remain the serving path.
+
 This shared-gradient identity follows from the chain rule. Novelty relative to
 parameter tying, duplicate-feature elimination, embedding factorization and
 existing storage methods still needs a literature comparison. The contribution
 to evaluate is the certified parameterization/export/query method and its
 measured scope, rather than claiming discovery of backpropagation itself.
+The [contribution claims](cotraining_contribution_claims.md) separate supported
+method/results from engineering features, prior foundations and unverified
+research opportunities.
 
 ## API and scope
 

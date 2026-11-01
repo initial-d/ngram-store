@@ -33,6 +33,7 @@ def main():
                 native.aggregate([[1]])
             except ValueError as error:
                 print({'partial_group_rejected': str(error)})
+                print({'uniform_safety_diagnostic': partition.explain_query([1])})
 
 
 if __name__ == '__main__':

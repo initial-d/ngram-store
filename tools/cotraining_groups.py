@@ -121,6 +121,65 @@ class BagPartition:
         np.minimum.at(first, self.mapping, np.arange(len(self.mapping)))
         return first[self.mapping]
 
+    def explain_query(self, bag):
+        """Explain uniform aggregate safety, with a sparse rejection witness.
+
+        Equal per-member coefficients are necessary and sufficient to preserve
+        a bag sum for EVERY possible source table under group-mean projection
+        in real arithmetic. A rejected bag may still agree for a particular
+        trained table. The witness is an algebraic fixture, not learned-vector
+        evidence; floating-point rounding is a separate contract.
+
+        Diagnostics are outside the hot path: finding an absent member can scan
+        the original-ID map in bounded chunks. Exclude padding consistently with
+        the consuming model before diagnosing a bag.
+        """
+        certified = self.certifies(bag)
+        bag = np.asarray(bag)
+        result = {"certified": certified, "scope": "all finite source rows in real arithmetic",
+                  "original_occurrences": int(len(bag)), "violation": None, "counterexample": None}
+        if certified:
+            return result
+        rows, counts = np.unique(bag, return_counts=True)
+        groups = self.mapping[rows]
+        order = np.argsort(groups, kind="stable")
+        rows, counts, groups = rows[order], counts[order], groups[order]
+        starts = np.r_[0, np.flatnonzero(groups[1:] != groups[:-1]) + 1]
+        for start, end in zip(starts, np.r_[starts[1:], len(rows)]):
+            group = int(groups[start])
+            group_rows, group_counts = rows[start:end], counts[start:end]
+            expected = int(self.sizes[group])
+            if len(group_rows) == expected and group_counts.min() == group_counts.max():
+                continue
+            high = int(np.argmax(group_counts))
+            positive_row, positive_count = int(group_rows[high]), int(group_counts[high])
+            if len(group_rows) < expected:
+                observed = set(map(int, group_rows))
+                negative_row = None
+                for begin in range(0, len(self.mapping), 4096):
+                    candidates = np.flatnonzero(self.mapping[begin:begin + 4096] == group) + begin
+                    negative_row = next((int(i) for i in candidates if int(i) not in observed), None)
+                    if negative_row is not None:
+                        break
+                if negative_row is None:
+                    raise RuntimeError("partition member count mismatch")
+                negative_count = 0
+                reason = "incomplete group"
+            else:
+                low = int(np.argmin(group_counts))
+                negative_row, negative_count = int(group_rows[low]), int(group_counts[low])
+                reason = "unequal multiplicity"
+            result["violation"] = {"group": group, "reason": reason, "expected_members": expected,
+                                   "observed_members": int(len(group_rows)),
+                                   "positive_row_count": positive_count, "negative_row_count": negative_count}
+            # +1 at one member, -1 at another, zero elsewhere: projection is
+            # zero, while the rejected sum equals the coefficient difference.
+            result["counterexample"] = {"dimension": 1, "positive_row": positive_row,
+                "negative_row": negative_row, "source_sum": positive_count - negative_count,
+                "projected_sum": 0, "other_rows": 0}
+            return result
+        raise RuntimeError("uncertified query has no violating group")
+
     def save(self, path):
         np.savez(path, mapping=self.mapping.astype("<u8"), domain_sha256=self.domain_sha256,
                  domain_bags=self.domain_bags)

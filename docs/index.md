@@ -6,6 +6,7 @@
 - [C ABI, native construction and runtime boundaries](native_ngram_memory.md)
 - [Engine roadmap, priorities and acceptance gates](ngram_memory_research_plan.md)
 - [Optional certified co-training parameterization and export API](cotraining_groups.md)
+- [Co-training paper contributions, evidence and open hypotheses](cotraining_contribution_claims.md)
 - [Word embeddings: FastText prepare/train/export/query](fasttext_native_bundle.md)
 - [LLM memory: official Engram demo and factory](engram_quickstart.md)
 - [TinyEngram/Qwen checkpoint integration](tinyengram_qwen_evidence_20261030/README.md)

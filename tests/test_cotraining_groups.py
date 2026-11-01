@@ -73,6 +73,39 @@ class PartitionTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'uncertified'):
             CertifiedBagPlan(p, [[1]])
 
+    def test_rejected_query_has_a_sparse_algebraic_counterexample(self):
+        import itertools
+        partition = BagPartition.fit([[0, 1], [2, 3], [4]], 5)
+        for counts in itertools.product(range(3), repeat=5):
+            bag = [i for i, count in enumerate(counts) for _ in range(count)]
+            explanation = partition.explain_query(bag)
+            expected = counts[0] == counts[1] and counts[2] == counts[3]
+            self.assertEqual(explanation['certified'], expected)
+            if expected:
+                self.assertIsNone(explanation['counterexample'])
+            else:
+                witness = explanation['counterexample']
+                source = np.zeros((5, 1), dtype=np.float64)
+                source[witness['positive_row']] = 1
+                source[witness['negative_row']] = -1
+                canonical = partition.means(source)[partition.mapping]
+                self.assertEqual(float(source[bag].sum()), witness['source_sum'])
+                self.assertEqual(float(canonical[bag].sum()), witness['projected_sum'])
+                self.assertGreater(witness['source_sum'], 0)
+                self.assertEqual(partition.mapping[witness['positive_row']],
+                                 partition.mapping[witness['negative_row']])
+
+    def test_query_diagnostic_handles_noncontiguous_members_and_invalid_ids(self):
+        partition = BagPartition.fit([[0, 5000], [1]], 5002)
+        incomplete = partition.explain_query([0])
+        self.assertEqual(incomplete['counterexample']['negative_row'], 5000)
+        unequal = partition.explain_query([5000, 0, 0])
+        self.assertEqual(unequal['violation']['reason'], 'unequal multiplicity')
+        self.assertEqual(unequal['counterexample']['positive_row'], 0)
+        for bag in ([True], [-1], [5002], [.5], [[0]]):
+            with self.assertRaises(ValueError):
+                partition.explain_query(bag)
+
     def test_native_weighted_schedule_empty_bags_and_artifact_integrity(self):
         from tools.native_row_store import pack_native
         p = BagPartition.fit([[0, 1, 2], [0, 3, 4]], 5, protected=[0])
