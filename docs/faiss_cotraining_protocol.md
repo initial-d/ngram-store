@@ -41,7 +41,10 @@ counted separately, without silently storing a duplicate full index.
 K-means uses 20 iterations, seed 42; OPQ uses 10 outer iterations and 20 PQ
 iterations. FAISS's residual beam settings remain default and its version is
 recorded. Small-table centroid-training warnings are preserved. This is a fixed
-rate sweep, not exhaustive per-codec tuning.
+rate sweep, not exhaustive per-codec tuning. The base grid fits with one CPU
+thread; the seven-codec rate extension fits with four after observing expensive
+single-thread OPQ construction. All query workers use one thread. Do not compare
+their fitting times as a matched-thread speedup.
 
 The initial nine-codec protocol preceded its full run. Seven rate extensions
 were added after initial aggregate errors showed that the original PQ settings
@@ -110,6 +113,17 @@ Two separate serving controls prevent weak-baseline conclusions:
   separate ablation. Timing measurements use the original uint64 domain; the
   in-memory map remains int64, so narrower on-disk maps do not establish a
   query-memory or latency gain.
+
+A further full-domain control deduplicates identical **encoded row bytes** after
+direct FAISS quantization, using the smallest unsigned original-to-code map.
+It reuses the same codebook, verifies every original-ID reconstruction and
+collapses repeated code IDs in all bags, without incidence restrictions or an
+FP32 fallback. Only candidates smaller than the matched complete direct bundle
+receive fresh query/quality workers; negative size results select the original
+flat codec and remain in the audit. This is exact relative to the codec's bytes,
+with separately checked OPQ batch-rounding differences, not lossless to FP32.
+Beneficial candidates participate in the direct baseline's validation selection.
+This control preserves frozen inference, not the original training parameters.
 
 ## Run
 
