@@ -37,6 +37,7 @@ class PartitionTest(unittest.TestCase):
         np.testing.assert_array_equal(p.certifies_many(bags), [p.certifies(b) for b in bags])
         protected = BagPartition.fit([[0, 1, 2]], 3, protected=[0])
         np.testing.assert_array_equal(protected.certifies_many([[0, 1, 2, 0], [0], [0, 1]], padding_idx=0), [True, True, False])
+        np.testing.assert_array_equal(protected.certifies_many([[0, 1, 2]], padding_idx=np.int64(0)), [True])
         for bag in ([True], [-1], [5002], [.5], [[0]]):
             with self.assertRaises(ValueError):
                 p.certifies_many([bag])

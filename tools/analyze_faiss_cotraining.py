@@ -97,6 +97,7 @@ def analyze(report, root=None, supplement_root=None, dedup_root=None):
                    'training_seconds': v['codec']['training_seconds'],
                    'encoding_seconds': v['codec']['encoding_seconds'],
                    'validation': v['quality']['validation'], 'test': v['quality']['test']}
+            row['validation_loss_change_percent'] = v['quality']['validation']['loss_relative_change'] * 100
             direct = by_name.get('direct-' + codec)
             if direct and family != 'direct':
                 row['versus_matched_direct'] = {
@@ -199,6 +200,7 @@ def figures(analysis, output):
     styles = {'direct': ('o', '#356bb3'), 'group': ('^', '#db7e1a'), 'hybrid': ('x', '#ad4663'), 'dedup': ('s', '#478653')}
     for metric, filename, ylabel in (
             ('known_aggregate_relative_l2', 'capacity-error.svg', 'Known-word aggregate relative L2'),
+            ('validation_loss_change_percent', 'capacity-sgns.svg', 'Validation SGNS loss change (%)'),
             ('known_p50_ms', 'capacity-replay.svg', '512-bag replay p50 (ms)'),
             ('known_dynamic_p50_ms', 'capacity-dynamic.svg', 'ID schedule + query p50 (ms)')):
         fig, axes = plt.subplots(1, 3, figsize=(13, 4.5))
@@ -210,7 +212,9 @@ def figures(analysis, output):
                     if not values:
                         continue
                     x = np.median([v['model_bytes'] / 2**20 for v in values])
-                    y = max(1e-9, np.median([v[metric] for v in values]))
+                    y = np.median([v[metric] for v in values])
+                    if metric != 'validation_loss_change_percent':
+                        y = max(1e-9, y)
                     ax.scatter(x, y, marker=marker, color=color, s=45)
                     frontier.append((x, y))
                     if family != 'hybrid' and codec in ('fp32', 'sq8', 'sq6', 'sq4', 'pq-64x8', 'opq-64x8'):
@@ -226,11 +230,15 @@ def figures(analysis, output):
             controls = [r['precomputed_known_words'] for r in analysis.get('serving_controls', []) if r['order'] == order]
             if controls:
                 x = np.median([r['model_bytes'] / 2**20 for r in controls])
-                y = 1e-9 if metric == 'known_aggregate_relative_l2' else np.median([r['p50_ms'] for r in controls])
+                y = 1e-9 if metric == 'known_aggregate_relative_l2' else 0. if metric == 'validation_loss_change_percent' else np.median([r['p50_ms'] for r in controls])
                 ax.scatter(x, y, marker='*', color='black', s=95, label='precomputed (known only)')
             ax.set_title(f'Max n-gram order {order}')
             ax.set_xlabel('Complete model (MiB)')
-            ax.set_yscale('log')
+            if metric == 'validation_loss_change_percent':
+                ax.set_yscale('symlog', linthresh=.0001)
+                ax.axhline(0, color='black', alpha=.2)
+            else:
+                ax.set_yscale('log')
             ax.grid(alpha=.2)
         axes[0].set_ylabel(ylabel)
         axes[-1].legend(fontsize=8)

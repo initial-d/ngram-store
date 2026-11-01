@@ -123,7 +123,8 @@ class BagPartition:
         scale with query occurrences; this is not a bounded-memory builder.
         """
         bags = list(bags)
-        if padding_idx is not None and (type(padding_idx) is not int or not 0 <= padding_idx < len(self.mapping)):
+        if padding_idx is not None and (not isinstance(padding_idx, (int, np.integer))
+                or isinstance(padding_idx, (bool, np.bool_)) or not 0 <= padding_idx < len(self.mapping)):
             raise ValueError('padding row ID out of range')
         if len(bags) * len(self.mapping) > np.iinfo(np.int64).max:
             raise ValueError('batch composite IDs exceed int64')
