@@ -62,7 +62,11 @@ def figure(summary, output):
     fig.text(.5, .015, 'Shared warm CPU, one query thread. Certified domain and full hybrid fallback costs are unchanged.',
              ha='center', fontsize=8)
     fig.tight_layout(rect=(0, .05, 1, .84))
-    fig.savefig(output / 'dynamic-query.svg')
+    svg = output / 'dynamic-query.svg'
+    fig.savefig(svg)
+    # Matplotlib writes trailing spaces in path attributes; normalize the
+    # generated text without changing coordinates or rendering.
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines()) + '\n')
     plt.close(fig)
 
 
