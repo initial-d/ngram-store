@@ -4,6 +4,9 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
+import subprocess
+import sys
+import time
 
 import numpy as np
 
@@ -25,7 +28,43 @@ def block_interval(a, b, positions, repeats=1000, seed=42):
             'scope': 'Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds.'}
 
 
-def analyze(report, root=None):
+def merge_reports(base, supplement):
+    """Merge a separately disclosed rate extension; reselect using validation."""
+    base = json.loads(json.dumps(base))
+    extra = {(r['order'], r['seed']): r for r in supplement['runs']}
+    for run in base['runs']:
+        other = extra.pop((run['order'], run['seed']))
+        for key in ('checkpoint_sha256', 'partition', 'training_original_ids_sha256', 'evaluation', 'traces'):
+            if run[key] != other[key]:
+                raise ValueError('supplement changes matched input: ' + key)
+        if set(v['name'] for v in run['variants']) & set(v['name'] for v in other['variants']):
+            raise ValueError('duplicate codec variants')
+        run['phase_selections'] = [run['selection'], other['selection']]
+        run['variants'].extend(other['variants'])
+        run['failures'].extend(other['failures'])
+        settings = base['settings']
+        for budget, choices in run['selection'].items():
+            for family in choices:
+                eligible = [v for v in run['variants'] if
+                    (v['name'].startswith('direct-') if family == 'direct' else
+                     v['name'].endswith('-hybrid') if family == 'hybrid' else
+                     v['name'].startswith('group-') and not v['name'].endswith('-hybrid'))
+                    and v['quality']['validation']['loss_relative_change'] <= float(budget)
+                    and v['quality']['validation']['discrimination_change'] >= -settings['max_discrimination_drop']
+                    and v['known_word_aggregate_fidelity']['global_relative_l2'] <= settings['max_aggregate_error']]
+                chosen = min(eligible, key=lambda v: v['model_bytes']) if eligible else None
+                choices[family] = None if chosen is None else {'name': chosen['name'], 'model_bytes': chosen['model_bytes'],
+                    'test': chosen['quality']['test'], 'test_quality_budget_passed':
+                    chosen['quality']['test']['loss_relative_change'] <= float(budget)
+                    and chosen['quality']['test']['discrimination_change'] >= -settings['max_discrimination_drop']}
+    if extra:
+        raise ValueError('supplement has unmatched checkpoints')
+    base['supplemental_grid_protocol'] = {k: v for k, v in supplement.items() if k != 'runs'}
+    base['status'] = 'completed' if base['status'] == supplement['status'] == 'completed' else 'completed-with-failures'
+    return base
+
+
+def analyze(report, root=None, supplement_root=None):
     rows, selections = [], []
     for run in report['runs']:
         by_name = {v['name']: v for v in run['variants']}
@@ -60,6 +99,8 @@ def analyze(report, root=None):
                        'family': family, 'selected': item}
                 if item is not None and root is not None:
                     directory = root / f"order-{run['order']}-seed-{run['seed']}"
+                    if not (directory / (item['name'] + '-test-scores.npz')).exists() and supplement_root is not None:
+                        directory = supplement_root / directory.name
                     candidate = dict(np.load(directory / (item['name'] + '-test-scores.npz')))
                     baseline = dict(np.load(directory / 'common/test-scores.npz'))
                     positions = np.load(directory / 'common/test-evaluation.npz')['positions']
@@ -75,6 +116,65 @@ def analyze(report, root=None):
                 'Reconstruction error, finite SGNS quality and query cost are separate outcomes.',
                 'Codebook/transform overhead is material on small tables; not extrapolated to million-row scale.',
                 'Matched-codec grouping savings are distinct from choosing a different codec on validation.']}
+
+
+def precomputed_worker(job):
+    job = json.loads(Path(job).read_text())
+    table = np.load(job['table'], mmap_mode='r')
+    ids = np.asarray(job['ids'], dtype=np.int64)
+    for _ in range(2):
+        table[ids]
+    samples = []
+    for _ in range(job['repeat']):
+        start = time.perf_counter()
+        values = table[ids]
+        samples.append(time.perf_counter() - start)
+    np.testing.assert_array_equal(values, np.load(job['reference']))
+    return {'scope': 'Known-word inference only; no arbitrary n-gram query, OOV, or matched training.',
+            'model_bytes': job['model_bytes'], 'p50_ms': float(np.median(samples) * 1000),
+            'p95_ms': float(np.quantile(samples, .95) * 1000), 'samples_seconds': samples,
+            'aggregate_relative_l2': 0., 'known_bags': len(ids), 'oov_accepted': 0}
+
+
+def serving_controls(report, root, output):
+    from .cotraining_groups import BagPartition
+    controls = []
+    for run in report['runs']:
+        name = f"order-{run['order']}-seed-{run['seed']}"
+        common = root / name / 'common'
+        directory = output / name
+        directory.mkdir(parents=True, exist_ok=True)
+        original = BagPartition.load(common / 'domain.npz')
+        dtype = next(t for t in (np.uint8, np.uint16, np.uint32, np.uint64)
+                     if len(original.sizes) - 1 <= np.iinfo(t).max)
+        compact = directory / 'compact-domain.npz'
+        np.savez(compact, mapping=original.mapping.astype(dtype), domain_sha256=original.domain_sha256,
+                 domain_bags=original.domain_bags)
+        decoded = BagPartition.load(compact)
+        if decoded.summary() != original.summary():
+            raise ValueError('compact certificate changes mapping/domain')
+        words = json.loads((common / 'registry.json').read_text())[0]
+        word_registry = directory / 'word-registry.json'
+        word_registry.write_text(json.dumps(words, ensure_ascii=True))
+        ids = json.loads((common / 'trace-bags.json').read_text())['known'][1]
+        oov_bags = json.loads((common / 'trace-bags.json').read_text())['oov'][0]
+        job = {'table': str(common / 'all-reference.npy'), 'ids': ids,
+               'reference': str(common / 'known-reference.npy'), 'repeat': report['settings']['repeat'],
+               'model_bytes': (common / 'all-reference.npy').stat().st_size
+                   + (common / 'output-rows.npy').stat().st_size + word_registry.stat().st_size}
+        job_file = directory / 'precomputed-job.json'
+        job_file.write_text(json.dumps(job))
+        process = subprocess.run([sys.executable, '-m', 'tools.analyze_faiss_cotraining',
+                                  '--precomputed-job', str(job_file)], capture_output=True, text=True, check=True)
+        controls.append({'order': run['order'], 'seed': run['seed'],
+            'oov_nonempty_bags': sum(bool(bag) for bag in oov_bags),
+            'certified_nonempty_oov_bags': sum(bool(bag) and original.certifies(bag) for bag in oov_bags),
+            'compact_domain': {'original_bytes': (common / 'domain.npz').stat().st_size,
+                'compact_bytes': compact.stat().st_size, 'dtype': np.dtype(dtype).name,
+                'mapping_sha256': decoded.summary()['mapping_sha256'],
+                'scope': 'Separate on-disk representation ablation; query timings use the original uint64 certificate. Runtime map remains int64.'},
+            'precomputed_known_words': json.loads(process.stdout)})
+    return controls
 
 
 def figures(analysis, output):
@@ -96,7 +196,7 @@ def figures(analysis, output):
                     x = np.median([v['model_bytes'] / 2**20 for v in values])
                     y = max(1e-9, np.median([v[metric] for v in values]))
                     ax.scatter(x, y, marker=marker, color=color, s=45)
-                    if family != 'hybrid':
+                    if family != 'hybrid' and codec in ('fp32', 'sq8', 'sq6', 'sq4', 'pq-64x8', 'opq-64x8'):
                         ax.annotate(codec, (x, y), fontsize=6, xytext=(3, 3), textcoords='offset points', color=color)
                 ax.scatter([], [], marker=marker, color=color, label=family)
             ax.set_title(f'Max n-gram order {order}')
@@ -114,15 +214,31 @@ def figures(analysis, output):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--report', type=Path, required=True)
+    p.add_argument('--report', type=Path)
+    p.add_argument('--supplement-report', type=Path)
     p.add_argument('--raw-root', type=Path)
-    p.add_argument('--output-dir', type=Path, required=True)
+    p.add_argument('--supplement-root', type=Path)
+    p.add_argument('--output-dir', type=Path)
+    p.add_argument('--precomputed-job', type=Path)
     p.add_argument('--plots', action='store_true')
     cfg = p.parse_args()
+    if cfg.precomputed_job:
+        print(json.dumps(precomputed_worker(cfg.precomputed_job)))
+        return
+    if cfg.report is None or cfg.output_dir is None:
+        p.error('report and output-dir required')
     raw = gzip.decompress(cfg.report.read_bytes()) if cfg.report.suffix == '.gz' else cfg.report.read_bytes()
-    analysis = analyze(json.loads(raw), cfg.raw_root)
+    report = json.loads(raw)
+    if cfg.supplement_report:
+        supplement_raw = gzip.decompress(cfg.supplement_report.read_bytes()) if cfg.supplement_report.suffix == '.gz' else cfg.supplement_report.read_bytes()
+        report = merge_reports(report, json.loads(supplement_raw))
+    analysis = analyze(report, cfg.raw_root, cfg.supplement_root)
     analysis['report_sha256'] = hashlib.sha256(raw).hexdigest()
     cfg.output_dir.mkdir(parents=True, exist_ok=True)
+    if cfg.raw_root:
+        analysis['serving_controls'] = serving_controls(report, cfg.raw_root, cfg.output_dir / 'controls')
+    if cfg.supplement_report:
+        (cfg.output_dir / 'merged-report.json.gz').write_bytes(gzip.compress(json.dumps(report, indent=2).encode(), mtime=0))
     (cfg.output_dir / 'analysis.json').write_text(json.dumps(analysis, indent=2, allow_nan=False) + '\n')
     if cfg.plots:
         figures(analysis, cfg.output_dir)
