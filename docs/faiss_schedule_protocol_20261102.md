@@ -13,8 +13,11 @@ direct, certified-group and full-domain hybrid, 27 selected variants total.
 These all selected SQ6. Original model bytes and query domains remain fixed.
 
 The reference is the complete benchmark module from source
-`f9994ca2dbe15f54826123ee2b0e3f684da6e5ff`. Its `schedule` is the scalar version
-used in the three historical fitting phases; record module/function hashes.
+`f9994ca2dbe15f54826123ee2b0e3f684da6e5ff`. Its `schedule` matches the scalar
+function in the selected SQ6 rate phase (`64ebc742`); record module/function
+hashes. The earlier base phase lacked the later encoded-byte-map option, which
+is unused by these selected SQ6 candidates. This source clarification does
+not change the saved run settings.
 Require the reducer source to match the new module exactly. Load the existing
 codec/codebooks and common row artifacts, verify trace hashes, and compare
 every saved schedule array with old/new compilation. Also check every one of

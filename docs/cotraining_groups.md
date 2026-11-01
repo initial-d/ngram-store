@@ -56,6 +56,12 @@ batch certification is about 7.3–7.8× faster and native-plan construction abo
 shared-CPU compilation results, not full-query or reducer speedups;
 [paired source-pinned measurements](faiss_cotraining_evidence_20261101/README.md).
 
+The FAISS evaluation adapter also uses batch certification and avoids building
+fallback ranks for queries that do not need them. On frozen selected SQ6 models,
+compilation plus known-word codec query improves about 3.2–3.4×, with identical
+schedules and output bytes. It still trails direct SQ6 for immediate queries;
+[complete paired retiming and OOV costs](faiss_schedule_evidence_20261102/README.md).
+
 This shared-gradient identity follows from the chain rule. Novelty relative to
 parameter tying, duplicate-feature elimination, embedding factorization and
 existing storage methods still needs a literature comparison. The contribution

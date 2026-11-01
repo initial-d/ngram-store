@@ -93,6 +93,11 @@ the shared machine. Record p50/p95, samples, acceptance and RSS before full
 quality decoding. Cross-phase timing frontiers are descriptive, not controlled
 exclusive-speed comparisons. No GPU process is inspected or modified.
 
+The [2026-11-02 frozen-codec follow-up](faiss_schedule_evidence_20261102/README.md)
+retimes old scalar and new batch certification on prior selected artifacts.
+Its compilation-plus-query results are separate from the frozen timing grid;
+no codebook or quality selection is rerun.
+
 ## Quality and stronger controls
 
 Measure all registered known-word aggregate relative L2, query error and

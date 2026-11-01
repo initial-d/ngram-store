@@ -49,6 +49,13 @@ new primary novelty claim. Batch certification also improves native-plan
 construction 3.1–3.4× without changing its arrays; that is an implementation
 result distinct from the method claims.
 
+The [frozen-codec query follow-up](faiss_schedule_evidence_20261102/README.md)
+also measures compilation plus FAISS bag query, rather than inferring it from
+certificate-only speedups. Batching reduces known-word total path time about
+3.2–3.4× with byte-identical outputs; direct SQ6 remains faster. This adds
+systems evidence for the supported query domain, without changing quality,
+capacity or novelty claims.
+
 ## Precise certificate result
 
 Let `P` replace each group's rows with their mean, `E` be arbitrary source rows,
