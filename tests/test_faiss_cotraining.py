@@ -69,7 +69,7 @@ class CodecPersistenceTests(unittest.TestCase):
         # Deterministic finite numerical fixture, not a compression-quality corpus.
         source = np.arange(512 * 8, dtype=np.float32).reshape(512, 8) / 1000
         with tempfile.TemporaryDirectory() as tmp:
-            for name in ('fp32', 'sq-fp16', 'sq8', 'pq-2x4', 'opq-2x4', 'rq-2x4'):
+            for name in ('fp32', 'sq-fp16', 'sq8', 'sq6', 'sq4', 'pq-2x4', 'opq-2x4', 'rq-2x4'):
                 with self.subTest(codec=name):
                     path = Path(tmp) / name
                     fit_codec(path, source, name, source, iterations=2, opq_iterations=2)

@@ -12,8 +12,9 @@ import numpy as np
 
 
 DEFAULT_CODECS = (
-    'fp32', 'sq-fp16', 'sq8', 'cluster-8', 'pq-8x4', 'pq-8x8',
-    'pq-16x8', 'opq-8x8', 'rq-2x8',
+    'fp32', 'sq-fp16', 'sq8', 'sq6', 'sq4', 'cluster-8', 'pq-8x4', 'pq-8x8',
+    'pq-16x8', 'pq-32x8', 'pq-64x8', 'opq-8x8', 'opq-32x8', 'opq-64x8',
+    'rq-2x8', 'rq-4x8',
 )
 
 
@@ -23,6 +24,10 @@ def make_index(name, dim, *, seed=42, iterations=20, opq_iterations=10):
         return faiss.IndexScalarQuantizer(dim, faiss.ScalarQuantizer.QT_fp16)
     if name == 'sq8':
         return faiss.IndexScalarQuantizer(dim, faiss.ScalarQuantizer.QT_8bit)
+    if name == 'sq6':
+        return faiss.IndexScalarQuantizer(dim, faiss.ScalarQuantizer.QT_6bit)
+    if name == 'sq4':
+        return faiss.IndexScalarQuantizer(dim, faiss.ScalarQuantizer.QT_4bit)
     if name == 'cluster-8':
         # One full-vector centroid ID: actual vector clustering, not scalar rounding.
         name = 'pq-1x8'
