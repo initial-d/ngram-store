@@ -75,7 +75,8 @@ class CodecPersistenceTests(unittest.TestCase):
                     fit_codec(path, source, name, source, iterations=2, opq_iterations=2)
                     reader = FaissRows(path)
                     all_rows = np.concatenate([x for _, x in reader.decoded(chunk_rows=73)])
-                    np.testing.assert_array_equal(reader.rows([42, 0, 42, 511]), all_rows[[42, 0, 42, 511]])
+                    # OPQ inverse rotation uses BLAS; batch shape can change FP32 rounding.
+                    np.testing.assert_allclose(reader.rows([42, 0, 42, 511]), all_rows[[42, 0, 42, 511]], rtol=1e-6, atol=1e-7)
                     self.assertEqual(reader.rows([]).shape, (0, 8))
                     if reader.index is not None:
                         self.assertEqual(reader.index.ntotal, 0)

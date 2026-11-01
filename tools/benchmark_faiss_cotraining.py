@@ -141,6 +141,8 @@ def worker(job_path):
     reader = FaissRows(job['codec_dir'])
     words = np.load(common / 'word-rows.npy', mmap_mode='r')
     fallback = np.load(common / 'fallback.npy', mmap_mode='r') if job['fallback'] else None
+    partition = BagPartition.load(common / 'domain.npz') if job['grouped'] else None
+    original_traces = json.loads((common / 'trace-bags.json').read_text())
     traces = {name: dict(np.load(path, allow_pickle=False)) for name, path in job['trace_plans'].items()}
     result = {'name': job['name'], 'codec': reader.metadata, 'coverage': job['coverage'],
               'model_bytes': job['model_bytes'], 'fixed_trace_plan_bytes': job['fixed_trace_plan_bytes'],
@@ -164,6 +166,16 @@ def worker(job_path):
             'accepted_bags_per_second': float(plan['accepted'].sum() / np.median(samples[name])),
             'original_occurrences': job['occurrences'][name], 'reducer_occurrences': len(plan['ids']),
             'fidelity': fidelity(ref, values, plan['accepted'])}
+        dynamic = []
+        for _ in range(job['repeat']):
+            begin = time.perf_counter()
+            rebuilt = schedule(*original_traces[name], partition, fallback=job['fallback'])
+            dynamic_values = evaluate(reader, rebuilt, words, fallback, job['batch_bags'])
+            dynamic.append(time.perf_counter() - begin)
+        np.testing.assert_array_equal(dynamic_values, values)
+        result['query'][name]['with_schedule_compilation'] = {
+            'samples_seconds': dynamic, 'p50_ms': float(np.median(dynamic) * 1000),
+            'p95_ms': float(np.quantile(dynamic, .95) * 1000)}
     # Measured BEFORE full quality decoding/outputs; mmap source weights never opened here.
     result['query_peak_rss_bytes'] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform == 'darwin' else 1024)
     result['codec_and_plan_array_bytes'] = reader.codes.nbytes + sum(sum(x.nbytes for x in p.values()) for p in traces.values())
@@ -226,6 +238,7 @@ def run_checkpoint(path, split, cfg, output):
     oov = [oov[i] for i in sorted(rng.choice(len(oov), min(len(oov), cfg.query_bags), replace=False))]
     traces = {'known': ([bags[word_lookup[w]] for w in known], [word_lookup[w] for w in known]),
               'oov': ([[lookup[g] for g in ngrams(w, checkpoint['order']) if g in lookup] for w in oov], [-1] * len(oov))}
+    write_json(common / 'trace-bags.json', traces)
     all_trace = (bags, list(range(len(words))))
     # Source references use the exact same FP64 weighted reducer as every codec.
     fit_codec(output / 'source-oracle', source, 'fp32', source[:1])
@@ -285,13 +298,15 @@ def run_checkpoint(path, split, cfg, output):
                     plans.mkdir()
                     trace_plans = {}
                     for trace_name, (tb, tw) in {**traces, 'all': all_trace}.items():
+                        plan_started = time.perf_counter()
                         plan = schedule(tb, tw, partition if grouped else None, fallback=hybrid)
                         file = plans / (trace_name + '.npz')
                         np.savez(file, **plan)
                         if trace_name != 'all':
                             trace_plans[trace_name] = str(file)
                     job = {'name': variant, 'codec_dir': str(codec_dir), 'common': str(common),
-                           'fallback': hybrid, 'coverage': 'full-domain-hybrid' if hybrid else 'certified-only' if grouped else 'full-domain',
+                           'fallback': hybrid, 'grouped': grouped,
+                           'coverage': 'full-domain-hybrid' if hybrid else 'certified-only' if grouped else 'full-domain',
                            'model_bytes': common_bytes + files_size(codec_dir) + (certificate_bytes if grouped else 0) + (fallback_bytes if hybrid else 0),
                            'fixed_trace_plan_bytes': sum(Path(f).stat().st_size for f in trace_plans.values()),
                            'occurrences': {key: sum(map(len, tb)) for key, (tb, tw) in traces.items()},
@@ -392,6 +407,7 @@ def main():
           'Standalone original-ID decoding; no IVF/HNSW/ANN search or recall comparison.',
           'Word/output FP32 rows and registry, codec/codebook files, domains and complete hybrid fallback are counted.',
           'Fixed-trace schedules counted separately; no native DATrie/block-codec benefit claimed in this adapter.',
+          'Both precompiled replay and original-ID schedule compilation plus query timings are reported.',
           'All controls deduplicate repeated IDs; grouped controls additionally collapse certified group occurrences.',
           'Grouped codec training uses the same sampled ORIGINAL IDs, weighting group means by original-row occupancy.',
           'One fresh query process per variant/checkpoint, warm pages and two warmups; shared CPU, no disk-cold or memory-pressure claim.',
