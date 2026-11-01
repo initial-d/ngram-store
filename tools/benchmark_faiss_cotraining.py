@@ -371,6 +371,7 @@ def main():
     parser.add_argument('--seeds', default='3,7,11')
     parser.add_argument('--codecs', default=','.join(DEFAULT_CODECS))
     parser.add_argument('--train-rows', type=int, default=16384)
+    parser.add_argument('--train-threads', type=int, default=1)
     parser.add_argument('--iterations', type=int, default=20)
     parser.add_argument('--opq-iterations', type=int, default=10)
     parser.add_argument('--seed', type=int, default=42)
@@ -394,7 +395,9 @@ def main():
     import torch
     from .benchmark_heldout_compression import split_tokens
     torch.set_num_threads(1)
-    faiss.omp_set_num_threads(1)
+    if cfg.train_threads < 1:
+        parser.error('positive training thread count required')
+    faiss.omp_set_num_threads(cfg.train_threads)
     cfg.output_dir = cfg.output_dir.resolve()
     cfg.output_dir.mkdir(parents=True, exist_ok=False)
     protocol = {'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
@@ -404,7 +407,7 @@ def main():
         'python': sys.version, 'torch': torch.__version__, 'numpy': np.__version__, 'faiss': faiss.__version__,
         'faiss_compile_options': faiss.get_compile_options(), 'os': platform.platform(),
         'cpu': subprocess.check_output(['lscpu', '-J'], text=True) if sys.platform == 'linux' else platform.processor(),
-        'corpus_sha256': digest_file(cfg.corpus), 'device': 'cpu', 'threads': 1,
+        'corpus_sha256': digest_file(cfg.corpus), 'device': 'cpu', 'query_threads': 1, 'training_threads': cfg.train_threads,
         'limitations': ['Finite public-corpus SGNS checkpoints, no convergence/semantic/PPL/LLM quality claim.',
           'Standalone original-ID decoding; no IVF/HNSW/ANN search or recall comparison.',
           'Word/output FP32 rows and registry, codec/codebook files, domains and complete hybrid fallback are counted.',

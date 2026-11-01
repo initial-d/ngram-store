@@ -90,6 +90,7 @@ def fit_codec(directory, rows, name, train_rows, *, seed=42, iterations=20,
     del codes
     metadata = {'codec': name, 'dim': dim, 'rows': len(rows), 'code_size': code_size,
                 'training_rows': len(train_rows), 'seed': seed,
+                'training_threads': faiss.omp_get_max_threads(),
                 'iterations': iterations, 'opq_iterations': opq_iterations,
                 'training_seconds': training_seconds,
                 'encoding_seconds': time.perf_counter() - start}
