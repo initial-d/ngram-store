@@ -21,6 +21,28 @@ except ImportError:
 
 @unittest.skipUnless(np is not None, 'optional NumPy required')
 class PartitionTest(unittest.TestCase):
+    def test_batch_certificate_matches_exhaustive_scalar_queries(self):
+        import itertools
+        p = BagPartition.fit([[0, 1], [2, 3], [4]], 5)
+        bags = [[i for i, n in enumerate(counts) for _ in range(n)]
+                for counts in itertools.product(range(3), repeat=5)]
+        expected = [p.certifies(bag) for bag in bags]
+        np.testing.assert_array_equal(p.certifies_many(bags), expected)
+        self.assertEqual(p.certifies_many([]).shape, (0,))
+        np.testing.assert_array_equal(p.certifies_many([[], []]), [True, True])
+
+    def test_batch_certificate_padding_invalid_and_noncontiguous_members(self):
+        p = BagPartition.fit([[0, 5000], [1]], 5002)
+        bags = [[0, 5000], [0], [5000, 0, 0], [], [1]]
+        np.testing.assert_array_equal(p.certifies_many(bags), [p.certifies(b) for b in bags])
+        protected = BagPartition.fit([[0, 1, 2]], 3, protected=[0])
+        np.testing.assert_array_equal(protected.certifies_many([[0, 1, 2, 0], [0], [0, 1]], padding_idx=0), [True, True, False])
+        for bag in ([True], [-1], [5002], [.5], [[0]]):
+            with self.assertRaises(ValueError):
+                p.certifies_many([bag])
+        with self.assertRaises(ValueError):
+            p.certifies_many([[]], padding_idx=True)
+
     def test_multiplicity_other_hosts_and_empty_rows_do_not_merge(self):
         bags = [[0, 1, 2, 3, 3], [0, 4, 5]]
         p = BagPartition.fit(bags, 7, protected=[0])

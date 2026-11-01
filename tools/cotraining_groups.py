@@ -116,6 +116,45 @@ class BagPartition:
         means /= self.sizes[:, None]
         return means.astype(rows.dtype)
 
+    def certifies_many(self, bags, *, padding_idx=None):
+        """Batch the SAME equal-member-count certificate, with no weight assumptions.
+
+        Two integer sorts replace per-bag unique/sort calls. Temporary arrays
+        scale with query occurrences; this is not a bounded-memory builder.
+        """
+        bags = list(bags)
+        if padding_idx is not None and (type(padding_idx) is not int or not 0 <= padding_idx < len(self.mapping)):
+            raise ValueError('padding row ID out of range')
+        if len(bags) * len(self.mapping) > np.iinfo(np.int64).max:
+            raise ValueError('batch composite IDs exceed int64')
+        accepted = np.ones(len(bags), dtype=bool)
+        parts, lengths = [], []
+        for bag in bags:
+            array = np.asarray(bag)
+            if array.ndim != 1:
+                raise ValueError('one-dimensional bag required')
+            if len(array) and (array.dtype.kind not in 'iu' or array.min() < 0 or array.max() >= len(self.mapping)):
+                raise ValueError('bag row ID out of range')
+            if padding_idx is not None:
+                array = array[array != padding_idx]
+            parts.append(array.astype(np.int64, copy=False))
+            lengths.append(len(array))
+        if not sum(lengths):
+            return accepted
+        rows = np.concatenate(parts)
+        bag_ids = np.repeat(np.arange(len(bags), dtype=np.int64), lengths)
+        unique, counts = np.unique(bag_ids * len(self.mapping) + rows, return_counts=True)
+        unique_bags, unique_rows = unique // len(self.mapping), unique % len(self.mapping)
+        keys = unique_bags * len(self.sizes) + self.mapping[unique_rows]
+        order = np.argsort(keys, kind='stable')
+        keys, counts = keys[order], counts[order]
+        starts = np.r_[0, np.flatnonzero(keys[1:] != keys[:-1]) + 1]
+        observed = np.diff(np.r_[starts, len(keys)])
+        bad = ((observed != self.sizes[keys[starts] % len(self.sizes)])
+               | (np.minimum.reduceat(counts, starts) != np.maximum.reduceat(counts, starts)))
+        accepted[keys[starts[bad]] // len(self.sizes)] = False
+        return accepted
+
     def representatives(self):
         first = np.full(len(self.sizes), len(self.mapping), dtype=np.int64)
         np.minimum.at(first, self.mapping, np.arange(len(self.mapping)))
@@ -197,6 +236,9 @@ class CertifiedBagPlan:
     The native weighted reducer accumulates in float64, then outputs float32.
     """
     def __init__(self, partition, bags, *, padding_idx=None):
+        bags = [list(bag) for bag in bags]
+        if not partition.certifies_many(bags, padding_idx=padding_idx).all():
+            raise ValueError('uncertified bag: incomplete group or unequal multiplicity')
         representatives = partition.representatives()
         ids, weights, offsets, denominators = [], [], [0], []
         original_occurrences = 0
@@ -204,8 +246,6 @@ class CertifiedBagPlan:
             bag = list(bag)
             if padding_idx is not None:
                 bag = [i for i in bag if i != padding_idx]
-            if not partition.certifies(bag):
-                raise ValueError('uncertified bag: incomplete group or unequal multiplicity')
             denominators.append(max(1, len(bag)))
             original_occurrences += len(bag)
             counts = Counter(int(representatives[i]) for i in bag)
