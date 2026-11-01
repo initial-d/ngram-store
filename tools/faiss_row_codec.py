@@ -38,8 +38,11 @@ def make_index(name, dim, *, seed=42, iterations=20, opq_iterations=10):
         opq = faiss.OPQMatrix(dim, m)
         opq.niter = opq_iterations
         opq.niter_pq = opq.niter_pq_0 = iterations
-        opq.pq = faiss.ProductQuantizer(dim, m, bits)
-        opq.pq.cp.seed = seed
+        # OPQ holds a borrowed C++ pointer. Retain its Python owner until training
+        # finishes; assigning a temporary can leave a dangling pointer.
+        opq._training_pq_owner = faiss.ProductQuantizer(dim, m, bits)
+        opq.pq = opq._training_pq_owner
+        opq._training_pq_owner.cp.seed = seed
         return faiss.IndexPreTransform(opq, pq)
     if family == 'rq':
         rq = faiss.IndexResidualQuantizer(dim, m, bits)

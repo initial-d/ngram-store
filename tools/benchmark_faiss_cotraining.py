@@ -298,7 +298,6 @@ def run_checkpoint(path, split, cfg, output):
                     plans.mkdir()
                     trace_plans = {}
                     for trace_name, (tb, tw) in {**traces, 'all': all_trace}.items():
-                        plan_started = time.perf_counter()
                         plan = schedule(tb, tw, partition if grouped else None, fallback=hybrid)
                         file = plans / (trace_name + '.npz')
                         np.savez(file, **plan)
