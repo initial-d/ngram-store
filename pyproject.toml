@@ -14,6 +14,7 @@ Repository = "https://github.com/initial-d/ngram-store"
 
 [project.optional-dependencies]
 torch = ["torch", "numpy"]
+faiss-benchmark = ["torch", "numpy", "faiss-cpu>=1.8,<2"]
 tinyengram = ["torch", "numpy", "sympy", "loguru", "transformers==4.57.3", "tokenizers==0.22.2", "safetensors==0.7.0"]
 
 [project.scripts]
