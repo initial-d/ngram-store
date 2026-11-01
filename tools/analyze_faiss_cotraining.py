@@ -28,7 +28,7 @@ def block_interval(a, b, positions, repeats=1000, seed=42):
             'scope': 'Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds.'}
 
 
-def merge_reports(base, supplement):
+def merge_reports(base, supplement, dedup=None):
     """Merge a separately disclosed rate extension; reselect using validation."""
     base = json.loads(json.dumps(base))
     extra = {(r['order'], r['seed']): r for r in supplement['runs']}
@@ -42,11 +42,20 @@ def merge_reports(base, supplement):
         run['phase_selections'] = [run['selection'], other['selection']]
         run['variants'].extend(other['variants'])
         run['failures'].extend(other['failures'])
+        if dedup is not None:
+            controls = [r for r in dedup['runs'] if r['order'] == run['order'] and r['seed'] == run['seed']]
+            for control in controls:
+                if control['checkpoint_sha256'] != run['checkpoint_sha256']:
+                    raise ValueError('dedup checkpoint mismatch')
+                if control['status'] == 'completed':
+                    run['variants'].append(control['variant'])
+                elif control['status'] == 'failed':
+                    run['failures'].append({'name': control['name'], 'error': 'dedup worker failed'})
         settings = base['settings']
         for budget, choices in run['selection'].items():
             for family in choices:
                 eligible = [v for v in run['variants'] if
-                    (v['name'].startswith('direct-') if family == 'direct' else
+                    (v['name'].startswith(('direct-', 'dedup-')) if family == 'direct' else
                      v['name'].endswith('-hybrid') if family == 'hybrid' else
                      v['name'].startswith('group-') and not v['name'].endswith('-hybrid'))
                     and v['quality']['validation']['loss_relative_change'] <= float(budget)
@@ -60,17 +69,19 @@ def merge_reports(base, supplement):
     if extra:
         raise ValueError('supplement has unmatched checkpoints')
     base['supplemental_grid_protocol'] = {k: v for k, v in supplement.items() if k != 'runs'}
+    if dedup is not None:
+        base['encoded_byte_dedup'] = dedup
     base['status'] = 'completed' if base['status'] == supplement['status'] == 'completed' else 'completed-with-failures'
     return base
 
 
-def analyze(report, root=None, supplement_root=None):
+def analyze(report, root=None, supplement_root=None, dedup_root=None):
     rows, selections = [], []
     for run in report['runs']:
         by_name = {v['name']: v for v in run['variants']}
         for v in run['variants']:
             codec = v['codec']['codec']
-            family = 'hybrid' if v['name'].endswith('-hybrid') else 'group' if v['name'].startswith('group-') else 'direct'
+            family = 'hybrid' if v['name'].endswith('-hybrid') else 'group' if v['name'].startswith('group-') else 'dedup' if v['name'].startswith('dedup-') else 'direct'
             row = {'order': run['order'], 'seed': run['seed'], 'name': v['name'], 'family': family,
                    'codec': codec, 'model_bytes': v['model_bytes'],
                    'model_plus_fixed_plans_bytes': v['model_bytes'] + v['fixed_trace_plan_bytes'],
@@ -101,9 +112,12 @@ def analyze(report, root=None, supplement_root=None):
                     directory = root / f"order-{run['order']}-seed-{run['seed']}"
                     if not (directory / (item['name'] + '-test-scores.npz')).exists() and supplement_root is not None:
                         directory = supplement_root / directory.name
+                    if not (directory / (item['name'] + '-test-scores.npz')).exists() and dedup_root is not None:
+                        directory = dedup_root / directory.name
                     candidate = dict(np.load(directory / (item['name'] + '-test-scores.npz')))
-                    baseline = dict(np.load(directory / 'common/test-scores.npz'))
-                    positions = np.load(directory / 'common/test-evaluation.npz')['positions']
+                    common = root / directory.name / 'common'
+                    baseline = dict(np.load(common / 'test-scores.npz'))
+                    positions = np.load(common / 'test-evaluation.npz')['positions']
                     row['test_paired_block_interval'] = block_interval(candidate, baseline, positions)
                 selections.append(row)
     return {'source_commit': report['source_commit'], 'status': report['status'],
@@ -181,7 +195,7 @@ def figures(analysis, output):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    styles = {'direct': ('o', '#356bb3'), 'group': ('^', '#db7e1a'), 'hybrid': ('x', '#ad4663')}
+    styles = {'direct': ('o', '#356bb3'), 'group': ('^', '#db7e1a'), 'hybrid': ('x', '#ad4663'), 'dedup': ('s', '#478653')}
     for metric, filename, ylabel in (
             ('known_aggregate_relative_l2', 'capacity-error.svg', 'Known-word aggregate relative L2'),
             ('known_p50_ms', 'capacity-replay.svg', '512-bag replay p50 (ms)'),
@@ -216,8 +230,10 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--report', type=Path)
     p.add_argument('--supplement-report', type=Path)
+    p.add_argument('--dedup-report', type=Path)
     p.add_argument('--raw-root', type=Path)
     p.add_argument('--supplement-root', type=Path)
+    p.add_argument('--dedup-root', type=Path)
     p.add_argument('--output-dir', type=Path)
     p.add_argument('--precomputed-job', type=Path)
     p.add_argument('--plots', action='store_true')
@@ -231,8 +247,8 @@ def main():
     report = json.loads(raw)
     if cfg.supplement_report:
         supplement_raw = gzip.decompress(cfg.supplement_report.read_bytes()) if cfg.supplement_report.suffix == '.gz' else cfg.supplement_report.read_bytes()
-        report = merge_reports(report, json.loads(supplement_raw))
-    analysis = analyze(report, cfg.raw_root, cfg.supplement_root)
+        report = merge_reports(report, json.loads(supplement_raw), json.loads(cfg.dedup_report.read_text()) if cfg.dedup_report else None)
+    analysis = analyze(report, cfg.raw_root, cfg.supplement_root, cfg.dedup_root)
     analysis['report_sha256'] = hashlib.sha256(raw).hexdigest()
     cfg.output_dir.mkdir(parents=True, exist_ok=True)
     if cfg.raw_root:
