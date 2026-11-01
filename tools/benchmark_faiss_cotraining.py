@@ -40,10 +40,12 @@ def write_json(path, value):
     tmp.replace(path)
 
 
-def schedule(bags, word_ids, partition=None, *, fallback=False):
+def schedule(bags, word_ids, partition=None, *, fallback=False, code_mapping=None):
     """Deduplicate repeated IDs in ALL controls; only certified groups are tied."""
     if len(bags) != len(word_ids):
         raise ValueError('one word ID per bag required')
+    if partition is not None and code_mapping is not None:
+        raise ValueError('incidence and encoded-byte maps are separate controls')
     ids, weights, offsets, denominators, accepted = [], [], [0], [], []
     rank = None
     if partition is not None:
@@ -55,7 +57,7 @@ def schedule(bags, word_ids, partition=None, *, fallback=False):
         denominators.append(max(1, len(bag) + (word >= 0)))
         if safe or fallback:
             if partition is None:
-                mapped = bag
+                mapped = bag if code_mapping is None else code_mapping[bag]
             elif safe:
                 mapped = partition.mapping[bag]
             else:
@@ -142,6 +144,7 @@ def worker(job_path):
     words = np.load(common / 'word-rows.npy', mmap_mode='r')
     fallback = np.load(common / 'fallback.npy', mmap_mode='r') if job['fallback'] else None
     partition = BagPartition.load(common / 'domain.npz') if job['grouped'] else None
+    code_mapping = np.load(job['code_mapping'], mmap_mode='r') if job.get('code_mapping') else None
     original_traces = json.loads((common / 'trace-bags.json').read_text())
     traces = {name: dict(np.load(path, allow_pickle=False)) for name, path in job['trace_plans'].items()}
     result = {'name': job['name'], 'codec': reader.metadata, 'coverage': job['coverage'],
@@ -169,7 +172,7 @@ def worker(job_path):
         dynamic = []
         for _ in range(job['repeat']):
             begin = time.perf_counter()
-            rebuilt = schedule(*original_traces[name], partition, fallback=job['fallback'])
+            rebuilt = schedule(*original_traces[name], partition, fallback=job['fallback'], code_mapping=code_mapping)
             dynamic_values = evaluate(reader, rebuilt, words, fallback, job['batch_bags'])
             dynamic.append(time.perf_counter() - begin)
         np.testing.assert_array_equal(dynamic_values, values)

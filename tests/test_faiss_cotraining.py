@@ -62,6 +62,15 @@ class QueryContractTests(unittest.TestCase):
         self.assertTrue(np.isfinite(scores['loss']).all())
         self.assertEqual(scores['discrimination'][0], .5)
 
+    def test_encoded_byte_mapping_has_no_incidence_restriction(self):
+        original = np.array([[1., 2.], [1., 2.], [3., 4.]], dtype=np.float32)
+        compact = ArrayReader(original[[0, 2]])
+        bags, words = [[0], [1], [0, 1, 2]], [-1, -1, -1]
+        mapped = schedule(bags, words, code_mapping=np.array([0, 0, 1]))
+        self.assertTrue(mapped['accepted'].all())
+        np.testing.assert_array_equal(evaluate(compact, mapped, self.words),
+            evaluate(ArrayReader(original), schedule(bags, words), self.words))
+
     def test_combined_selection_uses_validation_and_rejects_changed_traces(self):
         def variant(name, size, validation, test):
             return {'name': name, 'model_bytes': size,
