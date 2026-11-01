@@ -1,5 +1,6 @@
 """Algebra/serialization fixtures only, not learned-vector performance evidence."""
 import importlib.util
+import copy
 from pathlib import Path
 import tempfile
 import unittest
@@ -9,6 +10,7 @@ try:
     from tools.cotraining_groups import BagPartition
     from tools.benchmark_faiss_cotraining import schedule, evaluate, objective, fidelity
     from tools.faiss_row_codec import fit_codec, FaissRows
+    from tools.analyze_faiss_cotraining import merge_reports
 except ImportError:
     np = None
 
@@ -59,6 +61,28 @@ class QueryContractTests(unittest.TestCase):
         scores = objective(np.array([[1000., 0.]]), np.array([[1000., 0.]]), data)
         self.assertTrue(np.isfinite(scores['loss']).all())
         self.assertEqual(scores['discrimination'][0], .5)
+
+    def test_combined_selection_uses_validation_and_rejects_changed_traces(self):
+        def variant(name, size, validation, test):
+            return {'name': name, 'model_bytes': size,
+                    'known_word_aggregate_fidelity': {'global_relative_l2': .01},
+                    'quality': {'validation': {'loss_relative_change': validation, 'discrimination_change': 0.},
+                                'test': {'loss_relative_change': test, 'discrimination_change': 0.}}}
+        run = {'order': 4, 'seed': 3, 'checkpoint_sha256': 'fixture', 'partition': {'mapping': 'fixture'},
+               'training_original_ids_sha256': 'fixture', 'evaluation': {'sha256': 'fixture'},
+               'traces': {'known': 'fixture'}, 'variants': [variant('direct-fp32', 1000, 0., 0.)],
+               'failures': [], 'selection': {'0.001': {'direct': None, 'group': None, 'hybrid': None}}}
+        base = {'status': 'completed', 'settings': {'max_discrimination_drop': .005, 'max_aggregate_error': .05}, 'runs': [run]}
+        other = copy.deepcopy(base)
+        other['runs'][0]['variants'] = [variant('direct-sq8', 100, .0001, .1),
+                                        variant('direct-sq4', 50, .1, 0.)]
+        combined = merge_reports(base, other)
+        picked = combined['runs'][0]['selection']['0.001']['direct']
+        self.assertEqual(picked['name'], 'direct-sq8')
+        self.assertFalse(picked['test_quality_budget_passed'])
+        other['runs'][0]['traces'] = {'known': 'changed'}
+        with self.assertRaises(ValueError):
+            merge_reports(base, other)
 
 
 @unittest.skipIf(np is None or importlib.util.find_spec('faiss') is None, 'NumPy/FAISS required')
