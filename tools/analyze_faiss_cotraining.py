@@ -75,7 +75,7 @@ def merge_reports(base, supplement, dedup=None):
     return base
 
 
-def analyze(report, root=None, supplement_root=None, dedup_root=None):
+def analyze(report, root=None, supplement_root=None, dedup_root=None, cluster_root=None):
     rows, selections = [], []
     for run in report['runs']:
         by_name = {v['name']: v for v in run['variants']}
@@ -114,6 +114,8 @@ def analyze(report, root=None, supplement_root=None, dedup_root=None):
                     directory = root / f"order-{run['order']}-seed-{run['seed']}"
                     if not (directory / (item['name'] + '-test-scores.npz')).exists() and supplement_root is not None:
                         directory = supplement_root / directory.name
+                    if not (directory / (item['name'] + '-test-scores.npz')).exists() and cluster_root is not None:
+                        directory = cluster_root / directory.name
                     if not (directory / (item['name'] + '-test-scores.npz')).exists() and dedup_root is not None:
                         directory = dedup_root / directory.name
                     candidate = dict(np.load(directory / (item['name'] + '-test-scores.npz')))
@@ -254,9 +256,11 @@ def main():
     p.add_argument('--report', type=Path)
     p.add_argument('--supplement-report', type=Path)
     p.add_argument('--dedup-report', type=Path)
+    p.add_argument('--cluster-report', type=Path)
     p.add_argument('--raw-root', type=Path)
     p.add_argument('--supplement-root', type=Path)
     p.add_argument('--dedup-root', type=Path)
+    p.add_argument('--cluster-root', type=Path)
     p.add_argument('--output-dir', type=Path)
     p.add_argument('--precomputed-job', type=Path)
     p.add_argument('--plots', action='store_true')
@@ -270,8 +274,11 @@ def main():
     report = json.loads(raw)
     if cfg.supplement_report:
         supplement_raw = gzip.decompress(cfg.supplement_report.read_bytes()) if cfg.supplement_report.suffix == '.gz' else cfg.supplement_report.read_bytes()
-        report = merge_reports(report, json.loads(supplement_raw), json.loads(cfg.dedup_report.read_text()) if cfg.dedup_report else None)
-    analysis = analyze(report, cfg.raw_root, cfg.supplement_root, cfg.dedup_root)
+        supplement = json.loads(supplement_raw)
+        if cfg.cluster_report:
+            supplement = merge_reports(supplement, json.loads(cfg.cluster_report.read_text()))
+        report = merge_reports(report, supplement, json.loads(cfg.dedup_report.read_text()) if cfg.dedup_report else None)
+    analysis = analyze(report, cfg.raw_root, cfg.supplement_root, cfg.dedup_root, cfg.cluster_root)
     report_bytes = json.dumps(report, indent=2).encode() if cfg.supplement_report else raw
     analysis['report_sha256'] = hashlib.sha256(report_bytes).hexdigest()
     analysis['analyzer_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
