@@ -84,6 +84,7 @@ def analyze(report, root=None, supplement_root=None, dedup_root=None):
             family = 'hybrid' if v['name'].endswith('-hybrid') else 'group' if v['name'].startswith('group-') else 'dedup' if v['name'].startswith('dedup-') else 'direct'
             row = {'order': run['order'], 'seed': run['seed'], 'name': v['name'], 'family': family,
                    'codec': codec, 'model_bytes': v['model_bytes'],
+                   'codec_maps_certificate_fallback_bytes': v['model_bytes'] - run['common_word_output_registry_bytes'],
                    'model_plus_fixed_plans_bytes': v['model_bytes'] + v['fixed_trace_plan_bytes'],
                    'known_aggregate_relative_l2': v['known_word_aggregate_fidelity']['global_relative_l2'],
                    'known_p50_ms': v['query']['known']['p50_ms'],
@@ -203,6 +204,7 @@ def figures(analysis, output):
         fig, axes = plt.subplots(1, 3, figsize=(13, 4.5))
         for ax, order in zip(axes, (4, 8, 12)):
             for family, (marker, color) in styles.items():
+                frontier = []
                 for codec in sorted({r['codec'] for r in analysis['rows']}):
                     values = [r for r in analysis['rows'] if r['order'] == order and r['family'] == family and r['codec'] == codec]
                     if not values:
@@ -210,9 +212,22 @@ def figures(analysis, output):
                     x = np.median([v['model_bytes'] / 2**20 for v in values])
                     y = max(1e-9, np.median([v[metric] for v in values]))
                     ax.scatter(x, y, marker=marker, color=color, s=45)
+                    frontier.append((x, y))
                     if family != 'hybrid' and codec in ('fp32', 'sq8', 'sq6', 'sq4', 'pq-64x8', 'opq-64x8'):
                         ax.annotate(codec, (x, y), fontsize=6, xytext=(3, 3), textcoords='offset points', color=color)
                 ax.scatter([], [], marker=marker, color=color, label=family)
+                best, points = float('inf'), []
+                for x, y in sorted(frontier):
+                    if y < best:
+                        points.append((x, y))
+                        best = y
+                if points:
+                    ax.plot(*zip(*points), color=color, alpha=.35, linewidth=1)
+            controls = [r['precomputed_known_words'] for r in analysis.get('serving_controls', []) if r['order'] == order]
+            if controls:
+                x = np.median([r['model_bytes'] / 2**20 for r in controls])
+                y = 1e-9 if metric == 'known_aggregate_relative_l2' else np.median([r['p50_ms'] for r in controls])
+                ax.scatter(x, y, marker='*', color='black', s=95, label='precomputed (known only)')
             ax.set_title(f'Max n-gram order {order}')
             ax.set_xlabel('Complete model (MiB)')
             ax.set_yscale('log')
@@ -220,7 +235,7 @@ def figures(analysis, output):
         axes[0].set_ylabel(ylabel)
         axes[-1].legend(fontsize=8)
         fig.suptitle('Finite SGNS / known-word domain; medians over 3 training seeds', fontsize=11)
-        fig.text(.5, .01, 'Word/output rows, registry, codebooks and maps counted; hybrid includes full original-row fallback. Zero error plotted at 1e-9.', ha='center', fontsize=8)
+        fig.text(.5, .01, 'Complete costs; hybrid includes full original-row fallback. Precomputed has a narrower inference-only contract. Zero error at 1e-9.', ha='center', fontsize=8)
         fig.tight_layout(rect=(0, .04, 1, .94))
         fig.savefig(output / filename)
         plt.close(fig)
