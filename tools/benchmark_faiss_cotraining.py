@@ -47,12 +47,12 @@ def schedule(bags, word_ids, partition=None, *, fallback=False, code_mapping=Non
     if partition is not None and code_mapping is not None:
         raise ValueError('incidence and encoded-byte maps are separate controls')
     ids, weights, offsets, denominators, accepted = [], [], [0], [], []
+    safe_bags = np.ones(len(bags), dtype=bool) if partition is None else partition.certifies_many(bags)
     rank = None
-    if partition is not None:
+    if partition is not None and fallback and not safe_bags.all():
         multi = partition.sizes[partition.mapping] > 1
         rank = np.cumsum(multi, dtype=np.int64) - 1
-    for bag, word in zip(bags, word_ids):
-        safe = partition is None or partition.certifies(bag)
+    for bag, word, safe in zip(bags, word_ids, safe_bags):
         accepted.append(safe or fallback)
         denominators.append(max(1, len(bag) + (word >= 0)))
         if safe or fallback:

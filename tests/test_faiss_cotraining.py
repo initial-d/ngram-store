@@ -56,6 +56,19 @@ class QueryContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             schedule([[0]], [])
 
+    def test_batch_certificate_does_not_mix_member_counts_between_bags(self):
+        bags = [[0], [1], [0, 0, 1], [0, 0, 1, 1], []]
+        words = [-1] * len(bags)
+        strict = schedule(bags, words, self.partition)
+        self.assertEqual(strict['accepted'].tolist(), [False, False, False, True, True])
+        reference = evaluate(ArrayReader(self.source), schedule(bags, words), self.words)
+        hybrid = schedule(bags, words, self.partition, fallback=True)
+        np.testing.assert_array_equal(evaluate(ArrayReader(self.partition.means(self.source)),
+            hybrid, self.words, self.source[:2]), reference)
+        empty = schedule([], [], self.partition, fallback=True)
+        self.assertEqual(empty['offsets'].tolist(), [0])
+        self.assertEqual(len(empty['accepted']), 0)
+
     def test_objective_ties_and_stability(self):
         data = {'pairs': np.array([[0, 0]]), 'negative': np.array([[0, 0]])}
         scores = objective(np.array([[1000., 0.]]), np.array([[1000., 0.]]), data)
