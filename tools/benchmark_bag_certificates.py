@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import shlex
 import subprocess
 import sys
 import time
@@ -38,6 +39,8 @@ def main():
     spec.loader.exec_module(old)
     split = split_tokens(cfg.corpus.read_text())
     report = {'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'command': shlex.join([sys.executable, *sys.argv]),
+              'corpus_sha256': hashlib.sha256(cfg.corpus.read_bytes()).hexdigest(),
               'reference_module_sha256': hashlib.sha256(cfg.reference_module.read_bytes()).hexdigest(),
               'current_module_sha256': hashlib.sha256(Path(__file__).with_name('cotraining_groups.py').read_bytes()).hexdigest(),
               'python': sys.version, 'numpy': np.__version__, 'torch': torch.__version__, 'os': platform.platform(),
@@ -81,6 +84,8 @@ def main():
                     functions[key]()
                     timings[key].append(time.perf_counter() - start)
             report['runs'].append({'order': order, 'seed': seed, 'known_bags': len(known_bags),
+                'checkpoint_sha256': hashlib.sha256((cfg.checkpoint_root / name / 'reference.pt').read_bytes()).hexdigest(),
+                'query_bags_sha256': hashlib.sha256(json.dumps(mixed).encode()).hexdigest(),
                 'mixed_bags': len(mixed), 'mixed_accepted': int(expected.sum()),
                 'plan_arrays_byte_identical': True,
                 'plan_sha256': hashlib.sha256(b''.join(getattr(b, f).tobytes() for f in fields)).hexdigest(),
