@@ -264,12 +264,15 @@ def main():
         supplement_raw = gzip.decompress(cfg.supplement_report.read_bytes()) if cfg.supplement_report.suffix == '.gz' else cfg.supplement_report.read_bytes()
         report = merge_reports(report, json.loads(supplement_raw), json.loads(cfg.dedup_report.read_text()) if cfg.dedup_report else None)
     analysis = analyze(report, cfg.raw_root, cfg.supplement_root, cfg.dedup_root)
-    analysis['report_sha256'] = hashlib.sha256(raw).hexdigest()
+    report_bytes = json.dumps(report, indent=2).encode() if cfg.supplement_report else raw
+    analysis['report_sha256'] = hashlib.sha256(report_bytes).hexdigest()
+    analysis['analyzer_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    analysis['analysis_source_commit'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
     cfg.output_dir.mkdir(parents=True, exist_ok=True)
     if cfg.raw_root:
         analysis['serving_controls'] = serving_controls(report, cfg.raw_root, cfg.output_dir / 'controls')
     if cfg.supplement_report:
-        (cfg.output_dir / 'merged-report.json.gz').write_bytes(gzip.compress(json.dumps(report, indent=2).encode(), mtime=0))
+        (cfg.output_dir / 'merged-report.json.gz').write_bytes(gzip.compress(report_bytes, mtime=0))
     (cfg.output_dir / 'analysis.json').write_text(json.dumps(analysis, indent=2, allow_nan=False) + '\n')
     if cfg.plots:
         figures(analysis, cfg.output_dir)
