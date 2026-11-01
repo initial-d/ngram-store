@@ -35,6 +35,20 @@ Sources: [trained evidence](cotraining_evidence_20261031/README.md),
 These five supporting claims belong in the implementation/evaluation sections;
 they should not each be presented as an independent fundamental innovation.
 
+The [FAISS comparison](faiss_cotraining_evidence_20261101/README.md) now tests
+513 matched base candidates plus 171 encoded-byte dedup audits on nine actual
+trained checkpoints. Within a 0.1% SGNS loss-change, 0.5 percentage-point
+discrimination and 5% aggregate-error budget, validation-selected certified
+groups save another 11.27% / 33.21% / 34.54% complete bytes over the smallest
+qualifying direct codec at orders 4/8/12. All selected test point estimates
+pass; the extended grid is exploratory. Same-codec grouped reconstruction is
+less accurate, full-domain hybrid costs more than direct, and precomputed known
+words are smaller/faster for inference only. This supports complementarity to
+quantization within the certified domain, not universal FAISS dominance or a
+new primary novelty claim. Batch certification also improves native-plan
+construction 3.1–3.4× without changing its arrays; that is an implementation
+result distinct from the method claims.
+
 ## Precise certificate result
 
 Let `P` replace each group's rows with their mean, `E` be arbitrary source rows,

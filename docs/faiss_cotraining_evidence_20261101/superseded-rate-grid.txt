@@ -1,0 +1,1 @@
+Superseded by explicit four-thread fitting; single-thread query budget retained. Slow fits/logs preserved.

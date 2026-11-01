@@ -48,6 +48,14 @@ consumer does. An incomplete group may require scanning the ID map in bounded
 chunks; use diagnostics outside the hot query path. The unchanged `certifies`
 method and compiled native schedule remain the serving path.
 
+For multiple queries, `partition.certifies_many(bags, padding_idx=0)` returns
+the same Boolean decisions using batched integer count comparisons.
+`CertifiedBagPlan` uses this path automatically. On nine real cached checkpoints,
+batch certification is about 7.3–7.8× faster and native-plan construction about
+3.1–3.4× faster, with every resulting plan array byte-identical. These are
+shared-CPU compilation results, not full-query or reducer speedups;
+[paired source-pinned measurements](faiss_cotraining_evidence_20261101/README.md).
+
 This shared-gradient identity follows from the chain rule. Novelty relative to
 parameter tying, duplicate-feature elimination, embedding factorization and
 existing storage methods still needs a literature comparison. The contribution

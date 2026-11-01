@@ -33,7 +33,7 @@ counted separately, without silently storing a duplicate full index.
 ## Rate grid and disclosure
 
 - Raw FP32; FAISS FP16 and 8/6/4-bit scalar quantizers.
-- Full-vector 256-centroid clustering (one PQ subquantizer).
+- Full-vector 256/512/1,024/2,048-centroid clustering (one PQ subquantizer).
 - PQ: 8 × 4, 8 × 8, 16 × 8, 32 × 8 and 64 × 8 bits.
 - OPQ + PQ: 8 × 8, 32 × 8 and 64 × 8 bits.
 - Residual quantization: 2 × 8 and 4 × 8 bits.
@@ -44,7 +44,8 @@ recorded. Small-table centroid-training warnings are preserved. This is a fixed
 rate sweep, not exhaustive per-codec tuning. The base grid fits with one CPU
 thread; the seven-codec rate extension fits with four after observing expensive
 single-thread OPQ construction. All query workers use one thread. Do not compare
-their fitting times as a matched-thread speedup.
+their fitting times as a matched-thread speedup. The three larger clustering
+configurations also fit with four threads, as a separately disclosed extension.
 
 The initial nine-codec protocol preceded its full run. Seven rate extensions
 were added after initial aggregate errors showed that the original PQ settings
@@ -54,6 +55,10 @@ therefore exploratory, not a prospectively untouched final test claim. Each
 phase has its own frozen source, command and protocol; matching checkpoints,
 incidence groups, sampled fit IDs, evaluation hashes and query traces are
 checked before merging. Test scores do not enter the selection function.
+
+Completed results, point-estimate and uncertainty limitations, stronger
+baselines and source-pinned commands are in the
+[2026-11-01 evidence report](faiss_cotraining_evidence_20261101/README.md).
 
 ## Query contracts and complete cost
 

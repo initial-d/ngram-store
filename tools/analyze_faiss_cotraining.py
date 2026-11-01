@@ -205,7 +205,7 @@ def figures(analysis, output):
             ('validation_loss_change_percent', 'capacity-sgns.svg', 'Validation SGNS loss change (%)'),
             ('known_p50_ms', 'capacity-replay.svg', '512-bag replay p50 (ms)'),
             ('known_dynamic_p50_ms', 'capacity-dynamic.svg', 'ID schedule + query p50 (ms)')):
-        fig, axes = plt.subplots(1, 3, figsize=(13, 4.5))
+        fig, axes = plt.subplots(1, 3, figsize=(13, 4.8))
         for ax, order in zip(axes, (4, 8, 12)):
             for family, (marker, color) in styles.items():
                 frontier = []
@@ -219,7 +219,7 @@ def figures(analysis, output):
                         y = max(1e-9, y)
                     ax.scatter(x, y, marker=marker, color=color, s=45)
                     frontier.append((x, y))
-                    if family != 'hybrid' and codec in ('fp32', 'sq8', 'sq6', 'sq4', 'pq-64x8', 'opq-64x8'):
+                    if family in ('direct', 'group') and codec in ('fp32', 'sq8', 'sq6'):
                         ax.annotate(codec, (x, y), fontsize=6, xytext=(3, 3), textcoords='offset points', color=color)
                 ax.scatter([], [], marker=marker, color=color, label=family)
                 best, points = float('inf'), []
@@ -243,10 +243,12 @@ def figures(analysis, output):
                 ax.set_yscale('log')
             ax.grid(alpha=.2)
         axes[0].set_ylabel(ylabel)
-        axes[-1].legend(fontsize=8)
+        handles, labels = axes[0].get_legend_handles_labels()
+        fig.legend(handles, labels, loc='upper center', bbox_to_anchor=(.5, .93),
+                   ncol=5, fontsize=9)
         fig.suptitle('Finite SGNS / known-word domain; medians over 3 training seeds', fontsize=11)
         fig.text(.5, .01, 'Complete costs; hybrid includes full original-row fallback. Precomputed has a narrower inference-only contract. Zero error at 1e-9.', ha='center', fontsize=8)
-        fig.tight_layout(rect=(0, .04, 1, .94))
+        fig.tight_layout(rect=(0, .04, 1, .86))
         fig.savefig(output / filename)
         plt.close(fig)
 

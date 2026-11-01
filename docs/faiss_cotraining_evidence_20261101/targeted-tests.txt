@@ -1,0 +1,54 @@
+test_standalone_selected_id_decode_and_no_index_vectors (tests.test_faiss_cotraining.CodecPersistenceTests.test_standalone_selected_id_decode_and_no_index_vectors) ... WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+
+  test_standalone_selected_id_decode_and_no_index_vectors (tests.test_faiss_cotraining.CodecPersistenceTests.test_standalone_selected_id_decode_and_no_index_vectors) (codec='opq-2x4') ... FAIL
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+test_certified_means_and_hybrid_fallback (tests.test_faiss_cotraining.QueryContractTests.test_certified_means_and_hybrid_fallback) ... ok
+test_dedup_multiplicity_and_empty_boundaries (tests.test_faiss_cotraining.QueryContractTests.test_dedup_multiplicity_and_empty_boundaries) ... ok
+test_objective_ties_and_stability (tests.test_faiss_cotraining.QueryContractTests.test_objective_ties_and_stability) ... ok
+
+======================================================================
+FAIL: test_standalone_selected_id_decode_and_no_index_vectors (tests.test_faiss_cotraining.CodecPersistenceTests.test_standalone_selected_id_decode_and_no_index_vectors) (codec='opq-2x4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/llm-align/duyimin/ngram-faiss-20261101/source/tests/test_faiss_cotraining.py", line 78, in test_standalone_selected_id_decode_and_no_index_vectors
+    np.testing.assert_array_equal(reader.rows([42, 0, 42, 511]), all_rows[[42, 0, 42, 511]])
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/numpy/_utils/__init__.py", line 86, in wrapper
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/numpy/testing/_private/utils.py", line 1057, in assert_array_equal
+    assert_array_compare(operator.__eq__, actual, desired, err_msg=err_msg,
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/numpy/testing/_private/utils.py", line 921, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Arrays are not equal
+
+Mismatched elements: 16 / 32 (50%)
+Max absolute difference among violations: 2.3841858e-07
+Max relative difference among violations: 7.68101e-08
+ ACTUAL: array([[0.388   , 0.389   , 0.39    , 0.391   , 0.392   , 0.393   ,
+        0.394   , 0.395   ],
+       [0.388   , 0.389   , 0.39    , 0.391   , 0.392   , 0.393   ,...
+ DESIRED: array([[0.388   , 0.389   , 0.39    , 0.391   , 0.392   , 0.393   ,
+        0.394   , 0.395   ],
+       [0.388   , 0.389   , 0.39    , 0.391   , 0.392   , 0.393   ,...
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.377s
+
+FAILED (failures=1)
