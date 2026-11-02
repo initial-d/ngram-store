@@ -1,0 +1,33 @@
+.........................../llm-align/duyimin/ngram-external-build-20261102/source2/tools/cotraining_groups.py:490: UserWarning: Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:760.)
+  return torch.sparse_coo_tensor(index, values, gradient.shape,
+.........ss.ss...............WARNING clustering 512 points to 512 centroids: please provide at least 19968 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+........./llm-align/duyimin/ngram-external-build-20261102/source2/src/ftindex.cc: In function ‘FTIndex* ftindex_map_from_buffer(void*, size_t*)’:
+/llm-align/duyimin/ngram-external-build-20261102/source2/mylib/include/pub/pub_malloc.h:16:82: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   16 | #define pub_calloc(num, size)                   pub_calloc_detail((num), (size), __FILE__, __FUNCTION__, __LINE__)
+      |                                                                                  ^~~~~~~~
+/llm-align/duyimin/ngram-external-build-20261102/source2/src/ftindex.cc:461:31: note: in expansion of macro ‘pub_calloc’
+  461 |         if (!(fti = (FTIndex*)pub_calloc(1, sizeof(*fti)))) return NULL;
+      |                               ^~~~~~~~~~
+.............................................................................................sssssssssssss.......
+----------------------------------------------------------------------
+Ran 178 tests in 76.163s
+
+OK (skipped=17)

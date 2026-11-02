@@ -125,8 +125,14 @@ aggregates is smaller/faster on these references. Grouped parameters instead
 retain the demonstrated training-update geometry and a broader certified query
 space. Keep the stronger precomputation baseline in serving comparisons.
 
-Construction currently uses Python incidence lists/dictionaries, O(N) maps and
-FP64 group accumulators. The large study peaks at about 5.4 GiB RSS; this is not
-a bounded-memory structural builder. Source initialization is released after
+The original `BagPartition.fit` uses resident Python incidence lists/dictionaries,
+O(N) maps and FP64 group accumulators. The earlier large end-to-end study peaks
+at about 5.4 GiB RSS. The optional [external constructor](external_incidence_build.md)
+now uses disk-backed sorts, exact signature matching and ordered accumulation:
+the fresh isolated fit/means baseline falls from 3,140.7 to 95.0 MiB RSS at a
+64 MiB managed budget, taking 23.3 to 116.6 seconds. All mapping/size/mean bytes
+and the existing native trace match. [Complete costs and limits](external_incidence_evidence_20261102/README.md).
+This budget does not cap RSS or OS cache. Preprocessing, runtime materialization
+and native export retain separate memory costs. Source initialization is released after
 conversion, and reordered native ID maps use an additional `8*N` bytes to avoid
 per-row filesystem seeks. C store handles remain frozen and single-worker.

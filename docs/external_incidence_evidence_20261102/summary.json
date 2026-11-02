@@ -1,0 +1,175 @@
+{
+  "source_reports_sha256": {
+    "report": "7df9efd12940972182f869ce9f2f52cc8e5e8cc442986e8309153391fb9fc3a8",
+    "preparation": "e0eb7adbe2208a2a92369274a51feea32947fafa4679b004546a77e9ab63fcc3",
+    "verifier": "0a448e914e8869edfd175ad372a035d73691ac69bb29cf138bd163ebdda9eaa3"
+  },
+  "runs": [
+    {
+      "rows": 250000,
+      "method": "legacy",
+      "managed_memory_mib": null,
+      "groups": 107017,
+      "peak_rss_mib": 623.0390625,
+      "total_seconds": 4.608694975962862,
+      "partition_seconds": 3.2101957420818508,
+      "projection_seconds": 1.2661475951317698,
+      "sampled_workspace_mib": 109.14095687866211,
+      "final_artifact_mib": 109.14095687866211,
+      "temporary_accumulator_mib": 0.0,
+      "rss_reduction_fraction": 0.0,
+      "rss_reduction_factor": 1.0,
+      "build_time_factor": 1.0,
+      "all_output_bytes_identical": null
+    },
+    {
+      "rows": 250000,
+      "method": "external",
+      "managed_memory_mib": 64,
+      "groups": 107017,
+      "peak_rss_mib": 54.66015625,
+      "total_seconds": 13.624479249119759,
+      "partition_seconds": 10.563750183908269,
+      "projection_seconds": 3.0571206430904567,
+      "sampled_workspace_mib": 316.2508897781372,
+      "final_artifact_mib": 109.14161777496338,
+      "temporary_accumulator_mib": 209.017578125,
+      "rss_reduction_fraction": 0.9122684923948889,
+      "rss_reduction_factor": 11.398413492460516,
+      "build_time_factor": 2.9562553651694623,
+      "all_output_bytes_identical": {
+        "mapping": 2000000,
+        "sizes": 856136,
+        "means": 109585408
+      }
+    },
+    {
+      "rows": 1000000,
+      "method": "legacy",
+      "managed_memory_mib": null,
+      "groups": 267612,
+      "peak_rss_mib": 2012.30078125,
+      "total_seconds": 13.373967102030292,
+      "partition_seconds": 7.902275617932901,
+      "projection_seconds": 4.778799629071727,
+      "sampled_workspace_mib": 278.6413459777832,
+      "final_artifact_mib": 278.6413459777832,
+      "temporary_accumulator_mib": 0.0,
+      "rss_reduction_fraction": 0.0,
+      "rss_reduction_factor": 1.0,
+      "build_time_factor": 1.0,
+      "all_output_bytes_identical": null
+    },
+    {
+      "rows": 1000000,
+      "method": "external",
+      "managed_memory_mib": 64,
+      "groups": 267612,
+      "peak_rss_mib": 66.87890625,
+      "total_seconds": 52.1193814878352,
+      "partition_seconds": 42.14611145481467,
+      "projection_seconds": 9.958828659961,
+      "sampled_workspace_mib": 793.6913442611694,
+      "final_artifact_mib": 278.6420087814331,
+      "temporary_accumulator_mib": 522.6796875,
+      "rss_reduction_fraction": 0.9667649553818409,
+      "rss_reduction_factor": 30.088721453186146,
+      "build_time_factor": 3.897077141749735,
+      "all_output_bytes_identical": {
+        "mapping": 8000000,
+        "sizes": 2140896,
+        "means": 274034688
+      }
+    },
+    {
+      "rows": 1855907,
+      "method": "legacy",
+      "managed_memory_mib": null,
+      "groups": 360088,
+      "peak_rss_mib": 3140.67578125,
+      "total_seconds": 23.263457354158163,
+      "partition_seconds": 14.135997272096574,
+      "projection_seconds": 8.689080605050549,
+      "sampled_workspace_mib": 382.71557998657227,
+      "final_artifact_mib": 382.71557998657227,
+      "temporary_accumulator_mib": 0.0,
+      "rss_reduction_fraction": 0.0,
+      "rss_reduction_factor": 1.0,
+      "build_time_factor": 1.0,
+      "all_output_bytes_identical": null
+    },
+    {
+      "rows": 1855907,
+      "method": "external",
+      "managed_memory_mib": 64,
+      "groups": 360088,
+      "peak_rss_mib": 94.9921875,
+      "total_seconds": 116.5788890060503,
+      "partition_seconds": 99.47318756603636,
+      "projection_seconds": 17.081062393961474,
+      "sampled_workspace_mib": 1071.8527145385742,
+      "final_artifact_mib": 382.7162437438965,
+      "temporary_accumulator_mib": 703.296875,
+      "rss_reduction_fraction": 0.9697542203919588,
+      "rss_reduction_factor": 33.06246401842257,
+      "build_time_factor": 5.0112452001986165,
+      "all_output_bytes_identical": {
+        "mapping": 14847256,
+        "sizes": 2880704,
+        "means": 368730112
+      }
+    },
+    {
+      "rows": 1855907,
+      "method": "external",
+      "managed_memory_mib": 128,
+      "groups": 360088,
+      "peak_rss_mib": 71.71484375,
+      "total_seconds": 102.48242692789063,
+      "partition_seconds": 85.22908642096445,
+      "projection_seconds": 17.233892978169024,
+      "sampled_workspace_mib": 1071.8527154922485,
+      "final_artifact_mib": 382.7162446975708,
+      "temporary_accumulator_mib": 703.296875,
+      "rss_reduction_fraction": 0.9771657920954014,
+      "rss_reduction_factor": 43.793943025219235,
+      "build_time_factor": 4.405296485716586,
+      "all_output_bytes_identical": {
+        "mapping": 14847256,
+        "sizes": 2880704,
+        "means": 368730112
+      }
+    },
+    {
+      "rows": 1855907,
+      "method": "external",
+      "managed_memory_mib": 256,
+      "groups": 360088,
+      "peak_rss_mib": 109.50390625,
+      "total_seconds": 97.26112359110266,
+      "partition_seconds": 80.3366336710751,
+      "projection_seconds": 16.901588526088744,
+      "sampled_workspace_mib": 1071.8527154922485,
+      "final_artifact_mib": 382.7162446975708,
+      "temporary_accumulator_mib": 703.296875,
+      "rss_reduction_fraction": 0.9651336483365318,
+      "rss_reduction_factor": 28.680947454785432,
+      "build_time_factor": 4.180854208831431,
+      "all_output_bytes_identical": {
+        "mapping": 14847256,
+        "sizes": 2880704,
+        "means": 368730112
+      }
+    }
+  ],
+  "preparation_seconds": 34.506414401112124,
+  "preparation_peak_rss_mib": 324.46875,
+  "resident_verifier_peak_rss_mib": 484.578125,
+  "limitations": [
+    "Shared warm CPU/file cache; one fresh worker per build.",
+    "Managed memory is not a hard process RSS or OS page-cache cap.",
+    "Corpus/JSON preparation, runtime materialization and native packing are separate.",
+    "Workspace disk is sampled at runs/merges/stage boundaries, not a continuous physical-disk peak.",
+    "Only actual finite trained row prefixes; no new training or semantic/LLM quality claim."
+  ]
+}

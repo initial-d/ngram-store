@@ -1,0 +1,6 @@
+{
+  "method": "external",
+  "memory_mib": 64,
+  "input": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/input.json",
+  "output": "/llm-align/duyimin/ngram-external-build-20261102/results2/1855907-external-64"
+}

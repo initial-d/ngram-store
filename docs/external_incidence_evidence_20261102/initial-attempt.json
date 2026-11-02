@@ -1,0 +1,9 @@
+{
+  "time_utc": "2026-11-02T14:01:28.413998+00:00",
+  "source": "25ed5e6aba7aaf95460099bbae7b90b2925f2f01",
+  "interrupted_own_cpu_processes": {
+    "1309491": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python -m tools.benchmark_external_incidence --inputs /llm-align/duyimin/ngram-external-build-20261102/inputs --output-dir /llm-align/duyimin/ngram-external-build-20261102/results ",
+    "1309509": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python -m tools.benchmark_external_incidence --worker /llm-align/duyimin/ngram-external-build-20261102/results/250000-external-64-job.json "
+  },
+  "reason": "Per-bag disk payload truncation/seek/flush has excessive I/O waiting; replace with bounded small-bag buffer and explicit spill. Completed legacy run and incomplete attempt artifacts are preserved. No GPU process inspected/stopped."
+}

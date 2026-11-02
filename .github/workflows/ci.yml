@@ -156,6 +156,11 @@ jobs:
         run: |
           cd /tmp
           python "$GITHUB_WORKSPACE/tools/check_memory_wheel.py"
+      - name: Verify installed NumPy-only incidence extra
+        run: |
+          python -m pip install 'meft-memory[incidence]' --find-links /tmp/meft-wheels
+          cd /tmp
+          python "$GITHUB_WORKSPACE/tools/check_incidence_wheel.py"
       - uses: actions/upload-artifact@v4
         with:
           name: meft-memory-${{ matrix.os }}

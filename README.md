@@ -121,6 +121,7 @@ external data or GPU. It checks integration, not representative compression.
 | [1.85M-row structural applicability](docs/large_structural_evidence_20261031/README.md) | 27 layouts and 108 fresh query workers; shared SGNS updates are almost collinear, final weights retain initialization; extra structural savings stay below 0.63%, INT8 remains larger than raw, and broad queries are slower |
 | [Certified co-training and independent planner controls](docs/cotraining_evidence_20261031/README.md) | 18 matched CPU training runs; 1.86M-row subset groups to 360k parameter rows without large-model retraining; raw certified queries improve 33.5× over encoded certified queries but trail raw mmap; isolated DATrie adds 11.1–11.8% on canonical small tables, while byte dedup is stronger |
 | [Independent corpus, complete FAISS controls and fused native query](docs/cross_corpus_evidence_20261102/README.md) | enwik8 prefix: 18 dense/tied pairs; 581 codec candidates yield 12.33–40.47% extra complete saving at the fixed 0.1% SGNS loss budget; high-order registered queries beat selected direct codecs; unchanged 1.86M-row native total path improves 3.04× with identical output bytes; full OOV hybrid and precomputed-word controls remain stronger limits |
+| [Disk-backed incidence construction](docs/external_incidence_evidence_20261102/README.md) | Same 1.86M trained rows: 64 MiB managed budget lowers build RSS 3,140.7 → 95.0 MiB (33.06×), taking 23.3 → 116.6 seconds; all partition/mean bytes and the earlier native query outputs match; preprocessing/runtime costs remain separate |
 | [TinyEngram/Qwen trained integration](docs/tinyengram_qwen_evidence_20261030/README.md) / [CUDA controls](docs/qwen_cuda_performance_20261030/README.md) | Preserved trained outputs and measured CPU/device costs; native lookup remains slower than dense offload on these traces |
 
 Official DeepSeek Engram verification uses its small demonstration, not a
@@ -132,6 +133,10 @@ DATrie bridge and FastText facade require Linux x86-64. Handles are frozen and
 single-worker; cache budgets do not bound RSS. Structural planning holds full
 rows/maps offline. Trusted legacy metadata/index formats retain their own
 limits. [C ABI and runtime boundaries](docs/native_ngram_memory.md).
+For certified aggregate projection, the NumPy-only
+[external incidence constructor](docs/external_incidence_build.md) avoids
+resident full-table signatures and accumulators; native packing and runtime
+map loading retain their separate memory requirements.
 
 ## History, citation and contribution
 

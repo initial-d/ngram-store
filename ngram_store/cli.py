@@ -5,6 +5,7 @@ from importlib import import_module
 import json
 import os
 from pathlib import Path
+import shutil
 import struct
 import sys
 import tempfile
@@ -114,6 +115,11 @@ def main(argv=None):
     pack.add_argument('--mode',choices=('layout','exact','joint'),default='exact')
     pack.add_argument('--cosine',type=float,default=.99); pack.add_argument('--norm-ratio',type=float,default=.99)
     pack.add_argument('--max-block-bytes',type=int,default=8192); pack.add_argument('--deduplicate',action='store_true')
+    compact=commands.add_parser('compact-bags',help='Build exact incidence groups and FP32 group means with disk-backed buffers.')
+    compact.add_argument('--input',type=Path,required=True); compact.add_argument('--dim',type=int,required=True)
+    compact.add_argument('--bag-ids',type=Path,required=True); compact.add_argument('--bag-offsets',type=Path,required=True)
+    compact.add_argument('--protected-ids',type=Path,help='Raw uint64 independently addressed IDs that must remain singletons.')
+    compact.add_argument('--output',type=Path,required=True); compact.add_argument('--memory-mib',type=int,default=64)
     inspect=commands.add_parser('inspect',help='Inspect row shape, storage bytes and fidelity contract.')
     query=commands.add_parser('query',help='Query original row IDs or registered string keys.')
     for command in (inspect,query):
@@ -125,7 +131,31 @@ def main(argv=None):
     for name,(_,help_text) in FORWARD.items():commands.add_parser(name,help=help_text,add_help=False)
     args=parser.parse_args(argv)
     try:
-        if args.command=='pack':
+        if args.command=='compact-bags':
+            module=import_module('meft_memory._runtime.external_cotraining')
+            if args.dim<=0:raise ValueError('dim must be positive')
+            rows,tail=divmod(args.input.stat().st_size,args.dim*4)
+            if not rows or tail:raise ValueError('complete nonempty FP32 rows required')
+            output=args.output.resolve()
+            output.mkdir(parents=True,exist_ok=False)
+            try:
+                partition=module.fit_external(module.iter_bag_files(args.bag_ids,args.bag_offsets),
+                    rows,output/'partition',memory_bytes=args.memory_mib*1024**2,
+                    protected=module.iter_protected_ids(args.protected_ids) if args.protected_ids else ())
+                projected=partition.project_file(args.input,args.dim,output/'means.f32',
+                    memory_bytes=args.memory_mib*1024**2)
+                partition.save_npz(output/'domain.npz')
+                result={'partition':partition.summary(),'projection':projected,
+                    'source_row_bytes_preserved':False,'mean_row_ids':'Group IDs from domain.npz mapping.',
+                    'contract':'Complete certified bag sums/means in real arithmetic; reject incomplete groups.',
+                    'limitations':['Managed buffers are not a hard RSS or filesystem page-cache cap.',
+                        'Runtime map loading and native packing have separate memory costs.',
+                        'Native numeric lookup alone does not enforce the bag certificate.']}
+                (output/'compact.json').write_text(json.dumps(result,indent=2)+'\n')
+            except BaseException:
+                shutil.rmtree(output)
+                raise
+        elif args.command=='pack':
             result=pack_store(args.input,args.output,args.dim,native_library=args.native_library,
                 keys=read_keys(args.keys) if args.keys else None,structural_library=args.structural_library,
                 mode=args.mode,cosine=args.cosine,norm_ratio=args.norm_ratio,

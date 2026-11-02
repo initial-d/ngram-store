@@ -1,0 +1,6 @@
+{
+  "method": "legacy",
+  "memory_mib": null,
+  "input": "/llm-align/duyimin/ngram-external-build-20261102/inputs/250000/input.json",
+  "output": "/llm-align/duyimin/ngram-external-build-20261102/results2/250000-legacy"
+}

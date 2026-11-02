@@ -6,6 +6,8 @@ from ._runtime.native_row_store import NativeRows, pack_native
 __version__ = "0.4.0"
 
 _ADAPTERS = {
+    "ExternalBagPartition": "external_cotraining",
+    "fit_external": "external_cotraining",
     "BagPartition": "cotraining_groups",
     "CertifiedBagPlan": "cotraining_groups",
     "CertifiedBagRows": "cotraining_groups",
