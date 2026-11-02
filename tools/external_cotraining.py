@@ -352,6 +352,76 @@ class ExternalBagPartition:
             raise ValueError('external partition semantics mismatch')
         return partition
 
+    def export_native(self, means, dim, output, *, memory_bytes=64 << 20,
+                      block_rows=8, expected_means_sha256=None):
+        """Stream raw canonical rows and the original-ID map into MEFTNAT1.
+
+        Group IDs are already dense physical IDs, so neither a full forwarding
+        dictionary nor an expanded N-row table is needed. Descriptors are written
+        one at a time. Verification/runtime RSS has a separate contract.
+        """
+        from .native_row_store import HEADER, DESC, resolve_block_rows
+        memory_bytes = _budget(memory_bytes)
+        if type(dim) is not int or not 0 < dim <= memory_bytes // 64 // 4:
+            raise ValueError('dimension must fit the managed row buffer')
+        block_rows = resolve_block_rows(dim * 4, block_rows, memory_bytes // 64)
+        means, output = Path(means), Path(output)
+        summary = self.summary()
+        nrows, groups = summary['original_rows'], summary['group_rows']
+        if output.exists():
+            raise FileExistsError(output)
+        if means.stat().st_size != groups * dim * 4:
+            raise ValueError('matching FP32 group means required')
+        output.parent.mkdir(parents=True, exist_ok=True)
+        blocks = (groups + block_rows - 1) // block_rows
+        payload_start = HEADER.size + nrows * 8 + blocks * DESC.size
+        capacity = min(65536, memory_bytes // 64)
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(mode='w+b', prefix='.native-', dir=output.parent,
+                                             delete=False) as target:
+                temporary = Path(target.name)
+                target.write(HEADER.pack(b'MEFTNAT1', 2, nrows, dim * 4, groups, block_rows, blocks))
+                digest = hashlib.sha256()
+                with (self.path / 'mapping.u64').open('rb') as mapping:
+                    count = 0
+                    for chunk in iter(lambda: mapping.read(capacity), b''):
+                        if len(chunk) % 8 or any(gid >= groups for gid, in U64.iter_unpack(chunk)):
+                            raise ValueError('invalid forwarding group ID')
+                        count += len(chunk) // 8
+                        digest.update(chunk)
+                        target.write(chunk)
+                if count != nrows or digest.hexdigest() != self.metadata['files_sha256']['mapping.u64']:
+                    raise ValueError('external mapping changed during export')
+                for block in range(blocks):
+                    size = min(block_rows, groups - block * block_rows) * dim * 4
+                    target.write(DESC.pack(payload_start + block * block_rows * dim * 4, size, size, 0))
+                digest = hashlib.sha256()
+                with means.open('rb') as source:
+                    count = 0
+                    for chunk in iter(lambda: source.read(capacity), b''):
+                        if len(chunk) % 4 or not np.isfinite(np.frombuffer(chunk, dtype='<f4')).all():
+                            raise ValueError('finite FP32 group means required')
+                        count += len(chunk)
+                        digest.update(chunk)
+                        target.write(chunk)
+                if count != groups * dim * 4 or (expected_means_sha256 is not None and
+                        digest.hexdigest() != expected_means_sha256):
+                    raise ValueError('group means changed during export')
+                target.flush()
+                os.fsync(target.fileno())
+            os.link(temporary, output)  # Atomic publication without replacing an existing file.
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
+        return {'format': 'MEFTNAT1', 'format_version': 2, 'n_rows': nrows,
+                'row_bytes': dim * 4, 'unique_rows': groups, 'block_rows': block_rows,
+                'blocks': blocks, 'raw_blocks': blocks, 'compression': False,
+                'row_map_bytes': nrows * 8, 'artifact_bytes': output.stat().st_size,
+                'group_means_sha256': digest.hexdigest(), 'artifact_sha256': file_hash(output),
+                'managed_memory_bytes': memory_bytes,
+                'contract': 'Original IDs forward to projected group means; certified aggregates only.'}
+
     def save_npz(self, output):
         """Write the existing BagPartition reader format without loading its map."""
         output = Path(output)

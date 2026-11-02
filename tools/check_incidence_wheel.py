@@ -22,13 +22,24 @@ def main():
         np.asarray([0, 1, 2], dtype='<u8').tofile(root / 'ids')
         np.asarray([0, 2, 3], dtype='<u8').tofile(root / 'offsets')
         entry = next(e for e in distribution('meft-memory').entry_points if e.name == 'ngram-store')
-        sys.argv = ['ngram-store', 'compact-bags', '--input', str(root / 'rows'), '--dim', '2',
+        sys.argv = ['ngram-store', 'compact-bags', '--native', '--input', str(root / 'rows'), '--dim', '2',
                     '--bag-ids', str(root / 'ids'), '--bag-offsets', str(root / 'offsets'),
                     '--output', str(root / 'out'), '--memory-mib', '8']
         entry.load()()
         partition = ngram_store.BagPartition.load(root / 'out/domain.npz')
         assert partition.mapping.tolist() == [0, 0, 1]
-        assert (root / 'out/means.f32').read_bytes() == np.asarray([[2., 3.], [9., 10.]], dtype='<f4').tobytes()
+        with ngram_store.CertifiedBagRows(root / 'out') as store:
+            assert store.aggregate([[0, 1], [2]]).tobytes() == np.asarray([[4., 6.], [9., 10.]], dtype='<f4').tobytes()
+            try:
+                store.aggregate([[0]])
+            except ValueError:
+                pass
+            else:
+                raise AssertionError('incomplete group must be rejected')
+        # The wheel must include its own small training corpus and offline demo.
+        sys.argv = ['ngram-store', 'demo-bags', '--output', str(root / 'demo')]
+        entry.load()()
+        assert json.loads((root / 'demo/report.json').read_text())['status'] == 'passed'
         assert 'torch' not in sys.modules
         print(json.dumps({'status': 'passed', 'python': sys.version, 'numpy': np.__version__,
             'package': ngram_store.__file__, 'torch_loaded': False,
