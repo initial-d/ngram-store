@@ -1,6 +1,6 @@
 # Co-training contribution claims
 
-Updated 2026-11-01. This is a contribution framework for the next paper, not a
+Updated 2026-11-02. This is a contribution framework for the next paper, not a
 claim that the research area is unoccupied. Each statement has its own evidence
 and scope. Publication dates document disclosure; they do not establish novelty
 over all earlier work.
@@ -14,11 +14,12 @@ the compact parameters.** Storage/backend experiments support those contribution
 
 | ID | Paper-ready statement | Evidence and scope | Prior foundation / novelty status |
 | --- | --- | --- | --- |
-| C1 | We characterize an incidence-defined redundancy in learned n-gram tables, separating shared updates from initialization residuals and final-vector similarity. | Complete `(bag, multiplicity)` signatures; 18 matched CPU SGNS runs, two gradient rules and three orders/seeds. Update cosine is almost one under both rules; final cosine depends on the rule. This is not a statement about all prefix/suffix pairs, converged models or all optimizers. | The gradient identity follows from the chain rule. The application-specific measurement and exploitation are the contribution to evaluate; no first-of-kind assertion. |
-| C2 | We introduce an incidence-aware compact parameterization with a group-size gradient correction that preserves the demonstrated per-original-row SGD updates and group-mean trajectory in real arithmetic. | FP64 differential tests; paired FP32 training; held-out known-word SGNS objective relative difference at most 2.06e-8. Individual initialization residuals are removed. Registered coefficients and optimizer settings must match; row-specific effects and independently gated fields are outside the proof. | Parameter tying and reparameterization are established. The method combines the n-gram grouping criterion with an explicit optimizer/query contract. |
+| C1 | We characterize an incidence-defined redundancy in learned n-gram tables, separating shared updates from initialization residuals and final-vector similarity. | Complete `(bag, multiplicity)` signatures; matched CPU SGNS on TinyShakespeare and a fixed enwik8 prefix, two gradient rules and three orders/seeds. The new 18-pair replication retains almost-collinear updates, but final cosine is about 0.998 under legacy and 0.796–0.849 under average derivatives. This is not a statement about all prefix/suffix pairs, converged models or all optimizers. | The gradient identity follows from the chain rule. The application-specific measurement and exploitation are the contribution to evaluate; no first-of-kind assertion. |
+| C2 | We introduce an incidence-aware compact parameterization with a group-size gradient correction that preserves the demonstrated per-original-row SGD updates and group-mean trajectory in real arithmetic. | FP64 differential tests; paired FP32 training; maximum absolute held-out known-word SGNS relative difference 2.06e-8 on the original study and 5.79e-8 on the independent-corpus replication. Individual initialization residuals are removed. Registered coefficients and optimizer settings must match; row-specific effects and independently gated fields are outside the proof. | Parameter tying and reparameterization are established. The method combines the n-gram grouping criterion with an explicit optimizer/query contract. |
 | C3 | We characterize the maximal weight-independent bag-query domain of group-mean projection and provide executable certificates and sparse rejection witnesses. | Equal per-member counts are sufficient and necessary for all finite source tables in real arithmetic. `BagPartition.explain_query` returns a two-row algebraic witness for a rejected bag. OOV rejection is measured separately. A rejected query may still agree for particular weights. | A structured application of nullspace elimination and semantic equivalence, not a new fundamental theorem. The explicit domain/API/counterexamples are the method contribution to assess. |
 
 Sources: [trained evidence](cotraining_evidence_20261031/README.md),
+[independent-corpus replication](cross_corpus_evidence_20261102/README.md),
 [API and assumptions](cotraining_groups.md),
 [derived numerical ledger](cotraining_claims_20261101/claim-ledger.json).
 
@@ -26,7 +27,7 @@ Sources: [trained evidence](cotraining_evidence_20261031/README.md),
 
 | ID | Statement supported by this project | Boundary |
 | --- | --- | --- |
-| C4 | Certified bags can be compiled into weighted representative schedules, reducing the number of occurrences passed to the native reducer. | The large 512-bag trace represents 21,747 original occurrences with 15,892 weighted group occurrences and a 198,904-byte plan. This is an operation-count statement; repeated-ID dedup is not independently ablated, and this reduction does not account for the measured 33.5× codec bypass gain. Direct known-word precomputation remains the stronger serving control. |
+| C4 | Certified bags can be compiled into weighted representative schedules, reducing the number of occurrences passed to the native reducer. | The large 512-bag trace represents 21,747 original occurrences with 15,892 weighted group occurrences and a 198,904-byte plan. Fused counting plus cached digest/representatives now improves that identical native total path 3.04×. This is a combined implementation gain, not an isolated incidence operation-count or DATrie effect; the earlier 33.5× codec bypass is separate. Direct known-word precomputation remains the stronger serving control. |
 | C5 | The engine offers separate original-row byte-preserving and model-side aggregate-preserving contracts while retaining logical IDs and historical integrations. | Ordinary native storage preserves source bytes. Group-mean transformation changes source rows and admits only certified aggregates. Frozen native handles remain distinct from the mutable PyTorch model. Integration is a systems feature, not evidence of a new model architecture. |
 | C6 | Actual large trained tables contain substantial incidence-compaction opportunity, with measured costs that include maps, keys, certificates and query plans. | 1,855,907 updated n-gram rows yield 360,088 groups, or 80.60% fewer parameter-row slots. The large grouped model was not retrained, full word/output weights are unavailable, and construction peaks near 5.4 GiB RSS. This is not a whole-model memory or LLM-quality result. |
 | C7 | Production DATrie mark-compact has an independently measured contribution after canonical projection, distinct from global byte dedup and from source-row lossless layout. | On nine canonical small tables DATrie alone adds 11.1–11.8% complete saving; byte dedup alone adds 22.6–36.6%. Gains overlap. Original-byte incidence reorder adds only 0.06674% on the large source. The isolation study does not measure DATrie key-index capacity/latency. |
@@ -55,6 +56,19 @@ certificate-only speedups. Batching reduces known-word total path time about
 3.2–3.4× with byte-identical outputs; direct SQ6 remains faster. This adds
 systems evidence for the supported query domain, without changing quality,
 capacity or novelty claims.
+
+The [predeclared independent-corpus follow-up](cross_corpus_evidence_20261102/README.md)
+adds 18 paired training runs, all 513 base codec candidates and 171 direct-code
+dedup audits. Validation-selected groups save **12.33% / 37.12% / 40.47%**
+complete bytes at the same primary quality budget. All primary test point
+estimates pass, while the tighter 0.01% budget has four failures. Fused counts
+are also applied to the direct controls: registered 8/12-order total queries
+are now faster than selected direct SQ6 on both corpus prefixes; 4-order is
+near parity or slightly slower. Same-codec reconstruction remains less
+accurate, and full-domain hybrid remains larger/slower. Precomputed words
+still dominate restricted inference. This strengthens cross-corpus method and
+systems evidence, without establishing universal accuracy, serving or novelty
+dominance. The actual large native table is retimed, not retrained.
 
 ## Precise certificate result
 

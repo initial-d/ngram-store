@@ -26,6 +26,44 @@ class ArrayReader:
 
 @unittest.skipIf(np is None, 'NumPy required')
 class QueryContractTests(unittest.TestCase):
+    def test_fused_schedule_matches_independent_scalar_original_id_oracle(self):
+        import itertools
+        from collections import Counter
+        p = BagPartition([1, 0, 2, 0, 1], 'noncontiguous fixture', 1)
+        bags = [[i for i, n in enumerate(counts) for _ in range(n)]
+                for counts in itertools.product(range(3), repeat=5)]
+        word_ids = [0 if i % 2 else -1 for i in range(len(bags))]
+        byte_mapping = np.array([2, 0, 2, 1, 0])
+        for partition, fallback, code_mapping in ((None, False, None),
+                (None, False, byte_mapping), (p, False, None), (p, True, None)):
+            plan = schedule(bags, word_ids, partition, fallback=fallback, code_mapping=code_mapping)
+            ids, weights, offsets, accepted = [], [], [0], []
+            multi = p.sizes[p.mapping] > 1
+            rank = np.cumsum(multi) - 1
+            for bag in bags:
+                safe = partition is None or partition.certifies(bag)
+                accepted.append(safe or fallback)
+                if safe or fallback:
+                    if partition is None:
+                        mapped = bag if code_mapping is None else code_mapping[bag]
+                    elif safe:
+                        mapped = partition.mapping[bag]
+                    else:
+                        mapped = [len(p.sizes) + rank[i] if multi[i] else p.mapping[i] for i in bag]
+                    for row, count in sorted(Counter(map(int, mapped)).items()):
+                        ids.append(row)
+                        weights.append(count)
+                offsets.append(len(ids))
+            self.assertEqual(plan['ids'].tobytes(), np.asarray(ids, dtype='<i8').tobytes())
+            self.assertEqual(plan['weights'].tobytes(), np.asarray(weights, dtype='<f8').tobytes())
+            self.assertEqual(plan['offsets'].tobytes(), np.asarray(offsets, dtype='<i8').tobytes())
+            self.assertEqual(plan['accepted'].tolist(), accepted)
+            self.assertEqual(plan['denominators'].tolist(),
+                             [max(1, len(b) + (w >= 0)) for b, w in zip(bags, word_ids)])
+        for bag in ([True], [-1], [.5], [[0]]):
+            with self.assertRaises(ValueError):
+                schedule([bag], [-1])
+
     def setUp(self):
         self.source = np.array([[1., 2.], [3., 0.], [5., -2.]], dtype=np.float32)
         self.words = np.array([[.5, -.5]], dtype=np.float32)
@@ -105,6 +143,30 @@ class QueryContractTests(unittest.TestCase):
         other['runs'][0]['traces'] = {'known': 'changed'}
         with self.assertRaises(ValueError):
             merge_reports(base, other)
+
+    def test_complete_grid_accepts_dedup_controls_without_a_fake_rate_phase(self):
+        def variant(name, size):
+            return {'name': name, 'model_bytes': size,
+                'known_word_aggregate_fidelity': {'global_relative_l2': 0.},
+                'quality': {split: {'loss_relative_change': 0., 'discrimination_change': 0.}
+                            for split in ('validation', 'test')}}
+        run = {'order': 4, 'seed': 3, 'checkpoint_sha256': 'fixture',
+               'variants': [variant('direct-fp32', 100)], 'failures': [],
+               'selection': {'0.001': {'direct': None, 'group': None, 'hybrid': None}}}
+        base = {'status': 'completed', 'settings': {'max_discrimination_drop': .005,
+                 'max_aggregate_error': .05}, 'runs': [run]}
+        control = {'order': 4, 'seed': 3, 'checkpoint_sha256': 'fixture',
+                   'name': 'dedup-fp32', 'status': 'completed', 'variant': variant('dedup-fp32', 50)}
+        dedup = {'status': 'completed', 'runs': [control]}
+        merged = merge_reports(base, dedup=dedup)
+        self.assertEqual(merged['runs'][0]['selection']['0.001']['direct']['name'], 'dedup-fp32')
+        self.assertEqual(len(base['runs'][0]['variants']), 1)
+        with self.assertRaisesRegex(ValueError, 'duplicate dedup'):
+            merge_reports(merged, dedup=dedup)
+        failed = copy.deepcopy(dedup)
+        failed['status'] = 'completed-with-failures'
+        failed['runs'][0]['status'] = 'failed'
+        self.assertEqual(merge_reports(base, dedup=failed)['status'], 'completed-with-failures')
 
 
 @unittest.skipIf(np is None or importlib.util.find_spec('faiss') is None, 'NumPy/FAISS required')

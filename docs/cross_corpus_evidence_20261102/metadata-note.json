@@ -1,0 +1,37 @@
+{
+  "scope": "Metadata-only shallow-copy aliasing in the a472c23 dispatcher; frozen numeric reports remain unchanged.",
+  "authoritative_phase_metadata": "grid-orchestration.json",
+  "affected_embedded_metadata": "grid-report.json.gz / merged-report.json.gz checkpoint_orchestration.checkpoint_phases",
+  "differences": [
+    {
+      "name": "order-4-seed-3",
+      "settings_differences": {
+        "output_dir": {
+          "canonical": "/llm-align/duyimin/ngram-cross-corpus-20261102/faiss-results",
+          "embedded": "/llm-align/duyimin/ngram-cross-corpus-20261102/complete-grid"
+        }
+      }
+    },
+    {
+      "name": "order-4-seed-11",
+      "settings_differences": {
+        "output_dir": {
+          "canonical": "/llm-align/duyimin/ngram-cross-corpus-20261102/faiss-results",
+          "embedded": "/llm-align/duyimin/ngram-cross-corpus-20261102/complete-grid"
+        }
+      }
+    },
+    {
+      "name": "order-4-seed-7",
+      "settings_differences": {
+        "output_dir": {
+          "canonical": "/llm-align/duyimin/ngram-cross-corpus-20261102/faiss-results",
+          "embedded": "/llm-align/duyimin/ngram-cross-corpus-20261102/complete-grid"
+        }
+      }
+    }
+  ],
+  "measurements_or_fitting_settings_changed": false,
+  "source_fix": "Deep-copy prototype metadata before normalizing the combined grid output_dir.",
+  "frozen_report_sha256": "a5b45e24c665f33bbdd9ded2d52d61213c03e199bf84b34c592c08b63e4e5098"
+}

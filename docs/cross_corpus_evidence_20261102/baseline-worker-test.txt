@@ -1,0 +1,6 @@
+test_spawn_uses_separate_handles_and_captured_paths (tests.test_worker_memory.WorkerMemoryTest.test_spawn_uses_separate_handles_and_captured_paths) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 4.809s
+
+OK

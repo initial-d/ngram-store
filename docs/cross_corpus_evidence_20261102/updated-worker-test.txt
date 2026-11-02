@@ -1,0 +1,15 @@
+test_spawn_uses_separate_handles_and_captured_paths (tests.test_worker_memory.WorkerMemoryTest.test_spawn_uses_separate_handles_and_captured_paths) ... 
+  test_spawn_uses_separate_handles_and_captured_paths (tests.test_worker_memory.WorkerMemoryTest.test_spawn_uses_separate_handles_and_captured_paths) (backend='python') ... FAIL
+
+======================================================================
+FAIL: test_spawn_uses_separate_handles_and_captured_paths (tests.test_worker_memory.WorkerMemoryTest.test_spawn_uses_separate_handles_and_captured_paths) (backend='python')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/llm-align/duyimin/ngram-cross-corpus-20261102/evaluation-source/tests/test_worker_memory.py", line 132, in test_spawn_uses_separate_handles_and_captured_paths
+    self.assertEqual(process.exitcode, 0)
+AssertionError: -9 != 0
+
+----------------------------------------------------------------------
+Ran 1 test in 4.859s
+
+FAILED (failures=1)

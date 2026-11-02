@@ -24,6 +24,7 @@
 - [Matched co-training, 1.86M-row capacity and independent DATrie controls](cotraining_evidence_20261031/README.md)
 - [FAISS PQ/OPQ/RQ/clustering controls, fixed-budget capacity and batch certification](faiss_cotraining_evidence_20261101/README.md)
 - [Frozen FAISS codec query: batch compilation, identical outputs and total latency](faiss_schedule_evidence_20261102/README.md)
+- [Independent corpus: matched training, complete codec controls and fused native total query](cross_corpus_evidence_20261102/README.md)
 - [Sparse-block native miss latency](sparse_blocks_evidence_20261030/README.md)
 - [Native query/cache controls](native_query_evidence_20261030/README.md)
 - [Causal language-model quality controls](causal_lm_evidence_20261024/README.md)

@@ -21,6 +21,34 @@ except ImportError:
 
 @unittest.skipUnless(np is not None, 'optional NumPy required')
 class PartitionTest(unittest.TestCase):
+    def test_fused_counts_match_scalar_certificates_and_native_plan_order(self):
+        import itertools
+        from collections import Counter
+        # Group IDs need not follow representative original-ID order.
+        p = BagPartition([1, 0, 2, 0, 1], 'noncontiguous fixture', 1)
+        bags = [[i for i, n in enumerate(counts) for _ in range(n)]
+                for counts in itertools.product(range(3), repeat=5)]
+        compiled = p._compiled_groups(iter(bags))
+        expected = [p.certifies(b) for b in bags]
+        np.testing.assert_array_equal(compiled['accepted'], expected)
+        safe_bags = [b for b, safe in zip(bags, expected) if safe]
+        plan = CertifiedBagPlan(p, iter(safe_bags))
+        reps = p.representatives()
+        ids, weights, offsets = [], [], [0]
+        for bag in safe_bags:
+            for row, count in sorted(Counter(int(reps[i]) for i in bag).items()):
+                ids.append(row)
+                weights.append(count)
+            offsets.append(len(ids))
+        self.assertEqual(plan.ids.tobytes(), np.asarray(ids, dtype='<u8').tobytes())
+        self.assertEqual(plan.weights.tobytes(), np.asarray(weights, dtype='<f4').tobytes())
+        self.assertEqual(plan.offsets.tobytes(), np.asarray(offsets, dtype='<u8').tobytes())
+        self.assertEqual(plan.denominators.tolist(), [max(1, len(b)) for b in safe_bags])
+        self.assertEqual(CertifiedBagPlan(p, []).offsets.tolist(), [0])
+        for bag in ([True], [-1], [5], [.5], [[0]]):
+            with self.assertRaises(ValueError):
+                CertifiedBagPlan(p, [bag])
+
     def test_batch_certificate_matches_exhaustive_scalar_queries(self):
         import itertools
         p = BagPartition.fit([[0, 1], [2, 3], [4]], 5)
@@ -78,6 +106,11 @@ class PartitionTest(unittest.TestCase):
             loaded = BagPartition.load(path)
             self.assertEqual(loaded.summary(), p.summary())
             self.assertFalse(loaded.mapping.flags.writeable)
+            self.assertEqual(loaded.mapping_sha256,
+                             hashlib.sha256(loaded.mapping.astype('<u8').tobytes()).hexdigest())
+            for array in (loaded.mapping, loaded.sizes):
+                with self.assertRaises(ValueError):
+                    array.flags.writeable = True
         for bags in ([[True]], [[-1]], [[3]], [[.5]]):
             with self.assertRaises(ValueError):
                 BagPartition.fit(bags, 3)

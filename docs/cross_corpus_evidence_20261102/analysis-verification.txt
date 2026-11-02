@@ -1,0 +1,10 @@
+PASS: 18 paired trainings, 9 complete 57-candidate grids, 27 byte-identical query retimings
+PASS: frozen report hash chain, canonical phase hashes, current engine source hashes
+PASS: reject duplicate training pair -> all 18 predeclared training pairs required
+PASS: reject duplicate query family/seed -> exact complete selected-codec retiming required
+PASS: reject mixed training checkpoint -> query differs from selected trained checkpoint/codec
+PASS: reject mismatched selected codec cost -> query differs from selected trained checkpoint/codec
+PASS: reject changed output bytes -> selected query domain/byte equivalence failed
+PASS: reject rejected registered work -> all 512 known bags must be accepted
+PASS: reject missing quality-budget selection -> exact validation selection grid required
+PASS: reject failed native equality -> native plan/output equivalence required

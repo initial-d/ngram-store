@@ -1,0 +1,165 @@
+{
+  "source_commit": "0db92f18eb685d14cafc9a556301b316db41a0a5",
+  "source_files_sha256": {
+    "benchmark_native_plan.py": "0baef04de3de05056ad659438cffc39d9a7a73e0a2e54bdbe14a5faa08a86e56",
+    "cotraining_groups.py": "d883c165a6b6257c43333f6777cd5f2d33a8b959ba22f135a9ae6d95b579a75f"
+  },
+  "reference_module_sha256": "dd2cd56c0de658d82a8f0f94aeade1dc5ff68f2f0c9b47a3fdee5a652f95c209",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cross-corpus-20261102/evaluation-source/tools/benchmark_native_plan.py --partition /llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-raw-blocks/domain.npz --bags /llm-align/duyimin/ngram-cross-corpus-20261102/large-native-bags.json --reference-module /llm-align/duyimin/ngram-cross-corpus-20261102/reference-groups.py --native-store /llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-raw-blocks --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so --output /llm-align/duyimin/ngram-cross-corpus-20261102/native-retiming.json --repeat 15 --warmup 2",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "cpu": "{\n   \"lscpu\": [\n      {\n         \"field\": \"\u67b6\u6784\uff1a\",\n         \"data\": \"x86_64\"\n      },{\n         \"field\": \"CPU \u8fd0\u884c\u6a21\u5f0f\uff1a\",\n         \"data\": \"32-bit, 64-bit\"\n      },{\n         \"field\": \"Address sizes:\",\n         \"data\": \"43 bits physical, 48 bits virtual\"\n      },{\n         \"field\": \"\u5b57\u8282\u5e8f\uff1a\",\n         \"data\": \"Little Endian\"\n      },{\n         \"field\": \"CPU:\",\n         \"data\": \"256\"\n      },{\n         \"field\": \"\u5728\u7ebf CPU \u5217\u8868\uff1a\",\n         \"data\": \"0-254\"\n      },{\n         \"field\": \"\u79bb\u7ebf CPU \u5217\u8868\uff1a\",\n         \"data\": \"255\"\n      },{\n         \"field\": \"\u5382\u5546 ID\uff1a\",\n         \"data\": \"AuthenticAMD\"\n      },{\n         \"field\": \"\u578b\u53f7\u540d\u79f0\uff1a\",\n         \"data\": \"AMD EPYC 7742 64-Core Processor\"\n      },{\n         \"field\": \"CPU \u7cfb\u5217\uff1a\",\n         \"data\": \"23\"\n      },{\n         \"field\": \"\u578b\u53f7\uff1a\",\n         \"data\": \"49\"\n      },{\n         \"field\": \"\u6bcf\u4e2a\u6838\u7684\u7ebf\u7a0b\u6570\uff1a\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"\u6bcf\u4e2a\u5ea7\u7684\u6838\u6570\uff1a\",\n         \"data\": \"64\"\n      },{\n         \"field\": \"\u5ea7\uff1a\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"\u6b65\u8fdb\uff1a\",\n         \"data\": \"0\"\n      },{\n         \"field\": \"Frequency boost:\",\n         \"data\": \"disabled\"\n      },{\n         \"field\": \"CPU \u6700\u5927 MHz\uff1a\",\n         \"data\": \"2250.0000\"\n      },{\n         \"field\": \"CPU \u6700\u5c0f MHz\uff1a\",\n         \"data\": \"0.0000\"\n      },{\n         \"field\": \"BogoMIPS\uff1a\",\n         \"data\": \"4500.00\"\n      },{\n         \"field\": \"\u6807\u8bb0\uff1a\",\n         \"data\": \"fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate sme ssbd mba sev ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif umip rdpid overflow_recov succor smca\"\n      },{\n         \"field\": \"\u865a\u62df\u5316\uff1a\",\n         \"data\": \"AMD-V\"\n      },{\n         \"field\": \"L1d \u7f13\u5b58\uff1a\",\n         \"data\": \"4 MiB (128 instances)\"\n      },{\n         \"field\": \"L1i \u7f13\u5b58\uff1a\",\n         \"data\": \"4 MiB (128 instances)\"\n      },{\n         \"field\": \"L2 \u7f13\u5b58\uff1a\",\n         \"data\": \"64 MiB (128 instances)\"\n      },{\n         \"field\": \"L3 \u7f13\u5b58\uff1a\",\n         \"data\": \"512 MiB (32 instances)\"\n      },{\n         \"field\": \"NUMA \u8282\u70b9\uff1a\",\n         \"data\": \"8\"\n      },{\n         \"field\": \"NUMA \u8282\u70b90 CPU\uff1a\",\n         \"data\": \"0-15,128-143\"\n      },{\n         \"field\": \"NUMA \u8282\u70b91 CPU\uff1a\",\n         \"data\": \"16-31,144-159\"\n      },{\n         \"field\": \"NUMA \u8282\u70b92 CPU\uff1a\",\n         \"data\": \"32-47,160-175\"\n      },{\n         \"field\": \"NUMA \u8282\u70b93 CPU\uff1a\",\n         \"data\": \"48-63,176-191\"\n      },{\n         \"field\": \"NUMA \u8282\u70b94 CPU\uff1a\",\n         \"data\": \"64-79,192-207\"\n      },{\n         \"field\": \"NUMA \u8282\u70b95 CPU\uff1a\",\n         \"data\": \"80-95,208-223\"\n      },{\n         \"field\": \"NUMA \u8282\u70b96 CPU\uff1a\",\n         \"data\": \"96-111,224-239\"\n      },{\n         \"field\": \"NUMA \u8282\u70b97 CPU\uff1a\",\n         \"data\": \"112-127,240-254\"\n      },{\n         \"field\": \"Vulnerability Itlb multihit:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability L1tf:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Meltdown:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec store bypass:\",\n         \"data\": \"Mitigation; Speculative Store Bypass disabled via prctl and seccomp\"\n      },{\n         \"field\": \"Vulnerability Spectre v1:\",\n         \"data\": \"Mitigation; usercopy/swapgs barriers and __user pointer sanitization\"\n      },{\n         \"field\": \"Vulnerability Spectre v2:\",\n         \"data\": \"Mitigation; Full AMD retpoline, IBPB conditional, IBRS_FW, STIBP conditional, RSB filling\"\n      },{\n         \"field\": \"Vulnerability Srbds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsx async abort:\",\n         \"data\": \"Not affected\"\n      }\n   ]\n}\n",
+  "device": "cpu",
+  "partition_file_sha256": "5a783049e5f2f6a4ce1b37b84bce3607ecc63864ca40b2903ecc1f1f79f4880b",
+  "bags_file_sha256": "75783da6ae2ef8e72aaafebfc3549ab502cbd4bf013afb50c4177b37927242aa",
+  "partition": {
+    "original_rows": 1855907,
+    "group_rows": 360088,
+    "rows_in_nonsingleton_groups": 1696403,
+    "nonsingleton_groups": 200584,
+    "domain_bags": 142308,
+    "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+    "mapping_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "plan": {
+    "bags": 512,
+    "original_occurrences": 21747,
+    "group_occurrences": 15892,
+    "plan_bytes": 198904,
+    "partition_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb"
+  },
+  "plan_arrays_byte_identical": true,
+  "settings": {
+    "partition": "/llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-raw-blocks/domain.npz",
+    "bags": "/llm-align/duyimin/ngram-cross-corpus-20261102/large-native-bags.json",
+    "reference_module": "/llm-align/duyimin/ngram-cross-corpus-20261102/reference-groups.py",
+    "native_store": "/llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-raw-blocks",
+    "native_library": "/llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so",
+    "output": "/llm-align/duyimin/ngram-cross-corpus-20261102/native-retiming.json",
+    "repeat": 15,
+    "warmup": 2
+  },
+  "limitations": [
+    "Actual registered trace, unchanged weighted reducer; no new model-quality claim.",
+    "Shared warm CPU and bounded decoded cache, not exclusive or disk-cold latency.",
+    "Compilation includes original-ID validation/counts, certification and plan construction.",
+    "New partition has immutable buffers and cached digest; reference recomputes digest/representatives.",
+    "No fallback, OOV, arbitrary original-row fidelity or GPU performance claim.",
+    "RSS includes partition loading, validation and runtime; no isolated memory reduction claim."
+  ],
+  "native_table_sha256": "2e6131f707097ebcf9377338b31d0247c53f25974b754da168569821638e89e7",
+  "native_library_sha256": "49aa8e7e82c83e3ec0b103af62eeb3638d98a18a780a35bb5c80e435fc791c51",
+  "native_outputs_byte_identical": true,
+  "native_output_sha256": "939b42d08e95ba66d0202f8dd13ad5dc35e7a29d10806ce09a039d37b475bef7",
+  "timing": {
+    "compile_old": {
+      "samples_seconds": [
+        0.06300667813047767,
+        0.06328248186036944,
+        0.06291770096868277,
+        0.06284820893779397,
+        0.06293942080810666,
+        0.06301477993838489,
+        0.06279701506718993,
+        0.0630179918371141,
+        0.06299250083975494,
+        0.06318498379550874,
+        0.06341448193416,
+        0.0632057951297611,
+        0.0635772820096463,
+        0.06337900296784937,
+        0.06309705297462642
+      ],
+      "p50_ms": 63.017991837114096,
+      "p95_ms": 63.463321956805885
+    },
+    "compile_new": {
+      "samples_seconds": [
+        0.010238322895020247,
+        0.010316406143829226,
+        0.010224005905911326,
+        0.010244539938867092,
+        0.01018754905089736,
+        0.010166945168748498,
+        0.010140405967831612,
+        0.009653541026636958,
+        0.01007845695130527,
+        0.010233085136860609,
+        0.010161637095734477,
+        0.009588659042492509,
+        0.010154583025723696,
+        0.009619948221370578,
+        0.01021939585916698
+      ],
+      "p50_ms": 10.166945168748498,
+      "p95_ms": 10.266099800355732
+    },
+    "replay": {
+      "samples_seconds": [
+        0.015566032147035003,
+        0.01660317601636052,
+        0.01552824699319899,
+        0.01562853902578354,
+        0.015736792935058475,
+        0.016650947043672204,
+        0.015602488070726395,
+        0.01559731992892921,
+        0.016689777839928865,
+        0.015571689000353217,
+        0.01567861600778997,
+        0.01625257101841271,
+        0.015538583975285292,
+        0.0169026548974216,
+        0.01661979779601097
+      ],
+      "p50_ms": 15.67861600778997,
+      "p95_ms": 16.753640957176685
+    },
+    "dynamic_old": {
+      "samples_seconds": [
+        0.08036588598042727,
+        0.08000536495819688,
+        0.07961830496788025,
+        0.07993440609425306,
+        0.08000347902998328,
+        0.07972907205112278,
+        0.07981756096705794,
+        0.07986575295217335,
+        0.07971727009862661,
+        0.07980331382714212,
+        0.08022068603895605,
+        0.07984822196885943,
+        0.08019554312340915,
+        0.08008721913211048,
+        0.07958708610385656
+      ],
+      "p50_ms": 79.86575295217335,
+      "p95_ms": 80.26424602139741
+    },
+    "dynamic_new": {
+      "samples_seconds": [
+        0.026153492042794824,
+        0.02615872980095446,
+        0.026173396967351437,
+        0.026268030982464552,
+        0.026266214903444052,
+        0.027868167031556368,
+        0.026597263058647513,
+        0.026255249977111816,
+        0.026231085183098912,
+        0.02701938501559198,
+        0.026905823033303022,
+        0.02616955479606986,
+        0.02687879395671189,
+        0.026849949965253472,
+        0.02629401278682053
+      ],
+      "p50_ms": 26.268030982464552,
+      "p95_ms": 27.274019620381296
+    }
+  },
+  "peak_rss_bytes": 193810432,
+  "status": "completed"
+}
