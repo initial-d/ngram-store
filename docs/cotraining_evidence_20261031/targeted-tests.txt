@@ -1,0 +1,14 @@
+test_compiled_schedule_reduces_duplicates_and_rejects_partial_groups (tests.test_cotraining_groups.PartitionTest.test_compiled_schedule_reduces_duplicates_and_rejects_partial_groups) ... ok
+test_multiplicity_other_hosts_and_empty_rows_do_not_merge (tests.test_cotraining_groups.PartitionTest.test_multiplicity_other_hosts_and_empty_rows_do_not_merge) ... ok
+test_native_weighted_schedule_empty_bags_and_artifact_integrity (tests.test_cotraining_groups.PartitionTest.test_native_weighted_schedule_empty_bags_and_artifact_integrity) ... ok
+test_projection_preserves_only_certified_bag_sums (tests.test_cotraining_groups.PartitionTest.test_projection_preserves_only_certified_bag_sums) ... ok
+test_save_roundtrip_and_invalid_inputs (tests.test_cotraining_groups.PartitionTest.test_save_roundtrip_and_invalid_inputs) ... ok
+test_sparse_gradient_multiplicity_and_padding_guard (tests.test_cotraining_groups.TrainingTest.test_sparse_gradient_multiplicity_and_padding_guard) ... /llm-align/duyimin/ngram-cotraining-20261031/source/tools/cotraining_groups.py:264: UserWarning: Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:760.)
+  return torch.sparse_coo_tensor(index, values, gradient.shape,
+ok
+test_sparse_sgd_preserves_bag_function_and_group_mean_trajectory (tests.test_cotraining_groups.TrainingTest.test_sparse_sgd_preserves_bag_function_and_group_mean_trajectory) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.756s
+
+OK

@@ -1,0 +1,30 @@
+{
+  "category": "actual finite SGNS trained subset; certified bag aggregate transformation",
+  "source_commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/source/tools/benchmark_cotraining_capacity.py --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --corpus-zip /llm-align/duyimin/meft-cpu-capacity-20261030/enwik8.zip --output-dir /llm-align/duyimin/ngram-cotraining-20261031/large-results --native-library build/librows.so",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "torch": "2.11.0+cu130",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "cpu": "x86_64",
+  "device": "cpu",
+  "threads": 1,
+  "settings": {
+    "training_dir": "/llm-align/duyimin/meft-cpu-capacity-20261030/training2",
+    "corpus_zip": "/llm-align/duyimin/meft-cpu-capacity-20261030/enwik8.zip",
+    "output_dir": "/llm-align/duyimin/ngram-cotraining-20261031/large-results",
+    "native_library": "build/librows.so",
+    "query_words": 512,
+    "repeat": 8,
+    "seed": 42
+  },
+  "limitations": [
+    "One finite rare-center-coverage SGNS checkpoint, not convergence or LLM memory.",
+    "Registered changed-row subset, with original training-ID provenance; not a full-model export.",
+    "Individual source row bytes change; certified bag sums agree in real arithmetic only.",
+    "Queries use train-vocabulary known words occurring in held-out text; OOVs rejected and audited separately.",
+    "Complete bytes cover this subset, keys, source IDs, certificates, manifests and compiled plans; word/output model unavailable.",
+    "Shared CPU, OS page cache uncontrolled, not exclusive serving latency; no GPU process touched.",
+    "Wikipedia-derived enwik8; publish hashes/aggregates only; monetary/energy cost unmeasured."
+  ]
+}

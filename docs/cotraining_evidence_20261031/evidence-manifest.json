@@ -1,0 +1,193 @@
+{
+  "category": "CPU SGNS co-training, certified aggregate transformation and independent storage controls",
+  "implementation_commit": "29b2c1f64eba6201dd3ef38e8d2931d8cb5ce534",
+  "core_tests_commit": "80d3a011476da94e2715f971481d3bc2870ef804",
+  "device": "cpu; CUDA disabled",
+  "figure_inputs": "checked-in measured JSON; Matplotlib 3.11.1/NumPy 2.2.6",
+  "published_files": {
+    "README.md": {
+      "bytes": 13865,
+      "sha256": "15879db4382280f9b71fa4af18afcaed85ef479444dc6230d7f455e6f30821af"
+    },
+    "api-full-tests.txt": {
+      "bytes": 1612,
+      "sha256": "15e52a78f617324b105c33198f8ebe5478c794e4312b345d17771f7926c18bcf"
+    },
+    "average-protocol.json": {
+      "bytes": 2332,
+      "sha256": "4f3383e4f3b6f2d0e4a66054735b42cb907d1a1f3c7aec1e1f98a3d67e7b1735"
+    },
+    "average-report.json": {
+      "bytes": 562977,
+      "sha256": "4d81a554a6fb1e6e1eb0a77eb8e24a21413f376699d0e6fb914d42de82d9c604"
+    },
+    "cached-protocol.json": {
+      "bytes": 2417,
+      "sha256": "fd1a8c8eb21b91912461ba521006ad27fa9f1d7f6f1996ff6b7f0c59154bff6f"
+    },
+    "cached-report.json": {
+      "bytes": 260583,
+      "sha256": "90b384d5d149014698911f126667247eee67f3518f7df3631417b86ee5e1d432"
+    },
+    "capacity-and-strong-baselines.png": {
+      "bytes": 148878,
+      "sha256": "e925bc18bff31a1ec1e596a650360013fd1699186ff4a586b7d7a17d2ebccd11"
+    },
+    "capacity-and-strong-baselines.svg": {
+      "bytes": 85221,
+      "sha256": "e49b6068eb974190613485a98bf2b4862a73be48eba6fa130a1fbcd7583b164c"
+    },
+    "environment.json": {
+      "bytes": 8445,
+      "sha256": "6929a3b2789f80038868a3349b4b3727a1a48fdbec9d94a6bc95694dc5dabe08"
+    },
+    "final-audit.json": {
+      "bytes": 70815,
+      "sha256": "5de97df4b68a13e5d8d8c336b3d0046504bc00d4218c45245afc4bd036dcdd36"
+    },
+    "final-full-tests.txt": {
+      "bytes": 1638,
+      "sha256": "f56de2d1d84fa3d251afc38633f5d7b0e1555537af6bf8bae44ad6ff6cbb488f"
+    },
+    "final-installed-example.txt": {
+      "bytes": 1241,
+      "sha256": "0b2451085a63ef68367d61bb26dff56e201abe2630eba701a2e15a3a76385f5c"
+    },
+    "final-wheel-build.txt": {
+      "bytes": 724,
+      "sha256": "b912ca34cc692c5feb95587199c3776e5281a3c97fd06b4bb7f2eb7d7a7b9a3e"
+    },
+    "final-wheel-install.txt": {
+      "bytes": 620,
+      "sha256": "e744510fffe66580ae88fc3c1a9898c419a1536c9143468edf713a24d4267717"
+    },
+    "full-tests.txt": {
+      "bytes": 1595,
+      "sha256": "f12de9db3453090ce377cb2fe51d1ccfb38a9a48ea15f19167c7cdfdc29fc727"
+    },
+    "large-protocol.json": {
+      "bytes": 1895,
+      "sha256": "657846e1c1626d6a830b0bd4f62783d980cae0065a692951e62344789e349e7f"
+    },
+    "large-report.json": {
+      "bytes": 9274,
+      "sha256": "2e97a0ba44ead2c27daf5ff2d3e0d94d94565cb13420828698c09a1a72a9149d"
+    },
+    "layout-first-attempt.json": {
+      "bytes": 953,
+      "sha256": "7f092cf9c3e5fecfb0a9d7949e797e46c230d0b6c409d877e051b5baecae8773"
+    },
+    "layout-first-attempt.log": {
+      "bytes": 675,
+      "sha256": "7019a5ec49cdcc210a8caa279f7b6535b9cbf78c5a168c94948ac686535dff3a"
+    },
+    "layout-large-protocol.json": {
+      "bytes": 1406,
+      "sha256": "76b685e715136e12f788ebbf32318372629ccf0a50400c9b839e6cf6cf2d55ea"
+    },
+    "layout-large-report.json": {
+      "bytes": 6924,
+      "sha256": "9bc2b0a5afcf31860a19c1e4cfc37c5d02e68276c50901ab97c40bc9c8df68fe"
+    },
+    "layout-small-protocol.json": {
+      "bytes": 1329,
+      "sha256": "c53d1885df940cb257b470dd35192792ba006c3116233e872fe40560f7b9f29e"
+    },
+    "layout-small-report.json": {
+      "bytes": 49598,
+      "sha256": "3611f263008d5fbc536cd4795dbf07ae546e5d7eeeb856a9b58d345671a092ea"
+    },
+    "legacy-protocol.json": {
+      "bytes": 2328,
+      "sha256": "c0c76d8df63a0e47f96c4dd3835e1843a7201607450cc2fdbfab292d9c805b0b"
+    },
+    "legacy-report.json": {
+      "bytes": 563906,
+      "sha256": "778a89c3a88e9d89c957273ca205f002d289432bdaa89e756d040e97362232fc"
+    },
+    "planner-isolation-protocol.json": {
+      "bytes": 1402,
+      "sha256": "c406eb54fa9665315a105b260ae6908671c494b8f5820f6e1af7a8c633950723"
+    },
+    "planner-isolation-report.json": {
+      "bytes": 40511,
+      "sha256": "382197dc229c214cb3ee1acacae0ba9ed5b5812981b4c2d0caecb0573a1ef844"
+    },
+    "planner-isolation.png": {
+      "bytes": 168520,
+      "sha256": "55d70e7fca5956069e7ad632506c3a13116402d6e5c6d35f6f24d4098e8a5f0f"
+    },
+    "planner-isolation.svg": {
+      "bytes": 89479,
+      "sha256": "933d41f65cc835eb40e78e97260d6a7966d00cf1dda910f2ee3f7744a6f01643"
+    },
+    "plot_evidence.py": {
+      "bytes": 8630,
+      "sha256": "ae4f38efd40144c08e8dae09e19a2984000ff6dd85236943decddfeb6bfaeb44"
+    },
+    "query-cost-and-domain.png": {
+      "bytes": 130927,
+      "sha256": "ec43f4838a8f6d9bb86dc72d0815d33dd6a03f69569b3eeab2a960d095367bb4"
+    },
+    "query-cost-and-domain.svg": {
+      "bytes": 74704,
+      "sha256": "edb41dbcebd14e940156570d43c3614d0f519d9f17a4259e3118e6afd9a3352a"
+    },
+    "raw-block-evidence.json": {
+      "bytes": 3784,
+      "sha256": "ef0b6e98d1c122029e26bca6c2425c081fea3983458609a28b0ecb095a9b9cad"
+    },
+    "reproduction/README.md": {
+      "bytes": 3491,
+      "sha256": "9dd31a0ed492b73e5996784b36a10f950abbef2244c33c8b0d4102f1aff42f2a"
+    },
+    "reproduction/historical/api-run.sh.txt": {
+      "bytes": 1329,
+      "sha256": "d85b5c327a5cc85b7783db9d51e49010c15119178db8c5a46845928a76646652"
+    },
+    "reproduction/historical/isolation-run.sh.txt": {
+      "bytes": 812,
+      "sha256": "d80469f2509b6f963f50611711752ba904d0bfddacd40db522b453ac33a63b15"
+    },
+    "reproduction/historical/late-run.sh.txt": {
+      "bytes": 1176,
+      "sha256": "888bef22df99dac10dc3ce6636ebbac06d358be96b59aff7b70f3358cb529e7a"
+    },
+    "reproduction/historical/lifecycle-run.sh.txt": {
+      "bytes": 2460,
+      "sha256": "b8e887296e386d80e8461a502d0b59fd724a34e0cb48280019162e0d18a58a9d"
+    },
+    "reproduction/historical/map-run.sh.txt": {
+      "bytes": 2478,
+      "sha256": "109007b60b76a3b6b5b3512b04dc15ff8ea048cf63e456b6ca5d114b3e3a356f"
+    },
+    "reproduction/historical/raw-run.sh.txt": {
+      "bytes": 1253,
+      "sha256": "99b22f2e64073844a8007016d66a8fcf892d7827a5b5975410bce4ace65016ed"
+    },
+    "reproduction/historical/run.sh.txt": {
+      "bytes": 1880,
+      "sha256": "08f9351db44b78cd7c1feacee7b8374579c56eb77b36cf955b12b821387ae063"
+    },
+    "reproduction/historical/setup.sh.txt": {
+      "bytes": 944,
+      "sha256": "459d542fe87005336327730d06e625aab3347f00b4d1d54daae2c59fe37aead7"
+    },
+    "reproduction/rerun-small.sh": {
+      "bytes": 1415,
+      "sha256": "126a95eae2141583f05fddc3a3fe83a457ceee555a01f06a4ba9b2579d00fe74"
+    },
+    "targeted-tests.txt": {
+      "bytes": 1799,
+      "sha256": "3d5570c7c2f9526e71604bd32ea282ac78a188196fa4ee93ef5fa34dcb7c5797"
+    },
+    "training-dynamics.png": {
+      "bytes": 182642,
+      "sha256": "7cda404ed82aafd7044e2990277ba1090565c886a44c25658445dc9ad4302e13"
+    },
+    "training-dynamics.svg": {
+      "bytes": 85228,
+      "sha256": "a26e4c1fc9bf9ed64d13d9950fea209ce33b7c5297b8666366b1eb7ab160cb6a"
+    }
+  }
+}

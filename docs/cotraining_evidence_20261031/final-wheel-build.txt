@@ -1,0 +1,10 @@
+Looking in indexes: https://mirrors.aliyun.com/pypi/simple
+Processing ./.
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: meft-memory
+  Building wheel for meft-memory (pyproject.toml): started
+  Building wheel for meft-memory (pyproject.toml): finished with status 'done'
+  Created wheel for meft-memory: filename=meft_memory-0.4.0-py3-none-linux_x86_64.whl size=280077 sha256=fa896e2b60de89c6da108564b33098191f45ce75bc0fa20e9086126cd2d0db57
+  Stored in directory: /llm-align/duyimin/ngram-cotraining-20261031/pip-cache/wheels/e2/61/45/25c6b5faa9cf4051ce76cc126def4b64969515fdd3b52248d2
+Successfully built meft-memory

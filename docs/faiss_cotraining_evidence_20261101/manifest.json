@@ -1,0 +1,31 @@
+{
+  "numeric_analysis_source_commit": "e6d287014c2f5c2914ab255645cbfd48f05ed9a5",
+  "numeric_analyzer_sha256": "491dcc8fa1747c9e97eedf1730fd2378bc8793038c2f92a5ca0e5616371f825c",
+  "numeric_report_uncompressed_sha256": "bca3473b59327e6c141e70dfd7bfe5365310766b014b0b179e19ad4f9037a680",
+  "figure_renderer_source_sha256": "5e7aad68123db7969ecca382544f154dc13b4d46c68edf87e0807615b409c4f0",
+  "figure_note": "Redrawn from identical numeric analysis; layout and annotation changes only.",
+  "full_tests_source_commit": "e6d287014c2f5c2914ab255645cbfd48f05ed9a5",
+  "files": {
+    "README.md": "63f801b91bdae3b38a2f718e99bf16e1b18f298881055829cdc679d79932b081",
+    "analysis.json": "0a885989805e92fa7bc82653837c8abc3d45d67ac2268fd378ba8497ef15c20c",
+    "batch-certificates-final.json": "161356fbc12dd5c478bdf0e9bf42a686a72197229937b963e7487370f7270ba0",
+    "capacity-dynamic.svg": "35d9d4741ee22e00c98cd00aec68bb7eeb17785efc1cac4ec5b1e147027d5e3b",
+    "capacity-error.svg": "322ff12987bc28d2c2df4477bb2ee60d2072904d33fc0dcf8d05f9b3187cb32d",
+    "capacity-replay.svg": "ef60c2297bfb4c1f4da292b5c8b9c4c1df52dc86b0f0ade06519fe6d5013aef2",
+    "capacity-sgns.svg": "9953cb06f3de83d3ad3c17daac6965e2978bec0dfdc51c211708fcbc294887e3",
+    "cluster-run.log.gz": "b9ee408e5ee4b04236156bcedc1e94bccf21430b64551ebfb78c3bfe6ceade4f",
+    "commands.md": "bf607f89ff6141db6a869dc6dad7b04a1ad1f7547cbcbe5cbc320c53abe66a1a",
+    "final-run.log.gz": "dba396a6ac58e1c032fea224116b7c9ba999ba209ae165add33767a0c0cb48a1",
+    "latest-full-tests.txt": "a619cbfe5b84731c51ba647e1fd1fea3ea5b648baaee11a25ae77213d0f894c5",
+    "merged-report.json.gz": "b914c52aa6847ffc90d6771fd607f49e80db10b886b6f4c3a518427bf6c3ac61",
+    "phase-provenance.json": "70e3379eb5358cfd5e66f5b7f19fb38cfc4efd1047928451ca6f844fd35e37be",
+    "rate-grid.log.gz": "3b93f141fc6cc0db17a0598b3c084d273cd8aac58f4dd8b38eaad52eaa349d9a",
+    "rate4-run.log.gz": "aeb9a2029862ea3a091ce2bed67330bfe1937035facfcf3c40f1d06bbcacfc67",
+    "reproduce.sh": "8384f59ad37fd20a582180e1a53aabda315b71441b09a5f78fc9c06c3972b246",
+    "results-summary.json": "a27caeda5eca01a5b3a9c4720e5620bc88cc8af5d3decf9334a9c7d467c9e055",
+    "run.log.gz": "6f8d6681f7bd3a6ce14d3b324bdd24fe160c4ee68bbe591d63a9b062be6f2e38",
+    "superseded-rate-grid.txt": "adec6b8c6ba7a1e9835977f829cde6690570a6e9f891e6bf91b47df3dd4136af",
+    "superseded.txt": "7989fd61954b4119742e4a05c1aa1404b7f5bf69b139c55eded61e7525ad2c19",
+    "targeted-tests.txt": "4e2861dc8624ae9e107d7bab2fe388981c10af440f7e73a8786aee0dea7e488f"
+  }
+}

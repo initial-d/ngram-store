@@ -1,0 +1,17 @@
+test_compiled_schedule_reduces_duplicates_and_rejects_partial_groups (tests.test_cotraining_groups.PartitionTest) ... ok
+test_multiplicity_other_hosts_and_empty_rows_do_not_merge (tests.test_cotraining_groups.PartitionTest) ... ok
+test_native_weighted_schedule_empty_bags_and_artifact_integrity (tests.test_cotraining_groups.PartitionTest) ... ok
+test_projection_preserves_only_certified_bag_sums (tests.test_cotraining_groups.PartitionTest) ... ok
+test_public_exporter_checks_rows_and_cleans_failed_output (tests.test_cotraining_groups.PartitionTest) ... ok
+test_query_diagnostic_handles_noncontiguous_members_and_invalid_ids (tests.test_cotraining_groups.PartitionTest) ... ok
+test_raw_block_option_keeps_original_bits_and_default_artifact (tests.test_cotraining_groups.PartitionTest) ... ok
+test_rejected_query_has_a_sparse_algebraic_counterexample (tests.test_cotraining_groups.PartitionTest) ... ok
+test_save_roundtrip_and_invalid_inputs (tests.test_cotraining_groups.PartitionTest) ... ok
+test_factory_releases_source_table_instead_of_retaining_a_class_closure (tests.test_cotraining_groups.TrainingTest) ... skipped 'optional NumPy/PyTorch required'
+test_sparse_gradient_multiplicity_and_padding_guard (tests.test_cotraining_groups.TrainingTest) ... skipped 'optional NumPy/PyTorch required'
+test_sparse_sgd_preserves_bag_function_and_group_mean_trajectory (tests.test_cotraining_groups.TrainingTest) ... skipped 'optional NumPy/PyTorch required'
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.537s
+
+OK (skipped=3)

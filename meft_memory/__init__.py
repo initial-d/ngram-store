@@ -6,6 +6,11 @@ from ._runtime.native_row_store import NativeRows, pack_native
 __version__ = "0.4.0"
 
 _ADAPTERS = {
+    "BagPartition": "cotraining_groups",
+    "CertifiedBagPlan": "cotraining_groups",
+    "CertifiedBagRows": "cotraining_groups",
+    "grouped_embedding_bag": "cotraining_groups",
+    "export_certified_bags": "cotraining_groups",
     "StructuralPlan": "structural_native",
     "StructuralIndex": "structural_native",
     "MappedMultiHeadEmbedding": "engram_row_adapter",

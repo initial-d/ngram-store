@@ -1,0 +1,19 @@
+{
+  "source_commit": "7ff4a90e9b45edae870ae2175c173f3c4e4651fa",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/api-source/tools/benchmark_cotraining_layout.py --output-dir /llm-align/duyimin/ngram-cotraining-20261031/layout-small --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so --checkpoint-root /llm-align/duyimin/ngram-cotraining-20261031/source/artifacts/heldout-compression-20261024",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "torch": "2.11.0+cu130",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "cpu",
+  "threads": 1,
+  "limitations": [
+    "Lossless layout of actual source rows, not aggregate projection or newly trained memory.",
+    "One finite SGNS family; source provenance retained, no convergence/LLM task claim.",
+    "Signatures only guide export order; no certificate is needed at lookup, original bytes restored.",
+    "Query samples follow byte verification with warm OS pages on shared CPU; not exclusive/cold latency.",
+    "Small source complete bytes include input table + output vectors + common keys; large source excludes unavailable word/output model.",
+    "No GPU touched; monetary/energy cost unmeasured."
+  ],
+  "runs": []
+}

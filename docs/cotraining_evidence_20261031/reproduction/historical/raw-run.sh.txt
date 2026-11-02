@@ -1,0 +1,23 @@
+set -euo pipefail
+TASK=/llm-align/duyimin/ngram-cotraining-20261031
+PY=/llm-align/duyimin/miniconda3/envs/gemma4/bin/python
+git -c advice.detachedHead=false clone --quiet --shared "$TASK/api-source" "$TASK/raw-source"
+git -C "$TASK/raw-source" fetch --quiet "$TASK/raw.bundle" HEAD
+git -C "$TASK/raw-source" checkout --quiet --detach FETCH_HEAD
+cd "$TASK/raw-source"
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+(
+ "$PY" -m tools.benchmark_cotraining_raw --task-dir "$TASK" --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --native-library "$TASK/source/build/librows.so" > "$TASK/raw-block.log" 2>&1 && echo passed > "$TASK/raw-block.status" || echo failed > "$TASK/raw-block.status"
+) &
+(
+ "$PY" -m unittest discover -s tests > "$TASK/raw-full-tests.txt" 2>&1
+ "$PY" -m pip wheel . --no-deps --no-build-isolation --wheel-dir "$TASK/wheels" > "$TASK/wheel-build.txt" 2>&1
+ "$PY" -m pip install --no-deps --target "$TASK/installed" "$TASK/wheels/"*.whl > "$TASK/wheel-install.txt" 2>&1
+ cd "$TASK"
+ PYTHONPATH="$TASK/installed" "$PY" "$TASK/raw-source/examples/cotraining_groups.py" > "$TASK/installed-example.txt" 2>&1
+ echo passed > "$TASK/wheel.status"
+) &
+wait

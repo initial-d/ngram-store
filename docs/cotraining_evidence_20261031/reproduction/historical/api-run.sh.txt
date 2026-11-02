@@ -1,0 +1,20 @@
+set -euo pipefail
+TASK=/llm-align/duyimin/ngram-cotraining-20261031
+PY=/llm-align/duyimin/miniconda3/envs/gemma4/bin/python
+git -c advice.detachedHead=false clone --quiet --shared "$TASK/source" "$TASK/api-source"
+git -C "$TASK/api-source" fetch --quiet "$TASK/api.bundle" HEAD
+git -C "$TASK/api-source" checkout --quiet --detach FETCH_HEAD
+cd "$TASK/api-source"
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MEFT_ROWS_LIBRARY="$TASK/source/build/librows.so"
+"$PY" -m unittest discover -s tests > "$TASK/api-full-tests.txt" 2>&1
+"$PY" -m examples.cotraining_groups > "$TASK/api-example.txt" 2>&1
+"$PY" -m tools.benchmark_cotraining_layout --output-dir "$TASK/layout-small" --native-library "$MEFT_ROWS_LIBRARY" --checkpoint-root "$TASK/source/artifacts/heldout-compression-20261024" > "$TASK/layout-small.log" 2>&1
+echo passed > "$TASK/layout-small.status"
+if [ -f "$TASK/large-results/certified-groups/domain.npz" ]; then
+  "$PY" -m tools.benchmark_cotraining_layout --output-dir "$TASK/layout-large" --native-library "$MEFT_ROWS_LIBRARY" --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --partition-path "$TASK/large-results/certified-groups/domain.npz" > "$TASK/layout-large.log" 2>&1
+  echo passed > "$TASK/layout-large.status"
+fi

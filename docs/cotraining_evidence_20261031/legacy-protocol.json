@@ -1,0 +1,45 @@
+{
+  "category": "finite public-text CPU SGNS; aggregate-domain equivalence and training dynamics",
+  "source_commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/source/tools/benchmark_cotraining.py --corpus artifacts/native-ngram-20261018/corpus/tinyshakespeare.txt --output-dir /llm-align/duyimin/ngram-cotraining-20261031/dynamics-legacy --native-library build/librows.so --structural-library build/libstructural.so --conventions legacy",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "cpu": "x86_64",
+  "threads": 1,
+  "device": "cpu",
+  "corpus_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+  "split_token_sha256": {
+    "train": "dbc9b7ecc9d265b292bbe263491d08e9531d86338e64664c1f63cecf19da61dc",
+    "validation": "85312347c4cfd72644038c561afc2ecdb32ad679fe344e1790b66ddc8db6cef5",
+    "test": "e80a735e5a3aa730626d7341b8d4e4f22fd630c62b5715a58974ed7ec4fe774b"
+  },
+  "settings": {
+    "corpus": "artifacts/native-ngram-20261018/corpus/tinyshakespeare.txt",
+    "output_dir": "/llm-align/duyimin/ngram-cotraining-20261031/dynamics-legacy",
+    "native_library": "build/librows.so",
+    "structural_library": "build/libstructural.so",
+    "checkpoint_root": null,
+    "max_orders": "4,8,12",
+    "seeds": "3,7,11",
+    "conventions": "legacy",
+    "checkpoints": "0,100,500,2000,4000",
+    "steps": 4000,
+    "dim": 64,
+    "vocab_limit": 1200,
+    "min_count": 5,
+    "batch_size": 128,
+    "negatives": 5,
+    "eval_pairs": 8192,
+    "lr": 0.05
+  },
+  "limitations": [
+    "Identical fixed bag-incidence columns, not arbitrary prefixes or LLM memory.",
+    "Known-word SGNS evaluation excludes OOV centers/targets; OOV bags audited and rejected separately.",
+    "Canonicalization changes individual vectors; real-arithmetic aggregate identity is not byte identity.",
+    "Sparse SGD without decay/regularization; finite training, no convergence claim.",
+    "One small English public corpus; no GPU/whole-LLM task result; monetary/energy cost unmeasured.",
+    "Corpus license not independently verified; publish aggregate results/hashes only."
+  ]
+}

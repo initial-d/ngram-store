@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -eu
+TASK=/llm-align/duyimin/ngram-cotraining-20261031
+PY=/llm-align/duyimin/miniconda3/envs/gemma4/bin/python
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+git clone --shared "$TASK/lifecycle-source" "$TASK/isolation-source"
+cd "$TASK/isolation-source"
+git fetch "$TASK/isolation.bundle" HEAD
+git checkout --detach FETCH_HEAD
+set +e
+"$PY" -m tools.benchmark_cotraining_planner \
+  --checkpoint-root "$TASK/source/artifacts/heldout-compression-20261024" \
+  --output-dir "$TASK/planner-isolation" \
+  --native-library "$TASK/source/build/librows.so" \
+  --structural-library "$TASK/source/build/libstructural.so" \
+  > "$TASK/planner-isolation.log" 2>&1
+result=$?
+printf '%s\n' "$result" > "$TASK/planner-isolation.status"
+exit "$result"

@@ -1,0 +1,79 @@
+{
+  "category": "derived claims; no new model training or performance measurements",
+  "date": "2026-11-01",
+  "first_of_kind_status": "not established; representative prior work exists",
+  "source_reports": {
+    "cached-report.json": {
+      "path": "../cotraining_evidence_20261031/cached-report.json",
+      "sha256": "90b384d5d149014698911f126667247eee67f3518f7df3631417b86ee5e1d432",
+      "source_commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563"
+    },
+    "large-report.json": {
+      "path": "../cotraining_evidence_20261031/large-report.json",
+      "sha256": "2e97a0ba44ead2c27daf5ff2d3e0d94d94565cb13420828698c09a1a72a9149d",
+      "source_commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563"
+    },
+    "raw-block-evidence.json": {
+      "path": "../cotraining_evidence_20261031/raw-block-evidence.json",
+      "sha256": "ef0b6e98d1c122029e26bca6c2425c081fea3983458609a28b0ecb095a9b9cad",
+      "source_commit": "6d385ca531d4e1682e5fc202297f406399d6e7a7"
+    },
+    "legacy-report.json": {
+      "path": "../cotraining_evidence_20261031/legacy-report.json",
+      "sha256": "778a89c3a88e9d89c957273ca205f002d289432bdaa89e756d040e97362232fc",
+      "source_commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563"
+    },
+    "average-report.json": {
+      "path": "../cotraining_evidence_20261031/average-report.json",
+      "sha256": "4d81a554a6fb1e6e1eb0a77eb8e24a21413f376699d0e6fb914d42de82d9c604",
+      "source_commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563"
+    },
+    "planner-isolation-report.json": {
+      "path": "../cotraining_evidence_20261031/planner-isolation-report.json",
+      "sha256": "382197dc229c214cb3ee1acacae0ba9ed5b5812981b4c2d0caecb0573a1ef844",
+      "source_commit": "29b2c1f64eba6201dd3ef38e8d2931d8cb5ce534"
+    },
+    "layout-large-report.json": {
+      "path": "../cotraining_evidence_20261031/layout-large-report.json",
+      "sha256": "9bc2b0a5afcf31860a19c1e4cfc37c5d02e68276c50901ab97c40bc9c8df68fe",
+      "source_commit": "7925dbd1f30d9a9d2356c5b7bb78e2bc4f94e016"
+    }
+  },
+  "matched_training_runs": 18,
+  "large_partition": {
+    "original_rows": 1855907,
+    "group_rows": 360088,
+    "rows_in_nonsingleton_groups": 1696403,
+    "nonsingleton_groups": 200584,
+    "domain_bags": 142308,
+    "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+    "mapping_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "large_parameter_row_slot_reduction": 0.80597734692525,
+  "large_query_plan": {
+    "bags": 512,
+    "original_occurrences": 21747,
+    "group_occurrences": 15892,
+    "plan_bytes": 198904,
+    "partition_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+    "compile_seconds": 0.10871275491081178
+  },
+  "query_occurrence_reduction": 0.26923253782130874,
+  "query_occurrence_limitation": "repeated-ID dedup not independently ablated; not attribution of 33.5x codec bypass speedup",
+  "source_byte_preserving_layout_extra_saving": 0.0006674096752232739,
+  "diagnostic_verification": {
+    "type": "deterministic algebraic fixtures; not learned-vector evidence",
+    "count_vector_cases": 243,
+    "local_python": "3.9.6 (default, Apr 17 2026, 18:15:52) \n[Clang 21.0.0 (clang-2100.1.1.101)]",
+    "local_os": "macOS-26.6.2-arm64-arm-64bit",
+    "test_command": "python3 -m unittest tests.test_cotraining_groups -v",
+    "tests_run": 12,
+    "skipped": 3,
+    "reason_for_skips": "local PyTorch unavailable; NumPy partition, witness and native tests passed",
+    "tested_source_sha256": {
+      "tools/cotraining_groups.py": "30e867e3922efa1e888d0876cd8f5e2dcb8ebc5a1bfe52cb3202460e2bcc433f",
+      "tests/test_cotraining_groups.py": "ca19c30e2efb8ef942ee3380d059a9397e23c11ebbcba762293683ff9c92ab7b"
+    }
+  }
+}

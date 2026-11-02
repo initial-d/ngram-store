@@ -1,0 +1,23 @@
+set -euo pipefail
+TASK=/llm-align/duyimin/ngram-cotraining-20261031
+PY=/llm-align/duyimin/miniconda3/envs/gemma4/bin/python
+cd "$TASK/source"
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+"$PY" -m unittest discover -s tests > "$TASK/full-tests.txt" 2>&1
+(
+  "$PY" -m tools.benchmark_cotraining --corpus artifacts/native-ngram-20261018/corpus/tinyshakespeare.txt --output-dir "$TASK/cached-results" --native-library build/librows.so --structural-library build/libstructural.so --checkpoint-root artifacts/heldout-compression-20261024 --dim 128 > "$TASK/cached.log" 2>&1 && echo passed > "$TASK/cached.status" || echo failed > "$TASK/cached.status"
+) &
+(
+  "$PY" -m tools.benchmark_cotraining --corpus artifacts/native-ngram-20261018/corpus/tinyshakespeare.txt --output-dir "$TASK/dynamics-legacy" --native-library build/librows.so --structural-library build/libstructural.so --conventions legacy > "$TASK/dynamics-legacy.log" 2>&1 && echo passed > "$TASK/dynamics-legacy.status" || echo failed > "$TASK/dynamics-legacy.status"
+) &
+(
+  "$PY" -m tools.benchmark_cotraining --corpus artifacts/native-ngram-20261018/corpus/tinyshakespeare.txt --output-dir "$TASK/dynamics-average" --native-library build/librows.so --structural-library build/libstructural.so --conventions average > "$TASK/dynamics-average.log" 2>&1 && echo passed > "$TASK/dynamics-average.status" || echo failed > "$TASK/dynamics-average.status"
+) &
+(
+  "$PY" -m tools.benchmark_cotraining_capacity --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --corpus-zip /llm-align/duyimin/meft-cpu-capacity-20261030/enwik8.zip --output-dir "$TASK/large-results" --native-library build/librows.so > "$TASK/large.log" 2>&1 && echo passed > "$TASK/large.status" || echo failed > "$TASK/large.status"
+) &
+wait
+echo completed > "$TASK/status"

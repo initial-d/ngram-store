@@ -1,0 +1,260 @@
+{
+  "category": "actual finite SGNS trained subset; certified bag aggregate transformation",
+  "source_commit": "5237b7cf51eb87e1463e364e38fc7e4103b4c563",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-cotraining-20261031/source/tools/benchmark_cotraining_capacity.py --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --corpus-zip /llm-align/duyimin/meft-cpu-capacity-20261030/enwik8.zip --output-dir /llm-align/duyimin/ngram-cotraining-20261031/large-results --native-library build/librows.so",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "torch": "2.11.0+cu130",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "cpu": "x86_64",
+  "device": "cpu",
+  "threads": 1,
+  "settings": {
+    "training_dir": "/llm-align/duyimin/meft-cpu-capacity-20261030/training2",
+    "corpus_zip": "/llm-align/duyimin/meft-cpu-capacity-20261030/enwik8.zip",
+    "output_dir": "/llm-align/duyimin/ngram-cotraining-20261031/large-results",
+    "native_library": "build/librows.so",
+    "query_words": 512,
+    "repeat": 8,
+    "seed": 42
+  },
+  "limitations": [
+    "One finite rare-center-coverage SGNS checkpoint, not convergence or LLM memory.",
+    "Registered changed-row subset, with original training-ID provenance; not a full-model export.",
+    "Individual source row bytes change; certified bag sums agree in real arithmetic only.",
+    "Queries use train-vocabulary known words occurring in held-out text; OOVs rejected and audited separately.",
+    "Complete bytes cover this subset, keys, source IDs, certificates, manifests and compiled plans; word/output model unavailable.",
+    "Shared CPU, OS page cache uncontrolled, not exclusive serving latency; no GPU process touched.",
+    "Wikipedia-derived enwik8; publish hashes/aggregates only; monetary/energy cost unmeasured."
+  ],
+  "partition": {
+    "original_rows": 1855907,
+    "group_rows": 360088,
+    "rows_in_nonsingleton_groups": 1696403,
+    "nonsingleton_groups": 200584,
+    "domain_bags": 142308,
+    "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+    "mapping_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "source": {
+    "trained_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+    "keys_sha256": "addcb6e8300c27a5d8d43028d334f9d9e6f62dcf39f7590c0952a060ede8acc8",
+    "source_row_ids_sha256": "16c6ef210b5975bdb4146f0400163eecfb424c11e590012dc9ada47aa399bc0a",
+    "ngram_rows": 1855907,
+    "registered_ngram_rows": 1860921,
+    "excluded_untrained_rows": 5014,
+    "dim": 256,
+    "sampled_training_pairs": 1212126
+  },
+  "partition_seconds": 40.939815326128155,
+  "means_seconds": 8.53918473701924,
+  "source_row_error": {
+    "global_relative_l2": 0.0869642486180901,
+    "maximum_row_relative_l2": 1.0400979328597146
+  },
+  "common_keys_and_original_training_ids_bytes": 36276812,
+  "variants": [
+    {
+      "name": "identity",
+      "source_row_byte_preserving": true,
+      "native_decodes_declared_rows_byte_exactly": true,
+      "all_original_ids_checked": 1855907,
+      "decoded_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+      "artifact_sha256": "ff7abc982b7f2ea28ec65bf542dced85fcad65bdf5a43d6c4d888d7831f5d42e",
+      "storage": {
+        "format": "MEFTNAT1",
+        "format_version": 2,
+        "input_bytes": 1900448768,
+        "artifact_bytes": 1788494457,
+        "unique_rows": 1855907,
+        "row_map_bytes": 14847256,
+        "n_rows": 1855907,
+        "row_bytes": 1024,
+        "block_rows": 8,
+        "blocks": 231989,
+        "max_block_bytes": null,
+        "raw_blocks": 0,
+        "compressed_blocks": 231989,
+        "zlib_blocks": 231776,
+        "xor_blocks": 213,
+        "deduplicate": false,
+        "predictor": "xor",
+        "reordered": false,
+        "external_representatives": false,
+        "marked_rows": 1855907
+      },
+      "build_and_verification_seconds": 173.16871788003482,
+      "complete_subset_bytes": 1824772214
+    },
+    {
+      "name": "certified-groups",
+      "source_row_byte_preserving": false,
+      "native_decodes_declared_rows_byte_exactly": true,
+      "all_original_ids_checked": 1855907,
+      "decoded_sha256": "2f66dd72320a90d594311ef8f0f166a871bb95025b30bb19ecec959d058dd72c",
+      "artifact_sha256": "4796a52ee5262b92debef1d8fa95893f2909947c4afb2a19e724ade821aab272",
+      "storage": {
+        "format": "MEFTNAT1",
+        "format_version": 2,
+        "input_bytes": 1900448768,
+        "artifact_bytes": 361810709,
+        "unique_rows": 360088,
+        "row_map_bytes": 14847256,
+        "n_rows": 1855907,
+        "row_bytes": 1024,
+        "block_rows": 8,
+        "blocks": 45011,
+        "max_block_bytes": null,
+        "raw_blocks": 0,
+        "compressed_blocks": 45011,
+        "zlib_blocks": 44923,
+        "xor_blocks": 88,
+        "deduplicate": false,
+        "predictor": "xor",
+        "reordered": false,
+        "external_representatives": true,
+        "marked_rows": 360088
+      },
+      "build_and_verification_seconds": 43.167567724129185,
+      "partition": {
+        "original_rows": 1855907,
+        "group_rows": 360088,
+        "rows_in_nonsingleton_groups": 1696403,
+        "nonsingleton_groups": 200584,
+        "domain_bags": 142308,
+        "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+        "mapping_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+        "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+      },
+      "contract": "certified bag aggregates in real arithmetic; FP rounding measured; reject uncertified bags",
+      "complete_subset_bytes": 412937339
+    }
+  ],
+  "query_plan": {
+    "bags": 512,
+    "original_occurrences": 21747,
+    "group_occurrences": 15892,
+    "plan_bytes": 198904,
+    "partition_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+    "compile_seconds": 0.10871275491081178
+  },
+  "compiled_query_fidelity": {
+    "cosine": {
+      "count": 512,
+      "mean": 0.9999999999999991,
+      "p10": 0.9999999999999988,
+      "median": 0.9999999999999991,
+      "p90": 0.9999999999999993,
+      "minimum": 0.9999999999999982,
+      "maximum": 0.9999999999999997
+    },
+    "norm_ratio": {
+      "count": 512,
+      "mean": 0.9999999960733452,
+      "p10": 0.9999999920335677,
+      "median": 0.9999999967120409,
+      "p90": 0.9999999992483849,
+      "minimum": 0.9999999858496866,
+      "maximum": 0.9999999999928345
+    },
+    "joint099_fraction": 1.0,
+    "relative_l2": {
+      "count": 512,
+      "mean": 4.286624005147314e-08,
+      "p10": 3.718756941752171e-08,
+      "median": 4.2964126133127123e-08,
+      "p90": 4.846657510098726e-08,
+      "minimum": 2.9212716940801206e-08,
+      "maximum": 5.981101276800923e-08
+    },
+    "global_relative_l2": 4.318205631011731e-08
+  },
+  "identity_query_fidelity": {
+    "cosine": {
+      "count": 512,
+      "mean": 1.0,
+      "p10": 0.9999999999999998,
+      "median": 1.0,
+      "p90": 1.0000000000000002,
+      "minimum": 0.9999999999999998,
+      "maximum": 1.0000000000000002
+    },
+    "norm_ratio": {
+      "count": 512,
+      "mean": 1.0,
+      "p10": 1.0,
+      "median": 1.0,
+      "p90": 1.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "joint099_fraction": 1.0,
+    "relative_l2": {
+      "count": 512,
+      "mean": 0.0,
+      "p10": 0.0,
+      "median": 0.0,
+      "p90": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "global_relative_l2": 0.0
+  },
+  "query_samples_seconds": {
+    "raw-mmap": [
+      0.043799471808597445,
+      0.002438091905787587,
+      0.002555356128141284,
+      0.0025557749904692173,
+      0.002672199858352542,
+      0.0018683262169361115,
+      0.002467774087563157,
+      0.0023750250693410635,
+      0.0017822820227593184
+    ],
+    "identity-native": [
+      0.7714715651236475,
+      0.7382244949694723,
+      0.7386871241033077,
+      0.7376244869083166,
+      0.7375951539725065,
+      0.7389141779858619,
+      0.7372365880291909,
+      0.7370127469766885,
+      0.7390817969571799
+    ],
+    "certified-native": [
+      0.551864281995222,
+      0.5300190208945423,
+      0.52952691889368,
+      0.5286204479634762,
+      0.5331903081387281,
+      0.5299177521374077,
+      0.5291185569949448,
+      0.5284146959893405,
+      0.5301334918476641
+    ]
+  },
+  "query_bags_sha256": "cedaa2f0ac19ceedfea4eda07139204d8c179d84e3f33e213811168cd93f83fe",
+  "oov": {
+    "heldout_oov_types": 21967,
+    "audited_types": 4096,
+    "certified": 737,
+    "rejected": 3359,
+    "unsafe_unconditional_projection_relative_l2": {
+      "count": 4096,
+      "mean": 0.00017000975864661525,
+      "p10": 0.0,
+      "median": 0.00016212081105283473,
+      "p90": 0.00030743013627189636,
+      "minimum": 0.0,
+      "maximum": 0.0013702895280831022
+    }
+  },
+  "raw_subset_and_common_bytes": 1936725580,
+  "complete_certified_subset_and_plan_bytes": 413136243,
+  "wall_seconds": 285.5188717520796,
+  "peak_rss_mib": 5555.44140625,
+  "status": "completed"
+}

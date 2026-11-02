@@ -1,0 +1,24 @@
+{
+  "recorded_at_unix": 1793462562.5008204,
+  "interrupted_own_cpu_exports": [
+    {
+      "pid": 916892,
+      "command": [
+        "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python",
+        "-m",
+        "tools.benchmark_cotraining_layout",
+        "--output-dir",
+        "/llm-align/duyimin/ngram-cotraining-20261031/layout-large",
+        "--native-library",
+        "/llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so",
+        "--training-dir",
+        "/llm-align/duyimin/meft-cpu-capacity-20261030/training2",
+        "--partition-path",
+        "/llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-groups/domain.npz"
+      ],
+      "cpu_only": true,
+      "reason": "stop only our earlier layout export to apply sequential ID-map writes; preserve its partial artifacts"
+    }
+  ],
+  "duplicate_launch_failure": "A second launcher encountered existing output; its failure log is preserved separately."
+}

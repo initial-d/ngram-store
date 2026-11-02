@@ -1,0 +1,17 @@
+set -euo pipefail
+TASK=/llm-align/duyimin/ngram-cotraining-20261031
+PY=/llm-align/duyimin/miniconda3/envs/gemma4/bin/python
+git -C "$TASK/api-source" fetch --quiet "$TASK/audit.bundle" HEAD
+git -C "$TASK/api-source" checkout --quiet --detach FETCH_HEAD
+cd "$TASK/api-source"
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+(
+ "$PY" -m tools.finalize_cotraining_evidence --task-dir "$TASK" --corpus "$TASK/source/artifacts/native-ngram-20261018/corpus/tinyshakespeare.txt" --native-library "$TASK/source/build/librows.so" --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 > "$TASK/final-audit.log" 2>&1 && echo passed > "$TASK/final-audit.status" || echo failed > "$TASK/final-audit.status"
+) &
+(
+ "$PY" -m tools.benchmark_cotraining_layout --output-dir "$TASK/layout-large" --native-library "$TASK/source/build/librows.so" --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --partition-path "$TASK/large-results/certified-groups/domain.npz" > "$TASK/layout-large.log" 2>&1 && echo passed > "$TASK/layout-large.status" || echo failed > "$TASK/layout-large.status"
+) &
+wait

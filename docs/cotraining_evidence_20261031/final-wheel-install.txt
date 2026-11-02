@@ -1,0 +1,5 @@
+Looking in indexes: https://mirrors.aliyun.com/pypi/simple
+Processing /llm-align/duyimin/ngram-cotraining-20261031/final-wheels/meft_memory-0.4.0-py3-none-linux_x86_64.whl
+Installing collected packages: meft-memory
+Successfully installed meft-memory-0.4.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
