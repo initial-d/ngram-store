@@ -106,6 +106,11 @@ class PartitionTest(unittest.TestCase):
             loaded = BagPartition.load(path)
             self.assertEqual(loaded.summary(), p.summary())
             self.assertFalse(loaded.mapping.flags.writeable)
+            self.assertEqual(loaded.mapping_sha256,
+                             hashlib.sha256(loaded.mapping.astype('<u8').tobytes()).hexdigest())
+            for array in (loaded.mapping, loaded.sizes):
+                with self.assertRaises(ValueError):
+                    array.flags.writeable = True
         for bags in ([[True]], [[-1]], [[3]], [[.5]]):
             with self.assertRaises(ValueError):
                 BagPartition.fit(bags, 3)

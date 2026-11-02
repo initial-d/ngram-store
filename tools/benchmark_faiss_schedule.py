@@ -173,7 +173,9 @@ def main():
             if len(found) != 1:
                 raise ValueError('exactly one frozen job required: ' + name)
             return found[0]
-        direct = find(choices['direct']['name'])
+        # A selected dedup codec's plan addresses code IDs, not original IDs.
+        # Recover registered bags from the unchanged original-ID FP32 control.
+        direct = find('direct-fp32')
         for family, selected in choices.items():
             if selected is None:
                 continue

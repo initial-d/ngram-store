@@ -22,13 +22,13 @@ def _count_bags(bags, *, nrows=None, padding_idx=None):
             or (nrows is not None and padding_idx >= nrows)):
         raise ValueError('padding row ID out of range')
     parts, lengths = [], []
+    max_id = np.iinfo(np.int64).max
     for bag in bags:
         array = np.asarray(bag)
         if array.ndim != 1:
             raise ValueError('one-dimensional bag required')
-        if len(array) and (array.dtype.kind not in 'iu' or array.min() < 0
-                or array.max() > np.iinfo(np.int64).max
-                or (nrows is not None and array.max() >= nrows)):
+        if len(array) and (array.dtype.kind not in 'iu'
+                or (array.dtype.kind == 'u' and array.itemsize == 8 and array.max() > max_id)):
             raise ValueError('bag row ID out of range')
         if padding_idx is not None:
             array = array[array != padding_idx]
@@ -36,6 +36,8 @@ def _count_bags(bags, *, nrows=None, padding_idx=None):
         lengths.append(len(array))
     lengths = np.asarray(lengths, dtype=np.int64)
     rows = np.concatenate(parts) if len(parts) else np.empty(0, dtype=np.int64)
+    if len(rows) and (rows.min() < 0 or (nrows is not None and rows.max() >= nrows)):
+        raise ValueError('bag row ID out of range')
     bag_ids = np.repeat(np.arange(len(bags), dtype=np.int64), lengths)
     if len(rows):
         order = np.lexsort((rows, bag_ids))
@@ -64,13 +66,21 @@ class BagPartition:
         mapping = mapping.astype(np.int64, copy=True)
         if mapping.min() < 0 or mapping.max() >= len(mapping):
             raise ValueError("group ID out of range")
-        self.sizes = np.bincount(mapping)
-        if np.any(self.sizes == 0):
+        sizes = np.bincount(mapping)
+        if np.any(sizes == 0):
             raise ValueError("group IDs must be contiguous")
-        self.mapping = mapping
+        # Immutable byte-backed arrays make the cached digest safe: callers
+        # cannot re-enable writes on an owning NumPy allocation.
+        self.mapping = np.frombuffer(mapping.tobytes(), dtype=np.int64)
+        self.sizes = np.frombuffer(sizes.tobytes(), dtype=np.int64)
+        self._mapping_sha256 = hashlib.sha256(mapping.astype('<u8').tobytes()).hexdigest()
         self.domain_sha256 = str(domain_sha256)
         self.domain_bags = int(domain_bags)
         self.mapping.flags.writeable = self.sizes.flags.writeable = False
+
+    @property
+    def mapping_sha256(self):
+        return self._mapping_sha256
 
     @classmethod
     def fit(cls, bags, nrows, *, protected=()):
@@ -114,7 +124,7 @@ class BagPartition:
                 "rows_in_nonsingleton_groups": int(self.sizes[self.sizes > 1].sum()),
                 "nonsingleton_groups": int((self.sizes > 1).sum()),
                 "domain_bags": self.domain_bags, "domain_sha256": self.domain_sha256,
-                "mapping_sha256": hashlib.sha256(self.mapping.astype("<u8").tobytes()).hexdigest(),
+                "mapping_sha256": self.mapping_sha256,
                 "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"}
 
     def certifies(self, bag):
@@ -314,7 +324,7 @@ class CertifiedBagPlan:
         self.weights = np.asarray(weights, dtype='<f4')
         self.offsets = np.asarray(offsets, dtype='<u8')
         self.denominators = np.maximum(lengths, 1)
-        self.partition_sha256 = partition.summary()['mapping_sha256']
+        self.partition_sha256 = partition.mapping_sha256
         self.original_occurrences = int(lengths.sum())
         for values in (self.ids, self.weights, self.offsets, self.denominators):
             values.flags.writeable = False

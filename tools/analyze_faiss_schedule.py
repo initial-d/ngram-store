@@ -40,7 +40,7 @@ def summarize(report):
             'rows': rows, 'scope': 'Three-seed medians; within-process paired timings; OOV includes rejected work.'}
 
 
-def figure(summary, output):
+def figure(summary, output, old_label='Scalar certificate', new_label='Batch certificate'):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -48,8 +48,8 @@ def figure(summary, output):
     for ax, order in zip(axes, (4, 8, 12)):
         rows = [next(r for r in summary['rows'] if r['order'] == order and
                      r['family'] == category and r['trace'] == 'known') for category in ('direct', 'group', 'hybrid')]
-        for offset, key, color, label in ((-.18, 'dynamic_old', '#356bb3', 'Scalar certificate'),
-                                         (.18, 'dynamic_new', '#db7e1a', 'Batch certificate')):
+        for offset, key, color, label in ((-.18, 'dynamic_old', '#356bb3', old_label),
+                                         (.18, 'dynamic_new', '#db7e1a', new_label)):
             ax.bar([i + offset for i in range(3)], [r['p50_ms'][key] for r in rows],
                    width=.36, color=color, label=label)
         ax.set_xticks(range(3), ['Direct', 'Certified', 'Hybrid'])
@@ -75,6 +75,8 @@ def main():
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--plots', action='store_true')
+    p.add_argument('--old-label', default='Scalar certificate')
+    p.add_argument('--new-label', default='Batch certificate')
     cfg = p.parse_args()
     raw = cfg.report.read_bytes()
     summary = summarize(json.loads(raw))
@@ -83,7 +85,7 @@ def main():
     cfg.output_dir.mkdir(parents=True, exist_ok=True)
     (cfg.output_dir / 'summary.json').write_text(json.dumps(summary, indent=2, allow_nan=False) + '\n')
     if cfg.plots:
-        figure(summary, cfg.output_dir)
+        figure(summary, cfg.output_dir, cfg.old_label, cfg.new_label)
 
 
 if __name__ == '__main__':

@@ -144,6 +144,30 @@ class QueryContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             merge_reports(base, other)
 
+    def test_complete_grid_accepts_dedup_controls_without_a_fake_rate_phase(self):
+        def variant(name, size):
+            return {'name': name, 'model_bytes': size,
+                'known_word_aggregate_fidelity': {'global_relative_l2': 0.},
+                'quality': {split: {'loss_relative_change': 0., 'discrimination_change': 0.}
+                            for split in ('validation', 'test')}}
+        run = {'order': 4, 'seed': 3, 'checkpoint_sha256': 'fixture',
+               'variants': [variant('direct-fp32', 100)], 'failures': [],
+               'selection': {'0.001': {'direct': None, 'group': None, 'hybrid': None}}}
+        base = {'status': 'completed', 'settings': {'max_discrimination_drop': .005,
+                 'max_aggregate_error': .05}, 'runs': [run]}
+        control = {'order': 4, 'seed': 3, 'checkpoint_sha256': 'fixture',
+                   'name': 'dedup-fp32', 'status': 'completed', 'variant': variant('dedup-fp32', 50)}
+        dedup = {'status': 'completed', 'runs': [control]}
+        merged = merge_reports(base, dedup=dedup)
+        self.assertEqual(merged['runs'][0]['selection']['0.001']['direct']['name'], 'dedup-fp32')
+        self.assertEqual(len(base['runs'][0]['variants']), 1)
+        with self.assertRaisesRegex(ValueError, 'duplicate dedup'):
+            merge_reports(merged, dedup=dedup)
+        failed = copy.deepcopy(dedup)
+        failed['status'] = 'completed-with-failures'
+        failed['runs'][0]['status'] = 'failed'
+        self.assertEqual(merge_reports(base, dedup=failed)['status'], 'completed-with-failures')
+
 
 @unittest.skipIf(np is None or importlib.util.find_spec('faiss') is None, 'NumPy/FAISS required')
 class CodecPersistenceTests(unittest.TestCase):

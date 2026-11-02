@@ -69,9 +69,11 @@ def schedule(bags, word_ids, partition=None, *, fallback=False, code_mapping=Non
             ids = np.r_[ids, fallback_ids]
             weights = np.r_[weights, original['counts'][rejected]]
     # Apply the same batch counting optimization to the direct codec controls.
-    order = np.lexsort((ids, bag_ids))
-    ids, bag_ids, weights = ids[order], bag_ids[order], weights[order]
-    if len(ids):
+    reorder = code_mapping is not None or (partition is not None and fallback and not safe.all())
+    if reorder:
+        order = np.lexsort((ids, bag_ids))
+        ids, bag_ids, weights = ids[order], bag_ids[order], weights[order]
+    if code_mapping is not None and len(ids):
         starts = np.r_[0, np.flatnonzero((ids[1:] != ids[:-1]) | (bag_ids[1:] != bag_ids[:-1])) + 1]
         weights = np.add.reduceat(weights, starts)
         ids, bag_ids = ids[starts], bag_ids[starts]

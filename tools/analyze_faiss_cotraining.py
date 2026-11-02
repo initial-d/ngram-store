@@ -28,26 +28,29 @@ def block_interval(a, b, positions, repeats=1000, seed=42):
             'scope': 'Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds.'}
 
 
-def merge_reports(base, supplement, dedup=None):
-    """Merge a separately disclosed rate extension; reselect using validation."""
+def merge_reports(base, supplement=None, dedup=None):
+    """Merge matched phases/byte-dedup controls; reselect using validation."""
     base = json.loads(json.dumps(base))
-    extra = {(r['order'], r['seed']): r for r in supplement['runs']}
+    extra = {} if supplement is None else {(r['order'], r['seed']): r for r in supplement['runs']}
     for run in base['runs']:
-        other = extra.pop((run['order'], run['seed']))
-        for key in ('checkpoint_sha256', 'partition', 'training_original_ids_sha256', 'evaluation', 'traces'):
-            if run[key] != other[key]:
-                raise ValueError('supplement changes matched input: ' + key)
-        if set(v['name'] for v in run['variants']) & set(v['name'] for v in other['variants']):
-            raise ValueError('duplicate codec variants')
-        run['phase_selections'] = [run['selection'], other['selection']]
-        run['variants'].extend(other['variants'])
-        run['failures'].extend(other['failures'])
+        if supplement is not None:
+            other = extra.pop((run['order'], run['seed']))
+            for key in ('checkpoint_sha256', 'partition', 'training_original_ids_sha256', 'evaluation', 'traces'):
+                if run[key] != other[key]:
+                    raise ValueError('supplement changes matched input: ' + key)
+            if set(v['name'] for v in run['variants']) & set(v['name'] for v in other['variants']):
+                raise ValueError('duplicate codec variants')
+            run['phase_selections'] = [run['selection'], other['selection']]
+            run['variants'].extend(other['variants'])
+            run['failures'].extend(other['failures'])
         if dedup is not None:
             controls = [r for r in dedup['runs'] if r['order'] == run['order'] and r['seed'] == run['seed']]
             for control in controls:
                 if control['checkpoint_sha256'] != run['checkpoint_sha256']:
                     raise ValueError('dedup checkpoint mismatch')
                 if control['status'] == 'completed':
+                    if any(v['name'] == control['variant']['name'] for v in run['variants']):
+                        raise ValueError('duplicate dedup variant')
                     run['variants'].append(control['variant'])
                 elif control['status'] == 'failed':
                     run['failures'].append({'name': control['name'], 'error': 'dedup worker failed'})
@@ -68,10 +71,14 @@ def merge_reports(base, supplement, dedup=None):
                     and chosen['quality']['test']['discrimination_change'] >= -settings['max_discrimination_drop']}
     if extra:
         raise ValueError('supplement has unmatched checkpoints')
-    base['supplemental_grid_protocol'] = {k: v for k, v in supplement.items() if k != 'runs'}
+    if supplement is not None:
+        base['supplemental_grid_protocol'] = {k: v for k, v in supplement.items() if k != 'runs'}
     if dedup is not None:
         base['encoded_byte_dedup'] = dedup
-    base['status'] = 'completed' if base['status'] == supplement['status'] == 'completed' else 'completed-with-failures'
+    success = (base['status'] == 'completed' and not any(r['failures'] for r in base['runs'])
+               and (supplement is None or supplement['status'] == 'completed')
+               and (dedup is None or dedup['status'] == 'completed'))
+    base['status'] = 'completed' if success else 'completed-with-failures'
     return base
 
 
@@ -279,16 +286,18 @@ def main():
         supplement = json.loads(supplement_raw)
         if cfg.cluster_report:
             supplement = merge_reports(supplement, json.loads(cfg.cluster_report.read_text()))
-        report = merge_reports(report, supplement, json.loads(cfg.dedup_report.read_text()) if cfg.dedup_report else None)
+        report = merge_reports(report, supplement)
+    if cfg.dedup_report:
+        report = merge_reports(report, dedup=json.loads(cfg.dedup_report.read_text()))
     analysis = analyze(report, cfg.raw_root, cfg.supplement_root, cfg.dedup_root, cfg.cluster_root)
-    report_bytes = json.dumps(report, indent=2).encode() if cfg.supplement_report else raw
+    report_bytes = json.dumps(report, indent=2).encode() if cfg.supplement_report or cfg.dedup_report else raw
     analysis['report_sha256'] = hashlib.sha256(report_bytes).hexdigest()
     analysis['analyzer_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     analysis['analysis_source_commit'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
     cfg.output_dir.mkdir(parents=True, exist_ok=True)
     if cfg.raw_root:
         analysis['serving_controls'] = serving_controls(report, cfg.raw_root, cfg.output_dir / 'controls')
-    if cfg.supplement_report:
+    if cfg.supplement_report or cfg.dedup_report:
         (cfg.output_dir / 'merged-report.json.gz').write_bytes(gzip.compress(report_bytes, mtime=0))
     (cfg.output_dir / 'analysis.json').write_text(json.dumps(analysis, indent=2, allow_nan=False) + '\n')
     if cfg.plots:
