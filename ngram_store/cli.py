@@ -118,6 +118,7 @@ def main(argv=None):
     compact=commands.add_parser('compact-bags',help='Build exact incidence groups and FP32 group means with disk-backed buffers.')
     compact.add_argument('--input',type=Path,required=True); compact.add_argument('--dim',type=int,required=True)
     compact.add_argument('--bag-ids',type=Path,required=True); compact.add_argument('--bag-offsets',type=Path,required=True)
+    compact.add_argument('--protected-ids',type=Path,help='Raw uint64 independently addressed IDs that must remain singletons.')
     compact.add_argument('--output',type=Path,required=True); compact.add_argument('--memory-mib',type=int,default=64)
     inspect=commands.add_parser('inspect',help='Inspect row shape, storage bytes and fidelity contract.')
     query=commands.add_parser('query',help='Query original row IDs or registered string keys.')
@@ -139,7 +140,8 @@ def main(argv=None):
             output.mkdir(parents=True,exist_ok=False)
             try:
                 partition=module.fit_external(module.iter_bag_files(args.bag_ids,args.bag_offsets),
-                    rows,output/'partition',memory_bytes=args.memory_mib*1024**2)
+                    rows,output/'partition',memory_bytes=args.memory_mib*1024**2,
+                    protected=module.iter_protected_ids(args.protected_ids) if args.protected_ids else ())
                 projected=partition.project_file(args.input,args.dim,output/'means.f32',
                     memory_bytes=args.memory_mib*1024**2)
                 partition.save_npz(output/'domain.npz')

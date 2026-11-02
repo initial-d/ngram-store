@@ -18,6 +18,15 @@ else:
 
 @unittest.skipUnless(np is not None, 'NumPy required')
 class ExternalConstructionTests(unittest.TestCase):
+    def test_single_bag_exceeds_payload_buffer_and_spills_exactly(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            # 320,000 payload bytes exceed the 131,072-byte small-bag buffer.
+            expected = BagPartition.fit([range(20000)], 20000)
+            stages = []
+            result = BagPartition.fit_external([iter(range(20000))], 20000, Path(tmp) / 'domain',
+                memory_bytes=8 << 20, progress=lambda stage, path: stages.append(stage))
+            self.assertIn('bag-spill', stages)
+            self.assertEqual(result.summary(), expected.summary())
     def test_collision_resolution_protected_rows_empty_bags_and_exact_numbering(self):
         class Collision:
             def update(self, block):
@@ -120,6 +129,14 @@ class ExternalConstructionTests(unittest.TestCase):
             reference = BagPartition.fit(bags, 3)
             self.assertEqual(BagPartition.load(root / 'out/domain.npz').summary(), reference.summary())
             self.assertEqual((root / 'out/means.f32').read_bytes(), reference.means(rows).tobytes())
+            np.asarray([1], dtype='<u8').tofile(root / 'protected')
+            subprocess.run([sys.executable, '-m', 'ngram_store.cli', 'compact-bags',
+                '--input', str(root / 'rows'), '--dim', '2', '--bag-ids', str(root / 'ids'),
+                '--bag-offsets', str(root / 'offsets'), '--protected-ids', str(root / 'protected'),
+                '--output', str(root / 'protected-out'), '--memory-mib', '8'],
+                text=True, capture_output=True, check=True)
+            protected = BagPartition.fit(bags, 3, protected=[1])
+            self.assertEqual(BagPartition.load(root / 'protected-out/domain.npz').summary(), protected.summary())
             for offsets in ([1, 6], [0, 4, 3, 6], [0, 7], [0, 5]):
                 np.asarray(offsets, dtype='<u8').tofile(root / 'offsets')
                 with self.assertRaises(ValueError):

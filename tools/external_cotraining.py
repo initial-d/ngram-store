@@ -126,6 +126,39 @@ def _signature_hash():
     return hashlib.sha256()
 
 
+class _BagPayload:
+    """Bounded small-bag byte buffer; large bags spill to a visible owned file."""
+    def __init__(self, path, limit):
+        self.path, self.limit = path, limit
+        self.buffer, self.stream = bytearray(), None
+
+    def write(self, pair):
+        if self.stream is None and len(self.buffer) + len(pair) > self.limit:
+            self.stream = self.path.open('w+b')
+            self.stream.write(self.buffer)
+            self.buffer = bytearray()
+        if self.stream is None:
+            self.buffer.extend(pair)
+        else:
+            self.stream.write(pair)
+
+    def update_digest(self, digest):
+        if self.stream is None:
+            digest.update(self.buffer)
+        else:
+            self.stream.seek(0)
+            for block in iter(lambda: self.stream.read(65536), b''):
+                digest.update(block)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        if self.stream is not None:
+            self.stream.close()
+            self.path.unlink()
+
+
 def _same_signature(stream, left, right, size):
     stream.flush()
     for begin in range(0, size, 65536):
@@ -183,25 +216,23 @@ def fit_external(bags, nrows, output, *, memory_bytes=64 << 20, protected=(), pr
             protected_path = protect.finish()
             events = _Sorter(work / 'events', 3, memory_bytes, notify)
             digest = hashlib.sha256()
-            # One bag's payload lives on disk even when it exceeds the budget.
-            with raw_path.open('rb') as source, (work / 'bag.bin').open('w+b') as payload:
+            with raw_path.open('rb') as source:
                 expected_bid = 0
                 for bid, group in itertools.groupby(_records(source, 2), key=lambda r: r[0]):
                     while expected_bid < bid:
                         digest.update(U64.pack(0))
                         expected_bid += 1
-                    payload.seek(0)
-                    payload.truncate()
-                    pairs = 0
-                    for row, occurrences in itertools.groupby(group, key=lambda r: r[1]):
-                        count = sum(1 for _ in occurrences)
-                        payload.write(PAIR.pack(row, count))
-                        events.add(row, bid, count)
-                        pairs += 1
-                    digest.update(U64.pack(pairs))
-                    payload.seek(0)
-                    for block in iter(lambda: payload.read(65536), b''):
-                        digest.update(block)
+                    with _BagPayload(work / 'bag.bin', memory_bytes // 64) as payload:
+                        pairs = 0
+                        for row, occurrences in itertools.groupby(group, key=lambda r: r[1]):
+                            count = sum(1 for _ in occurrences)
+                            payload.write(PAIR.pack(row, count))
+                            events.add(row, bid, count)
+                            pairs += 1
+                        digest.update(U64.pack(pairs))
+                        payload.update_digest(digest)
+                        if payload.stream is not None:
+                            notify('bag-spill')
                     expected_bid = bid + 1
                 while expected_bid < domain_bags:
                     digest.update(U64.pack(0))
@@ -445,3 +476,9 @@ def iter_bag_files(ids_path, offsets_path):
             start = end
         if start * 8 != ids_path.stat().st_size:
             raise ValueError('CSR offsets must cover all IDs')
+
+
+def iter_protected_ids(path):
+    """Stream independently addressed IDs from a raw little-endian uint64 file."""
+    with Path(path).open('rb') as stream:
+        yield from (row for row, in _records(stream, 1))

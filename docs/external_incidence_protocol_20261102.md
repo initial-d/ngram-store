@@ -48,3 +48,11 @@ the earlier certificate and unchanged 512-bag native plan/output bytes in a
 separate verifier. Verification/runtime RSS is excluded from construction RSS
 and reported separately. Preserve the maximum observed bag length and all input,
 code, SQLite, package, hardware, command, source-SHA and output hashes.
+
+Operational correction after the first 250k attempt: per-bag temporary-file
+truncate/seek/flush incurred substantial I/O waiting. Preserve the interrupted
+attempt and its completed legacy result. Use a bounded byte payload of at most
+budget/64 for small bags, spilling larger bags to a visible owned file. This
+changes temporary I/O, not signatures, group numbering, averaging or inputs.
+Rerun the complete grid in a new source snapshot with the same cached CSR and
+all declared budgets. Include a forced-spill correctness test.
