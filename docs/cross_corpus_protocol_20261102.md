@@ -79,3 +79,13 @@ CPU timings are not exclusive/cold-page/production LLM measurements. Record
 source SHA, exact commands, source/corpus/model hashes, OS/CPU, package versions,
 threads, raw samples and limitations. Publish metrics/hashes, not corpus or
 checkpoints. Monetary/energy cost and bounded construction RAM are not measured.
+
+Operational follow-up before dispatching remaining checkpoints: execute at
+most three independent checkpoint jobs, with four fit threads per job and one
+thread in each fresh query worker. Reuse only complete serial checkpoint runs
+with identical corpus/checkpoint hashes, engine source hashes and all declared
+settings; preserve their original commands/source SHA. The controller records
+each phase and verifies the complete 57-variant grid for every checkpoint.
+This changes elapsed-time orchestration after initial checkpoints, not fitting,
+the grid, quality gates or validation selection. Query timings remain shared-CPU
+measurements. Preserve the interrupted serial continuation and its log.

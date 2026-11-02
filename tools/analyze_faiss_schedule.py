@@ -58,7 +58,7 @@ def figure(summary, output, old_label='Scalar certificate', new_label='Batch cer
     axes[0].set_ylabel('Compilation + query p50 (ms)')
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc='upper center', ncol=2, bbox_to_anchor=(.5, .95))
-    fig.suptitle('512 known bags, frozen SQ6 codecs; three-seed medians')
+    fig.suptitle('512 known bags, frozen codec selections; three-seed medians')
     fig.text(.5, .015, 'Shared warm CPU, one query thread. Certified domain and full hybrid fallback costs are unchanged.',
              ha='center', fontsize=8)
     fig.tight_layout(rect=(0, .05, 1, .84))
