@@ -1,0 +1,1 @@
+Stopped only our CPU comparison PID 1271309 after all three order-4 checkpoint grids completed, to dispatch remaining checkpoints concurrently. The fitting/quality settings and completed artifacts are unchanged. Partial serial continuation is preserved.

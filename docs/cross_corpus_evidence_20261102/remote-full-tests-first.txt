@@ -1,0 +1,41 @@
+.........................../llm-align/duyimin/ngram-cross-corpus-20261102/evaluation-source/tools/cotraining_groups.py:483: UserWarning: Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:760.)
+  return torch.sparse_coo_tensor(index, values, gradient.shape,
+.........ss.ss........WARNING clustering 512 points to 512 centroids: please provide at least 19968 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+........./llm-align/duyimin/ngram-cross-corpus-20261102/evaluation-source/src/ftindex.cc: In function ‘FTIndex* ftindex_map_from_buffer(void*, size_t*)’:
+/llm-align/duyimin/ngram-cross-corpus-20261102/evaluation-source/mylib/include/pub/pub_malloc.h:16:82: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   16 | #define pub_calloc(num, size)                   pub_calloc_detail((num), (size), __FILE__, __FUNCTION__, __LINE__)
+      |                                                                                  ^~~~~~~~
+/llm-align/duyimin/ngram-cross-corpus-20261102/evaluation-source/src/ftindex.cc:461:31: note: in expansion of macro ‘pub_calloc’
+  461 |         if (!(fti = (FTIndex*)pub_calloc(1, sizeof(*fti)))) return NULL;
+      |                               ^~~~~~~~~~
+.............................................................................................sssssssssssss.....F.
+======================================================================
+FAIL: test_spawn_uses_separate_handles_and_captured_paths (test_worker_memory.WorkerMemoryTest.test_spawn_uses_separate_handles_and_captured_paths) (backend='native')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/llm-align/duyimin/ngram-cross-corpus-20261102/evaluation-source/tests/test_worker_memory.py", line 132, in test_spawn_uses_separate_handles_and_captured_paths
+    self.assertEqual(process.exitcode, 0)
+AssertionError: -9 != 0
+
+----------------------------------------------------------------------
+Ran 171 tests in 111.859s
+
+FAILED (failures=1, skipped=17)

@@ -105,7 +105,9 @@ def main():
             print(json.dumps({'completed': name, 'mode': mode, 'variants': len(entry['variants'])}), flush=True)
     prototype = next(iter(phases.values()), {'source_files': source_files,
         'corpus_sha256': corpus_hash, 'settings': required_settings})
-    report = {k: v for k, v in prototype.items() if k != 'runs'}
+    # Do not mutate the original phase's settings while normalizing the merged
+    # grid view: phase commands, paths and source provenance must stay exact.
+    report = json.loads(json.dumps({k: v for k, v in prototype.items() if k != 'runs'}))
     report.update(source_commit=orchestration['source_commit'], command=orchestration['command'],
                   checkpoint_orchestration=orchestration,
                   runs=[entries[pair] for pair in requested if pair in entries],

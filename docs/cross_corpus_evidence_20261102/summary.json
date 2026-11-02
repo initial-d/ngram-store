@@ -1,0 +1,1357 @@
+{
+  "training_pairs": 18,
+  "trained_codec_checkpoints": 9,
+  "scored_codec_variants": 581,
+  "dynamics": [
+    {
+      "convention": "legacy",
+      "order": 4,
+      "mean_final_pair_cosine": 0.9982245274729158,
+      "minimum_update_pair_cosine": 0.9999999999994689,
+      "maximum_tied_global_aggregate_relative_l2": 4.186010292928687e-05,
+      "maximum_absolute_test_loss_change": 1.5950056164726334e-08,
+      "maximum_absolute_test_discrimination_change": 0.0,
+      "test_token_coverage": [
+        0.65355
+      ]
+    },
+    {
+      "convention": "legacy",
+      "order": 8,
+      "mean_final_pair_cosine": 0.9977296812299817,
+      "minimum_update_pair_cosine": 0.999999999999197,
+      "maximum_tied_global_aggregate_relative_l2": 4.818753783638347e-05,
+      "maximum_absolute_test_loss_change": 4.2675718736617796e-08,
+      "maximum_absolute_test_discrimination_change": 0.0,
+      "test_token_coverage": [
+        0.65355
+      ]
+    },
+    {
+      "convention": "legacy",
+      "order": 12,
+      "mean_final_pair_cosine": 0.997707851259143,
+      "minimum_update_pair_cosine": 0.9999999999988296,
+      "maximum_tied_global_aggregate_relative_l2": 4.9645848190935304e-05,
+      "maximum_absolute_test_loss_change": 5.788106760551415e-08,
+      "maximum_absolute_test_discrimination_change": 0.0,
+      "test_token_coverage": [
+        0.65355
+      ]
+    },
+    {
+      "convention": "average",
+      "order": 4,
+      "mean_final_pair_cosine": 0.8491037197423502,
+      "minimum_update_pair_cosine": 0.9999999999991991,
+      "maximum_tied_global_aggregate_relative_l2": 1.4144471764809732e-05,
+      "maximum_absolute_test_loss_change": 1.9415768992558924e-08,
+      "maximum_absolute_test_discrimination_change": 0.0,
+      "test_token_coverage": [
+        0.65355
+      ]
+    },
+    {
+      "convention": "average",
+      "order": 8,
+      "mean_final_pair_cosine": 0.801537793305185,
+      "minimum_update_pair_cosine": 0.9999999999989062,
+      "maximum_tied_global_aggregate_relative_l2": 1.2933018288403731e-05,
+      "maximum_absolute_test_loss_change": 2.2234420082867246e-08,
+      "maximum_absolute_test_discrimination_change": 0.0,
+      "test_token_coverage": [
+        0.65355
+      ]
+    },
+    {
+      "convention": "average",
+      "order": 12,
+      "mean_final_pair_cosine": 0.7962421224290797,
+      "minimum_update_pair_cosine": 0.9999999999983437,
+      "maximum_tied_global_aggregate_relative_l2": 1.380454412579472e-05,
+      "maximum_absolute_test_loss_change": 4.0778879606406804e-08,
+      "maximum_absolute_test_discrimination_change": 0.0,
+      "test_token_coverage": [
+        0.65355
+      ]
+    }
+  ],
+  "primary_capacity": [
+    {
+      "order": 4,
+      "seeds": [
+        {
+          "seed": 3,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 1838069,
+              "test": {
+                "sgns_loss_per_pair": 1.8895865514269183,
+                "context_discrimination": 0.829931640625,
+                "loss_relative_change": -8.980032357619461e-05,
+                "discrimination_change": 0.0002197265625000222,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1611457,
+              "test": {
+                "sgns_loss_per_pair": 1.889456117554021,
+                "context_discrimination": 0.8297607421875,
+                "loss_relative_change": -0.00015882185624682688,
+                "discrimination_change": 4.882812499995559e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 3627329,
+              "test": {
+                "sgns_loss_per_pair": 1.889456117554021,
+                "context_discrimination": 0.8297607421875,
+                "loss_relative_change": -0.00015882185624682688,
+                "discrimination_change": 4.882812499995559e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.12328808113297163,
+          "relative_l2": {
+            "direct": 0.019054498635750147,
+            "group": 0.021577853194835316,
+            "hybrid": 0.021577853194835316
+          },
+          "new_known_dynamic_p50_ms": {
+            "direct": 10.904893046244979,
+            "hybrid": 11.48171303793788,
+            "group": 10.867598000913858
+          },
+          "new_oov_dynamic_p50_ms": {
+            "direct": 11.26024592667818,
+            "hybrid": 14.346885960549116,
+            "group": 5.9678759425878525
+          },
+          "oov_coverage": {
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            },
+            "group": {
+              "accepted": 83,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0002003420306325221,
+                2.4328763142422697e-05
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.00011577599448088873,
+                0.0005902281426179496
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0002586555859521722,
+                -4.456267981774733e-05
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0002484487485027694,
+                0.00037453978620610235
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0002586555859521722,
+                -4.456267981774733e-05
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0002484487485027694,
+                0.00037453978620610235
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        },
+        {
+          "seed": 7,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 1838066,
+              "test": {
+                "sgns_loss_per_pair": 1.920471444345255,
+                "context_discrimination": 0.823681640625,
+                "loss_relative_change": 0.00034395768706607655,
+                "discrimination_change": 0.0002197265625000222,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1611455,
+              "test": {
+                "sgns_loss_per_pair": 1.9204811112374562,
+                "context_discrimination": 0.82373046875,
+                "loss_relative_change": 0.0003489930221300952,
+                "discrimination_change": 0.0002685546874999778,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 3627327,
+              "test": {
+                "sgns_loss_per_pair": 1.9204811112374562,
+                "context_discrimination": 0.82373046875,
+                "loss_relative_change": 0.0003489930221300952,
+                "discrimination_change": 0.0002685546874999778,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.12328773830754713,
+          "relative_l2": {
+            "direct": 0.019378081884298612,
+            "group": 0.021823004811567334,
+            "hybrid": 0.021823004811567334
+          },
+          "new_known_dynamic_p50_ms": {
+            "hybrid": 11.334558017551899,
+            "direct": 10.982068022713065,
+            "group": 10.977388825267553
+          },
+          "new_oov_dynamic_p50_ms": {
+            "hybrid": 14.29150183685124,
+            "direct": 11.295236181467772,
+            "group": 6.058180937543511
+          },
+          "oov_coverage": {
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            },
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "group": {
+              "accepted": 83,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                0.00023522292128264622,
+                0.0004527492384432674
+              ],
+              "discrimination_change_95_percent_interval": [
+                -9.256152497189928e-05,
+                0.0005209186598951256
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                0.00022577333813850187,
+                0.0004669732383443592
+              ],
+              "discrimination_change_95_percent_interval": [
+                -5.0052874544928345e-05,
+                0.0006101303284670611
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                0.00022577333813850187,
+                0.0004669732383443592
+              ],
+              "discrimination_change_95_percent_interval": [
+                -5.0052874544928345e-05,
+                0.0006101303284670611
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        },
+        {
+          "seed": 11,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 1838068,
+              "test": {
+                "sgns_loss_per_pair": 1.8986448424591507,
+                "context_discrimination": 0.829052734375,
+                "loss_relative_change": 6.516521091337601e-05,
+                "discrimination_change": 0.0,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1611456,
+              "test": {
+                "sgns_loss_per_pair": 1.8986872869367017,
+                "context_discrimination": 0.82900390625,
+                "loss_relative_change": 8.752181100279977e-05,
+                "discrimination_change": -4.882812500006661e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 3627328,
+              "test": {
+                "sgns_loss_per_pair": 1.8986872869367017,
+                "context_discrimination": 0.82900390625,
+                "loss_relative_change": 8.752181100279977e-05,
+                "discrimination_change": -4.882812500006661e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.1232881482077921,
+          "relative_l2": {
+            "direct": 0.0188286968297688,
+            "group": 0.021254703476818224,
+            "hybrid": 0.021254703476818224
+          },
+          "new_known_dynamic_p50_ms": {
+            "group": 10.887360898777843,
+            "direct": 10.784765938296914,
+            "hybrid": 11.433382984250784
+          },
+          "new_oov_dynamic_p50_ms": {
+            "group": 5.980656016618013,
+            "direct": 11.164144147187471,
+            "hybrid": 14.363927999511361
+          },
+          "oov_coverage": {
+            "group": {
+              "accepted": 83,
+              "total": 512
+            },
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -1.7938935294889433e-05,
+                0.00014592613415574383
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004312509610057933,
+                0.00037693466218327603
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                1.0458807974900184e-06,
+                0.00017624174850691676
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004605553890694114,
+                0.00031811833217604057
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                1.0458807974900184e-06,
+                0.00017624174850691676
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004605553890694114,
+                0.00031811833217604057
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        }
+      ],
+      "median_extra_complete_saving": 0.12328808113297163,
+      "median_model_bytes": {
+        "direct": 1838068.0,
+        "group": 1611456.0,
+        "hybrid": 3627328.0
+      },
+      "median_known_dynamic_p50_ms": {
+        "direct": 10.904893046244979,
+        "group": 10.887360898777843,
+        "hybrid": 11.433382984250784
+      },
+      "all_primary_test_point_gates_pass": true
+    },
+    {
+      "order": 8,
+      "seeds": [
+        {
+          "seed": 3,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 2915142,
+              "test": {
+                "sgns_loss_per_pair": 1.9173711153727506,
+                "context_discrimination": 0.826904296875,
+                "loss_relative_change": 0.00016460893139580435,
+                "discrimination_change": -0.00014648437500008882,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1832905,
+              "test": {
+                "sgns_loss_per_pair": 1.9176578417622305,
+                "context_discrimination": 0.82685546875,
+                "loss_relative_change": 0.00031417496214780627,
+                "discrimination_change": -0.0001953125000000444,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 9174089,
+              "test": {
+                "sgns_loss_per_pair": 1.9176578417622305,
+                "context_discrimination": 0.82685546875,
+                "loss_relative_change": 0.00031417496214780627,
+                "discrimination_change": -0.0001953125000000444,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.3712467523022892,
+          "relative_l2": {
+            "direct": 0.025438856701729202,
+            "group": 0.031764155926662506,
+            "hybrid": 0.031764155926662506
+          },
+          "new_known_dynamic_p50_ms": {
+            "group": 12.025218922644854,
+            "direct": 15.12806210666895,
+            "hybrid": 12.734038988128304
+          },
+          "new_oov_dynamic_p50_ms": {
+            "group": 5.816041026264429,
+            "direct": 12.46012095361948,
+            "hybrid": 15.728836879134178
+          },
+          "oov_coverage": {
+            "group": {
+              "accepted": 49,
+              "total": 512
+            },
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                4.416885236429025e-05,
+                0.0002808186133177626
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.000552620512035633,
+                0.00023701337858098143
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                0.00017336692959562527,
+                0.00045708073640770007
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0006148057527716231,
+                0.00019713238620717823
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                0.00017336692959562527,
+                0.00045708073640770007
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0006148057527716231,
+                0.00019713238620717823
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        },
+        {
+          "seed": 7,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 2915142,
+              "test": {
+                "sgns_loss_per_pair": 1.9186189580077624,
+                "context_discrimination": 0.823828125,
+                "loss_relative_change": 1.1665311422826008e-05,
+                "discrimination_change": 0.000244140625,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1832906,
+              "test": {
+                "sgns_loss_per_pair": 1.918556755646259,
+                "context_discrimination": 0.8236083984375,
+                "loss_relative_change": -2.075544979895927e-05,
+                "discrimination_change": 2.4414062499977796e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 9174090,
+              "test": {
+                "sgns_loss_per_pair": 1.918556755646259,
+                "context_discrimination": 0.8236083984375,
+                "loss_relative_change": -2.075544979895927e-05,
+                "discrimination_change": 2.4414062499977796e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.3712464092658265,
+          "relative_l2": {
+            "direct": 0.025922197890905083,
+            "group": 0.032244745241366446,
+            "hybrid": 0.032244745241366446
+          },
+          "new_known_dynamic_p50_ms": {
+            "direct": 15.166264958679676,
+            "hybrid": 12.554686050862074,
+            "group": 12.07878696732223
+          },
+          "new_oov_dynamic_p50_ms": {
+            "direct": 12.378267012536526,
+            "hybrid": 15.599212143570185,
+            "group": 5.800536135211587
+          },
+          "oov_coverage": {
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            },
+            "group": {
+              "accepted": 49,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -9.027155230087736e-05,
+                0.00011371482547950505
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.00014754092084473324,
+                0.0006253497843926138
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0001319620453858167,
+                8.60756356051373e-05
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004247451073225238,
+                0.00046131123485377087
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0001319620453858167,
+                8.60756356051373e-05
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004247451073225238,
+                0.00046131123485377087
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        },
+        {
+          "seed": 11,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 2915143,
+              "test": {
+                "sgns_loss_per_pair": 1.8972118404615088,
+                "context_discrimination": 0.827490234375,
+                "loss_relative_change": 1.2567439637845013e-06,
+                "discrimination_change": 0.0001708984375000666,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1832905,
+              "test": {
+                "sgns_loss_per_pair": 1.8971790200926928,
+                "context_discrimination": 0.8276123046874999,
+                "loss_relative_change": -1.6042541947758338e-05,
+                "discrimination_change": 0.0002929687499999556,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 9174089,
+              "test": {
+                "sgns_loss_per_pair": 1.8971790200926928,
+                "context_discrimination": 0.8276123046874999,
+                "loss_relative_change": -1.6042541947758338e-05,
+                "discrimination_change": 0.0002929687499999556,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.3712469679875052,
+          "relative_l2": {
+            "direct": 0.025256589345608062,
+            "group": 0.03153668787147352,
+            "hybrid": 0.03153668787147352
+          },
+          "new_known_dynamic_p50_ms": {
+            "hybrid": 12.601898983120918,
+            "direct": 15.178626868873835,
+            "group": 11.97982206940651
+          },
+          "new_oov_dynamic_p50_ms": {
+            "hybrid": 15.563243068754673,
+            "direct": 12.226850958541036,
+            "group": 5.794320954009891
+          },
+          "oov_coverage": {
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            },
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "group": {
+              "accepted": 49,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.00014970774030428346,
+                0.00014634689911694474
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0001925400700463465,
+                0.0005199443963563811
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0001667095809917224,
+                0.00012835367581244815
+              ],
+              "discrimination_change_95_percent_interval": [
+                -7.62396721035094e-05,
+                0.0006844148687725727
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0001667095809917224,
+                0.00012835367581244815
+              ],
+              "discrimination_change_95_percent_interval": [
+                -7.62396721035094e-05,
+                0.0006844148687725727
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        }
+      ],
+      "median_extra_complete_saving": 0.3712467523022892,
+      "median_model_bytes": {
+        "direct": 2915142.0,
+        "group": 1832905.0,
+        "hybrid": 9174089.0
+      },
+      "median_known_dynamic_p50_ms": {
+        "direct": 15.166264958679676,
+        "group": 12.025218922644854,
+        "hybrid": 12.601898983120918
+      },
+      "all_primary_test_point_gates_pass": true
+    },
+    {
+      "order": 12,
+      "seeds": [
+        {
+          "seed": 3,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 3161169,
+              "test": {
+                "sgns_loss_per_pair": 1.8787218779407735,
+                "context_discrimination": 0.830859375,
+                "loss_relative_change": 0.00020941923484185665,
+                "discrimination_change": -7.324218750004441e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1881995,
+              "test": {
+                "sgns_loss_per_pair": 1.8787029677170528,
+                "context_discrimination": 0.8307861328125,
+                "loss_relative_change": 0.00019935165426621104,
+                "discrimination_change": -0.0001464843749999778,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 10374667,
+              "test": {
+                "sgns_loss_per_pair": 1.8787029677170528,
+                "context_discrimination": 0.8307861328125,
+                "loss_relative_change": 0.00019935165426621104,
+                "discrimination_change": -0.0001464843749999778,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.4046522030299551,
+          "relative_l2": {
+            "direct": 0.02585162931768338,
+            "group": 0.03242095847166315,
+            "hybrid": 0.03242095847166315
+          },
+          "new_known_dynamic_p50_ms": {
+            "group": 12.196538038551807,
+            "direct": 16.322558978572488,
+            "hybrid": 12.713714968413115
+          },
+          "new_oov_dynamic_p50_ms": {
+            "group": 5.834059091284871,
+            "direct": 12.412769021466374,
+            "hybrid": 15.710399020463228
+          },
+          "oov_coverage": {
+            "group": {
+              "accepted": 49,
+              "total": 512
+            },
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                7.493329193468679e-05,
+                0.0003365334023780253
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004935392394775291,
+                0.0003641904379283029
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                5.307483377510192e-05,
+                0.0003427150685028024
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0005687753087796021,
+                0.00029559115430894566
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                5.307483377510192e-05,
+                0.0003427150685028024
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0005687753087796021,
+                0.00029559115430894566
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        },
+        {
+          "seed": 7,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 3161168,
+              "test": {
+                "sgns_loss_per_pair": 1.915312873783818,
+                "context_discrimination": 0.8235107421875001,
+                "loss_relative_change": -1.3429033687950565e-05,
+                "discrimination_change": -0.0001220703125,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1881996,
+              "test": {
+                "sgns_loss_per_pair": 1.9155021526058174,
+                "context_discrimination": 0.8235595703125,
+                "loss_relative_change": 8.539360921200334e-05,
+                "discrimination_change": -7.324218750004441e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 10374668,
+              "test": {
+                "sgns_loss_per_pair": 1.9155021526058174,
+                "context_discrimination": 0.8235595703125,
+                "loss_relative_change": 8.539360921200334e-05,
+                "discrimination_change": -7.324218750004441e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.4046516983595937,
+          "relative_l2": {
+            "direct": 0.027027741814694913,
+            "group": 0.03335486850017508,
+            "hybrid": 0.03335486850017508
+          },
+          "new_known_dynamic_p50_ms": {
+            "group": 12.10148399695754,
+            "direct": 16.17645099759102,
+            "hybrid": 12.78558187186718
+          },
+          "new_oov_dynamic_p50_ms": {
+            "group": 5.783983040601015,
+            "direct": 12.563626049086452,
+            "hybrid": 15.758170979097486
+          },
+          "oov_coverage": {
+            "group": {
+              "accepted": 49,
+              "total": 512
+            },
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            },
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.00015848416128232956,
+                0.00013621732071436574
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0005042360314591642,
+                0.0002698757360758971
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -6.739521729886011e-05,
+                0.00025241121702779257
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004794021227270497,
+                0.00036380349379579413
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -6.739521729886011e-05,
+                0.00025241121702779257
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004794021227270497,
+                0.00036380349379579413
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        },
+        {
+          "seed": 11,
+          "selected": {
+            "direct": {
+              "name": "direct-sq6",
+              "model_bytes": 3161167,
+              "test": {
+                "sgns_loss_per_pair": 1.9273520141531142,
+                "context_discrimination": 0.8232177734375,
+                "loss_relative_change": 4.5266271344601705e-06,
+                "discrimination_change": -0.0001708984375000666,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "group": {
+              "name": "group-sq6",
+              "model_bytes": 1881996,
+              "test": {
+                "sgns_loss_per_pair": 1.9273074130671968,
+                "context_discrimination": 0.8233154296875,
+                "loss_relative_change": -1.8614598486177414e-05,
+                "discrimination_change": -7.324218750004441e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            },
+            "hybrid": {
+              "name": "group-sq6-hybrid",
+              "model_bytes": 10374668,
+              "test": {
+                "sgns_loss_per_pair": 1.9273074130671968,
+                "context_discrimination": 0.8233154296875,
+                "loss_relative_change": -1.8614598486177414e-05,
+                "discrimination_change": -7.324218750004441e-05,
+                "pairs": 8192
+              },
+              "test_quality_budget_passed": true
+            }
+          },
+          "extra_complete_saving": 0.404651510027784,
+          "relative_l2": {
+            "direct": 0.026563399865979886,
+            "group": 0.0330771303210237,
+            "hybrid": 0.0330771303210237
+          },
+          "new_known_dynamic_p50_ms": {
+            "hybrid": 12.761906022205949,
+            "group": 12.208831962198019,
+            "direct": 16.046755015850067
+          },
+          "new_oov_dynamic_p50_ms": {
+            "hybrid": 15.806012088432908,
+            "group": 5.852497881278396,
+            "direct": 12.448247987776995
+          },
+          "oov_coverage": {
+            "hybrid": {
+              "accepted": 512,
+              "total": 512
+            },
+            "group": {
+              "accepted": 49,
+              "total": 512
+            },
+            "direct": {
+              "accepted": 512,
+              "total": 512
+            }
+          },
+          "primary_test_point_gates_pass": true,
+          "test_block_intervals": {
+            "direct": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0001174162657928135,
+                0.00013759025661015385
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0005297784474843114,
+                0.00017390220241325486
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "group": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0001452452833520801,
+                0.00012009643623230864
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004525425747289887,
+                0.0003235554033187261
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            },
+            "hybrid": {
+              "token_block_size": 128,
+              "observed_blocks": 157,
+              "repeats": 1000,
+              "seed": 42,
+              "loss_relative_change_95_percent_interval": [
+                -0.0001452452833520801,
+                0.00012009643623230864
+              ],
+              "discrimination_change_95_percent_interval": [
+                -0.0004525425747289887,
+                0.0003235554033187261
+              ],
+              "scope": "Paired within-text token-block bootstrap; exploratory intervals, not independent corpora or simultaneous bounds."
+            }
+          }
+        }
+      ],
+      "median_extra_complete_saving": 0.4046516983595937,
+      "median_model_bytes": {
+        "direct": 3161168.0,
+        "group": 1881996.0,
+        "hybrid": 10374668.0
+      },
+      "median_known_dynamic_p50_ms": {
+        "direct": 16.17645099759102,
+        "group": 12.196538038551807,
+        "hybrid": 12.761906022205949
+      },
+      "all_primary_test_point_gates_pass": true
+    }
+  ],
+  "cross_corpus_query_retiming": [
+    {
+      "order": 4,
+      "known_total_query": {
+        "direct": {
+          "dynamic_old": 13.131926069036126,
+          "dynamic_new": 10.904893046244979,
+          "median_paired_speedup": 1.2067945632960984
+        },
+        "group": {
+          "dynamic_old": 19.868192030116916,
+          "dynamic_new": 10.887360898777843,
+          "median_paired_speedup": 1.8248859585748842
+        },
+        "hybrid": {
+          "dynamic_old": 20.476515172049403,
+          "dynamic_new": 11.433382984250784,
+          "median_paired_speedup": 1.7885758828251093
+        }
+      }
+    },
+    {
+      "order": 8,
+      "known_total_query": {
+        "direct": {
+          "dynamic_old": 18.822111887857318,
+          "dynamic_new": 15.166264958679676,
+          "median_paired_speedup": 1.2418166047073533
+        },
+        "group": {
+          "dynamic_old": 22.114085964858532,
+          "dynamic_new": 12.025218922644854,
+          "median_paired_speedup": 1.8406901230473538
+        },
+        "hybrid": {
+          "dynamic_old": 22.694607032462955,
+          "dynamic_new": 12.601898983120918,
+          "median_paired_speedup": 1.800887871174042
+        }
+      }
+    },
+    {
+      "order": 12,
+      "known_total_query": {
+        "direct": {
+          "dynamic_old": 19.932032097131014,
+          "dynamic_new": 16.17645099759102,
+          "median_paired_speedup": 1.2308768420995424
+        },
+        "group": {
+          "dynamic_old": 22.69313600845635,
+          "dynamic_new": 12.196538038551807,
+          "median_paired_speedup": 1.860621098932012
+        },
+        "hybrid": {
+          "dynamic_old": 23.02956604398787,
+          "dynamic_new": 12.761906022205949,
+          "median_paired_speedup": 1.804555370014166
+        }
+      }
+    }
+  ],
+  "native": {
+    "original_rows": 1855907,
+    "bags": 512,
+    "p50_ms": {
+      "compile_old": 63.017991837114096,
+      "compile_new": 10.166945168748498,
+      "replay": 15.67861600778997,
+      "dynamic_old": 79.86575295217335,
+      "dynamic_new": 26.268030982464552
+    },
+    "compile_speedup": 6.198321205746338,
+    "total_query_speedup": 3.040416428832767,
+    "plan_arrays_byte_identical": true,
+    "outputs_byte_identical": true
+  },
+  "scope": "Fixed finite SGNS corpus prefix and registered known-word domain; native retiming reuses the older large enwik8 table.",
+  "limitations": [
+    "Shared warm CPU; per-checkpoint query timings are descriptive across fresh workers.",
+    "Group projection/quantization changes original rows; original-row byte-preserving storage is separate.",
+    "OOV hybrid costs and narrower precomputed serving controls remain in the source analysis.",
+    "No large grouped-model retraining, convergence, semantic, LLM quality or GPU claim."
+  ],
+  "previous_corpus_frozen_query": [
+    {
+      "order": 4,
+      "known_total_query": {
+        "direct": {
+          "dynamic_old": 11.682712007313967,
+          "dynamic_new": 9.668626822531223,
+          "median_paired_speedup": 1.2120387119183549
+        },
+        "group": {
+          "dynamic_old": 18.32204102538526,
+          "dynamic_new": 9.854126023128629,
+          "median_paired_speedup": 1.8593268426222256
+        },
+        "hybrid": {
+          "dynamic_old": 18.85800389572978,
+          "dynamic_new": 10.334286140277982,
+          "median_paired_speedup": 1.8175734741692542
+        }
+      }
+    },
+    {
+      "order": 8,
+      "known_total_query": {
+        "direct": {
+          "dynamic_old": 15.478101093322039,
+          "dynamic_new": 12.622777139768004,
+          "median_paired_speedup": 1.2262041008835012
+        },
+        "group": {
+          "dynamic_old": 20.002075005322695,
+          "dynamic_new": 10.634253965690732,
+          "median_paired_speedup": 1.8809100356127793
+        },
+        "hybrid": {
+          "dynamic_old": 20.535173127427697,
+          "dynamic_new": 11.145213153213263,
+          "median_paired_speedup": 1.8531433039164562
+        }
+      }
+    },
+    {
+      "order": 12,
+      "known_total_query": {
+        "direct": {
+          "dynamic_old": 15.661084791645408,
+          "dynamic_new": 12.792631052434444,
+          "median_paired_speedup": 1.2258533727756344
+        },
+        "group": {
+          "dynamic_old": 20.098106004297733,
+          "dynamic_new": 10.65744087100029,
+          "median_paired_speedup": 1.8896798951857976
+        },
+        "hybrid": {
+          "dynamic_old": 20.72213892824948,
+          "dynamic_new": 11.237544007599354,
+          "median_paired_speedup": 1.850796294893387
+        }
+      }
+    }
+  ],
+  "inputs_sha256": {
+    "training": "58448edb797500e8e0ae59378556f46749c19a89e805037830435b97bd7517f5",
+    "codecs": "86290830b7e5d5c77414d41227a950d5817a5debe1cb3153f16744245a76b032",
+    "query": "6bc5226d146d643fc99bbad4e9ba8b9cf4c9bfdc14fb062ea3bea0f0c93b4da7",
+    "native": "d1d753b1d14be4b3556f9c5aa7c4ed3ee391b37cc690f52ec2557bfbcd6ff35f",
+    "frozen_query": "24590354bb07f1e3bfa2aa74f5a28af7f592e6f1dbc134750e7752f3c64c26e3"
+  },
+  "analyzer_sha256": "bffd92f1a71d6ac83d91afd9afada09c19cd9e33fc62934aa221dbedff03ed9c"
+}
