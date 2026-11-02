@@ -86,6 +86,8 @@ def verify(cfg):
         raise ValueError('native trace changed')
     started = time.perf_counter()
     outputs = {}
+    if file_hash(cfg.store / 'table.men') != file_hash(cfg.previous / 'table.men'):
+        raise ValueError('complete native table differs from the earlier raw artifact')
     with CertifiedBagRows(cfg.store, cfg.native_library) as new, \
             CertifiedBagRows(cfg.previous, cfg.native_library) as old:
         if new.partition.summary() != old.partition.summary():
