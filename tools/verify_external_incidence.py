@@ -63,7 +63,8 @@ def main():
             raise ValueError('native plan summary changed')
         # Check all new group means against the earlier native canonical rows,
         # without allocating a second complete float table.
-        representatives = partition.representatives()
+        representatives = np.full(len(partition.sizes), len(partition.mapping), dtype=np.int64)
+        np.minimum.at(representatives, partition.mapping, np.arange(len(partition.mapping)))
         checked = 0
         with (cfg.build / 'means.f32').open('rb') as means:
             for begin in range(0, len(representatives), 4096):
