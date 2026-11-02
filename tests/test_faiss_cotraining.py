@@ -26,6 +26,44 @@ class ArrayReader:
 
 @unittest.skipIf(np is None, 'NumPy required')
 class QueryContractTests(unittest.TestCase):
+    def test_fused_schedule_matches_independent_scalar_original_id_oracle(self):
+        import itertools
+        from collections import Counter
+        p = BagPartition([1, 0, 2, 0, 1], 'noncontiguous fixture', 1)
+        bags = [[i for i, n in enumerate(counts) for _ in range(n)]
+                for counts in itertools.product(range(3), repeat=5)]
+        word_ids = [0 if i % 2 else -1 for i in range(len(bags))]
+        byte_mapping = np.array([2, 0, 2, 1, 0])
+        for partition, fallback, code_mapping in ((None, False, None),
+                (None, False, byte_mapping), (p, False, None), (p, True, None)):
+            plan = schedule(bags, word_ids, partition, fallback=fallback, code_mapping=code_mapping)
+            ids, weights, offsets, accepted = [], [], [0], []
+            multi = p.sizes[p.mapping] > 1
+            rank = np.cumsum(multi) - 1
+            for bag in bags:
+                safe = partition is None or partition.certifies(bag)
+                accepted.append(safe or fallback)
+                if safe or fallback:
+                    if partition is None:
+                        mapped = bag if code_mapping is None else code_mapping[bag]
+                    elif safe:
+                        mapped = partition.mapping[bag]
+                    else:
+                        mapped = [len(p.sizes) + rank[i] if multi[i] else p.mapping[i] for i in bag]
+                    for row, count in sorted(Counter(map(int, mapped)).items()):
+                        ids.append(row)
+                        weights.append(count)
+                offsets.append(len(ids))
+            self.assertEqual(plan['ids'].tobytes(), np.asarray(ids, dtype='<i8').tobytes())
+            self.assertEqual(plan['weights'].tobytes(), np.asarray(weights, dtype='<f8').tobytes())
+            self.assertEqual(plan['offsets'].tobytes(), np.asarray(offsets, dtype='<i8').tobytes())
+            self.assertEqual(plan['accepted'].tolist(), accepted)
+            self.assertEqual(plan['denominators'].tolist(),
+                             [max(1, len(b) + (w >= 0)) for b, w in zip(bags, word_ids)])
+        for bag in ([True], [-1], [.5], [[0]]):
+            with self.assertRaises(ValueError):
+                schedule([bag], [-1])
+
     def setUp(self):
         self.source = np.array([[1., 2.], [3., 0.], [5., -2.]], dtype=np.float32)
         self.words = np.array([[.5, -.5]], dtype=np.float32)

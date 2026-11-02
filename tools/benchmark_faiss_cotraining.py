@@ -21,7 +21,7 @@ import time
 
 import numpy as np
 
-from .cotraining_groups import BagPartition
+from .cotraining_groups import BagPartition, _count_bags
 from .faiss_row_codec import DEFAULT_CODECS, FaissRows, fit_codec
 
 
@@ -46,29 +46,38 @@ def schedule(bags, word_ids, partition=None, *, fallback=False, code_mapping=Non
         raise ValueError('one word ID per bag required')
     if partition is not None and code_mapping is not None:
         raise ValueError('incidence and encoded-byte maps are separate controls')
-    ids, weights, offsets, denominators, accepted = [], [], [0], [], []
-    safe_bags = np.ones(len(bags), dtype=bool) if partition is None else partition.certifies_many(bags)
-    rank = None
-    if partition is not None and fallback and not safe_bags.all():
-        multi = partition.sizes[partition.mapping] > 1
-        rank = np.cumsum(multi, dtype=np.int64) - 1
-    for bag, word, safe in zip(bags, word_ids, safe_bags):
-        accepted.append(safe or fallback)
-        denominators.append(max(1, len(bag) + (word >= 0)))
-        if safe or fallback:
-            if partition is None:
-                mapped = bag if code_mapping is None else code_mapping[bag]
-            elif safe:
-                mapped = partition.mapping[bag]
-            else:
-                # Unsafe query: original FP32 for EVERY nonsingleton member;
-                # singleton groups still use the chosen codec like the other rows.
-                mapped = [len(partition.sizes) + int(rank[i]) if multi[i]
-                          else int(partition.mapping[i]) for i in bag]
-            for row, count in sorted(Counter(map(int, mapped)).items()):
-                ids.append(row)
-                weights.append(count)
-        offsets.append(len(ids))
+    if partition is None:
+        original = _count_bags(bags, nrows=None if code_mapping is None else len(code_mapping))
+        bag_ids, ids, weights = (original[k] for k in ('bags', 'rows', 'counts'))
+        if code_mapping is not None:
+            ids = np.asarray(code_mapping)[ids]
+        accepted = np.ones(len(bags), dtype=bool)
+    else:
+        compiled = partition._compiled_groups(bags)
+        original = compiled['original']
+        safe = compiled['accepted']
+        used = safe[compiled['bags']]
+        bag_ids, ids, weights = (compiled[k][used] for k in ('bags', 'groups', 'counts'))
+        accepted = safe | fallback
+        if fallback and not safe.all():
+            multi = partition.sizes[partition.mapping] > 1
+            rank = np.cumsum(multi, dtype=np.int64) - 1
+            rejected = ~safe[original['bags']]
+            rows = original['rows'][rejected]
+            fallback_ids = np.where(multi[rows], len(partition.sizes) + rank[rows], partition.mapping[rows])
+            bag_ids = np.r_[bag_ids, original['bags'][rejected]]
+            ids = np.r_[ids, fallback_ids]
+            weights = np.r_[weights, original['counts'][rejected]]
+    # Apply the same batch counting optimization to the direct codec controls.
+    order = np.lexsort((ids, bag_ids))
+    ids, bag_ids, weights = ids[order], bag_ids[order], weights[order]
+    if len(ids):
+        starts = np.r_[0, np.flatnonzero((ids[1:] != ids[:-1]) | (bag_ids[1:] != bag_ids[:-1])) + 1]
+        weights = np.add.reduceat(weights, starts)
+        ids, bag_ids = ids[starts], bag_ids[starts]
+    per_bag = np.bincount(bag_ids, minlength=len(bags))
+    offsets = np.r_[0, np.cumsum(per_bag, dtype=np.int64)]
+    denominators = np.maximum(1, original['lengths'] + (np.asarray(word_ids) >= 0))
     return {'ids': np.asarray(ids, dtype='<i8'), 'weights': np.asarray(weights, dtype='<f8'),
             'offsets': np.asarray(offsets, dtype='<i8'),
             'denominators': np.asarray(denominators, dtype='<f8'),

@@ -14,6 +14,41 @@ import shutil
 import numpy as np
 
 
+def _count_bags(bags, *, nrows=None, padding_idx=None):
+    """Count original IDs once, retaining bag boundaries and empty bags."""
+    bags = list(bags)
+    if padding_idx is not None and (not isinstance(padding_idx, (int, np.integer))
+            or isinstance(padding_idx, (bool, np.bool_)) or padding_idx < 0
+            or (nrows is not None and padding_idx >= nrows)):
+        raise ValueError('padding row ID out of range')
+    parts, lengths = [], []
+    for bag in bags:
+        array = np.asarray(bag)
+        if array.ndim != 1:
+            raise ValueError('one-dimensional bag required')
+        if len(array) and (array.dtype.kind not in 'iu' or array.min() < 0
+                or array.max() > np.iinfo(np.int64).max
+                or (nrows is not None and array.max() >= nrows)):
+            raise ValueError('bag row ID out of range')
+        if padding_idx is not None:
+            array = array[array != padding_idx]
+        parts.append(array.astype(np.int64, copy=False))
+        lengths.append(len(array))
+    lengths = np.asarray(lengths, dtype=np.int64)
+    rows = np.concatenate(parts) if len(parts) else np.empty(0, dtype=np.int64)
+    bag_ids = np.repeat(np.arange(len(bags), dtype=np.int64), lengths)
+    if len(rows):
+        order = np.lexsort((rows, bag_ids))
+        rows, bag_ids = rows[order], bag_ids[order]
+        starts = np.r_[0, np.flatnonzero((rows[1:] != rows[:-1])
+                                       | (bag_ids[1:] != bag_ids[:-1])) + 1]
+        counts = np.diff(np.r_[starts, len(rows)])
+        rows, bag_ids = rows[starts], bag_ids[starts]
+    else:
+        counts = np.empty(0, dtype=np.int64)
+    return {'bags': bag_ids, 'rows': rows, 'counts': counts, 'lengths': lengths}
+
+
 class BagPartition:
     """Exact equality of (bag ID, multiplicity) signatures; empty rows stay alone.
 
@@ -161,6 +196,32 @@ class BagPartition:
         np.minimum.at(first, self.mapping, np.arange(len(self.mapping)))
         return first[self.mapping]
 
+    def _compiled_groups(self, bags, *, padding_idx=None):
+        """Reuse exact original counts for both certification and group weights.
+
+        Rejected groups remain marked unsafe, even if their summed count happens
+        to match that of a complete group. Temporary memory scales with the batch.
+        """
+        original = _count_bags(bags, nrows=len(self.mapping), padding_idx=padding_idx)
+        rows, counts, bag_ids = (original[k] for k in ('rows', 'counts', 'bags'))
+        accepted = np.ones(len(original['lengths']), dtype=bool)
+        groups = self.mapping[rows]
+        order = np.lexsort((groups, bag_ids))
+        groups, bag_ids, counts, rows = groups[order], bag_ids[order], counts[order], rows[order]
+        if len(groups):
+            starts = np.r_[0, np.flatnonzero((groups[1:] != groups[:-1])
+                                            | (bag_ids[1:] != bag_ids[:-1])) + 1]
+            observed = np.diff(np.r_[starts, len(groups)])
+            bad = ((observed != self.sizes[groups[starts]])
+                   | (np.minimum.reduceat(counts, starts) != np.maximum.reduceat(counts, starts)))
+            accepted[bag_ids[starts[bad]]] = False
+            weights = np.add.reduceat(counts, starts)
+            groups, bag_ids, first_rows = groups[starts], bag_ids[starts], rows[starts]
+        else:
+            weights, first_rows = counts, rows
+        return {'original': original, 'accepted': accepted, 'bags': bag_ids,
+                'groups': groups, 'counts': weights, 'first_rows': first_rows}
+
     def explain_query(self, bag):
         """Explain uniform aggregate safety, with a sparse rejection witness.
 
@@ -237,31 +298,24 @@ class CertifiedBagPlan:
     The native weighted reducer accumulates in float64, then outputs float32.
     """
     def __init__(self, partition, bags, *, padding_idx=None):
-        bags = [list(bag) for bag in bags]
-        if not partition.certifies_many(bags, padding_idx=padding_idx).all():
+        compiled = partition._compiled_groups(bags, padding_idx=padding_idx)
+        if not compiled['accepted'].all():
             raise ValueError('uncertified bag: incomplete group or unequal multiplicity')
-        representatives = partition.representatives()
-        ids, weights, offsets, denominators = [], [], [0], []
-        original_occurrences = 0
-        for bag in bags:
-            bag = list(bag)
-            if padding_idx is not None:
-                bag = [i for i in bag if i != padding_idx]
-            denominators.append(max(1, len(bag)))
-            original_occurrences += len(bag)
-            counts = Counter(int(representatives[i]) for i in bag)
-            for root, count in sorted(counts.items()):
-                if int(np.float32(count)) != count:
-                    raise ValueError('multiplicity cannot be represented exactly as float32')
-                ids.append(root)
-                weights.append(count)
-            offsets.append(len(ids))
+        lengths = compiled['original']['lengths']
+        # Certified groups contain every member: the first observed original ID
+        # is the global representative. Sort by that ID to keep legacy arrays.
+        order = np.lexsort((compiled['first_rows'], compiled['bags']))
+        ids, weights = compiled['first_rows'][order], compiled['counts'][order]
+        if np.any(weights.astype(np.float32).astype(np.int64) != weights):
+            raise ValueError('multiplicity cannot be represented exactly as float32')
+        per_bag = np.bincount(compiled['bags'], minlength=len(lengths))
+        offsets = np.r_[0, np.cumsum(per_bag, dtype=np.int64)]
         self.ids = np.asarray(ids, dtype='<u8')
         self.weights = np.asarray(weights, dtype='<f4')
         self.offsets = np.asarray(offsets, dtype='<u8')
-        self.denominators = np.asarray(denominators, dtype=np.int64)
+        self.denominators = np.maximum(lengths, 1)
         self.partition_sha256 = partition.summary()['mapping_sha256']
-        self.original_occurrences = original_occurrences
+        self.original_occurrences = int(lengths.sum())
         for values in (self.ids, self.weights, self.offsets, self.denominators):
             values.flags.writeable = False
 
