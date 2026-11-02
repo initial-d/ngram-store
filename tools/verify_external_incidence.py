@@ -69,7 +69,7 @@ def main():
         with (cfg.build / 'means.f32').open('rb') as means:
             for begin in range(0, len(representatives), 4096):
                 ids = representatives[begin:begin + 4096]
-                actual = previous.table.rows(ids)
+                actual = previous.table.rows(ids.tolist())
                 expected = means.read(len(ids) * previous.dim * 4)
                 if actual != expected:
                     raise ValueError('new means differ from earlier native canonical rows')

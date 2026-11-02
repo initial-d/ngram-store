@@ -1,6 +1,8 @@
 """Exact external construction, adversarial collisions and eviction order."""
 import importlib.util
+import hashlib
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -18,6 +20,45 @@ else:
 
 @unittest.skipUnless(np is not None, 'NumPy required')
 class ExternalConstructionTests(unittest.TestCase):
+    def test_independent_native_verifier_checks_each_group_and_rejects_changed_means(self):
+        from tools.cotraining_groups import export_certified_bags
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            library = root / 'librows.so'
+            checkout = Path(__file__).resolve().parents[1]
+            subprocess.run([os.environ.get('CC', 'cc'), '-std=c11', '-O2', '-fPIC', '-shared',
+                str(checkout / 'native/meft_rows.c'), '-lz', '-o', str(library)], check=True)
+            bags = [[4, 1, 4, 1], [0, 3], []]
+            rows = np.arange(18, dtype='<f4').reshape(6, 3)
+            partition = BagPartition.fit(bags, 6)
+            export_certified_bags(rows, partition, root / 'previous', native_library=library, compress=False)
+            build = root / 'build'
+            build.mkdir()
+            external = BagPartition.fit_external(bags, 6, build / 'partition', memory_bytes=8 << 20)
+            rows.tofile(root / 'source')
+            external.project_file(root / 'source', 3, build / 'means.f32', memory_bytes=8 << 20)
+            external.save_npz(build / 'domain.npz')
+            (root / 'bags.json').write_text(json.dumps(bags))
+            trace = hashlib.sha256(np.asarray([row for bag in bags for row in bag], dtype='<u8').tobytes()
+                + np.asarray([0, 4, 6, 6], dtype='<u8').tobytes()).hexdigest()
+            command = [sys.executable, '-m', 'tools.verify_external_incidence', '--build', str(build),
+                '--previous-store', str(root / 'previous'), '--bags', str(root / 'bags.json'),
+                '--expected-trace-sha256', trace, '--native-library', str(library), '--output', str(root / 'verified.json')]
+            environment = dict(os.environ, CUDA_VISIBLE_DEVICES='')
+            verified = subprocess.run(command, env=environment, capture_output=True, text=True)
+            self.assertEqual(verified.returncode, 0, verified.stderr)
+            report = json.loads((root / 'verified.json').read_text())
+            self.assertEqual(report['all_group_means_identical_to_previous_native_rows'], len(partition.sizes))
+            self.assertEqual(set(report['identical_native_outputs']), {'sum', 'mean'})
+            (root / 'verified.json').unlink()
+            payload = bytearray((build / 'means.f32').read_bytes())
+            payload[-1] ^= 1
+            (build / 'means.f32').write_bytes(payload)
+            failed = subprocess.run(command, env=environment, capture_output=True, text=True)
+            self.assertNotEqual(failed.returncode, 0)
+            self.assertIn('new means differ', failed.stderr)
+            self.assertFalse((root / 'verified.json').exists())
+
     def test_single_bag_exceeds_payload_buffer_and_spills_exactly(self):
         with tempfile.TemporaryDirectory() as tmp:
             # 320,000 payload bytes exceed the 131,072-byte small-bag buffer.
