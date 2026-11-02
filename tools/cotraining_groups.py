@@ -119,6 +119,13 @@ class BagPartition:
             mapping[row] = group
         return cls(mapping, digest.hexdigest(), domain_bags)
 
+    @classmethod
+    def fit_external(cls, bags, nrows, output, *, memory_bytes=64 << 20, protected=(), progress=None):
+        """Disk-backed exact construction; runtime materialization is explicit."""
+        from .external_cotraining import fit_external
+        return fit_external(bags, nrows, output, memory_bytes=memory_bytes,
+                            protected=protected, progress=progress)
+
     def summary(self):
         return {"original_rows": len(self.mapping), "group_rows": len(self.sizes),
                 "rows_in_nonsingleton_groups": int(self.sizes[self.sizes > 1].sum()),
