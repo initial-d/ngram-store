@@ -1,0 +1,5 @@
+{"stage": "raw-bag-sort", "elapsed_seconds": 22.215814388124272, "workspace_logical_bytes": 101677568}
+{"stage": "row-incidence-sort", "elapsed_seconds": 53.81891399715096, "workspace_logical_bytes": 152181168}
+{"stage": "exact-signature-grouping", "elapsed_seconds": 98.99957446497865, "workspace_logical_bytes": 306161640}
+{"stage": "means-written", "elapsed_seconds": 116.13916257210076, "workspace_logical_bytes": 1123919032}
+{"finished": "external", "rows": 1855907, "peak_rss_bytes": 99606528, "seconds": 116.5788890060503}

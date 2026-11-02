@@ -51,6 +51,11 @@ def validate_grid(report, preparation, verifier):
             'build_time_factor': r['total_seconds'] / base['total_seconds'],
             'all_output_bytes_identical': r.get('all_output_bytes_identical')})
     full = bases[1855907]['partition']
+    full_run = bases[1855907]
+    if verifier.get('means_sha256') != full_run['projection']['means_sha256'] or any(
+            verifier['source_files_sha256'].get(name) != full_run['source_files_sha256'][name]
+            for name in ('external_cotraining.py', 'cotraining_groups.py')):
+        raise ValueError('native verifier used different means or construction code')
     if verifier['partition'] != full or not verifier.get('partition_arrays_and_legacy_reader_identical') or \
             verifier.get('all_group_means_identical_to_previous_native_rows') != full['group_rows'] or \
             verifier['plan']['bags'] != 512 or verifier['plan']['partition_sha256'] != full['mapping_sha256'] or \

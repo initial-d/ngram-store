@@ -1,0 +1,18 @@
+{
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "CPU only",
+  "torch_environment_version_not_used_by_builder": "2.11.0",
+  "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "filesystem_type": "ceph",
+  "source_commits": {
+    "preparation": "25ed5e6aba7aaf95460099bbae7b90b2925f2f01",
+    "construction": "1c0c832b50ba4b17087679ca61fdf510620fc401",
+    "native_verifier": "9734ec191f3820e003a220769e8a492150c294cd"
+  },
+  "limits": [
+    "Existing remote CPU and warm shared filesystem; no affinity/exclusive/cold-cache claim.",
+    "Physical storage medium, OS page-cache total, monetary and energy costs not measured.",
+    "No GPU inspection or process operations in this task."
+  ]
+}

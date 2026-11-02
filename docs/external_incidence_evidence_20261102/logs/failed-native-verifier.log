@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-external-build-20261102/source3/tools/verify_external_incidence.py", line 116, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-external-build-20261102/source3/tools/verify_external_incidence.py", line 72, in main
+    actual = previous.table.rows(ids)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-external-build-20261102/source3/tools/native_row_store.py", line 351, in rows
+    raise IndexError("row ID out of bounds")
+IndexError: row ID out of bounds

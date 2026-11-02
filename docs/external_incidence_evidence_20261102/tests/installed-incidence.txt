@@ -1,0 +1,40 @@
+{
+  "partition": {
+    "original_rows": 3,
+    "group_rows": 2,
+    "rows_in_nonsingleton_groups": 2,
+    "nonsingleton_groups": 1,
+    "domain_bags": 2,
+    "domain_sha256": "c0a184deef5d73e49723e6902dca88bf0898d3e9c71d281c4af50cbefa077543",
+    "mapping_sha256": "85526ba79728a470972be92942ef4de212630c9368703cb4ab3cb42dece95912",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "projection": {
+    "source_sha256": "a87dea4808ed77447d1a08bb29ccfefc4fe0de288a396e1ad761bda1b6c0b673",
+    "means_sha256": "d4771e546a663fba4f18d90d167b0889d51dca053f29aa7a0b913a3295721d3f",
+    "group_rows": 2,
+    "dim": 2,
+    "managed_memory_bytes": 8388608,
+    "cache_capacity_rows": 3971,
+    "accumulator_reads": 2,
+    "evictions": 0,
+    "temporary_accumulator_bytes": 32,
+    "contract": "ordered float64 group means rounded to FP32; source rows change"
+  },
+  "source_row_bytes_preserved": false,
+  "mean_row_ids": "Group IDs from domain.npz mapping.",
+  "contract": "Complete certified bag sums/means in real arithmetic; reject incomplete groups.",
+  "limitations": [
+    "Managed buffers are not a hard RSS or filesystem page-cache cap.",
+    "Runtime map loading and native packing have separate memory costs.",
+    "Native numeric lookup alone does not enforce the bag certificate."
+  ]
+}
+{
+  "status": "passed",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "numpy": "2.3.5",
+  "package": "/tmp/ngram-external-installed-20261102/ngram_store/__init__.py",
+  "torch_loaded": false,
+  "installed_cli_mapping_and_means_identical": true
+}

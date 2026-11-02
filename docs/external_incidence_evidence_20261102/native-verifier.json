@@ -1,0 +1,77 @@
+{
+  "status": "completed",
+  "source_commit": "9734ec191f3820e003a220769e8a492150c294cd",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-external-build-20261102/source4/tools/verify_external_incidence.py --build /llm-align/duyimin/ngram-external-build-20261102/results2/1855907-external-64 --previous-store /llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-raw-blocks --bags /llm-align/duyimin/ngram-cross-corpus-20261102/large-native-bags.json --expected-trace-sha256 cedaa2f0ac19ceedfea4eda07139204d8c179d84e3f33e213811168cd93f83fe --native-library /llm-align/duyimin/ngram-cotraining-20261031/source/build/librows.so --output /llm-align/duyimin/ngram-external-build-20261102/native-verifier4.json",
+  "device": "cpu",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "source_files_sha256": {
+    "verify_external_incidence.py": "ba77a5fe4d7ece82277671006a0c1f634d30579d68a9190d4d6b41d9bfbbd806",
+    "external_cotraining.py": "eb3ac15679f231c9b0de6766682bf65552f6c95dcb9c8d6cf9b134282962201e",
+    "cotraining_groups.py": "9fa0b723c4a3ccbc04f9776076753477706cb9c88b2fcb9533881f50fc1029c1"
+  },
+  "native_library_sha256": "49aa8e7e82c83e3ec0b103af62eeb3638d98a18a780a35bb5c80e435fc791c51",
+  "previous_manifest_sha256": "108533f6e18e681a8f2b53d5e24bc2907de7da838db6135edb25c6debd6cae66",
+  "previous_domain_sha256": "5a783049e5f2f6a4ce1b37b84bce3607ecc63864ca40b2903ecc1f1f79f4880b",
+  "new_external_metadata_sha256": "8f276e4d50fdc6d755ca9e09d1178db688c4c70d952cf182fcc8ff48ca31d36f",
+  "new_domain_file_sha256": "32d747d9369ac3d731efe35a150a2f41a085bba7f3a5f5fae0821b2525852f57",
+  "means_sha256": "6ac01d5ebdb6af0961dccddc0d5ce2f79b0a5d2a5025079fc18d5b18b2a0fd3f",
+  "bags_file_sha256": "75783da6ae2ef8e72aaafebfc3549ab502cbd4bf013afb50c4177b37927242aa",
+  "query_bags_sha256": "cedaa2f0ac19ceedfea4eda07139204d8c179d84e3f33e213811168cd93f83fe",
+  "partition": {
+    "original_rows": 1855907,
+    "group_rows": 360088,
+    "rows_in_nonsingleton_groups": 1696403,
+    "nonsingleton_groups": 200584,
+    "domain_bags": 142308,
+    "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+    "mapping_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "partition_arrays_and_legacy_reader_identical": true,
+  "all_group_means_identical_to_previous_native_rows": 360088,
+  "plan": {
+    "bags": 512,
+    "original_occurrences": 21747,
+    "group_occurrences": 15892,
+    "plan_bytes": 198904,
+    "partition_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb"
+  },
+  "identical_plan_arrays": {
+    "ids": {
+      "bytes": 127136,
+      "sha256": "036612837dcf64df0ce119430b89134056a853d11034a18943271246a6369074"
+    },
+    "weights": {
+      "bytes": 63568,
+      "sha256": "addf1e0e298a77e5e9db98b15a04029f0b2830ae941f2483872f1a4dd0ceacce"
+    },
+    "offsets": {
+      "bytes": 4104,
+      "sha256": "aa9b314d88f8da42a62b02e757e2df34d044e2daf9016acfcb4aed73b661fd7c"
+    },
+    "denominators": {
+      "bytes": 4096,
+      "sha256": "a2dbd4daf0c9fe7b60548f077f263eef524fc5078562eade5decff269b286694"
+    }
+  },
+  "identical_native_outputs": {
+    "sum": {
+      "bytes": 524288,
+      "sha256": "c26cb78b896e5b1f6a042af89f0c4dbf2c89b072d58922688f6548bea95ad162"
+    },
+    "mean": {
+      "bytes": 524288,
+      "sha256": "939b42d08e95ba66d0202f8dd13ad5dc35e7a29d10806ce09a039d37b475bef7"
+    }
+  },
+  "seconds": 1.6839496369939297,
+  "peak_rss_bytes": 508116992,
+  "limitations": [
+    "Separate resident verifier; maps and native runtime are O(N).",
+    "Same existing native artifact and C reducer; no new native packing benchmark.",
+    "Byte identity is to the existing projected means/plan, not the original source rows.",
+    "No query-performance, new training or LLM-quality claim."
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "source_commit": "25ed5e6aba7aaf95460099bbae7b90b2925f2f01",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python /llm-align/duyimin/ngram-external-build-20261102/source/tools/prepare_external_bags.py --training-dir /llm-align/duyimin/meft-cpu-capacity-20261030/training2 --words /llm-align/duyimin/ngram-cotraining-20261031/large-results/precomputed-known-words/words.json --reference-report /llm-align/duyimin/ngram-cotraining-20261031/large-results/report.json --output-dir /llm-align/duyimin/ngram-external-build-20261102/inputs",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "cpu",
+  "source_table_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+  "source_keys_sha256": "addcb6e8300c27a5d8d43028d334f9d9e6f62dcf39f7590c0952a060ede8acc8",
+  "source_training_ids_sha256": "16c6ef210b5975bdb4146f0400163eecfb424c11e590012dc9ada47aa399bc0a",
+  "words_sha256": "52ed1b214c171af3d360e22ca9388e592b870f82b087f4dc99baaf0de8a32043",
+  "reference_report_sha256": "2e97a0ba44ead2c27daf5ff2d3e0d94d94565cb13420828698c09a1a72a9149d",
+  "source_files_sha256": {
+    "prepare_external_bags.py": "094c53afe33ea8c102ec98b6136372eb814907c9871f6a50147c0eaf4e2654b6",
+    "external_cotraining.py": "09efc1fbc987b535c3f4deb541ccbb072f843700ca5c474c0b584d010bc2bcde"
+  },
+  "sets": [
+    {
+      "rows": 250000,
+      "dim": 256,
+      "bags": 142308,
+      "occurrences": 650166,
+      "maximum_bag_occurrences": 22,
+      "empty_bags": 61372,
+      "domain_sha256": "af516ac058e8646d9f2665a9c37c9ebf71beaa2bc4ba162e79ef1c60b7f47e70",
+      "source": "/llm-align/duyimin/ngram-external-build-20261102/inputs/250000/source.f32",
+      "source_sha256": "9e30bc4cd95bcedf4e5fad980d40fe7447618af01216244bde1481bd5990746f",
+      "ids": "/llm-align/duyimin/ngram-external-build-20261102/inputs/250000/ids.u64",
+      "offsets": "/llm-align/duyimin/ngram-external-build-20261102/inputs/250000/offsets.u64",
+      "ids_sha256": "847c59fe132df3dcdf430dec08f836f58df611b3341590986b9f05a35522c6cd",
+      "offsets_sha256": "09fe77139633b3712311f53d89c60bcb4e759e52e12f68cd895cbed307b7bb2f"
+    },
+    {
+      "rows": 1000000,
+      "dim": 256,
+      "bags": 142308,
+      "occurrences": 3134613,
+      "maximum_bag_occurrences": 175,
+      "empty_bags": 0,
+      "domain_sha256": "b4049bac907a45885eae90e9a963bb120bc470098d1ea551259dd27a6b445e85",
+      "source": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1000000/source.f32",
+      "source_sha256": "181db07951c14557a087de7960773357cb128efd2cac47b0728dc4f7da14c9b9",
+      "ids": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1000000/ids.u64",
+      "offsets": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1000000/offsets.u64",
+      "ids_sha256": "2796e4d88bc94defe0d754cfc4fc28cdcacfb9de18f499b8162681cd61571f63",
+      "offsets_sha256": "302d1022776faa268aef45f8b58e7c7e0493a782615cfd8e66d2444d6856e4db"
+    },
+    {
+      "rows": 1855907,
+      "dim": 256,
+      "bags": 142308,
+      "occurrences": 6354848,
+      "maximum_bag_occurrences": 594,
+      "empty_bags": 0,
+      "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+      "source": "/llm-align/duyimin/meft-cpu-capacity-20261030/training2/trained.f32",
+      "source_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+      "ids": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/ids.u64",
+      "offsets": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/offsets.u64",
+      "ids_sha256": "5765960f4f6dfb9da9f9ddd39568d547904674cbfeac1fff9abd6e8977664e5c",
+      "offsets_sha256": "3061579a3b0dd4ba993707708d1d2069a1d8907e906d008715279fbac954e552"
+    }
+  ],
+  "limitations": [
+    "Cached JSON preprocessing is not a bounded-memory tokenizer/key registry.",
+    "Actual original-row prefixes; no independent training, new quality or GPU claim."
+  ],
+  "seconds": 34.506414401112124,
+  "status": "completed",
+  "peak_rss_bytes": 340230144
+}

@@ -1,0 +1,8 @@
+{"completed": "250000-legacy", "seconds": 4.608694975962862, "peak_rss_bytes": 653303808}
+{"completed": "250000-external-64", "seconds": 13.624479249119759, "peak_rss_bytes": 57315328}
+{"completed": "1000000-legacy", "seconds": 13.373967102030292, "peak_rss_bytes": 2110050304}
+{"completed": "1000000-external-64", "seconds": 52.1193814878352, "peak_rss_bytes": 70127616}
+{"completed": "1855907-legacy", "seconds": 23.263457354158163, "peak_rss_bytes": 3293237248}
+{"completed": "1855907-external-64", "seconds": 116.5788890060503, "peak_rss_bytes": 99606528}
+{"completed": "1855907-external-128", "seconds": 102.48242692789063, "peak_rss_bytes": 75198464}
+{"completed": "1855907-external-256", "seconds": 97.26112359110266, "peak_rss_bytes": 114823168}
