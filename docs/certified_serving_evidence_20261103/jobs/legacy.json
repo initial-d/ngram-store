@@ -1,0 +1,6 @@
+{
+  "method": "legacy",
+  "input": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/input.json",
+  "output": "/llm-align/duyimin/ngram-store-serving-20261103/results/legacy",
+  "report": "/llm-align/duyimin/ngram-store-serving-20261103/results/legacy.json"
+}

@@ -64,6 +64,22 @@ path has a separate contract from original-row byte-preserving storage.
 
 ## Quick start
 
+Try an actual CPU-trained example with the
+[v0.4.0 native wheel](docs/try_certified_memory.md), NumPy and no GPU:
+
+```bash
+ngram-store demo-bags --output demo
+ngram-store query-bags --store demo/memory --bags demo/queries.json --mode mean
+```
+
+This trains the included small text, builds a native table and checks certified
+queries. Use `compact-bags --native` for your own FP32 table and registered bags.
+The [standalone reproduction](examples/reproduce_certified_demo.py) runs outside
+the checkout; optional PyTorch CPU integration is included. This aggregate
+projection changes rows and rejects incomplete groups. The example is an
+installation/integration check; [large-table evidence](docs/external_incidence_evidence_20261102/README.md)
+has its own measured memory/time tradeoff.
+
 Linux/macOS require a C compiler and zlib development headers. From this checkout:
 
 ```bash
@@ -122,6 +138,7 @@ external data or GPU. It checks integration, not representative compression.
 | [Certified co-training and independent planner controls](docs/cotraining_evidence_20261031/README.md) | 18 matched CPU training runs; 1.86M-row subset groups to 360k parameter rows without large-model retraining; raw certified queries improve 33.5× over encoded certified queries but trail raw mmap; isolated DATrie adds 11.1–11.8% on canonical small tables, while byte dedup is stronger |
 | [Independent corpus, complete FAISS controls and fused native query](docs/cross_corpus_evidence_20261102/README.md) | enwik8 prefix: 18 dense/tied pairs; 581 codec candidates yield 12.33–40.47% extra complete saving at the fixed 0.1% SGNS loss budget; high-order registered queries beat selected direct codecs; unchanged 1.86M-row native total path improves 3.04× with identical output bytes; full OOV hybrid and precomputed-word controls remain stronger limits |
 | [Disk-backed incidence construction](docs/external_incidence_evidence_20261102/README.md) | Same 1.86M trained rows: 64 MiB managed budget lowers build RSS 3,140.7 → 95.0 MiB (33.06×), taking 23.3 → 116.6 seconds; all partition/mean bytes and the earlier native query outputs match; preprocessing/runtime costs remain separate |
+| [Complete certified native build and PyTorch CPU integration](docs/certified_serving_evidence_20261103/README.md) | Same complete native bytes: build RSS 3,143.5 → 100.7 MiB (31.21×), taking 31.5 → 129.5 seconds; final bundle has 3 files; original-ID certified queries and native output bytes match, while source FP32 PyTorch rounding differs |
 | [TinyEngram/Qwen trained integration](docs/tinyengram_qwen_evidence_20261030/README.md) / [CUDA controls](docs/qwen_cuda_performance_20261030/README.md) | Preserved trained outputs and measured CPU/device costs; native lookup remains slower than dense offload on these traces |
 
 Official DeepSeek Engram verification uses its small demonstration, not a

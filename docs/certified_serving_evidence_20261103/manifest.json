@@ -1,0 +1,86 @@
+{
+  "README.md": {
+    "bytes": 5593,
+    "sha256": "58b166dd36aa20a4cbddfefd34cbbbfb5d8100ffef89e40bd23c7a255d86d441"
+  },
+  "demo-report.json": {
+    "bytes": 2258,
+    "sha256": "ad03669bc24504783b4359a73cd68351fed4797f2775095b6f8e676b1f6bc3f3"
+  },
+  "environment.json": {
+    "bytes": 459,
+    "sha256": "d9c688b89d2414a8589af1262d8f9b5539566433ea5d9973b076d6f92c1d7dd9"
+  },
+  "external.json": {
+    "bytes": 5404,
+    "sha256": "50f772e9dfe79dfa2aba489e12f28a7a7933cd21053cdaec45eceb2d2f0196cc"
+  },
+  "installed-linux-reproduction.json": {
+    "bytes": 3216,
+    "sha256": "c8df192f8c3fa3ab1c28bcb94cea90bfb392a5e505f5537ab2da8f4d02a2d6ea"
+  },
+  "jobs/external.json": {
+    "bytes": 281,
+    "sha256": "34324ce4568058f4c7a5d0e22f50cdcd3b9ef2eaa2584b2662009acbbb12e5df"
+  },
+  "jobs/legacy.json": {
+    "bytes": 275,
+    "sha256": "95a54ba8acf663b33a71740f0a7eabc74029a9ef77585fa2784862762783c036"
+  },
+  "legacy.json": {
+    "bytes": 4031,
+    "sha256": "cc5eeaefe95de90934681f76037f95c8a6a8a4aaeff70e60871ca68746f1b7b0"
+  },
+  "logs/controller.log": {
+    "bytes": 68,
+    "sha256": "aafd22fd2cd1d8cb378f9536a69df4f7e2eff0251f2e230f86c07bd7d8e35971"
+  },
+  "logs/demo.log": {
+    "bytes": 2258,
+    "sha256": "ad03669bc24504783b4359a73cd68351fed4797f2775095b6f8e676b1f6bc3f3"
+  },
+  "logs/external.log": {
+    "bytes": 82,
+    "sha256": "388a1b4d51a1f32879d8eb23fb63cf11045cc10246954ebe69a4bb0fc02670e9"
+  },
+  "logs/legacy.log": {
+    "bytes": 82,
+    "sha256": "bbf34ef43c5a99b2e001aa4780d6c2fafdca51a1d58c3eceda8f6c0de1592ee1"
+  },
+  "report.json": {
+    "bytes": 17192,
+    "sha256": "929070fdbea3077f703f5ba292db47922704847d711b433d7a90c24590160a09"
+  },
+  "reproduction/run.sh": {
+    "bytes": 1314,
+    "sha256": "9b7cb1d6b75baf85b4313201e833022b381319cbecfbbeb8a8e5effddda5b68b"
+  },
+  "tests/local-full.txt": {
+    "bytes": 298,
+    "sha256": "44c6ee94c62b9c8e802d46369f16cf2383259f8184ace5ba177dcceca8989371"
+  },
+  "tests/local-installed-wheel.txt": {
+    "bytes": 5273,
+    "sha256": "3585e36e932be751a36229d55eb5554d1803f649e5cbef016d478c90042ca798"
+  },
+  "tests/local-reproduction.txt": {
+    "bytes": 262,
+    "sha256": "f8c0f99f538bf37a4ec33d277f6c7d34a076d1da8e4c357877fc37b9d7f72262"
+  },
+  "tests/remote-full.txt": {
+    "bytes": 3371,
+    "sha256": "486f79a89e074932ad31ec378ef335edac6df774823b48531bb960cdbb689fbd"
+  },
+  "tests/remote-targeted.txt": {
+    "bytes": 784,
+    "sha256": "af32a597e5718eab7622632aca3924bea8e2729bd0ff6fdcd47797d204aab8f6"
+  },
+  "verifier.json": {
+    "bytes": 2732,
+    "sha256": "266e10f52b0b80a6e3da40352c814ee1d8e96b3d677db30f3f274ad47859fb2a"
+  },
+  "verify.py": {
+    "bytes": 2487,
+    "sha256": "4ea4c0f390f06da71ca3d6d01a4ec21f1a1d27f0530cfc8463799599537efbf3"
+  }
+}

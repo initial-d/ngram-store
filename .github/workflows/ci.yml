@@ -22,6 +22,8 @@ jobs:
         run: python -m unittest discover -s tests
       - name: Check full legacy exporter translation unit
         run: c++ -std=c++11 -I. -Imylib/include -fsyntax-only src/fasttext.cc
+      - name: Verify complete serving evidence provenance
+        run: python docs/certified_serving_evidence_20261103/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter
@@ -161,6 +163,7 @@ jobs:
           python -m pip install 'meft-memory[incidence]' --find-links /tmp/meft-wheels
           cd /tmp
           python "$GITHUB_WORKSPACE/tools/check_incidence_wheel.py"
+          python "$GITHUB_WORKSPACE/examples/reproduce_certified_demo.py" --output /tmp/ngram-store-reproduction
       - uses: actions/upload-artifact@v4
         with:
           name: meft-memory-${{ matrix.os }}

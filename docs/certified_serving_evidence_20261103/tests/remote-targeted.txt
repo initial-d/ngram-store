@@ -1,0 +1,9 @@
+test_cli_build_inspect_queries_and_rejected_raw_lookup (tests.test_certified_store.CertifiedStoreTests.test_cli_build_inspect_queries_and_rejected_raw_lookup) ... ok
+test_export_failure_cleanup_existing_output_and_mean_hash (tests.test_certified_store.CertifiedStoreTests.test_export_failure_cleanup_existing_output_and_mean_hash) ... ok
+test_full_bundle_matches_legacy_canonical_rows_and_query_outputs (tests.test_certified_store.CertifiedStoreTests.test_full_bundle_matches_legacy_canonical_rows_and_query_outputs) ... ok
+test_cpu_fixed_and_ragged_bags_padding_and_rejection (tests.test_certified_torch.CertifiedTorchTests.test_cpu_fixed_and_ragged_bags_padding_and_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.671s
+
+OK

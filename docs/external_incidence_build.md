@@ -18,6 +18,7 @@ rows can be listed in an optional `protected.u64` file.
 
 ```bash
 ngram-store compact-bags \
+  --native \
   --input vectors.f32 --dim 256 \
   --bag-ids ids.u64 --bag-offsets offsets.u64 \
   --output compact --memory-mib 64 \
@@ -29,7 +30,20 @@ externally sorts complete incidence signatures, compares the full signature
 after a hash match, and keeps unseen/protected rows separate. The disk-backed
 FP64 accumulation follows ascending original row order before rounding to FP32.
 
-The output contains:
+With `--native`, the serving directory contains only `table.men`, `domain.npz`
+and `manifest.json`. It streams dense group IDs into the original-ID native
+map and writes raw blocks without a full descriptor/representative dictionary
+or expanded canonical staging table. Intermediate maps/means are removed.
+Open it with `CertifiedBagRows`, or run:
+
+```bash
+ngram-store query-bags --store compact --bags queries.json --mode mean
+```
+
+`queries.json` is a list of original-ID bags. Every query must satisfy the
+certificate. [Release installation, offline example and PyTorch CPU integration](try_certified_memory.md).
+
+Without `--native`, the historical construction output still contains:
 
 - `partition/mapping.u64`, `sizes.u64`, `external.json`: disk-backed partition
   with array hashes;
@@ -69,9 +83,10 @@ if not runtime_partition.certifies(original_ids):
 
 Do not treat `means.f32` as an original-ID row table: its IDs are group IDs.
 `CertifiedBagPlan` uses representative **original IDs** for an existing expanded
-native certified artifact. Loading maps, exporting that native artifact and
-compiling query plans retain their separate memory costs; this change makes no
-bounded-memory native-packing claim.
+native certified artifact. Loading runtime maps and compiling query plans retain
+their separate memory costs. `compact-bags --native` now streams the canonical
+group table directly; the original `export_certified_bags` API still uses
+resident maps/expanded staging.
 
 This projection changes individual source vectors. Equal per-member counts
 preserve sums in real arithmetic; arbitrary row lookup, incomplete groups,

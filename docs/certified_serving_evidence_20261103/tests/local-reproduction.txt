@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "rows": 919,
+  "groups": 165,
+  "source_vectors_sha256": "cae444567e5b8564232e78a9bf5a33cf077c5d75b9433e64d4f0a5f0a4712421",
+  "pytorch_checked": false,
+  "report": "/private/tmp/ngram-serving-reproduction-20261103/reproduction.json"
+}

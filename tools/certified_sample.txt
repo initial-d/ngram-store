@@ -1,0 +1,10 @@
+memory vectors store learned patterns in tables
+learned memory vectors support fast lookup
+ngram vectors share prefixes and suffixes
+the memory store keeps original lookup ids
+training learns vectors and inference reads vectors
+compact storage preserves certified sums of vectors
+query repeated ids and empty bags consistently
+memory storage and query costs should be measured
+train memory vectors then freeze the lookup table
+ngram memory tables connect word embeddings and learned memory

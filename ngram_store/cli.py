@@ -92,7 +92,8 @@ def read_keys(path):
 
 def open_metadata(path):
     root=Path(path)
-    name='store.json' if (root/'store.json').is_file() else 'fasttext.json'
+    name=next((name for name in ('store.json','fasttext.json','manifest.json') if (root/name).is_file()),None)
+    if name is None:raise ValueError('store metadata not found')
     metadata=json.loads((root/name).read_text())
     if metadata.get('schema_version')!=1:raise ValueError('unsupported store metadata')
     return metadata
@@ -120,6 +121,18 @@ def main(argv=None):
     compact.add_argument('--bag-ids',type=Path,required=True); compact.add_argument('--bag-offsets',type=Path,required=True)
     compact.add_argument('--protected-ids',type=Path,help='Raw uint64 independently addressed IDs that must remain singletons.')
     compact.add_argument('--output',type=Path,required=True); compact.add_argument('--memory-mib',type=int,default=64)
+    compact.add_argument('--native',action='store_true',help='Produce a ready-to-query certified native bundle; omit intermediate means/maps.')
+    compact.add_argument('--block-rows',type=int,default=8,help='Raw native block width for --native (default: 8).')
+    query_bags=commands.add_parser('query-bags',help='Certify and evaluate original-ID bags on a compact native bundle.')
+    query_bags.add_argument('--store',type=Path,required=True)
+    query_bags.add_argument('--native-library',type=Path)
+    bag_selection=query_bags.add_mutually_exclusive_group(required=True)
+    bag_selection.add_argument('--ids',type=int,nargs='+',help='One bag, including repeated original IDs.')
+    bag_selection.add_argument('--bags',type=Path,help='JSON list of bags (lists of original row IDs), including empty bags.')
+    query_bags.add_argument('--mode',choices=('sum','mean'),default='sum')
+    demo_bags=commands.add_parser('demo-bags',help='Train an offline NumPy example and verify native certified queries.')
+    demo_bags.add_argument('--output',type=Path,required=True)
+    demo_bags.add_argument('--native-library',type=Path)
     inspect=commands.add_parser('inspect',help='Inspect row shape, storage bytes and fidelity contract.')
     query=commands.add_parser('query',help='Query original row IDs or registered string keys.')
     for command in (inspect,query):
@@ -132,6 +145,12 @@ def main(argv=None):
     args=parser.parse_args(argv)
     try:
         if args.command=='compact-bags':
+            if args.native:
+                module=import_module('meft_memory._runtime.certified_store')
+                result=module.compact_native(args.input,args.dim,args.bag_ids,args.bag_offsets,args.output,
+                    memory_bytes=args.memory_mib*1024**2,protected_ids=args.protected_ids,block_rows=args.block_rows)
+                print(json.dumps(result,indent=2,allow_nan=False))
+                return
             module=import_module('meft_memory._runtime.external_cotraining')
             if args.dim<=0:raise ValueError('dim must be positive')
             rows,tail=divmod(args.input.stat().st_size,args.dim*4)
@@ -155,6 +174,20 @@ def main(argv=None):
             except BaseException:
                 shutil.rmtree(output)
                 raise
+        elif args.command=='demo-bags':
+            module=import_module('meft_memory._runtime.demo_certified_store')
+            result=module.demo(args.output,native_library=args.native_library)
+        elif args.command=='query-bags':
+            from . import CertifiedBagRows
+            bags=[args.ids] if args.ids is not None else json.loads(args.bags.read_text())
+            if not isinstance(bags,list) or any(not isinstance(bag,list) for bag in bags):
+                raise ValueError('JSON list of original-ID bags required')
+            with CertifiedBagRows(args.store,args.native_library) as table:
+                plan=table.compile(bags)
+                values=table.evaluate(plan,mean=args.mode=='mean')
+                result={'mode':args.mode,'certified':True,'source_row_bytes_preserved':False,
+                    'vectors':values.tolist(),'plan':plan.summary(),
+                    'contract':'Certified projected aggregates; floating-point rounding is separate.'}
         elif args.command=='pack':
             result=pack_store(args.input,args.output,args.dim,native_library=args.native_library,
                 keys=read_keys(args.keys) if args.keys else None,structural_library=args.structural_library,
@@ -162,6 +195,8 @@ def main(argv=None):
                 max_block_bytes=args.max_block_bytes,deduplicate=args.deduplicate)
         else:
             metadata=open_metadata(args.store); rows,dim=metadata['shape']
+            if args.command=='query' and metadata.get('name')=='certified-groups':
+                raise ValueError('certified aggregate store: use query-bags to check the original-ID bag')
             ids=None
             if args.command=='query':
                 ids=args.ids
