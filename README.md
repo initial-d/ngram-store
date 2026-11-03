@@ -64,6 +64,22 @@ path has a separate contract from original-row byte-preserving storage.
 
 ## Quick start
 
+Try an actual CPU-trained example with the
+[v0.4.0 native wheel](docs/try_certified_memory.md), NumPy and no GPU:
+
+```bash
+ngram-store demo-bags --output demo
+ngram-store query-bags --store demo/memory --bags demo/queries.json --mode mean
+```
+
+This trains the included small text, builds a native table and checks certified
+queries. Use `compact-bags --native` for your own FP32 table and registered bags.
+The [standalone reproduction](examples/reproduce_certified_demo.py) runs outside
+the checkout; optional PyTorch CPU integration is included. This aggregate
+projection changes rows and rejects incomplete groups. The example is an
+installation/integration check; [large-table evidence](docs/external_incidence_evidence_20261102/README.md)
+has its own measured memory/time tradeoff.
+
 Linux/macOS require a C compiler and zlib development headers. From this checkout:
 
 ```bash

@@ -2,6 +2,7 @@
 
 ## Engine and application entry points
 
+- [Try a trained certified memory table: release wheel, offline demo and own-table flow](try_certified_memory.md)
 - [Engine: pack, inspect and query](evaluator_quickstart.md)
 - [C ABI, native construction and runtime boundaries](native_ngram_memory.md)
 - [Engine roadmap, priorities and acceptance gates](ngram_memory_research_plan.md)
