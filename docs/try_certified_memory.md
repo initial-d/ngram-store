@@ -108,6 +108,8 @@ The configured memory budget manages build buffers; it does not cap RSS or OS
 page cache. Corpus preparation, runtime map loading and query compilation are
 separate costs. See [construction evidence](external_incidence_evidence_20261102/README.md)
 and the [complete serving protocol](certified_serving_protocol_20261103.md).
+The [complete serving results](certified_serving_evidence_20261103/README.md)
+measure a fresh matched 31.21× build-RSS reduction with a 4.11× time increase.
 Engram's independent fields/gates still need model-specific validation before
 using this aggregate transformation. Ordinary original-row byte-preserving
 storage remains available through `pack/query`.

@@ -1,0 +1,13 @@
+{
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "filesystem": "ceph",
+  "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "thread_limits": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "cuda_visible_devices": "",
+  "cost": "Shared warm CPU/filesystem; no GPU inspection/process operation or monetary/energy metering."
+}

@@ -28,6 +28,7 @@
 - [Frozen FAISS codec query: batch compilation, identical outputs and total latency](faiss_schedule_evidence_20261102/README.md)
 - [Independent corpus: matched training, complete codec controls and fused native total query](cross_corpus_evidence_20261102/README.md)
 - [External incidence construction: full byte comparisons, RAM/time/disk and native compatibility](external_incidence_evidence_20261102/README.md)
+- [Complete certified native serving: build resources, installed wheels and actual PyTorch CPU trace](certified_serving_evidence_20261103/README.md)
 - [Sparse-block native miss latency](sparse_blocks_evidence_20261030/README.md)
 - [Native query/cache controls](native_query_evidence_20261030/README.md)
 - [Causal language-model quality controls](causal_lm_evidence_20261024/README.md)

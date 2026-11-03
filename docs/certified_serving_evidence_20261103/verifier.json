@@ -1,0 +1,46 @@
+{
+  "source_commit": "3f0770cd99b08b3d0465ff26d9d474308124fdd1",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python -m tools.benchmark_certified_serving --verify --input /llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/input.json --store /llm-align/duyimin/ngram-store-serving-20261103/results/external --previous /llm-align/duyimin/ngram-cotraining-20261031/large-results/certified-raw-blocks --bags /llm-align/duyimin/ngram-cross-corpus-20261102/large-native-bags.json --native-library /llm-align/duyimin/ngram-store-serving-20261103/librows.so --output /llm-align/duyimin/ngram-store-serving-20261103/verifier.json",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "source_files_sha256": {
+    "benchmark_certified_serving.py": "20c39563b7fe49667e058f06c782da2a0ebaa369ed4efb8d940c952eae03ae24",
+    "certified_store.py": "9a605d7b344597f149b020778f234c924f1c48cbc5ba5bd01f2971d68b8e010f",
+    "external_cotraining.py": "8900e837365c103aace0507454119ca22419391e8ce97df6254764a13322d050",
+    "cotraining_groups.py": "9fa0b723c4a3ccbc04f9776076753477706cb9c88b2fcb9533881f50fc1029c1",
+    "native_row_store.py": "04ea63fa0d907f184231cc8578ac00af4ac15801e15854b27c5ab815bd6dcb62",
+    "certified_torch.py": "56889650559989ffb708c8e98d121499678175c62e4f76c44969ad5b9e3810da"
+  },
+  "device": "cpu",
+  "status": "completed",
+  "torch": "2.11.0+cu130",
+  "trace_sha256": "cedaa2f0ac19ceedfea4eda07139204d8c179d84e3f33e213811168cd93f83fe",
+  "native_library_sha256": "49aa8e7e82c83e3ec0b103af62eeb3638d98a18a780a35bb5c80e435fc791c51",
+  "native_outputs_sha256": {
+    "sum": "c26cb78b896e5b1f6a042af89f0c4dbf2c89b072d58922688f6548bea95ad162",
+    "mean": "939b42d08e95ba66d0202f8dd13ad5dc35e7a29d10806ce09a039d37b475bef7"
+  },
+  "plan": {
+    "bags": 512,
+    "original_occurrences": 21747,
+    "group_occurrences": 15892,
+    "plan_bytes": 198904,
+    "partition_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb"
+  },
+  "all_plan_arrays_identical": true,
+  "incomplete_group_rejected": 3,
+  "pytorch_adapter_identical_to_native_bytes": true,
+  "source_pytorch_fp32_comparison": {
+    "maximum_absolute_error": 4.76837158203125e-07,
+    "global_relative_l2": 7.755762087138621e-08,
+    "byte_identical": false
+  },
+  "seconds": 4.82338499603793,
+  "peak_rss_bytes": 4488462336,
+  "limitations": [
+    "Separate resident/native/PyTorch verifier, excluded from build RSS.",
+    "PyTorch source-copy/reference reduction is measured for integration, not serving latency.",
+    "No training, downstream or LLM-quality evidence; projection/native rounding can change FP32 outputs."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "source_vectors_sha256": "1c66a1152e49e284958d4d53356d508e22d28a171269881f2cb3f886a6d1ff2d",
+  "every_row_matches_legacy_projection": true,
+  "cli_outputs_match_python": true,
+  "incomplete_group_refused": true,
+  "training": {
+    "status": "passed",
+    "category": "included-text actual CPU training and integration example",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "seed": 7,
+    "dim": 32,
+    "steps": 1200,
+    "lr": 0.025,
+    "gradient_rule": "legacy unscaled row SGD",
+    "torch_loaded": false,
+    "source_corpus_sha256": "da90323b6a591f027ad085161cbf8807063a7e7b76f74c34b8dd183039903a57",
+    "source_code_sha256": "25822c3452bb6afa8b5ebd3c9be0421c3bfcae922cf2dbf4f72ea98e3ffb273b",
+    "rows": 919,
+    "changed_rows": 919,
+    "training_samples": [
+      {
+        "step": 0,
+        "sample_sgns_loss": 4.1588830928829434
+      },
+      {
+        "step": 200,
+        "sample_sgns_loss": 4.1588777888042365
+      },
+      {
+        "step": 400,
+        "sample_sgns_loss": 4.158885431857281
+      },
+      {
+        "step": 600,
+        "sample_sgns_loss": 4.158793631357244
+      },
+      {
+        "step": 800,
+        "sample_sgns_loss": 4.158687036549448
+      },
+      {
+        "step": 1000,
+        "sample_sgns_loss": 4.1584524641032985
+      },
+      {
+        "step": 1199,
+        "sample_sgns_loss": 4.158409178262477
+      }
+    ],
+    "partition": {
+      "original_rows": 919,
+      "group_rows": 165,
+      "rows_in_nonsingleton_groups": 817,
+      "nonsingleton_groups": 63,
+      "domain_bags": 45,
+      "domain_sha256": "540998874ee5fe34ae5756d6138c788f766b9d1a07035bce6446ef1363510fab",
+      "mapping_sha256": "b0f0ba640ab3b08f47275c20188cbcd07b36c660cd63adfc0c86328c71aa575f",
+      "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+    },
+    "complete_serving_bytes": 40311,
+    "every_native_row_identical_to_legacy_projection": true,
+    "queries": 47,
+    "maximum_aggregate_absolute_error_vs_source_fp64": 1.862645149230957e-09,
+    "incomplete_group_rejected": 45,
+    "seconds": 0.26271389913745224,
+    "limitations": [
+      "Small MIT repository-authored text; no representative compression/quality/performance claim.",
+      "Actual SGNS updates after independent initialization; no random-vector similarity premise.",
+      "Projection changes rows; registered complete aggregates only; FP32 rounding measured.",
+      "Example retains source files for reproduction; serving directory has 3 files."
+    ]
+  },
+  "limitation": "Self-reproduction entry, not independent adoption or representative capacity/quality evidence.",
+  "pytorch": {
+    "version": "2.11.0+cu130",
+    "native_output_bytes_identical": true,
+    "maximum_source_embedding_error": 3.725290298461914e-09,
+    "maximum_source_sgns_logit_error": 1.1641532182693481e-10,
+    "scope": "Frozen CPU EmbeddingBag and example-trained head; no downstream quality claim."
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "source_commit": "3f0770cd99b08b3d0465ff26d9d474308124fdd1",
+  "command": "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python -m tools.benchmark_certified_serving --worker /llm-align/duyimin/ngram-store-serving-20261103/results/legacy-job.json",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "source_files_sha256": {
+    "benchmark_certified_serving.py": "20c39563b7fe49667e058f06c782da2a0ebaa369ed4efb8d940c952eae03ae24",
+    "certified_store.py": "9a605d7b344597f149b020778f234c924f1c48cbc5ba5bd01f2971d68b8e010f",
+    "external_cotraining.py": "8900e837365c103aace0507454119ca22419391e8ce97df6254764a13322d050",
+    "cotraining_groups.py": "9fa0b723c4a3ccbc04f9776076753477706cb9c88b2fcb9533881f50fc1029c1",
+    "native_row_store.py": "04ea63fa0d907f184231cc8578ac00af4ac15801e15854b27c5ab815bd6dcb62",
+    "certified_torch.py": "56889650559989ffb708c8e98d121499678175c62e4f76c44969ad5b9e3810da"
+  },
+  "device": "cpu",
+  "input": {
+    "rows": 1855907,
+    "dim": 256,
+    "bags": 142308,
+    "occurrences": 6354848,
+    "maximum_bag_occurrences": 594,
+    "empty_bags": 0,
+    "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+    "source": "/llm-align/duyimin/meft-cpu-capacity-20261030/training2/trained.f32",
+    "source_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+    "ids": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/ids.u64",
+    "offsets": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/offsets.u64",
+    "ids_sha256": "5765960f4f6dfb9da9f9ddd39568d547904674cbfeac1fff9abd6e8977664e5c",
+    "offsets_sha256": "3061579a3b0dd4ba993707708d1d2069a1d8907e906d008715279fbac954e552"
+  },
+  "job": {
+    "method": "legacy",
+    "input": "/llm-align/duyimin/ngram-external-build-20261102/inputs/1855907/input.json",
+    "output": "/llm-align/duyimin/ngram-store-serving-20261103/results/legacy",
+    "report": "/llm-align/duyimin/ngram-store-serving-20261103/results/legacy.json"
+  },
+  "result": {
+    "schema_version": 1,
+    "name": "certified-groups",
+    "shape": [
+      1855907,
+      256
+    ],
+    "source_row_byte_preserving": false,
+    "partition": {
+      "original_rows": 1855907,
+      "group_rows": 360088,
+      "rows_in_nonsingleton_groups": 1696403,
+      "nonsingleton_groups": 200584,
+      "domain_bags": 142308,
+      "domain_sha256": "4faabf557ad3bbc67da96a5d71f0cc7a78b1066713efa51f7d934aa9bcf01a5d",
+      "mapping_sha256": "65830cdf2381c7eef8f6bb030eba26f5105cd01db2d069e833809c5ae33febeb",
+      "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+    },
+    "storage": {
+      "format": "MEFTNAT1",
+      "format_version": 2,
+      "input_bytes": 1900448768,
+      "artifact_bytes": 385017776,
+      "unique_rows": 360088,
+      "row_map_bytes": 14847256,
+      "n_rows": 1855907,
+      "row_bytes": 1024,
+      "block_rows": 8,
+      "blocks": 45011,
+      "max_block_bytes": null,
+      "raw_blocks": 45011,
+      "compressed_blocks": 0,
+      "zlib_blocks": 0,
+      "xor_blocks": 0,
+      "deduplicate": false,
+      "predictor": "xor",
+      "compression": false,
+      "reordered": false,
+      "external_representatives": true,
+      "marked_rows": 360088
+    },
+    "artifact_sha256": "2e6131f707097ebcf9377338b31d0247c53f25974b754da168569821638e89e7",
+    "source_sha256": "0e5d4be0b156c5e9f0d745292876e48f78772c599d97902619123512955d82fc",
+    "projection": {
+      "means_sha256": "6ac01d5ebdb6af0961dccddc0d5ce2f79b0a5d2a5025079fc18d5b18b2a0fd3f"
+    },
+    "legacy_expanded_staging_bytes": 1900448768,
+    "complete_serving_bytes": 399867577
+  },
+  "status": "completed",
+  "total_seconds": 31.530935418093577,
+  "peak_rss_bytes": 3296235520,
+  "native_table_sha256": "2e6131f707097ebcf9377338b31d0247c53f25974b754da168569821638e89e7",
+  "domain_file_sha256": "5a783049e5f2f6a4ce1b37b84bce3607ecc63864ca40b2903ecc1f1f79f4880b"
+}
