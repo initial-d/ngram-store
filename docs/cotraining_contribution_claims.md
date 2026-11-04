@@ -1,6 +1,6 @@
 # Co-training contribution claims
 
-Updated 2026-11-02. This is a contribution framework for the next paper, not a
+Updated 2026-11-04. This is a contribution framework for the next paper, not a
 claim that the research area is unoccupied. Each statement has its own evidence
 and scope. Publication dates document disclosure; they do not establish novelty
 over all earlier work.
@@ -33,11 +33,16 @@ Sources: [trained evidence](cotraining_evidence_20261031/README.md),
 | C7 | Production DATrie mark-compact has an independently measured contribution after canonical projection, distinct from global byte dedup and from source-row lossless layout. | On nine canonical small tables DATrie alone adds 11.1–11.8% complete saving; byte dedup alone adds 22.6–36.6%. Gains overlap. Original-byte incidence reorder adds only 0.06674% on the large source. The isolation study does not measure DATrie key-index capacity/latency. |
 | C8 | Raw native blocks expose a measured capacity/query-cost tradeoff for certified serving. | Same warm/shared-CPU trace: 529.9 to 15.82 ms, 33.5× faster, with 5.62% more complete bytes than encoded certified storage. Raw mmap and raw precomputed known words remain faster. This is a codec-path result, not a universal native or structural-algorithm speedup. |
 | C9 | Complete incidence groups and ordered FP32 means can be constructed with disk-backed working buffers while retaining the existing partition and native aggregate outputs. | Eight fresh CPU builds on actual 250k/1M/1.86M row scales; the full 64 MiB managed-budget build lowers RSS 3,140.7 → 95.0 MiB (33.06×), taking 23.3 → 116.6 seconds. All five external builds match every mapping/size/mean byte; all 360,088 means and the unchanged native plan/outputs match the earlier artifact. Temporary disk, preprocessing and runtime memory remain separate. Budget is not a hard RSS/page-cache cap; external sorting/SQLite are established techniques. No new compression, training-quality or first-of-kind claim. |
+| C10 | Actual-source residual norms and group-sum defects provide budget-gated partial-group queries beyond the weight-independent exact domain. | 18 frozen enwik8 SGNS checkpoints; primary 1% per-query aggregate-L2 bounds admit 98.8–99.8% sampled stored-ngram OOV bags versus 9.6–16.2% strict coverage. All actual errors obey bounds; rounded-mean/native-output errors and sidecar bytes are included. Average-derivative sensitivity is weaker. Source queries remain faster; no semantic/LLM-quality, arbitrary-type coverage or new general error-bound theorem claim. |
 
 These supporting claims belong in the implementation/evaluation sections;
 they should not each be presented as an independent fundamental innovation.
 The [construction evidence](external_incidence_evidence_20261102/README.md)
 supports C9 with source-pinned reports and preserved failures.
+The [partial-query follow-up](budgeted_bag_evidence_20261104/README.md) supports
+C10 with actual trained residuals, explicit budgets, complete costs and preserved
+batching controls. It is a source-specific approximate contract; C3's uniform
+exact-domain theorem remains unchanged.
 
 The [FAISS comparison](faiss_cotraining_evidence_20261101/README.md) now tests
 513 matched base candidates plus 171 encoded-byte dedup audits on nine actual
@@ -123,7 +128,7 @@ before using even a narrowly qualified “first” statement.
 | --- | --- | --- |
 | 1 | Extend disk-backed incidence construction to end-to-end native export and runtime integration. | C9 now validates grouping and ordered projection. Corpus/key preprocessing and native packing still need their own bounded-buffer implementations and peak RSS/disk/time controls; current native export/runtime maps must not inherit the builder's memory claim. |
 | 2 | Proportional-incidence groups beyond exactly identical columns. | Detect proportional integer signatures; derive the weighted parameterization and squared-coefficient gradient correction; prove query conditions; run paired SGD and real-table complete-cost controls. This is related to feature factorization and must be checked against prior work. |
-| 3 | Certified approximation for partially used groups at an explicit query-error budget. | Derive bounds from actual residuals and query coefficients, include rounding/metadata cost, compare accepted-query coverage and downstream quality at fixed storage. Cosine/norm-ratio thresholds alone do not establish such a bound. |
+| 3 | Extend the implemented source-specific partial-query bounds to downstream quality and tighter cross-group residual summaries. | The current scalar residual/defect sidecar includes rounding and demonstrates trained-query coverage/cost. Semantic/LLM-quality and tighter correlated-residual summaries remain unmeasured. Cosine/norm-ratio thresholds alone do not establish such a query bound. |
 | 4 | Role-specific incidence compaction for learned LLM memory. | Trace each field's actual coefficients and gating; preserve fields separately; paired trained-model quality/capacity and head-aware controls. Existing raw-row Engram/TinyEngram integration does not validate model-side group sharing through independent gates. |
 
 These are explicit research hypotheses and engineering targets that require

@@ -1,0 +1,14 @@
+test_bounds_enclose_exact_fraction_source_sums_and_means (tests.test_budgeted_bags.BudgetedBagTests.test_bounds_enclose_exact_fraction_source_sums_and_means) ... ok
+test_cancellation_padding_empty_batches_and_explicit_budgets (tests.test_budgeted_bags.BudgetedBagTests.test_cancellation_padding_empty_batches_and_explicit_budgets) ... ok
+test_centered_bound_improves_partial_and_unequal_queries (tests.test_budgeted_bags.BudgetedBagTests.test_centered_bound_improves_partial_and_unequal_queries) ... ok
+test_chunk_invariance_hash_binding_cleanup_and_source_mismatch (tests.test_budgeted_bags.BudgetedBagTests.test_chunk_invariance_hash_binding_cleanup_and_source_mismatch) ... ok
+test_cli_opt_in_gate_and_default_strict_path (tests.test_budgeted_bags.BudgetedBagTests.test_cli_opt_in_gate_and_default_strict_path) ... ok
+test_nonfinite_native_output_is_refused (tests.test_budgeted_bags.BudgetedBagTests.test_nonfinite_native_output_is_refused) ... ok
+test_false_bounds_coverage_and_costs_are_rejected (tests.test_budgeted_report.BudgetedReportTests.test_false_bounds_coverage_and_costs_are_rejected) ... ok
+test_incomplete_duplicated_or_failed_runs_are_rejected (tests.test_budgeted_report.BudgetedReportTests.test_incomplete_duplicated_or_failed_runs_are_rejected) ... ok
+test_summary_and_complete_costs (tests.test_budgeted_report.BudgetedReportTests.test_summary_and_complete_costs) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.347s
+
+OK
