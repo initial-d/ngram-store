@@ -6,6 +6,9 @@ from ._runtime.native_row_store import NativeRows, pack_native
 __version__ = "0.4.0"
 
 _ADAPTERS = {
+    "BudgetedBagRows": "budgeted_bags",
+    "BagErrorAssessment": "budgeted_bags",
+    "build_error_bounds": "budgeted_bags",
     "CertifiedEmbeddingBag": "certified_torch",
     "compact_native": "certified_store",
     "ExternalBagPartition": "external_cotraining",

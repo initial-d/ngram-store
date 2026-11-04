@@ -36,6 +36,20 @@ def main():
                 pass
             else:
                 raise AssertionError('incomplete group must be rejected')
+        # The opt-in path binds actual source residuals to the installed native
+        # bundle, retains no source matrix at query time and reports its bounds.
+        ngram_store.build_error_bounds(root / 'rows', root / 'out', root / 'bounds')
+        with ngram_store.BudgetedBagRows(root / 'out', root / 'bounds') as store:
+            result = store.aggregate([[0]], max_absolute_l2=1.415)
+            assert result.vectors.tolist() == [[2., 3.]]
+            assert not result.exact_domain[0]
+            assert result.absolute_l2_bounds[0] < 1.415
+            try:
+                store.aggregate([[0]], max_absolute_l2=1.)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError('above-budget query must be rejected')
         # The wheel must include its own small training corpus and offline demo.
         sys.argv = ['ngram-store', 'demo-bags', '--output', str(root / 'demo')]
         entry.load()()

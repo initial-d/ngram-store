@@ -130,6 +130,15 @@ def main(argv=None):
     bag_selection.add_argument('--ids',type=int,nargs='+',help='One bag, including repeated original IDs.')
     bag_selection.add_argument('--bags',type=Path,help='JSON list of bags (lists of original row IDs), including empty bags.')
     query_bags.add_argument('--mode',choices=('sum','mean'),default='sum')
+    query_bags.add_argument('--bounds',type=Path,help='Optional actual-source residual sidecar; requires an explicit error budget.')
+    query_bags.add_argument('--max-relative-l2',type=float,help='Maximum source-relative L2 upper bound (0.01 = 1%%).')
+    query_bags.add_argument('--max-absolute-l2',type=float,help='Maximum absolute L2 upper bound; both supplied budgets must pass.')
+    bounds=commands.add_parser('build-error-bounds',help='Build actual-source residual bounds for opt-in partial-group queries.')
+    bounds.add_argument('--input',type=Path,required=True)
+    bounds.add_argument('--store',type=Path,required=True)
+    bounds.add_argument('--output',type=Path,required=True)
+    bounds.add_argument('--native-library',type=Path)
+    bounds.add_argument('--chunk-rows',type=int,default=1024)
     demo_bags=commands.add_parser('demo-bags',help='Train an offline NumPy example and verify native certified queries.')
     demo_bags.add_argument('--output',type=Path,required=True)
     demo_bags.add_argument('--native-library',type=Path)
@@ -144,7 +153,11 @@ def main(argv=None):
     for name,(_,help_text) in FORWARD.items():commands.add_parser(name,help=help_text,add_help=False)
     args=parser.parse_args(argv)
     try:
-        if args.command=='compact-bags':
+        if args.command=='build-error-bounds':
+            from . import build_error_bounds
+            result=build_error_bounds(args.input,args.store,args.output,
+                native_library=args.native_library,chunk_rows=args.chunk_rows)
+        elif args.command=='compact-bags':
             if args.native:
                 module=import_module('meft_memory._runtime.certified_store')
                 result=module.compact_native(args.input,args.dim,args.bag_ids,args.bag_offsets,args.output,
@@ -178,16 +191,29 @@ def main(argv=None):
             module=import_module('meft_memory._runtime.demo_certified_store')
             result=module.demo(args.output,native_library=args.native_library)
         elif args.command=='query-bags':
-            from . import CertifiedBagRows
             bags=[args.ids] if args.ids is not None else json.loads(args.bags.read_text())
             if not isinstance(bags,list) or any(not isinstance(bag,list) for bag in bags):
                 raise ValueError('JSON list of original-ID bags required')
-            with CertifiedBagRows(args.store,args.native_library) as table:
-                plan=table.compile(bags)
-                values=table.evaluate(plan,mean=args.mode=='mean')
-                result={'mode':args.mode,'certified':True,'source_row_bytes_preserved':False,
-                    'vectors':values.tolist(),'plan':plan.summary(),
-                    'contract':'Certified projected aggregates; floating-point rounding is separate.'}
+            budget=args.max_relative_l2 is not None or args.max_absolute_l2 is not None
+            if (args.bounds is not None) != budget:
+                raise ValueError('--bounds and an explicit L2 error budget must be supplied together')
+            if budget:
+                from . import BudgetedBagRows
+                with BudgetedBagRows(args.store,args.bounds,args.native_library) as table:
+                    assessment=table.aggregate(bags,mean=args.mode=='mean',
+                        max_relative_l2=args.max_relative_l2,max_absolute_l2=args.max_absolute_l2)
+                    result={'mode':args.mode,'certified':False,'approximation_opt_in':True,
+                        'source_row_bytes_preserved':False,'source_sha256':table.source_sha256,
+                        'vectors':assessment.vectors.tolist(),'bounds':assessment.summary(),
+                        'max_relative_l2':args.max_relative_l2,'max_absolute_l2':args.max_absolute_l2}
+            else:
+                from . import CertifiedBagRows
+                with CertifiedBagRows(args.store,args.native_library) as table:
+                    plan=table.compile(bags)
+                    values=table.evaluate(plan,mean=args.mode=='mean')
+                    result={'mode':args.mode,'certified':True,'source_row_bytes_preserved':False,
+                        'vectors':values.tolist(),'plan':plan.summary(),
+                        'contract':'Certified projected aggregates; floating-point rounding is separate.'}
         elif args.command=='pack':
             result=pack_store(args.input,args.output,args.dim,native_library=args.native_library,
                 keys=read_keys(args.keys) if args.keys else None,structural_library=args.structural_library,
