@@ -246,6 +246,9 @@ class BudgetedBagRows:
         total = 0.
         for group, members in groups.items():
             if self.group_totals[group] == 0:
+                # Preserve the original outward-rounded per-group addition,
+                # including its final ULP when the total is already nonzero.
+                total = float(_up(total))
                 continue
             # t=0 is the ordinary triangle bound. Centering counts by t exploits
             # cancellation even when one/few members are absent or counts differ:
