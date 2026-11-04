@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/benchmark_budgeted_bags.py", line 235, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/benchmark_budgeted_bags.py", line 222, in main
+    raise RuntimeError(f'worker {key} failed; preserve the logged failure')
+RuntimeError: worker legacy:4:3 failed; preserve the logged failure

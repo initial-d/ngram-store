@@ -24,6 +24,8 @@ jobs:
         run: c++ -std=c++11 -I. -Imylib/include -fsyntax-only src/fasttext.cc
       - name: Verify complete serving evidence provenance
         run: python docs/certified_serving_evidence_20261103/verify.py
+      - name: Verify partial-query bounds and coverage evidence
+        run: python docs/budgeted_bag_evidence_20261104/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter

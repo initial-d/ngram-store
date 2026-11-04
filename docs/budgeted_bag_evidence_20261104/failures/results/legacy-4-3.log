@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/benchmark_budgeted_bags.py", line 235, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/benchmark_budgeted_bags.py", line 187, in main
+    run_worker(cfg, training)
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/benchmark_budgeted_bags.py", line 144, in run_worker
+    bounds = build_error_bounds(output / 'source.f32', output / 'store', output / 'bounds')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/budgeted_bags.py", line 83, in build_error_bounds
+    with CertifiedBagRows(store, native_library) as native:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/cotraining_groups.py", line 367, in __init__
+    self.table = NativeRows(path / 'table.men', native_library)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-query-bounds-20261104/source/tools/native_row_store.py", line 205, in __init__
+    raise ValueError("set MEFT_ROWS_LIBRARY or pass a compiled library path")
+ValueError: set MEFT_ROWS_LIBRARY or pass a compiled library path
