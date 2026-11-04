@@ -58,3 +58,17 @@ independent equality theorem, establish arbitrary OOV/model accuracy, or prove
 all same-prefix/suffix final weights are 99% similar. Report both conventions
 even when one is materially weaker. The additional cost of checking bounds is
 part of the result, including regressions against strict/native/dense controls.
+
+## Frozen performance follow-up
+
+The first complete run validates the bounds but exposes per-bag Python norm
+loops as a bottleneck. Before retiming, freeze its full report and source. Batch
+native row gathering and interval norms, use scalar outward rounding for scalar
+bounds, and skip groups with zero residual mass. Keep all query arithmetic order,
+source/store/sidecar bytes and budgets. Compare output and every bound/domain
+array byte-for-byte on all 18 checkpoints. Time the nine primary legacy
+checkpoints only, both known/OOV traces, two warmups and five paired repetitions,
+seed-42 randomized reference-first/batched-first ordering, one CPU thread.
+Sensitivity checkpoints perform equality checks only. Preserve the first slow
+results, publish both implementations' exact source/report hashes and retain
+the dense/strict-subset comparisons with their different query scopes.

@@ -22,11 +22,15 @@ from .external_cotraining import file_hash
 
 
 def _up(value):
+    if np.isscalar(value):
+        return math.nextafter(float(value), math.inf) if value != 0 else 0.
     value = np.asarray(value, dtype=np.float64)
     return np.where(value == 0, 0., np.nextafter(value, np.inf))
 
 
 def _down(value):
+    if np.isscalar(value):
+        return max(0., math.nextafter(float(value), -math.inf))
     value = np.asarray(value, dtype=np.float64)
     return np.maximum(0., np.nextafter(value, -np.inf))
 
@@ -241,6 +245,8 @@ class BudgetedBagRows:
             groups[int(self.native.partition.mapping[row])].append((int(row), int(count)))
         total = 0.
         for group, members in groups.items():
+            if self.group_totals[group] == 0:
+                continue
             # t=0 is the ordinary triangle bound. Centering counts by t exploits
             # cancellation even when one/few members are absent or counts differ:
             # sum c_i r_i = sum (c_i-t)r_i + t sum r_i.
@@ -262,14 +268,16 @@ class BudgetedBagRows:
         return total
 
     def assess(self, bags, *, mean=False, padding_idx=None, chunk_rows=64):
+        bags = list(bags)
         counted = _count_bags(bags, nrows=len(self.native.partition.mapping), padding_idx=padding_idx)
         lengths = counted['lengths']
         if np.any(lengths > 2**53):
             raise ValueError('bag length cannot be represented exactly as float64')
         projection = np.zeros(len(lengths))
-        ids, weights, offsets, magnitudes = [], [], [0], []
+        ids, weights, offsets = [], [], [0]
+        boundaries = np.searchsorted(counted['bags'], np.arange(len(lengths) + 1))
         for bid in range(len(lengths)):
-            selected = counted['bags'] == bid
+            selected = slice(boundaries[bid], boundaries[bid + 1])
             rows, counts = counted['rows'][selected], counted['counts'][selected]
             projection[bid] = self._projection_bound(rows, counts)
             grouped = {}
@@ -285,15 +293,16 @@ class BudgetedBagRows:
             ids.extend(row for row, _ in representatives)
             weights.extend(weight for _, weight in representatives)
             offsets.append(len(ids))
-            if representatives:
-                canonical = np.frombuffer(self.native.table.rows([r for r, _ in representatives]), dtype='<f4').reshape(-1, self.native.dim)
-                norms = _norm_upper(canonical)
-                magnitudes.append(_sum_upper(_up(weight * norm) for (_, weight), norm in zip(representatives, norms)))
-            else:
-                magnitudes.append(0.)
         ids = np.asarray(ids, dtype='<u8')
         weights = np.asarray(weights, dtype='<f4')
         offsets = np.asarray(offsets, dtype='<u8')
+        # One gather and one column-wise interval norm pass across the complete
+        # schedule avoid B separate d-column Python loops. Arithmetic order for
+        # each row and bag remains identical to the original bounded path.
+        canonical = np.frombuffer(self.native.table.rows(ids.tolist()), dtype='<f4').reshape(-1, self.native.dim)
+        weighted_norms = _up(weights.astype(np.float64) * _norm_upper(canonical))
+        magnitudes = [_sum_upper(weighted_norms[offsets[bid]:offsets[bid+1]])
+                      for bid in range(len(lengths))]
         vectors = np.zeros((len(lengths), self.native.dim), dtype='<f4')
         if len(lengths):
             self.native.table.embedding_bag_into(ids.ctypes.data, len(ids), offsets.ctypes.data,
@@ -326,9 +335,7 @@ class BudgetedBagRows:
         relative = _up(relative)
         relative[(absolute == 0) & (lower == 0)] = 0.
         # Strict membership diagnostics are independent of residual magnitudes.
-        normalized = [counted['rows'][counted['bags'] == bid].repeat(counted['counts'][counted['bags'] == bid])
-                      for bid in range(len(lengths))]
-        exact_domain = self.native.partition.certifies_many(normalized)
+        exact_domain = self.native.partition.certifies_many(bags, padding_idx=padding_idx)
         for array in (vectors, projection, rounding, absolute, relative, exact_domain):
             array.flags.writeable = False
         return BagErrorAssessment(vectors, projection, rounding, absolute, relative, exact_domain, len(ids))
