@@ -6,7 +6,7 @@
     "batched": "e55927279735a12759163a3c762e16e74b96772a"
   },
   "files_sha256": {
-    "README.md": "04146ff668fef45f4c7e5a5f238b6f7eaea21c11a2494421ed325cf036343599",
+    "README.md": "a195f800f3170b66c20e92c92995dc7aef23bede0449144fd6695c810954f7de",
     "environment.json": "f0bcc8f4ea7c1d8c5ecfd25fbc6cab8a770c1d789da6d73cab79ced30e6834c3",
     "failures/batched-retiming.log": "538490105483e7762e82d3a35732decd29b97bdfe6953d32f05d05d683dc4a88",
     "failures/benchmark.log": "ce63f9d21dfa6560f241313b6f05c4da57f0b3a45e63921ed8904667992a9261",
@@ -15,7 +15,7 @@
     "failures/results/report.json": "d50bde0ddd73cab7e017920ecb76180f519768bcea468e74ffbed3672fcc5f42",
     "oov-error-budget.png": "bc3aaa49aabe6fa2b6b7f26de7aea9eca7c959fb296c39538e621343636888cf",
     "oov-error-budget.svg": "51685e3ccd8ee8a9912ad2062c7e8af700f0a9516d28617866d929d65f143545",
-    "report.json": "ec4672cd5a9a68117026e031fef61256d42477129d9247b75d20999428ad65cd",
+    "report.json.gz": "653eab715b81fec0a595d9ea94f5b6ac21bd3ce04da364387f1144b794c75ba1",
     "reproduction/retime.sh": "ed51e26a35da390414f8ea8bbcd063e87ec82d9e1e71e31eb8dd7709a992c2d3",
     "reproduction/run.sh": "abfc92293198e3525dc703acb71780d8f9271ce9a06d7972780cd00d1bfb7f19",
     "retiming.json": "60c6bd2447c73c6f3cce07efd47da68946f8e9288245444c27116d7bde1ae3b8",
@@ -24,7 +24,7 @@
     "tests/local-full.txt": "90473b894b663b0c4dcd7564a23cf64df8f8a4161c4f35c02bff9fff4fc6ea3f",
     "tests/local-installed.txt": "7def6726af8f81418b91c059652d4451e0d8c19796fc9b4033842d8fb4226111",
     "tests/remote-targeted.txt": "2d71edb1c544ae6c74af57e9d3dbfa2623044a5a6f6adbb21db0c13a7fe900ac",
-    "verify.py": "54acfac6bc0e57ac50dbd07b9f5f61973e5caedd7977f61284d1b69686ddbf1b"
+    "verify.py": "5b9b1f180e30c979ed3d16fbee0dd3c0eed0d0bdfc68acaed3d4480b538228e4"
   },
   "limitations": "Public metric/provenance verification; rerunning original queries requires the source-linked cached corpus and weights. No third-party adoption, semantic/LLM quality or universal serving claim."
 }

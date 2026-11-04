@@ -31,7 +31,7 @@ all mean relative errors fall within their computed relative bounds, including
 queries that fail tighter budget gates. Strict accepted mean-query native bytes
 remain unchanged. This is a source-specific guarantee under the documented
 floating-point assumptions, not an extension of the uniform exact-domain theorem.
-The [raw report](report.json) includes every checkpoint, query error/bound, all
+The [raw report](report.json.gz) includes every checkpoint, query error/bound, all
 12 predeclared budgets, oracle eligibility and failed budget selections.
 
 For all three legacy seeds, a 2% bound admits every sampled OOV query; the largest
@@ -64,7 +64,7 @@ The first correct bounded implementation takes about 2.0–2.3 seconds to assess
 512 OOV bags, against about 9–10 milliseconds for the source FP64 reference.
 The strict path's shorter trace contains only its accepted subset, so its
 sub-millisecond/millisecond timing is a different scope. Keep these slow
-results in [report.json](report.json).
+results in [report.json.gz](report.json.gz).
 
 The batched follow-up gathers all representative rows and computes interval
 norms across a whole schedule. Scalar outward rounding and zero-residual groups
@@ -119,7 +119,7 @@ The public summary can be validated and regenerated without training or GPUs:
 ```bash
 python docs/budgeted_bag_evidence_20261104/verify.py
 python -m tools.analyze_budgeted_bags \
-  --report docs/budgeted_bag_evidence_20261104/report.json \
+  --report docs/budgeted_bag_evidence_20261104/report.json.gz \
   --retiming docs/budgeted_bag_evidence_20261104/retiming.json \
   --output-dir artifacts/budgeted-bag-redrawn --plots
 ```

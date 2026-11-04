@@ -1,5 +1,6 @@
 """Validate/redraw the public residual-bound reports without trained inputs."""
 import argparse
+import gzip
 import hashlib
 import itertools
 import json
@@ -10,6 +11,12 @@ from statistics import median
 
 BUDGETS = [0., .0001, .001, .005, .01, .02, .03, .05, .1, .2, .5, 1.]
 EXPECTED = set(itertools.product(('legacy', 'average'), (4, 8, 12), (3, 7, 11)))
+
+
+def read_report_bytes(path):
+    path = Path(path)
+    raw = path.read_bytes()
+    return gzip.decompress(raw) if path.suffix == '.gz' else raw
 
 
 def validate(report):
@@ -156,7 +163,7 @@ def main():
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--plots', action='store_true')
     cfg = p.parse_args()
-    raw = cfg.report.read_bytes()
+    raw = read_report_bytes(cfg.report)
     report = json.loads(raw)
     retiming = json.loads(cfg.retiming.read_text()) if cfg.retiming else None
     if retiming is not None and retiming['frozen_report_sha256'] != hashlib.sha256(raw).hexdigest():

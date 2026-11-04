@@ -8,7 +8,7 @@ import sys
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parents[1]
 sys.path.insert(0, str(REPO))
-from tools.analyze_budgeted_bags import summarize
+from tools.analyze_budgeted_bags import read_report_bytes, summarize
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
     for name, expected in manifest['files_sha256'].items():
         if hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected:
             raise ValueError('evidence hash mismatch: ' + name)
-    report_bytes = (ROOT / 'report.json').read_bytes()
+    report_bytes = read_report_bytes(ROOT / 'report.json.gz')
     report = json.loads(report_bytes)
     retiming = json.loads((ROOT / 'retiming.json').read_text())
     if manifest['source_commits'] != {'first': report['source_commit'], 'batched': retiming['source_commit']}:
