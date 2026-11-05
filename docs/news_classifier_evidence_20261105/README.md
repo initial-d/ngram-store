@@ -59,7 +59,7 @@ Shared CPU host: AMD EPYC 7742 64-Core Processor; Linux-5.4.0-42-generic-x86_64-
 
 The table has 612,759 × 64 FP32 source rows: 41,892 protected whole-word rows and 570,867 exact character-n-gram keys, orders 2..8, from all 62,035 training token types. Singleton word types also participate in the incidence domain. Identical full incidence/multiplicity groups preserve complete registered aggregates in real arithmetic; arbitrary partial/OOV bags require source-relative error bounds. This application measures incidence compaction and native packing, not a separate DATrie lookup-speed benefit.
 
-Input audit: train/validation/test retained-token, truncation, OOV, missing-ngram and empty-bag counts are in `preprocessing-audit.json`. Test: 288,389 retained tokens, 1,758 unknown-token occurrences, 5 truncated documents, 14,958 missing OOV n-gram occurrences, 0 empty OOV bags.
+Input audit: train/validation/test retained-token, truncation, OOV, missing-ngram and empty-bag counts are in `preprocessing-audit.json.gz`. Test: 288,389 retained tokens, 1,758 unknown-token occurrences, 5 truncated documents, 14,958 missing OOV n-gram occurrences, 0 empty OOV bags.
 
 The initial Linux `ru_maxrss` measurements inherited the controller's pre-exec high-water mark. A controlled 256 MiB parent reproduces this while child `VmHWM` stays near 10 MiB. The corrected full sweeps use current-exec `/proc/self/status` `VmHWM`; lifetime `ru_maxrss` remains diagnostic only. Original complete/partial runs, the intentional stop of this task's own CPU worker, original environment and reproduction are retained in `superseded-rss/`, `rss-diagnostic.json` and logs. No graph, data, training, codec, quality gate or budget changed.
 

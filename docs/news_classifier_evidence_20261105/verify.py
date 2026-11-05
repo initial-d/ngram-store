@@ -27,7 +27,7 @@ def main():
     # The measured commit remains the reference when later application code
     # changes. Verification binds stored evidence, rather than relabeling old
     # measurements as timings of the current checkout.
-    audit = read(ROOT/'preprocessing-audit.json')
+    audit = read(ROOT/'preprocessing-audit.json.gz')
     tasks = {}
     for task in ('linear','relu'):
         tasks[task] = []

@@ -14,7 +14,7 @@
   "category": "Real public-data supervised CPU application",
   "files_sha256": {
     "AG-NEWS-NOTICE.txt": "779c2e6bbf93dd810d9c7b318006daef7a4bfc34062002461d251dc10fb9f58c",
-    "README.md": "fdb4f2f47c9c4e2644cd69f6090adf20a969f5809635b901239cd63502d3d304",
+    "README.md": "6777253b6932473e0db4f36f850b278619c1ec083cd822bf769e4fdf10fea61e",
     "actual-installed-inference.json": "c3ffefc5db0c3bba96186becc1f115d3da0e2273ca1ee83d8813e979a196cc71",
     "commands/ngram-news-actual-wheel-20261105.sh": "1e3303a31518fdf9ba82dc3fb2371edfa9be8c1c5d86054624a94ee1e67c391d",
     "commands/ngram-news-audit-20261105.sh": "97eafccfd78589cc08b42c8cac67dc59be9432f88b15e895f0d92e3b9b6cf330",
@@ -260,7 +260,7 @@
     "logs/training-relu.log": "941c24363d0c45f92ddeeadbcbd1373d0b3dffdc4892a13be552d399a8754112",
     "logs/training.log": "32b04041a45b36c88bc96ef98d6fc787a5ce0e028b956f110e68c60f9b30c240",
     "metrics.csv": "bfd4c6561262312d46b5ec466601b19c1d248a0f06f341ccbe06ca113687709b",
-    "preprocessing-audit.json": "ba4463d766ef3df668ced143c1fa059ea8f91dee0a5ca63d2e94a2d8eb1a195d",
+    "preprocessing-audit.json.gz": "ecbb6ea869406dec2aadef9693614806c9bad8e53d1373715627f891497eec3b",
     "results/linear/seed-11/report.json.gz": "a016cf0d2c71dfa255e3629e2a333db2d501c1820b188703ec629b28585825ca",
     "results/linear/seed-11/selection-before-test.json": "33d38d9e5fc7f62a2f0ebee36145b5363a595c325f4a2c034f644160fe6c7f6f",
     "results/linear/seed-3/report.json.gz": "3fe1369a2ac2b69bc31496c826c0250bb468a83a8fba7f9a524fd1e55ff182f3",
@@ -286,7 +286,8 @@
     "training/relu/seed-11.json": "0f6478c7c8d203bae1bc2e229058b1a1b441babeaac1936fba97eb7fd56b3057",
     "training/relu/seed-3.json": "e8a433d60dfa6adf911891a5b1cf7eb995eec08e595ced7e7ee588e911b315ef",
     "training/relu/seed-7.json": "055ccc641235af99e3613ae9a39f176a9ef9cd6f3234600c0f9efda46562465c",
-    "verify.py": "b8814b3144a3fe4bb13dcb8403e99d2965f89620f52300069a2b350ab3c063c4"
+    "verify.py": "3a2097fd7dad0afa439859dc5e07d89ac72d1f2eafb946804f5c9a6256f0a6ca"
   },
-  "scope": "Six full runs, three seeds, nonlinear primary and mandatory linear folding control. No text/weights redistributed."
+  "scope": "Six full runs, three seeds, nonlinear primary and mandatory linear folding control. No text/weights redistributed.",
+  "preprocessing_audit_json_sha256": "ba4463d766ef3df668ced143c1fa059ea8f91dee0a5ca63d2e94a2d8eb1a195d"
 }
