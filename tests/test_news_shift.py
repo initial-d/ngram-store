@@ -38,7 +38,7 @@ class NewsShiftTests(TextClassifierTests):
         (checkpoint/'training.json').write_text(json.dumps(training))
         backends = ['source-mmap','int8','ngram-bounded','ngram-int8','precomputed-words']
         if faiss:
-            backends.append('faiss-sq4')
+            backends.extend(('faiss-sq4','faiss-sq8'))
         export_seed(common,checkpoint,parent/'serving',library=self.library,backends=backends)
         return common,checkpoint
 
@@ -89,13 +89,15 @@ class NewsShiftTests(TextClassifierTests):
         with tempfile.TemporaryDirectory() as tmp:
             parent=Path(tmp)
             common,checkpoint=self.hybrid_fixture(parent,faiss=True)
-            export_hybrids(common,checkpoint,parent/'serving',parent/'hybrids',['precomputed-hybrid-faiss-sq4'])
-            left=parent/'serving/faiss-sq4'
-            right=parent/'hybrids/precomputed-hybrid-faiss-sq4'
-            self.assertEqual(file_hash(left/'memory/codec.faiss'),file_hash(right/'memory/codec.faiss'))
-            with TextClassifier(left) as original,TextClassifier(right) as hybrid:
-                self.assertEqual(original.predict(['abc','zz'])['logits'].tobytes(),
-                                 hybrid.predict(['abc','zz'])['logits'].tobytes())
+            export_hybrids(common,checkpoint,parent/'serving',parent/'hybrids',
+                           ['precomputed-hybrid-faiss-sq4','precomputed-hybrid-faiss-sq8'])
+            for codec in ('faiss-sq4','faiss-sq8'):
+                left=parent/'serving'/codec
+                right=parent/'hybrids'/('precomputed-hybrid-'+codec)
+                self.assertEqual(file_hash(left/'memory/codec.faiss'),file_hash(right/'memory/codec.faiss'))
+                with TextClassifier(left) as original,TextClassifier(right) as hybrid:
+                    self.assertEqual(original.predict(['abc','zz'])['logits'].tobytes(),
+                                     hybrid.predict(['abc','zz'])['logits'].tobytes())
 
     def test_stratified_hash_split_dedup_overlap_and_literal_categories(self):
         from tools.benchmark_news_shift import prepare_requests,content_hash

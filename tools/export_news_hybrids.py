@@ -20,11 +20,13 @@ from .train_news_classifier import write_json
 
 HYBRIDS = ('precomputed-hybrid-source', 'precomputed-hybrid-int8',
            'precomputed-hybrid-faiss-sq4', 'precomputed-hybrid-ngram-int8')
+AUDIT_HYBRIDS = ('precomputed-hybrid-faiss-sq8', 'precomputed-hybrid-faiss-pq-8x8',
+                'precomputed-hybrid-faiss-cluster-8')
 
 
 def export_hybrids(common, checkpoint, existing, output, backends=HYBRIDS):
     common, checkpoint, existing, output = map(Path, (common, checkpoint, existing, output))
-    if not backends or any(name not in HYBRIDS for name in backends):
+    if not backends or any(name not in HYBRIDS + AUDIT_HYBRIDS for name in backends):
         raise ValueError('nonempty known hybrid backends required')
     data = json.loads((common/'data.json').read_text())
     training = json.loads((checkpoint/'training.json').read_text())
@@ -87,13 +89,13 @@ def export_hybrids(common, checkpoint, existing, output, backends=HYBRIDS):
                     pack_quantized_file(staging,root/'memory',data['dim'],'int8',**options)
                     staging.unlink()
             else:
-                codec_root = existing/'faiss-sq4'
+                codec_root = existing/fallback
                 bound = json.loads((codec_root/'classifier.json').read_text())
                 if bound['trained_source_sha256'] != training['source_sha256']:
-                    raise ValueError('SQ4 uses a different trained source')
+                    raise ValueError('FAISS uses a different trained source')
                 for name,digest in bound['files_sha256'].items():
                     if name.startswith('memory/') and file_hash(codec_root/name) != digest:
-                        raise ValueError('existing SQ4 codec changed')
+                        raise ValueError('existing FAISS codec changed')
                 memory = root/'memory'
                 memory.mkdir()
                 copy_file(codec_root/'memory/codec.faiss',memory/'codec.faiss')
@@ -128,10 +130,12 @@ def main():
     p.add_argument('--existing-serving',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--seed',type=int,required=True)
+    p.add_argument('--backends',default=','.join(HYBRIDS))
     cfg = p.parse_args()
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         p.error('CPU-only export requires empty CUDA_VISIBLE_DEVICES')
-    export_hybrids(cfg.training/'common',cfg.training/f'seed-{cfg.seed}',cfg.existing_serving,cfg.output)
+    export_hybrids(cfg.training/'common',cfg.training/f'seed-{cfg.seed}',cfg.existing_serving,cfg.output,
+                   cfg.backends.split(','))
 
 
 if __name__ == '__main__':

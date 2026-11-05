@@ -151,7 +151,7 @@ source-model agreement, not truth, confidence calibration or downstream safety.
                     from .quantized_memory import QuantizedRows
                     self.reader = QuantizedRows(directory / 'memory', native_library, cache_bytes=cache_bytes)
                     self.reader.rows = self.reader.gather
-                elif fallback == 'faiss-sq4':
+                elif fallback in ('faiss-sq4','faiss-sq8','faiss-pq-8x8','faiss-cluster-8'):
                     from .faiss_row_codec import FaissRows
                     self.reader = FaissRows(directory / 'memory')
                 else:

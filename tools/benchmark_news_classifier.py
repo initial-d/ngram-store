@@ -48,7 +48,7 @@ def metrics(labels, predicted, losses, selected=None):
 def worker(cfg):
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         raise ValueError('CPU worker requires empty CUDA_VISIBLE_DEVICES')
-    if cfg.backend.startswith('faiss-') or cfg.backend == 'precomputed-hybrid-faiss-sq4':
+    if cfg.backend.startswith('faiss-') or cfg.backend.startswith('precomputed-hybrid-faiss-'):
         import faiss
         faiss.omp_set_num_threads(1)
     requests = [json.loads(line) for line in cfg.requests.read_text().splitlines()]
@@ -199,8 +199,8 @@ def main():
         sub.add_argument('--output',type=Path,required=True);sub.add_argument('--source-commit',required=True)
         sub.add_argument('--native-library',type=Path,required=True)
         if name=='worker':
-            from .export_news_hybrids import HYBRIDS
-            sub.add_argument('--backend',choices=[*BACKENDS,*HYBRIDS],required=True)
+            from .export_news_hybrids import HYBRIDS, AUDIT_HYBRIDS
+            sub.add_argument('--backend',choices=[*BACKENDS,*HYBRIDS,*AUDIT_HYBRIDS],required=True)
             sub.add_argument('--phase',choices=('validation','test'),required=True)
         else:
             sub.add_argument('--seed',type=int,required=True)
