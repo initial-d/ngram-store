@@ -1,0 +1,13 @@
+{
+  "codec": "pq-8x8",
+  "dim": 64,
+  "rows": 612759,
+  "code_size": 8,
+  "training_rows": 32768,
+  "seed": 42,
+  "training_threads": 1,
+  "iterations": 20,
+  "opq_iterations": 10,
+  "training_seconds": 1.8925494998693466,
+  "encoding_seconds": 5.727326171007007
+}

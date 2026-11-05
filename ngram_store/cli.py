@@ -109,6 +109,11 @@ def main(argv=None):
         finally:sys.argv=old
     parser=argparse.ArgumentParser(description=__doc__)
     commands=parser.add_subparsers(dest='command',required=True)
+    classify=commands.add_parser('classify',help='Classify actual text with a frozen learned n-gram bundle.')
+    classify.add_argument('--store',type=Path,required=True)
+    classify.add_argument('--text',nargs='+',required=True)
+    classify.add_argument('--native-library',type=Path)
+    classify.add_argument('--require-preserved',action='store_true',help='Refuse predictions without a source-model agreement certificate.')
     pack=commands.add_parser('pack',help='Pack existing little-endian float32 rows and verify every reconstructed row.')
     pack.add_argument('--input',type=Path,required=True); pack.add_argument('--output',type=Path,required=True)
     pack.add_argument('--dim',type=int,required=True); pack.add_argument('--native-library',type=Path)
@@ -155,7 +160,17 @@ def main(argv=None):
     for name,(_,help_text) in FORWARD.items():commands.add_parser(name,help=help_text,add_help=False)
     args=parser.parse_args(argv)
     try:
-        if args.command=='build-error-bounds':
+        if args.command=='classify':
+            from . import TextClassifier
+            with TextClassifier(args.store,native_library=args.native_library) as model:
+                prediction=model.predict(args.text,require_preserved=args.require_preserved)
+                result={'backend':model.backend,'predictions':[{'label':model.classes[int(label)],
+                    'probabilities':{name:float(v) for name,v in zip(model.classes,probs)},
+                    'source_prediction_preserved':bool(flag),'tokens':int(tokens),'oov_tokens':int(oov),
+                    'truncated':bool(truncated)} for label,probs,flag,tokens,oov,truncated in zip(
+                        prediction['predictions'],prediction['probabilities'],prediction['source_prediction_preserved'],
+                        prediction['token_counts'],prediction['oov_counts'],prediction['truncated'])]}
+        elif args.command=='build-error-bounds':
             from . import build_error_bounds
             result=build_error_bounds(args.input,args.store,args.output,
                 native_library=args.native_library,chunk_rows=args.chunk_rows)

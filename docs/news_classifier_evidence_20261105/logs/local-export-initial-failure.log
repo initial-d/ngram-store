@@ -1,0 +1,33 @@
+test_cli_and_import_without_torch (tests.test_text_classifier.TextClassifierTests.test_cli_and_import_without_torch) ... ok
+test_complete_export_controls_share_source_and_head (tests.test_text_classifier.TextClassifierTests.test_complete_export_controls_share_source_and_head) ... {"seed": 3, "backend": "source-resident", "complete_model_bytes": 1984, "build_seconds": 0.0014033750630915165, "classifier_sha256": "40e98cf8a75d14f2b7ebe5ebdc86b4bad5328012569703acdb5844cdd6c2b042", "files_sha256": {"head.npz": "a79398fc65d403afb1fa26b211f7a6132da46e12eb327db5d15b4c866e0a33d9", "lexicon.json": "f8a2001d08a0c462330119c895fbe3fb9188182cbdcd618d054a3b73b3e3f03f", "source.f32": "a4b3ba14eec839860a08eeb995f7b2085ced85644537e0ae386406e242ede185", "word-ids.u64": "b8c4cb0ef6ce36827659a570a38210175500bc8c281f54ba439d68fd3221ec1f", "word-offsets.u64": "abf703c6840ca9670268696e7c42cb853d74dcb475588d177939d51f9cfae5db"}}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 1980, "build_seconds": 0.0014171670190989971, "classifier_sha256": "59bed21a2c66f9b6c34caa81473f901477233e5c02a67673fb1c6f614b8290dc", "files_sha256": {"head.npz": "a79398fc65d403afb1fa26b211f7a6132da46e12eb327db5d15b4c866e0a33d9", "lexicon.json": "f8a2001d08a0c462330119c895fbe3fb9188182cbdcd618d054a3b73b3e3f03f", "source.f32": "a4b3ba14eec839860a08eeb995f7b2085ced85644537e0ae386406e242ede185", "word-ids.u64": "b8c4cb0ef6ce36827659a570a38210175500bc8c281f54ba439d68fd3221ec1f", "word-offsets.u64": "abf703c6840ca9670268696e7c42cb853d74dcb475588d177939d51f9cfae5db"}}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 2854, "build_seconds": 0.001568374689668417, "classifier_sha256": "bad93fb6a495cd8378458d2a93edc9cf87c1e10df736d96a220d800b6ff328d6", "files_sha256": {"head.npz": "a79398fc65d403afb1fa26b211f7a6132da46e12eb327db5d15b4c866e0a33d9", "lexicon.json": "f8a2001d08a0c462330119c895fbe3fb9188182cbdcd618d054a3b73b3e3f03f", "memory/codec.json": "2a925a9914ae6fce91681fb41bf4c64789061688eeb5fce370fb12b9ca047773", "memory/table.rows": "b8b379ea8f9c1a21bb40acfc8561e240f56c7febea966415590a6feae77c2d55", "word-ids.u64": "b8c4cb0ef6ce36827659a570a38210175500bc8c281f54ba439d68fd3221ec1f", "word-offsets.u64": "abf703c6840ca9670268696e7c42cb853d74dcb475588d177939d51f9cfae5db"}}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 2917, "build_seconds": 0.001602791715413332, "classifier_sha256": "0de6866a90c191baaa9a0d8a6daf3330345d508878cdb5f3bc2622ebf8f16e28", "files_sha256": {"head.npz": "a79398fc65d403afb1fa26b211f7a6132da46e12eb327db5d15b4c866e0a33d9", "lexicon.json": "f8a2001d08a0c462330119c895fbe3fb9188182cbdcd618d054a3b73b3e3f03f", "memory/codec.json": "bb58ec1993dc92197ce3e1c739db97c2e52dcabde03478c87ed1609eeb4858b0", "memory/table.rows": "43e7dc418c9feaf56d39afaa954610a0c9e9cd8115ef47e41cbe2b16e2cddee0", "word-ids.u64": "b8c4cb0ef6ce36827659a570a38210175500bc8c281f54ba439d68fd3221ec1f", "word-offsets.u64": "abf703c6840ca9670268696e7c42cb853d74dcb475588d177939d51f9cfae5db"}}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 7970, "build_seconds": 0.03271525027230382, "classifier_sha256": "7cd0ab1504f9c8af7cc5c3b066e35a8990a4b60185c63a6eff85357e245adbe4", "files_sha256": {"bounds/bounds.json": "c2029c6551436c31e2c3522b06a5cd5eec0cea7ede8cf1acd087472a8a67aa2f", "bounds/group-defect-l2.f64": "e420eb64e5fa6d29c0dd65403294d55128cb71a4bc2905a75a4b98a1fdded9e3", "bounds/group-total-l2.f64": "89dac5359d6b896b8627d28fbe50e5a0c43aefbabc9f78554594ef69b019cc8b", "bounds/row-l2.f64": "e8f7f937b9aed70215ba8f6a2f5140a17c0cf7830af89e0ce7775667eda7d209", "head.npz": "a79398fc65d403afb1fa26b211f7a6132da46e12eb327db5d15b4c866e0a33d9", "lexicon.json": "f8a2001d08a0c462330119c895fbe3fb9188182cbdcd618d054a3b73b3e3f03f", "memory/domain.npz": "ea342bfae2237024dcb199c149f29b73953a487bf92e0a010e24607ae144be80", "memory/manifest.json": "86fd84887e88b784a867b53ac6c2c143d97529d1d3a2c82b643300bd43924074", "memory/table.men": "6e27b3e9314d6859bfc4a38ded053c885a7fec5e8e2149a0363973fba33cb361", "word-ids.u64": "b8c4cb0ef6ce36827659a570a38210175500bc8c281f54ba439d68fd3221ec1f", "word-offsets.u64": "abf703c6840ca9670268696e7c42cb853d74dcb475588d177939d51f9cfae5db"}}
+ERROR
+test_fraction_oracle_linear_certificate (tests.test_text_classifier.TextClassifierTests.test_fraction_oracle_linear_certificate) ... ok
+test_full_text_prediction_flags_refusal_and_hash_binding (tests.test_text_classifier.TextClassifierTests.test_full_text_prediction_flags_refusal_and_hash_binding) ... ok
+test_tokenization_boundary (tests.test_text_classifier.TextClassifierTests.test_tokenization_boundary) ... ok
+
+======================================================================
+ERROR: test_complete_export_controls_share_source_and_head (tests.test_text_classifier.TextClassifierTests.test_complete_export_controls_share_source_and_head)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/tests/test_text_classifier.py", line 143, in test_complete_export_controls_share_source_and_head
+    export_seed(common,checkpoint,parent/'serving',library=self.library,backends=backends)
+  File "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/tools/export_news_classifier.py", line 108, in export_seed
+    pack_quantized_file(staging,root/'memory',data['dim'],'int8',native=True,
+  File "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/tools/quantized_memory.py", line 110, in pack_quantized_file
+    return _pack_quantized(FileRows(), directory, encoding, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/tools/quantized_memory.py", line 139, in _pack_quantized
+    storage = pack_native(source, table, width, deduplicate=deduplicate,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/tools/native_row_store.py", line 96, in pack_native
+    raise ValueError("representatives must be an idempotent map of original row IDs")
+ValueError: representatives must be an idempotent map of original row IDs
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.102s
+
+FAILED (errors=1)

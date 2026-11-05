@@ -1,0 +1,34 @@
+{
+  "classifier.json": {
+    "bytes": 1416,
+    "sha256": "28270f18d82f3a2b45ec76557b85908fb1c81dccb10a0acaeffd296276347fc9"
+  },
+  "head.npz": {
+    "bytes": 1546,
+    "sha256": "bc2dd0f23234f92c158cb3ef5634759ef60004b580cdf5e711237b7b0a33868e"
+  },
+  "lexicon.json": {
+    "bytes": 9715965,
+    "sha256": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe"
+  },
+  "memory/codec.faiss": {
+    "bytes": 65622,
+    "sha256": "5eb3403fa77f1cf9bc1dfbe356be5e62d5089b0b392e65a99b1d53b506bce275"
+  },
+  "memory/codec.json": {
+    "bytes": 269,
+    "sha256": "e09e7521f01163266dd37bdba0361a69db815e78e6ac7381b1858584438ece16"
+  },
+  "memory/codes.npy": {
+    "bytes": 612887,
+    "sha256": "ef607a6ea76432367fc08c2121050e7110a975e9d4f48d024fe19aad8f472f2c"
+  },
+  "word-ids.u64": {
+    "bytes": 19209408,
+    "sha256": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0"
+  },
+  "word-offsets.u64": {
+    "bytes": 496288,
+    "sha256": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+  }
+}

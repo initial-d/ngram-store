@@ -1,0 +1,124 @@
+{
+  "source_commit": "698efcea8210eb9ee65bd278dde3a0ab214d7f62",
+  "seed": 3,
+  "status": "passed",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "cpu",
+  "threads": 4,
+  "interop_threads": 1,
+  "data": {
+    "category": "AG News real supervised CPU news routing",
+    "source_urls": {
+      "train.csv": "https://raw.githubusercontent.com/mhjabreel/CharCnn_Keras/555590db4219b1243abb1918effd6a7425a2d75f/data/ag_news_csv/train.csv",
+      "test.csv": "https://raw.githubusercontent.com/mhjabreel/CharCnn_Keras/555590db4219b1243abb1918effd6a7425a2d75f/data/ag_news_csv/test.csv",
+      "readme.txt": "https://raw.githubusercontent.com/mhjabreel/CharCnn_Keras/555590db4219b1243abb1918effd6a7425a2d75f/data/ag_news_csv/readme.txt"
+    },
+    "train_csv_sha256": "76a0a2d2f92b286371fe4d4044640910a04a803fdd2538e0f3f29a5c6f6b672e",
+    "test_csv_sha256": "521465c2428ed7f02f8d6db6ffdd4b5447c1c701962353eb2c40d548c3c85699",
+    "research_use_notice_sha256": "779c2e6bbf93dd810d9c7b318006daef7a4bfc34062002461d251dc10fb9f58c",
+    "train_documents": 108000,
+    "validation_documents": 12000,
+    "official_train_documents": 120000,
+    "vocabulary_tokens": 62035,
+    "whole_word_rows": 41892,
+    "ngram_rows": 570867,
+    "rows": 612759,
+    "dim": 64,
+    "split_sha256": "e019d9519d8f2562d57d82f3f69e64e1cf05899e13e17ea19136f76595a5a0ec",
+    "registry_sha256": {
+      "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+      "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+      "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+    }
+  },
+  "initial_rows_sha256": "00f64d5ede510ab1aa5c164b8d94a1c33df093a417b74cce92f9fc4c6b018b0a",
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0951645801558878,
+      "validation_ce": 0.677729606628418,
+      "validation_accuracy": 0.7785,
+      "seconds": 17.844932350097224
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5326543995907521,
+      "validation_ce": 0.45917341113090515,
+      "validation_accuracy": 0.8514166666666667,
+      "seconds": 18.477540113031864
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.41304888809320484,
+      "validation_ce": 0.3971748352050781,
+      "validation_accuracy": 0.8744166666666666,
+      "seconds": 17.266877115005627
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.36892047605667067,
+      "validation_ce": 0.3701879382133484,
+      "validation_accuracy": 0.8821666666666667,
+      "seconds": 17.51687210611999
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.34567968826299594,
+      "validation_ce": 0.35467952489852905,
+      "validation_accuracy": 0.88725,
+      "seconds": 17.109507276210934
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.3315886128605542,
+      "validation_ce": 0.3461512327194214,
+      "validation_accuracy": 0.8901666666666667,
+      "seconds": 19.654465542873368
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.3225093297130689,
+      "validation_ce": 0.34051787853240967,
+      "validation_accuracy": 0.8923333333333333,
+      "seconds": 24.83903632988222
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.31710695535368266,
+      "validation_ce": 0.3378119170665741,
+      "validation_accuracy": 0.8926666666666667,
+      "seconds": 16.121384838828817
+    }
+  ],
+  "command_argv": [
+    "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python",
+    "-m",
+    "tools.train_news_classifier",
+    "--data",
+    "/llm-align/duyimin/ngram-news-app-20261105/data",
+    "--output",
+    "/llm-align/duyimin/ngram-news-app-20261105/training",
+    "--source-commit",
+    "698efcea8210eb9ee65bd278dde3a0ab214d7f62"
+  ],
+  "settings": {
+    "epochs": 8,
+    "batch": 128,
+    "dim": 64,
+    "embedding_lr": 1.0,
+    "head_lr": 1.0,
+    "backward": "unscaled word-bag; ordinary document mean/head derivative",
+    "optimizer": "sparse+dense SGD"
+  },
+  "source_files_sha256": {
+    "train_news_classifier.py": "5e1fcaab86f6712235e8ec64fc509875af96ee403d110f9ba265a0f2454d2e21",
+    "text_classifier.py": "58909e2b607b8600ef335276db613814553833519f1f4470d8611ddced8d5525"
+  },
+  "selected_epoch": 8,
+  "seconds": 151.35129275289364,
+  "source_sha256": "f9fd1513820b071bc73259fedb4cd6159492383ef6e4493ce844bcd003f5ab44",
+  "head_sha256": "da6a95b7802f02e2d1896da325ba4844db99a9f70df43013b8be04657a9e0947"
+}

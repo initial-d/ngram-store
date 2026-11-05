@@ -115,6 +115,7 @@ with NativeRows("memory.native/table.men", cache_bytes=4 * 1024**2) as memory:
 
 | Application | Runnable entry | What stays with the model |
 | --- | --- | --- |
+| AG News / CPU text classification | [Full training → export → actual-text classification](docs/news_classifier_app.md) | Tokenization, word/document means, ReLU and four-class head; NumPy/C frozen inference |
 | FastText / word embeddings | [Prepare text → train → export → query](docs/fasttext_native_bundle.md) | Dictionary, original float32 aggregation, output weights |
 | Engram / LLM memory | [Official demo factory and verified boundaries](docs/engram_quickstart.md) | Hash IDs, head layout, projections, gates and convolution |
 | TinyEngram / Qwen | [Checkpoint export, trained outputs and decode](docs/tinyengram_qwen_evidence_20261030/README.md) | Backbone, tokenizer, learned gates and checkpoint state |
@@ -129,6 +130,7 @@ external data or GPU. It checks integration, not representative compression.
 
 | Evidence | Observed result and boundary |
 | --- | --- |
+| [Full AG News CPU application](docs/news_classifier_evidence_20261105/README.md) | 612,759 trained rows, three seeds and all 7,600 official test examples: complete INT8 bundles 177.66 → 45.14 MiB; same 22,800 predictions as row INT8 with 33.42% extra file saving. NumPy/C inference; precomputed words remain smaller/faster, and aggregate/quantized rows change |
 | [Actual FastText model](docs/fasttext_native_evidence_20261031/README.md) | 90,380 rows and word/sentence outputs byte-identical; whole bundle saves 0.46%, hot queries slower than dense; structural order has no added benefit here |
 | [Structural contribution controls](docs/structural_native_evidence_20261030/README.md) | Trained SGNS/GRU references measure DATrie and approximate joint sharing separately; exact mode finds no identical rows to merge |
 | [FP16/INT8 + structural controls](docs/quantized_structural_evidence_20261031/README.md) | Same trained tables retain additional approximate savings after quantization; 4-order GRU INT8 regresses; quality failures and fixed-default audit are separate |

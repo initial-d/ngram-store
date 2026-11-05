@@ -1,0 +1,50 @@
+{
+  "bounds/bounds.json": {
+    "bytes": 1384,
+    "sha256": "50a5f0806ef3bc6728028ecf47e93eb380865b40beffdd395cb71fc90dfe69a7"
+  },
+  "bounds/group-defect-l2.f64": {
+    "bytes": 1550752,
+    "sha256": "842414249acffe40c6d440ce08185668652cd04d2ded3f6349639402b2906767"
+  },
+  "bounds/group-total-l2.f64": {
+    "bytes": 1550752,
+    "sha256": "5af401fbcf780590be0e67de08bc8d8eefd85f84fb6c1b255daff3cf4c08c786"
+  },
+  "bounds/row-l2.f64": {
+    "bytes": 4902072,
+    "sha256": "c0833dd6afd4aa6430c49f2dfa8af52fb1b68e5b6228db567d8159035300ac7f"
+  },
+  "classifier.json": {
+    "bytes": 1800,
+    "sha256": "1f8a5ff8e0919de1142a8a8d1820ed003fe78f8c6e2596dcc64227d9f04b1fb9"
+  },
+  "head.npz": {
+    "bytes": 1546,
+    "sha256": "f704ce8780c324a63400ab42e96d3a31bd04327a8ae1813018c1b447a5fa135a"
+  },
+  "lexicon.json": {
+    "bytes": 9715965,
+    "sha256": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe"
+  },
+  "memory/domain.npz": {
+    "bytes": 4903076,
+    "sha256": "d0eec32142d3731a4964e0ddc33c0c60a3e3637c15b6d0a70b06c012d93ce2c7"
+  },
+  "memory/manifest.json": {
+    "bytes": 2810,
+    "sha256": "c8cc4c47a21fa2f5a426721ce15124ad07aa895bfd6ce99582c788fc2f4e6dd7"
+  },
+  "memory/table.men": {
+    "bytes": 55301584,
+    "sha256": "fc664667d68579272aed1be41989bf5bce6ccb3be7a5f3cc07866c06661624df"
+  },
+  "word-ids.u64": {
+    "bytes": 19209408,
+    "sha256": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0"
+  },
+  "word-offsets.u64": {
+    "bytes": 496288,
+    "sha256": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+  }
+}

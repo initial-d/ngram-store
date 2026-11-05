@@ -1,0 +1,16 @@
+.............ssssssss...sssssss............sssssssssssssssssssssss.........s........ss.ssssssss.........sssssssssss.s..................ss...s....s..ssss.............sss.ssssssss.{"seed": 3, "backend": "source-resident", "complete_model_bytes": 2012, "build_seconds": 0.0009787497110664845}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 2008, "build_seconds": 0.0010722908191382885}
+{"seed": 3, "backend": "linear-fused", "complete_model_bytes": 2009, "build_seconds": 0.005867583677172661}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 2883, "build_seconds": 0.0015212921425700188}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 2946, "build_seconds": 0.0012374590151011944}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 8000, "build_seconds": 0.03009237488731742}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 3478, "build_seconds": 0.006290041841566563}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 1671, "build_seconds": 0.0077432082034647465}
+....{"seed": 7, "backend": "source-mmap", "complete_model_bytes": 2014, "build_seconds": 0.0013427920639514923}
+{"seed": 7, "backend": "ngram-bounded", "complete_model_bytes": 8006, "build_seconds": 0.028441250324249268}
+{"seed": 7, "backend": "ngram-int8", "complete_model_bytes": 3484, "build_seconds": 0.007198582869023085}
+.s.ssssssssssssssssssss
+----------------------------------------------------------------------
+Ran 205 tests in 10.173s
+
+OK (skipped=101)

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "format": "source-residual-l2-v1",
+  "shape": [
+    612759,
+    64
+  ],
+  "groups": 193844,
+  "source_sha256": "1ae59673cfe370ec837398c574e83aca07a2f45049ad632bcbc6165ad0243b9b",
+  "artifact_sha256": "66279de7e78f290bd4a4f7f3e956aaa7fa06189e307feac5168e758366a863cf",
+  "partition_sha256": "1caf4ee5962a96d5fb589d831fc2fc4265ed4e9380e64b7b1f881bbbc17ec0ba",
+  "files_sha256": {
+    "row-l2.f64": "caaf863137d2a2b6af8c7a8d7823ce42be36648daa6831a63d078359e5488066",
+    "group-total-l2.f64": "b4ed610533fc4572281eb2a2626b1a508c528801ef965556001993bd2bfdf4ef",
+    "group-defect-l2.f64": "375a7e3d57b0440b76dd5d6dcf7589dd85581dfa386048eb9fdc2a672e8716b6"
+  },
+  "construction": {
+    "seconds": 5.510985011933371,
+    "peak_rss_bytes": 726499328,
+    "scratch_logical_bytes": 198496256,
+    "chunk_rows": 1024
+  },
+  "contract": "Source-specific L2 bounds; returned native vectors versus real-arithmetic FP32 source aggregates.",
+  "limitations": [
+    "Optional approximation, not original-row byte preservation.",
+    "Assumes IEEE round-to-nearest arithmetic; no FP32 source-reducer byte identity.",
+    "Query-relative L2 is not semantic quality, cosine similarity or downstream loss.",
+    "Scratch/RSS/runtime maps have separate costs; no hard memory cap.",
+    "Hash-bound trusted immutable source/store/sidecar; no quantized table substitution."
+  ]
+}

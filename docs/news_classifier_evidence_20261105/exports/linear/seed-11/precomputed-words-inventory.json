@@ -1,0 +1,18 @@
+{
+  "classifier.json": {
+    "bytes": 1052,
+    "sha256": "ed44f0cde7110047ed8acf14fc66834a060173d25ed5175d4a729311c8f8ed7c"
+  },
+  "head.npz": {
+    "bytes": 1546,
+    "sha256": "6d020cb289a445f692587d929afb70af1eacbe600694d3c5a5c3c71d611fd60a"
+  },
+  "lexicon.json": {
+    "bytes": 955229,
+    "sha256": "1b0c9f31f79e68fd499fe195a3c57d8ee4dbdc38c583ccf3a57248ab766bb807"
+  },
+  "word-vectors.f32": {
+    "bytes": 15880960,
+    "sha256": "853ee7a6c7dd8d3275457a0b2eab1c5ff24f4131f3e3df99481e6bafd003c19c"
+  }
+}

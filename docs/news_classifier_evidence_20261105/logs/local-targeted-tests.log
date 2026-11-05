@@ -1,0 +1,24 @@
+test_cli_and_import_without_torch (tests.test_text_classifier.TextClassifierTests.test_cli_and_import_without_torch) ... ok
+test_complete_export_controls_share_source_and_head (tests.test_text_classifier.TextClassifierTests.test_complete_export_controls_share_source_and_head) ... {"seed": 3, "backend": "source-resident", "complete_model_bytes": 2011, "build_seconds": 0.000988250132650137}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 2008, "build_seconds": 0.0010380838066339493}
+{"seed": 3, "backend": "linear-fused", "complete_model_bytes": 2008, "build_seconds": 0.00511537492275238}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 2883, "build_seconds": 0.0012130001559853554}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 2946, "build_seconds": 0.0011740829795598984}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 7999, "build_seconds": 0.030612208880484104}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 3478, "build_seconds": 0.003935750108212233}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 1670, "build_seconds": 0.006190749816596508}
+ok
+test_fraction_oracle_linear_certificate (tests.test_text_classifier.TextClassifierTests.test_fraction_oracle_linear_certificate) ... ok
+test_full_text_prediction_flags_refusal_and_hash_binding (tests.test_text_classifier.TextClassifierTests.test_full_text_prediction_flags_refusal_and_hash_binding) ... ok
+test_metrics_and_validation_only_budget_selection (tests.test_text_classifier.TextClassifierTests.test_metrics_and_validation_only_budget_selection) ... ok
+test_relu_graph_preserves_predictions_and_excludes_linear_folding (tests.test_text_classifier.TextClassifierTests.test_relu_graph_preserves_predictions_and_excludes_linear_folding) ... {"seed": 7, "backend": "source-mmap", "complete_model_bytes": 2014, "build_seconds": 0.0014962079003453255}
+{"seed": 7, "backend": "ngram-bounded", "complete_model_bytes": 8005, "build_seconds": 0.029602875001728535}
+{"seed": 7, "backend": "ngram-int8", "complete_model_bytes": 3484, "build_seconds": 0.007021166849881411}
+ok
+test_rss_excludes_large_parent_before_exec (tests.test_text_classifier.TextClassifierTests.test_rss_excludes_large_parent_before_exec) ... skipped 'Linux exec high-water regression'
+test_tokenization_boundary (tests.test_text_classifier.TextClassifierTests.test_tokenization_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.250s
+
+OK (skipped=1)

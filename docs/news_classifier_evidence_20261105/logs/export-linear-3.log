@@ -1,0 +1,12 @@
+{"seed": 3, "backend": "source-resident", "complete_model_bytes": 186290736, "build_seconds": 0.0027176670264452696}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 186290732, "build_seconds": 0.0018570120446383953}
+{"seed": 3, "backend": "linear-fused", "complete_model_bytes": 39227611, "build_seconds": 0.14075423101894557}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 107858508, "build_seconds": 1.1191585219930857}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 71093010, "build_seconds": 0.883795924950391}
+{"seed": 3, "backend": "faiss-sq4", "complete_model_bytes": 49033891, "build_seconds": 0.3340986578259617}
+{"seed": 3, "backend": "faiss-sq8", "complete_model_bytes": 68642181, "build_seconds": 0.7362666630651802}
+{"seed": 3, "backend": "faiss-pq-8x8", "complete_model_bytes": 34392706, "build_seconds": 7.683105221949518}
+{"seed": 3, "backend": "faiss-cluster-8", "complete_model_bytes": 30103400, "build_seconds": 2.4870043240953237}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 97637439, "build_seconds": 45.4184241630137}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 47364038, "build_seconds": 3.3301959480158985}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 16838785, "build_seconds": 2.430179995018989}

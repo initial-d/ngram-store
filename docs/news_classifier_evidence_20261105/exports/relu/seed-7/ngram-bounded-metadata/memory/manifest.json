@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "name": "certified-groups",
+  "engine": "NGramStore",
+  "shape": [
+    612759,
+    64
+  ],
+  "dim": 64,
+  "dtype": "little-endian float32",
+  "source_row_byte_preserving": false,
+  "original_bytes_preserved": false,
+  "native_decodes_declared_rows_byte_exactly": true,
+  "partition": {
+    "original_rows": 612759,
+    "group_rows": 193844,
+    "rows_in_nonsingleton_groups": 502346,
+    "nonsingleton_groups": 83431,
+    "domain_bags": 62035,
+    "domain_sha256": "fad095cb00063c31e1109e3496c4c479aa5f509ae496e51b29062e262f66a8ae",
+    "mapping_sha256": "1caf4ee5962a96d5fb589d831fc2fc4265ed4e9380e64b7b1f881bbbc17ec0ba",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "projection": {
+    "source_sha256": "9bc32f09407aeabed0da57f1dbb69d58dcbc84632c376a3f7a8302d5bba1d97a",
+    "means_sha256": "3c3dc9c7e77bc30b7c121f352fdc8ffab8ee8cdc405752b40c4adaec194e5541",
+    "group_rows": 193844,
+    "dim": 64,
+    "managed_memory_bytes": 67108864,
+    "cache_capacity_rows": 16384,
+    "accumulator_reads": 317317,
+    "evictions": 300933,
+    "temporary_accumulator_bytes": 99248128,
+    "contract": "ordered float64 group means rounded to FP32; source rows change"
+  },
+  "storage": {
+    "format": "MEFTNAT1",
+    "format_version": 2,
+    "n_rows": 612759,
+    "row_bytes": 256,
+    "unique_rows": 193844,
+    "block_rows": 8,
+    "blocks": 24231,
+    "raw_blocks": 24231,
+    "compression": false,
+    "row_map_bytes": 4902072,
+    "artifact_bytes": 55301584,
+    "group_means_sha256": "3c3dc9c7e77bc30b7c121f352fdc8ffab8ee8cdc405752b40c4adaec194e5541",
+    "artifact_sha256": "bb796b09aa7f87d06af4b1ec3952dc7450931dcf153a26fe6b4e387c51d6c04b",
+    "managed_memory_bytes": 67108864,
+    "contract": "Original IDs forward to projected group means; certified aggregates only."
+  },
+  "artifact_sha256": "bb796b09aa7f87d06af4b1ec3952dc7450931dcf153a26fe6b4e387c51d6c04b",
+  "source_sha256": "9bc32f09407aeabed0da57f1dbb69d58dcbc84632c376a3f7a8302d5bba1d97a",
+  "construction": {
+    "partition_seconds": 41.94142304989509,
+    "projection_seconds": 5.3800962620880455,
+    "native_export_seconds": 0.2848190830554813,
+    "seconds_before_cleanup": 47.60635585687123,
+    "sampled_workspace_logical_bytes": 155325748,
+    "peak_rss_bytes": 313167872
+  },
+  "contract": "Certified complete bag sums/means in real arithmetic; individual rows change.",
+  "limitations": [
+    "Managed buffers do not cap process RSS or OS page cache.",
+    "Runtime maps and query compilation have separate resident memory costs.",
+    "Native raw lookup does not enforce the certificate; use query-bags/CertifiedBagRows.",
+    "No original-row byte identity or universal model-quality claim."
+  ],
+  "serving_bytes_without_manifest": 60204660
+}

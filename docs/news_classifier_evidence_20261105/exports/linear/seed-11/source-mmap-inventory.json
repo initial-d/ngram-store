@@ -1,0 +1,26 @@
+{
+  "classifier.json": {
+    "bytes": 1222,
+    "sha256": "f6cc161aabb3d7f24c57d750e62c42d330c53b7d22f9cd7a49ae5a88cfd1a2d2"
+  },
+  "head.npz": {
+    "bytes": 1546,
+    "sha256": "6d020cb289a445f692587d929afb70af1eacbe600694d3c5a5c3c71d611fd60a"
+  },
+  "lexicon.json": {
+    "bytes": 9715965,
+    "sha256": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe"
+  },
+  "source.f32": {
+    "bytes": 156866304,
+    "sha256": "5695da1d690839ff0640611ae20f98877dce9d901d2a10f93bdb20a3ed2b83c3"
+  },
+  "word-ids.u64": {
+    "bytes": 19209408,
+    "sha256": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0"
+  },
+  "word-offsets.u64": {
+    "bytes": 496288,
+    "sha256": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+  }
+}

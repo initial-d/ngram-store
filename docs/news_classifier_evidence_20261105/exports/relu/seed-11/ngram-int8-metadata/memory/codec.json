@@ -1,0 +1,43 @@
+{
+  "backend": "native",
+  "byteorder": "little",
+  "contract": "frozen original IDs; exact encoded representative bytes; quantization/sharing may change float32 rows",
+  "decoded_float32_sha256": "6232d4c4d699926886ca940b73d57fb88a64ed5e28c8200ec1ea01f1dacf7b11",
+  "encoding": "int8",
+  "export_chunk_rows": 4096,
+  "int8_scale_bytes_per_physical_row": 4,
+  "rounding": "nearest-even; symmetric [-127,127] per-row scale",
+  "row_bytes": 68,
+  "schema_version": 1,
+  "shape": [
+    612759,
+    64
+  ],
+  "source_bytes_preserved": false,
+  "source_float32_sha256": "2ac316b40c759e55536782ed12ebeedcfb8c9616283bea47190b885ceb2322de",
+  "storage": {
+    "artifact_bytes": 17905271,
+    "block_rows": 120,
+    "blocks": 1616,
+    "compressed_blocks": 1600,
+    "compression": true,
+    "deduplicate": false,
+    "external_representatives": true,
+    "format": "MEFTNAT1",
+    "format_version": 2,
+    "input_bytes": 41667612,
+    "marked_rows": 193844,
+    "max_block_bytes": 8192,
+    "n_rows": 612759,
+    "predictor": "xor",
+    "raw_blocks": 16,
+    "reordered": false,
+    "row_bytes": 68,
+    "row_map_bytes": 4902072,
+    "unique_rows": 193844,
+    "xor_blocks": 0,
+    "zlib_blocks": 1600
+  },
+  "table_file": "table.men",
+  "table_sha256": "ff4d5841f8ee3e9af2c011c2a25c555e8224ee767038d92382a785757c214521"
+}

@@ -1,0 +1,29 @@
+{
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "machine": "x86_64",
+  "cpu_model": "AMD EPYC 7742 64-Core Processor",
+  "logical_cpus": 255,
+  "mem_total": "MemTotal:       2113631756 kB",
+  "versions": {
+    "numpy": "2.2.6",
+    "torch": "2.11.0",
+    "faiss-cpu": "1.15.0",
+    "matplotlib": "3.11.1"
+  },
+  "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "native_library_sha256": "8598d422671bd78e931ca0a9bb4cab8f2fccf3be7e3599a8b10f8b91285eaebc",
+  "measured_source_sha256": {
+    "tools/train_news_classifier.py": "ee7561d7a55b19f06c1078a19dd1d1a2c0cb9fad8fc68d4a4c4c749585438865",
+    "tools/text_classifier.py": "d6f8024ae118ec732bbe0d50938901d1d09df61de9745ebfccdf60592aedfa69",
+    "tools/export_news_classifier.py": "4979204cf73c0e9dd9718ab2f6b72a60560410e24998e720fa4084c1d44fa1aa",
+    "tools/benchmark_news_classifier.py": "1c901b90e65cac36600b21315f1103c3ba505c923426e7f45f67cc2e8c2231e0",
+    "native/meft_rows.c": "997a391f38ae2403a59702482c316ffa24fe9fdf48076237b5442b8d2d26358d"
+  },
+  "inference_threads": 1,
+  "training_threads": 4,
+  "training_interop_threads": 1,
+  "cuda_visible_devices": "",
+  "scope": "Shared CPU host, no GPU inspection/use, no process stops, no exclusive or cold-cache claims.",
+  "cost_assumptions": "No GPU, energy or monetary estimate; artifact and observed RSS thresholds are not OS-enforced limits."
+}

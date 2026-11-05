@@ -1,0 +1,25 @@
+{
+  "reason": "Stop only this CPU task worker for confirmed inherited ru_maxrss correction.",
+  "pid": 1646129,
+  "argv": [
+    "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python",
+    "-m",
+    "tools.benchmark_news_classifier",
+    "worker",
+    "--serving",
+    "/llm-align/duyimin/ngram-news-app-20261105/serving-final/linear/seed-11",
+    "--backend",
+    "ngram-bounded",
+    "--requests",
+    "/llm-align/duyimin/ngram-news-app-20261105/requests-final/linear/test.jsonl",
+    "--phase",
+    "test",
+    "--output",
+    "/llm-align/duyimin/ngram-news-app-20261105/results-final/linear/seed-11/ngram-bounded-test.json",
+    "--source-commit",
+    "84c21eae7bbef4c1ee505b1f7336ef48b5d80ac8",
+    "--native-library",
+    "/llm-align/duyimin/ngram-news-app-20261105/final-source/build/libmeft_rows.so",
+    ""
+  ]
+}

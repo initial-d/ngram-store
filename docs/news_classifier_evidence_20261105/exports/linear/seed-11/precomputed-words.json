@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "kind": "ngram-linear-text",
+  "backend": "precomputed-words",
+  "classes": [
+    "World",
+    "Sports",
+    "Business",
+    "Sci/Tech"
+  ],
+  "rows": 612759,
+  "dim": 64,
+  "trained_source_sha256": "5695da1d690839ff0640611ae20f98877dce9d901d2a10f93bdb20a3ed2b83c3",
+  "source_commit": "698efcea8210eb9ee65bd278dde3a0ab214d7f62",
+  "head_sha256": "6d020cb289a445f692587d929afb70af1eacbe600694d3c5a5c3c71d611fd60a",
+  "seed": 11,
+  "selected_epoch": 8,
+  "activation": "identity",
+  "source_row_byte_preserving": false,
+  "prediction_preservation_certificate": false,
+  "contract": "Frozen supervised reference; all requests predicted; source-real-model preservation flags only for bounded FP32.",
+  "build_seconds": 2.4651041699107736,
+  "files_sha256": {
+    "head.npz": "6d020cb289a445f692587d929afb70af1eacbe600694d3c5a5c3c71d611fd60a",
+    "lexicon.json": "1b0c9f31f79e68fd499fe195a3c57d8ee4dbdc38c583ccf3a57248ab766bb807",
+    "word-vectors.f32": "853ee7a6c7dd8d3275457a0b2eab1c5ff24f4131f3e3df99481e6bafd003c19c"
+  }
+}
