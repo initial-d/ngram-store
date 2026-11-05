@@ -139,12 +139,18 @@ def main():
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--seed',type=int,required=True)
     p.add_argument('--native-library',type=Path)
+    p.add_argument('--backends',default=','.join(BACKENDS))
     cfg = p.parse_args()
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         p.error('CPU-only export requires empty CUDA_VISIBLE_DEVICES')
-    import faiss
-    faiss.omp_set_num_threads(1)
-    export_seed(cfg.training/'common',cfg.training/f'seed-{cfg.seed}',cfg.output,native_library=cfg.native_library)
+    backends = cfg.backends.split(',')
+    if not backends or any(name not in BACKENDS for name in backends):
+        p.error('unknown or empty backend list')
+    if any(name.startswith('faiss-') for name in backends):
+        import faiss
+        faiss.omp_set_num_threads(1)
+    export_seed(cfg.training/'common',cfg.training/f'seed-{cfg.seed}',cfg.output,
+                library=cfg.native_library,backends=backends)
 
 
 if __name__ == '__main__':

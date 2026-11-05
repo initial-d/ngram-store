@@ -127,7 +127,7 @@ class TextClassifierTests(unittest.TestCase):
             parent = Path(tmp)
             fixture = parent/'fixture'
             rows = self.build(fixture)
-            common, checkpoint = parent/'common', parent/'checkpoint'
+            common, checkpoint = parent/'common', parent/'seed-3'
             common.mkdir(); checkpoint.mkdir()
             import shutil
             for name in ('lexicon.json','word-ids.u64','word-offsets.u64'):
@@ -150,6 +150,12 @@ class TextClassifierTests(unittest.TestCase):
             self.assertEqual(results['source-mmap']['logits'][:2].tobytes(),results['precomputed-words']['logits'][:2].tobytes())
             self.assertFalse(results['ngram-int8']['source_prediction_preserved'].any())
             self.assertEqual(file_hash(checkpoint/'head.npz'),training['head_sha256'])
+            result = subprocess.run([sys.executable,'-m','tools.export_news_classifier','--training',str(parent),
+                '--output',str(parent/'cli-serving'),'--seed','3','--backends','source-mmap,ngram-bounded,ngram-int8',
+                '--native-library',str(self.library)],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            with TextClassifier(parent/'cli-serving/ngram-int8',native_library=self.library) as model:
+                self.assertEqual(model.predict(['ab'])['predictions'].tolist(),[0])
 
     def test_metrics_and_validation_only_budget_selection(self):
         from tools.benchmark_news_classifier import metrics, select
