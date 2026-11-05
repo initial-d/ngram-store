@@ -178,6 +178,41 @@ class TextClassifierTests(unittest.TestCase):
         self.assertEqual(next(c for c in choices if c['budget_kind']=='observed_rss' and c['budget_mib']==256)['selected'],'fp16')
         self.assertFalse(any('bad-small' in c['eligible'] for c in choices))
 
+    def test_relu_graph_preserves_predictions_and_excludes_linear_folding(self):
+        from tools.export_news_classifier import export_seed
+        import shutil
+        with tempfile.TemporaryDirectory() as tmp:
+            parent = Path(tmp)
+            fixture = parent/'fixture'
+            rows = self.build(fixture)
+            rows[:,1] *= -1
+            common, checkpoint = parent/'common', parent/'checkpoint'
+            common.mkdir(); checkpoint.mkdir()
+            for name in ('lexicon.json','word-ids.u64','word-offsets.u64'):
+                shutil.copyfile(fixture/name,common/name)
+            (common/'data.json').write_text(json.dumps({'rows':len(rows),'dim':2,'whole_word_rows':0}))
+            rows.tofile(checkpoint/'source.f32')
+            # Negative second coordinates favor class B before ReLU; the
+            # activated graph removes that coordinate and favors class A.
+            np.savez(checkpoint/'head.npz',weight=np.asarray([[0.,1.],[0.,-1.]],'<f4'),
+                     bias=np.asarray([.125,-.125],'<f4'))
+            (checkpoint/'training.json').write_text(json.dumps({'status':'passed','seed':7,
+                'source_sha256':file_hash(checkpoint/'source.f32'),'head_sha256':file_hash(checkpoint/'head.npz'),
+                'source_commit':'nonlinear-arithmetic-fixture','selected_epoch':1,'classes':['A','B'],
+                'settings':{'activation':'relu'}}))
+            exported = export_seed(common,checkpoint,parent/'serving',library=self.library,
+                backends=['source-mmap','linear-fused','ngram-bounded','ngram-int8'])
+            self.assertNotIn('linear-fused',[v['backend'] for v in exported['variants']])
+            for backend in ('source-mmap','ngram-bounded','ngram-int8'):
+                with TextClassifier(parent/'serving'/backend,native_library=self.library) as model:
+                    result = model.predict(['ab','ac','abc'])
+                    self.assertEqual(result['predictions'].tolist(),[0,0,0])
+                    if backend=='ngram-bounded':
+                        self.assertTrue(result['source_prediction_preserved'].all())
+                        model.predict(['abc'],require_preserved=True)
+                    model.activation = 'identity'
+                    self.assertEqual(model.predict(['ab'])['predictions'].tolist(),[1])
+
 
 if __name__ == '__main__':
     unittest.main()
