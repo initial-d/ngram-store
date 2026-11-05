@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "name": "certified-groups",
+  "engine": "NGramStore",
+  "shape": [
+    3,
+    2
+  ],
+  "dim": 2,
+  "dtype": "little-endian float32",
+  "source_row_byte_preserving": false,
+  "original_bytes_preserved": false,
+  "native_decodes_declared_rows_byte_exactly": true,
+  "partition": {
+    "original_rows": 3,
+    "group_rows": 2,
+    "rows_in_nonsingleton_groups": 2,
+    "nonsingleton_groups": 1,
+    "domain_bags": 2,
+    "domain_sha256": "c0a184deef5d73e49723e6902dca88bf0898d3e9c71d281c4af50cbefa077543",
+    "mapping_sha256": "85526ba79728a470972be92942ef4de212630c9368703cb4ab3cb42dece95912",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "projection": {
+    "source_sha256": "a87dea4808ed77447d1a08bb29ccfefc4fe0de288a396e1ad761bda1b6c0b673",
+    "means_sha256": "d4771e546a663fba4f18d90d167b0889d51dca053f29aa7a0b913a3295721d3f",
+    "group_rows": 2,
+    "dim": 2,
+    "managed_memory_bytes": 8388608,
+    "cache_capacity_rows": 3971,
+    "accumulator_reads": 2,
+    "evictions": 0,
+    "temporary_accumulator_bytes": 32,
+    "contract": "ordered float64 group means rounded to FP32; source rows change"
+  },
+  "storage": {
+    "format": "MEFTNAT1",
+    "format_version": 2,
+    "n_rows": 3,
+    "row_bytes": 8,
+    "unique_rows": 2,
+    "block_rows": 8,
+    "blocks": 1,
+    "raw_blocks": 1,
+    "compression": false,
+    "row_map_bytes": 24,
+    "artifact_bytes": 128,
+    "group_means_sha256": "d4771e546a663fba4f18d90d167b0889d51dca053f29aa7a0b913a3295721d3f",
+    "artifact_sha256": "1215a857deeed9a5da882cf50b3cd1bb53ff7b772a79307d0ce88405ee13ebc7",
+    "managed_memory_bytes": 8388608,
+    "contract": "Original IDs forward to projected group means; certified aggregates only."
+  },
+  "artifact_sha256": "1215a857deeed9a5da882cf50b3cd1bb53ff7b772a79307d0ce88405ee13ebc7",
+  "source_sha256": "a87dea4808ed77447d1a08bb29ccfefc4fe0de288a396e1ad761bda1b6c0b673",
+  "construction": {
+    "partition_seconds": 0.002300666645169258,
+    "projection_seconds": 0.000731125008314848,
+    "native_export_seconds": 0.000809874851256609,
+    "seconds_before_cleanup": 0.0038435417227447033,
+    "sampled_workspace_logical_bytes": 12432,
+    "peak_rss_bytes": 36945920
+  },
+  "contract": "Certified complete bag sums/means in real arithmetic; individual rows change.",
+  "limitations": [
+    "Managed buffers do not cap process RSS or OS page cache.",
+    "Runtime maps and query compilation have separate resident memory costs.",
+    "Native raw lookup does not enforce the certificate; use query-bags/CertifiedBagRows.",
+    "No original-row byte identity or universal model-quality claim."
+  ],
+  "serving_bytes_without_manifest": 1156,
+  "complete_serving_bytes": 3881
+}
+{
+  "backend": "ngram-bounded",
+  "predictions": [
+    {
+      "label": "A",
+      "probabilities": {
+        "A": 0.999983298578152,
+        "B": 1.670142184809518e-05
+      },
+      "source_prediction_preserved": true,
+      "tokens": 2,
+      "oov_tokens": 0,
+      "truncated": false
+    }
+  ]
+}
+{
+  "status": "passed",
+  "category": "included-text actual CPU training and integration example",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "numpy": "2.3.5",
+  "os": "macOS-26.6.2-arm64-arm-64bit",
+  "seed": 7,
+  "dim": 32,
+  "steps": 1200,
+  "lr": 0.025,
+  "gradient_rule": "legacy unscaled row SGD",
+  "torch_loaded": false,
+  "source_corpus_sha256": "da90323b6a591f027ad085161cbf8807063a7e7b76f74c34b8dd183039903a57",
+  "source_code_sha256": "25822c3452bb6afa8b5ebd3c9be0421c3bfcae922cf2dbf4f72ea98e3ffb273b",
+  "rows": 919,
+  "changed_rows": 919,
+  "training_samples": [
+    {
+      "step": 0,
+      "sample_sgns_loss": 4.1588830928829434
+    },
+    {
+      "step": 200,
+      "sample_sgns_loss": 4.1588777888042365
+    },
+    {
+      "step": 400,
+      "sample_sgns_loss": 4.158885431857281
+    },
+    {
+      "step": 600,
+      "sample_sgns_loss": 4.158793631359063
+    },
+    {
+      "step": 800,
+      "sample_sgns_loss": 4.158687036551267
+    },
+    {
+      "step": 1000,
+      "sample_sgns_loss": 4.158452464110575
+    },
+    {
+      "step": 1199,
+      "sample_sgns_loss": 4.15840917827703
+    }
+  ],
+  "partition": {
+    "original_rows": 919,
+    "group_rows": 165,
+    "rows_in_nonsingleton_groups": 817,
+    "nonsingleton_groups": 63,
+    "domain_bags": 45,
+    "domain_sha256": "540998874ee5fe34ae5756d6138c788f766b9d1a07035bce6446ef1363510fab",
+    "mapping_sha256": "b0f0ba640ab3b08f47275c20188cbcd07b36c660cd63adfc0c86328c71aa575f",
+    "contract": "certified aggregate equivalence in real arithmetic; not original-row byte identity"
+  },
+  "complete_serving_bytes": 40314,
+  "every_native_row_identical_to_legacy_projection": true,
+  "queries": 47,
+  "maximum_aggregate_absolute_error_vs_source_fp64": 1.862645149230957e-09,
+  "incomplete_group_rejected": 45,
+  "seconds": 0.07357066683471203,
+  "limitations": [
+    "Small MIT repository-authored text; no representative compression/quality/performance claim.",
+    "Actual SGNS updates after independent initialization; no random-vector similarity premise.",
+    "Projection changes rows; registered complete aggregates only; FP32 rounding measured.",
+    "Example retains source files for reproduction; serving directory has 3 files."
+  ]
+}
+{
+  "status": "passed",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "numpy": "2.3.5",
+  "package": "/tmp/ngram-news-final-installed-20261105/ngram_store/__init__.py",
+  "torch_loaded": false,
+  "installed_native_bounded_compiler": true,
+  "installed_numpy_only_text_classifier": true,
+  "installed_cli_mapping_and_means_identical": true
+}

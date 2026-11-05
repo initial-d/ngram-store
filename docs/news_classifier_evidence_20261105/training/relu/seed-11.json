@@ -1,0 +1,127 @@
+{
+  "source_commit": "84c21eae7bbef4c1ee505b1f7336ef48b5d80ac8",
+  "seed": 11,
+  "status": "passed",
+  "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "device": "cpu",
+  "threads": 4,
+  "interop_threads": 1,
+  "data": {
+    "category": "AG News real supervised CPU news routing",
+    "source_urls": {
+      "train.csv": "https://raw.githubusercontent.com/mhjabreel/CharCnn_Keras/555590db4219b1243abb1918effd6a7425a2d75f/data/ag_news_csv/train.csv",
+      "test.csv": "https://raw.githubusercontent.com/mhjabreel/CharCnn_Keras/555590db4219b1243abb1918effd6a7425a2d75f/data/ag_news_csv/test.csv",
+      "readme.txt": "https://raw.githubusercontent.com/mhjabreel/CharCnn_Keras/555590db4219b1243abb1918effd6a7425a2d75f/data/ag_news_csv/readme.txt"
+    },
+    "train_csv_sha256": "76a0a2d2f92b286371fe4d4044640910a04a803fdd2538e0f3f29a5c6f6b672e",
+    "test_csv_sha256": "521465c2428ed7f02f8d6db6ffdd4b5447c1c701962353eb2c40d548c3c85699",
+    "research_use_notice_sha256": "779c2e6bbf93dd810d9c7b318006daef7a4bfc34062002461d251dc10fb9f58c",
+    "train_documents": 108000,
+    "validation_documents": 12000,
+    "official_train_documents": 120000,
+    "vocabulary_tokens": 62035,
+    "whole_word_rows": 41892,
+    "ngram_rows": 570867,
+    "rows": 612759,
+    "dim": 64,
+    "split_sha256": "e019d9519d8f2562d57d82f3f69e64e1cf05899e13e17ea19136f76595a5a0ec",
+    "registry_sha256": {
+      "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+      "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+      "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+    }
+  },
+  "initial_rows_sha256": "4237c3c21b2b9b497d3171b51b40f498872da8188af94b7965954edc2cefa44b",
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_loss": 1.131045936055093,
+      "validation_ce": 0.7033646702766418,
+      "validation_accuracy": 0.76975,
+      "seconds": 31.901197504950687
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5420437774740124,
+      "validation_ce": 0.459248423576355,
+      "validation_accuracy": 0.8515,
+      "seconds": 20.02065337309614
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.4145201231348571,
+      "validation_ce": 0.4028054475784302,
+      "validation_accuracy": 0.87025,
+      "seconds": 18.539020905969664
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.36843150098459415,
+      "validation_ce": 0.37097689509391785,
+      "validation_accuracy": 0.8784166666666666,
+      "seconds": 18.15829510684125
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.3436403759883196,
+      "validation_ce": 0.35010769963264465,
+      "validation_accuracy": 0.8878333333333334,
+      "seconds": 30.011014161165804
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.3282893016510665,
+      "validation_ce": 0.3409412205219269,
+      "validation_accuracy": 0.8911666666666667,
+      "seconds": 18.43360333191231
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.3186205979701467,
+      "validation_ce": 0.33416643738746643,
+      "validation_accuracy": 0.8925833333333333,
+      "seconds": 18.13544482900761
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.3128839637819342,
+      "validation_ce": 0.33131787180900574,
+      "validation_accuracy": 0.8930833333333333,
+      "seconds": 18.39396514603868
+    }
+  ],
+  "command_argv": [
+    "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python",
+    "-m",
+    "tools.train_news_classifier",
+    "--data",
+    "/llm-align/duyimin/ngram-news-app-20261105/data",
+    "--output",
+    "/llm-align/duyimin/ngram-news-app-20261105/training-relu",
+    "--activation",
+    "relu",
+    "--source-commit",
+    "84c21eae7bbef4c1ee505b1f7336ef48b5d80ac8"
+  ],
+  "settings": {
+    "epochs": 8,
+    "batch": 128,
+    "dim": 64,
+    "embedding_lr": 1.0,
+    "head_lr": 1.0,
+    "backward": "unscaled word-bag; ordinary document mean/head derivative",
+    "optimizer": "sparse+dense SGD",
+    "activation": "relu"
+  },
+  "source_files_sha256": {
+    "train_news_classifier.py": "ee7561d7a55b19f06c1078a19dd1d1a2c0cb9fad8fc68d4a4c4c749585438865",
+    "text_classifier.py": "d6f8024ae118ec732bbe0d50938901d1d09df61de9745ebfccdf60592aedfa69"
+  },
+  "selected_epoch": 8,
+  "seconds": 174.73595793405548,
+  "source_sha256": "acafb2b5f4eb458e07a05e8d56c6f92258f9ec935dfd651f8f4b4b101317390b",
+  "head_sha256": "091a513aa93643e54dbacc5a16efc48d77a59e24a0ec9343ded8a4bcc93e18d6"
+}

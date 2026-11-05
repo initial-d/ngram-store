@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "source_commit": "237cb86953a4a0061e1047b5a82d4c8d2d3d00cc",
+  "package_path": "/llm-align/duyimin/ngram-news-app-20261105/installed-news/ngram_store/__init__.py",
+  "torch_loaded": false,
+  "scope": "Actual AG News-trained seed-3 bundles, installed wheel outside checkout; authored-text functional check, not new accuracy evidence.",
+  "wheel_sha256": {
+    "meft_memory-0.4.0-py3-none-linux_x86_64.whl": "e2c157716bd946b18fd0f6d1cdac84f7105882ceac6a12f32ccb9cb3daf00a58"
+  },
+  "results": {
+    "ngram-int8": {
+      "labels": [
+        "Sports",
+        "Sci/Tech"
+      ],
+      "probabilities": [
+        [
+          5.77172153116998e-07,
+          0.9999991723116225,
+          2.805741651687008e-08,
+          2.2245880803000605e-07
+        ],
+        [
+          1.8381945317109116e-06,
+          1.5663552666423007e-08,
+          5.5007435411822825e-05,
+          0.9999431387065038
+        ]
+      ],
+      "source_prediction_preserved": [
+        false,
+        false
+      ],
+      "classifier_sha256": "3119f89ff640f820cb3945c92361711899f75c9aa662873b5ed23108eed5b19a"
+    },
+    "ngram-bounded": {
+      "labels": [
+        "Sports",
+        "Sci/Tech"
+      ],
+      "probabilities": [
+        [
+          5.760032627611496e-07,
+          0.9999991724983588,
+          2.819612183799258e-08,
+          2.2330225662861512e-07
+        ],
+        [
+          1.8243271766721856e-06,
+          1.5566564341965676e-08,
+          5.49280404876958e-05,
+          0.9999432320657712
+        ]
+      ],
+      "source_prediction_preserved": [
+        true,
+        true
+      ],
+      "classifier_sha256": "1f8a5ff8e0919de1142a8a8d1820ed003fe78f8c6e2596dcc64227d9f04b1fb9"
+    }
+  }
+}

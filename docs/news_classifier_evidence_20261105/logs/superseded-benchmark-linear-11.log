@@ -1,0 +1,32 @@
+{"phase": "validation", "backend": "source-resident", "seed": 11, "accuracy": 0.8925833333333333, "model_mib": 177.6606903076172, "rss_mib": 342.1171875}
+{"phase": "validation", "backend": "source-mmap", "seed": 11, "accuracy": 0.8925833333333333, "model_mib": 177.66068744659424, "rss_mib": 335.0078125}
+{"phase": "validation", "backend": "linear-fused", "seed": 11, "accuracy": 0.8925833333333333, "model_mib": 37.41036510467529, "rss_mib": 164.37890625}
+{"phase": "validation", "backend": "fp16", "seed": 11, "accuracy": 0.8925833333333333, "model_mib": 102.86188983917236, "rss_mib": 267.1171875}
+{"phase": "validation", "backend": "int8", "seed": 11, "accuracy": 0.8925, "model_mib": 67.79957962036133, "rss_mib": 237.23828125}
+{"phase": "validation", "backend": "faiss-sq4", "seed": 11, "accuracy": 0.8928333333333334, "model_mib": 46.76236629486084, "rss_mib": 221.4453125}
+{"phase": "validation", "backend": "faiss-sq8", "seed": 11, "accuracy": 0.8936666666666667, "model_mib": 65.46228790283203, "rss_mib": 240.296875}
+{"phase": "validation", "backend": "faiss-pq-8x8", "seed": 11, "accuracy": 0.8895833333333333, "model_mib": 32.799442291259766, "rss_mib": 207.53125}
+{"phase": "validation", "backend": "faiss-cluster-8", "seed": 11, "accuracy": 0.8618333333333333, "model_mib": 28.70884132385254, "rss_mib": 203.5703125}
+{"phase": "validation", "backend": "ngram-bounded", "seed": 11, "accuracy": 0.8925833333333333, "model_mib": 93.11431980133057, "rss_mib": 245.58203125}
+{"phase": "validation", "backend": "ngram-int8", "seed": 11, "accuracy": 0.8925, "model_mib": 45.17585372924805, "rss_mib": 221.01953125}
+{"phase": "validation", "backend": "precomputed-words", "seed": 11, "accuracy": 0.8925, "model_mib": 16.05871868133545, "rss_mib": 111.81640625}
+{"phase": "test", "backend": "source-resident", "seed": 11, "accuracy": 0.8892105263157895, "model_mib": 177.6606903076172, "rss_mib": 337.4453125}
+{"phase": "test", "backend": "source-mmap", "seed": 11, "accuracy": 0.8892105263157895, "model_mib": 177.66068744659424, "rss_mib": 327.71875}
+{"phase": "test", "backend": "linear-fused", "seed": 11, "accuracy": 0.8892105263157895, "model_mib": 37.41036510467529, "rss_mib": 158.5703125}
+{"phase": "test", "backend": "fp16", "seed": 11, "accuracy": 0.8892105263157895, "model_mib": 102.86188983917236, "rss_mib": 262.2421875}
+{"phase": "test", "backend": "int8", "seed": 11, "accuracy": 0.8890789473684211, "model_mib": 67.79957962036133, "rss_mib": 232.36328125}
+{"phase": "test", "backend": "faiss-sq4", "seed": 11, "accuracy": 0.8877631578947368, "model_mib": 46.76236629486084, "rss_mib": 216.890625}
+{"phase": "test", "backend": "faiss-sq8", "seed": 11, "accuracy": 0.8889473684210526, "model_mib": 65.46228790283203, "rss_mib": 235.40625}
+{"phase": "test", "backend": "faiss-pq-8x8", "seed": 11, "accuracy": 0.8835526315789474, "model_mib": 32.799442291259766, "rss_mib": 202.8828125}
+{"phase": "test", "backend": "faiss-cluster-8", "seed": 11, "accuracy": 0.8572368421052632, "model_mib": 28.70884132385254, "rss_mib": 198.65234375}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-news-app-20261105/final-source/tools/benchmark_news_classifier.py", line 196, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-news-app-20261105/final-source/tools/benchmark_news_classifier.py", line 192, in main
+    else:run(cfg)
+         ^^^^^^^^
+  File "/llm-align/duyimin/ngram-news-app-20261105/final-source/tools/benchmark_news_classifier.py", line 155, in run
+    raise ValueError('isolated task worker failed: '+backend)
+ValueError: isolated task worker failed: ngram-bounded

@@ -1,0 +1,19 @@
+test_cli_and_import_without_torch (tests.test_text_classifier.TextClassifierTests.test_cli_and_import_without_torch) ... ok
+test_complete_export_controls_share_source_and_head (tests.test_text_classifier.TextClassifierTests.test_complete_export_controls_share_source_and_head) ... {"seed": 3, "backend": "source-resident", "complete_model_bytes": 2012, "build_seconds": 0.0016019509639590979}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 2007, "build_seconds": 0.001211188966408372}
+{"seed": 3, "backend": "linear-fused", "complete_model_bytes": 2009, "build_seconds": 0.014632603852078319}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 2883, "build_seconds": 0.0030942519661039114}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 2945, "build_seconds": 0.009662552969530225}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 7992, "build_seconds": 0.1908566781785339}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 3478, "build_seconds": 0.022900843061506748}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 1670, "build_seconds": 0.004349370952695608}
+ok
+test_fraction_oracle_linear_certificate (tests.test_text_classifier.TextClassifierTests.test_fraction_oracle_linear_certificate) ... ok
+test_full_text_prediction_flags_refusal_and_hash_binding (tests.test_text_classifier.TextClassifierTests.test_full_text_prediction_flags_refusal_and_hash_binding) ... ok
+test_metrics_and_validation_only_budget_selection (tests.test_text_classifier.TextClassifierTests.test_metrics_and_validation_only_budget_selection) ... ok
+test_tokenization_boundary (tests.test_text_classifier.TextClassifierTests.test_tokenization_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 3.779s
+
+OK

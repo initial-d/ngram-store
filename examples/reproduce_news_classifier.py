@@ -50,7 +50,7 @@ def main():
     command = [sys.executable,'-m','tools.export_news_classifier','--training',str(training),'--output',str(serving),
                '--seed',str(cfg.seed),'--native-library',str(library)]
     if not cfg.full_controls:
-        command.extend(['--backends','source-mmap,ngram-bounded,ngram-int8'])
+        command.extend(['--backends','source-mmap,int8,ngram-bounded,ngram-int8,precomputed-words'])
     run(command)
     requests = cfg.output/'requests'
     run([sys.executable,'-m','tools.benchmark_news_classifier','prepare','--data',str(data),

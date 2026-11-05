@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "ngram-linear-text",
+  "backend": "faiss-pq-8x8",
+  "classes": [
+    "World",
+    "Sports",
+    "Business",
+    "Sci/Tech"
+  ],
+  "rows": 612759,
+  "dim": 64,
+  "trained_source_sha256": "f9fd1513820b071bc73259fedb4cd6159492383ef6e4493ce844bcd003f5ab44",
+  "source_commit": "698efcea8210eb9ee65bd278dde3a0ab214d7f62",
+  "head_sha256": "da6a95b7802f02e2d1896da325ba4844db99a9f70df43013b8be04657a9e0947",
+  "seed": 3,
+  "selected_epoch": 8,
+  "activation": "identity",
+  "source_row_byte_preserving": false,
+  "prediction_preservation_certificate": false,
+  "contract": "Frozen supervised reference; all requests predicted; source-real-model preservation flags only for bounded FP32.",
+  "build_seconds": 7.683105221949518,
+  "files_sha256": {
+    "head.npz": "da6a95b7802f02e2d1896da325ba4844db99a9f70df43013b8be04657a9e0947",
+    "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+    "memory/codec.faiss": "571bfb5126c0db2c24a4986c7ce952456029b5b0d2704b0fd11bcb1a4ec909d3",
+    "memory/codec.json": "cb75d7b3fc7501ab8f39ab43f9340cc7560b44a0ae0d3fa6c1d418f9c29542f3",
+    "memory/codes.npy": "2a5090023825463065aa830a661f169f1cabf43140ffd94cd46f445e997e7e4b",
+    "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+    "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+  }
+}

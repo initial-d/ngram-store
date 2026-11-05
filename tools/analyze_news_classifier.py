@@ -82,6 +82,8 @@ def validate_run(run, task):
                     or len(record['labels'])!=n or record['phase']!=phase
                     or record['requests_sha256']!=source['requests_sha256'] or record['labels']!=source['labels']):
                 raise ValueError('different requests or nonisolated/failed inference')
+            if record['os'].startswith('Linux') and record.get('peak_rss_measurement')!='current-exec VmHWM':
+                raise ValueError('Linux worker RSS must exclude inherited pre-exec high-water')
             if record['token_counts']!=source['token_counts'] or record['oov_counts']!=source['oov_counts']:
                 raise ValueError('different tokenization or OOV definition')
             validate_metrics(record)
@@ -139,9 +141,16 @@ def summarize(tasks):
                 'accuracy':median(r['metrics']['accuracy'] for r in tested),
                 'macro_f1':median(r['metrics']['macro_f1'] for r in tested),
                 'cross_entropy':median(r['metrics']['cross_entropy'] for r in tested),
+                'accuracy_difference_pp_median':median((run['test'][backend]['metrics']['accuracy']-
+                    run['test']['source-mmap']['metrics']['accuracy'])*100 for run in runs),
+                'accuracy_by_seed':{str(run['seed']):run['test'][backend]['metrics']['accuracy'] for run in runs},
                 'oov_heavy_documents':median(r['oov_heavy_metrics']['documents'] for r in tested),
                 'oov_heavy_accuracy':median(r['oov_heavy_metrics']['accuracy'] for r in tested) if tested[0]['oov_heavy_metrics']['documents'] else None,
                 'source_agreement':median(r['source_agreement_fraction'] for r in tested),
+                'pooled_test_documents':sum(len(r['labels']) for r in tested),
+                'pooled_source_disagreements':sum(sum(a!=b for a,b in zip(run['test'][backend]['predictions'],
+                    run['test']['source-mmap']['predictions'])) for run in runs),
+                'pooled_source_preserved':sum(sum(r['source_prediction_preserved']) for r in tested),
                 'source_disagreements_by_seed':{str(run['seed']):sum(a!=b for a,b in zip(
                     run['test'][backend]['predictions'],run['test']['source-mmap']['predictions'])) for run in runs},
                 'source_preserved_fraction':median(r['source_prediction_preservation_fraction'] for r in tested),
@@ -151,6 +160,8 @@ def summarize(tasks):
                 'peak_rss_mib':median(r['peak_rss_bytes']/(1<<20) for r in tested),
                 'single_request_p50_ms':median(r['timings']['1']['p50_seconds']*1000 for r in validated),
                 'batch32_docs_per_second':median(r['timings']['32']['documents_per_second'] for r in validated),
+                'batch32_docs_per_second_range':[min(r['timings']['32']['documents_per_second'] for r in validated),
+                                                max(r['timings']['32']['documents_per_second'] for r in validated)],
                 'full_test_docs_per_second':median(r['full_quality_documents_per_second'] for r in tested)})
         budgets = []
         for index,choice in enumerate(runs[0]['selections']):

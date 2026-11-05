@@ -1,0 +1,18 @@
+[
+  {
+    "parent_allocation_mib": 0,
+    "parent_ru_maxrss_kib": 11664,
+    "child": [
+      "11664",
+      "VmHWM:\t   10868 kB"
+    ]
+  },
+  {
+    "parent_allocation_mib": 256,
+    "parent_ru_maxrss_kib": 273808,
+    "child": [
+      "273808",
+      "VmHWM:\t   10744 kB"
+    ]
+  }
+]
