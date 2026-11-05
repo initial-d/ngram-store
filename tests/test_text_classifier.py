@@ -139,7 +139,7 @@ class TextClassifierTests(unittest.TestCase):
                         'head_sha256':file_hash(checkpoint/'head.npz'),'source_commit':'arithmetic-fixture',
                         'seed':3,'selected_epoch':1,'classes':['A','B']}
             (checkpoint/'training.json').write_text(json.dumps(training))
-            backends = ['source-resident','source-mmap','fp16','int8','ngram-bounded','ngram-int8','precomputed-words']
+            backends = ['source-resident','source-mmap','linear-fused','fp16','int8','ngram-bounded','ngram-int8','precomputed-words']
             export_seed(common,checkpoint,parent/'serving',library=self.library,backends=backends)
             results = {}
             for backend in backends:
@@ -149,6 +149,7 @@ class TextClassifierTests(unittest.TestCase):
             self.assertEqual(results['source-resident']['logits'].tobytes(),results['source-mmap']['logits'].tobytes())
             self.assertEqual(results['source-mmap']['logits'][:2].tobytes(),results['precomputed-words']['logits'][:2].tobytes())
             self.assertFalse(results['ngram-int8']['source_prediction_preserved'].any())
+            self.assertEqual(file_hash(checkpoint/'head.npz'),training['head_sha256'])
 
     def test_metrics_and_validation_only_budget_selection(self):
         from tools.benchmark_news_classifier import metrics, select

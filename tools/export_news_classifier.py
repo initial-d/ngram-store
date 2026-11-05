@@ -18,7 +18,7 @@ from .text_classifier import _RawRows, reduce_words
 from .train_news_classifier import CLASSES, write_json
 
 
-BACKENDS = ['source-resident','source-mmap','fp16','int8','faiss-sq4','faiss-sq8',
+BACKENDS = ['source-resident','source-mmap','linear-fused','fp16','int8','faiss-sq4','faiss-sq8',
             'faiss-pq-8x8','faiss-cluster-8','ngram-bounded','ngram-int8','precomputed-words']
 
 
@@ -36,6 +36,7 @@ def finalize(root, backend, data, training, started):
         'classes':training.get('classes',CLASSES),'rows':data['rows'],'dim':data['dim'],
         'trained_source_sha256':training['source_sha256'],'source_commit':training['source_commit'],
         'head_sha256':training['head_sha256'],'seed':training['seed'],'selected_epoch':training['selected_epoch'],
+        'activation':training.get('settings',{}).get('activation','identity'),
         'source_row_byte_preserving':backend.startswith('source-'),
         'prediction_preservation_certificate':backend == 'ngram-bounded',
         'contract':'Frozen supervised reference; all requests predicted; source-real-model preservation flags only for bounded FP32.',
@@ -67,7 +68,10 @@ def export_seed(common, checkpoint, output, *, library=None, backends=BACKENDS):
               'codebook_training_ids_sha256':__import__('hashlib').sha256(sample.astype('<u8').tobytes()).hexdigest(),
               'variants':[]}
     bounded = None
+    classes = training.get('classes',CLASSES)
     for backend in backends:
+        if backend=='linear-fused' and training.get('settings',{}).get('activation','identity')!='identity':
+            continue
         started = time.perf_counter()
         root = output/backend
         root.mkdir()
@@ -87,7 +91,16 @@ def export_seed(common, checkpoint, output, *, library=None, backends=BACKENDS):
         else:
             for name in ('lexicon.json','word-ids.u64','word-offsets.u64'):
                 copy_file(common/name,root/name)
-            if backend.startswith('source-'):
+            if backend=='linear-fused':
+                head = np.load(checkpoint/'head.npz',allow_pickle=False)
+                projected = np.memmap(root/'source.f32',mode='w+',dtype='<f4',shape=(len(source),len(classes)))
+                for start in range(0,len(source),4096):
+                    projected[start:start+4096] = source[start:start+4096].astype(np.float64) @ head['weight'].astype(np.float64).T
+                projected.flush(); projected._mmap.close()
+                (root/'head.npz').unlink()  # The copied source head may share an inode.
+                np.savez(root/'head.npz',weight=np.eye(len(classes),dtype='<f4'),bias=head['bias'])
+                head.close()
+            elif backend.startswith('source-'):
                 copy_file(checkpoint/'source.f32',root/'source.f32')
             elif backend in ('fp16','int8'):
                 pack_quantized_file(checkpoint/'source.f32',root/'memory',data['dim'],backend,native=False)
@@ -108,7 +121,8 @@ def export_seed(common, checkpoint, output, *, library=None, backends=BACKENDS):
                 pack_quantized_file(staging,root/'memory',data['dim'],'int8',native=True,
                     representatives=partition.representatives().tolist(),deduplicate=False,max_block_bytes=8192)
                 staging.unlink()
-        report['variants'].append(finalize(root,backend,data,training,started))
+        variant_data = {**data,'dim':len(classes)} if backend=='linear-fused' else data
+        report['variants'].append(finalize(root,backend,variant_data,training,started))
         write_json(output/'export.json',report)
         print(json.dumps({'seed':training['seed'],'backend':backend,
             'complete_model_bytes':report['variants'][-1]['complete_model_bytes'],

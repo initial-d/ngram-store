@@ -1,7 +1,9 @@
 """Check the installed NumPy-only incidence extra from outside the checkout."""
 from importlib.metadata import distribution
+import hashlib
 import json
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 
@@ -51,6 +53,24 @@ def main():
                 pass
             else:
                 raise AssertionError('above-budget query must be rejected')
+        classifier = root / 'classifier'
+        classifier.mkdir()
+        shutil.copytree(root / 'out', classifier / 'memory')
+        shutil.copytree(root / 'bounds', classifier / 'bounds')
+        (classifier / 'lexicon.json').write_text(json.dumps({'tokens':['ab','cd'], 'grams':[],
+            'whole_word_rows':0, 'max_order':3, 'max_tokens':128}))
+        np.asarray([0,1,2],'<u8').tofile(classifier/'word-ids.u64')
+        np.asarray([0,2,3],'<u8').tofile(classifier/'word-offsets.u64')
+        np.savez(classifier/'head.npz',weight=np.asarray([[1.,0.],[-1.,0.]],'<f4'),bias=np.zeros(2,'<f4'))
+        (classifier/'classifier.json').write_text(json.dumps({'schema_version':1,'kind':'ngram-linear-text',
+            'backend':'ngram-bounded','classes':['A','B'],'rows':3,'dim':2,
+            'files_sha256':{str(p.relative_to(classifier)):hashlib.sha256(p.read_bytes()).hexdigest()
+                            for p in classifier.rglob('*') if p.is_file()}}))
+        with ngram_store.TextClassifier(classifier) as model:
+            prediction=model.predict(['ab cd'],require_preserved=True)
+            assert prediction['predictions'].tolist()==[0]
+        sys.argv=['ngram-store','classify','--store',str(classifier),'--text','ab cd','--require-preserved']
+        entry.load()()
         # The wheel must include its own small training corpus and offline demo.
         sys.argv = ['ngram-store', 'demo-bags', '--output', str(root / 'demo')]
         entry.load()()
@@ -59,6 +79,7 @@ def main():
         print(json.dumps({'status': 'passed', 'python': sys.version, 'numpy': np.__version__,
             'package': ngram_store.__file__, 'torch_loaded': False,
             'installed_native_bounded_compiler': True,
+            'installed_numpy_only_text_classifier': True,
             'installed_cli_mapping_and_means_identical': True}, indent=2))
 
 

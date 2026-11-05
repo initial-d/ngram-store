@@ -130,7 +130,8 @@ def train_one(root, common, seed, cfg, texts, labels, train, validation, lexicon
               'device': 'cpu', 'threads': torch.get_num_threads(), 'interop_threads': torch.get_num_interop_threads(),
               'data': data_report, 'initial_rows_sha256': initial_sha, 'epochs': [],
               'command_argv': sys.orig_argv, 'settings': {'epochs':8,'batch':128,'dim':64,'embedding_lr':1.,'head_lr':1.,
-                 'backward':'unscaled word-bag; ordinary document mean/head derivative', 'optimizer':'sparse+dense SGD'},
+                 'backward':'unscaled word-bag; ordinary document mean/head derivative', 'optimizer':'sparse+dense SGD',
+                 'activation':cfg.activation},
               'source_files_sha256': {name:file_hash(Path(__file__).with_name(name)) for name in ('train_news_classifier.py','text_classifier.py')}}
     best = float('inf')
     started = time.perf_counter()
@@ -154,7 +155,8 @@ def train_one(root, common, seed, cfg, texts, labels, train, validation, lexicon
             features = summed + (mean-summed).detach()
             hidden = F.embedding_bag(torch.tensor(inverse, dtype=torch.long), features,
                                      torch.tensor(doc_offsets, dtype=torch.long), mode='mean', include_last_offset=True)
-            loss = F.cross_entropy(head(hidden), torch.tensor(labels[train[chosen]], dtype=torch.long))
+            loss = F.cross_entropy(head(hidden.relu() if cfg.activation=='relu' else hidden),
+                                   torch.tensor(labels[train[chosen]], dtype=torch.long))
             if not bool(torch.isfinite(loss)):
                 raise ValueError('nonfinite training loss')
             optimizer.zero_grad(set_to_none=True)
@@ -169,7 +171,7 @@ def train_one(root, common, seed, cfg, texts, labels, train, validation, lexicon
                 offsets = np.r_[0, np.cumsum([len(d) for d in docs])]
                 hidden = F.embedding_bag(torch.tensor(np.concatenate(docs), dtype=torch.long), vectors,
                                         torch.tensor(offsets, dtype=torch.long), mode='mean', include_last_offset=True)
-                val_logits.append(head(hidden))
+                val_logits.append(head(hidden.relu() if cfg.activation=='relu' else hidden))
             logits = torch.cat(val_logits)
             ce = float(F.cross_entropy(logits, torch.tensor(labels[validation])))
             accuracy = float((logits.argmax(1).numpy() == labels[validation]).mean())
@@ -196,6 +198,7 @@ def main():
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--source-commit',required=True)
     p.add_argument('--seeds',default='3,7,11')
+    p.add_argument('--activation',choices=('identity','relu'),default='identity')
     cfg = p.parse_args()
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         p.error('CPU only: CUDA_VISIBLE_DEVICES must be empty')

@@ -120,6 +120,9 @@ source-model agreement, not truth, confidence calibration or downstream safety.
         self.metadata = metadata
         self.dim = metadata['dim']
         self.backend = metadata['backend']
+        self.activation = metadata.get('activation','identity')
+        if self.activation not in ('identity','relu'):
+            raise ValueError('unsupported document activation')
         self.classes = tuple(metadata['classes'])
         head = np.load(directory / 'head.npz', allow_pickle=False)
         self.head = np.frombuffer(head['weight'].astype('<f4').tobytes(),dtype='<f4').reshape(len(self.classes),self.dim)
@@ -144,7 +147,7 @@ source-model agreement, not truth, confidence calibration or downstream safety.
                     self.reader = BudgetedBagRows(directory / 'memory', directory / 'bounds', native_library)
                     self.reader.native.table.set_cache_policy('rows')
                     self.reader.native.table.set_cache_bytes(cache_bytes)
-                elif self.backend in ('source-resident', 'source-mmap'):
+                elif self.backend in ('source-resident', 'source-mmap', 'linear-fused'):
                     self.reader = _RawRows(directory / 'source.f32', (metadata['rows'], self.dim), self.backend == 'source-resident')
                 elif self.backend in ('fp16', 'int8', 'ngram-int8'):
                     from .quantized_memory import QuantizedRows
@@ -200,12 +203,15 @@ source-model agreement, not truth, confidence calibration or downstream safety.
                 magnitude = _sum_upper(_up(weights * _norm_upper(features[positions])))
                 rounding = _up(_up(float(_gamma(len(positions) + 3)) * magnitude) / len(words))
                 bounds[i] = _up(residual + rounding)
+        hidden = np.maximum(documents,0.) if self.activation=='relu' else documents
+        # ReLU is exactly evaluated and 1-Lipschitz; the same source deviation
+        # bound applies after activation. A linear head cannot be pushed through it.
         if word_bounds is None:
-            logits = documents @ self.head.astype(np.float64).T + self.bias
+            logits = hidden @ self.head.astype(np.float64).T + self.bias
             predicted = logits.argmax(1)
             preserved = np.zeros(len(texts), dtype=bool)
         else:
-            logits, predicted, preserved = linear_preservation(documents, bounds, self.head, self.bias)
+            logits, predicted, preserved = linear_preservation(hidden, bounds, self.head, self.bias)
         if require_preserved and not preserved.all():
             raise ValueError('one or more predictions lack a source-model preservation certificate')
         probabilities = np.exp(logits - logits.max(1, keepdims=True))

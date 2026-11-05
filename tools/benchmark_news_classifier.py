@@ -136,12 +136,13 @@ def run(cfg):
         name:file_hash(Path(__file__).with_name(name)) for name in ('benchmark_news_classifier.py','text_classifier.py','export_news_classifier.py')},
         'native_library_sha256':file_hash(cfg.native_library),'phase_order':['validation-all','freeze-selection','test-all'],
         'validation':{},'test':{},'selections':None,'failures':[]}
+    backends = [v['backend'] for v in json.loads((cfg.serving/'export.json').read_text())['variants']]
     for phase in ('validation','test'):
         if phase == 'test':
             report['selections'] = select(report['validation'])
             write_json(cfg.output/'selection-before-test.json',{'seed':cfg.seed,'selections':report['selections'],
-                'validation_report_sha256':{name:file_hash(cfg.output/(name+'-validation.json')) for name in BACKENDS}})
-        for backend in BACKENDS:
+                'validation_report_sha256':{name:file_hash(cfg.output/(name+'-validation.json')) for name in backends}})
+        for backend in backends:
             out = cfg.output/(backend+'-'+phase+'.json')
             command = [sys.executable,'-m','tools.benchmark_news_classifier','worker','--serving',str(cfg.serving),
                 '--backend',backend,'--requests',str(cfg.requests/(phase+'.jsonl')),'--phase',phase,
