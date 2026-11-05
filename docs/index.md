@@ -11,6 +11,7 @@
 - [Disk-backed incidence construction: NumPy-only CLI and buffer contract](external_incidence_build.md)
 - [Co-training paper contributions, evidence and open hypotheses](cotraining_contribution_claims.md)
 - [Word embeddings: FastText prepare/train/export/query](fasttext_native_bundle.md)
+- [CPU news application and independent precomputed/subword hybrids](news_shift_app.md)
 - [LLM memory: official Engram demo and factory](engram_quickstart.md)
 - [TinyEngram/Qwen checkpoint integration](tinyengram_qwen_evidence_20261030/README.md)
 - [Historical me_fasttext compatibility](legacy_fasttext.md)
@@ -18,6 +19,7 @@
 
 ## Source-linked trained results
 
+- [Independent news: 15 controls, fair hybrids and the necessity boundary](news_shift_evidence_20261105/README.md)
 - [Actual legacy FastText model and matched layout controls](fasttext_native_evidence_20261031/README.md)
 - [Original DATrie / mark-compact contribution ablations](structural_native_evidence_20261030/README.md)
 - [Same-trained-table FP16/INT8 and structural-sharing controls](quantized_structural_evidence_20261031/README.md)

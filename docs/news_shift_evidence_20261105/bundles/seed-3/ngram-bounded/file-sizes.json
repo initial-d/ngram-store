@@ -1,0 +1,14 @@
+{
+  "classifier.json": 1800,
+  "word-offsets.u64": 496288,
+  "lexicon.json": 9715965,
+  "word-ids.u64": 19209408,
+  "head.npz": 1546,
+  "bounds/group-total-l2.f64": 1550752,
+  "bounds/group-defect-l2.f64": 1550752,
+  "bounds/bounds.json": 1385,
+  "bounds/row-l2.f64": 4902072,
+  "memory/domain.npz": 4903076,
+  "memory/manifest.json": 2808,
+  "memory/table.men": 55301584
+}

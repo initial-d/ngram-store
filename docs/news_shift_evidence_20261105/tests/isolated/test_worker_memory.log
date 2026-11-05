@@ -1,0 +1,12 @@
+test_deepcopy_and_pickle_keep_exact_bytes_and_independent_handles (tests.test_worker_memory.WorkerMemoryTest.test_deepcopy_and_pickle_keep_exact_bytes_and_independent_handles) ... ok
+test_ordinary_embedding_and_unique_bag_use_the_query_budget (tests.test_worker_memory.WorkerMemoryTest.test_ordinary_embedding_and_unique_bag_use_the_query_budget) ... ok
+test_query_budget_preserves_multihead_factory_and_copy_results (tests.test_worker_memory.WorkerMemoryTest.test_query_budget_preserves_multihead_factory_and_copy_results) ... ok
+test_restore_keeps_environment_selected_library_and_relative_artifact_path (tests.test_worker_memory.WorkerMemoryTest.test_restore_keeps_environment_selected_library_and_relative_artifact_path) ... ok
+test_serialized_state_contains_no_table_payload_and_rejects_changed_artifact (tests.test_worker_memory.WorkerMemoryTest.test_serialized_state_contains_no_table_payload_and_rejects_changed_artifact) ... ok
+test_spawn_uses_separate_handles_and_captured_paths (tests.test_worker_memory.WorkerMemoryTest.test_spawn_uses_separate_handles_and_captured_paths) ... ok
+test_wrapped_embedding_and_weighted_bag_survive_copy (tests.test_worker_memory.WorkerMemoryTest.test_wrapped_embedding_and_weighted_bag_survive_copy) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.645s
+
+OK

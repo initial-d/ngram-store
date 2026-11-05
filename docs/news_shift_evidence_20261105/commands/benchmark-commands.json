@@ -1,0 +1,72 @@
+{
+  "commands": [
+    [
+      "/tmp/ngram-news-shift-20261105/venv/bin/python",
+      "-m",
+      "tools.benchmark_news_shift",
+      "run",
+      "--serving",
+      "/tmp/ngram-news-shift-20261105/serving/seed-3",
+      "--hybrids",
+      "/tmp/ngram-news-shift-20261105/hybrids/seed-3",
+      "--requests",
+      "/tmp/ngram-news-shift-20261105/requests",
+      "--output",
+      "/tmp/ngram-news-shift-20261105/results/seed-3",
+      "--seed",
+      "3",
+      "--source-commit",
+      "c5f02bce85f4de43f7f34cd39acd9d86e2cccb48",
+      "--native-library",
+      "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/build/libmeft_rows.dylib"
+    ],
+    [
+      "/tmp/ngram-news-shift-20261105/venv/bin/python",
+      "-m",
+      "tools.benchmark_news_shift",
+      "run",
+      "--serving",
+      "/tmp/ngram-news-shift-20261105/serving/seed-7",
+      "--hybrids",
+      "/tmp/ngram-news-shift-20261105/hybrids/seed-7",
+      "--requests",
+      "/tmp/ngram-news-shift-20261105/requests",
+      "--output",
+      "/tmp/ngram-news-shift-20261105/results/seed-7",
+      "--seed",
+      "7",
+      "--source-commit",
+      "c5f02bce85f4de43f7f34cd39acd9d86e2cccb48",
+      "--native-library",
+      "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/build/libmeft_rows.dylib"
+    ],
+    [
+      "/tmp/ngram-news-shift-20261105/venv/bin/python",
+      "-m",
+      "tools.benchmark_news_shift",
+      "run",
+      "--serving",
+      "/tmp/ngram-news-shift-20261105/serving/seed-11",
+      "--hybrids",
+      "/tmp/ngram-news-shift-20261105/hybrids/seed-11",
+      "--requests",
+      "/tmp/ngram-news-shift-20261105/requests",
+      "--output",
+      "/tmp/ngram-news-shift-20261105/results/seed-11",
+      "--seed",
+      "11",
+      "--source-commit",
+      "c5f02bce85f4de43f7f34cd39acd9d86e2cccb48",
+      "--native-library",
+      "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/build/libmeft_rows.dylib"
+    ]
+  ],
+  "commit": "c5f02bce85f4de43f7f34cd39acd9d86e2cccb48",
+  "env_overrides": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

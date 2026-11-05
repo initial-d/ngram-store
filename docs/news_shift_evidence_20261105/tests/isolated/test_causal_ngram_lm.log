@@ -1,0 +1,13 @@
+test_full_softmax_metrics_against_scalar_probability_oracle (tests.test_causal_ngram_lm.CausalMemoryTest.test_full_softmax_metrics_against_scalar_probability_oracle) ... ok
+test_future_perturbation_cannot_change_previous_keys_or_logits (tests.test_causal_ngram_lm.CausalMemoryTest.test_future_perturbation_cannot_change_previous_keys_or_logits) ... ok
+test_identical_scores_have_zero_paired_character_block_interval (tests.test_causal_ngram_lm.CausalMemoryTest.test_identical_scores_have_zero_paired_character_block_interval) ... ok
+test_streaming_scores_include_unknown_targets_and_keep_state (tests.test_causal_ngram_lm.CausalMemoryTest.test_streaming_scores_include_unknown_targets_and_keep_state) ... ok
+test_test_budget_audit_preserves_validation_choice (tests.test_causal_ngram_lm.CausalMemoryTest.test_test_budget_audit_preserves_validation_choice) ... ok
+test_train_only_registry_and_original_split_boundaries (tests.test_causal_ngram_lm.CausalMemoryTest.test_train_only_registry_and_original_split_boundaries) ... ok
+test_validation_selection_rejects_distribution_shift_despite_low_ppl (tests.test_causal_ngram_lm.CausalMemoryTest.test_validation_selection_rejects_distribution_shift_despite_low_ppl) ... ok
+test_tiny_trained_lm_queries_native_storage_and_has_bit_exact_logits (tests.test_causal_ngram_lm.CausalNativeTest.test_tiny_trained_lm_queries_native_storage_and_has_bit_exact_logits) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.825s
+
+OK

@@ -1,0 +1,22 @@
+test_batch_certificate_matches_exhaustive_scalar_queries (tests.test_cotraining_groups.PartitionTest.test_batch_certificate_matches_exhaustive_scalar_queries) ... ok
+test_batch_certificate_padding_invalid_and_noncontiguous_members (tests.test_cotraining_groups.PartitionTest.test_batch_certificate_padding_invalid_and_noncontiguous_members) ... ok
+test_compiled_schedule_reduces_duplicates_and_rejects_partial_groups (tests.test_cotraining_groups.PartitionTest.test_compiled_schedule_reduces_duplicates_and_rejects_partial_groups) ... ok
+test_fused_counts_match_scalar_certificates_and_native_plan_order (tests.test_cotraining_groups.PartitionTest.test_fused_counts_match_scalar_certificates_and_native_plan_order) ... ok
+test_multiplicity_other_hosts_and_empty_rows_do_not_merge (tests.test_cotraining_groups.PartitionTest.test_multiplicity_other_hosts_and_empty_rows_do_not_merge) ... ok
+test_native_weighted_schedule_empty_bags_and_artifact_integrity (tests.test_cotraining_groups.PartitionTest.test_native_weighted_schedule_empty_bags_and_artifact_integrity) ... ok
+test_projection_preserves_only_certified_bag_sums (tests.test_cotraining_groups.PartitionTest.test_projection_preserves_only_certified_bag_sums) ... ok
+test_public_exporter_checks_rows_and_cleans_failed_output (tests.test_cotraining_groups.PartitionTest.test_public_exporter_checks_rows_and_cleans_failed_output) ... ok
+test_query_diagnostic_handles_noncontiguous_members_and_invalid_ids (tests.test_cotraining_groups.PartitionTest.test_query_diagnostic_handles_noncontiguous_members_and_invalid_ids) ... ok
+test_raw_block_option_keeps_original_bits_and_default_artifact (tests.test_cotraining_groups.PartitionTest.test_raw_block_option_keeps_original_bits_and_default_artifact) ... ok
+test_rejected_query_has_a_sparse_algebraic_counterexample (tests.test_cotraining_groups.PartitionTest.test_rejected_query_has_a_sparse_algebraic_counterexample) ... ok
+test_save_roundtrip_and_invalid_inputs (tests.test_cotraining_groups.PartitionTest.test_save_roundtrip_and_invalid_inputs) ... ok
+test_factory_releases_source_table_instead_of_retaining_a_class_closure (tests.test_cotraining_groups.TrainingTest.test_factory_releases_source_table_instead_of_retaining_a_class_closure) ... ok
+test_sparse_gradient_multiplicity_and_padding_guard (tests.test_cotraining_groups.TrainingTest.test_sparse_gradient_multiplicity_and_padding_guard) ... /Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/tools/cotraining_groups.py:490: UserWarning: Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/Context.cpp:767.)
+  return torch.sparse_coo_tensor(index, values, gradient.shape,
+ok
+test_sparse_sgd_preserves_bag_function_and_group_mean_trajectory (tests.test_cotraining_groups.TrainingTest.test_sparse_sgd_preserves_bag_function_and_group_mean_trajectory) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 1.537s
+
+OK

@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "source_sha256": "bdb1f7498f29e3959dd0a068201498fd7f0d9ef4bcea15d6735f1c97ddbca631",
+  "seed": 11,
+  "precomputed_word_sha256": "dc762751dc1a73d65e9e6a801638aa3c45d141adda432c260db481f0983c5c20",
+  "original_whole_word_rows_removed": 41892,
+  "variants": [
+    {
+      "backend": "precomputed-hybrid-source",
+      "complete_model_bytes": 171104055,
+      "build_seconds": 0.06516320863738656,
+      "classifier_sha256": "5f4dc1456755881c32eeff62df298db4b15be072d80669b65a9dda117ada7345",
+      "files_sha256": {
+        "head.npz": "5eb1c4b7a9459251be6bd67afbaa428d4b8c6589c812cdbd2c7d7db1ac78384d",
+        "lexicon.json": "393cd6bd77f115815e3cecd734ee8c8fa9e4cc353fe3a54a9a13163f1342a9cd",
+        "source.f32": "0678b524050e4f9f95c8f095323524f1382fcf8271bbb4cae10687d73a26e5f9",
+        "word-vectors.f32": "dc762751dc1a73d65e9e6a801638aa3c45d141adda432c260db481f0983c5c20"
+      }
+    },
+    {
+      "backend": "precomputed-hybrid-int8",
+      "complete_model_bytes": 63782037,
+      "build_seconds": 0.30519079184159636,
+      "classifier_sha256": "b20af2985249a7210cd01d93d86b2f23d2cdbc78f26219d592bc9ee6a41bee01",
+      "files_sha256": {
+        "head.npz": "5eb1c4b7a9459251be6bd67afbaa428d4b8c6589c812cdbd2c7d7db1ac78384d",
+        "lexicon.json": "393cd6bd77f115815e3cecd734ee8c8fa9e4cc353fe3a54a9a13163f1342a9cd",
+        "memory/codec.json": "825b740e76ccaf9129fe97af861c6c4063dcb8dbb331278424520c04ab63bd80",
+        "memory/table.rows": "fe086933d21048063e7f40463147a8e001540116632dca3d6b291d5c35d90517",
+        "word-vectors.f32": "dc762751dc1a73d65e9e6a801638aa3c45d141adda432c260db481f0983c5c20"
+      }
+    },
+    {
+      "backend": "precomputed-hybrid-faiss-sq4",
+      "complete_model_bytes": 43231287,
+      "build_seconds": 0.07199512468650937,
+      "classifier_sha256": "919934d9328d1532c84828eeca88e2d78df6e4a84adab2d0df562b8632a8bf52",
+      "files_sha256": {
+        "head.npz": "5eb1c4b7a9459251be6bd67afbaa428d4b8c6589c812cdbd2c7d7db1ac78384d",
+        "lexicon.json": "393cd6bd77f115815e3cecd734ee8c8fa9e4cc353fe3a54a9a13163f1342a9cd",
+        "memory/codec.faiss": "fca276cd892bce1dc26e472de25888e232d1bc24fcbba3d2546d10d9cf95a0ad",
+        "memory/codec.json": "c80b1f5ff5023670a6569a03d8b6780dce98b31fdf741f6d549e0d30a54853a9",
+        "memory/codes.npy": "5cc7a2de59539c304e55936c333e68645e63b631c29e90e170e4df1333ce7f76",
+        "word-vectors.f32": "dc762751dc1a73d65e9e6a801638aa3c45d141adda432c260db481f0983c5c20"
+      }
+    },
+    {
+      "backend": "precomputed-hybrid-ngram-int8",
+      "complete_model_bytes": 39680308,
+      "build_seconds": 0.8416468747891486,
+      "classifier_sha256": "703dd8a1e769248d06a83cf53a4cdf6bf791abd7b0933892cee28a714fdba37e",
+      "files_sha256": {
+        "head.npz": "5eb1c4b7a9459251be6bd67afbaa428d4b8c6589c812cdbd2c7d7db1ac78384d",
+        "lexicon.json": "393cd6bd77f115815e3cecd734ee8c8fa9e4cc353fe3a54a9a13163f1342a9cd",
+        "memory/codec.json": "1ff2eb5538d885a0e4abaf27f4c31c605a9560ec250580c6939eea5d10c38903",
+        "memory/table.men": "7db6cc6c1d051efea3790cd1fcd123c1cf8b730f5a8408ac7864def52b35b52a",
+        "word-vectors.f32": "dc762751dc1a73d65e9e6a801638aa3c45d141adda432c260db481f0983c5c20"
+      }
+    }
+  ]
+}

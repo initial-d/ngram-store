@@ -1,0 +1,8 @@
+{
+  "classifier.json": 1245,
+  "word-vectors.f32": 15880960,
+  "lexicon.json": 9078454,
+  "head.npz": 1546,
+  "memory/codec.json": 1314,
+  "memory/table.men": 14716789
+}

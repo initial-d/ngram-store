@@ -1,0 +1,16 @@
+test_failed_export_removes_only_new_owned_directory (tests.test_quantized_memory.CodecTest.test_failed_export_removes_only_new_owned_directory) ... ok
+test_file_export_streams_chunks_and_checks_original_id_hashes (tests.test_quantized_memory.CodecTest.test_file_export_streams_chunks_and_checks_original_id_hashes) ... ok
+test_finite_subnormal_zero_signed_zero_and_overflow (tests.test_quantized_memory.CodecTest.test_finite_subnormal_zero_signed_zero_and_overflow) ... ok
+test_int8_code_equality_does_not_discard_different_scales (tests.test_quantized_memory.CodecTest.test_int8_code_equality_does_not_discard_different_scales) ... ok
+test_same_size_source_mutation_is_rejected_by_streaming_audit (tests.test_quantized_memory.CodecTest.test_same_size_source_mutation_is_rejected_by_streaming_audit) ... ok
+test_mark_compact_forwards_entire_quantized_representative (tests.test_quantized_memory.QuantizedNativeTest.test_mark_compact_forwards_entire_quantized_representative) ... ok
+test_optional_auto_backend_avoids_map_descriptor_expansion_and_retains_useful_native (tests.test_quantized_memory.QuantizedNativeTest.test_optional_auto_backend_avoids_map_descriptor_expansion_and_retains_useful_native) ... ok
+test_original_ids_padding_repeated_queries_and_scale_sensitive_dedup (tests.test_quantized_memory.QuantizedNativeTest.test_original_ids_padding_repeated_queries_and_scale_sensitive_dedup) ... ok
+test_quantized_reader_preserves_model_reduction_logits_and_restores_on_failure (tests.test_quantized_memory.QuantizedNativeTest.test_quantized_reader_preserves_model_reduction_logits_and_restores_on_failure) ... ok
+test_analysis_uses_smallest_matched_baseline_and_preserves_negative_results (tests.test_quantized_memory.ValidationSelectionTest.test_analysis_uses_smallest_matched_baseline_and_preserves_negative_results) ... ok
+test_size_winner_requires_all_budgets_and_cannot_use_test (tests.test_quantized_memory.ValidationSelectionTest.test_size_winner_requires_all_budgets_and_cannot_use_test) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.542s
+
+OK

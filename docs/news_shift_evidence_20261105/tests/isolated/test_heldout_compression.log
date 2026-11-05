@@ -1,0 +1,13 @@
+test_real_training_native_decode_lossless_identity_and_selection (tests.test_heldout_compression.HeldoutNativeTest.test_real_training_native_decode_lossless_identity_and_selection) ... ok
+test_composition_keeps_word_rows_and_ngram_multiplicity (tests.test_heldout_compression.HeldoutProtocolTest.test_composition_keeps_word_rows_and_ngram_multiplicity) ... ok
+test_fixed_evaluation_ids_negatives_and_original_positions (tests.test_heldout_compression.HeldoutProtocolTest.test_fixed_evaluation_ids_negatives_and_original_positions) ... ok
+test_identical_predictions_have_zero_paired_block_interval (tests.test_heldout_compression.HeldoutProtocolTest.test_identical_predictions_have_zero_paired_block_interval) ... ok
+test_objective_and_ties_against_scalar_oracle (tests.test_heldout_compression.HeldoutProtocolTest.test_objective_and_ties_against_scalar_oracle) ... ok
+test_oov_gaps_never_collapse_or_cross_split_boundary (tests.test_heldout_compression.HeldoutProtocolTest.test_oov_gaps_never_collapse_or_cross_split_boundary) ... ok
+test_threshold_selection_ignores_test_metrics (tests.test_heldout_compression.HeldoutProtocolTest.test_threshold_selection_ignores_test_metrics) ... ok
+test_vocabulary_and_ngrams_fit_training_only (tests.test_heldout_compression.HeldoutProtocolTest.test_vocabulary_and_ngrams_fit_training_only) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.782s
+
+OK

@@ -1,0 +1,6 @@
+Processing /tmp/ngram-news-shift-20261105/wheels/meft_memory-0.4.0-py3-none-macosx_26_0_arm64.whl
+Installing collected packages: meft-memory
+Successfully installed meft-memory-0.4.0
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: /tmp/ngram-news-shift-20261105/venv/bin/python -m pip install --upgrade pip

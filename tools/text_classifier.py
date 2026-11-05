@@ -109,6 +109,7 @@ source-model agreement, not truth, confidence calibration or downstream safety.
     def __init__(self, directory, *, native_library=None, cache_bytes=4 << 20):
         directory = Path(directory)
         self.reader = None
+        self.word_reader = None
         self.maps = []
         metadata = json.loads((directory / 'classifier.json').read_text())
         if metadata.get('schema_version') != 1 or metadata.get('kind') != 'ngram-linear-text':
@@ -120,6 +121,7 @@ source-model agreement, not truth, confidence calibration or downstream safety.
         self.metadata = metadata
         self.dim = metadata['dim']
         self.backend = metadata['backend']
+        self.hybrid = self.backend.startswith('precomputed-hybrid-')
         self.activation = metadata.get('activation','identity')
         if self.activation not in ('identity','relu'):
             raise ValueError('unsupported document activation')
@@ -137,6 +139,23 @@ source-model agreement, not truth, confidence calibration or downstream safety.
             if self.backend == 'precomputed-words':
                 self.reader = _RawRows(directory / 'word-vectors.f32', (len(self.words), self.dim))
                 self.ids = self.offsets = None
+            elif self.hybrid:
+                if lexicon['whole_word_rows'] != 0 or metadata['rows'] != len(self.grams):
+                    raise ValueError('hybrid fallback requires rebased n-gram rows only')
+                self.ids = self.offsets = None
+                self.word_reader = _RawRows(directory / 'word-vectors.f32', (len(self.words), self.dim))
+                fallback = self.backend[len('precomputed-hybrid-'):]
+                if fallback == 'source':
+                    self.reader = _RawRows(directory / 'source.f32', (metadata['rows'], self.dim))
+                elif fallback in ('int8', 'ngram-int8'):
+                    from .quantized_memory import QuantizedRows
+                    self.reader = QuantizedRows(directory / 'memory', native_library, cache_bytes=cache_bytes)
+                    self.reader.rows = self.reader.gather
+                elif fallback in ('faiss-sq4','faiss-sq8','faiss-pq-8x8','faiss-cluster-8'):
+                    from .faiss_row_codec import FaissRows
+                    self.reader = FaissRows(directory / 'memory')
+                else:
+                    raise ValueError('unknown hybrid fallback')
             else:
                 self.ids = np.memmap(directory / 'word-ids.u64', mode='r', dtype='<u8')
                 self.offsets = np.memmap(directory / 'word-offsets.u64', mode='r', dtype='<u8')
@@ -166,6 +185,8 @@ source-model agreement, not truth, confidence calibration or downstream safety.
     def word_bag(self, word):
         index = self.words.get(word)
         if index is not None:
+            if self.hybrid:
+                raise ValueError('known hybrid words use precomputed features, not fallback bags')
             return self.ids[int(self.offsets[index]):int(self.offsets[index + 1])]
         return [self.grams[g] for g in ngrams(word, self.order) if g in self.grams]
 
@@ -176,12 +197,19 @@ source-model agreement, not truth, confidence calibration or downstream safety.
             raise ValueError('each text needs at least one supported token')
         unique = list(dict.fromkeys(word for words, _ in parsed for word in words))
         lookup = {word: i for i, word in enumerate(unique)}
-        if self.backend == 'precomputed-words':
+        if self.backend == 'precomputed-words' or self.hybrid:
             features = np.zeros((len(unique), self.dim), dtype='<f4')
             selected = [(i, self.words[w]) for i, w in enumerate(unique) if w in self.words]
             if selected:
                 positions, ids = zip(*selected)
-                features[list(positions)] = self.reader.rows(np.asarray(ids))
+                known_reader = self.word_reader if self.hybrid else self.reader
+                features[list(positions)] = known_reader.rows(np.asarray(ids))
+            if self.hybrid:
+                unknown = [(i, word) for i, word in enumerate(unique) if word not in self.words]
+                if unknown:
+                    positions, words = zip(*unknown)
+                    features[list(positions)] = reduce_words(
+                        self.reader, [self.word_bag(word) for word in words], self.dim)
             word_bounds = None
         else:
             bags = [self.word_bag(word) for word in unique]
@@ -223,6 +251,9 @@ source-model agreement, not truth, confidence calibration or downstream safety.
                 'truncated': np.asarray([t for _, t in parsed])}
 
     def close(self):
+        if self.word_reader is not None:
+            self.word_reader.close()
+            self.word_reader = None
         if self.reader is not None:
             close = getattr(self.reader, 'close', None)
             if close:

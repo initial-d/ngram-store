@@ -8,6 +8,10 @@ deep-averaging model applies ReLU before its classifier head. Training uses
 PyTorch on CPU; frozen inference needs NumPy and the native C library only.
 This is a public-data application benchmark, not a state-of-the-art classifier.
 
+For new-word serving, the [precomputed/subword hybrid follow-up](news_shift_app.md)
+adds four fair fallback controls and an independent news corpus. Its storage
+benefit and the failed application-necessity hypothesis are reported separately.
+
 ## Run the application
 
 From a source checkout, with a C compiler and zlib development headers:

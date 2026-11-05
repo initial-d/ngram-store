@@ -1,0 +1,17 @@
+{
+  "codec": "pq-8x8",
+  "dim": 64,
+  "rows": 570867,
+  "code_size": 8,
+  "training_rows": 32768,
+  "seed": 42,
+  "training_threads": 1,
+  "iterations": 20,
+  "opq_iterations": 10,
+  "training_seconds": 0.4350667083635926,
+  "encoding_seconds": 4.401697165798396,
+  "reused_source_codec": true,
+  "source_codec_sha256": "ddfcfb746c69fe214cc907ad28457af682d73f189bcc3161af7c7c2892909df2",
+  "source_codes_sha256": "4dc541a98bd7b13def7f96b912d517650d4c14e8c14026e38de1541050b894df",
+  "whole_word_prefix_removed": 41892
+}

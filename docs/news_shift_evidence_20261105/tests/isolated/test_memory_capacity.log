@@ -1,0 +1,7 @@
+test_workers_do_not_import_torch_or_initialize_cuda (tests.test_memory_capacity.CapacityImportsTest.test_workers_do_not_import_torch_or_initialize_cuda) ... ok
+test_initialized_rows_are_rejected_or_explicitly_excluded (tests.test_memory_capacity.CapacityProvenanceTest.test_initialized_rows_are_rejected_or_explicitly_excluded) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.870s
+
+OK

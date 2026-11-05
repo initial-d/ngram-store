@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "category": "Independent public cross-source news-routing evaluation",
+  "source_url": "https://huggingface.co/datasets/heegyu/news-category-dataset/resolve/304a05a55bc6abc0446d8fae0d0771716b6a271a/data.json",
+  "source_sha256": "2cfc51fa4a82a96ecbe251fa383737aa1dea2e0a517f61dece633fcc25a4a065",
+  "ag_train_sha256": "76a0a2d2f92b286371fe4d4044640910a04a803fdd2538e0f3f29a5c6f6b672e",
+  "attribution": "Rishabh Misra, News Category Dataset; original HuffPost articles; mirror heegyu/news-category-dataset",
+  "original_dataset_url": "https://www.kaggle.com/datasets/rmisra/news-category-dataset",
+  "mirror_declared_license": "CC BY 4.0",
+  "taxonomy_mapping": {
+    "WORLD NEWS": 0,
+    "SPORTS": 1,
+    "BUSINESS": 2,
+    "TECH": 3
+  },
+  "split": "per-category content-SHA256 order: first floor(n/5) calibration, remainder evaluation",
+  "registry_sha256": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+  "counts": {
+    "original_rows": 209527,
+    "selected_category_rows": 16472,
+    "empty_rows": 1,
+    "duplicate_rows": 56,
+    "conflicting_category_duplicate_rows": 0
+  },
+  "phase_stats": {
+    "validation": {
+      "documents": 3281,
+      "tokens": 90983,
+      "oov_tokens": 2695,
+      "oov_heavy_documents": 299,
+      "attempted_oov_ngrams": 104101,
+      "missing_oov_ngrams": 23746,
+      "truncated_documents": 0,
+      "class_2": 1197,
+      "class_1": 1015,
+      "class_3": 410,
+      "class_0": 659,
+      "unique_oov_types": 1778,
+      "date_min": "2012-01-28",
+      "date_max": "2022-09-19"
+    },
+    "test": {
+      "documents": 13134,
+      "tokens": 362539,
+      "oov_tokens": 10123,
+      "oov_heavy_documents": 1132,
+      "attempted_oov_ngrams": 385731,
+      "missing_oov_ngrams": 86277,
+      "truncated_documents": 8,
+      "class_2": 4791,
+      "class_3": 1644,
+      "class_1": 4061,
+      "class_0": 2638,
+      "unique_oov_types": 5433,
+      "date_min": "2012-01-28",
+      "date_max": "2022-09-22"
+    }
+  },
+  "requests_sha256": {
+    "validation": "d93c224806fca8429ea7631975e2c7057dd3a7d280292cd9f151a5810ccfb515",
+    "test": "2c18b7fa25ea2f31f832ded72a3583bd84128b09289904be01d967149e176516"
+  },
+  "audit_sha256": "bda5c954712fae55457334ab75da2439c415982c03e9e5a6e0f9bed91817c2a3",
+  "limitations": [
+    "Cross-source category mapping is related, not identical to AG News.",
+    "No retraining or target-specific label calibration; this is an external model-transfer test.",
+    "Non-ASCII tokenization and 128-token truncation preserve the original source-model boundary."
+  ]
+}

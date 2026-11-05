@@ -1,0 +1,33 @@
+test_standalone_selected_id_decode_and_no_index_vectors (tests.test_faiss_cotraining.CodecPersistenceTests.test_standalone_selected_id_decode_and_no_index_vectors) ... WARNING clustering 512 points to 512 centroids: please provide at least 19968 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+WARNING clustering 512 points to 16 centroids: please provide at least 624 training points
+ok
+test_batch_certificate_does_not_mix_member_counts_between_bags (tests.test_faiss_cotraining.QueryContractTests.test_batch_certificate_does_not_mix_member_counts_between_bags) ... ok
+test_certified_means_and_hybrid_fallback (tests.test_faiss_cotraining.QueryContractTests.test_certified_means_and_hybrid_fallback) ... ok
+test_combined_selection_uses_validation_and_rejects_changed_traces (tests.test_faiss_cotraining.QueryContractTests.test_combined_selection_uses_validation_and_rejects_changed_traces) ... ok
+test_complete_grid_accepts_dedup_controls_without_a_fake_rate_phase (tests.test_faiss_cotraining.QueryContractTests.test_complete_grid_accepts_dedup_controls_without_a_fake_rate_phase) ... ok
+test_dedup_multiplicity_and_empty_boundaries (tests.test_faiss_cotraining.QueryContractTests.test_dedup_multiplicity_and_empty_boundaries) ... ok
+test_encoded_byte_mapping_has_no_incidence_restriction (tests.test_faiss_cotraining.QueryContractTests.test_encoded_byte_mapping_has_no_incidence_restriction) ... ok
+test_fused_schedule_matches_independent_scalar_original_id_oracle (tests.test_faiss_cotraining.QueryContractTests.test_fused_schedule_matches_independent_scalar_original_id_oracle) ... ok
+test_objective_ties_and_stability (tests.test_faiss_cotraining.QueryContractTests.test_objective_ties_and_stability) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.116s
+
+OK

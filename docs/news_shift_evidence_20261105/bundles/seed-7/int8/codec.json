@@ -1,0 +1,26 @@
+{
+  "backend": "raw_mmap",
+  "byteorder": "little",
+  "contract": "frozen original IDs; exact encoded representative bytes; quantization/sharing may change float32 rows",
+  "decoded_float32_sha256": "ffc832aed7df6c3e65bec1dae40f1450bd960c7f880ae0b074e1c845e50a9299",
+  "encoding": "int8",
+  "export_chunk_rows": 4096,
+  "int8_scale_bytes_per_physical_row": 4,
+  "rounding": "nearest-even; symmetric [-127,127] per-row scale",
+  "row_bytes": 68,
+  "schema_version": 1,
+  "shape": [
+    612759,
+    64
+  ],
+  "source_bytes_preserved": false,
+  "source_float32_sha256": "94dbfe652aa7cdfcdf7b9f95064c1987b89969113821153020ef8cad365d2271",
+  "storage": {
+    "artifact_bytes": 41667612,
+    "deduplicate": false,
+    "row_map_bytes": 0,
+    "unique_rows": 612759
+  },
+  "table_file": "table.rows",
+  "table_sha256": "005f5d294c347bc746cde190ce6eae97d9881bd60f4a6501d79c133768c5a282"
+}

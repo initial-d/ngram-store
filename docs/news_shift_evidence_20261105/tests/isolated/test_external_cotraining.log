@@ -1,0 +1,13 @@
+test_collision_resolution_protected_rows_empty_bags_and_exact_numbering (tests.test_external_cotraining.ExternalConstructionTests.test_collision_resolution_protected_rows_empty_bags_and_exact_numbering) ... ok
+test_csr_contract_and_cli_preserve_the_certified_domain (tests.test_external_cotraining.ExternalConstructionTests.test_csr_contract_and_cli_preserve_the_certified_domain) ... ok
+test_external_sort_multiple_merge_passes_and_duplicates (tests.test_external_cotraining.ExternalConstructionTests.test_external_sort_multiple_merge_passes_and_duplicates) ... ok
+test_failures_cleanup_owned_outputs_and_preserve_existing_paths (tests.test_external_cotraining.ExternalConstructionTests.test_failures_cleanup_owned_outputs_and_preserve_existing_paths) ... ok
+test_file_projection_matches_ordered_float64_reference_with_evictions (tests.test_external_cotraining.ExternalConstructionTests.test_file_projection_matches_ordered_float64_reference_with_evictions) ... ok
+test_independent_native_verifier_checks_each_group_and_rejects_changed_means (tests.test_external_cotraining.ExternalConstructionTests.test_independent_native_verifier_checks_each_group_and_rejects_changed_means) ... ok
+test_public_namespaces_load_without_torch (tests.test_external_cotraining.ExternalConstructionTests.test_public_namespaces_load_without_torch) ... ok
+test_single_bag_exceeds_payload_buffer_and_spills_exactly (tests.test_external_cotraining.ExternalConstructionTests.test_single_bag_exceeds_payload_buffer_and_spills_exactly) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.898s
+
+OK

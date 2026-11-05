@@ -1,0 +1,6 @@
+test_complete_grid_and_native_checks_reject_missing_or_mixed_evidence (tests.test_external_incidence_evidence.ExternalEvidenceTests.test_complete_grid_and_native_checks_reject_missing_or_mixed_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.021s
+
+OK

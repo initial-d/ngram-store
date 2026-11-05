@@ -1,0 +1,13 @@
+{
+  "codec": "sq4",
+  "dim": 64,
+  "rows": 612759,
+  "code_size": 32,
+  "training_rows": 32768,
+  "seed": 42,
+  "training_threads": 1,
+  "iterations": 20,
+  "opq_iterations": 10,
+  "training_seconds": 0.0009021670557558537,
+  "encoding_seconds": 0.03583283303305507
+}

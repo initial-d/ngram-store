@@ -1,0 +1,13 @@
+test_cpu_owned_results_and_original_bytes (tests.test_device_row_adapter.DeviceGatherTest.test_cpu_owned_results_and_original_bytes) ... ok
+test_cpu_row_cache_owned_results_and_original_bytes (tests.test_device_row_adapter.DeviceGatherTest.test_cpu_row_cache_owned_results_and_original_bytes) ... ok
+test_cuda_owned_outputs_pinned_staging_and_stream_waits (tests.test_device_row_adapter.DeviceGatherTest.test_cuda_owned_outputs_pinned_staging_and_stream_waits) ... skipped 'real CUDA required'
+test_cuda_partial_failure_drains_copies_before_reusing_slots (tests.test_device_row_adapter.DeviceGatherTest.test_cuda_partial_failure_drains_copies_before_reusing_slots) ... skipped 'real CUDA required'
+test_cuda_request_fails_explicitly_without_hardware (tests.test_device_row_adapter.DeviceGatherTest.test_cuda_request_fails_explicitly_without_hardware) ... ok
+test_cuda_row_cache_staging_and_owned_results (tests.test_device_row_adapter.DeviceGatherTest.test_cuda_row_cache_staging_and_owned_results) ... skipped 'real CUDA required'
+test_mps_synchronous_staging_and_reuse (tests.test_device_row_adapter.DeviceGatherTest.test_mps_synchronous_staging_and_reuse) ... ok
+test_reject_invalid_ids_placement_dtype_training_and_concurrency (tests.test_device_row_adapter.DeviceGatherTest.test_reject_invalid_ids_placement_dtype_training_and_concurrency) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.606s
+
+OK (skipped=3)

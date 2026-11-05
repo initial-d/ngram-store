@@ -1,0 +1,10 @@
+test_corrupt_queries_and_dense_source_are_rejected (tests.test_device_gather_benchmark.DeviceBenchmarkTest.test_corrupt_queries_and_dense_source_are_rejected) ... ok
+test_dense_reader_preserves_special_bytes_and_rejects_bad_addressing (tests.test_device_gather_benchmark.DeviceBenchmarkTest.test_dense_reader_preserves_special_bytes_and_rejects_bad_addressing) ... ok
+test_gpu_competition_snapshot_identifies_only_other_processes (tests.test_device_gather_benchmark.DeviceBenchmarkTest.test_gpu_competition_snapshot_identifies_only_other_processes) ... ok
+test_gpu_uuid_prefix_and_explicit_host_pid_mapping (tests.test_device_gather_benchmark.DeviceBenchmarkTest.test_gpu_uuid_prefix_and_explicit_host_pid_mapping) ... ok
+test_native_worker_does_not_read_or_retain_dense_table (tests.test_device_gather_benchmark.DeviceBenchmarkTest.test_native_worker_does_not_read_or_retain_dense_table) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.507s
+
+OK
