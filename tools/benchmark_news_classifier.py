@@ -48,7 +48,7 @@ def metrics(labels, predicted, losses, selected=None):
 def worker(cfg):
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         raise ValueError('CPU worker requires empty CUDA_VISIBLE_DEVICES')
-    if cfg.backend.startswith('faiss-'):
+    if cfg.backend.startswith('faiss-') or cfg.backend == 'precomputed-hybrid-faiss-sq4':
         import faiss
         faiss.omp_set_num_threads(1)
     requests = [json.loads(line) for line in cfg.requests.read_text().splitlines()]
@@ -91,7 +91,8 @@ def worker(cfg):
         'limitations':['Shared warm CPU, one query thread, no exclusive/cold-cache or enforced RSS cap.',
             'Peak process RSS includes NumPy, keys, maps, request text buffers and query scratch.',
             'Prediction preservation is agreement with the source-real model, not ground-truth accuracy.',
-            'Artifact-budget eligibility is separate from measured RSS; no original-source fallback or word-vector cache.']}
+            'Artifact-budget eligibility is separate from measured RSS; no dynamic word-vector cache.',
+            'Hybrid controls explicitly include precomputed training-word features and an unknown-word subword fallback.']}
     if report['torch_loaded']:
         raise AssertionError('inference worker imported Torch')
     if cfg.phase == 'validation':
@@ -196,7 +197,8 @@ def main():
         sub.add_argument('--output',type=Path,required=True);sub.add_argument('--source-commit',required=True)
         sub.add_argument('--native-library',type=Path,required=True)
         if name=='worker':
-            sub.add_argument('--backend',choices=BACKENDS,required=True)
+            from .export_news_hybrids import HYBRIDS
+            sub.add_argument('--backend',choices=[*BACKENDS,*HYBRIDS],required=True)
             sub.add_argument('--phase',choices=('validation','test'),required=True)
         else:
             sub.add_argument('--seed',type=int,required=True)
