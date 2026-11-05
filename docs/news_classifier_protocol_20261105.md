@@ -66,6 +66,10 @@ startup costs; do not relabel mmap virtual/file bytes as resident RAM. Select th
 fastest validation backend at each budget among those with accuracy loss <=0.5
 percentage points and cross-entropy increase <=2% versus its source. Test only
 audits these fixed choices, alongside all method comparisons. No winner is required.
+Also freeze observed process-RSS ceilings at 128/192/256/384/512 MiB, applying
+the same validation quality gate and fastest-backend selection. These are observed
+workload eligibility checks, not cgroup-enforced bounds. The selected backend's
+test RSS must be checked again and any test budget failure retained.
 
 ## Evaluation and serving
 
