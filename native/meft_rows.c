@@ -473,3 +473,153 @@ int meft_rows_embedding_bag_weighted(meft_rows *s, const uint64_t *ids, size_t c
     return embedding_bag(s, ids, count, offsets, bags, dtype, 0, padding_id,
                          chunk_rows, out, out_floats, err, cap, 1, weights, weights_bytes);
 }
+
+/* Positive binary64 nextafter implemented by bits, avoiding a new libm link
+ * dependency for the standalone engine. Each operation retains the reference
+ * rounding step; do not compile this contract with unsafe floating optimizations. */
+static double bound_up(double x) {
+    if (x == 0.0) return 0.0;
+    if (x > DBL_MAX) return x;
+    uint64_t bits;
+    memcpy(&bits, &x, sizeof(bits)); ++bits;
+    memcpy(&x, &bits, sizeof(x)); return x;
+}
+static double bound_down(double x) {
+    if (x <= 0.0) return 0.0;
+    uint64_t bits;
+    memcpy(&bits, &x, sizeof(bits)); --bits;
+    memcpy(&x, &bits, sizeof(x)); return x;
+}
+struct bound_member { uint64_t group, row, count; double norm; };
+struct bound_group { uint64_t row, weight; double bound; unsigned char exact; };
+static int bound_member_cmp(const void *a, const void *b) {
+    const struct bound_member *x = a, *y = b;
+    if (x->group != y->group) return x->group < y->group ? -1 : 1;
+    return x->row < y->row ? -1 : x->row != y->row;
+}
+static int bound_group_cmp(const void *a, const void *b) {
+    const struct bound_group *x = a, *y = b;
+    return x->row < y->row ? -1 : x->row != y->row;
+}
+static double centered_bound(const struct bound_member *m, size_t n,
+                             uint64_t center, double missing, double defect) {
+    double value = bound_up((double)center * defect);
+    if (center) value = bound_up(value + bound_up((double)center * missing));
+    for (size_t i = 0; i < n; ++i) {
+        uint64_t delta = m[i].count > center ? m[i].count - center : center - m[i].count;
+        value = bound_up(value + bound_up((double)delta * m[i].norm));
+    }
+    return value;
+}
+
+int meft_rows_compile_bounded_bags(const uint64_t *rows, const uint64_t *counts,
+    const uint64_t *offsets, size_t count, size_t bags,
+    const uint64_t *mapping, size_t nrows, const uint64_t *sizes, size_t groups,
+    const double *row_l2, const double *total_l2, const double *defect_l2,
+    uint64_t *ids, float *weights, uint64_t *plan_offsets, double *projection,
+    unsigned char *exact, size_t plan_capacity, size_t bag_capacity,
+    size_t *plan_count, char *err, size_t cap) {
+    if (sizeof(double) != 8 || DBL_MANT_DIG != 53 || DBL_MAX_EXP != 1024 ||
+        DBL_MIN_EXP != -1021 || sizeof(float) != 4 || FLT_RADIX != 2 || FLT_MANT_DIG != 24)
+        return fail(err, cap, "bounded compiler requires IEEE binary32/binary64");
+    if (!plan_count || !nrows || !groups || !mapping || !sizes ||
+        !row_l2 || !total_l2 || !defect_l2 || plan_capacity < count || bag_capacity < bags ||
+        bags > SIZE_MAX / sizeof(uint64_t) - 1 || count > SIZE_MAX / sizeof(uint64_t) ||
+        (bags && (!offsets || !plan_offsets || !projection || !exact)) ||
+        (count && (!rows || !counts || !ids || !weights || !bags)))
+        return fail(err, cap, "invalid bounded compiler capacity or arrays");
+    *plan_count = 0;
+    if (!bags) return 0;
+    if (offsets[0] != 0 || offsets[bags] != count)
+        return fail(err, cap, "bounded offsets must span all unique IDs");
+    size_t largest = 0;
+    for (size_t b = 0; b < bags; ++b) {
+        if (offsets[b] > offsets[b+1] || offsets[b+1] > count)
+            return fail(err, cap, "bounded offsets must be nondecreasing");
+        size_t n = (size_t)(offsets[b+1] - offsets[b]);
+        if (n > largest) largest = n;
+    }
+    if (largest > SIZE_MAX / sizeof(struct bound_member) || largest > SIZE_MAX / sizeof(struct bound_group))
+        return fail(err, cap, "bounded compiler scratch capacity overflow");
+    struct bound_member *members = largest ? malloc(largest * sizeof(*members)) : NULL;
+    struct bound_group *plans = largest ? malloc(largest * sizeof(*plans)) : NULL;
+    if (largest && (!members || !plans)) {
+        free(members); free(plans); return fail(err, cap, "bounded compiler allocation failed");
+    }
+    int status = 0;
+    size_t used = 0;
+    plan_offsets[0] = 0;
+    for (size_t b = 0; b < bags; ++b) {
+        size_t begin = (size_t)offsets[b], n = (size_t)(offsets[b+1] - offsets[b]);
+        uint64_t length = 0;
+        for (size_t i = 0; i < n; ++i) {
+            uint64_t row = rows[begin+i], c = counts[begin+i];
+            if (row >= nrows || (i && row <= rows[begin+i-1]) || !c || c > (1u << 24)) {
+                status = fail(err, cap, "bounded IDs must be sorted unique; counts must be exact positive float32 integers");
+                goto done_bounds;
+            }
+            uint64_t g = mapping[row];
+            if (g >= groups || !sizes[g] || !(row_l2[row] >= 0.0 && row_l2[row] <= DBL_MAX) ||
+                !(total_l2[g] >= 0.0 && total_l2[g] <= DBL_MAX) ||
+                !(defect_l2[g] >= 0.0 && defect_l2[g] <= DBL_MAX)) {
+                status = fail(err, cap, "invalid bounded group or residual arrays"); goto done_bounds;
+            }
+            if (length > (UINT64_C(1) << 53) - c) {
+                status = fail(err, cap, "bounded bag length exceeds exact float64 range"); goto done_bounds;
+            }
+            length += c;
+            members[i] = (struct bound_member){g, row, c, row_l2[row]};
+        }
+        if (n) qsort(members, n, sizeof(*members), bound_member_cmp);
+        size_t np = 0;
+        for (size_t first = 0; first < n;) {
+            size_t end = first+1;
+            uint64_t g = members[first].group, weight = members[first].count;
+            unsigned char equal = 1;
+            while (end < n && members[end].group == g) {
+                if (weight > (1u << 24) - members[end].count) {
+                    status = fail(err, cap, "group multiplicity exceeds exact float32 range"); goto done_bounds;
+                }
+                weight += members[end].count;
+                if (members[end].count != members[first].count) equal = 0;
+                ++end;
+            }
+            size_t observed = end-first;
+            if (observed > sizes[g]) {
+                status = fail(err, cap, "group size is smaller than observed members"); goto done_bounds;
+            }
+            double best = 0.0;
+            if (total_l2[g] != 0.0) {
+                double present = 0.0;
+                for (size_t i = first; i < end; ++i) present = bound_down(present + members[i].norm);
+                double missing = total_l2[g] - present;
+                missing = bound_up(missing > 0.0 ? missing : 0.0);
+                best = centered_bound(members+first, observed, 0, missing, defect_l2[g]);
+                for (size_t i = first; i < end; ++i) {
+                    int duplicate = 0;
+                    for (size_t j = first; j < i; ++j)
+                        if (members[j].count == members[i].count) { duplicate = 1; break; }
+                    if (!duplicate) {
+                        double value = centered_bound(members+first, observed, members[i].count, missing, defect_l2[g]);
+                        if (value < best) best = value;
+                    }
+                }
+            }
+            plans[np++] = (struct bound_group){members[first].row, weight, best, (unsigned char)(equal && observed == sizes[g])};
+            first = end;
+        }
+        /* Order by first observed original row, not numeric group ID. A missing
+         * representative can reverse group order; this also preserves rounding. */
+        if (np) qsort(plans, np, sizeof(*plans), bound_group_cmp);
+        projection[b] = 0.0; exact[b] = 1;
+        for (size_t i = 0; i < np; ++i) {
+            projection[b] = bound_up(projection[b] + plans[i].bound);
+            exact[b] &= plans[i].exact;
+            ids[used] = plans[i].row; weights[used++] = (float)plans[i].weight;
+        }
+        plan_offsets[b+1] = used;
+    }
+    *plan_count = used;
+done_bounds:
+    free(members); free(plans); return status;
+}

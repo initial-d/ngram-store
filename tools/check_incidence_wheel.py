@@ -40,6 +40,7 @@ def main():
         # bundle, retains no source matrix at query time and reports its bounds.
         ngram_store.build_error_bounds(root / 'rows', root / 'out', root / 'bounds')
         with ngram_store.BudgetedBagRows(root / 'out', root / 'bounds') as store:
+            assert store.compiler == 'native', 'wheel must bundle the bounded-plan compiler'
             result = store.aggregate([[0]], max_absolute_l2=1.415)
             assert result.vectors.tolist() == [[2., 3.]]
             assert not result.exact_domain[0]
@@ -57,6 +58,7 @@ def main():
         assert 'torch' not in sys.modules
         print(json.dumps({'status': 'passed', 'python': sys.version, 'numpy': np.__version__,
             'package': ngram_store.__file__, 'torch_loaded': False,
+            'installed_native_bounded_compiler': True,
             'installed_cli_mapping_and_means_identical': True}, indent=2))
 
 

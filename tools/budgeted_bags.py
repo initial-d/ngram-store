@@ -207,10 +207,16 @@ class BudgetedBagRows:
     assess() exposes candidates for diagnostics. aggregate() refuses the entire
     batch if any bound exceeds a budget. No original source matrix is loaded.
     """
-    def __init__(self, store, bounds, native_library=None):
+    def __init__(self, store, bounds, native_library=None, *, compiler='auto'):
+        if compiler not in ('auto', 'native', 'python'):
+            raise ValueError('compiler must be auto, native or python')
         self.native = CertifiedBagRows(store, native_library)
         self.arrays = []
         try:
+            available = self.native.table.supports_bounded_bag_compiler
+            if compiler == 'native' and not available:
+                raise ValueError('native bounded compiler requires rebuilding the row library')
+            self.compiler = 'native' if available and compiler != 'python' else 'python'
             bounds = Path(bounds)
             metadata = json.loads((bounds / 'bounds.json').read_text())
             store_metadata = json.loads((Path(store) / 'manifest.json').read_text())
@@ -276,29 +282,44 @@ class BudgetedBagRows:
         lengths = counted['lengths']
         if np.any(lengths > 2**53):
             raise ValueError('bag length cannot be represented exactly as float64')
-        projection = np.zeros(len(lengths))
-        ids, weights, offsets = [], [], [0]
         boundaries = np.searchsorted(counted['bags'], np.arange(len(lengths) + 1))
-        for bid in range(len(lengths)):
-            selected = slice(boundaries[bid], boundaries[bid + 1])
-            rows, counts = counted['rows'][selected], counted['counts'][selected]
-            projection[bid] = self._projection_bound(rows, counts)
-            grouped = {}
-            for row, count in zip(rows, counts):
-                group = int(self.native.partition.mapping[row])
-                if group in grouped:
-                    grouped[group][1] += int(count)
-                else:
-                    grouped[group] = [int(row), int(count)]
-            representatives = sorted(grouped.values())
-            if any(weight > 2**24 for _, weight in representatives):
-                raise ValueError('group multiplicity exceeds the exact float32 integer range')
-            ids.extend(row for row, _ in representatives)
-            weights.extend(weight for _, weight in representatives)
-            offsets.append(len(ids))
-        ids = np.asarray(ids, dtype='<u8')
-        weights = np.asarray(weights, dtype='<f4')
-        offsets = np.asarray(offsets, dtype='<u8')
+        projection = np.zeros(len(lengths))
+        if self.compiler == 'native':
+            capacity = len(counted['rows'])
+            ids, weights = np.empty(capacity, dtype='<u8'), np.empty(capacity, dtype='<f4')
+            offsets = np.zeros(len(lengths) + 1, dtype='<u8')
+            exact_domain = np.ones(len(lengths), dtype=np.bool_)
+            used = self.native.table.compile_bounded_bags_into(
+                counted['rows'].ctypes.data, counted['counts'].ctypes.data, boundaries.ctypes.data,
+                capacity, len(lengths), self.native.partition.mapping.ctypes.data,
+                len(self.native.partition.mapping), self.native.partition.sizes.ctypes.data,
+                len(self.native.partition.sizes), self.row_norms.ctypes.data, self.group_totals.ctypes.data,
+                self.group_defects.ctypes.data, ids.ctypes.data, weights.ctypes.data, offsets.ctypes.data,
+                projection.ctypes.data, exact_domain.ctypes.data, capacity, len(lengths))
+            ids, weights = ids[:used], weights[:used]
+        else:
+            ids, weights, offsets = [], [], [0]
+            for bid in range(len(lengths)):
+                selected = slice(boundaries[bid], boundaries[bid + 1])
+                rows, counts = counted['rows'][selected], counted['counts'][selected]
+                projection[bid] = self._projection_bound(rows, counts)
+                grouped = {}
+                for row, count in zip(rows, counts):
+                    group = int(self.native.partition.mapping[row])
+                    if group in grouped:
+                        grouped[group][1] += int(count)
+                    else:
+                        grouped[group] = [int(row), int(count)]
+                representatives = sorted(grouped.values())
+                if any(weight > 2**24 for _, weight in representatives):
+                    raise ValueError('group multiplicity exceeds the exact float32 integer range')
+                ids.extend(row for row, _ in representatives)
+                weights.extend(weight for _, weight in representatives)
+                offsets.append(len(ids))
+            ids = np.asarray(ids, dtype='<u8')
+            weights = np.asarray(weights, dtype='<f4')
+            offsets = np.asarray(offsets, dtype='<u8')
+            exact_domain = self.native.partition.certifies_many(bags, padding_idx=padding_idx)
         # One gather and one column-wise interval norm pass across the complete
         # schedule avoid B separate d-column Python loops. Arithmetic order for
         # each row and bag remains identical to the original bounded path.
@@ -337,8 +358,7 @@ class BudgetedBagRows:
         np.divide(absolute, lower, out=relative, where=lower > 0)
         relative = _up(relative)
         relative[(absolute == 0) & (lower == 0)] = 0.
-        # Strict membership diagnostics are independent of residual magnitudes.
-        exact_domain = self.native.partition.certifies_many(bags, padding_idx=padding_idx)
+        # Both compilers certify strict membership independently of residuals.
         for array in (vectors, projection, rounding, absolute, relative, exact_domain):
             array.flags.writeable = False
         return BagErrorAssessment(vectors, projection, rounding, absolute, relative, exact_domain, len(ids))

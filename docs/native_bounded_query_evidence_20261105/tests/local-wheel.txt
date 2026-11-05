@@ -1,0 +1,9 @@
+Processing ./.
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: meft-memory
+  Building wheel for meft-memory (pyproject.toml): started
+  Building wheel for meft-memory (pyproject.toml): finished with status 'done'
+  Created wheel for meft-memory: filename=meft_memory-0.4.0-py3-none-macosx_26_0_arm64.whl size=378547 sha256=3ca5f094e14566df0de841863a10b3b9b866ba53148f5e4162b6f963b9c7a559
+  Stored in directory: /private/var/folders/ld/dfm826ld4_d6myjvpl4f8_c80000gn/T/pip-ephem-wheel-cache-n3wv00s5/wheels/fd/be/21/c46547ab30cda76a0ebc7f2bb33266ce89c12d257f26140673
+Successfully built meft-memory

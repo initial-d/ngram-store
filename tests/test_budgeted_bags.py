@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import PropertyMock, patch
 
 if importlib.util.find_spec('numpy'):
     import numpy as np
@@ -183,6 +184,88 @@ class BudgetedBagTests(unittest.TestCase):
             with BudgetedBagRows(root / 'store', root / 'bounds', self.library) as native:
                 with self.assertRaisesRegex(ValueError, 'nonfinite native output'):
                     native.assess([[0, 0]])
+
+    def test_native_and_python_compilers_preserve_all_bound_bytes_and_gates(self):
+        # Arithmetic fixtures, including reversed observed-group order and
+        # zero-residual groups; not random-vector compression evidence.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.build(root, [[1.1, 2.], [3., 4.1], [7., 8.], [7., 8.], [3.5, 4.3], [1.7, 2.1]],
+                       [[0, 5], [1, 4], [2, 3]])
+            bags = [[4, 5], [5, 4, 5, 2], [0, 5, 1, 4, 2, 3], [0, 0, 5], [], [2]]
+            with BudgetedBagRows(root / 'store', root / 'bounds', self.library, compiler='native') as native, \
+                 BudgetedBagRows(root / 'store', root / 'bounds', self.library, compiler='python') as python:
+                self.assertEqual(native.compiler, 'native')
+                for mean in (False, True):
+                    for padding in (None, 0):
+                        a, b = native.assess(bags, mean=mean, padding_idx=padding), python.assess(bags, mean=mean, padding_idx=padding)
+                        for attr in ('vectors', 'projection_l2_bounds', 'rounding_l2_bounds', 'absolute_l2_bounds',
+                                     'relative_l2_bounds', 'exact_domain'):
+                            self.assertEqual(getattr(a, attr).tobytes(), getattr(b, attr).tobytes(), attr)
+                        for budget in (0., .0001, .001, .01, .03, 1.):
+                            np.testing.assert_array_equal(a.accepts(max_relative_l2=budget), b.accepts(max_relative_l2=budget))
+
+    def test_native_compiler_differential_randomized_arithmetic_queries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rng = np.random.default_rng(11)
+            rows = rng.normal(size=(128, 8)).astype('<f4')
+            permutation = rng.permutation(len(rows))
+            domain = [list(map(int, permutation[i:i+4])) for i in range(0, len(rows), 4)]
+            for group in domain[:4]:
+                rows[group] = rows[group[0]]
+            self.build(root, rows, domain)
+            bags = [rng.integers(0, len(rows), int(n)).tolist() for n in rng.integers(0, 120, 100)] + domain
+            with BudgetedBagRows(root / 'store', root / 'bounds', self.library, compiler='native') as native, \
+                 BudgetedBagRows(root / 'store', root / 'bounds', self.library, compiler='python') as python:
+                for mean in (False, True):
+                    a, b = native.assess(bags, mean=mean), python.assess(bags, mean=mean)
+                    for attr in ('vectors', 'projection_l2_bounds', 'rounding_l2_bounds', 'absolute_l2_bounds',
+                                 'relative_l2_bounds', 'exact_domain'):
+                        self.assertEqual(getattr(a, attr).tobytes(), getattr(b, attr).tobytes(), attr)
+
+    def test_automatic_fallback_and_forced_native_requirement(self):
+        from tools.native_row_store import NativeRows
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.build(root, [[1.], [2.]], [[0, 1]])
+            with patch.object(NativeRows, 'supports_bounded_bag_compiler', new_callable=PropertyMock, return_value=False):
+                with BudgetedBagRows(root / 'store', root / 'bounds', self.library) as automatic:
+                    self.assertEqual(automatic.compiler, 'python')
+                    automatic.assess([[0]])
+                with self.assertRaisesRegex(ValueError, 'rebuilding'):
+                    BudgetedBagRows(root / 'store', root / 'bounds', self.library, compiler='native')
+
+    def test_native_pointer_abi_rejects_malformed_inputs_and_capacities(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.build(root, [[1.], [2.]], [[0, 1]])
+            with BudgetedBagRows(root / 'store', root / 'bounds', self.library) as table:
+                arrays = [np.asarray(a, dtype=d) for a, d in [([0, 1], '<u8'), ([1, 1], '<u8'), ([0, 2], '<u8'),
+                    ([0, 0], '<u8'), ([2], '<u8'), ([1., 1.], '<f8'), ([2.], '<f8'), ([0.], '<f8')]]
+                ids, weights, offsets = np.empty(2, '<u8'), np.empty(2, '<f4'), np.empty(2, '<u8')
+                bound, exact = np.empty(1, '<f8'), np.empty(1, np.bool_)
+                def invoke(a, capacity=2, bag_capacity=1):
+                    return table.native.table.compile_bounded_bags_into(a[0].ctypes.data, a[1].ctypes.data,
+                        a[2].ctypes.data, 2, 1, a[3].ctypes.data, 2, a[4].ctypes.data, 1,
+                        a[5].ctypes.data, a[6].ctypes.data, a[7].ctypes.data, ids.ctypes.data, weights.ctypes.data,
+                        offsets.ctypes.data, bound.ctypes.data, exact.ctypes.data, capacity, bag_capacity)
+                self.assertEqual(invoke(arrays), 1)
+                self.assertEqual(ids[0], 0)
+                self.assertEqual(weights[0], 2)
+                self.assertTrue(exact[0])
+                for index, replacement in [(0, [1, 0]), (0, [0, 0]), (0, [0, 2]),
+                    (1, [0, 1]), (1, [2**24, 1]), (2, [0, 3]), (3, [0, 2]),
+                    (4, [0]), (5, [float('nan'), 1.]), (6, [-1.])]:
+                    changed = [a.copy() for a in arrays]
+                    changed[index][:] = replacement
+                    before = [a.tobytes() for a in changed]
+                    with self.assertRaises(ValueError):
+                        invoke(changed)
+                    self.assertEqual([a.tobytes() for a in changed], before)
+                for capacity, bag_capacity in ((1, 1), (2, 0)):
+                    with self.assertRaises(ValueError):
+                        invoke(arrays, capacity, bag_capacity)
 
 
 if __name__ == '__main__':

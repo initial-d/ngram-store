@@ -133,6 +133,8 @@ def main(argv=None):
     query_bags.add_argument('--bounds',type=Path,help='Optional actual-source residual sidecar; requires an explicit error budget.')
     query_bags.add_argument('--max-relative-l2',type=float,help='Maximum source-relative L2 upper bound (0.01 = 1%%).')
     query_bags.add_argument('--max-absolute-l2',type=float,help='Maximum absolute L2 upper bound; both supplied budgets must pass.')
+    query_bags.add_argument('--bound-compiler',choices=('auto','native','python'),default='auto',
+        help='Optional bounds plan compiler; auto uses native when available.')
     bounds=commands.add_parser('build-error-bounds',help='Build actual-source residual bounds for opt-in partial-group queries.')
     bounds.add_argument('--input',type=Path,required=True)
     bounds.add_argument('--store',type=Path,required=True)
@@ -197,12 +199,15 @@ def main(argv=None):
             budget=args.max_relative_l2 is not None or args.max_absolute_l2 is not None
             if (args.bounds is not None) != budget:
                 raise ValueError('--bounds and an explicit L2 error budget must be supplied together')
+            if args.bound_compiler != 'auto' and not budget:
+                raise ValueError('--bound-compiler requires --bounds and an explicit L2 error budget')
             if budget:
                 from . import BudgetedBagRows
-                with BudgetedBagRows(args.store,args.bounds,args.native_library) as table:
+                with BudgetedBagRows(args.store,args.bounds,args.native_library,compiler=args.bound_compiler) as table:
                     assessment=table.aggregate(bags,mean=args.mode=='mean',
                         max_relative_l2=args.max_relative_l2,max_absolute_l2=args.max_absolute_l2)
                     result={'mode':args.mode,'certified':False,'approximation_opt_in':True,
+                        'bound_compiler':table.compiler,
                         'source_row_bytes_preserved':False,'source_sha256':table.source_sha256,
                         'vectors':assessment.vectors.tolist(),'bounds':assessment.summary(),
                         'max_relative_l2':args.max_relative_l2,'max_absolute_l2':args.max_absolute_l2}

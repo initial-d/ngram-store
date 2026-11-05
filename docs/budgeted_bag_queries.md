@@ -43,6 +43,16 @@ with BudgetedBagRows("memory", "bounds") as table:
 ```
 
 IDs above are illustrative; the real source and query determine acceptance.
+`BudgetedBagRows(..., compiler="auto")` uses the C bounded-plan compiler when
+the loaded library includes it. `compiler="python"` retains the reference path;
+`compiler="native"` requires the new symbol and reports a rebuild error for older
+libraries. Read `table.compiler` to inspect the chosen backend, or select it with
+`query-bags --bound-compiler auto|native|python` (budgeted queries only). Auto falls
+back for older libraries. Both paths preserve output/bound bytes and budget
+decisions; the table, residual sidecar, strict certificate and older ABI are
+unchanged. The C compiler groups observed IDs, evaluates centered bounds and
+constructs the reduction schedule without scanning the full table.
+
 Source matrix, native table and partition hashes bind the sidecar. Array hashes
 are verified on open. The original source matrix is not needed at query time.
 Artifacts/handles retain the trusted-immutable, single-worker boundary.

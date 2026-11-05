@@ -1,0 +1,233 @@
+{
+  "source_commit": "56df5865dd58ae5a396ffa2910b8c953e9511782",
+  "remote": {
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "cpu": {
+      "lscpu": [
+        {
+          "field": "\u67b6\u6784\uff1a",
+          "data": "x86_64"
+        },
+        {
+          "field": "CPU \u8fd0\u884c\u6a21\u5f0f\uff1a",
+          "data": "32-bit, 64-bit"
+        },
+        {
+          "field": "Address sizes:",
+          "data": "43 bits physical, 48 bits virtual"
+        },
+        {
+          "field": "\u5b57\u8282\u5e8f\uff1a",
+          "data": "Little Endian"
+        },
+        {
+          "field": "CPU:",
+          "data": "256"
+        },
+        {
+          "field": "\u5728\u7ebf CPU \u5217\u8868\uff1a",
+          "data": "0-254"
+        },
+        {
+          "field": "\u79bb\u7ebf CPU \u5217\u8868\uff1a",
+          "data": "255"
+        },
+        {
+          "field": "\u5382\u5546 ID\uff1a",
+          "data": "AuthenticAMD"
+        },
+        {
+          "field": "\u578b\u53f7\u540d\u79f0\uff1a",
+          "data": "AMD EPYC 7742 64-Core Processor"
+        },
+        {
+          "field": "CPU \u7cfb\u5217\uff1a",
+          "data": "23"
+        },
+        {
+          "field": "\u578b\u53f7\uff1a",
+          "data": "49"
+        },
+        {
+          "field": "\u6bcf\u4e2a\u6838\u7684\u7ebf\u7a0b\u6570\uff1a",
+          "data": "2"
+        },
+        {
+          "field": "\u6bcf\u4e2a\u5ea7\u7684\u6838\u6570\uff1a",
+          "data": "64"
+        },
+        {
+          "field": "\u5ea7\uff1a",
+          "data": "2"
+        },
+        {
+          "field": "\u6b65\u8fdb\uff1a",
+          "data": "0"
+        },
+        {
+          "field": "Frequency boost:",
+          "data": "disabled"
+        },
+        {
+          "field": "CPU \u6700\u5927 MHz\uff1a",
+          "data": "2250.0000"
+        },
+        {
+          "field": "CPU \u6700\u5c0f MHz\uff1a",
+          "data": "0.0000"
+        },
+        {
+          "field": "BogoMIPS\uff1a",
+          "data": "4500.00"
+        },
+        {
+          "field": "\u6807\u8bb0\uff1a",
+          "data": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate sme ssbd mba sev ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif umip rdpid overflow_recov succor smca"
+        },
+        {
+          "field": "\u865a\u62df\u5316\uff1a",
+          "data": "AMD-V"
+        },
+        {
+          "field": "L1d \u7f13\u5b58\uff1a",
+          "data": "4 MiB (128 instances)"
+        },
+        {
+          "field": "L1i \u7f13\u5b58\uff1a",
+          "data": "4 MiB (128 instances)"
+        },
+        {
+          "field": "L2 \u7f13\u5b58\uff1a",
+          "data": "64 MiB (128 instances)"
+        },
+        {
+          "field": "L3 \u7f13\u5b58\uff1a",
+          "data": "512 MiB (32 instances)"
+        },
+        {
+          "field": "NUMA \u8282\u70b9\uff1a",
+          "data": "8"
+        },
+        {
+          "field": "NUMA \u8282\u70b90 CPU\uff1a",
+          "data": "0-15,128-143"
+        },
+        {
+          "field": "NUMA \u8282\u70b91 CPU\uff1a",
+          "data": "16-31,144-159"
+        },
+        {
+          "field": "NUMA \u8282\u70b92 CPU\uff1a",
+          "data": "32-47,160-175"
+        },
+        {
+          "field": "NUMA \u8282\u70b93 CPU\uff1a",
+          "data": "48-63,176-191"
+        },
+        {
+          "field": "NUMA \u8282\u70b94 CPU\uff1a",
+          "data": "64-79,192-207"
+        },
+        {
+          "field": "NUMA \u8282\u70b95 CPU\uff1a",
+          "data": "80-95,208-223"
+        },
+        {
+          "field": "NUMA \u8282\u70b96 CPU\uff1a",
+          "data": "96-111,224-239"
+        },
+        {
+          "field": "NUMA \u8282\u70b97 CPU\uff1a",
+          "data": "112-127,240-254"
+        },
+        {
+          "field": "Vulnerability Itlb multihit:",
+          "data": "Not affected"
+        },
+        {
+          "field": "Vulnerability L1tf:",
+          "data": "Not affected"
+        },
+        {
+          "field": "Vulnerability Mds:",
+          "data": "Not affected"
+        },
+        {
+          "field": "Vulnerability Meltdown:",
+          "data": "Not affected"
+        },
+        {
+          "field": "Vulnerability Spec store bypass:",
+          "data": "Mitigation; Speculative Store Bypass disabled via prctl and seccomp"
+        },
+        {
+          "field": "Vulnerability Spectre v1:",
+          "data": "Mitigation; usercopy/swapgs barriers and __user pointer sanitization"
+        },
+        {
+          "field": "Vulnerability Spectre v2:",
+          "data": "Mitigation; Full AMD retpoline, IBPB conditional, IBRS_FW, STIBP conditional, RSB filling"
+        },
+        {
+          "field": "Vulnerability Srbds:",
+          "data": "Not affected"
+        },
+        {
+          "field": "Vulnerability Tsx async abort:",
+          "data": "Not affected"
+        }
+      ]
+    },
+    "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "native_library_sha256": "8598d422671bd78e931ca0a9bb4cab8f2fccf3be7e3599a8b10f8b91285eaebc",
+    "source_sha256": {
+      "native/meft_rows.c": "997a391f38ae2403a59702482c316ffa24fe9fdf48076237b5442b8d2d26358d",
+      "native/meft_rows.h": "a8739365227697851b31297caaee69d196bd773250f1b819fc38a1a172f5834b",
+      "tools/budgeted_bags.py": "aa3d3430b629708083e17d87e7af9cf90ee44184b9dc379a7fffafe14bc54cf3",
+      "tools/native_row_store.py": "232ad4b8f93e3cda66044d0e61b69e9b4545f2d4fdbb966a56480027dadf5554"
+    }
+  },
+  "pytorch": "Not used by the C/NumPy CPU query benchmark; no GPU access.",
+  "exact_benchmark_argv": [
+    "/llm-align/duyimin/miniconda3/envs/gemma4/bin/python",
+    "-m",
+    "tools.benchmark_native_bounded_bags",
+    "--report",
+    "/llm-align/duyimin/ngram-query-bounds-20261104/results-native/report.json",
+    "--prior-retiming",
+    "/llm-align/duyimin/ngram-query-bounds-20261104/batched-r2-retiming.json",
+    "--results-root",
+    "/llm-align/duyimin/ngram-query-bounds-20261104/results-native",
+    "--traces-root",
+    "/llm-align/duyimin/ngram-cross-corpus-20261102/complete-grid",
+    "--output",
+    "/llm-align/duyimin/ngram-native-bounds-20261105/report.json",
+    "--source-commit",
+    "56df5865dd58ae5a396ffa2910b8c953e9511782"
+  ],
+  "remote_workdir": "/llm-align/duyimin/ngram-native-bounds-20261105/source",
+  "env": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MEFT_ROWS_LIBRARY": "/llm-align/duyimin/ngram-native-bounds-20261105/source/build/libmeft_rows.so"
+  },
+  "local": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "numpy": "2.3.5",
+    "os": "macOS-26.6.2-arm64-arm-64bit",
+    "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n"
+  },
+  "source_archive_sha256": "b880cee9c5ae51a709b415f32b819d2dead270d1dbe02fae7fd84b8f1b7bfd5c",
+  "data_source": "Same cached finite enwik8-prefix SGNS checkpoints and trace bags, hash-linked to the prior public evidence.",
+  "cost_assumptions": "Shared warm CPU, single thread; no exclusive/RSS/GPU/energy/monetary claim.",
+  "local_commands": [
+    "python -m unittest discover -s tests",
+    "python tools/check_native_sanitizers.py",
+    "python -m pip wheel . --no-deps --no-build-isolation --wheel-dir /tmp/ngram-native-bounds-wheel-20261105",
+    "PYTHONPATH=/tmp/ngram-native-bounds-installed-20261105 python /Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext/tools/check_incidence_wheel.py (from /tmp)"
+  ]
+}

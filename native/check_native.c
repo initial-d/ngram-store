@@ -3,8 +3,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+static int check_bounded_compiler(void) {
+    uint64_t rows[3] = {0, 1, 2}, counts[3] = {1, 1, 1}, offsets[2] = {0, 3};
+    uint64_t mapping[3] = {0, 1, 0}, sizes[2] = {2, 1};
+    double norms[3] = {1, 0, 1}, totals[2] = {2, 0}, defects[2] = {0, 0};
+    uint64_t ids[3], plan_offsets[2]; float weights[3]; double bound[1]; unsigned char exact[1];
+    size_t used; char error[256];
+#define COMPILE_BOUND(capacity, bag_capacity, row_input) meft_rows_compile_bounded_bags( \
+    row_input, counts, offsets, 3, 1, mapping, 3, sizes, 2, norms, totals, defects, \
+    ids, weights, plan_offsets, bound, exact, capacity, bag_capacity, &used, error, sizeof(error))
+    if (COMPILE_BOUND(3, 1, rows) || used != 2 || ids[0] != 0 || ids[1] != 1 ||
+        weights[0] != 2 || weights[1] != 1 || !exact[0] || bound[0] > 1e-12) return 1;
+    if (!COMPILE_BOUND(2, 1, rows) || !COMPILE_BOUND(3, 0, rows) || !COMPILE_BOUND(3, 1, NULL)) return 1;
+    rows[1] = 0;
+    if (!COMPILE_BOUND(3, 1, rows)) return 1;
+    rows[1] = 1; mapping[0] = 2;
+    if (!COMPILE_BOUND(3, 1, rows)) return 1;
+    mapping[0] = 0; counts[0] = 1u << 24;
+    if (!COMPILE_BOUND(3, 1, rows)) return 1;
+    counts[0] = 1; norms[0] = -1;
+    if (!COMPILE_BOUND(3, 1, rows)) return 1;
+    norms[0] = 1; offsets[1] = 4;
+    if (!COMPILE_BOUND(3, 1, rows)) return 1;
+#undef COMPILE_BOUND
+    return 0;
+}
 int main(int argc, char **argv) {
     if (argc != 2) return 1;
+    if (check_bounded_compiler()) return 1;
     char error[256];
     meft_rows *s = meft_rows_open(argv[1], error, sizeof(error));
     if (!s) return 0; /* malformed files are expected to be rejected */
