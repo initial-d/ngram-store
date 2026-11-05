@@ -43,7 +43,8 @@ def main():
         raise ValueError('previous retiming and original report differ')
     rng = np.random.default_rng(42)
     report = {'status': 'running', 'category': 'frozen trained-source CPU native bounded-plan implementation follow-up',
-        'source_commit': cfg.source_commit, 'command': shlex.join([sys.executable, *sys.argv]),
+        'source_commit': cfg.source_commit,
+        'command': shlex.join(getattr(sys, 'orig_argv', [sys.executable, '-m', 'tools.benchmark_native_bounded_bags', *sys.argv[1:]])),
         'python': sys.version, 'numpy': np.__version__, 'os': platform.platform(),
         'cpu': json.loads(subprocess.check_output(['lscpu', '--json'], text=True)),
         'compiler': subprocess.check_output(['cc', '--version'], text=True),

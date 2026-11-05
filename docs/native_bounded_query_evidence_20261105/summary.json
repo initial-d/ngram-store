@@ -1,0 +1,126 @@
+{
+  "source_commit": "56df5865dd58ae5a396ffa2910b8c953e9511782",
+  "all_18_sum_mean_output_bound_domain_bytes_and_budget_decisions_identical": true,
+  "complete_model_bytes_unchanged": true,
+  "conventions": {
+    "legacy": [
+      {
+        "order": 4,
+        "traces": {
+          "known": {
+            "python_ms": 97.4005195312202,
+            "native_ms": 52.3295485181734,
+            "source_fp64_ms": 10.725607513450086,
+            "paired_speedup": 1.8578909712624323,
+            "native_vs_source_ratio": 4.878935617637629
+          },
+          "oov": {
+            "python_ms": 110.0540979532525,
+            "native_ms": 62.09092668723315,
+            "source_fp64_ms": 10.812001419253647,
+            "paired_speedup": 1.772466668239972,
+            "native_vs_source_ratio": 5.742778259043115
+          }
+        }
+      },
+      {
+        "order": 8,
+        "traces": {
+          "known": {
+            "python_ms": 127.99948710016906,
+            "native_ms": 54.78248244617134,
+            "source_fp64_ms": 12.198841432109475,
+            "paired_speedup": 2.3338469432685547,
+            "native_vs_source_ratio": 4.48520318073048
+          },
+          "oov": {
+            "python_ms": 120.59661641251296,
+            "native_ms": 63.70904599316418,
+            "source_fp64_ms": 11.204405571334064,
+            "paired_speedup": 1.8903445624461026,
+            "native_vs_source_ratio": 5.687524634170263
+          }
+        }
+      },
+      {
+        "order": 12,
+        "traces": {
+          "known": {
+            "python_ms": 132.44185142684728,
+            "native_ms": 55.027066031470895,
+            "source_fp64_ms": 12.456521508283913,
+            "paired_speedup": 2.4037391908094254,
+            "native_vs_source_ratio": 4.410841816416069
+          },
+          "oov": {
+            "python_ms": 120.94624305609614,
+            "native_ms": 63.86542157270014,
+            "source_fp64_ms": 11.293313466012478,
+            "paired_speedup": 1.8942325641726143,
+            "native_vs_source_ratio": 5.655153535311386
+          }
+        }
+      }
+    ],
+    "average": [
+      {
+        "order": 4,
+        "traces": {
+          "known": {
+            "python_ms": 97.85190399270505,
+            "native_ms": 52.55901243072003,
+            "source_fp64_ms": 10.794715955853462,
+            "paired_speedup": 1.8706620918085022,
+            "native_vs_source_ratio": 4.879755092710309
+          },
+          "oov": {
+            "python_ms": 106.96036939043552,
+            "native_ms": 58.794694021344185,
+            "source_fp64_ms": 10.83990337792784,
+            "paired_speedup": 1.8204892725986144,
+            "native_vs_source_ratio": 5.423913108032094
+          }
+        }
+      },
+      {
+        "order": 8,
+        "traces": {
+          "known": {
+            "python_ms": 128.21473751682788,
+            "native_ms": 54.79163094423711,
+            "source_fp64_ms": 12.208130909129977,
+            "paired_speedup": 2.33980738294016,
+            "native_vs_source_ratio": 4.480756675970689
+          },
+          "oov": {
+            "python_ms": 120.53651851601899,
+            "native_ms": 63.50744888186455,
+            "source_fp64_ms": 11.267122463323176,
+            "paired_speedup": 1.898452437452036,
+            "native_vs_source_ratio": 5.636527790355921
+          }
+        }
+      },
+      {
+        "order": 12,
+        "traces": {
+          "known": {
+            "python_ms": 132.55227054469287,
+            "native_ms": 55.04313006531447,
+            "source_fp64_ms": 12.451737537048757,
+            "paired_speedup": 2.4166425580791513,
+            "native_vs_source_ratio": 4.411523478655371
+          },
+          "oov": {
+            "python_ms": 121.33250059559941,
+            "native_ms": 63.8142975512892,
+            "source_fp64_ms": 11.262094019912183,
+            "paired_speedup": 1.9014450457389824,
+            "native_vs_source_ratio": 5.664625453057991
+          }
+        }
+      }
+    ]
+  },
+  "scope": "Frozen finite SGNS trained-source full CPU assessment; unchanged approximation contract, no new quality or compression claim."
+}

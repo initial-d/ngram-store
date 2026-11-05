@@ -26,6 +26,8 @@ jobs:
         run: python docs/certified_serving_evidence_20261103/verify.py
       - name: Verify partial-query bounds and coverage evidence
         run: python docs/budgeted_bag_evidence_20261104/verify.py
+      - name: Verify native bounded-plan timings and frozen contracts
+        run: python docs/native_bounded_query_evidence_20261105/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter
