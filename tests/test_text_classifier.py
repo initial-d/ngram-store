@@ -3,6 +3,7 @@ from fractions import Fraction
 import importlib.util
 import itertools
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -152,7 +153,8 @@ class TextClassifierTests(unittest.TestCase):
             self.assertEqual(file_hash(checkpoint/'head.npz'),training['head_sha256'])
             result = subprocess.run([sys.executable,'-m','tools.export_news_classifier','--training',str(parent),
                 '--output',str(parent/'cli-serving'),'--seed','3','--backends','source-mmap,ngram-bounded,ngram-int8',
-                '--native-library',str(self.library)],capture_output=True,text=True)
+                '--native-library',str(self.library)],capture_output=True,text=True,
+                env={**os.environ,'CUDA_VISIBLE_DEVICES':''})
             self.assertEqual(result.returncode,0,result.stderr)
             with TextClassifier(parent/'cli-serving/ngram-int8',native_library=self.library) as model:
                 self.assertEqual(model.predict(['ab'])['predictions'].tolist(),[0])
