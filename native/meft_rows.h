@@ -69,6 +69,26 @@ int meft_rows_embedding_bag_weighted(meft_rows *store, const uint64_t *ids, size
                                     uint64_t padding_id, size_t max_chunk_rows,
                                     float *output, size_t output_floats,
                                     char *error, size_t error_capacity);
+/* Compile source-specific bounded bags from per-bag sorted UNIQUE original IDs
+ * and positive integer counts. offsets spans count. mapping/row_l2 contain
+ * nrows entries; sizes/total_l2/defect_l2 contain groups entries. These immutable
+ * validated arrays describe the same partition and native artifact as the caller.
+ * IDs/weights need plan_capacity>=count slots; plan_offsets needs bags+1 slots,
+ * projection/exact need bag_capacity>=bags slots. Returns actual plan_count.
+ * Projection bounds use IEEE binary64 round-to-nearest with outward rounding;
+ * original-row/group order and rounded-mean defects match the Python reference.
+ * Exact-domain flags test complete equal-member counts independently of norms.
+ * No model/file changes, whole-table scan or store state. Scratch scales with
+ * the largest query bag, not nrows/groups. Same no-overlap/partial-error-output
+ * ownership contract as gather; ignore all output unless return value is zero.
+ */
+int meft_rows_compile_bounded_bags(const uint64_t *rows, const uint64_t *counts,
+    const uint64_t *offsets, size_t count, size_t bags,
+    const uint64_t *mapping, size_t nrows, const uint64_t *sizes, size_t groups,
+    const double *row_l2, const double *total_l2, const double *defect_l2,
+    uint64_t *plan_ids, float *plan_weights, uint64_t *plan_offsets,
+    double *projection, unsigned char *exact, size_t plan_capacity,
+    size_t bag_capacity, size_t *plan_count, char *error, size_t error_capacity);
 uint64_t meft_rows_last_block_reads(const meft_rows *store);
 uint64_t meft_rows_last_decompressions(const meft_rows *store);
 /* Successfully decoded compressed blocks in the last call, including repeated

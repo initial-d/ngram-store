@@ -249,6 +249,39 @@ class NativeRows:
         if setter(self.handle, budget):
             raise ValueError("cannot configure native cache")
 
+    @property
+    def supports_bounded_bag_compiler(self):
+        return hasattr(self.lib, 'meft_rows_compile_bounded_bags')
+
+    def compile_bounded_bags_into(self, rows_address, counts_address, offsets_address, count, bags,
+            mapping_address, nrows, sizes_address, groups, row_l2_address, total_l2_address, defect_l2_address,
+            ids_address, weights_address, plan_offsets_address, projection_address, exact_address,
+            plan_capacity, bag_capacity):
+        """Pointer ABI; caller owns disjoint, correctly sized immutable arrays/output.
+
+        IDs/counts are sorted unique per bag. Query scratch is bounded by the
+        largest bag. No stored table bytes are read or changed during compilation.
+        """
+        if not self.handle:
+            raise ValueError('row store is closed')
+        if not self.supports_bounded_bag_compiler:
+            raise ValueError('bounded bag compilation requires rebuilding the native row library')
+        function = self.lib.meft_rows_compile_bounded_bags
+        pointer, size = ctypes.c_void_p, ctypes.c_size_t
+        function.argtypes = [pointer, pointer, pointer, size, size, pointer, size, pointer, size,
+            pointer, pointer, pointer, pointer, pointer, pointer, pointer, pointer, size, size,
+            pointer, pointer, size]
+        function.restype = ctypes.c_int
+        used = ctypes.c_size_t()
+        error = ctypes.create_string_buffer(256)
+        status = function(rows_address, counts_address, offsets_address, count, bags,
+            mapping_address, nrows, sizes_address, groups, row_l2_address, total_l2_address, defect_l2_address,
+            ids_address, weights_address, plan_offsets_address, projection_address, exact_address,
+            plan_capacity, bag_capacity, ctypes.byref(used), error, len(error))
+        if status:
+            raise ValueError(error.value.decode())
+        return used.value
+
     def _counter(self, name):
         if not self.handle:
             raise ValueError("row store is closed")
