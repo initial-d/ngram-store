@@ -23,7 +23,8 @@ def main():
     p.add_argument('--huffpost',type=Path)
     cfg=p.parse_args()
     cfg.output=cfg.output.resolve();cfg.output.mkdir(parents=True,exist_ok=False)
-    env={**os.environ,'CUDA_VISIBLE_DEVICES':'','OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1'}
+    env={**os.environ,'CUDA_VISIBLE_DEVICES':'','OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1',
+         'OPENBLAS_NUM_THREADS':'1','VECLIB_MAXIMUM_THREADS':'1'}
     def run(args):
         subprocess.run(args,cwd=ROOT,env=env,check=True)
     # Importing only NumPy/C-side tools; no Torch required for this follow-up.

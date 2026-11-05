@@ -66,6 +66,9 @@ def validate_run(run):
                 raise ValueError('invalid model/RSS accounting')
             if record['os'].startswith('Linux') and record['peak_rss_measurement']!='current-exec VmHWM':
                 raise ValueError('Linux RSS must exclude inherited parent peak')
+            if any(record.get('thread_environment',{}).get(k)!='1' for k in
+                   ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS','VECLIB_MAXIMUM_THREADS')):
+                raise ValueError('all CPU runtime thread limits must be recorded as 1')
             if not near(record['full_quality_documents_per_second'],n/record['quality_seconds']):
                 raise ValueError('full traversal throughput mismatch')
             if phase=='validation':

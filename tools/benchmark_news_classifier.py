@@ -79,6 +79,8 @@ def worker(cfg):
     report = {'status':'passed','backend':cfg.backend,'phase':cfg.phase,'source_commit':cfg.source_commit,
         'python':sys.version,'numpy':np.__version__,'os':platform.platform(),
         'command_argv':sys.orig_argv,'requests_sha256':file_hash(cfg.requests),
+        'thread_environment':{k:os.environ.get(k) for k in ('OMP_NUM_THREADS','MKL_NUM_THREADS',
+            'OPENBLAS_NUM_THREADS','VECLIB_MAXIMUM_THREADS')},
         'classifier_sha256':file_hash(cfg.serving/cfg.backend/'classifier.json'),
         'peak_rss_measurement':'current-exec VmHWM' if sys.platform=='linux' else 'getrusage ru_maxrss',
         'torch_loaded':'torch' in sys.modules,'startup_seconds':startup_seconds,'startup_peak_rss_bytes':startup_rss,

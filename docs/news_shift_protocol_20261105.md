@@ -85,6 +85,11 @@ Isolated fresh NumPy/C worker for each seed/backend/phase; no Torch imports.
 Full text -> tokenization -> known/OOV lookup -> word/document mean -> ReLU ->
 head/output time. Native decoded cache 4 MiB. No hidden word cache. One CPU
 thread, no exclusive/core-pinned, cold filesystem-cache, production or GPU claim.
+Set OMP_NUM_THREADS/MKL_NUM_THREADS/OPENBLAS_NUM_THREADS/VECLIB_MAXIMUM_THREADS
+to 1, including Apple's Accelerate runtime. The first incomplete local run
+omitted VECLIB_MAXIMUM_THREADS; retain it as superseded, then repeat all backend
+calibration, freeze and evaluation measurements with the same models, inputs,
+codecs and quality/budget thresholds. No result-dependent method tuning.
 Fixed seed-42 sample of up to 512 calibration documents, batches 1/32, one warmup
 and five repeats. Also record one full evaluation traversal's docs/s separately.
 Linux RSS uses current-exec VmHWM, not the parent's inherited ru_maxrss.
