@@ -213,6 +213,19 @@ class TextClassifierTests(unittest.TestCase):
                     model.activation = 'identity'
                     self.assertEqual(model.predict(['ab'])['predictions'].tolist(),[1])
 
+    @unittest.skipUnless(sys.platform=='linux','Linux exec high-water regression')
+    def test_rss_excludes_large_parent_before_exec(self):
+        # A real fork/exec reproducer, rather than a mocked resource counter.
+        allocation = bytearray(128*(1<<20))
+        command = ('import json,resource; from tools.benchmark_news_classifier import peak_rss_bytes; '
+                   'print(json.dumps([peak_rss_bytes(),resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024]))')
+        child = subprocess.run([sys.executable,'-c',command],capture_output=True,text=True,
+                               env={**os.environ,'OPENBLAS_NUM_THREADS':'1'})
+        del allocation
+        self.assertEqual(child.returncode,0,child.stderr)
+        current, lifetime = json.loads(child.stdout)
+        self.assertGreater(lifetime-current,64*(1<<20))
+
 
 if __name__ == '__main__':
     unittest.main()

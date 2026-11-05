@@ -18,6 +18,18 @@ from .text_classifier import TextClassifier
 from .train_news_classifier import read_csv, write_json
 
 
+def peak_rss_bytes():
+    # Linux ru_maxrss can retain the parent's high-water mark across fork/exec.
+    # VmHWM describes the current executable's mm instead; a large controller
+    # must not make a small inference worker appear to need its parent's RAM.
+    if sys.platform=='linux':
+        for line in Path('/proc/self/status').read_text().splitlines():
+            if line.startswith('VmHWM:'):
+                return int(line.split()[1])*1024
+        raise RuntimeError('current-process VmHWM missing')
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform=='darwin' else 1024)
+
+
 def metrics(labels, predicted, losses, selected=None):
     selected = np.ones(len(labels),dtype=bool) if selected is None else np.asarray(selected,dtype=bool)
     labels, predicted, losses = labels[selected], predicted[selected], losses[selected]
@@ -42,7 +54,7 @@ def worker(cfg):
     requests = [json.loads(line) for line in cfg.requests.read_text().splitlines()]
     texts = [r['text'] for r in requests]
     labels = np.asarray([r['label'] for r in requests],dtype=np.int64)
-    rss = lambda: resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform=='darwin' else 1024)
+    rss = peak_rss_bytes
     before = time.perf_counter()
     model = TextClassifier(cfg.serving/cfg.backend,native_library=cfg.native_library)
     startup_seconds = time.perf_counter()-before
@@ -68,6 +80,7 @@ def worker(cfg):
         'python':sys.version,'numpy':np.__version__,'os':platform.platform(),
         'command_argv':sys.orig_argv,'requests_sha256':file_hash(cfg.requests),
         'classifier_sha256':file_hash(cfg.serving/cfg.backend/'classifier.json'),
+        'peak_rss_measurement':'current-exec VmHWM' if sys.platform=='linux' else 'getrusage ru_maxrss',
         'torch_loaded':'torch' in sys.modules,'startup_seconds':startup_seconds,'startup_peak_rss_bytes':startup_rss,
         'quality_seconds':quality_seconds,'full_quality_documents_per_second':len(texts)/quality_seconds,
         'metrics':metrics(labels,predictions,losses),'oov_heavy_metrics':metrics(labels,predictions,losses,high_oov),
@@ -97,6 +110,7 @@ def worker(cfg):
                 'p50_seconds':float(np.median(samples)),'p95_seconds':float(np.quantile(samples,.95)),
                 'documents_per_second':(512*5)/sum(samples)}
     report['peak_rss_bytes'] = rss()
+    report['process_lifetime_ru_maxrss_bytes'] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform=='darwin' else 1024)
     model.close()
     write_json(cfg.output,report)
 
