@@ -1,0 +1,8 @@
+{
+  "classifier.json": 1222,
+  "word-offsets.u64": 496288,
+  "lexicon.json": 9715965,
+  "word-ids.u64": 19209408,
+  "head.npz": 1546,
+  "source.f32": 156866304
+}

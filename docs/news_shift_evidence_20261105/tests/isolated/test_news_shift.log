@@ -1,0 +1,26 @@
+test_hybrids_same_known_features_and_rebased_oov (tests.test_news_shift.NewsShiftTests.test_hybrids_same_known_features_and_rebased_oov) ... {"seed": 3, "backend": "source-mmap", "complete_model_bytes": 5852, "build_seconds": 0.0012332499027252197}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 4744, "build_seconds": 0.001292459201067686}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 10449, "build_seconds": 0.49841045774519444}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 4922, "build_seconds": 0.005946457851678133}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 3221, "build_seconds": 0.008128167130053043}
+{"backend": "precomputed-hybrid-source", "complete_model_bytes": 5715}
+{"backend": "precomputed-hybrid-int8", "complete_model_bytes": 4986}
+{"backend": "precomputed-hybrid-ngram-int8", "complete_model_bytes": 5146}
+ok
+test_hybrid_sq4_reuses_exact_codebook_and_unknown_codes (tests.test_news_shift.NewsShiftTests.test_hybrid_sq4_reuses_exact_codebook_and_unknown_codes) ... {"seed": 3, "backend": "source-mmap", "complete_model_bytes": 5852, "build_seconds": 0.0009461250156164169}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 4745, "build_seconds": 0.0012041670270264149}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 10450, "build_seconds": 0.027909334283322096}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 4922, "build_seconds": 0.006320582702755928}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 3221, "build_seconds": 0.014898417051881552}
+{"seed": 3, "backend": "faiss-sq4", "complete_model_bytes": 4566, "build_seconds": 0.0052983746863901615}
+{"backend": "precomputed-hybrid-faiss-sq4", "complete_model_bytes": 5130}
+ok
+test_stratified_hash_split_dedup_overlap_and_literal_categories (tests.test_news_shift.NewsShiftTests.test_stratified_hash_split_dedup_overlap_and_literal_categories) ... {"counts": {"original_rows": 3004, "selected_category_rows": 3003, "empty_rows": 1, "ag_input_overlap_rows": 1, "duplicate_rows": 1, "conflicting_category_duplicate_rows": 1}, "phase_stats": {"validation": {"documents": 600, "tokens": 1200, "oov_tokens": 600, "oov_heavy_documents": 600, "attempted_oov_ngrams": 4200, "missing_oov_ngrams": 4199, "truncated_documents": 0, "class_1": 600, "unique_oov_types": 600, "date_min": "2016-12-31", "date_max": "2017-01-01"}, "test": {"documents": 2400, "tokens": 4800, "oov_tokens": 2400, "oov_heavy_documents": 2400, "attempted_oov_ngrams": 16800, "missing_oov_ngrams": 16797, "truncated_documents": 0, "class_1": 2400, "unique_oov_types": 2400, "date_min": "2016-12-31", "date_max": "2017-01-01"}}}
+ok
+test_quality_gates_include_macro_f1_and_frozen_budget (tests.test_news_shift.NewsShiftTests.test_quality_gates_include_macro_f1_and_frozen_budget) ... ok
+test_paired_bootstrap_resamples_documents_and_recomputes_draws (tests.test_news_shift.NewsShiftTests.test_paired_bootstrap_resamples_documents_and_recomputes_draws) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.838s
+
+OK

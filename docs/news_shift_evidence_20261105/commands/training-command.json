@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/tmp/ngram-news-shift-20261105/venv/bin/python",
+    "-m",
+    "tools.train_news_classifier",
+    "--data",
+    "/tmp/ngram-news-shift-20261105/ag-data",
+    "--output",
+    "/tmp/ngram-news-shift-20261105/training",
+    "--activation",
+    "relu",
+    "--source-commit",
+    "0c1733e955e1c3c25367d0965a018dee7184bbe0"
+  ],
+  "env_overrides": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "cwd": "/Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext",
+  "commit": "0c1733e955e1c3c25367d0965a018dee7184bbe0",
+  "local_source_replication": true,
+  "os": "macOS-26.6.2-arm64-arm-64bit"
+}

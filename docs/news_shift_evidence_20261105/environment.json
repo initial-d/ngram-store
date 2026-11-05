@@ -1,0 +1,25 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "packages": {
+    "numpy": "2.5.4",
+    "torch": "2.11.0",
+    "faiss-cpu": "1.15.1"
+  },
+  "os": "macOS-26.6.2-arm64-arm-64bit",
+  "cpu": "Apple M5",
+  "ram_bytes": 34359738368,
+  "logical_cpus": 10,
+  "training_threads": 4,
+  "inference_worker_threads": 1,
+  "training_commit": "0c1733e",
+  "benchmark_commit": "c5f02bc",
+  "device": "cpu",
+  "torch_loaded_in_inference": false,
+  "source_replication": "Fresh local AG News checkpoints; not the original remote model hashes.",
+  "limitations": [
+    "Shared warm CPU; no exclusive/core pinning, cold-cache or enforced RSS limit.",
+    "NumPy linked to Apple Accelerate; OMP/MKL/OPENBLAS/VECLIB thread limits set to 1 in final measurements.",
+    "Mac OpenMP conflict when Torch/FAISS share one test process; 32 isolated test modules pass.",
+    "Initial nested SSH request eventually returned; all new training/export/inference happened locally."
+  ]
+}

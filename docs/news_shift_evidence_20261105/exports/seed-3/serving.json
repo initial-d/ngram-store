@@ -1,0 +1,166 @@
+{
+  "status": "passed",
+  "seed": 3,
+  "source_sha256": "c308f2b9b6fc53365336f8abfb619a18558f3a8a0fdfd3cc1452c38ddb14edc5",
+  "codebook_training_ids_sha256": "aeaeb7e62b2675ab68eeea24a0b4ffa7a94e8ada3d23bfece2fdd1ff3b691f7f",
+  "variants": [
+    {
+      "backend": "source-resident",
+      "complete_model_bytes": 186290732,
+      "build_seconds": 0.0009917090646922588,
+      "classifier_sha256": "b3712dd5973f737dd75e51e9e48e6fe7c198f88d80bd3e8154712e588cba8604",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "source.f32": "c308f2b9b6fc53365336f8abfb619a18558f3a8a0fdfd3cc1452c38ddb14edc5",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "source-mmap",
+      "complete_model_bytes": 186290728,
+      "build_seconds": 0.0008136248216032982,
+      "classifier_sha256": "e8ddc291510d95deee8ce39feec74c969847aaf2cbf54b279650f316fd76133e",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "source.f32": "c308f2b9b6fc53365336f8abfb619a18558f3a8a0fdfd3cc1452c38ddb14edc5",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "fp16",
+      "complete_model_bytes": 107858504,
+      "build_seconds": 0.2198193329386413,
+      "classifier_sha256": "f9646ca44ecb0c0055e47efab15dbe738962d2924e975a7bff03b20a5bcf3ed9",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/codec.json": "268646972ba6d49f10781f8e8748f81d2955063008b6d53598a043c487862501",
+        "memory/table.rows": "b0ded399df5de0a4e874fe2210ebe5f2c15b25cf6c43229a9f7a1df90ca24466",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "int8",
+      "complete_model_bytes": 71093007,
+      "build_seconds": 0.2597991251386702,
+      "classifier_sha256": "a737d5a1d2d9e1d0f1f1c7f49e499f32eb851b30b27550efa75ae59bdba2d74f",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/codec.json": "5dc9625fb1afc64c56a7d544e8de849cb6a725c7e7e0010430df5b0657660577",
+        "memory/table.rows": "6eaf0b4b0ca486c45ab587de9ecafa9970f20e5a271e41dd6a5b7cc0a1329388",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "faiss-sq4",
+      "complete_model_bytes": 49033891,
+      "build_seconds": 0.04658970795571804,
+      "classifier_sha256": "4731eee257f1f54aadd7d04a846a1359f420b689608f80f60353067d2fb8c558",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/codec.faiss": "297e97fe3a43e50a66a966ad43f6289b24d166508d417af7c3c29c127ed1502e",
+        "memory/codec.json": "a2ec9a181c7f0ab3f3a8b1a24b7e775b37a88f206adf38f5cd5fd3d135314b52",
+        "memory/codes.npy": "14282d027da69d38f4bd679436224a2782d6c9dd5ae0589ac463536ed7a1c1a3",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "faiss-sq8",
+      "complete_model_bytes": 68642181,
+      "build_seconds": 0.041208417154848576,
+      "classifier_sha256": "34c3ac9c948f9553ebee2718f5ddeb680646efdddfac0334f7a21cbc8be5cfff",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/codec.faiss": "988b3a8fd9a0b0729b35dc5c91cd1f080cec2b8815ed8cb35a6a27dbf86b2e6a",
+        "memory/codec.json": "2f087542b86bcd17fe2279cd527018151ad891294fc1d2bb4d6af215f6120e4e",
+        "memory/codes.npy": "51a29cc7ccc8b4ff37e1b169d1f44b5d949332d9264be00e334296c14b9ce7ab",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "faiss-pq-8x8",
+      "complete_model_bytes": 34392704,
+      "build_seconds": 4.821390375029296,
+      "classifier_sha256": "1b020e2323d6b8b6635b243e15339b4cc20305afc778c86ea6d125a4d47a0172",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/codec.faiss": "4098fe8f3a462707933259cada430c7804b4108da78072cbe96d51339c067253",
+        "memory/codec.json": "8bef8c5c54efa6fc9851b9208325b44a6420be929e88bcb48981117fb8b702d1",
+        "memory/codes.npy": "fb997ba210fe3b17889161e05e4c8dc589a0ec118ca5aabe2f278eb971ffac47",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "faiss-cluster-8",
+      "complete_model_bytes": 30103398,
+      "build_seconds": 0.21851525036618114,
+      "classifier_sha256": "0dde30747852fecf93610aeaea76f2a579cc1bb26e8429790742c679add37b30",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/codec.faiss": "91fa770b4f09bfa0e602b7b82e4eee5440091a53c411c081547d97dd19b349ef",
+        "memory/codec.json": "615c6919c16d9b30020d6fd016f46b886a4b3252b6bf619bd4bc7b2e6674a686",
+        "memory/codes.npy": "e5718d3a8c96c327d79dd63d4f16b3fa0bf76b7097c155296a786dea390f36e4",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "ngram-bounded",
+      "complete_model_bytes": 97637436,
+      "build_seconds": 8.350828040856868,
+      "classifier_sha256": "6563f931b37686a59e9682ddd95a3abec0cbb3917dedce41d1b10dc058e821ad",
+      "files_sha256": {
+        "bounds/bounds.json": "c6ab853ff7fc618975eb14cfd1fa5c73458a2b97899895fc3304396f69fe60f1",
+        "bounds/group-defect-l2.f64": "e27a9bae57f61e7bfa31b7b5e567322280a9593e675e35a2cbfb0c015e55b6ab",
+        "bounds/group-total-l2.f64": "2c13f446e3e3abcf6be4bc7ac402f17edb5f951c2d82a16eae7b8b5bbda55ab4",
+        "bounds/row-l2.f64": "555b8b9e4c42579db479435be82813b473bc680b9ff6ddeca28e4ff8a919ac10",
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/domain.npz": "d0eec32142d3731a4964e0ddc33c0c60a3e3637c15b6d0a70b06c012d93ce2c7",
+        "memory/manifest.json": "6ca4542130df75d666ea7b93e3c19daa8148eb02cf858658b81b320d89fc323b",
+        "memory/table.men": "f13fc21466592d40183b96839860520369ac8dc01710ba141c6abd5c207108a7",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "ngram-int8",
+      "complete_model_bytes": 47351402,
+      "build_seconds": 0.8810008340515196,
+      "classifier_sha256": "d94d32bf7a5246a59f09d524302e04a8a3d8e6e858467e2b1abe71db93e88965",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "e02d7522c9e95cebdbae0f2711eda3badfcb64918a76d1bdf7e6ad84518aecbe",
+        "memory/codec.json": "8d283d9eb1de2bbfe3439806224b6ac6e00cf2055243c80e3d51ec8f7821f187",
+        "memory/table.men": "22104eef7f5c59429fbb53f706821e59be28be11d5971809faee71655b99eda4",
+        "word-ids.u64": "1e48f21b843dec47d0d89166e19fd717a9e0fcf20c876e60a822015bf4a327f0",
+        "word-offsets.u64": "f46c79fe93bb8d342974a2a29d7f32201598f49b7895776816731ce2802e50b8"
+      }
+    },
+    {
+      "backend": "precomputed-words",
+      "complete_model_bytes": 16838782,
+      "build_seconds": 0.7680833330377936,
+      "classifier_sha256": "51186dc309783feca04f6e30bb37d5ee8885b6b02ac68e870d6cd914c49b1c77",
+      "files_sha256": {
+        "head.npz": "dfca3e8abc3606e14e15b5175d98747c39d66d20a3c12d96e78dea0988c7ca90",
+        "lexicon.json": "1b0c9f31f79e68fd499fe195a3c57d8ee4dbdc38c583ccf3a57248ab766bb807",
+        "word-vectors.f32": "a3c878f578e99430685393b5a8b5fae3e295aa4299e00817ccf5c2b527c9b9e3"
+      }
+    }
+  ]
+}

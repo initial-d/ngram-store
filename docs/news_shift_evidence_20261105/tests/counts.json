@@ -1,0 +1,167 @@
+{
+  "modules": 32,
+  "tests": 210,
+  "skipped": 27,
+  "counts": [
+    {
+      "module": "test_ngram_training_groups",
+      "tests": 3,
+      "skipped": 0
+    },
+    {
+      "module": "test_large_structure",
+      "tests": 4,
+      "skipped": 0
+    },
+    {
+      "module": "test_text_classifier",
+      "tests": 8,
+      "skipped": 1
+    },
+    {
+      "module": "test_budgeted_report",
+      "tests": 3,
+      "skipped": 0
+    },
+    {
+      "module": "test_device_row_adapter",
+      "tests": 8,
+      "skipped": 3
+    },
+    {
+      "module": "test_heldout_compression",
+      "tests": 8,
+      "skipped": 0
+    },
+    {
+      "module": "test_corpus_checkpoints",
+      "tests": 2,
+      "skipped": 0
+    },
+    {
+      "module": "test_cotraining_groups",
+      "tests": 15,
+      "skipped": 0
+    },
+    {
+      "module": "test_certified_store",
+      "tests": 3,
+      "skipped": 0
+    },
+    {
+      "module": "test_mapped_embedding_bag",
+      "tests": 11,
+      "skipped": 0
+    },
+    {
+      "module": "test_certified_torch",
+      "tests": 1,
+      "skipped": 0
+    },
+    {
+      "module": "test_causal_ngram_lm",
+      "tests": 8,
+      "skipped": 0
+    },
+    {
+      "module": "test_ngram_store",
+      "tests": 3,
+      "skipped": 0
+    },
+    {
+      "module": "test_device_gather_benchmark",
+      "tests": 5,
+      "skipped": 0
+    },
+    {
+      "module": "test_quantized_memory",
+      "tests": 11,
+      "skipped": 0
+    },
+    {
+      "module": "test_news_shift",
+      "tests": 5,
+      "skipped": 0
+    },
+    {
+      "module": "test_quantized_capacity",
+      "tests": 1,
+      "skipped": 0
+    },
+    {
+      "module": "test_memory_capacity",
+      "tests": 2,
+      "skipped": 0
+    },
+    {
+      "module": "test_native_rows",
+      "tests": 29,
+      "skipped": 0
+    },
+    {
+      "module": "test_cosine_merge",
+      "tests": 4,
+      "skipped": 0
+    },
+    {
+      "module": "test_external_cotraining",
+      "tests": 8,
+      "skipped": 0
+    },
+    {
+      "module": "test_worker_memory",
+      "tests": 7,
+      "skipped": 0
+    },
+    {
+      "module": "test_legacy_merge",
+      "tests": 1,
+      "skipped": 0
+    },
+    {
+      "module": "test_lossless_row_store",
+      "tests": 4,
+      "skipped": 0
+    },
+    {
+      "module": "test_external_incidence_evidence",
+      "tests": 1,
+      "skipped": 0
+    },
+    {
+      "module": "test_engram_row_adapter",
+      "tests": 7,
+      "skipped": 0
+    },
+    {
+      "module": "test_faiss_cotraining",
+      "tests": 9,
+      "skipped": 0
+    },
+    {
+      "module": "test_prepare_public_benchmark",
+      "tests": 4,
+      "skipped": 0
+    },
+    {
+      "module": "test_budgeted_bags",
+      "tests": 10,
+      "skipped": 0
+    },
+    {
+      "module": "test_tinyengram_checkpoint",
+      "tests": 13,
+      "skipped": 13
+    },
+    {
+      "module": "test_fasttext_native_bundle",
+      "tests": 3,
+      "skipped": 2
+    },
+    {
+      "module": "test_structural_native",
+      "tests": 9,
+      "skipped": 8
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "codec": "sq4",
+  "dim": 64,
+  "rows": 570867,
+  "code_size": 32,
+  "training_rows": 32768,
+  "seed": 42,
+  "training_threads": 1,
+  "iterations": 20,
+  "opq_iterations": 10,
+  "training_seconds": 0.0009522084146738052,
+  "encoding_seconds": 0.03643166599795222,
+  "reused_source_codec": true,
+  "source_codec_sha256": "fca276cd892bce1dc26e472de25888e232d1bc24fcbba3d2546d10d9cf95a0ad",
+  "source_codes_sha256": "46769754ce42b56824a6fddd8b965138f17712ea67075768e918090e76b728aa",
+  "whole_word_prefix_removed": 41892
+}

@@ -1,0 +1,16 @@
+test_dense_compaction_and_budget_fallback_preserve_sorted_original_ids (tests.test_mapped_embedding_bag.MappedBagTest.test_dense_compaction_and_budget_fallback_preserve_sorted_original_ids) ... ok
+test_fixed_noncontiguous_and_empty_bags (tests.test_mapped_embedding_bag.MappedBagTest.test_fixed_noncontiguous_and_empty_bags) ... ok
+test_half_subnormals_nonfinite_values_and_owned_output (tests.test_mapped_embedding_bag.MappedBagTest.test_half_subnormals_nonfinite_values_and_owned_output) ... ok
+test_native_abi_rejects_bad_capacity_offsets_dtype_and_ids (tests.test_mapped_embedding_bag.MappedBagTest.test_native_abi_rejects_bad_capacity_offsets_dtype_and_ids) ... ok
+test_three_dtypes_ragged_padding_and_chunk_sizes_against_double_oracle (tests.test_mapped_embedding_bag.MappedBagTest.test_three_dtypes_ragged_padding_and_chunk_sizes_against_double_oracle) ... ok
+test_trained_causal_model_uses_bag_path_without_new_parameters (tests.test_mapped_embedding_bag.MappedBagTest.test_trained_causal_model_uses_bag_path_without_new_parameters) ... ok
+test_unique_queries_preserve_dense_bag_results_and_original_ids (tests.test_mapped_embedding_bag.MappedBagTest.test_unique_queries_preserve_dense_bag_results_and_original_ids) ... ok
+test_weighted_inputs_reject_wrong_shape_dtype_training_and_mean (tests.test_mapped_embedding_bag.MappedBagTest.test_weighted_inputs_reject_wrong_shape_dtype_training_and_mean) ... ok
+test_weighted_native_abi_checks_weight_capacity_and_null_pointer (tests.test_mapped_embedding_bag.MappedBagTest.test_weighted_native_abi_checks_weight_capacity_and_null_pointer) ... ok
+test_weighted_noncontiguous_fixed_bags_and_nonfinite_scalars (tests.test_mapped_embedding_bag.MappedBagTest.test_weighted_noncontiguous_fixed_bags_and_nonfinite_scalars) ... ok
+test_weighted_sum_preserves_each_occurrence_with_bounded_chunking (tests.test_mapped_embedding_bag.MappedBagTest.test_weighted_sum_preserves_each_occurrence_with_bounded_chunking) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.863s
+
+OK

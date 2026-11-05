@@ -1,0 +1,7 @@
+test_fixed_token_order_and_incomplete_utf8_suffix (tests.test_corpus_checkpoints.CorpusPrefixTests.test_fixed_token_order_and_incomplete_utf8_suffix) ... ok
+test_malformed_interior_bytes_are_not_silently_discarded (tests.test_corpus_checkpoints.CorpusPrefixTests.test_malformed_interior_bytes_are_not_silently_discarded) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK

@@ -1,0 +1,9 @@
+test_cli_reports_missing_input_without_traceback (tests.test_prepare_public_benchmark.PreparePublicBenchmarkTest.test_cli_reports_missing_input_without_traceback) ... ok
+test_generates_manifest_and_query_slices (tests.test_prepare_public_benchmark.PreparePublicBenchmarkTest.test_generates_manifest_and_query_slices) ... ok
+test_rejects_empty_filtered_corpus (tests.test_prepare_public_benchmark.PreparePublicBenchmarkTest.test_rejects_empty_filtered_corpus) ... ok
+test_rejects_non_positive_limits (tests.test_prepare_public_benchmark.PreparePublicBenchmarkTest.test_rejects_non_positive_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.021s
+
+OK

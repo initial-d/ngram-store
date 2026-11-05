@@ -1,0 +1,4 @@
+{"backend": "precomputed-hybrid-source", "complete_model_bytes": 171104055}
+{"backend": "precomputed-hybrid-int8", "complete_model_bytes": 63782037}
+{"backend": "precomputed-hybrid-faiss-sq4", "complete_model_bytes": 43231287}
+{"backend": "precomputed-hybrid-ngram-int8", "complete_model_bytes": 39680308}

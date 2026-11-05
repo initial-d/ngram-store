@@ -1,0 +1,8 @@
+test_bitwise_prediction_restores_arbitrary_original_row_order (tests.test_ngram_training_groups.NgramGroupsTest.test_bitwise_prediction_restores_arbitrary_original_row_order) ... ok
+test_same_word_training_signature_is_narrower_than_prefix_relation (tests.test_ngram_training_groups.NgramGroupsTest.test_same_word_training_signature_is_narrower_than_prefix_relation) ... ok
+test_shared_gradient_preserves_initial_offset_but_raises_cosine_with_large_update (tests.test_ngram_training_groups.NgramGroupsTest.test_shared_gradient_preserves_initial_offset_but_raises_cosine_with_large_update) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.008s
+
+OK
