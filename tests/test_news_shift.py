@@ -97,7 +97,7 @@ class NewsShiftTests(TextClassifierTests):
                 self.assertEqual(original.predict(['abc','zz'])['logits'].tobytes(),
                                  hybrid.predict(['abc','zz'])['logits'].tobytes())
 
-    def test_temporal_split_dedup_overlap_and_literal_categories(self):
+    def test_stratified_hash_split_dedup_overlap_and_literal_categories(self):
         from tools.benchmark_news_shift import prepare_requests,content_hash
         from tools.text_classifier import tokenize
         with tempfile.TemporaryDirectory() as tmp:
@@ -111,8 +111,8 @@ class NewsShiftTests(TextClassifierTests):
                 return chr(97+i//676)+chr(97+(i//26)%26)+chr(97+i%26)
             rows=[]
             for phase,when in enumerate(('2016-12-31','2017-01-01')):
-                for i in range(520):
-                    rows.append({'category':'SPORTS','headline':'news '+suffix(i+phase*520),
+                for i in range(1500):
+                    rows.append({'category':'SPORTS','headline':'news '+suffix(i+phase*1500),
                         'short_description':'','date':when})
             rows.extend([{'category':'TECH','headline':rows[0]['headline'],'short_description':'','date':'2018-01-01'},
                 {'category':'WORLD NEWS','headline':'Overlap','short_description':'article','date':'2018-01-01'},
@@ -125,13 +125,15 @@ class NewsShiftTests(TextClassifierTests):
             self.assertEqual(result['counts']['conflicting_category_duplicate_rows'],1)
             self.assertEqual(result['counts']['ag_input_overlap_rows'],1)
             self.assertEqual(result['counts']['empty_rows'],1)
-            self.assertEqual(result['phase_stats']['validation']['documents'],520)
-            self.assertEqual(result['phase_stats']['test']['documents'],520)
-            self.assertEqual(result['phase_stats']['validation']['class_1'],520)
-            self.assertEqual(result['phase_stats']['test']['class_1'],520)
+            self.assertEqual(result['phase_stats']['validation']['documents'],600)
+            self.assertEqual(result['phase_stats']['test']['documents'],2400)
+            self.assertEqual(result['phase_stats']['validation']['class_1'],600)
+            self.assertEqual(result['phase_stats']['test']['class_1'],2400)
             audit=json.loads((parent/'requests/preprocessing-audit.json').read_text())
             self.assertTrue(all('text' not in r and 'headline' not in r for r in audit))
             self.assertNotIn(content_hash(tokenize('Overlap article')[0]),{r['content_sha256'] for r in audit})
+            hashes=sorted(r['content_sha256'] for r in audit)
+            self.assertEqual(sorted(r['content_sha256'] for r in audit if r['phase']=='validation'),hashes[:600])
             with self.assertRaisesRegex(ValueError,'hash mismatch'):
                 prepare_requests(raw,ag,common,parent/'bad')
 

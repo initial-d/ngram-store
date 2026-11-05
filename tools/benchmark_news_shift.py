@@ -1,4 +1,4 @@
-"""Temporal external-news validation with frozen AG News models and fair hybrids.
+"""Independent external-news validation with frozen AG News models and fair hybrids.
 
 No retraining, test vocabulary construction, changed source registry or network
 service. Inputs/weights remain local; numeric reports contain no article text.
@@ -25,7 +25,7 @@ HUFFPOST_URL = ('https://huggingface.co/datasets/heegyu/news-category-dataset/re
 HUFFPOST_SHA256 = '2cfc51fa4a82a96ecbe251fa383737aa1dea2e0a517f61dece633fcc25a4a065'
 AG_TRAIN_SHA256 = '76a0a2d2f92b286371fe4d4044640910a04a803fdd2538e0f3f29a5c6f6b672e'
 CATEGORIES = {'WORLD NEWS':0, 'SPORTS':1, 'BUSINESS':2, 'TECH':3}
-CUTOFF = '2017-01-01'
+SPLIT = 'per-category content-SHA256 order: first floor(n/5) calibration, remainder evaluation'
 BASE = {'source-resident','source-mmap','fp16','int8','faiss-sq4','faiss-sq8',
         'faiss-pq-8x8','faiss-cluster-8','ngram-bounded','ngram-int8','precomputed-words'}
 
@@ -58,21 +58,28 @@ def prepare_requests(huffpost, ag_train, common, output, *, verify_hashes=True):
                 continue
             candidates.append((when,row_id,CATEGORIES[row['category']],text,parsed,truncated,content_hash(parsed)))
     output.mkdir(parents=True,exist_ok=False)
-    seen, audit = {}, []
+    seen, audit, retained = {}, [], []
+    for row in sorted(candidates,key=lambda v:v[:2]):
+        when,row_id,label,text,parsed,truncated,digest = row
+        if digest in seen:
+            counts['duplicate_rows'] += 1
+            counts['conflicting_category_duplicate_rows'] += int(seen[digest]!=label)
+            continue
+        seen[digest] = label
+        if digest in ag_hashes:
+            counts['ag_input_overlap_rows'] += 1
+            continue
+        retained.append(row)
+    calibration=set()
+    for label in range(4):
+        category=sorted((row for row in retained if row[2]==label),key=lambda row:(row[6],row[1]))
+        calibration.update(row[1] for row in category[:len(category)//5])
     streams = {phase:(output/(phase+'.jsonl')).open('w',encoding='utf-8') for phase in ('validation','test')}
     phase_stats = {phase:Counter() for phase in streams}
     new_types = {phase:set() for phase in streams}
     try:
-        for when,row_id,label,text,parsed,truncated,digest in sorted(candidates,key=lambda v:v[:2]):
-            if digest in seen:
-                counts['duplicate_rows'] += 1
-                counts['conflicting_category_duplicate_rows'] += int(seen[digest]!=label)
-                continue
-            seen[digest] = label
-            if digest in ag_hashes:
-                counts['ag_input_overlap_rows'] += 1
-                continue
-            phase = 'validation' if when<CUTOFF else 'test'
+        for when,row_id,label,text,parsed,truncated,digest in retained:
+            phase = 'validation' if row_id in calibration else 'test'
             unknown = [word for word in parsed if word not in words]
             missing = attempted = 0
             for word in unknown:
@@ -99,11 +106,11 @@ def prepare_requests(huffpost, ag_train, common, output, *, verify_hashes=True):
     if any(phase_stats[p]['documents']<512 for p in streams):
         raise ValueError('both complete temporal phases need at least 512 supported documents')
     write_json(output/'preprocessing-audit.json',audit)
-    manifest = {'schema_version':1,'category':'Independent public temporal news-routing evaluation',
+    manifest = {'schema_version':1,'category':'Independent public cross-source news-routing evaluation',
         'source_url':HUFFPOST_URL,'source_sha256':file_hash(huffpost),'ag_train_sha256':file_hash(ag_train),
         'attribution':'Rishabh Misra, News Category Dataset; original HuffPost articles; mirror heegyu/news-category-dataset',
         'original_dataset_url':'https://www.kaggle.com/datasets/rmisra/news-category-dataset',
-        'mirror_declared_license':'CC BY 4.0','taxonomy_mapping':CATEGORIES,'cutoff':CUTOFF,
+        'mirror_declared_license':'CC BY 4.0','taxonomy_mapping':CATEGORIES,'split':SPLIT,
         'registry_sha256':file_hash(common/'lexicon.json'),'counts':dict(counts),
         'phase_stats':{phase:{**dict(phase_stats[phase]),'unique_oov_types':len(new_types[phase]),
             'date_min':min(a['date'] for a in audit if a['phase']==phase),

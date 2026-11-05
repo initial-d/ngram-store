@@ -5,7 +5,7 @@ newer news, and whether incidence compaction can make that backend useful under
 a complete deployment-file budget. Freeze this protocol before any new task
 predictions. A positive result is not required. No GPU use or inspection.
 
-## Independent input and temporal split
+## Independent input and backend-calibration split
 
 Use the HuffPost News Category Dataset mirror `heegyu/news-category-dataset`,
 revision `304a05a55bc6abc0446d8fae0d0771716b6a271a`, `data.json`. The mirror declares
@@ -24,8 +24,16 @@ ID; retain the earliest occurrence of each tokenized input and record duplicates
 and conflicting-category duplicate counts. Exclude exact tokenized matches with
 the AG News update/validation inputs, if any, and record them.
 
-Calibration: date before **2017-01-01**. Evaluation: date on/after that date.
-The split and dedup rules never depend on model output. Publish numeric request
+An input-only audit of the original pre-2017/post-2017 design found **zero World
+News calibration articles** (11,400 calibration / 5,015 evaluation inputs).
+Before any external predictions, amend that design to a stratified 20% backend
+calibration / 80% evaluation split. Preserve the rejected input audit; do not
+claim chronological held-out evaluation. Within each literal category, sort
+deduplicated inputs by SHA256 of their tokenized text (original line ID breaks
+ties) and assign the first floor(n/5) to calibration, all others to evaluation.
+This uses category labels only for stratification, never model output. The
+AG News source training is still independent of every HuffPost article.
+Publish numeric request
 IDs, labels, dates, content hashes and preprocessing counts, never article text.
 No artificially corrupted text, held-out training types or injected new names.
 
