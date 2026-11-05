@@ -5,6 +5,7 @@ An explicit download occurs only if --huffpost is omitted. No GPU or training.
 """
 import argparse
 import hashlib
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -56,6 +57,22 @@ def main():
         '--output',str(cfg.output/'bootstrap.json')])
     run([sys.executable,'-m','tools.analyze_news_shift','--results',str(cfg.output/'results'),
         '--bootstrap',str(cfg.output/'bootstrap.json'),'--output',str(cfg.output/'summary.json')])
+    from tools.export_news_hybrids import AUDIT_HYBRIDS
+    from tools.analyze_news_hybrid_audit import summarize as summarize_audit
+    primary, audits = [], []
+    for seed in (3,7,11):
+        hybrids=cfg.output/'audit-hybrids'/f'seed-{seed}'
+        report=cfg.output/'results'/f'seed-{seed}'/'report.json'
+        output=cfg.output/'audit-results'/f'seed-{seed}'
+        run([sys.executable,'-m','tools.export_news_hybrids','--training',str(cfg.training.resolve()),
+            '--existing-serving',str(cfg.existing_serving.resolve()/f'seed-{seed}'),
+            '--output',str(hybrids),'--seed',str(seed),'--backends',','.join(AUDIT_HYBRIDS)])
+        run([sys.executable,'-m','tools.benchmark_news_hybrid_audit','--primary',str(report),
+            '--hybrids',str(hybrids),'--requests',str(requests),'--output',str(output),
+            '--native-library',str(library),'--source-commit',commit])
+        primary.append(json.loads(report.read_text()))
+        audits.append(json.loads((output/'report.json').read_text()))
+    (cfg.output/'audit-summary.json').write_text(json.dumps(summarize_audit(primary,audits),indent=2)+'\n')
     print('Complete independent evaluation:',cfg.output/'summary.json')
     print('Article text and model weights stay in this output or their original training directory.')
 

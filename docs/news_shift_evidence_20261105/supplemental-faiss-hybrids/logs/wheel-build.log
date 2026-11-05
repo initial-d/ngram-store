@@ -1,0 +1,12 @@
+Processing /Users/duyimin/Documents/Codex/2026-09-12/github/work/me_fasttext
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: meft-memory
+  Building wheel for meft-memory (pyproject.toml): started
+  Building wheel for meft-memory (pyproject.toml): finished with status 'done'
+  Created wheel for meft-memory: filename=meft_memory-0.4.0-py3-none-macosx_26_0_arm64.whl size=422507 sha256=973494d190e2a3e2eb0780bcd0beb4ef57ccd97df5cd2eb9cff074b525d9433c
+  Stored in directory: /private/var/folders/ld/dfm826ld4_d6myjvpl4f8_c80000gn/T/pip-ephem-wheel-cache-9rsiwgy5/wheels/fd/be/21/c46547ab30cda76a0ebc7f2bb33266ce89c12d257f26140673
+Successfully built meft-memory
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: /tmp/ngram-news-shift-20261105/venv/bin/python -m pip install --upgrade pip

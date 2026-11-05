@@ -9,6 +9,7 @@ HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 sys.path.insert(0,str(ROOT))
 from tools.analyze_news_shift import read, summarize
+from tools.analyze_news_hybrid_audit import summarize as summarize_audit
 
 
 def digest(data):
@@ -116,7 +117,39 @@ def main():
     summary=summarize(runs,read(HERE/'bootstrap.json.gz'))
     if summary!=read(HERE/'summary.json'):
         raise ValueError('published summary differs from complete numeric evidence')
-    print('Verified three source models, 15 controls, frozen choices, all task metrics, and paired document-bootstrap draws.')
+    extra_root=HERE/'supplemental-faiss-hybrids';audits=[]
+    for seed in (3,7,11):
+        directory=extra_root/'results'/f'seed-{seed}'
+        audit=read(directory/'report.json.gz');audits.append(audit)
+        primary_bytes=gzip.decompress((HERE/'results'/f'seed-{seed}/report.json.gz').read_bytes())
+        if audit['primary_report_sha256']!=digest(primary_bytes):
+            raise ValueError('supplemental audit must retain the completed primary report')
+        freeze=read(directory/'selection-before-test.json')
+        if freeze['selections']!=audit['selections'] or freeze['primary_report_sha256']!=audit['primary_report_sha256']:
+            raise ValueError('supplemental calibration freeze changed')
+        for name,expected in freeze['validation_report_sha256'].items():
+            raw=gzip.decompress((directory/'calibration'/f'{name}.json.gz').read_bytes())
+            record=dict(audit['validation'][name]);record.pop('source_agreement_fraction')
+            if digest(raw)!=expected or json.loads(raw)!=record:
+                raise ValueError('supplemental calibration changed after freeze')
+        for name in audit['test']:
+            folder=extra_root/'bundles'/f'seed-{seed}'/name
+            bundle=read(folder/'classifier.json');sizes=read(folder/'file-sizes.json')
+            original=read(HERE/'bundles'/f'seed-{seed}'/name[len('precomputed-hybrid-'):]/'classifier.json')
+            known=read(HERE/'bundles'/f'seed-{seed}'/'precomputed-words/classifier.json')
+            if (digest((folder/'classifier.json').read_bytes())!=audit['test'][name]['classifier_sha256']
+                    or bundle['trained_source_sha256']!=audit['trained_source_sha256']
+                    or bundle['head_sha256']!=known['head_sha256'] or bundle['rows']!=570867
+                    or bundle['files_sha256']['word-vectors.f32']!=known['files_sha256']['word-vectors.f32']
+                    or bundle['files_sha256']['memory/codec.faiss']!=original['files_sha256']['memory/codec.faiss']):
+                raise ValueError('FAISS hybrids must reuse source words/head/codec and rebased grams')
+            if (set(sizes)!=set(bundle['files_sha256'])|{'classifier.json'}
+                    or sum(sizes.values())!=audit['test'][name]['complete_model_bytes']
+                    or 'word-ids.u64' in sizes or 'word-offsets.u64' in sizes):
+                raise ValueError('complete supplemental deployment size audit changed')
+    if summarize_audit(runs,audits)!=read(extra_root/'summary.json'):
+        raise ValueError('supplemental summary differs from numeric evidence')
+    print('Verified three source models, 15 primary + 3 supplemental controls, frozen choices, task metrics, and paired document-bootstrap draws.')
 
 
 if __name__=='__main__':main()

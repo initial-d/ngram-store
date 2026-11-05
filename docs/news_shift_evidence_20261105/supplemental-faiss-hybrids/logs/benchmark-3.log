@@ -1,0 +1,6 @@
+{"phase": "validation", "backend": "precomputed-hybrid-faiss-sq8", "seed": 3, "accuracy": 0.6543736665650717, "model_mib": 58.65004539489746}
+{"phase": "validation", "backend": "precomputed-hybrid-faiss-pq-8x8", "seed": 3, "accuracy": 0.655592807071015, "model_mib": 28.22447681427002}
+{"phase": "validation", "backend": "precomputed-hybrid-faiss-cluster-8", "seed": 3, "accuracy": 0.6531545260591283, "model_mib": 24.413533210754395}
+{"phase": "test", "backend": "precomputed-hybrid-faiss-sq8", "seed": 3, "accuracy": 0.6592051164915487, "model_mib": 58.65004539489746}
+{"phase": "test", "backend": "precomputed-hybrid-faiss-pq-8x8", "seed": 3, "accuracy": 0.6593573930257347, "model_mib": 28.22447681427002}
+{"phase": "test", "backend": "precomputed-hybrid-faiss-cluster-8", "seed": 3, "accuracy": 0.6588244251560834, "model_mib": 24.413533210754395}

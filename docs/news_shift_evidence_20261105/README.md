@@ -15,6 +15,13 @@ control, but its 95% document-bootstrap interval is [-0.0761, +0.4163] pp. On
 The source classifier's 65.87% cross-source accuracy also limits application
 readiness. Keep these limits with the storage numbers.
 
+**A post-primary stronger-control audit further weakens the advantage claim.**
+Giving PQ and clustering the identical precomputed-word path yields 28.22 MiB
+and 24.41 MiB hybrid bundles; both pass every seed's calibration/evaluation
+quality gate. Their throughput is also higher than the NGramStore hybrid here.
+NGramStore retains much closer source predictions, but does not win the declared
+task-quality/storage/throughput tradeoff against these controls.
+
 ## Data, model and measurements
 
 - Independent [HuffPost News Category Dataset mirror](https://huggingface.co/datasets/heegyu/news-category-dataset/tree/304a05a55bc6abc0446d8fae0d0771716b6a271a),
@@ -52,7 +59,7 @@ readiness. Keep these limits with the storage numbers.
   RSS includes runtime, keys, request text, mmap pages and scratch. File budgets
   and observed-RSS eligibility are distinct; neither is an enforced memory cap.
 
-## All controls (three-seed medians)
+## Primary 15 controls (three-seed medians)
 
 | Backend | Complete MiB | Evaluation peak RSS MiB | Accuracy % | Macro-F1 % | Calibration batch32 docs/s |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -115,6 +122,30 @@ counterexample to necessity. OOV is only 2.79% of all tokens, and source-domain
 transfer is weak. This experiment does not establish that subword features
 drive quality enough to justify their storage cost. It neither disproves their
 value in other applications nor establishes an LLM-memory improvement.
+
+## Supplemental audit: every FAISS codec gets precomputed words
+
+This audit was added **after** the primary evaluation when reviewing baseline
+fairness. It is explicitly retrospective, not a preregistered primary result.
+Reuse the identical checkpoints, word features, codebooks/codes, inputs and
+quality gates. No retraining or parameter change. Supplemental calibration is
+measured before freezing its choices and evaluating the added methods. The
+original 15-control study and its choices remain unchanged.
+
+| Additional hybrid | Complete MiB | Peak RSS MiB | Accuracy % | Macro-F1 % | Calibration batch32 docs/s | Source disagreements / 39,402 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Precomputed + FAISS SQ8 | 58.65 | 208.36 | 65.9205 | 64.8257 | 40,475 | 71 |
+| Precomputed + FAISS PQ8x8 | **28.22** | 177.77 | 65.9357 | 64.8497 | **39,891** | 442 |
+| Precomputed + FAISS 256-centroid clustering | **24.41** | **173.97** | 65.8824 | 64.8040 | **40,697** | 576 |
+
+All three added controls pass every seed's calibration/evaluation quality gates.
+Zero-OOV precomputation still wins the combined 18-method budget choices. Even
+among subword-retaining bundles, NGramStore is not the best low-storage choice
+under these gates. Its 3 source disagreements versus 442/576 for PQ/clustering
+are a fidelity tradeoff, not evidence of better task accuracy. These supplemental
+entries are point summaries, without a new superiority significance claim.
+
+[Supplemental records and unchanged-source hashes](supplemental-faiss-hybrids/)
 
 ## Reproduction, verification and preserved failures
 

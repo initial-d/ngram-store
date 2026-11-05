@@ -108,3 +108,14 @@ subword-preserving hybrids fail at least one, and the zero-OOV control fails
 quality. Even then state the dataset/model/budget, explain the mechanism, and
 report any throughput/RSS disadvantage. If these conditions do not occur,
 publish the negative boundary instead of claiming universal superiority.
+
+## Explicit post-primary strong-control audit
+
+After completing the original 15 controls, baseline review adds precomputed +
+FAISS SQ8/PQ8x8/256-centroid clustering. This is retrospective supplementary
+evidence, not a preregistered primary result. Reuse the same source words,
+checkpoints, original trained codebooks/codes, input split and quality/budget
+gates. Do not change any original primary result or selected backend. Measure
+new calibration workers, freeze supplementary combined choices, then evaluate
+all new controls. Preserve original primary report hashes. The reproduction
+entry follows that same primary-then-supplemental order.

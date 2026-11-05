@@ -1,0 +1,3 @@
+{"backend": "precomputed-hybrid-faiss-sq8", "complete_model_bytes": 61499030}
+{"backend": "precomputed-hybrid-faiss-pq-8x8", "complete_model_bytes": 29595509}
+{"backend": "precomputed-hybrid-faiss-cluster-8", "complete_model_bytes": 25599445}

@@ -19,6 +19,11 @@ including the 1,132 naturally OOV-heavy articles. Source-model transfer accuracy
 is only 65.87% median. This is a backend/robustness comparison, not a deployed
 service or universal advantage. Read the complete report before quoting results.
 
+The supplemental audit also gives SQ8, PQ8x8 and clustering the same known-word
+path. PQ/clustering hybrids are 28.22/24.41 MiB and pass every seed's task-quality
+gates, while running faster than the NGramStore hybrid. Its closer source
+predictions remain a separate fidelity tradeoff.
+
 ## Serve an exported hybrid
 
 Install this checkout; public v0.4.0 predates these additions:
@@ -41,6 +46,8 @@ with TextClassifier("experiment/hybrids/seed-3/precomputed-hybrid-ngram-int8") a
 Backends: `precomputed-hybrid-source`, `precomputed-hybrid-int8`,
 `precomputed-hybrid-faiss-sq4`, `precomputed-hybrid-ngram-int8`. The FAISS hybrid
 requires faiss-cpu; the NGramStore hybrid needs NumPy and the native C library.
+Additional controls: `precomputed-hybrid-faiss-sq8`,
+`precomputed-hybrid-faiss-pq-8x8`, `precomputed-hybrid-faiss-cluster-8`.
 Known words read identical source FP32 features. New words use available
 **already-trained** character n-grams. No online training, evaluation-word
 precomputation or dynamic word cache; missing n-grams add no learned information.
@@ -70,6 +77,8 @@ FAISS are needed for the complete comparison; Torch is only needed to reproduce
 source training. The earlier single-seed [AG News entry](news_classifier_app.md)
 must be assembled for all three seeds first. Exact source-training/export/run
 commands are retained in the [evidence folder](news_shift_evidence_20261105/commands/).
+The reproduction runs the 15 primary controls, then the three supplemental
+FAISS hybrids; the latter retain their explicit post-primary audit role.
 
 The [protocol](news_shift_protocol_20261105.md) amended an input-only temporal
 split before predictions because World News was absent from calibration. The
