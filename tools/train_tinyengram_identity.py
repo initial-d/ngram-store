@@ -212,7 +212,8 @@ def main():
         report["training_targets_per_seed"] = train_targets
         report["sampled_train_windows"] = {"count": len(training), "token_ids_sha256": tensor_sha(training),
                                            "window_indices_sha256": hashlib.sha256(selected.tobytes()).hexdigest()}
-        evaluation = {s: ids[0,:length*protocol[s+"_windows"]].reshape(-1,length)
+        evaluation = {s: ids[0,length*protocol.get(s+"_window_start",0):
+                                  length*(protocol.get(s+"_window_start",0)+protocol[s+"_windows"])].reshape(-1,length)
                       for s,ids in encoded.items() if s != "train"}
         for s,ids in evaluation.items():
             if len(ids) != protocol[s+"_windows"]:
