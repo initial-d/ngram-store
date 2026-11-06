@@ -1,4 +1,4 @@
-"""CPU training reuse for one late TinyEngram branch on a frozen Qwen.
+"""FP32 CPU/CUDA training reuse for a late TinyEngram branch on frozen Qwen.
 
 Capture the state immediately before the branch in the original pinned forward.
 Resume the SAME decoder suffix and full-vocabulary head. This saves frozen
@@ -20,6 +20,9 @@ class FrozenTinyEngramPrefix:
     def __init__(self, model):
         self.model = model
         self.backbone = model.model
+        self.device = next(model.parameters()).device
+        if self.device.type not in ("cpu", "cuda"):
+            raise ValueError("prefix reuse supports CPU and CUDA")
         layers = list(self.backbone.engram_layers)
         if len(layers) != 1:
             raise ValueError("requires exactly one memory branch")
@@ -30,8 +33,8 @@ class FrozenTinyEngramPrefix:
         if model.config._attn_implementation != "eager":
             raise ValueError("requires pinned eager attention")
         for name, p in model.named_parameters():
-            if p.device.type != "cpu" or p.dtype != torch.float32:
-                raise ValueError("requires CPU FP32 parameters")
+            if p.device != self.device or p.dtype != torch.float32:
+                raise ValueError("requires FP32 parameters on one fixed device")
             if "engram_layers" not in name and p.requires_grad:
                 raise ValueError("all non-memory parameters must be frozen")
         if any(isinstance(m, torch.nn.Dropout) and m.p for m in model.modules()):
@@ -44,7 +47,7 @@ class FrozenTinyEngramPrefix:
         for name, p in self.model.state_dict().items():
             if "engram_layers" not in name:
                 digest.update(name.encode())
-                digest.update(p.detach().contiguous().view(torch.uint8).numpy().tobytes())
+                digest.update(p.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes())
         return digest.hexdigest()
 
     @torch.no_grad()
@@ -56,7 +59,7 @@ class FrozenTinyEngramPrefix:
 
         handle = self.branch.register_forward_pre_hook(stop, with_kwargs=True)
         try:
-            self.backbone(input_ids=ids, use_cache=False)
+            self.backbone(input_ids=ids.to(self.device), use_cache=False)
         except _CapturedPrefix as captured:
             return captured.hidden
         finally:
@@ -71,10 +74,10 @@ class FrozenTinyEngramPrefix:
     def forward(self, ids, hidden, *, use_memory=True):
         self._validate(ids)
         if (hidden.shape != (*ids.shape, self.model.config.hidden_size)
-                or hidden.device.type != "cpu" or hidden.dtype != torch.float32
+                or hidden.device != self.device or hidden.dtype != torch.float32
                 or hidden.requires_grad or hidden.is_inference()):
             raise ValueError("requires ordinary detached FP32 prefix states with matching shape")
-        cache_position = torch.arange(ids.shape[1])
+        cache_position = torch.arange(ids.shape[1],device=self.device)
         position_ids = cache_position.unsqueeze(0)
         mask_kwargs = dict(config=self.model.config, input_embeds=hidden,
                            attention_mask=None, cache_position=cache_position,
@@ -84,7 +87,7 @@ class FrozenTinyEngramPrefix:
             masks["sliding_attention"] = create_sliding_window_causal_mask(**mask_kwargs)
         rotations = self.backbone.rotary_emb(hidden, position_ids)
         if use_memory:
-            hidden = hidden + self.branch(hidden_states=hidden.unsqueeze(2), input_ids=ids).squeeze(2)
+            hidden = hidden + self.branch(hidden_states=hidden.unsqueeze(2), input_ids=ids.to(self.device)).squeeze(2)
         for layer in self.backbone.layers[self.layer_id:]:
             hidden = layer(hidden, attention_mask=masks[layer.attention_type],
                            position_ids=position_ids, past_key_values=None, use_cache=False,
@@ -96,7 +99,7 @@ def check_reuse(model, reuse, ids, *, gradients=False):
     """Compare full logits and, optionally, every branch gradient before reuse."""
     model.zero_grad(set_to_none=True)
     hidden = reuse.capture(ids)
-    direct = model(ids, use_cache=False).logits
+    direct = model(ids.to(reuse.device), use_cache=False).logits
     cached = reuse.forward(ids, hidden)
     if not torch.equal(direct.detach().contiguous().view(torch.uint8),
                        cached.detach().contiguous().view(torch.uint8)):
@@ -105,7 +108,7 @@ def check_reuse(model, reuse, ids, *, gradients=False):
     if gradients:
         def loss(logits):
             return torch.nn.functional.cross_entropy(logits[:, :-1].reshape(-1, logits.shape[-1]),
-                                                     ids[:, 1:].reshape(-1))
+                                                     ids[:, 1:].to(reuse.device).reshape(-1))
         loss(direct).backward()
         expected = {n: p.grad.clone() if p.grad is not None else None
                     for n, p in model.named_parameters() if p.requires_grad}

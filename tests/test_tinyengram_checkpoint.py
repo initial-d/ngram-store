@@ -164,6 +164,27 @@ class TinyEngramCheckpointTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             sample_windows(ids,8,18)
 
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_frozen_prefix_preserves_full_logits_and_gradients(self):
+        import copy
+        from tools.frozen_tinyengram_prefix import FrozenTinyEngramPrefix, check_reuse
+        model = copy.deepcopy(self.original)
+        del model.model.engram_layers["0"]
+        model.to("cuda")
+        old = torch.are_deterministic_algorithms_enabled()
+        old_tf32 = torch.backends.cuda.matmul.allow_tf32
+        try:
+            torch.use_deterministic_algorithms(True)
+            torch.backends.cuda.matmul.allow_tf32 = False
+            reuse = FrozenTinyEngramPrefix(model)
+            result = check_reuse(model,reuse,self.ids,gradients=True)
+            self.assertTrue(result["logits_byte_exact"])
+            self.assertTrue(result["branch_gradients_exact"])
+            self.assertEqual(reuse.capture(self.ids).device.type,"cuda")
+        finally:
+            torch.use_deterministic_algorithms(old)
+            torch.backends.cuda.matmul.allow_tf32 = old_tf32
+
     def check_staged_model(self, device, cache_policy="blocks"):
         import copy
         from tools.tinyengram_checkpoint import TinyEngramModel

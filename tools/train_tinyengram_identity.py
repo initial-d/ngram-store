@@ -1,4 +1,4 @@
-"""Larger actual-text TinyEngram branch training with frozen-prefix CPU reuse.
+"""Actual-text TinyEngram branch training with frozen-prefix CPU/CUDA reuse.
 
 Train ordinary next-token CE from a local pretrained Qwen. Freeze the protocol,
 retain every final seed and both identity/branch ablations, and never choose a
@@ -21,13 +21,14 @@ from transformers import AutoTokenizer, Qwen3Config
 import transformers
 
 from .engram_row_adapter import MappedMultiHeadEmbedding, file_sha256
+from .device_row_adapter import StagedMultiHeadEmbedding
 from .frozen_tinyengram_prefix import FrozenTinyEngramPrefix, check_reuse
 from .lm_quality_metrics import memory_qualification, next_token_metrics, summarize_windows
 from .tinyengram_checkpoint import export_tinyengram_checkpoint, load_upstream, source_revision, UPSTREAM_SHA
 
 
 def tensor_sha(value):
-    return hashlib.sha256(value.detach().contiguous().view(torch.uint8).numpy().tobytes()).hexdigest()
+    return hashlib.sha256(value.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes()).hexdigest()
 
 
 def sample_windows(ids, length, count):
@@ -59,21 +60,27 @@ def evaluate_seed(model, reuse, ids, prefixes, bundle, library):
             for begin, end in zip(offsets, offsets[1:]):
                 mean[begin:end] = weight[begin:end].mean(0)
             means[key] = mean
-            native[key] = MappedMultiHeadEmbedding(bundle / manifest["layers"][key]["path"],
-                                                  native_library=library, native_cache_bytes=1024**2)
-            if native[key].table.rows(range(len(weight))) != weight.contiguous().view(torch.uint8).numpy().tobytes():
+            path = bundle / manifest["layers"][key]["path"]
+            if reuse.device.type == "cuda":
+                native[key] = StagedMultiHeadEmbedding(path,device=reuse.device,native_library=library,
+                              native_cache_bytes=1024**2,staging_rows=4096,staging_slots=2)
+                gather = native[key].gather
+            else:
+                native[key] = MappedMultiHeadEmbedding(path,native_library=library,native_cache_bytes=1024**2)
+                gather = native[key]
+            if gather.table.rows(range(len(weight))) != weight.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes():
                 raise AssertionError("export changed a source row")
-            if not torch.equal(native[key].offsets, embedding.offsets):
+            if not torch.equal(gather.offsets, embedding.offsets.cpu()):
                 raise AssertionError("export changed original head offsets")
         with torch.no_grad():
             for split, windows in ids.items():
                 for i, sample in enumerate(windows):
                     sample = sample.unsqueeze(0)
-                    hidden = torch.from_numpy(np.array(prefixes[split][i:i+1], copy=True))
+                    hidden = torch.from_numpy(np.array(prefixes[split][i:i+1], copy=True)).to(reuse.device)
                     reference = reuse.forward(sample, hidden)
                     # Validate a direct complete forward in each independently
                     # prepared split, in addition to the pretraining gradient check.
-                    if i == 0 and not torch.equal(model(sample, use_cache=False).logits.view(torch.uint8),
+                    if i == 0 and not torch.equal(model(sample.to(reuse.device), use_cache=False).logits.view(torch.uint8),
                                                   reference.contiguous().view(torch.uint8)):
                         raise AssertionError("held-out prefix reuse changed complete-forward logits")
                     for name in result:
@@ -87,7 +94,7 @@ def evaluate_seed(model, reuse, ids, prefixes, bundle, library):
                                 for key, layer in model.model.engram_layers.items():
                                     layer.multi_head_embedding = native[key]
                             candidate = reuse.forward(sample, hidden, use_memory=name != "memory-off")
-                            metrics = next_token_metrics(reference, candidate, sample)
+                            metrics = next_token_metrics(reference, candidate, sample.to(reuse.device))
                             metrics["window_index"] = i
                             if name == "native-fp32" and not metrics["logits_byte_exact"]:
                                 raise AssertionError("native source logits changed")
@@ -110,6 +117,7 @@ def main():
     for name in ("base-model", "corpus", "upstream-dir", "protocol", "output-dir"):
         p.add_argument("--"+name, type=Path, required=True)
     p.add_argument("--native-library", type=Path)
+    p.add_argument("--device",choices=("cpu","cuda"),default="cpu")
     p.add_argument("--smoke", action="store_true", help="training-only arithmetic/runtime check; no held-out scoring")
     args = p.parse_args()
     protocol = json.loads(args.protocol.read_text())
@@ -129,7 +137,7 @@ def main():
                                       "lm_quality_metrics.py", "tinyengram_checkpoint.py", "engram_row_adapter.py")},
               "environment": {"python": sys.version, "torch": torch.__version__,
                               "transformers": transformers.__version__, "numpy": np.__version__,
-                              "os": platform.platform(), "device": "cpu", "threads": protocol["threads"],
+                              "os": platform.platform(), "device": args.device, "threads": protocol["threads"],
                               "interop_threads": 1}, "seeds": {},
               "limitations": ["finite late-layer branch training on one corpus; not convergence or released DeepSeek weights",
                               "sampled held-out windows; Qwen pretraining overlap unknown",
@@ -148,6 +156,22 @@ def main():
             raise ValueError("corpus differs from frozen protocol")
         torch.set_num_threads(protocol["threads"])
         torch.set_num_interop_threads(1)
+        device = torch.device(args.device)
+        if device.type == "cuda":
+            if not torch.cuda.is_available():
+                raise ValueError("CUDA requested but unavailable")
+            device = torch.device("cuda",torch.cuda.current_device())
+            torch.use_deterministic_algorithms(True)
+            torch.backends.cuda.matmul.allow_tf32 = False
+            torch.backends.cudnn.allow_tf32 = False
+            torch.backends.cudnn.deterministic = True
+            torch.backends.cudnn.benchmark = False
+            properties = torch.cuda.get_device_properties(device)
+            report["environment"].update({"gpu":properties.name,"gpu_uuid":str(properties.uuid),
+                        "gpu_total_memory":properties.total_memory,"cuda":torch.version.cuda,
+                        "cudnn":torch.backends.cudnn.version(),"deterministic_algorithms":True,
+                        "tf32":False})
+            torch.cuda.reset_peak_memory_stats(device)
         try:
             report["environment"]["cpu"] = subprocess.check_output(["lscpu"], text=True)
         except (OSError, subprocess.CalledProcessError):
@@ -198,7 +222,7 @@ def main():
                 raise ValueError("base backbone was not exactly restored: " + repr(loading))
             for name, parameter in model.named_parameters():
                 parameter.requires_grad_("engram_layers" in name)
-            model.eval()
+            model.to(device).eval()
             reuse = FrozenTinyEngramPrefix(model)
             frozen_hash = reuse.frozen_weight_sha256()
             seed_report = report["seeds"][str(seed)] = {"status": "training", "layer_id": layer_id,
@@ -222,7 +246,7 @@ def main():
                     # Evaluation prefix batches match its batch-one forward.
                     prep_batch = batch if split == "train" else 1
                     for i in range(0,len(windows),prep_batch):
-                        states[i:i+prep_batch] = reuse.capture(windows[i:i+prep_batch]).numpy()
+                        states[i:i+prep_batch] = reuse.capture(windows[i:i+prep_batch]).cpu().numpy()
                         if i % 64 == 0:
                             print(f"prefix {split} {i}/{len(windows)}",flush=True)
                     states.flush()
@@ -236,14 +260,14 @@ def main():
             elif cache_metadata["frozen_weight_sha256"] != frozen_hash:
                 raise AssertionError("seed changed the frozen backbone; prefix cache is invalid")
             # Check the serialized state and sample schedule as well as the helper.
-            serialized = torch.from_numpy(np.array(cache_files["train"][:batch],copy=True))
+            serialized = torch.from_numpy(np.array(cache_files["train"][:batch],copy=True)).to(device)
             with torch.no_grad():
-                if not torch.equal(model(training[:batch],use_cache=False).logits.view(torch.uint8),
+                if not torch.equal(model(training[:batch].to(device),use_cache=False).logits.view(torch.uint8),
                                    reuse.forward(training[:batch],serialized).contiguous().view(torch.uint8)):
                     raise AssertionError("serialized prefix cache changed source logits")
             for windows in training.split(64):
                 queried = torch.from_numpy(branch.hash_mapping.hash(windows.numpy())[layer_id])
-                shifted = queried + branch.multi_head_embedding.offsets
+                shifted = queried + branch.multi_head_embedding.offsets.cpu()
                 seen[shifted.flatten().numpy()] = True
             params = [p for p in model.parameters() if p.requires_grad]
             other = [p for p in params if p is not weight]
@@ -257,11 +281,11 @@ def main():
                 for begin in range(0,len(training),batch):
                     indices = order[begin:begin+batch]
                     samples = training[torch.from_numpy(indices)]
-                    states = torch.from_numpy(np.array(cache_files["train"][indices],copy=True))
+                    states = torch.from_numpy(np.array(cache_files["train"][indices],copy=True)).to(device)
                     optimizer.zero_grad(set_to_none=True)
                     engram.set_global_step(step)
                     logits = reuse.forward(samples,states)
-                    loss = torch.nn.functional.cross_entropy(logits[:,:-1].reshape(-1,logits.shape[-1]),samples[:,1:].reshape(-1))
+                    loss = torch.nn.functional.cross_entropy(logits[:,:-1].reshape(-1,logits.shape[-1]),samples[:,1:].to(device).reshape(-1))
                     if not torch.isfinite(loss):
                         raise ValueError("nonfinite training loss")
                     loss.backward()
@@ -278,6 +302,10 @@ def main():
                 raise AssertionError("training changed frozen weights")
             seed_report.update({"steps":step,"training_seconds":time.perf_counter()-train_start,
                                 "frozen_weight_hash_unchanged":True})
+            if device.type == "cuda":
+                seed_report["cuda_peak_allocated_bytes"] = torch.cuda.max_memory_allocated(device)
+                seed_report["cuda_peak_reserved_bytes"] = torch.cuda.max_memory_reserved(device)
+                torch.cuda.reset_peak_memory_stats(device)
             seed_report["memory"].update({"queried_rows":int(seen.sum()),
                               "changed_rows":int((weight.detach()!=initial).any(1).sum()),
                               "trained_weight_sha256":tensor_sha(weight)})
