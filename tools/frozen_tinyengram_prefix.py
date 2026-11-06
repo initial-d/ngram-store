@@ -18,7 +18,7 @@ class _CapturedPrefix(Exception):
 
 
 class FrozenTinyEngramPrefix:
-    def __init__(self, model):
+    def __init__(self, model, *, train_decoder_suffix=False):
         self.model = model
         self.backbone = model.model
         self.device = next(model.parameters()).device
@@ -33,11 +33,15 @@ class FrozenTinyEngramPrefix:
         self.branch = self.backbone.engram_layers[layers[0]]
         if model.config._attn_implementation != "eager":
             raise ValueError("requires pinned eager attention")
+        self._trainable_suffix=set()
+        suffix_names=tuple(f'model.layers.{i}.' for i in range(self.layer_id,model.config.num_hidden_layers))
         for name, p in model.named_parameters():
             if p.device != self.device or p.dtype != torch.float32:
                 raise ValueError("requires FP32 parameters on one fixed device")
             if "engram_layers" not in name and p.requires_grad:
-                raise ValueError("all non-memory parameters must be frozen")
+                if not train_decoder_suffix or not name.startswith(suffix_names):
+                    raise ValueError("all prefix/head parameters must be frozen; only explicitly allowed decoder suffix may train")
+                self._trainable_suffix.add(name)
         if any(isinstance(m, torch.nn.Dropout) and m.p for m in model.modules()):
             raise ValueError("dropout is incompatible with reusable frozen states")
         if model.config.attention_dropout:
@@ -46,7 +50,7 @@ class FrozenTinyEngramPrefix:
     def frozen_weight_sha256(self):
         digest = hashlib.sha256()
         for name, p in self.model.state_dict().items():
-            if "engram_layers" not in name:
+            if "engram_layers" not in name and name not in self._trainable_suffix:
                 digest.update(name.encode())
                 digest.update(p.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes())
         return digest.hexdigest()
@@ -100,12 +104,18 @@ class FrozenTinyEngramPrefix:
         return self.model.lm_head(self.backbone.norm(hidden))
 
 
-def check_reuse(model, reuse, ids, *, gradients=False):
+def check_reuse(model, reuse, ids, *, gradients=False, use_memory=True, set_skip_memory=None):
     """Compare full logits and, optionally, every branch gradient before reuse."""
     model.zero_grad(set_to_none=True)
     hidden = reuse.capture(ids)
-    direct = model(ids.to(reuse.device), use_cache=False).logits
-    cached = reuse.forward(ids, hidden)
+    if not use_memory and set_skip_memory is None:
+        raise ValueError('memory-off complete-forward checking needs the pinned skip setter')
+    try:
+        if set_skip_memory is not None:set_skip_memory(not use_memory)
+        direct = model(ids.to(reuse.device), use_cache=False).logits
+    finally:
+        if set_skip_memory is not None:set_skip_memory(False)
+    cached = reuse.forward(ids, hidden,use_memory=use_memory)
     if not torch.equal(direct.detach().contiguous().view(torch.uint8),
                        cached.detach().contiguous().view(torch.uint8)):
         raise AssertionError("reused prefix changed matched-schedule logits")
@@ -128,4 +138,6 @@ def check_reuse(model, reuse, ids, *, gradients=False):
                 raise AssertionError("frozen backbone acquired gradients")
         model.zero_grad(set_to_none=True)
         result["branch_gradients_exact"] = True
+        result['all_trainable_gradients_exact']=True
+        result['trainable_gradient_count']=len(expected)
     return result
