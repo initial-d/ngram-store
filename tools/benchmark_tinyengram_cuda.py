@@ -47,7 +47,7 @@ class ResidentPrefetchedBaseline(DenseStagedBaseline):
 def load_mode(args):
     model = load_tinyengram_checkpoint(args.bundle, upstream_dir=args.upstream_dir,
         native_library=args.native_library, device="cuda", staging_rows=args.staging_rows,
-        staging_slots=2, native_cache_bytes=args.cache_bytes)
+        staging_slots=2, native_cache_bytes=args.cache_bytes,native_cache_policy=args.native_cache_policy)
     if args.mode == "native":
         return model
     manifest = json.loads((args.bundle / "bundle.json").read_text())
@@ -98,6 +98,7 @@ def main():
     parser.add_argument("--repeat", type=int, default=5)
     parser.add_argument("--staging-rows", type=int, default=256)
     parser.add_argument("--cache-bytes", type=int, default=1048576)
+    parser.add_argument('--native-cache-policy',choices=('blocks','rows'),default='blocks')
     args = parser.parse_args()
     counts = [int(v) for v in args.tokens.split(",")]
     if min(*counts, args.decode_tokens, args.repeat, args.staging_rows) < 1 or min(args.warmup, args.cache_bytes) < 0:
@@ -112,6 +113,7 @@ def main():
         parser.error("previous report exists; choose a fresh output directory")
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     report = {"status": "failed", "mode": args.mode, "commit": source_revision(),
+              'native_cache_policy':args.native_cache_policy,
               "command": shlex.join(sys.orig_argv), "inputs": _fingerprint(args.checkpoint, args.bundle, args.corpus),
               "source_hashes": {name: file_sha256(Path(__file__).parent / name) for name in
                                 ("benchmark_tinyengram_cuda.py", "benchmark_device_gather.py",
