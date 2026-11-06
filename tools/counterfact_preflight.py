@@ -34,24 +34,42 @@ def main():
         exec(compile(ast.Module(body=[node],type_ignores=[]),'<pinned MEMIT oracle>','exec'),namespace)
         class Wrapper(torch.nn.Module):
             def forward(self,input_ids,**kwargs):
-                with replay.context(input_ids.cpu(),True):return model(input_ids=input_ids,**kwargs,use_cache=False)
-        tok.padding_side='right';parity=[]
+                with replay.context(input_ids.cpu(),True):
+                    self.result=model(input_ids=input_ids,**kwargs,use_cache=False)
+                return self.result
+        tok.padding_side='right';parity=[];formula_parity=[];batch_rank_changes=0;batch_accuracy_changes=0
         with torch.no_grad():
             for r in records[:4]:
                 e=r['requested_rewrite'];prefixes=[e['prompt'].format(e['subject']),*r['paraphrase_prompts'],*r['neighborhood_prompts']]
                 correct=[0]*(1+len(r['paraphrase_prompts']))+[1]*len(r['neighborhood_prompts'])
-                expected,accuracy=namespace['test_batch_prediction'](Wrapper(),tok,prefixes,correct,e['target_new']['str'],e['target_true']['str'])
+                wrapper=Wrapper()
+                expected,accuracy=namespace['test_batch_prediction'](wrapper,tok,prefixes,correct,e['target_new']['str'],e['target_true']['str'])
                 for i,prefix in enumerate(prefixes):
+                    canonical={}
                     for choice in ('target_new','target_true'):
                         x=encode_choice(tok,prefix,e[choice]['str']);a=torch.tensor([x['ids']]);k=len(x['target_ids'])+1
                         logits=replay.complete(a,True,k);labels=torch.tensor(x['target_ids'],device='cuda')
                         values=-logits[0,:-1].float().log_softmax(-1).gather(-1,labels[:,None]).squeeze(-1)
                         delta=abs(float(values.mean())-expected[i][choice])
-                        if delta>1e-4:raise AssertionError(('official scorer mismatch',r['case_id'],choice,delta))
+                        canonical[choice]=float(values.mean())
+                        # The same captured logits must implement the unchanged
+                        # official formula exactly. Separate batch arithmetic
+                        # drift from errors in target indexing or aggregation.
+                        row=2*i+(choice=='target_true');total=np.float32(0.)
+                        for j,label in enumerate(labels.tolist()):
+                            value=-wrapper.result.logits[row,x['target_start']+j-1].float().log_softmax(-1)[label].item()
+                            total=np.float32(total+value)
+                        exact=float(np.float32(total/len(labels)))
+                        formula_parity.append(abs(exact-expected[i][choice]))
+                        if exact!=expected[i][choice]:raise AssertionError('same-logit official formula mismatch')
                         actual=bool(torch.equal(logits[0,:-1].argmax(-1),labels))
-                        if (choice=='target_new')==(correct[i]==0) and actual!=bool(accuracy[i]):raise AssertionError('official target accuracy mismatch')
+                        if (choice=='target_new')==(correct[i]==0) and actual!=bool(accuracy[i]):batch_accuracy_changes+=1
                         parity.append(delta)
+                    if (canonical['target_new']<canonical['target_true'])!=(expected[i]['target_new']<expected[i]['target_true']):batch_rank_changes+=1
+        if batch_rank_changes or batch_accuracy_changes:raise AssertionError('batch arithmetic changed official success/accuracy in preflight')
         report.update(status='passed',loading=loading,masked_replay=check,official_oracle_max_nll_delta=max(parity),
+            same_logits_official_formula_max_delta=max(formula_parity),batch_rank_changes=batch_rank_changes,
+            batch_target_accuracy_changes=batch_accuracy_changes,
             official_oracle_choices=len(parity),official_oracle_sha256=sha(args.oracle),
             physical_rows=len(replay.memory.multi_head_embedding.embedding.weight),frozen_weight_sha256=replay.frozen_hash(),
             trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad))
