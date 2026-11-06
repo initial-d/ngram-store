@@ -147,6 +147,7 @@ external data or GPU. It checks integration, not representative compression.
 | [Native bounded-plan compiler](docs/native_bounded_query_evidence_20261105/README.md) | Same 18 checkpoints and model/sidecar bytes: full CPU assessment improves 1.77–1.90× OOV and 1.86–2.42× known at three-seed medians; all output/bound bytes and budget decisions match; source FP64 remains faster |
 | [TinyEngram/Qwen trained integration](docs/tinyengram_qwen_evidence_20261030/README.md) / [CUDA controls](docs/qwen_cuda_performance_20261030/README.md) | Preserved trained outputs and measured CPU/device costs; native lookup remains slower than dense offload on these traces |
 | [Held-out Qwen branch and row-identity qualification](docs/qwen_quality_evidence_20261106/README.md) | 8,128 targets: native FP32 logits remain byte-exact. On test, memory-off raises PPL 11.19%, while head constants raise it 0.0416% with an interval crossing zero and 121 changed predictions; this small checkpoint does not establish a need for distinct memory rows |
+| [Eight-GPU Qwen training, codecs and full serving](docs/qwen_gpu_grid_evidence_20261106/README.md) | 12 trained checkpoints, 63 codec comparisons and 69 isolated CUDA workers. Same 1 MiB row cache speeds warm 128-token native paths 1.33–1.39× with exact outputs; large branches fail held-out necessity gates, FAISS remains strong, and whole-model storage barely changes |
 
 Official DeepSeek Engram verification uses its small demonstration, not a
 released trained Engram checkpoint. Small-model results are not production

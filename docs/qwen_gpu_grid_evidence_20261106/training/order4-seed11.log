@@ -1,0 +1,38 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+`torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /llm-align/open_models/Qwen3/Qwen3-0.6B and are newly initialized: ['model.engram_layers.26.key_projs.0.bias', 'model.engram_layers.26.key_projs.0.weight', 'model.engram_layers.26.multi_head_embedding.embedding.weight', 'model.engram_layers.26.multi_head_embedding.offsets', 'model.engram_layers.26.norm1.0.weight', 'model.engram_layers.26.norm2.0.weight', 'model.engram_layers.26.short_conv.conv.weight', 'model.engram_layers.26.short_conv.norms.0.weight', 'model.engram_layers.26.value_proj.bias', 'model.engram_layers.26.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+seed 11 epoch 1 step 32 loss=4.280006
+seed 11 epoch 1 step 64 loss=4.594537
+seed 11 epoch 1 step 96 loss=4.822152
+seed 11 epoch 1 step 128 loss=4.737389
+seed 11 epoch 1 step 160 loss=4.391723
+seed 11 epoch 1 step 192 loss=4.546757
+seed 11 epoch 1 step 224 loss=4.569342
+seed 11 epoch 1 step 256 loss=4.584513
+seed 11 epoch 2 step 288 loss=4.390975
+seed 11 epoch 2 step 320 loss=4.100882
+seed 11 epoch 2 step 352 loss=4.366590
+seed 11 epoch 2 step 384 loss=4.298992
+seed 11 epoch 2 step 416 loss=4.070695
+seed 11 epoch 2 step 448 loss=4.140012
+seed 11 epoch 2 step 480 loss=3.983309
+seed 11 epoch 2 step 512 loss=4.027911
+seed 11 epoch 3 step 544 loss=3.684462
+seed 11 epoch 3 step 576 loss=3.478408
+seed 11 epoch 3 step 608 loss=3.495594
+seed 11 epoch 3 step 640 loss=3.641437
+seed 11 epoch 3 step 672 loss=3.777004
+seed 11 epoch 3 step 704 loss=3.145210
+seed 11 epoch 3 step 736 loss=3.813051
+seed 11 epoch 3 step 768 loss=3.686636
+seed 11 epoch 4 step 800 loss=2.639096
+seed 11 epoch 4 step 832 loss=2.504521
+seed 11 epoch 4 step 864 loss=2.595703
+seed 11 epoch 4 step 896 loss=2.788876
+seed 11 epoch 4 step 928 loss=2.348426
+seed 11 epoch 4 step 960 loss=2.288517
+seed 11 epoch 4 step 992 loss=2.874479
+seed 11 epoch 4 step 1024 loss=2.666985
+The tokenizer you are loading from '/llm-align/duyimin/ngram-qwen-gpu-grid-20261106/order4-seed11/seed-11/checkpoint' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Report: /llm-align/duyimin/ngram-qwen-gpu-grid-20261106/order4-seed11/report.json

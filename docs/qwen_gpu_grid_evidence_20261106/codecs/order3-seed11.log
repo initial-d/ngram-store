@@ -1,0 +1,11 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+The tokenizer you are loading from '/llm-align/duyimin/ngram-qwen-gpu-grid-20261106/order3-seed11/seed-11/checkpoint' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from '/llm-align/duyimin/ngram-qwen-gpu-grid-20261106/order3-seed11/seed-11/checkpoint' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+fp16 {'calibration': -2e-06, 'test': -3e-06}
+int8 {'calibration': -9.7e-05, 'test': -7.6e-05}
+sq8 {'calibration': 5.5e-05, 'test': -0.000216}
+sq4 {'calibration': -0.00534, 'test': -0.007811}
+pq-8x8 {'calibration': 0.007475, 'test': 0.000938}
+cluster-8 {'calibration': 0.261421, 'test': 0.157071}
+opq-8x8 {'calibration': 0.011708, 'test': 0.006142}

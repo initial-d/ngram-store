@@ -1,0 +1,97 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+`torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /llm-align/open_models/Qwen3/Qwen3-0.6B and are newly initialized: ['model.engram_layers.26.key_projs.0.bias', 'model.engram_layers.26.key_projs.0.weight', 'model.engram_layers.26.multi_head_embedding.embedding.weight', 'model.engram_layers.26.multi_head_embedding.offsets', 'model.engram_layers.26.norm1.0.weight', 'model.engram_layers.26.norm2.0.weight', 'model.engram_layers.26.short_conv.conv.weight', 'model.engram_layers.26.short_conv.norms.0.weight', 'model.engram_layers.26.value_proj.bias', 'model.engram_layers.26.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+prefix train 0/1024
+prefix train 64/1024
+prefix train 128/1024
+prefix train 192/1024
+prefix train 256/1024
+prefix train 320/1024
+prefix train 384/1024
+prefix train 448/1024
+prefix train 512/1024
+prefix train 576/1024
+prefix train 640/1024
+prefix train 704/1024
+prefix train 768/1024
+prefix train 832/1024
+prefix train 896/1024
+prefix train 960/1024
+prefix calibration 0/64
+prefix test 0/64
+seed 3 epoch 1 step 32 loss=4.689239
+seed 3 epoch 1 step 64 loss=4.651165
+seed 3 epoch 1 step 96 loss=4.867766
+seed 3 epoch 1 step 128 loss=4.701481
+seed 3 epoch 1 step 160 loss=4.782118
+seed 3 epoch 1 step 192 loss=4.791817
+seed 3 epoch 1 step 224 loss=4.628948
+seed 3 epoch 1 step 256 loss=4.366047
+seed 3 epoch 2 step 288 loss=4.223136
+seed 3 epoch 2 step 320 loss=4.481687
+seed 3 epoch 2 step 352 loss=3.970503
+seed 3 epoch 2 step 384 loss=4.056973
+seed 3 epoch 2 step 416 loss=4.201577
+seed 3 epoch 2 step 448 loss=4.184661
+seed 3 epoch 2 step 480 loss=4.531019
+seed 3 epoch 2 step 512 loss=3.972083
+seed 3 epoch 3 step 544 loss=3.794113
+seed 3 epoch 3 step 576 loss=3.432420
+seed 3 epoch 3 step 608 loss=3.067913
+seed 3 epoch 3 step 640 loss=3.675045
+seed 3 epoch 3 step 672 loss=3.548659
+seed 3 epoch 3 step 704 loss=3.600887
+seed 3 epoch 3 step 736 loss=3.230352
+seed 3 epoch 3 step 768 loss=3.562133
+seed 3 epoch 4 step 800 loss=2.591764
+seed 3 epoch 4 step 832 loss=2.065708
+seed 3 epoch 4 step 864 loss=2.320557
+seed 3 epoch 4 step 896 loss=2.225130
+seed 3 epoch 4 step 928 loss=2.606762
+seed 3 epoch 4 step 960 loss=2.503526
+seed 3 epoch 4 step 992 loss=2.460080
+seed 3 epoch 4 step 1024 loss=2.478888
+The tokenizer you are loading from '/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/training/seed-3/checkpoint' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Report: /llm-align/duyimin/ngram-qwen-identity-gpu-20261106/training/report.json
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/source/tools/train_tinyengram_identity.py", line 353, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/source/tools/train_tinyengram_identity.py", line 327, in main
+    windows = evaluate_seed(model,reuse,evaluation,cache_files,bundle,args.native_library)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/source/tools/train_tinyengram_identity.py", line 96, in evaluate_seed
+    candidate = reuse.forward(sample, hidden, use_memory=name != "memory-off")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/source/tools/frozen_tinyengram_prefix.py", line 90, in forward
+    hidden = hidden + self.branch(hidden_states=hidden.unsqueeze(2), input_ids=ids.to(self.device)).squeeze(2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/meft-cuda-20261030/upstream/engram.py", line 413, in forward
+    embeddings = self.multi_head_embedding(hash_input_ids).flatten(start_dim=-2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/source/tools/device_row_adapter.py", line 212, in forward
+    return self.prefetch(input_ids).wait()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/source/tools/device_row_adapter.py", line 171, in prefetch
+    ids = self.gather._global_ids(input_ids).reshape(-1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/source/tools/engram_row_adapter.py", line 199, in _global_ids
+    raise ValueError("adapter supports CPU gather only")
+ValueError: adapter supports CPU gather only

@@ -1,0 +1,32 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+`torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /llm-align/open_models/Qwen3/Qwen3-0.6B and are newly initialized: ['model.engram_layers.26.key_projs.0.bias', 'model.engram_layers.26.key_projs.0.weight', 'model.engram_layers.26.multi_head_embedding.embedding.weight', 'model.engram_layers.26.multi_head_embedding.offsets', 'model.engram_layers.26.norm1.0.weight', 'model.engram_layers.26.norm2.0.weight', 'model.engram_layers.26.short_conv.conv.weight', 'model.engram_layers.26.short_conv.norms.0.weight', 'model.engram_layers.26.value_proj.bias', 'model.engram_layers.26.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+prefix train 0/1024
+prefix train 64/1024
+prefix train 128/1024
+prefix train 192/1024
+prefix train 256/1024
+prefix train 320/1024
+prefix train 384/1024
+prefix train 448/1024
+prefix train 512/1024
+prefix train 576/1024
+prefix train 640/1024
+prefix train 704/1024
+prefix train 768/1024
+prefix train 832/1024
+prefix train 896/1024
+prefix train 960/1024
+prefix calibration 0/64
+prefix test 0/64
+seed 11 epoch 1 step 32 loss=4.287158
+seed 11 epoch 1 step 64 loss=4.611476
+seed 11 epoch 1 step 96 loss=4.862367
+seed 11 epoch 1 step 128 loss=4.788138
+seed 11 epoch 1 step 160 loss=4.442673
+seed 11 epoch 1 step 192 loss=4.616210
+seed 11 epoch 1 step 224 loss=4.652746
+seed 11 epoch 1 step 256 loss=4.741407
+The tokenizer you are loading from '/llm-align/duyimin/ngram-qwen-codecs-20261106/low-lr-seed11/seed-11/checkpoint' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Report: /llm-align/duyimin/ngram-qwen-codecs-20261106/low-lr-seed11/report.json

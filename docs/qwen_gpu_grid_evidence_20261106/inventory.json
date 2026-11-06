@@ -1,0 +1,119 @@
+{
+  "order3-seed3": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 6280213,
+        "sha256": "c6c5951fbe1c1405e8731579da59f27a06484e804c90d07937dade5332c505e8"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 727,
+        "sha256": "417c7300aae9f2ee91901e0433e8b1ebaf13a4d28b1ede5dd86773832ca9edfb"
+      }
+    },
+    "complete_bundle_bytes": 2407509382
+  },
+  "order3-seed7": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 6279777,
+        "sha256": "a3ce70b92c99fce5a4e85b4cbba7ff6d93ac7ac6e1c88eb3a043439736ccde58"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 727,
+        "sha256": "4884b8e7c742f074bcd29545c2e3a609e2f0e375b133fb0ea5c18f0c5a61591b"
+      }
+    },
+    "complete_bundle_bytes": 2407508946
+  },
+  "order6-seed3": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 31431473,
+        "sha256": "525563425b4c87b5e451271b8098036e95d76b463864b6353c59128291d8a7a5"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 868,
+        "sha256": "e236cb354e1120ec287ddd12e4585aa354e05ece702350e3b1f8ab413dac2470"
+      }
+    },
+    "complete_bundle_bytes": 2434233825
+  },
+  "order6-seed7": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 31428920,
+        "sha256": "0b0e1255bcc6d7e450f1146e8059ea0dfdbd049c4fef9191ab89af953bb29f1b"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 868,
+        "sha256": "1d86f9ac501948cdb0aee6151c46ca71e39d7f199b601fc915715b147dfc5218"
+      }
+    },
+    "complete_bundle_bytes": 2434231272
+  },
+  "order4-seed7": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 14659683,
+        "sha256": "dfc271045fae25a59106f6c1b494797b602f10c4e13f23a6f93767f1d4164bda"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 775,
+        "sha256": "d96ca5045184cdaa79c3264aed9accb3d3e3c023b027d79da88d340006e04ff1"
+      }
+    },
+    "complete_bundle_bytes": 2416413242
+  },
+  "order6-seed11": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 31433149,
+        "sha256": "b545356cede02841251c121922bc5f3ba56d9fead3aad38c5e583afa5568bbea"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 868,
+        "sha256": "30769fe5a5e82aeff6c5700bd3e5c64c9e2980445b6d7c94a1bb352fa811823d"
+      }
+    },
+    "complete_bundle_bytes": 2434235503
+  },
+  "order4-seed11": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 14659293,
+        "sha256": "c238a3d2d8cb252b6687a57c849cd0a093976b3d0bf70d32e62789849ed6a5c4"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 775,
+        "sha256": "184113187836ef58f8210b426f00130d73feb0ed6e5eda9cc7b5f178bfe6b48e"
+      }
+    },
+    "complete_bundle_bytes": 2416412854
+  },
+  "order4-seed3": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 14662669,
+        "sha256": "442d6ab1b08e4b206dec1d80e4f99fcd9e1e2bf6cf65b6a30b8a3044892f0b6c"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 775,
+        "sha256": "f1516b21838a9e897bc22d5a657b48be1c6c461893be1352c8ee4533f532f186"
+      }
+    },
+    "complete_bundle_bytes": 2416416228
+  },
+  "order3-seed11": {
+    "memory_files": {
+      "memory/26/table.men": {
+        "bytes": 6280116,
+        "sha256": "1b70dcff504f5f62df27aa6511d02ad76ae11f9975ea5ad952b6c81c9c5754f5"
+      },
+      "memory/26/embedding.json": {
+        "bytes": 727,
+        "sha256": "3ba370ce26d34e5e06f825afab5ab060164c81eeb36627a595f44c4bc6ee0585"
+      }
+    },
+    "complete_bundle_bytes": 2407509287
+  }
+}

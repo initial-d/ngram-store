@@ -1,0 +1,10 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+Report: /llm-align/duyimin/ngram-qwen-identity-gpu-20261106/order4-seed3/report.json
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/fix-source/tools/train_tinyengram_identity.py", line 397, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/fix-source/tools/train_tinyengram_identity.py", line 235, in main
+    raise ValueError("resume data or sampling schedule changed")
+ValueError: resume data or sampling schedule changed
