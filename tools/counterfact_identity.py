@@ -60,6 +60,18 @@ def check(args):
             model,tok,replay,module,cfg,loading=setup(args.base,args.upstream,'full',[257,521,1031],3,train_decoder_suffix=False)
             info=configure_memory(replay,module,vocabulary,exact,3);objects.append((model,replay,module));infos.append(info)
         hm,hr,_=objects[0];em,er,_=objects[1]
+        if infos[0]['head_sizes']!=infos[1]['head_sizes']:raise AssertionError('row budgets differ')
+        if sum(p.numel() for p in hm.parameters() if p.requires_grad)!=sum(p.numel() for p in em.parameters() if p.requires_grad):
+            raise AssertionError('trainable parameter budgets differ')
+        with torch.no_grad():
+            hs,es=hr.memory.multi_head_embedding,er.memory.multi_head_embedding
+            for head,(hoff,eoff) in enumerate(zip(hs.offsets.tolist(),es.offsets.tolist())):
+                keys=vocabulary.keys[2+head//2]
+                local=hr.memory.hash_mapping.source._get_ngram_hashes(keys,hr.layer_id)[:,-1,head]+1
+                a=hs.embedding.weight[torch.from_numpy(local+hoff).to(hr.device)]
+                b=es.embedding.weight[eoff+1:eoff+1+len(keys)]
+                if not torch.equal(a.contiguous().view(torch.uint8),b.contiguous().view(torch.uint8)):
+                    raise AssertionError('initial effective vectors differ for a training key')
         with torch.no_grad():
             a=hr.complete(ids,True,keep);b=er.complete(ids,True,keep)
             if not torch.equal(a.contiguous().view(torch.uint8),b.contiguous().view(torch.uint8)):
@@ -114,6 +126,8 @@ def check(args):
         write(args.output/'report.json',{'status':'passed','environment':env,'vocabulary_sha256':sha(args.vocabulary),
             'paired_training_logits_byte_exact':True,'question_requests':checked,'masked_replay':replay_checks,
             'initial_nonrow_gradients_byte_exact':True,'gradient_pooling_max_absolute_error':delta,
+            'all_training_key_vectors_initially_byte_exact':True,'trainable_parameter_budget_matched':True,
+            'frozen_prefix_and_head_sha256':fingerprints[0][0],'frozen_decoder_suffix_sha256':fingerprints[0][1],
             'gradient_pooling_tolerance':{'atol':1e-6,'rtol':1e-4},'backbone_unchanged_after_optimizer':True,
             'variants':infos,'scope':'Initialization/gradient fidelity only; no trained full-versus-hash quality or storage advantage'})
         print(json.dumps({'status':'passed','requests':len(checked),'gradient_pooling_max_absolute_error':delta}),flush=True)
