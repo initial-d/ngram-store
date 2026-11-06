@@ -37,7 +37,7 @@ def load_model(path):
     return model,info
 
 
-def setup(base,upstream,control,vocab_sizes,seed,device='cuda',suffix_layers=8):
+def setup(base,upstream,control,vocab_sizes,seed,device='cuda',suffix_layers=8,train_decoder_suffix=True):
     torch.manual_seed(seed)
     tokenizer=AutoTokenizer.from_pretrained(base,local_files_only=True,trust_remote_code=False)
     model,info=load_model(base)
@@ -64,7 +64,7 @@ def setup(base,upstream,control,vocab_sizes,seed,device='cuda',suffix_layers=8):
     elif control=='off':branch=DisabledMemory()
     prefix='model.language_model' if hasattr(model.model,'language_model') else 'model'
     suffix=tuple(f'{prefix}.layers.{i}.' for i in range(layer,len(text.layers)))
-    for name,p in model.named_parameters():p.requires_grad_(name.startswith(suffix))
+    for name,p in model.named_parameters():p.requires_grad_(train_decoder_suffix and name.startswith(suffix))
     for p in branch.parameters():p.requires_grad_(control!='off')
     model.to(device).eval();branch.to(device)
     replay=LateMemoryReplay(model,branch,layer)

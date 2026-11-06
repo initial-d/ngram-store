@@ -168,8 +168,10 @@ def train(args):
         if sha(args.prepared/'sequences.json')!=meta['payload_sha256']:raise ValueError('IDs changed')
         payload=json.loads((args.prepared/'sequences.json').read_text());seq=payload['sequences'];samples=payload['train']
         control=variant['control'];enabled=control!='off'
-        model,tok,replay,module,cfg,loading=setup(args.base,args.upstream,control,variant['vocab_sizes'],args.seed,suffix_layers=protocol['suffix_layers'])
+        model,tok,replay,module,cfg,loading=setup(args.base,args.upstream,control,variant['vocab_sizes'],args.seed,
+            suffix_layers=protocol['suffix_layers'],train_decoder_suffix=protocol.get('train_decoder_suffix',True))
         report.update(loading=loading,base_model=str(args.base),frozen_weight_sha256=replay.frozen_hash(),
+            frozen_decoder_suffix_sha256=replay.frozen_suffix_hash(),
             trained_parameter_names=[n for n,p in model.named_parameters() if p.requires_grad],
             trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
             memory_parameters=sum(p.numel() for p in replay.memory.parameters()),
@@ -185,9 +187,10 @@ def train(args):
         suffix=[p for n,p in model.named_parameters() if p.requires_grad and n in replay.suffix_names]
         branch=[p for n,p in model.named_parameters() if p.requires_grad and n.startswith('ngram_memory.') and 'multi_head_embedding' not in n]
         rows=[p for n,p in model.named_parameters() if p.requires_grad and 'ngram_memory.multi_head_embedding' in n]
-        groups=[{'params':suffix,'lr':protocol['suffix_lr']}]
+        groups=[{'params':suffix,'lr':protocol['suffix_lr']}] if suffix else []
         if branch:groups.append({'params':branch,'lr':protocol['branch_lr']})
         if rows:groups.append({'params':rows,'lr':protocol['row_lr']})
+        if not groups:raise ValueError('no trainable parameters; use baseline action for an unedited frozen model')
         optimizer=torch.optim.Adam(groups)
         rng=np.random.default_rng(args.seed);steps=0;report['epochs']=[];save()
         training_started=time.perf_counter()
@@ -209,6 +212,7 @@ def train(args):
                 'actual_sequences':exposures,'steps':steps,'elapsed_seconds':time.perf_counter()-epoch_started});save()
         report['training_seconds']=time.perf_counter()-training_started
         if replay.frozen_hash()!=report['frozen_weight_sha256']:raise AssertionError('frozen weights changed')
+        if replay.frozen_suffix_hash()!=report['frozen_decoder_suffix_sha256']:raise AssertionError('frozen decoder suffix changed')
         # A delta plus its immutable shared base is the complete deployment recipe.
         state={n:p.detach().cpu().contiguous() for n,p in model.named_parameters() if p.requires_grad}
         save_file(state,str(args.output/'delta.safetensors'));del state

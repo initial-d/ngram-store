@@ -144,6 +144,13 @@ class LateMemoryReplay:
                 h.update(n.encode());h.update(p.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes())
         return h.hexdigest()
 
+    def frozen_suffix_hash(self):
+        h=hashlib.sha256()
+        for n,p in self.model.named_parameters():
+            if n in self.suffix_names and not p.requires_grad:
+                h.update(n.encode());h.update(p.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes())
+        return h.hexdigest()
+
     def close(self):self.handle.remove()
 
 
