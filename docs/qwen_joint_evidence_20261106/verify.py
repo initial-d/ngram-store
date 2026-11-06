@@ -21,6 +21,9 @@ def main():
     expected=json.loads((ROOT/'summary.json').read_text())
     if actual!=expected:raise AssertionError('paired-control metrics/bootstrap/gates changed')
     inventory=json.loads((ROOT/'inventory.json').read_text())
+    cleanup=json.loads((ROOT/'cleanup.json').read_text())
+    if cleanup['status']!='passed' or len(cleanup['training_exit_codes'])!=9 or any(v!='0' for v in cleanup['training_exit_codes'].values()) or any(v['still_running_this_task'] for v in cleanup['known_workers'].values()):
+        raise AssertionError('task workers did not finish cleanly')
     tokenizers=json.loads((ROOT/'tokenizer-check.json').read_text())
     environment=json.loads((ROOT/'environment.json').read_text())
     if hashlib.sha256((ROOT/'verify-saved-tokenizers.py').read_bytes()).hexdigest()!=tokenizers['script_sha256']:

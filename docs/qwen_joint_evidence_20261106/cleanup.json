@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "observed_at_unix": 1793968320.4889605,
+  "known_workers": {
+    "launcher": {
+      "pid": 1813047,
+      "still_running_this_task": false
+    },
+    "release-helper": {
+      "pid": 1812913,
+      "still_running_this_task": false
+    }
+  },
+  "training_exit_codes": {
+    "full-seed3.exit-code": "0",
+    "off-seed3.exit-code": "0",
+    "head-constant-seed7.exit-code": "0",
+    "head-constant-seed11.exit-code": "0",
+    "off-seed7.exit-code": "0",
+    "head-constant-seed3.exit-code": "0",
+    "off-seed11.exit-code": "0",
+    "full-seed11.exit-code": "0",
+    "full-seed7.exit-code": "0"
+  },
+  "experiment_exit_code": 0,
+  "limitations": [
+    "This records task-scoped launcher/release-helper completion; no GPU reset or unrelated process shutdown/restoration."
+  ]
+}

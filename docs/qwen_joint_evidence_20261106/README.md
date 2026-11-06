@@ -159,7 +159,8 @@ Only hash/argv/cwd-verified matmul occupancy processes on GPUs 5/6/7 were
 released under the user's authorization; unknown jobs and other GPUs were
 preserved. Training launch gates on no competing compute client on these three
 devices; CPU/I/O and the rest of the host are shared. The task release helper
-ends with the experiment. Auxiliary correctness checks allow shared GPU use
+ends with the experiment; [cleanup](cleanup.json) records that both the launcher
+and release helper have exited. Auxiliary correctness checks allow shared GPU use
 and make no isolated timing claim.
 
 The next LLM capacity/codec study should start from an independently useful

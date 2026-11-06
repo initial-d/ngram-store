@@ -1,7 +1,11 @@
 {
   "README.md": {
-    "bytes": 10429,
-    "sha256": "1e35c3d12444955e362393f1c8648c3a3df87f5e1e925311723d61fe1d7c4219"
+    "bytes": 10516,
+    "sha256": "c9b312ae03366d670868340bc6cc8b8a8c652a6f0298d994b137213de0c0ee39"
+  },
+  "cleanup.json": {
+    "bytes": 801,
+    "sha256": "11fc6be4ff2c57a36418a4f82d8bec1cb7a1bc335af707808c9be41adf113c36"
   },
   "collect.py": {
     "bytes": 2263,
@@ -260,7 +264,7 @@
     "sha256": "a92f21098ee55259d40f38f077bf8e3f9f8447d45536c757536ebb917a2aec58"
   },
   "verify.py": {
-    "bytes": 5808,
-    "sha256": "f6827efc34ed485d2e12cee073b271184aec6604d36f5cbe7db3da30f29e0f7f"
+    "bytes": 6156,
+    "sha256": "10d796f967b51eac7a9adb13d1543789232e4b3ef0b298ed4d362798f7ac6176"
   }
 }
