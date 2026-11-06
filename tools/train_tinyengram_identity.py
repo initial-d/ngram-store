@@ -118,11 +118,16 @@ def main():
         p.add_argument("--"+name, type=Path, required=True)
     p.add_argument("--native-library", type=Path)
     p.add_argument("--device",choices=("cpu","cuda"),default="cpu")
+    p.add_argument("--resume-from",type=Path,help="reuse final checkpoints and audited prefixes in an earlier run; preserve its report")
+    p.add_argument("--prefix-from",type=Path,help="reuse audited prefixes only, with identical data and frozen-backbone computation")
+    p.add_argument("--seed",type=int,help="run one preregistered seed as a parallel shard")
     p.add_argument("--smoke", action="store_true", help="training-only arithmetic/runtime check; no held-out scoring")
     args = p.parse_args()
     protocol = json.loads(args.protocol.read_text())
     if protocol["schema_version"] != 1 or args.output_dir.exists():
         p.error("use schema v1 and a fresh output directory")
+    if args.resume_from and args.prefix_from or args.seed is not None and args.seed not in protocol["seeds"]:
+        p.error("choose one prefix/resume source and a seed listed in the frozen protocol")
     if (protocol["training_windows"] % protocol["batch_size"] or protocol["epochs"] < 1
             or not 0 < protocol["training_fraction"] < protocol["test_start_fraction"] < 1):
         p.error("invalid training dimensions or contiguous split boundaries")
@@ -154,6 +159,19 @@ def main():
     try:
         if file_sha256(args.corpus) != protocol["corpus_sha256"]:
             raise ValueError("corpus differs from frozen protocol")
+        previous = None
+        prefix_root = args.resume_from or args.prefix_from
+        if prefix_root:
+            previous = json.loads((prefix_root/"report.json").read_text())
+            match_fields = ("corpus_sha256","training_fraction","test_start_fraction","window_tokens",
+                            "training_windows","batch_size","layer_from_end","threads")
+            if (args.smoke or previous["smoke_only"] or previous["environment"]["device"] != args.device
+                    or args.resume_from and previous["protocol"] != protocol
+                    or any(previous["protocol"][k] != protocol[k] for k in match_fields)):
+                raise ValueError("resume requires the identical non-smoke protocol and device")
+            report["prefix_source"] = {"report_sha256":file_sha256(prefix_root/"report.json"),
+                                "source_code_sha":previous["code_sha"],"previous_status":previous["status"],
+                                "resume_final_checkpoints":bool(args.resume_from)}
         torch.set_num_threads(protocol["threads"])
         torch.set_num_interop_threads(1)
         device = torch.device(args.device)
@@ -204,7 +222,20 @@ def main():
         if layer_id < 1:
             raise ValueError("backbone is too short for a nonempty frozen prefix")
         cache_files, cache_metadata = {}, None
-        for seed in protocol["seeds"][:1] if args.smoke else protocol["seeds"]:
+        if previous is not None:
+            cache_metadata = previous["prefix_preparation"]
+            report["prefix_preparation"] = cache_metadata
+            report["prefix_files"] = previous["prefix_files"]
+            for split,metadata in previous["prefix_files"].items():
+                path = prefix_root/(split+"-prefix.npy")
+                if file_sha256(path) != metadata["sha256"] or path.stat().st_size != metadata["bytes"]:
+                    raise ValueError("resume prefix checksum changed: "+split)
+                cache_files[split] = np.load(path,mmap_mode="r",allow_pickle=False)
+            if previous["sampled_train_windows"] != report["sampled_train_windows"] or previous["splits"] != report["splits"]:
+                raise ValueError("resume data or sampling schedule changed")
+        seeds_to_run = [args.seed] if args.seed is not None else protocol["seeds"][:1] if args.smoke else protocol["seeds"]
+        report["executed_seeds"] = seeds_to_run
+        for seed in seeds_to_run:
             torch.manual_seed(seed)
             engram, qwen = load_upstream(args.upstream_dir)
             qwen.set_skip_engram(False)
@@ -213,10 +244,14 @@ def main():
                          n_embed_per_ngram=protocol["n_embed_per_ngram"], n_head_per_ngram=protocol["n_head_per_ngram"],
                          layer_ids=[layer_id], pad_id=tokenizer.pad_token_id, kernel_size=protocol["kernel_size"], seed=seed)
             engram.set_global_step(0)
-            model, loading = qwen.EngramQwenForCausalLM.from_pretrained(args.base_model, engram_cfg=ecfg,
+            prior_seed = previous["seeds"].get(str(seed)) if args.resume_from else None
+            resuming = bool(prior_seed and prior_seed.get("steps") == protocol["epochs"]*len(training)//batch
+                            and (args.resume_from/("seed-"+str(seed))/"checkpoint").is_dir())
+            model_path = args.resume_from/("seed-"+str(seed))/"checkpoint" if resuming else args.base_model
+            model, loading = qwen.EngramQwenForCausalLM.from_pretrained(model_path, engram_cfg=ecfg,
                          local_files_only=True, torch_dtype=torch.float32, attn_implementation="eager",
                          output_loading_info=True)
-            expected_missing = {name for name in model.state_dict() if "engram_layers" in name}
+            expected_missing = set() if resuming else {name for name in model.state_dict() if "engram_layers" in name}
             if (set(loading["missing_keys"]) != expected_missing or loading["unexpected_keys"]
                     or loading["mismatched_keys"] or loading["error_msgs"]):
                 raise ValueError("base backbone was not exactly restored: " + repr(loading))
@@ -237,6 +272,14 @@ def main():
             seed_report["memory"] = {"rows": len(weight), "dim": weight.shape[1], "raw_bytes": weight.numel()*4,
                                      "initial_weight_sha256": tensor_sha(initial),
                                      "head_offsets": branch.multi_head_embedding.offsets.tolist()}
+            if resuming:
+                proof = seed_report["reuse_check"]
+                if tensor_sha(weight) != prior_seed["memory"]["trained_weight_sha256"]:
+                    raise AssertionError("resumed source memory weights changed")
+                seed_report = report["seeds"][str(seed)] = json.loads(json.dumps(prior_seed))
+                seed_report.update({"status":"resumed_evaluation","resumed_steps":prior_seed["steps"],
+                                    "resume_reuse_check":proof,"resume_loading":loading,
+                                    "resume_checkpoint_sha256":file_sha256(model_path/"model.safetensors")})
             if cache_metadata is None:
                 prep_start = time.perf_counter()
                 for split,windows in {"train": training, **evaluation}.items():
@@ -274,9 +317,9 @@ def main():
             optimizer = torch.optim.Adam([{"params":[weight],"lr":protocol["memory_learning_rate"]},
                                           {"params":other,"lr":protocol["branch_learning_rate"]}])
             rng = np.random.default_rng(seed)
-            step = 0
+            step = prior_seed["steps"] if resuming else 0
             train_start = time.perf_counter()
-            for epoch in range(1 if args.smoke else protocol["epochs"]):
+            for epoch in range(0 if resuming else 1 if args.smoke else protocol["epochs"]):
                 order = rng.permutation(len(training))
                 for begin in range(0,len(training),batch):
                     indices = order[begin:begin+batch]
@@ -300,13 +343,14 @@ def main():
                         print(f"seed {seed} epoch {epoch+1} step {step} loss={seed_report['losses'][-1]:.6f}",flush=True)
             if reuse.frozen_weight_sha256() != frozen_hash:
                 raise AssertionError("training changed frozen weights")
-            seed_report.update({"steps":step,"training_seconds":time.perf_counter()-train_start,
+            seed_report.update({"steps":step,"training_seconds":prior_seed["training_seconds"] if resuming else time.perf_counter()-train_start,
                                 "frozen_weight_hash_unchanged":True})
             if device.type == "cuda":
                 seed_report["cuda_peak_allocated_bytes"] = torch.cuda.max_memory_allocated(device)
                 seed_report["cuda_peak_reserved_bytes"] = torch.cuda.max_memory_reserved(device)
                 torch.cuda.reset_peak_memory_stats(device)
-            seed_report["memory"].update({"queried_rows":int(seen.sum()),
+            if not resuming:
+                seed_report["memory"].update({"queried_rows":int(seen.sum()),
                               "changed_rows":int((weight.detach()!=initial).any(1).sum()),
                               "trained_weight_sha256":tensor_sha(weight)})
             if args.smoke:
@@ -339,8 +383,8 @@ def main():
             del optimizer,params,other,weight,branch,reuse,model,initial
         report["status"] = "smoke_passed" if args.smoke else "passed"
         if not args.smoke:
-            report["all_seeds_qualified_on_calibration"] = all(r["quality"]["memory_qualified_on_calibration"] for r in report["seeds"].values())
-            report["all_seeds_confirmed_on_test"] = all(r["quality"]["test_confirmation"] for r in report["seeds"].values())
+            report["all_seeds_qualified_on_calibration"] = set(seeds_to_run)==set(protocol["seeds"]) and all(r["quality"]["memory_qualified_on_calibration"] for r in report["seeds"].values())
+            report["all_seeds_confirmed_on_test"] = set(seeds_to_run)==set(protocol["seeds"]) and all(r["quality"]["test_confirmation"] for r in report["seeds"].values())
     except BaseException as error:
         report["status"],report["error"] = "failed",repr(error)
         raise

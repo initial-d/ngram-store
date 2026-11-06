@@ -9,6 +9,7 @@ import hashlib
 
 import torch
 from transformers.masking_utils import create_causal_mask, create_sliding_window_causal_mask
+from .device_row_adapter import StagedMultiHeadEmbedding
 
 
 class _CapturedPrefix(Exception):
@@ -87,7 +88,11 @@ class FrozenTinyEngramPrefix:
             masks["sliding_attention"] = create_sliding_window_causal_mask(**mask_kwargs)
         rotations = self.backbone.rotary_emb(hidden, position_ids)
         if use_memory:
-            hidden = hidden + self.branch(hidden_states=hidden.unsqueeze(2), input_ids=ids.to(self.device)).squeeze(2)
+            # Native staging accepts CPU hash IDs. Let the pinned Engram layer
+            # hash CPU tokens for that adapter; its returned vectors are CUDA.
+            # Ordinary trainable CUDA embeddings keep upstream CUDA-ID behavior.
+            tokens = ids if isinstance(self.branch.multi_head_embedding,StagedMultiHeadEmbedding) else ids.to(self.device)
+            hidden = hidden + self.branch(hidden_states=hidden.unsqueeze(2), input_ids=tokens).squeeze(2)
         for layer in self.backbone.layers[self.layer_id:]:
             hidden = layer(hidden, attention_mask=masks[layer.attention_type],
                            position_ids=position_ids, past_key_values=None, use_cache=False,
