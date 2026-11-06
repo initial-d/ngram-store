@@ -23,7 +23,7 @@ class CodecStagedBaseline(StagedMultiHeadEmbedding):
 
     def _read(self,ids,output):
         values=read_rows(self.reader,ids.numpy())
-        output.copy_(torch.from_numpy(values))
+        output.reshape(-1,self.embedding_dim).copy_(torch.from_numpy(values))
 
     def close(self):
         if not self._closed:
