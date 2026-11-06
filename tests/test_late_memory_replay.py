@@ -44,6 +44,14 @@ class LateReplayTest(unittest.TestCase):
         loss=masked_loss(replay.forward(ids,replay.capture(ids)),ids,[5,4]);loss.backward();optimizer.step()
         self.assertEqual(replay.frozen_hash(),fingerprint)
         self.assertTrue(check_masked_replay(replay,ids,[5,4])['all_masked_gradients_exact'])
+        for name,p in model.named_parameters():
+            if name in replay.suffix_names:p.requires_grad_(False)
+        frozen_suffix=replay.frozen_suffix_hash()
+        self.assertTrue(check_masked_replay(replay,ids,[5,4],True,5)['all_masked_gradients_exact'])
+        frozen_optimizer=torch.optim.Adam([p for p in model.parameters() if p.requires_grad],lr=.001)
+        masked_loss(replay.forward(ids,replay.capture(ids)),ids,[5,4]).backward();frozen_optimizer.step()
+        self.assertEqual(replay.frozen_suffix_hash(),frozen_suffix)
+        self.assertEqual(replay.frozen_hash(),fingerprint)
         replay.close()
 
     def test_qwen3_cpu(self):self.check('qwen3','cpu')
