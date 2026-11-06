@@ -14,6 +14,7 @@ import time
 import traceback
 
 from .counterfact_capacity import write,sha
+from .counterfact_resume import completed_task
 
 GPUS=['GPU-805ec4aa-37cf-6d18-f341-da44657c3844','GPU-7c1fe9b0-4b49-e530-ebab-5cb72ec71aa4',
       'GPU-739011e2-6861-76a1-aacc-ec382e95e733','GPU-20d75cd9-0182-957b-65df-9a2d44291c6e',
@@ -24,9 +25,20 @@ MODELS={'qwen06':'/llm-align/open_models/Qwen3/Qwen3-0.6B','qwen35':'/llm-align/
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root',type=Path,required=True);parser.add_argument('--protocol',type=Path,required=True)
+    parser.add_argument('--resume',action='store_true',help='Hash-validate and reuse completed artifacts; preserve previous outcomes')
     args=parser.parse_args();root=args.root.resolve()
     if not root.is_relative_to('/llm-align/duyimin'):raise ValueError('user directory only')
     protocol=json.loads(args.protocol.read_text());status={'status':'waiting-for-preflight','protocol_sha256':sha(args.protocol),'jobs':[]}
+    if (root/'queue.json').exists():
+        if not args.resume:raise ValueError('existing queue requires explicit --resume')
+        previous=json.loads((root/'queue.json').read_text())
+        if previous['status'] not in ('complete','failed') or previous['protocol_sha256']!=status['protocol_sha256']:
+            raise ValueError('resume requires a stopped queue with the same protocol')
+        if any('exit_code' not in job and 'pid' in job and Path('/proc',str(job['pid'])).exists() for job in previous['jobs']):
+            raise ValueError('a previous queue child is still active; wait before resuming')
+        history=root/'queue-history';history.mkdir(exist_ok=True)
+        snapshot=history/(str(time.time_ns())+'.json');snapshot.write_bytes((root/'queue.json').read_bytes())
+        status.update(previous_queue=str(snapshot),previous_queue_sha256=sha(snapshot))
     write(root/'queue.json',status);(root/'runs').mkdir(exist_ok=True);(root/'logs').mkdir(exist_ok=True)
     active={};failed=False
     def jobs_for(edits):
@@ -42,7 +54,12 @@ def main():
         return tasks
     def execute(tasks):
         nonlocal failed
-        pending=list(tasks)
+        pending=[]
+        for task in tasks:
+            reused=completed_task(root,task,status['protocol_sha256']) if args.resume else None
+            if reused:status['jobs'].append(reused)
+            else:pending.append(task)
+        write(root/'queue.json',status)
         while pending or active:
             if (root/'queue-stop').exists():raise RuntimeError('user-requested queue stop marker')
             for gpu in list(active):

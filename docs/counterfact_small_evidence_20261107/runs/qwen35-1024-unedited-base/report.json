@@ -1,0 +1,104 @@
+{
+  "status": "complete",
+  "variant": "unedited-base",
+  "environment": {
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.3.0",
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "cuda": "13.0",
+    "tf32": false,
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.counterfact_capacity baseline --base /llm-align/open_models/Qwen3.5/Qwen3.5-4B --output /llm-align/duyimin/ngram-counterfact-capacity-20261106/runs/qwen35-1024-unedited-base --upstream /llm-align/duyimin/meft-cuda-20261030/upstream --prepared /llm-align/duyimin/ngram-counterfact-capacity-20261106/prepared-qwen35-1024 --cache /llm-align/duyimin/ngram-counterfact-capacity-20261106/cache-qwen35-1024 --protocol /llm-align/duyimin/ngram-counterfact-capacity-20261106/source-frozen/benchmarks/counterfact_capacity_v1.json",
+    "code_sha": "537debf3e8d9715afc464a9e6db8e97e34fb0bfe",
+    "source_hashes": {
+      "counterfact_runner.py": "8cd24498e82c62a98ad7424144f1949b0f74f72e93e0b2ed06b041485d123f67",
+      "counterfact_retrieval.py": "14d2d1d491ddea572dd52e2441fbb07201e7c8de67fc45f61227746bb7c7d93b",
+      "counterfact_models.py": "ff67a724ee08de05fae54ec88514a83d474286da8f77ddbd2b4745480a33c339",
+      "counterfact_preflight.py": "e9cf2d771e7cdec6de2461cb12e557db546fc1564bdc1ba5e6e5ba2000a3d461",
+      "counterfact_data.py": "bf189ce0c3a40079674d73587a6c8de029693a650abd99ff9d4a4f08c04e1d85",
+      "counterfact_capacity.py": "2c1349a5c2f3f2618c7695e5156fed06a119de4bd35f6ef1ac33b505e8bd6a4d",
+      "late_memory_replay.py": "98d0f7ed4ba6ad0b6c8a2d7f7fd51cd61ef810a6c70c1b2d69db5c8e1fa16c6d"
+    },
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "7c1fe9b0-4b49-e530-ebab-5cb72ec71aa4",
+    "gpu_memory": 84987740160
+  },
+  "loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "base_model": "/llm-align/open_models/Qwen3.5/Qwen3.5-4B",
+  "edits": 1024,
+  "prepared_sha256": "d8e1bfdd96a8e0b7a165c09471c9d1a680d574dc8d624537024fb719e3a4fb5e",
+  "protocol_sha256": "1a33c174723ada0a991130de77cdc06177da6de003319049fd9daa2732106825",
+  "metrics": {
+    "all": {
+      "rewrite": {
+        "cases": 1024,
+        "prompts": 1024,
+        "success": 0.162109375,
+        "teacher_forced_accuracy": 0.0029296875
+      },
+      "paraphrase": {
+        "cases": 1024,
+        "prompts": 2048,
+        "success": 0.1748046875,
+        "teacher_forced_accuracy": 0.0068359375
+      },
+      "neighborhood": {
+        "cases": 1024,
+        "prompts": 10240,
+        "success": 0.83212890625,
+        "teacher_forced_accuracy": 0.1431640625
+      },
+      "harmonic_score": 0.22916364023107863
+    },
+    "calibration": {
+      "rewrite": {
+        "cases": 103,
+        "prompts": 103,
+        "success": 0.17475728155339806,
+        "teacher_forced_accuracy": 0.009708737864077669
+      },
+      "paraphrase": {
+        "cases": 103,
+        "prompts": 206,
+        "success": 0.1941747572815534,
+        "teacher_forced_accuracy": 0.0048543689320388345
+      },
+      "neighborhood": {
+        "cases": 103,
+        "prompts": 1030,
+        "success": 0.7980582524271845,
+        "teacher_forced_accuracy": 0.14951456310679612
+      },
+      "harmonic_score": 0.24741730182034652
+    },
+    "test": {
+      "rewrite": {
+        "cases": 921,
+        "prompts": 921,
+        "success": 0.16069489685124863,
+        "teacher_forced_accuracy": 0.002171552660152009
+      },
+      "paraphrase": {
+        "cases": 921,
+        "prompts": 1842,
+        "success": 0.17263843648208468,
+        "teacher_forced_accuracy": 0.007057546145494028
+      },
+      "neighborhood": {
+        "cases": 921,
+        "prompts": 9210,
+        "success": 0.8359391965255157,
+        "teacher_forced_accuracy": 0.14245385450597176
+      },
+      "harmonic_score": 0.2270717162056418
+    }
+  },
+  "case_scores_sha256": "8cdfc2ad782f6e82a7fde696510043c8df084bfd1a29502ea03089cf844e3a76",
+  "elapsed_seconds": 184.44100271188654
+}

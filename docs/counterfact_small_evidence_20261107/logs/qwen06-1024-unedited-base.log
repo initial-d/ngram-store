@@ -1,0 +1,18 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:01<07:20,  1.42s/it]Loading weights:  83%|████████▎ | 259/311 [00:01<00:00, 235.68it/s]Loading weights: 100%|██████████| 311/311 [00:01<00:00, 194.73it/s]
+The tied weights mapping and config for this model specifies to tie model.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+{"stage": "base-eval", "batches": 0, "choices": 5}
+{"stage": "base-eval", "batches": 200, "choices": 1598}
+{"stage": "base-eval", "batches": 400, "choices": 3195}
+{"stage": "base-eval", "batches": 600, "choices": 4795}
+{"stage": "base-eval", "batches": 800, "choices": 6388}
+{"stage": "base-eval", "batches": 1000, "choices": 7988}
+{"stage": "base-eval", "batches": 1200, "choices": 9587}
+{"stage": "base-eval", "batches": 1400, "choices": 11187}
+{"stage": "base-eval", "batches": 1600, "choices": 12787}
+{"stage": "base-eval", "batches": 1800, "choices": 14387}
+{"stage": "base-eval", "batches": 2000, "choices": 15986}
+{"stage": "base-eval", "batches": 2200, "choices": 17582}
+{"stage": "base-eval", "batches": 2400, "choices": 19177}
+{"stage": "base-eval", "batches": 2600, "choices": 20765}
+{"stage": "base-eval", "batches": 2800, "choices": 22343}
+{"stage": "base-eval", "batches": 3000, "choices": 23919}

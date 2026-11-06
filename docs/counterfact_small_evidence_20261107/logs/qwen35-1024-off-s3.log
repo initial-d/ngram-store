@@ -1,0 +1,38 @@
+The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:   0%|          | 1/723 [00:04<57:04,  4.74s/it]Loading weights:  39%|███▊      | 279/723 [00:04<00:05, 81.32it/s]Loading weights:  60%|█████▉    | 432/723 [00:06<00:03, 83.79it/s]Loading weights:  72%|███████▏  | 519/723 [00:06<00:01, 109.67it/s]Loading weights:  87%|████████▋ | 626/723 [00:06<00:00, 152.63it/s]Loading weights:  99%|█████████▉| 717/723 [00:07<00:00, 187.95it/s]Loading weights: 100%|██████████| 723/723 [00:07<00:00, 103.10it/s]
+{"stage": "train", "epoch": 0, "batch": 0, "loss": 9.74267292022705, "steps": 1}
+{"stage": "train", "epoch": 0, "batch": 100, "loss": 2.124051570892334, "steps": 101}
+{"stage": "train", "epoch": 1, "batch": 0, "loss": 1.7653175592422485, "steps": 136}
+{"stage": "train", "epoch": 1, "batch": 100, "loss": 0.23064857721328735, "steps": 236}
+{"stage": "train", "epoch": 2, "batch": 0, "loss": 0.07603535056114197, "steps": 271}
+{"stage": "train", "epoch": 2, "batch": 100, "loss": 1.1442971229553223, "steps": 371}
+{"stage": "train", "epoch": 3, "batch": 0, "loss": 0.0086861876770854, "steps": 406}
+{"stage": "train", "epoch": 3, "batch": 100, "loss": 0.30050593614578247, "steps": 506}
+{"stage": "train", "epoch": 4, "batch": 0, "loss": 0.0003121082845609635, "steps": 541}
+{"stage": "train", "epoch": 4, "batch": 100, "loss": 0.00026285654166713357, "steps": 641}
+{"stage": "train", "epoch": 5, "batch": 0, "loss": 5.557979238801636e-05, "steps": 676}
+{"stage": "train", "epoch": 5, "batch": 100, "loss": 6.864019087515771e-05, "steps": 776}
+{"stage": "train", "epoch": 6, "batch": 0, "loss": 3.653435851447284e-05, "steps": 811}
+{"stage": "train", "epoch": 6, "batch": 100, "loss": 0.2556575536727905, "steps": 911}
+{"stage": "train", "epoch": 7, "batch": 0, "loss": 0.00015180492482613772, "steps": 946}
+{"stage": "train", "epoch": 7, "batch": 100, "loss": 1.4222447134670801e-05, "steps": 1046}
+{"stage": "train", "epoch": 8, "batch": 0, "loss": 2.6865423933486454e-05, "steps": 1081}
+{"stage": "train", "epoch": 8, "batch": 100, "loss": 2.881759610318113e-05, "steps": 1181}
+{"stage": "train", "epoch": 9, "batch": 0, "loss": 1.8131122487829998e-05, "steps": 1216}
+{"stage": "train", "epoch": 9, "batch": 100, "loss": 1.7113547073677182e-05, "steps": 1316}
+{"stage": "eval", "batches": 0, "choices": 5}
+{"stage": "eval", "batches": 200, "choices": 1598}
+{"stage": "eval", "batches": 400, "choices": 3195}
+{"stage": "eval", "batches": 600, "choices": 4795}
+{"stage": "eval", "batches": 800, "choices": 6395}
+{"stage": "eval", "batches": 1000, "choices": 7995}
+{"stage": "eval", "batches": 1200, "choices": 9595}
+{"stage": "eval", "batches": 1400, "choices": 11190}
+{"stage": "eval", "batches": 1600, "choices": 12790}
+{"stage": "eval", "batches": 1800, "choices": 14386}
+{"stage": "eval", "batches": 2000, "choices": 15982}
+{"stage": "eval", "batches": 2200, "choices": 17582}
+{"stage": "eval", "batches": 2400, "choices": 19173}
+{"stage": "eval", "batches": 2600, "choices": 20773}
+{"stage": "eval", "batches": 2800, "choices": 22359}
+{"stage": "eval", "batches": 3000, "choices": 23935}

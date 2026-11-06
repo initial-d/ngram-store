@@ -40,6 +40,8 @@ jobs:
         run: python -S docs/qwen_joint_evidence_20261106/verify.py
       - name: Verify real Qwen3.5 interfaces and official MultiCounterFact score formulas
         run: python -S docs/counterfact_capacity_evidence_20261106/verify.py
+      - name: Verify completed MultiCounterFact small-grid evidence
+        run: python -S docs/counterfact_small_evidence_20261107/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter

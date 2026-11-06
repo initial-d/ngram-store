@@ -1,0 +1,64 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:00<02:34,  2.00it/s]Loading weights:  83%|████████▎ | 257/311 [00:00<00:00, 565.27it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 466.95it/s]
+The tied weights mapping and config for this model specifies to tie model.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+{"stage": "rag-eval", "top_k": 1, "batches": 0, "choices": 4}
+{"stage": "rag-eval", "top_k": 1, "batches": 100, "choices": 792}
+{"stage": "rag-eval", "top_k": 1, "batches": 200, "choices": 1592}
+{"stage": "rag-eval", "top_k": 1, "batches": 300, "choices": 2385}
+{"stage": "rag-eval", "top_k": 1, "batches": 400, "choices": 3181}
+{"stage": "rag-eval", "top_k": 1, "batches": 500, "choices": 3981}
+{"stage": "rag-eval", "top_k": 1, "batches": 600, "choices": 4777}
+{"stage": "rag-eval", "top_k": 1, "batches": 700, "choices": 5577}
+{"stage": "rag-eval", "top_k": 1, "batches": 800, "choices": 6375}
+{"stage": "rag-eval", "top_k": 1, "batches": 900, "choices": 7175}
+{"stage": "rag-eval", "top_k": 1, "batches": 1000, "choices": 7975}
+{"stage": "rag-eval", "top_k": 1, "batches": 1100, "choices": 8771}
+{"stage": "rag-eval", "top_k": 1, "batches": 1200, "choices": 9571}
+{"stage": "rag-eval", "top_k": 1, "batches": 1300, "choices": 10371}
+{"stage": "rag-eval", "top_k": 1, "batches": 1400, "choices": 11164}
+{"stage": "rag-eval", "top_k": 1, "batches": 1500, "choices": 11964}
+{"stage": "rag-eval", "top_k": 1, "batches": 1600, "choices": 12764}
+{"stage": "rag-eval", "top_k": 1, "batches": 1700, "choices": 13564}
+{"stage": "rag-eval", "top_k": 1, "batches": 1800, "choices": 14359}
+{"stage": "rag-eval", "top_k": 1, "batches": 1900, "choices": 15159}
+{"stage": "rag-eval", "top_k": 1, "batches": 2000, "choices": 15959}
+{"stage": "rag-eval", "top_k": 1, "batches": 2100, "choices": 16757}
+{"stage": "rag-eval", "top_k": 1, "batches": 2200, "choices": 17552}
+{"stage": "rag-eval", "top_k": 1, "batches": 2300, "choices": 18352}
+{"stage": "rag-eval", "top_k": 1, "batches": 2400, "choices": 19150}
+{"stage": "rag-eval", "top_k": 1, "batches": 2500, "choices": 19946}
+{"stage": "rag-eval", "top_k": 1, "batches": 2600, "choices": 20739}
+{"stage": "rag-eval", "top_k": 1, "batches": 2700, "choices": 21531}
+{"stage": "rag-eval", "top_k": 1, "batches": 2800, "choices": 22326}
+{"stage": "rag-eval", "top_k": 1, "batches": 2900, "choices": 23114}
+{"stage": "rag-eval", "top_k": 1, "batches": 3000, "choices": 23902}
+{"stage": "rag-eval", "top_k": 3, "batches": 0, "choices": 2}
+{"stage": "rag-eval", "top_k": 3, "batches": 100, "choices": 785}
+{"stage": "rag-eval", "top_k": 3, "batches": 200, "choices": 1585}
+{"stage": "rag-eval", "top_k": 3, "batches": 300, "choices": 2372}
+{"stage": "rag-eval", "top_k": 3, "batches": 400, "choices": 3170}
+{"stage": "rag-eval", "top_k": 3, "batches": 500, "choices": 3970}
+{"stage": "rag-eval", "top_k": 3, "batches": 600, "choices": 4767}
+{"stage": "rag-eval", "top_k": 3, "batches": 700, "choices": 5561}
+{"stage": "rag-eval", "top_k": 3, "batches": 800, "choices": 6361}
+{"stage": "rag-eval", "top_k": 3, "batches": 900, "choices": 7157}
+{"stage": "rag-eval", "top_k": 3, "batches": 1000, "choices": 7957}
+{"stage": "rag-eval", "top_k": 3, "batches": 1100, "choices": 8757}
+{"stage": "rag-eval", "top_k": 3, "batches": 1200, "choices": 9550}
+{"stage": "rag-eval", "top_k": 3, "batches": 1300, "choices": 10348}
+{"stage": "rag-eval", "top_k": 3, "batches": 1400, "choices": 11148}
+{"stage": "rag-eval", "top_k": 3, "batches": 1500, "choices": 11944}
+{"stage": "rag-eval", "top_k": 3, "batches": 1600, "choices": 12744}
+{"stage": "rag-eval", "top_k": 3, "batches": 1700, "choices": 13537}
+{"stage": "rag-eval", "top_k": 3, "batches": 1800, "choices": 14333}
+{"stage": "rag-eval", "top_k": 3, "batches": 1900, "choices": 15133}
+{"stage": "rag-eval", "top_k": 3, "batches": 2000, "choices": 15931}
+{"stage": "rag-eval", "top_k": 3, "batches": 2100, "choices": 16731}
+{"stage": "rag-eval", "top_k": 3, "batches": 2200, "choices": 17524}
+{"stage": "rag-eval", "top_k": 3, "batches": 2300, "choices": 18324}
+{"stage": "rag-eval", "top_k": 3, "batches": 2400, "choices": 19123}
+{"stage": "rag-eval", "top_k": 3, "batches": 2500, "choices": 19918}
+{"stage": "rag-eval", "top_k": 3, "batches": 2600, "choices": 20718}
+{"stage": "rag-eval", "top_k": 3, "batches": 2700, "choices": 21516}
+{"stage": "rag-eval", "top_k": 3, "batches": 2800, "choices": 22316}
+{"stage": "rag-eval", "top_k": 3, "batches": 2900, "choices": 23099}
+{"stage": "rag-eval", "top_k": 3, "batches": 3000, "choices": 23880}

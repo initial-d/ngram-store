@@ -1,0 +1,3788 @@
+{
+  "status": "partial",
+  "completed_trained_runs": 36,
+  "expected_trained_runs": 72,
+  "runs": [
+    {
+      "run": "qwen06-1024-adapter-s11",
+      "report_sha256": "d0755ce6c2bd1b44fe1bbeea17b36291dd4d0d90c5db53222852d269e32d38a3",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.765625,
+            "teacher_forced_accuracy": 0.404296875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.47294921875,
+            "teacher_forced_accuracy": 0.12490234375
+          },
+          "harmonic_score": 0.6786540567902013
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7621359223300971,
+            "teacher_forced_accuracy": 0.45145631067961167
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.46796116504854374,
+            "teacher_forced_accuracy": 0.1262135922330097
+          },
+          "harmonic_score": 0.6743040786988083
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7660152008686211,
+            "teacher_forced_accuracy": 0.3990228013029316
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4735070575461455,
+            "teacher_forced_accuracy": 0.12475570032573291
+          },
+          "harmonic_score": 0.6791389688989734
+        }
+      },
+      "case_scores_sha256": "31ba8b28d74db40ef822f07fbb91388eccacb0e6e5f29bcd05b494735ca63954",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.47351821642196845
+      },
+      "trainable_parameters": 155609088,
+      "memory_parameters": 29761536,
+      "physical_rows": 0,
+      "training_seconds": 106.7685658049304,
+      "delta": {
+        "bytes": 622446432,
+        "sha256": "7990076d8cc6779ea24198c212ec43e6a323cede1956cc74be9bbfe63add1a91"
+      }
+    },
+    {
+      "run": "qwen06-1024-adapter-s3",
+      "report_sha256": "55281b7e65f717e82676b8ca9f27031f0c65f2420c6e5d84cc743eac10528df2",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.7880859375,
+            "teacher_forced_accuracy": 0.43212890625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.462109375,
+            "teacher_forced_accuracy": 0.11533203125000001
+          },
+          "harmonic_score": 0.6767598623154623
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7815533980582524,
+            "teacher_forced_accuracy": 0.46116504854368934
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4553398058252427,
+            "teacher_forced_accuracy": 0.11067961165048544
+          },
+          "harmonic_score": 0.6702914310569813
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7888165038002172,
+            "teacher_forced_accuracy": 0.42888165038002174
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.46286644951140066,
+            "teacher_forced_accuracy": 0.11585233441910966
+          },
+          "harmonic_score": 0.677480406938495
+        }
+      },
+      "case_scores_sha256": "48d9662f34523bf6b0ebf81c32bdd3a5c91d9cdbc1daa75f0380bd8cbdd5f06b",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.46286025013594345
+      },
+      "trainable_parameters": 155609088,
+      "memory_parameters": 29761536,
+      "physical_rows": 0,
+      "training_seconds": 105.80967215215787,
+      "delta": {
+        "bytes": 622446432,
+        "sha256": "501a5a22840ac60959a1d3d25d0e98ac1cb66a844ddbfc34574c9458a26cb1e4"
+      }
+    },
+    {
+      "run": "qwen06-1024-adapter-s7",
+      "report_sha256": "cb8fa0b98f581ba0be9ed5f60aa9e67212a732ad2a54d7faec82d29883c81225",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.78369140625,
+            "teacher_forced_accuracy": 0.42529296875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4515625,
+            "teacher_forced_accuracy": 0.10234375
+          },
+          "harmonic_score": 0.6680703071701848
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7038834951456311,
+            "teacher_forced_accuracy": 0.38349514563106796
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.46796116504854374,
+            "teacher_forced_accuracy": 0.10388349514563108
+          },
+          "harmonic_score": 0.6582384187459974
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7926167209554832,
+            "teacher_forced_accuracy": 0.42996742671009774
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.449728555917481,
+            "teacher_forced_accuracy": 0.10217155266015202
+          },
+          "harmonic_score": 0.6688654009197343
+        }
+      },
+      "case_scores_sha256": "f2964518e91d81387906e73c78973c2608bd26e6456d5cfa3f6f07618ac4d3a5",
+      "near_ties_at_0_0014_nll": 5,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.45002718868950514
+      },
+      "trainable_parameters": 155609088,
+      "memory_parameters": 29761536,
+      "physical_rows": 0,
+      "training_seconds": 107.14355331193656,
+      "delta": {
+        "bytes": 622446432,
+        "sha256": "7b0777a22931a1e8490ba354ce89e930e339afd7cbc2215b127fb6b876c152fc"
+      }
+    },
+    {
+      "run": "qwen06-1024-bm25",
+      "report_sha256": "833a8e6fe47df20a68c878bc06f813622dc3b1ccb8d47ed04a89c7658f0c1d98",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.87890625
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.890625,
+            "teacher_forced_accuracy": 0.4208984375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.65478515625,
+            "teacher_forced_accuracy": 0.1
+          },
+          "harmonic_score": 0.8219120635705761
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9223300970873787
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9320388349514563,
+            "teacher_forced_accuracy": 0.42718446601941745
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6456310679611651,
+            "teacher_forced_accuracy": 0.1
+          },
+          "harmonic_score": 0.8283199619401855
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.8740499457111836
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8859934853420195,
+            "teacher_forced_accuracy": 0.4201954397394137
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.6558089033659066,
+            "teacher_forced_accuracy": 0.1
+          },
+          "harmonic_score": 0.821127971370879
+        }
+      },
+      "case_scores_sha256": "5b51465dc2206f31bc44caf0a3191d81fbc0d962f767b0de75eccf76754e9b62",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.6557911908646004
+      },
+      "trainable_parameters": null,
+      "memory_parameters": null,
+      "physical_rows": null,
+      "training_seconds": null,
+      "delta": null
+    },
+    {
+      "run": "qwen06-1024-head-constant-s11",
+      "report_sha256": "a7fb708c0b4ae56afc9b7e1d070ab36083fa81d93d1da0e8ed02aafbf60e639b",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.73095703125,
+            "teacher_forced_accuracy": 0.3388671875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43876953125,
+            "teacher_forced_accuracy": 0.11298828125
+          },
+          "harmonic_score": 0.6455541348944148
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7038834951456311,
+            "teacher_forced_accuracy": 0.3058252427184466
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.45145631067961167,
+            "teacher_forced_accuracy": 0.09320388349514563
+          },
+          "harmonic_score": 0.6471453937580984
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7339847991313789,
+            "teacher_forced_accuracy": 0.34256243213897936
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43735070575461454,
+            "teacher_forced_accuracy": 0.11520086862106406
+          },
+          "harmonic_score": 0.6453110894061908
+        }
+      },
+      "case_scores_sha256": "b2fbd753a5233554b41a9ea9689b57825314e53c96c07ee62d24bda9410aac8d",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4374116367591082
+      },
+      "trainable_parameters": 126249152,
+      "memory_parameters": 401600,
+      "physical_rows": 6,
+      "training_seconds": 114.25723782205023,
+      "delta": {
+        "bytes": 505007432,
+        "sha256": "89fb1ac15a1906dd0dd6fa2d1ea00f685cc62fdd99a46fe26a84bbfd1253f77c"
+      }
+    },
+    {
+      "run": "qwen06-1024-head-constant-s3",
+      "report_sha256": "258836948ad57b3b87c332e952f4a3b0b419711b3aa7ae16fd1a607070fee5ed",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.72216796875,
+            "teacher_forced_accuracy": 0.32763671875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.433203125,
+            "teacher_forced_accuracy": 0.11455078125
+          },
+          "harmonic_score": 0.639235598556085
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7038834951456311,
+            "teacher_forced_accuracy": 0.2912621359223301
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.44563106796116503,
+            "teacher_forced_accuracy": 0.08543689320388351
+          },
+          "harmonic_score": 0.6431284002074349
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7242128121606949,
+            "teacher_forced_accuracy": 0.3317046688382193
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43181324647122693,
+            "teacher_forced_accuracy": 0.11780673181324647
+          },
+          "harmonic_score": 0.6387564808927142
+        }
+      },
+      "case_scores_sha256": "0c5c32a498066c0ccd4c817797ee0bc507178f51d092cd1067838b6c1fc6b360",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.431973898858075
+      },
+      "trainable_parameters": 126249152,
+      "memory_parameters": 401600,
+      "physical_rows": 6,
+      "training_seconds": 109.75426453305408,
+      "delta": {
+        "bytes": 505007432,
+        "sha256": "4d3fcf9ab7800387847923c30286f5b4a46ffd8522cfa5dda2977aa90463ac42"
+      }
+    },
+    {
+      "run": "qwen06-1024-head-constant-s7",
+      "report_sha256": "cce76536f486cf445bed8a17883a3a6b8065d0efca6d290130658e84400319e9",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.71728515625,
+            "teacher_forced_accuracy": 0.333984375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43505859375,
+            "teacher_forced_accuracy": 0.113671875
+          },
+          "harmonic_score": 0.6392926330953008
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7233009708737864,
+            "teacher_forced_accuracy": 0.3155339805825243
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4349514563106796,
+            "teacher_forced_accuracy": 0.09320388349514563
+          },
+          "harmonic_score": 0.6407986944417778
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7166123778501629,
+            "teacher_forced_accuracy": 0.3360477741585233
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43507057546145494,
+            "teacher_forced_accuracy": 0.11596091205211725
+          },
+          "harmonic_score": 0.6391229924243981
+        }
+      },
+      "case_scores_sha256": "1c005b79fc0b174497bbaf73c8938b0727b5fd76c7d1b20cf55df01362a11fb2",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43491027732463294
+      },
+      "trainable_parameters": 126249152,
+      "memory_parameters": 401600,
+      "physical_rows": 6,
+      "training_seconds": 111.77646137611009,
+      "delta": {
+        "bytes": 505007432,
+        "sha256": "abf78aeb6645712e46b8f82187cd06488be4cef56a971186c08a372828490972"
+      }
+    },
+    {
+      "run": "qwen06-1024-large-s11",
+      "report_sha256": "e220874fb7f4585590a043b7d12dace28088ddc9741ad62c7c01e7e2afe16eae",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.72265625,
+            "teacher_forced_accuracy": 0.333984375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43779296875,
+            "teacher_forced_accuracy": 0.1134765625
+          },
+          "harmonic_score": 0.6426778612301536
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.6941747572815534,
+            "teacher_forced_accuracy": 0.3155339805825243
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4407766990291262,
+            "teacher_forced_accuracy": 0.10194174757281553
+          },
+          "harmonic_score": 0.637039799042311
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7258414766558089,
+            "teacher_forced_accuracy": 0.3360477741585233
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43745928338762213,
+            "teacher_forced_accuracy": 0.11476655808903366
+          },
+          "harmonic_score": 0.6432745835406719
+        }
+      },
+      "case_scores_sha256": "80417fa4f77edb7b4eee3ae0b53f85a791427dc131e1c682110a1a05f594a3a0",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43752039151712885
+      },
+      "trainable_parameters": 155609472,
+      "memory_parameters": 29761920,
+      "physical_rows": 917516,
+      "training_seconds": 114.53701681108214,
+      "delta": {
+        "bytes": 622448720,
+        "sha256": "5d10ff09025916cc043805e88a1f22c16c6bb39956f1805ffd032f3eb1c1971b"
+      }
+    },
+    {
+      "run": "qwen06-1024-large-s3",
+      "report_sha256": "ac1dcacd413e0dffdbbd1dc9a477ec3f950c42d072feb28c47bcf2c24b46551b",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.71728515625,
+            "teacher_forced_accuracy": 0.3271484375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43994140625,
+            "teacher_forced_accuracy": 0.1173828125
+          },
+          "harmonic_score": 0.6427870362740918
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.6699029126213593,
+            "teacher_forced_accuracy": 0.2912621359223301
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4553398058252427,
+            "teacher_forced_accuracy": 0.0912621359223301
+          },
+          "harmonic_score": 0.6398067721994491
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7225841476655809,
+            "teacher_forced_accuracy": 0.3311617806731813
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43821932681867537,
+            "teacher_forced_accuracy": 0.12030401737242127
+          },
+          "harmonic_score": 0.6429649494042187
+        }
+      },
+      "case_scores_sha256": "9927895fe306333f3ae71e4f925cf5c7a2703911f88f91e5e7bf93fc9fabfc40",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4383904295812942
+      },
+      "trainable_parameters": 155609472,
+      "memory_parameters": 29761920,
+      "physical_rows": 917516,
+      "training_seconds": 111.73130909912288,
+      "delta": {
+        "bytes": 622448720,
+        "sha256": "a91d9836dc269946e5a74f194a0ea47feca95271b2812b2aa9beaabf5f48f9ec"
+      }
+    },
+    {
+      "run": "qwen06-1024-large-s7",
+      "report_sha256": "fb3114cf31a89278e50df951cfb5cf72accbbfea25b44d07927af270ff140657",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.7177734375,
+            "teacher_forced_accuracy": 0.33056640625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.432421875,
+            "teacher_forced_accuracy": 0.10888671875
+          },
+          "harmonic_score": 0.6375174238073262
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7233009708737864,
+            "teacher_forced_accuracy": 0.32038834951456313
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4262135922330097,
+            "teacher_forced_accuracy": 0.08834951456310679
+          },
+          "harmonic_score": 0.6344115222346152
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7171552660152009,
+            "teacher_forced_accuracy": 0.3317046688382193
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4331161780673181,
+            "teacher_forced_accuracy": 0.11118349619978285
+          },
+          "harmonic_score": 0.6378571376405632
+        }
+      },
+      "case_scores_sha256": "7d6bddd1c9f6490a72de1c483e7918082a837e42af22b9479d16196342b77dd9",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43317020119630234
+      },
+      "trainable_parameters": 155609472,
+      "memory_parameters": 29761920,
+      "physical_rows": 917516,
+      "training_seconds": 110.25967474817298,
+      "delta": {
+        "bytes": 622448720,
+        "sha256": "c0b919c59be579b25b07f921c7af104b437beaee909990cbf5a819cf455c1a89"
+      }
+    },
+    {
+      "run": "qwen06-1024-mid-s11",
+      "report_sha256": "eab83c01946a3fd89616e0aa9078c57a884bb872090721a5bf1f619cbea6d06c",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.72119140625,
+            "teacher_forced_accuracy": 0.3359375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.44150390625,
+            "teacher_forced_accuracy": 0.115625
+          },
+          "harmonic_score": 0.6449421388651141
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.6941747572815534,
+            "teacher_forced_accuracy": 0.3155339805825243
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.44854368932038835,
+            "teacher_forced_accuracy": 0.1
+          },
+          "harmonic_score": 0.6423987450085568
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7242128121606949,
+            "teacher_forced_accuracy": 0.33821932681867534
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.44071661237785015,
+            "teacher_forced_accuracy": 0.11737242128121608
+          },
+          "harmonic_score": 0.6451832991997147
+        }
+      },
+      "case_scores_sha256": "d4494a3abdae0e6883a53d61945d51765a4e7d666bff6ff3164ac52ff77b1d2e",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4407830342577488
+      },
+      "trainable_parameters": 128085248,
+      "memory_parameters": 2237696,
+      "physical_rows": 57384,
+      "training_seconds": 109.68203115602955,
+      "delta": {
+        "bytes": 512351824,
+        "sha256": "4a4796d82f84af17bb858f8bcc2147c9caaac0c0d5c1d190cbe37091afa17c3c"
+      }
+    },
+    {
+      "run": "qwen06-1024-mid-s3",
+      "report_sha256": "a2ccfbfb973b7c3f83472d7168cb2b8c92438731b0e82415a350501130788547",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.716796875,
+            "teacher_forced_accuracy": 0.32763671875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4365234375,
+            "teacher_forced_accuracy": 0.11474609375
+          },
+          "harmonic_score": 0.6402153707261802
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.6844660194174758,
+            "teacher_forced_accuracy": 0.2912621359223301
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4553398058252427,
+            "teacher_forced_accuracy": 0.0825242718446602
+          },
+          "harmonic_score": 0.6441701058209649
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7204125950054289,
+            "teacher_forced_accuracy": 0.3317046688382193
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43441910966340935,
+            "teacher_forced_accuracy": 0.11834961997828447
+          },
+          "harmonic_score": 0.6396563987261635
+        }
+      },
+      "case_scores_sha256": "152b4f5dbf8c07ba3880b298c77ac0eebd85ae1364254ffb6ba790524a19867d",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.434584013050571
+      },
+      "trainable_parameters": 128085248,
+      "memory_parameters": 2237696,
+      "physical_rows": 57384,
+      "training_seconds": 112.47065392602235,
+      "delta": {
+        "bytes": 512351824,
+        "sha256": "9886fddde832211a1d8d964108a7c7959d92eb8b2925c797412ce48bb58e2a04"
+      }
+    },
+    {
+      "run": "qwen06-1024-mid-s7",
+      "report_sha256": "3126299a90de1ff01e1ac74efebf115084068b525c29574336f1b522be195923",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.71630859375,
+            "teacher_forced_accuracy": 0.32666015625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43466796875,
+            "teacher_forced_accuracy": 0.109765625
+          },
+          "harmonic_score": 0.638752751501638
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7378640776699029,
+            "teacher_forced_accuracy": 0.3058252427184466
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4300970873786408,
+            "teacher_forced_accuracy": 0.08932038834951457
+          },
+          "harmonic_score": 0.6409818691814161
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7138979370249728,
+            "teacher_forced_accuracy": 0.3289902280130293
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43517915309446253,
+            "teacher_forced_accuracy": 0.11205211726384365
+          },
+          "harmonic_score": 0.6384792754568794
+        }
+      },
+      "case_scores_sha256": "9facb7839669f631624e475fdd0ccf620da23be82d6a4339204030d87eec0bf5",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43501903208265363
+      },
+      "trainable_parameters": 128085248,
+      "memory_parameters": 2237696,
+      "physical_rows": 57384,
+      "training_seconds": 111.75841276091523,
+      "delta": {
+        "bytes": 512351824,
+        "sha256": "49e26f71ffb869e2b10305147bfae85cb2bee4ff7b2b7f46a7a4d997b1cb65d3"
+      }
+    },
+    {
+      "run": "qwen06-1024-off-s11",
+      "report_sha256": "b7805ba21b20322038289a40b37d6ad05678009f0ed924dd7087577d6f7b12ee",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.72802734375,
+            "teacher_forced_accuracy": 0.33203125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.44052734375,
+            "teacher_forced_accuracy": 0.11240234375000001
+          },
+          "harmonic_score": 0.6460530613385791
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.6941747572815534,
+            "teacher_forced_accuracy": 0.28640776699029125
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.45339805825242724,
+            "teacher_forced_accuracy": 0.09805825242718447
+          },
+          "harmonic_score": 0.645699110138491
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7318132464712269,
+            "teacher_forced_accuracy": 0.33713355048859933
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43908794788273614,
+            "teacher_forced_accuracy": 0.11400651465798045
+          },
+          "harmonic_score": 0.6460063897763578
+        }
+      },
+      "case_scores_sha256": "947bdb20e985f302eab26718bab819aa8ec72ab739b4cc7a8e304e799f9bd58a",
+      "near_ties_at_0_0014_nll": 3,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4391517128874388
+      },
+      "trainable_parameters": 125847552,
+      "memory_parameters": 0,
+      "physical_rows": 0,
+      "training_seconds": 111.6695200689137,
+      "delta": {
+        "bytes": 503400088,
+        "sha256": "26cf32cdf117da2ad6c629c73185ace355e649c9dd35fd547e85d8d4c185aef9"
+      }
+    },
+    {
+      "run": "qwen06-1024-off-s3",
+      "report_sha256": "899ca7940b4ba98ddb2ccc8073307c8ab66e72df91110557cb5481391c44feb6",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.72412109375,
+            "teacher_forced_accuracy": 0.32958984375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.42568359375,
+            "teacher_forced_accuracy": 0.10849609375000001
+          },
+          "harmonic_score": 0.6342297415662713
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.6941747572815534,
+            "teacher_forced_accuracy": 0.3058252427184466
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.44854368932038835,
+            "teacher_forced_accuracy": 0.09029126213592234
+          },
+          "harmonic_score": 0.6423987450085568
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7274701411509229,
+            "teacher_forced_accuracy": 0.3322475570032573
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4231270358306189,
+            "teacher_forced_accuracy": 0.11053203040173724
+          },
+          "harmonic_score": 0.63318078896423
+        }
+      },
+      "case_scores_sha256": "75b732c3223da484e9abf30984f5b618e896ac3cdd4640db5b93360110bf864f",
+      "near_ties_at_0_0014_nll": 3,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.42327351821642195
+      },
+      "trainable_parameters": 125847552,
+      "memory_parameters": 0,
+      "physical_rows": 0,
+      "training_seconds": 104.22285801311955,
+      "delta": {
+        "bytes": 503400088,
+        "sha256": "36e56d44e6d0391adcd06b8805404afd67a6996860ef247981c1fa82e6de9ec1"
+      }
+    },
+    {
+      "run": "qwen06-1024-off-s7",
+      "report_sha256": "198776eb6837c1ec6d85ea6ac431658cd41fe4699d435863c6e7a12b78f02899",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.7216796875,
+            "teacher_forced_accuracy": 0.33203125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4330078125,
+            "teacher_forced_accuracy": 0.11064453125
+          },
+          "harmonic_score": 0.6389662791814774
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7378640776699029,
+            "teacher_forced_accuracy": 0.3058252427184466
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.43398058252427185,
+            "teacher_forced_accuracy": 0.0941747572815534
+          },
+          "harmonic_score": 0.643844010790117
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7198697068403909,
+            "teacher_forced_accuracy": 0.3349619978284473
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43289902280130294,
+            "teacher_forced_accuracy": 0.11248642779587406
+          },
+          "harmonic_score": 0.6384136295068331
+        }
+      },
+      "case_scores_sha256": "9243ebd649e0253ee9c3e3cfc4828e720ffbe271b1f12737f49126bfc2b5046f",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43306144643828165
+      },
+      "trainable_parameters": 125847552,
+      "memory_parameters": 0,
+      "physical_rows": 0,
+      "training_seconds": 103.23167383205146,
+      "delta": {
+        "bytes": 503400088,
+        "sha256": "2b2d9f011d24bd7c1e67a8e2fe70373a2c6605d995cf5eff45657d4b41a6e64b"
+      }
+    },
+    {
+      "run": "qwen06-1024-small-s11",
+      "report_sha256": "1beeaa0bea6773036765d6f3a256dfd72f6db0bb3a93d12f5b6c673619315f2a",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.728515625,
+            "teacher_forced_accuracy": 0.33154296875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43984375,
+            "teacher_forced_accuracy": 0.11494140625
+          },
+          "harmonic_score": 0.6456905077918818
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7038834951456311,
+            "teacher_forced_accuracy": 0.3106796116504854
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.45048543689320386,
+            "teacher_forced_accuracy": 0.09902912621359225
+          },
+          "harmonic_score": 0.6464796581831692
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7312703583061889,
+            "teacher_forced_accuracy": 0.3338762214983713
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4386536373507057,
+            "teacher_forced_accuracy": 0.11672095548317046
+          },
+          "harmonic_score": 0.6455519163539867
+        }
+      },
+      "case_scores_sha256": "dd07b29bc66b9ccb96a0a13a995d8a189f361ee0c215d4fba575ebdc9da0ba94",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43882544861337686
+      },
+      "trainable_parameters": 126365056,
+      "memory_parameters": 517504,
+      "physical_rows": 3628,
+      "training_seconds": 107.77540408587083,
+      "delta": {
+        "bytes": 505471056,
+        "sha256": "fea41a33900617cf8a4066075cedfc783b71644274f5d412be50998476153f88"
+      }
+    },
+    {
+      "run": "qwen06-1024-small-s3",
+      "report_sha256": "2a4d0672801ec13584c1c715d2eadee0e6f3cd7e700099cbce88925e118913aa",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998046875
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.71240234375,
+            "teacher_forced_accuracy": 0.33251953125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43466796875,
+            "teacher_forced_accuracy": 0.11376953125
+          },
+          "harmonic_score": 0.6377133781194172
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.6553398058252428,
+            "teacher_forced_accuracy": 0.2815533980582524
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.45339805825242724,
+            "teacher_forced_accuracy": 0.09320388349514563
+          },
+          "harmonic_score": 0.6340492864494112
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.997828447339848
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7187839305103149,
+            "teacher_forced_accuracy": 0.33821932681867534
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4325732899022801,
+            "teacher_forced_accuracy": 0.11606948968512487
+          },
+          "harmonic_score": 0.6378926532519511
+        }
+      },
+      "case_scores_sha256": "a29c6e1cf493b3cf54790d58439523bc5490fd3ee75b8b1dfaf8947427c77ab2",
+      "near_ties_at_0_0014_nll": 3,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4327351821642197
+      },
+      "trainable_parameters": 126365056,
+      "memory_parameters": 517504,
+      "physical_rows": 3628,
+      "training_seconds": 110.2612345837988,
+      "delta": {
+        "bytes": 505471056,
+        "sha256": "437c33b14be0d7c256b8cd55326f8ef2471542658c544f5a1c5adf689f4d74d4"
+      }
+    },
+    {
+      "run": "qwen06-1024-small-s7",
+      "report_sha256": "9283e74c3dad5f43ca5199f1df2701a1ad3e4a77780be48b1c8094b602ac346d",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.71337890625,
+            "teacher_forced_accuracy": 0.32763671875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43369140625,
+            "teacher_forced_accuracy": 0.1115234375
+          },
+          "harmonic_score": 0.6372719204217089
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7135922330097088,
+            "teacher_forced_accuracy": 0.30097087378640774
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4368932038834951,
+            "teacher_forced_accuracy": 0.09320388349514563
+          },
+          "harmonic_score": 0.6396248307870818
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7133550488599348,
+            "teacher_forced_accuracy": 0.3306188925081433
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43333333333333335,
+            "teacher_forced_accuracy": 0.11357220412595007
+          },
+          "harmonic_score": 0.6370077565632459
+        }
+      },
+      "case_scores_sha256": "0eee92c269743126c93383b209082ddc9b34dab7a730363404f8d7dffed48d91",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43349646547036436
+      },
+      "trainable_parameters": 126365056,
+      "memory_parameters": 517504,
+      "physical_rows": 3628,
+      "training_seconds": 109.60718128294684,
+      "delta": {
+        "bytes": 505471056,
+        "sha256": "1b3fcf2faea44f313125af0f182c5bbc3443df6cc8f487d7d6d81cbf1de4a66a"
+      }
+    },
+    {
+      "run": "qwen06-1024-unedited-base",
+      "report_sha256": "c4b7cac15cffbf5220c7a9400d3778a3f82acbf4a6f923215725dc512b405b99",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.2666015625,
+            "teacher_forced_accuracy": 0.0009765625
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.28955078125,
+            "teacher_forced_accuracy": 0.0029296875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.71826171875,
+            "teacher_forced_accuracy": 0.05859375
+          },
+          "harmonic_score": 0.3489674003864018
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 0.27184466019417475,
+            "teacher_forced_accuracy": 0.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.3058252427184466,
+            "teacher_forced_accuracy": 0.0048543689320388345
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.7155339805825243,
+            "teacher_forced_accuracy": 0.059223300970873784
+          },
+          "harmonic_score": 0.35945490685121156
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.26601520086862107,
+            "teacher_forced_accuracy": 0.0010857763300760044
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.28773072747014117,
+            "teacher_forced_accuracy": 0.0027144408251900108
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.7185667752442996,
+            "teacher_forced_accuracy": 0.05852334419109663
+          },
+          "harmonic_score": 0.3477730850038601
+        }
+      },
+      "case_scores_sha256": "25f2750650074584f41abc7bc370d5b291c972fa83b5e7d5c06904039e7aff25",
+      "near_ties_at_0_0014_nll": 7,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.7186514410005438
+      },
+      "trainable_parameters": null,
+      "memory_parameters": null,
+      "physical_rows": null,
+      "training_seconds": null,
+      "delta": null
+    },
+    {
+      "run": "qwen35-1024-adapter-s11",
+      "report_sha256": "2b9466d37e7cdd427e198c8f7edd6caa3d670d8e0a284df6872a04ee9616e1cf",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.9990234375,
+            "teacher_forced_accuracy": 0.9970703125
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.9091796875,
+            "teacher_forced_accuracy": 0.7158203125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.452734375,
+            "teacher_forced_accuracy": 0.1166015625
+          },
+          "harmonic_score": 0.6961088542550657
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9902912621359223
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9271844660194175,
+            "teacher_forced_accuracy": 0.7669902912621359
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4524271844660194,
+            "teacher_forced_accuracy": 0.10582524271844661
+          },
+          "harmonic_score": 0.6994907421960957
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.998914223669924,
+            "teacher_forced_accuracy": 0.997828447339848
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.9071661237785016,
+            "teacher_forced_accuracy": 0.7100977198697068
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4527687296416938,
+            "teacher_forced_accuracy": 0.11780673181324647
+          },
+          "harmonic_score": 0.6957241288363446
+        }
+      },
+      "case_scores_sha256": "6622bc1121fc4966cbd703757b517819e39297c777d8b499de8fd7c996a51b05",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.45296356715606306
+      },
+      "trainable_parameters": 922873984,
+      "memory_parameters": 30361600,
+      "physical_rows": 0,
+      "training_seconds": 201.3435865601059,
+      "delta": {
+        "bytes": 3691509840,
+        "sha256": "3f47dc3151ec90fc490c80632d107bea8bf5d57dd0cfbfc0ecf49c703bc673f4"
+      }
+    },
+    {
+      "run": "qwen35-1024-adapter-s3",
+      "report_sha256": "5955a3dcfadb88bd051117cba85c10315d5929699109110a088a07aa33f16e03",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.9990234375,
+            "teacher_forced_accuracy": 0.9970703125
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.9013671875,
+            "teacher_forced_accuracy": 0.69580078125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4185546875,
+            "teacher_forced_accuracy": 0.11923828125000001
+          },
+          "harmonic_score": 0.6667292862291629
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9902912621359223
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9077669902912622,
+            "teacher_forced_accuracy": 0.6796116504854369
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4349514563106796,
+            "teacher_forced_accuracy": 0.11553398058252427
+          },
+          "harmonic_score": 0.6817079587928632
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.998914223669924,
+            "teacher_forced_accuracy": 0.997828447339848
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.9006514657980456,
+            "teacher_forced_accuracy": 0.6976112920738328
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.41672095548317045,
+            "teacher_forced_accuracy": 0.11965255157437568
+          },
+          "harmonic_score": 0.6650289651870305
+        }
+      },
+      "case_scores_sha256": "d2687160a1c2d1ef7455dae88d1896c72b7707ac6b84976e6b856ecd336f71df",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4164219684611202
+      },
+      "trainable_parameters": 922873984,
+      "memory_parameters": 30361600,
+      "physical_rows": 0,
+      "training_seconds": 202.2121383731719,
+      "delta": {
+        "bytes": 3691509840,
+        "sha256": "d445809b06185200abfe9d72ebfed1d21c20ebe1f1c92985cf8ea3ff9ea46128"
+      }
+    },
+    {
+      "run": "qwen35-1024-adapter-s7",
+      "report_sha256": "62309abd96eba40b5f763091263f5080c7fa6042de9aa22378646070c774928d",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.916015625,
+            "teacher_forced_accuracy": 0.7353515625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4337890625,
+            "teacher_forced_accuracy": 0.11025390625
+          },
+          "harmonic_score": 0.6822907717134259
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9271844660194175,
+            "teacher_forced_accuracy": 0.7330097087378641
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4368932038834951,
+            "teacher_forced_accuracy": 0.09320388349514563
+          },
+          "harmonic_score": 0.6869039373434919
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.9147665580890336,
+            "teacher_forced_accuracy": 0.7356134636264929
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43344191096634094,
+            "teacher_forced_accuracy": 0.11216069489685125
+          },
+          "harmonic_score": 0.6817733548109011
+        }
+      },
+      "case_scores_sha256": "c672af56df31573e26d69af69485b903e0f7beb49afb43f9e9d7e4d656f4c62f",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43349646547036436
+      },
+      "trainable_parameters": 922873984,
+      "memory_parameters": 30361600,
+      "physical_rows": 0,
+      "training_seconds": 203.7209095840808,
+      "delta": {
+        "bytes": 3691509840,
+        "sha256": "c87425f701da3fb13ef4c07cc8b1c8fe45aa04c7c14e3362d5e028a00f85dc45"
+      }
+    },
+    {
+      "run": "qwen35-1024-bm25",
+      "report_sha256": "21faadac2af740850ed3fdf031097b6b53db1616876f3885f63615c7c29a4e73",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.9990234375,
+            "teacher_forced_accuracy": 0.9638671875
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.8720703125,
+            "teacher_forced_accuracy": 0.5791015625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.7169921875,
+            "teacher_forced_accuracy": 0.12685546875
+          },
+          "harmonic_score": 0.8468860072735136
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9174757281553398,
+            "teacher_forced_accuracy": 0.6116504854368932
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6970873786407766,
+            "teacher_forced_accuracy": 0.12233009708737863
+          },
+          "harmonic_score": 0.8511875888600818
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.998914223669924,
+            "teacher_forced_accuracy": 0.9598262757871878
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8669923995656895,
+            "teacher_forced_accuracy": 0.5754614549402823
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.7192182410423452,
+            "teacher_forced_accuracy": 0.1273615635179153
+          },
+          "harmonic_score": 0.8462866542311884
+        }
+      },
+      "case_scores_sha256": "e8586403e14e661a6bf7639961967da1cdd5fec8f233e073e22214deec671814",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.7189777052746058
+      },
+      "trainable_parameters": null,
+      "memory_parameters": null,
+      "physical_rows": null,
+      "training_seconds": null,
+      "delta": null
+    },
+    {
+      "run": "qwen35-1024-head-constant-s11",
+      "report_sha256": "5b37ed9a9bbc264416a502fffacbe6138efac79d5ef42ee6e2e86b6fb5eeb55a",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.88623046875,
+            "teacher_forced_accuracy": 0.66064453125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.45556640625,
+            "teacher_forced_accuracy": 0.13310546875
+          },
+          "harmonic_score": 0.6938912070112149
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9077669902912622,
+            "teacher_forced_accuracy": 0.6699029126213593
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4601941747572815,
+            "teacher_forced_accuracy": 0.10873786407766992
+          },
+          "harmonic_score": 0.701820043706386
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8838219326818675,
+            "teacher_forced_accuracy": 0.6596091205211726
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.45504885993485344,
+            "teacher_forced_accuracy": 0.13583061889250814
+          },
+          "harmonic_score": 0.6929981565275682
+        }
+      },
+      "case_scores_sha256": "80dd2b9a0efc53858b173f4e854ce75ac9369e26fff2069c9a1aabe46084e2a5",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.45459488852637303
+      },
+      "trainable_parameters": 893516096,
+      "memory_parameters": 1003712,
+      "physical_rows": 6,
+      "training_seconds": 206.12964853690937,
+      "delta": {
+        "bytes": 3574079056,
+        "sha256": "0996cd3ad99677718ce61636aefcf448b2b266e57cb6a2ecb8112438ba24704c"
+      }
+    },
+    {
+      "run": "qwen35-1024-head-constant-s3",
+      "report_sha256": "dbd830547a686a6f7d278b154d58803a24a45171a345731ce80ff30b29d85692",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.9990234375,
+            "teacher_forced_accuracy": 0.998046875
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.8701171875,
+            "teacher_forced_accuracy": 0.65625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.44912109375,
+            "teacher_forced_accuracy": 0.13330078125
+          },
+          "harmonic_score": 0.6854293048263242
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.883495145631068,
+            "teacher_forced_accuracy": 0.6796116504854369
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.45339805825242724,
+            "teacher_forced_accuracy": 0.10485436893203884
+          },
+          "harmonic_score": 0.691652923050215
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.998914223669924,
+            "teacher_forced_accuracy": 0.997828447339848
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8686210640608035,
+            "teacher_forced_accuracy": 0.6536373507057546
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.448642779587405,
+            "teacher_forced_accuracy": 0.13648208469055376
+          },
+          "harmonic_score": 0.6847311249080602
+        }
+      },
+      "case_scores_sha256": "9fce8577e3c31136308454ef9d393ce9ba07ed75454124b4fa921f23c43a61ec",
+      "near_ties_at_0_0014_nll": 3,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.44839586731919523
+      },
+      "trainable_parameters": 893516096,
+      "memory_parameters": 1003712,
+      "physical_rows": 6,
+      "training_seconds": 205.17038434394635,
+      "delta": {
+        "bytes": 3574079056,
+        "sha256": "a52ef1e091c98f493a10cd06c7d2fcab661b0599d27a940d13dd9c9613fa4eb9"
+      }
+    },
+    {
+      "run": "qwen35-1024-head-constant-s7",
+      "report_sha256": "7462773547fc2b6db3373d41d0bcfce72f468d25fb3829062ec41222456618fc",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.88427734375,
+            "teacher_forced_accuracy": 0.68408203125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.458203125,
+            "teacher_forced_accuracy": 0.13369140625
+          },
+          "harmonic_score": 0.6955223242062141
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8980582524271845,
+            "teacher_forced_accuracy": 0.6941747572815534
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.47378640776699027,
+            "teacher_forced_accuracy": 0.1029126213592233
+          },
+          "harmonic_score": 0.7101988158108654
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8827361563517915,
+            "teacher_forced_accuracy": 0.6829533116178067
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4564603691639522,
+            "teacher_forced_accuracy": 0.13713355048859935
+          },
+          "harmonic_score": 0.6938642931068155
+        }
+      },
+      "case_scores_sha256": "7f27826fc8b0341db2ca2d0ab649c60f7dd976110428fd2a95f544105710621c",
+      "near_ties_at_0_0014_nll": 4,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.456226209896683
+      },
+      "trainable_parameters": 893516096,
+      "memory_parameters": 1003712,
+      "physical_rows": 6,
+      "training_seconds": 203.15154538908973,
+      "delta": {
+        "bytes": 3574079056,
+        "sha256": "ebaf6c7143d7109191b042c19bdff918c970af732aeca539af0546c05aca4546"
+      }
+    },
+    {
+      "run": "qwen35-1024-large-s11",
+      "report_sha256": "eac8ddb0720be4e4fc01b488654179cb695f1d8782c9bbe470b09fdd7be479f3",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.87744140625,
+            "teacher_forced_accuracy": 0.65283203125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.46259765625,
+            "teacher_forced_accuracy": 0.13515625
+          },
+          "harmonic_score": 0.6974501055508739
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.912621359223301,
+            "teacher_forced_accuracy": 0.6747572815533981
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.45922330097087377,
+            "teacher_forced_accuracy": 0.10097087378640777
+          },
+          "harmonic_score": 0.7020278840637681
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8735070575461455,
+            "teacher_forced_accuracy": 0.6503800217155266
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.46297502714440825,
+            "teacher_forced_accuracy": 0.13897937024972856
+          },
+          "harmonic_score": 0.6969039093106192
+        }
+      },
+      "case_scores_sha256": "2dc2d3f1638af7e3c215abd39a60bdcff3643231234bb2fce7513adcfd9d9952",
+      "near_ties_at_0_0014_nll": 5,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4624252311038608
+      },
+      "trainable_parameters": 922876416,
+      "memory_parameters": 30364032,
+      "physical_rows": 917516,
+      "training_seconds": 208.1500184519682,
+      "delta": {
+        "bytes": 3691520336,
+        "sha256": "27d46f40824f64d7c74291ad33d87982b58a8573ea06f91c5a197da30a3c088f"
+      }
+    },
+    {
+      "run": "qwen35-1024-large-s3",
+      "report_sha256": "d6c674c72571c1eabe3ffbc79257a37b6a67c137ba1ad462eb6513f5987b4b6d",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.8740234375,
+            "teacher_forced_accuracy": 0.65478515625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.44306640625,
+            "teacher_forced_accuracy": 0.126171875
+          },
+          "harmonic_score": 0.6816427990729048
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8980582524271845,
+            "teacher_forced_accuracy": 0.6796116504854369
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.45145631067961167,
+            "teacher_forced_accuracy": 0.1
+          },
+          "harmonic_score": 0.6930699716675842
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8713355048859935,
+            "teacher_forced_accuracy": 0.6520086862106406
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.442128121606949,
+            "teacher_forced_accuracy": 0.12909880564603693
+          },
+          "harmonic_score": 0.6803567491332051
+        }
+      },
+      "case_scores_sha256": "26f70840c9023c3891354a644791cd2e91a11afacb8a4a55611d844894418937",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4418705818379554
+      },
+      "trainable_parameters": 922876416,
+      "memory_parameters": 30364032,
+      "physical_rows": 917516,
+      "training_seconds": 207.04878881410696,
+      "delta": {
+        "bytes": 3691520336,
+        "sha256": "0b5daec4abc39b50de76ab9d77a4199bfcb760ac9be89499a5d00d0624e604e7"
+      }
+    },
+    {
+      "run": "qwen35-1024-large-s7",
+      "report_sha256": "b5291503e6b40c08d5d800f6d8bd59fe971f14cabf160e32857686311e6423b3",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.8857421875,
+            "teacher_forced_accuracy": 0.67431640625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4423828125,
+            "teacher_forced_accuracy": 0.1298828125
+          },
+          "harmonic_score": 0.6834518891207207
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8786407766990292,
+            "teacher_forced_accuracy": 0.6844660194174758
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4621359223300971,
+            "teacher_forced_accuracy": 0.11262135922330097
+          },
+          "harmonic_score": 0.6973521619244447
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8865363735070575,
+            "teacher_forced_accuracy": 0.6731813246471227
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.44017372421281215,
+            "teacher_forced_accuracy": 0.13181324647122694
+          },
+          "harmonic_score": 0.6818467582957458
+        }
+      },
+      "case_scores_sha256": "6e1c8fd63e6f90a683377213d8e7140834c43e77be6357c6bdbdecb206c838c3",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4398042414355628
+      },
+      "trainable_parameters": 922876416,
+      "memory_parameters": 30364032,
+      "physical_rows": 917516,
+      "training_seconds": 205.56274466915056,
+      "delta": {
+        "bytes": 3691520336,
+        "sha256": "a36fd01cb2ba33e5481fba8a2b67807829d9c412871f692b0efdfc90e7c9bed8"
+      }
+    },
+    {
+      "run": "qwen35-1024-mid-s11",
+      "report_sha256": "9ef07bd1df3d79b86911cba6afba708608800c2f3073cc544900f29574762ec6",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.87890625,
+            "teacher_forced_accuracy": 0.65771484375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.46865234375,
+            "teacher_forced_accuracy": 0.1365234375
+          },
+          "harmonic_score": 0.7023202428106121
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9077669902912622,
+            "teacher_forced_accuracy": 0.6699029126213593
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4776699029126214,
+            "teacher_forced_accuracy": 0.10873786407766992
+          },
+          "harmonic_score": 0.7151199846618613
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8756786102062974,
+            "teacher_forced_accuracy": 0.6563517915309446
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.46764386536373503,
+            "teacher_forced_accuracy": 0.13963083604777415
+          },
+          "harmonic_score": 0.7008771232174423
+        }
+      },
+      "case_scores_sha256": "2b721a8c5c834886eb9338704d932da72ab1fac2a1ca99e3f023bb84495def5a",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.46731919521479065
+      },
+      "trainable_parameters": 895352192,
+      "memory_parameters": 2839808,
+      "physical_rows": 57384,
+      "training_seconds": 205.46475438214839,
+      "delta": {
+        "bytes": 3581423440,
+        "sha256": "672b495903da61331f83b730441114136f7ee7254427ec68972e4a7cf0d7bde7"
+      }
+    },
+    {
+      "run": "qwen35-1024-mid-s3",
+      "report_sha256": "6eac6317bb4a121372de14a4455d36e4602f5491d336d75717a15c4034cdc511",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.86767578125,
+            "teacher_forced_accuracy": 0.65625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.44443359375,
+            "teacher_forced_accuracy": 0.12958984375
+          },
+          "harmonic_score": 0.6814218492809315
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8786407766990292,
+            "teacher_forced_accuracy": 0.6699029126213593
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4436893203883495,
+            "teacher_forced_accuracy": 0.10485436893203884
+          },
+          "harmonic_score": 0.6830677504686352
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8664495114006515,
+            "teacher_forced_accuracy": 0.6547231270358306
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.44451682953311616,
+            "teacher_forced_accuracy": 0.13235613463626494
+          },
+          "harmonic_score": 0.6812346503821531
+        }
+      },
+      "case_scores_sha256": "3a820be5d881bea24dabe064cc7ca43232088c06b90909ff414b0135ebcc3c96",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.44426318651441
+      },
+      "trainable_parameters": 895352192,
+      "memory_parameters": 2839808,
+      "physical_rows": 57384,
+      "training_seconds": 206.6953112850897,
+      "delta": {
+        "bytes": 3581423440,
+        "sha256": "ca7468705ca4c8857c6d2d8258a1d3227f81b8df826bbc69d382b10a9e9a6fe0"
+      }
+    },
+    {
+      "run": "qwen35-1024-mid-s7",
+      "report_sha256": "dd6b1ee6bc9fe5e50440662ba9d0cf3323b71bd93fd2ee8ed217b232f46f9760",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.88818359375,
+            "teacher_forced_accuracy": 0.68115234375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43955078125,
+            "teacher_forced_accuracy": 0.13095703125
+          },
+          "harmonic_score": 0.6816720349150353
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8786407766990292,
+            "teacher_forced_accuracy": 0.6990291262135923
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4601941747572815,
+            "teacher_forced_accuracy": 0.12233009708737863
+          },
+          "harmonic_score": 0.6958752852368952
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8892508143322475,
+            "teacher_forced_accuracy": 0.6791530944625407
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43724212812160695,
+            "teacher_forced_accuracy": 0.13192182410423453
+          },
+          "harmonic_score": 0.680024701081858
+        }
+      },
+      "case_scores_sha256": "af80c3727d4f85b1d105d95b3b023cea111c4c48dc56631cc1b9cdd723d7740d",
+      "near_ties_at_0_0014_nll": 3,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43686786296900487
+      },
+      "trainable_parameters": 895352192,
+      "memory_parameters": 2839808,
+      "physical_rows": 57384,
+      "training_seconds": 204.5898997981567,
+      "delta": {
+        "bytes": 3581423440,
+        "sha256": "b36a0d5985708e28c8b63f3d5c94380b85943477ecec8c8b3fcebd3c00a8a476"
+      }
+    },
+    {
+      "run": "qwen35-1024-off-s11",
+      "report_sha256": "fafc1476afd8d33d78bd1f3c006c6c5e957e662d66d5e7db7b76c9ef4d8cf655",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.87890625,
+            "teacher_forced_accuracy": 0.65625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.45712890625,
+            "teacher_forced_accuracy": 0.137890625
+          },
+          "harmonic_score": 0.6935863662016599
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.9174757281553398,
+            "teacher_forced_accuracy": 0.6796116504854369
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.474757281553398,
+            "teacher_forced_accuracy": 0.12135922330097088
+          },
+          "harmonic_score": 0.7149178108683039
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8745928338762216,
+            "teacher_forced_accuracy": 0.6536373507057546
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.45515743756786103,
+            "teacher_forced_accuracy": 0.13973941368078174
+          },
+          "harmonic_score": 0.6911755705440374
+        }
+      },
+      "case_scores_sha256": "d770eddd6c3e05df00b5701cab352cd9c57d5a5f8d2ca9aaa6caccd3ddd50e68",
+      "near_ties_at_0_0014_nll": 1,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.45481239804241436
+      },
+      "trainable_parameters": 892512384,
+      "memory_parameters": 0,
+      "physical_rows": 0,
+      "training_seconds": 198.6011359000113,
+      "delta": {
+        "bytes": 3570063240,
+        "sha256": "37b48a0f4eadedc6a5faedb25f23abe0149b5298c33efaaf69bef6b362554f63"
+      }
+    },
+    {
+      "run": "qwen35-1024-off-s3",
+      "report_sha256": "01fe1dfefb8dba9e510865f01a1b1b5032629bdd173e378cafdfcafdc1a8a859",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.87255859375,
+            "teacher_forced_accuracy": 0.66162109375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4365234375,
+            "teacher_forced_accuracy": 0.13115234375
+          },
+          "harmonic_score": 0.6761504153484081
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8932038834951457,
+            "teacher_forced_accuracy": 0.6747572815533981
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.4436893203883495,
+            "teacher_forced_accuracy": 0.10970873786407767
+          },
+          "harmonic_score": 0.6859660095173351
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8702497285559175,
+            "teacher_forced_accuracy": 0.6601520086862106
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.43572204125950054,
+            "teacher_forced_accuracy": 0.13355048859934854
+          },
+          "harmonic_score": 0.6750467628233325
+        }
+      },
+      "case_scores_sha256": "569055812da7a3e446a07c14dc229c3031e58e9b11d03b63516b2708db33b3b8",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43578031538879825
+      },
+      "trainable_parameters": 892512384,
+      "memory_parameters": 0,
+      "physical_rows": 0,
+      "training_seconds": 198.63880715705454,
+      "delta": {
+        "bytes": 3570063240,
+        "sha256": "08a16899bf930652b0814c289db745ec92b861f4e8d3c5fe4932ff443e81d3aa"
+      }
+    },
+    {
+      "run": "qwen35-1024-off-s7",
+      "report_sha256": "0e9c686100d4d6a1d6bac6a11d1a5f9f09c10a70ba25b5d6cfe4803191808559",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990234375
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.875,
+            "teacher_forced_accuracy": 0.66162109375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4494140625,
+            "teacher_forced_accuracy": 0.13037109375
+          },
+          "harmonic_score": 0.6868168573662142
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8786407766990292,
+            "teacher_forced_accuracy": 0.6796116504854369
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.46504854368932036,
+            "teacher_forced_accuracy": 0.10970873786407767
+          },
+          "harmonic_score": 0.6995559476389377
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.998914223669924
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8745928338762216,
+            "teacher_forced_accuracy": 0.6596091205211726
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4476655808903366,
+            "teacher_forced_accuracy": 0.13268186753528774
+          },
+          "harmonic_score": 0.6853697160445154
+        }
+      },
+      "case_scores_sha256": "2570d789cd654215c054b1612901fd35bc839a22bcc4170e66f7c803c1a0333a",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.4471995649809679
+      },
+      "trainable_parameters": 892512384,
+      "memory_parameters": 0,
+      "physical_rows": 0,
+      "training_seconds": 198.58328285603784,
+      "delta": {
+        "bytes": 3570063240,
+        "sha256": "8ec7e89f06d8367dbe850bb060d603b8b631fd3cadea13d475ef2cc6d87c48b8"
+      }
+    },
+    {
+      "run": "qwen35-1024-small-s11",
+      "report_sha256": "7a6775045f9dac184f59a465529c5b0833b68eb59b8180ccff30530b6111a947",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.88232421875,
+            "teacher_forced_accuracy": 0.65576171875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.454296875,
+            "teacher_forced_accuracy": 0.1333984375
+          },
+          "harmonic_score": 0.6921095343926555
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.912621359223301,
+            "teacher_forced_accuracy": 0.6650485436893204
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.48058252427184467,
+            "teacher_forced_accuracy": 0.11844660194174758
+          },
+          "harmonic_score": 0.7182957264517457
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8789359391965255,
+            "teacher_forced_accuracy": 0.6547231270358306
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.451357220412595,
+            "teacher_forced_accuracy": 0.13507057546145496
+          },
+          "harmonic_score": 0.689135643635019
+        }
+      },
+      "case_scores_sha256": "19c985aa29fa32a4a038ff394ff4425fb868682a8aa99f0d0271a378d42483ff",
+      "near_ties_at_0_0014_nll": 5,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.45100598151169113
+      },
+      "trainable_parameters": 893632000,
+      "memory_parameters": 1119616,
+      "physical_rows": 3628,
+      "training_seconds": 206.52814642898738,
+      "delta": {
+        "bytes": 3574542672,
+        "sha256": "e314c53a6e941d73dfe40d9cb3df3d201b7c9fdf420d3fdd56516b19369f6b74"
+      }
+    },
+    {
+      "run": "qwen35-1024-small-s3",
+      "report_sha256": "00c19a542a01efd71be48c31df29cd1bd69a39a300e7a94ec5b2b87ba57227af",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.86962890625,
+            "teacher_forced_accuracy": 0.65673828125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.4431640625,
+            "teacher_forced_accuracy": 0.12734375
+          },
+          "harmonic_score": 0.6808253467890018
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8786407766990292,
+            "teacher_forced_accuracy": 0.6893203883495146
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.44271844660194176,
+            "teacher_forced_accuracy": 0.1
+          },
+          "harmonic_score": 0.6822999046574557
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8686210640608035,
+            "teacher_forced_accuracy": 0.6530944625407166
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.443213897937025,
+            "teacher_forced_accuracy": 0.1304017372421281
+          },
+          "harmonic_score": 0.6806584422754146
+        }
+      },
+      "case_scores_sha256": "9035b74f1561962382d1704d9599fa0e09bc7003f0e269fff03b08babbaa07e1",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.44306688417618273
+      },
+      "trainable_parameters": 893632000,
+      "memory_parameters": 1119616,
+      "physical_rows": 3628,
+      "training_seconds": 204.38636940182187,
+      "delta": {
+        "bytes": 3574542672,
+        "sha256": "0e7e93a35a36ee23378e8dc208341bd4997abc3c2b40f95eda3fced88dd7696b"
+      }
+    },
+    {
+      "run": "qwen35-1024-small-s7",
+      "report_sha256": "78e7c8631e3259cc99805dfa5f9dc9bf3ccb50be4c34a453fb1e09e20d38c81a",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.87841796875,
+            "teacher_forced_accuracy": 0.671875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.463671875,
+            "teacher_forced_accuracy": 0.13154296875
+          },
+          "harmonic_score": 0.6984690839744178
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8883495145631068,
+            "teacher_forced_accuracy": 0.6990291262135923
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.47572815533980584,
+            "teacher_forced_accuracy": 0.10485436893203884
+          },
+          "harmonic_score": 0.7096016882089159
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8773072747014115,
+            "teacher_forced_accuracy": 0.6688382193268186
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.46232356134636265,
+            "teacher_forced_accuracy": 0.13452768729641695
+          },
+          "harmonic_score": 0.6972141270577034
+        }
+      },
+      "case_scores_sha256": "30d4e4785bbd841de738399be388c834f99410a9460f10b4e77d2e3eea10764f",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.46188145731375746
+      },
+      "trainable_parameters": 893632000,
+      "memory_parameters": 1119616,
+      "physical_rows": 3628,
+      "training_seconds": 203.99501619813964,
+      "delta": {
+        "bytes": 3574542672,
+        "sha256": "cd192e9db352e239015f4460c030004d5c8027f0da675fe5835f044a4c8a3fec"
+      }
+    },
+    {
+      "run": "qwen35-1024-unedited-base",
+      "report_sha256": "3427dd9b989666689349d3b744bd2167d201ba0bea89f0524efeb99fee4df491",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.162109375,
+            "teacher_forced_accuracy": 0.0029296875
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.1748046875,
+            "teacher_forced_accuracy": 0.0068359375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.83212890625,
+            "teacher_forced_accuracy": 0.1431640625
+          },
+          "harmonic_score": 0.22916364023107863
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 0.17475728155339806,
+            "teacher_forced_accuracy": 0.009708737864077669
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.1941747572815534,
+            "teacher_forced_accuracy": 0.0048543689320388345
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.7980582524271845,
+            "teacher_forced_accuracy": 0.14951456310679612
+          },
+          "harmonic_score": 0.24741730182034652
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.16069489685124863,
+            "teacher_forced_accuracy": 0.002171552660152009
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.17263843648208468,
+            "teacher_forced_accuracy": 0.007057546145494028
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.8359391965255157,
+            "teacher_forced_accuracy": 0.14245385450597176
+          },
+          "harmonic_score": 0.2270717162056418
+        }
+      },
+      "case_scores_sha256": "8cdfc2ad782f6e82a7fde696510043c8df084bfd1a29502ea03089cf844e3a76",
+      "near_ties_at_0_0014_nll": 2,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.8357803153887983
+      },
+      "trainable_parameters": null,
+      "memory_parameters": null,
+      "physical_rows": null,
+      "training_seconds": null,
+      "delta": null
+    }
+  ],
+  "large_vs_control": [
+    {
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "small",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.0012085838525898174,
+      "harmonic_delta_interval95": [
+        -0.003283611182538024,
+        0.006089896924660828
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.0007238508867173366,
+          "interval95": [
+            -0.007600434310532034,
+            0.008867173362287373
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.001411509229098662,
+          "interval95": [
+            -0.00380021715526406,
+            0.007166123778500573
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "mid",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.00025634737337565383,
+      "harmonic_delta_interval95": [
+        -0.0030050191524084975,
+        0.00388777611059296
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.002352515381831344,
+          "interval95": [
+            -0.002352515381831344,
+            0.007057546145494031
+          ]
+        },
+        "neighborhood": {
+          "delta": -0.0005066956207019357,
+          "interval95": [
+            -0.004923090843285935,
+            0.004560260586317452
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "head-constant",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.00029273482335934187,
+      "harmonic_delta_interval95": [
+        -0.004021336009675519,
+        0.005175198526008186
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.0030763662685486803,
+          "interval95": [
+            -0.010857763300760048,
+            0.005066956207021356
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.0015200868621064734,
+          "interval95": [
+            -0.004126854867899129,
+            0.007602243937748841
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "off",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.002129920455302692,
+      "harmonic_delta_interval95": [
+        -0.004284583266179487,
+        0.009451530272502772
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.0045240680419833534,
+          "interval95": [
+            -0.011767100977198701,
+            0.0030763662685486803
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.004560260586318254,
+          "interval95": [
+            -0.003908794788274284,
+            0.014767462902641677
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "adapter",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": -0.03395290211609503,
+      "harmonic_delta_interval95": [
+        -0.043756716058635056,
+        -0.023838085216996294
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.060622511762576936,
+          "interval95": [
+            -0.08794788273615639,
+            -0.03329261672095552
+          ]
+        },
+        "neighborhood": {
+          "delta": -0.025769091567136138,
+          "interval95": [
+            -0.04039087947882688,
+            -0.010929243575822055
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "small",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": -0.0025643846159761896,
+      "harmonic_delta_interval95": [
+        -0.015804835404605196,
+        0.00869293327914385
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.0021715526601518986,
+          "interval95": [
+            -0.008143322475569929,
+            0.011943539630836053
+          ]
+        },
+        "neighborhood": {
+          "delta": -0.0038726022439369845,
+          "interval95": [
+            -0.022478284473400334,
+            0.012233984799131624
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "mid",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": -0.0010727695094420175,
+      "harmonic_delta_interval95": [
+        -0.0058248072542746,
+        0.0037619095331281366
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.0,
+          "interval95": [
+            -0.006514657980456029,
+            0.007238508867173257
+          ]
+        },
+        "neighborhood": {
+          "delta": -0.0013753166847630394,
+          "interval95": [
+            -0.007636626854867554,
+            0.004598262757872875
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "head-constant",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": -0.004056286340664239,
+      "harmonic_delta_interval95": [
+        -0.013904367905380077,
+        0.005121519753752542
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0003619254433586683,
+          "interval95": [
+            0.0,
+            0.0021715526601520097
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.001266739051755339,
+          "interval95": [
+            -0.012486427795873948,
+            0.009052660152008663
+          ]
+        },
+        "neighborhood": {
+          "delta": -0.0049583785740136554,
+          "interval95": [
+            -0.018570394498731217,
+            0.008831885631559627
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "off",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.0025686867807409586,
+      "harmonic_delta_interval95": [
+        -0.004660137281939184,
+        0.009321628247488355
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.00398117987694524,
+          "interval95": [
+            -0.0059717698154180265,
+            0.014115092290987952
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.002243937748823477,
+          "interval95": [
+            -0.007928881650381815,
+            0.011763481722765319
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "adapter",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "complete_three_seed_pair": true,
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.005455522456912942,
+      "harmonic_delta_interval95": [
+        -0.0061455456427660675,
+        0.01779833441421943
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0007238508867173366,
+          "interval95": [
+            0.0,
+            0.002533478103510678
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.030401737242128135,
+          "interval95": [
+            -0.042168838219326835,
+            -0.019001085776330084
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.014115092290987952,
+          "interval95": [
+            -0.0009781035106751434,
+            0.02862920738327825
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    }
+  ],
+  "interpretation": "Partial pairs are provisional. Retain all official metrics and failures; no backend or algorithm dominance follows from these comparisons alone."
+}

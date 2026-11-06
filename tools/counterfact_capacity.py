@@ -113,7 +113,11 @@ def cache(args):
             'prepared_sha256':sha(args.prepared/'prepare.json'),'batch_size':meta['batch_size'],
             'frozen_weight_sha256':replay.frozen_hash(),'environment':env,'loading':loading,
             'elapsed_seconds':time.perf_counter()-started}
-    write(stem.with_suffix('.json'),report);print(json.dumps({k:v for k,v in report.items() if k!='sequences'}),flush=True)
+    write(stem.with_suffix('.json'),report)
+    # Transformers loading information can contain sets. Use the same JSON
+    # normalization as the saved manifest so final logging cannot fail a cache.
+    normalized=json.loads(stem.with_suffix('.json').read_text())
+    print(json.dumps({k:v for k,v in normalized.items() if k!='sequences'}),flush=True)
 
 
 class Prefixes:

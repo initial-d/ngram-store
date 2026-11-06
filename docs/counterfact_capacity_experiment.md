@@ -5,6 +5,13 @@ when edit count and hash capacity change. It does not establish a state-of-the-a
 editing algorithm or a need for a storage backend. Those require independent
 method comparisons and source-qualified serving measurements respectively.
 
+The [completed 1,024-edit three-seed grid](counterfact_small_evidence_20261107/README.md)
+does not show a stable large-table gain; BM25 has the highest observed quality,
+and both native exports slightly expand. Its 40 main evaluations, four separately
+registered frozen-backbone probes and two byte-exact native reopen checks are
+archived with a scalar verifier. The 20,877-edit grid is still running and is
+not included in those completed results.
+
 The [frozen protocol](../benchmarks/counterfact_capacity_v1.json) uses Qwen3-0.6B
 and Qwen3.5-4B, 1,024 and all 20,877 official MEMIT MultiCounterFact edits, three
 training seeds, three hash capacities, trained memory-off, trained head constants,
@@ -46,6 +53,13 @@ training and baseline evaluation. The finite remote queue in
 directory; it is not a portable GPU discovery tool and never terminates other
 users' processes. The independently audited occupancy helper is task-specific
 and is stopped by the queue on completion or failure.
+
+For an already stopped queue, `counterfact_runner --resume` preserves its prior
+outcomes and hash-validates completed runs/cache shards before reusing them.
+It checks shard sequence coverage against prepared batches and rejects partial
+or changed files. Preserve partial artifacts separately before a retry. Ensure
+the previous helper/children stopped, preserve logs, and clear task-local
+completion markers before restarting the finite queue.
 
 Frozen-prefix caching uses fixed batch size eight and exact length buckets.
 Duplicate fillers have no target loss and do not count as training exposures or
