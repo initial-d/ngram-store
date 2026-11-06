@@ -273,19 +273,42 @@ def retrieval(args):
         report.update(status='failed',error=repr(error),traceback=traceback.format_exc());save();raise
 
 
+def baseline(args):
+    env=environment();protocol=json.loads(args.protocol.read_text());started=time.perf_counter()
+    if args.output.exists():raise ValueError('fresh output required')
+    args.output.mkdir(parents=True)
+    meta=json.loads((args.prepared/'prepare.json').read_text())
+    payload=json.loads((args.prepared/'sequences.json').read_text());seq=payload['sequences']
+    model,tok,replay,module,cfg,loading=setup(args.base,args.upstream,'off',[257,521,1031],3,suffix_layers=protocol['suffix_layers'])
+    for p in model.parameters():p.requires_grad_(False)
+    prefixes=Prefixes(args.cache,args.prepared,replay,protocol['batch_size'])
+    scores={};all_eval=sorted({p[k] for c in payload['cases'] for pairs in c['groups'].values() for p in pairs for k in ('new','true')})
+    with torch.no_grad():
+        for n,valid in enumerate(batch_indices(all_eval,seq,protocol['batch_size'])):
+            b=filled(valid,protocol['batch_size']);ids=ids_for(b,seq);k=max(len(seq[i]['target_ids']) for i in b)+1
+            logits=replay.forward(ids,prefixes.get(b,replay.device),False,k)
+            scores.update(choice_scores(logits,b,seq,len(valid)))
+            if n%200==0:print(json.dumps({'stage':'base-eval','batches':n,'choices':len(scores)}),flush=True)
+    cases=case_metrics(payload['cases'],scores);write(args.output/'case-scores.json',cases)
+    write(args.output/'report.json',{'status':'complete','variant':'unedited-base','environment':env,'loading':loading,
+        'base_model':str(args.base),'edits':meta['edits'],'prepared_sha256':sha(args.prepared/'prepare.json'),
+        'protocol_sha256':sha(args.protocol),'metrics':{s:summarize([c for c in cases if s=='all' or c['split']==s]) for s in ('all','calibration','test')},
+        'case_scores_sha256':sha(args.output/'case-scores.json'),'elapsed_seconds':time.perf_counter()-started})
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='action',required=True)
     p=sub.add_parser('prepare')
     p.add_argument('--base',type=Path,required=True);p.add_argument('--data',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True);p.add_argument('--edits',type=int,required=True);p.add_argument('--batch',type=int,default=8)
-    for name in ('cache','train'):
+    for name in ('cache','train','baseline'):
         p=sub.add_parser(name)
         for x in ('base','upstream','prepared','output'):p.add_argument('--'+x,type=Path,required=True)
         if name=='cache':
             p.add_argument('--shard',type=int,required=True);p.add_argument('--shards',type=int,required=True);p.add_argument('--suffix',type=int,default=8)
         else:
             p.add_argument('--cache',type=Path,required=True);p.add_argument('--protocol',type=Path,required=True)
-            p.add_argument('--seed',type=int,required=True);p.add_argument('--variant',required=True)
+            if name=='train':p.add_argument('--seed',type=int,required=True);p.add_argument('--variant',required=True)
     p=sub.add_parser('retrieval')
     for x in ('base','data','protocol','output'):p.add_argument('--'+x,type=Path,required=True)
     p.add_argument('--edits',type=int,required=True)
