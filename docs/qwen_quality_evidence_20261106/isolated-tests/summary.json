@@ -1,0 +1,369 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "os": "macOS-26.6.2-arm64-arm-64bit",
+  "results": [
+    {
+      "module": "tests.test_budgeted_bags",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_budgeted_bags",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_budgeted_report",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_budgeted_report",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_causal_ngram_lm",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_causal_ngram_lm",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_certified_store",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_certified_store",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_certified_torch",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_certified_torch",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_corpus_checkpoints",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_corpus_checkpoints",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_cosine_merge",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_cosine_merge",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_cotraining_groups",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_cotraining_groups",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_device_gather_benchmark",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_device_gather_benchmark",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_device_row_adapter",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_device_row_adapter",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_engram_row_adapter",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_engram_row_adapter",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_external_cotraining",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_external_cotraining",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_external_incidence_evidence",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_external_incidence_evidence",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_faiss_cotraining",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_faiss_cotraining",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_fasttext_native_bundle",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_fasttext_native_bundle",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_heldout_compression",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_heldout_compression",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_large_structure",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_large_structure",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_legacy_merge",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_legacy_merge",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_lm_quality_metrics",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_lm_quality_metrics",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_lossless_row_store",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_lossless_row_store",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_mapped_embedding_bag",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_mapped_embedding_bag",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_memory_capacity",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_memory_capacity",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_native_rows",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_native_rows",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_news_shift",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_news_shift",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_ngram_store",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_ngram_store",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_ngram_training_groups",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_ngram_training_groups",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_prepare_public_benchmark",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_prepare_public_benchmark",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_quantized_capacity",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_quantized_capacity",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_quantized_memory",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_quantized_memory",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_structural_native",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_structural_native",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_text_classifier",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_text_classifier",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_tinyengram_checkpoint",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_tinyengram_checkpoint",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "module": "tests.test_worker_memory",
+      "command": [
+        "/tmp/ngram-news-shift-20261105/venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_worker_memory",
+        "-v"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

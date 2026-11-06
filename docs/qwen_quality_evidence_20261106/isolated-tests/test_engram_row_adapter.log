@@ -1,0 +1,12 @@
+test_byte_cap_resolves_each_dtype_and_bounds_tensor_staging (tests.test_engram_row_adapter.EngramGatherTest.test_byte_cap_resolves_each_dtype_and_bounds_tensor_staging) ... ok
+test_export_checks_official_interface_offsets_and_preserves_source (tests.test_engram_row_adapter.EngramGatherTest.test_export_checks_official_interface_offsets_and_preserves_source) ... ok
+test_factory_layout_checks_and_cleanup_on_failure (tests.test_engram_row_adapter.EngramGatherTest.test_factory_layout_checks_and_cleanup_on_failure) ... ok
+test_gather_preserves_head_offsets_shape_dtype_and_all_bytes (tests.test_engram_row_adapter.EngramGatherTest.test_gather_preserves_head_offsets_shape_dtype_and_all_bytes) ... ok
+test_modified_artifact_is_rejected_before_gather (tests.test_engram_row_adapter.EngramGatherTest.test_modified_artifact_is_rejected_before_gather) ... ok
+test_rejects_cross_head_ids_metadata_mismatch_and_training (tests.test_engram_row_adapter.EngramGatherTest.test_rejects_cross_head_ids_metadata_mismatch_and_training) ... ok
+test_streamed_export_bounds_chunks_and_preserves_noncontiguous_weights (tests.test_engram_row_adapter.EngramGatherTest.test_streamed_export_bounds_chunks_and_preserves_noncontiguous_weights) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.066s
+
+OK

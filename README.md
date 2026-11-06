@@ -146,6 +146,7 @@ external data or GPU. It checks integration, not representative compression.
 | [Source-specific partial-query error budgets](docs/budgeted_bag_evidence_20261104/README.md) | 18 frozen SGNS checkpoints: primary 1% aggregate-L2 bounds admit 98.8–99.8% of sampled stored-ngram OOV bags versus 9.6–16.2% strict coverage; 29.7–66.3% complete-model saving versus raw FP32 includes sidecar costs; source queries remain faster and no downstream-quality claim follows |
 | [Native bounded-plan compiler](docs/native_bounded_query_evidence_20261105/README.md) | Same 18 checkpoints and model/sidecar bytes: full CPU assessment improves 1.77–1.90× OOV and 1.86–2.42× known at three-seed medians; all output/bound bytes and budget decisions match; source FP64 remains faster |
 | [TinyEngram/Qwen trained integration](docs/tinyengram_qwen_evidence_20261030/README.md) / [CUDA controls](docs/qwen_cuda_performance_20261030/README.md) | Preserved trained outputs and measured CPU/device costs; native lookup remains slower than dense offload on these traces |
+| [Held-out Qwen branch and row-identity qualification](docs/qwen_quality_evidence_20261106/README.md) | 8,128 targets: native FP32 logits remain byte-exact. On test, memory-off raises PPL 11.19%, while head constants raise it 0.0416% with an interval crossing zero and 121 changed predictions; this small checkpoint does not establish a need for distinct memory rows |
 
 Official DeepSeek Engram verification uses its small demonstration, not a
 released trained Engram checkpoint. Small-model results are not production

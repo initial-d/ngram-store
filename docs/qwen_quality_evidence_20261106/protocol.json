@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "corpus_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+  "excluded_prefix_characters": 16384,
+  "window_tokens": 128,
+  "calibration_windows": 16,
+  "test_windows": 48,
+  "threads": 8,
+  "minimum_ppl_effect": 0.01,
+  "schedule": "nonoverlapping 128-token CPU FP32 eager full forwards; cache reset at every window",
+  "selection": "first 8192 tokenized suffix tokens in corpus order; no outcome-based text selection",
+  "targets": "127 next-token targets per window; 2032 calibration and 6096 test targets",
+  "qualification": "source must beat both memory-off and head-mean by >=1% relative PPL, with paired-window bootstrap lower delta-NLL bound >0 on calibration",
+  "test_use": "report independent confirmation; never select backend, threshold or checkpoint on test",
+  "compression_followup": "only pursue quality/capacity competition if calibration qualifies; small table cannot establish large-memory storage value",
+  "controls": ["memory-off", "head-mean", "native-fp32"],
+  "head_mean": "unweighted FP32 mean over all actual trained rows within each original hash head; no text or labels used",
+  "corpus_pretraining_boundary": "excluded from TinyEngram branch training; Qwen pretraining overlap is unknown",
+  "cost_scope": "offline CPU qualification, no GPU, no data-fetch or usage fees; elapsed time is not a backend latency benchmark"
+}

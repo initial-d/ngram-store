@@ -1,0 +1,9 @@
+test_cosine_only_does_not_bound_norm_error_and_guard_rejects_it (tests.test_cosine_merge.CosineMergeTest.test_cosine_only_does_not_bound_norm_error_and_guard_rejects_it) ... ok
+test_direct_representative_check_prevents_transitive_drift (tests.test_cosine_merge.CosineMergeTest.test_direct_representative_check_prevents_transitive_drift) ... ok
+test_norm_only_accepts_opposite_directions (tests.test_cosine_merge.CosineMergeTest.test_norm_only_accepts_opposite_directions) ... ok
+test_suffix_ancestors_allowed_unrelated_equal_vectors_kept (tests.test_cosine_merge.CosineMergeTest.test_suffix_ancestors_allowed_unrelated_equal_vectors_kept) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+OK

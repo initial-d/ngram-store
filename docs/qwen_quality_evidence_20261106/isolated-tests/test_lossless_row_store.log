@@ -1,0 +1,9 @@
+test_batch_decompresses_each_requested_block_once_with_cache_disabled (tests.test_lossless_row_store.LosslessRowsTest.test_batch_decompresses_each_requested_block_once_with_cache_disabled) ... ok
+test_every_original_id_preserves_bytes_and_query_order (tests.test_lossless_row_store.LosslessRowsTest.test_every_original_id_preserves_bytes_and_query_order) ... ok
+test_rejects_partial_rows_and_source_overwrite (tests.test_lossless_row_store.LosslessRowsTest.test_rejects_partial_rows_and_source_overwrite) ... ok
+test_truncated_payload_is_not_returned_as_a_vector (tests.test_lossless_row_store.LosslessRowsTest.test_truncated_payload_is_not_returned_as_a_vector) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.021s
+
+OK

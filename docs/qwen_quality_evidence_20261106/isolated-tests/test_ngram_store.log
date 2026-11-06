@@ -1,0 +1,8 @@
+test_adjacent_pairs_utf8_order_line_boundaries_and_failure_publication (tests.test_ngram_store.CorpusTest.test_adjacent_pairs_utf8_order_line_boundaries_and_failure_publication) ... ok
+test_old_imports_share_objects_and_all_bits_survive_cli_and_adapter_metadata (tests.test_ngram_store.EngineTest.test_old_imports_share_objects_and_all_bits_survive_cli_and_adapter_metadata) ... ok
+test_packed_engine_store_opens_existing_torch_adapter (tests.test_ngram_store.EngineTest.test_packed_engine_store_opens_existing_torch_adapter) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.857s
+
+OK
