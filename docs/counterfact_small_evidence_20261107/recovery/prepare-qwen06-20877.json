@@ -1,0 +1,20 @@
+{
+  "status": "prepared",
+  "data_sha256": "977a6acce4705507b5fd6bfcea8f61cd78f9ed0f9cd9c9a6bcd6c8a3ed61c833",
+  "base": "/llm-align/open_models/Qwen3/Qwen3-0.6B",
+  "edits": 20877,
+  "batch_size": 8,
+  "unique_sequences": 374921,
+  "tokens": 4414148,
+  "batches": 46896,
+  "token_boundary_mismatches": 0,
+  "payload_sha256": "ca65602bfb464c6106f8a039b0a089367c1f8782cb4006bf45eb5bbaff76103a",
+  "batches_sha256": "11695be8f7baae193b614625303ebacb02bb0d0ed051823d04203101167f02cf",
+  "training_sequences": 20877,
+  "filler_sequence_exposures": 247,
+  "edited_neighborhood_prompts": 4189,
+  "split_counts": {
+    "calibration": 2088,
+    "test": 18789
+  }
+}

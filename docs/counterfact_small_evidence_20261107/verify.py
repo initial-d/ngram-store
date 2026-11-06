@@ -177,7 +177,38 @@ def main():
         assert r['bundle_bytes'] > r['source_delta_bytes']
         assert len(r['requests']) == 16 and all(x['byte_exact'] for x in r['requests'])
         assert r['staging_stats']['staging_bytes'] <= r['staging_stats']['staging_byte_limit'] == 1048576
+    failure, raw_failure = load(ROOT / 'recovery/failure-1/queue.json')
+    recovery, _ = load(ROOT / 'recovery/validation.json')
+    assert failure['status'] == 'failed' and len(failure['jobs']) == 46
+    assert recovery['status'] == 'validated' and len(recovery['verified_jobs']) == 46
+    assert recovery['previous_queue_sha256'] == digest(raw_failure)
+    assert len([j for j in failure['jobs'] if j.get('exit_code') == 1]) == 6
+    assert all(j['reused'] for j in recovery['verified_jobs'])
+    prepared, prepared_raw = load(ROOT / 'recovery/prepare-qwen06-20877.json')
+    batches, batch_raw = load(ROOT / 'recovery/batches-qwen06-20877.json.gz')
+    assert digest(batch_raw) == prepared['batches_sha256'] and prepared['edits'] == 20877
+    covered = set()
+    for shard in range(6):
+        cache, raw = load(ROOT / f'recovery/shard-{shard}.json.gz')
+        job = next(j for j in recovery['verified_jobs'] if j['name'] == f'qwen06-20877-cache{shard}')
+        assert digest(raw) == job['completion_report_sha256']
+        assert cache['status'] == 'complete' and cache['shards'] == 6 and cache['shard'] == shard
+        assert cache['prepared_sha256'] == digest(prepared_raw)
+        assert cache['bytes'] == cache['tokens'] * cache['hidden_size'] * 4
+        expected = {str(i) for batch in batches[shard::6] for i in batch}
+        assert set(cache['sequences']) == expected and not covered.intersection(expected)
+        covered.update(expected)
+        offset = 0
+        for start, length in sorted(cache['sequences'].values()):
+            assert start == offset and length > 0
+            offset += length
+        assert offset == cache['tokens']
+        assert cache['frozen_weight_sha256'] == json.loads((ROOT / 'runs/qwen06-1024-large-s3/report.json').read_text())['frozen_weight_sha256']
+        log = (ROOT / f'recovery/failure-1/qwen06-20877-cache{shard}.log').read_text()
+        assert 'TypeError: Object of type set is not JSON serializable' in log
+    assert covered == {str(i) for i in range(prepared['unique_sequences'])}
     print('Verified 40 small-grid runs, 4 exploratory probes, RAG calibration selection, all scalar scores, paired point estimates and 2 native reopen reports.')
+    print('Preserved six cache process failures; recovered manifest ranges cover the full prepared 0.6B data. Raw hidden states remain private.')
     print('Full 20,877-edit grid is not included; native fidelity passed but both artifacts expanded.')
     if args.bootstrap:
         print('Also reproduced all 12 paired bootstrap intervals exactly.')

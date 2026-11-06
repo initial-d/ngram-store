@@ -182,3 +182,11 @@ per-shard prepared sequence coverage and the immutable-prefix hash before
 reusing these caches. Completed small-grid weights and scores are also checked.
 No learning rate, edit set, training schedule or scoring rule changes. Recovered
 artifacts are labeled reused; original nonzero process exits remain in history.
+
+The [remote validation receipt](recovery/validation.json) records all 46 checked
+artifacts and the recovery source commit. Compressed cache manifests and prepared
+batch indices let the dependency-free verifier reconstruct all six shards'
+sequence coverage and offsets. Cached hidden-state bytes remain private; their
+file hashes were checked remotely. [Resume commands](recovery/resume-grid.sh)
+and [local tests](recovery/local-tests.log) are retained. Restoring the queue does
+not turn the unfinished full-edit training grid into a completed result.

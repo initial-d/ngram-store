@@ -242,6 +242,10 @@
       "bytes": 57999,
       "sha256": "5a3889d09d3973d96aa6f3ea5a68e6448604516e259d54f9d4475ada0b17af06"
     },
+    "recovery/batches-qwen06-20877.json.gz": {
+      "bytes": 1035312,
+      "sha256": "cff51b298a55286281e87adda89d171fb02a73975763f62aeeccab866ca582d4"
+    },
     "recovery/failure-1/final-analysis.json": {
       "bytes": 116761,
       "sha256": "ae23abd58a2ec894210982f3dc3fc3d12d25154957c166628c4ffacc5f118476"
@@ -285,6 +289,62 @@
     "recovery/failure-1/release-helper.log": {
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "recovery/local-tests.log": {
+      "bytes": 3028,
+      "sha256": "31ac34f88b1b546062188e5600301de9fa308fd05ddf017202010195bdc90a9d"
+    },
+    "recovery/prepare-qwen06-20877.json": {
+      "bytes": 657,
+      "sha256": "6f2b50b6c2e536e6c3557f48ed40262823ba165cc895f4f65eb77a52fed913d7"
+    },
+    "recovery/resume-grid.sh": {
+      "bytes": 2074,
+      "sha256": "95bfb4168e97327621178358b3a128d4442f171215dda55c865661ac7ca99ffa"
+    },
+    "recovery/resume-tests.log": {
+      "bytes": 387,
+      "sha256": "cd0f9789f620cf964d3fbbc9d72848a79ae400f6bf16e9750b84e17271ddac34"
+    },
+    "recovery/runtime/counterfact_capacity.py": {
+      "bytes": 21388,
+      "sha256": "834b400425d03a76e8550e351f43d4d213bde7b4dda0c6b2a93173ea8071d371"
+    },
+    "recovery/runtime/counterfact_resume.py": {
+      "bytes": 4527,
+      "sha256": "246bb92c72dbacde543913255e4be500adce698df2cbb27b6f214e9d5b480d28"
+    },
+    "recovery/runtime/counterfact_runner.py": {
+      "bytes": 7565,
+      "sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a"
+    },
+    "recovery/shard-0.json.gz": {
+      "bytes": 375769,
+      "sha256": "e5a582eb5066c4fece6eaea59b25eec869e45f028cf27b5e4c60348f49f12226"
+    },
+    "recovery/shard-1.json.gz": {
+      "bytes": 376113,
+      "sha256": "215a5ef78d8154d66485efc9036fa4b0d154022b83221aac368e4d9fc4150091"
+    },
+    "recovery/shard-2.json.gz": {
+      "bytes": 376257,
+      "sha256": "b34b26a2667ee95458e4119fcaddaed1095427d90b139cffef671da1d8ad001a"
+    },
+    "recovery/shard-3.json.gz": {
+      "bytes": 376173,
+      "sha256": "6096d6b2a138532ec7ab385253741633178b263f7c29d0b20f7dbd0c73afca28"
+    },
+    "recovery/shard-4.json.gz": {
+      "bytes": 375984,
+      "sha256": "6c91e6e14a03e7cbc52398f7ef7448f32ad7d53d51dbb8d1564e04bac815c70d"
+    },
+    "recovery/shard-5.json.gz": {
+      "bytes": 376208,
+      "sha256": "ebcdb447323f9bcabb50e9aefbc0a7a8fa0c8186b62e06d8dafb1a5475f59766"
+    },
+    "recovery/validation.json": {
+      "bytes": 75340,
+      "sha256": "3424d478071b32b010182bd48747f706882adc48d1f8925306004ea8acbfe1e5"
     },
     "release-scope.json": {
       "bytes": 14,
