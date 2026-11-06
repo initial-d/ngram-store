@@ -202,7 +202,7 @@ def main():
         tokenizer = AutoTokenizer.from_pretrained(args.base_model, local_files_only=True, trust_remote_code=False)
         encoded = {s: tokenizer(text[begin:end], return_tensors="pt", add_special_tokens=False).input_ids
                    for s,(begin,end) in boundaries.items() if s == "train" or not args.smoke}
-        report["splits"] = {s: {"character_range": boundaries[s], "tokens": ids.shape[1],
+        report["splits"] = {s: {"character_range": list(boundaries[s]), "tokens": ids.shape[1],
                                  "token_ids_sha256": tensor_sha(ids)} for s,ids in encoded.items()}
         length, batch = protocol["window_tokens"], protocol["batch_size"]
         training, selected = sample_windows(encoded["train"], length, protocol["training_windows"])

@@ -226,6 +226,18 @@ class TinyEngramCheckpointTest(unittest.TestCase):
             self.assertEqual(summary["targets"],14)
             self.assertTrue(summary["all_logits_byte_exact"])
         self.assertTrue((output/"seed-3"/"checkpoint"/"model.safetensors").exists())
+        resumed = self.root / ("identity-resumed-"+device)
+        command = list(run.args)
+        command[command.index("--output-dir")+1] = str(resumed)
+        command.extend(["--resume-from",str(output)])
+        replay = subprocess.run(command,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        self.assertEqual(replay.returncode,0,replay.stderr)
+        resumed_report = json.loads((resumed/"report.json").read_text())
+        resumed_seed = resumed_report["seeds"]["3"]
+        self.assertEqual(resumed_seed["resumed_steps"],8)
+        self.assertEqual(resumed_seed["memory"],seed["memory"])
+        self.assertEqual(resumed_seed["losses"],seed["losses"])
+        self.assertEqual(resumed_seed["quality"]["summary"],seed["quality"]["summary"])
 
     def test_cpu_identity_training_exports_native_and_evaluates_complete_splits(self):
         self.run_identity_training_fixture("cpu")
