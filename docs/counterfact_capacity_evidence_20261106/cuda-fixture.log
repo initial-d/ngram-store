@@ -1,0 +1,30 @@
+test_duplicate_batch_edits_are_rejected (tests.test_counterfact_data.CounterFactDataTest.test_duplicate_batch_edits_are_rejected) ... ok
+test_official_success_direction_and_case_macro_average (tests.test_counterfact_data.CounterFactDataTest.test_official_success_direction_and_case_macro_average) ... ok
+test_training_contains_only_rewrite_target_and_eos (tests.test_counterfact_data.CounterFactDataTest.test_training_contains_only_rewrite_target_and_eos) ... ok
+test_qwen35_cpu (tests.test_late_memory_replay.LateReplayTest.test_qwen35_cpu) ... /llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/ops/nsa/naive.py:19: ImportWarning: Flash Attention is not installed. Please install it via `pip install flash-attn --no-build-isolation`
+  warnings.warn(
+/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/ops/nsa/parallel.py:25: ImportWarning: Flash Attention is not installed. Please install it via `pip install flash-attn --no-build-isolation`
+  warnings.warn(
+/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/layers/attn.py:28: ImportWarning: Flash Attention is not installed. Please install it via `pip install flash-attn --no-build-isolation`
+  warnings.warn(
+/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/layers/bitattn.py:29: ImportWarning: Flash Attention is not installed. Please install it via `pip install flash-attn --no-build-isolation`
+  warnings.warn(
+/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/ops/deltaformer/parallel.py:20: ImportWarning: Flash Attention is not installed. Please install it via `pip install flash-attn --no-build-isolation`
+  warnings.warn(
+/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/layers/mla.py:35: ImportWarning: Flash Attention is not installed. Please install it via `pip install flash-attn --no-build-isolation`
+  warnings.warn(
+/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/layers/rodimus.py:41: ImportWarning: Flash Attention is not installed. Please install it via `pip install flash-attn --no-build-isolation`
+  warnings.warn(
+The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+ok
+test_qwen35_cuda (tests.test_late_memory_replay.LateReplayTest.test_qwen35_cuda) ... ok
+test_qwen3_cpu (tests.test_late_memory_replay.LateReplayTest.test_qwen3_cpu) ... ok
+test_qwen3_cuda (tests.test_late_memory_replay.LateReplayTest.test_qwen3_cuda) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 167.706s
+
+OK
+sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
