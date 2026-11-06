@@ -71,7 +71,7 @@ jobs:
           python -m pip install numpy transformers==5.3.0
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
       - name: Check both decoder architectures, target masking and gradients
-        run: python -m unittest tests.test_counterfact_data tests.test_counterfact_retrieval tests.test_late_memory_replay -v
+        run: python -m unittest tests.test_counterfact_data tests.test_counterfact_retrieval tests.test_late_memory_replay tests.test_ngram_identity -v
 
   native-sanitizers:
     name: Native C sanitizers
