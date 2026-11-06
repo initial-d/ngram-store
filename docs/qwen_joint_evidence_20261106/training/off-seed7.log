@@ -1,0 +1,37 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+`torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /llm-align/open_models/Qwen3/Qwen3-0.6B and are newly initialized: ['model.engram_layers.26.key_projs.0.bias', 'model.engram_layers.26.key_projs.0.weight', 'model.engram_layers.26.multi_head_embedding.embedding.weight', 'model.engram_layers.26.multi_head_embedding.offsets', 'model.engram_layers.26.norm1.0.weight', 'model.engram_layers.26.norm2.0.weight', 'model.engram_layers.26.short_conv.conv.weight', 'model.engram_layers.26.short_conv.norms.0.weight', 'model.engram_layers.26.value_proj.bias', 'model.engram_layers.26.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+off 7 1 32 4.290218830108643
+off 7 1 64 4.321696758270264
+off 7 1 96 4.432552814483643
+off 7 1 128 4.7173004150390625
+off 7 1 160 3.8628368377685547
+off 7 1 192 4.277100563049316
+off 7 1 224 4.012813091278076
+off 7 1 256 4.223586082458496
+off 7 2 288 3.931354284286499
+off 7 2 320 4.027803421020508
+off 7 2 352 4.361042499542236
+off 7 2 384 3.931792736053467
+off 7 2 416 4.15610933303833
+off 7 2 448 3.7775959968566895
+off 7 2 480 4.0080437660217285
+off 7 2 512 3.886951208114624
+off 7 3 544 3.9963066577911377
+off 7 3 576 4.132232189178467
+off 7 3 608 4.184206962585449
+off 7 3 640 3.4983837604522705
+off 7 3 672 3.851532459259033
+off 7 3 704 3.8965163230895996
+off 7 3 736 3.7781624794006348
+off 7 3 768 3.9967920780181885
+off 7 4 800 3.4114885330200195
+off 7 4 832 3.9546968936920166
+off 7 4 864 3.6132619380950928
+off 7 4 896 3.679443597793579
+off 7 4 928 4.016096591949463
+off 7 4 960 3.7812981605529785
+off 7 4 992 3.7982029914855957
+off 7 4 1024 4.062418460845947
+Report: /llm-align/duyimin/ngram-qwen-joint-20261106/off-seed7/report.json

@@ -1,0 +1,37 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+`torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /llm-align/open_models/Qwen3/Qwen3-0.6B and are newly initialized: ['model.engram_layers.26.key_projs.0.bias', 'model.engram_layers.26.key_projs.0.weight', 'model.engram_layers.26.multi_head_embedding.embedding.weight', 'model.engram_layers.26.multi_head_embedding.offsets', 'model.engram_layers.26.norm1.0.weight', 'model.engram_layers.26.norm2.0.weight', 'model.engram_layers.26.short_conv.conv.weight', 'model.engram_layers.26.short_conv.norms.0.weight', 'model.engram_layers.26.value_proj.bias', 'model.engram_layers.26.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+off 3 1 32 4.455018520355225
+off 3 1 64 4.358316421508789
+off 3 1 96 4.502799987792969
+off 3 1 128 4.371872425079346
+off 3 1 160 4.3834381103515625
+off 3 1 192 4.443544864654541
+off 3 1 224 4.302092552185059
+off 3 1 256 3.957838535308838
+off 3 2 288 3.8162741661071777
+off 3 2 320 4.138479709625244
+off 3 2 352 3.6692447662353516
+off 3 2 384 3.8754117488861084
+off 3 2 416 4.000043869018555
+off 3 2 448 3.935584783554077
+off 3 2 480 4.363519191741943
+off 3 2 512 3.7573070526123047
+off 3 3 544 3.8942573070526123
+off 3 3 576 3.652411460876465
+off 3 3 608 3.478404998779297
+off 3 3 640 3.9919495582580566
+off 3 3 672 4.050662994384766
+off 3 3 704 4.226568698883057
+off 3 3 736 3.5524842739105225
+off 3 3 768 3.9715576171875
+off 3 4 800 3.8877127170562744
+off 3 4 832 3.3607869148254395
+off 3 4 864 3.7668542861938477
+off 3 4 896 3.5326201915740967
+off 3 4 928 3.9012868404388428
+off 3 4 960 4.078610420227051
+off 3 4 992 3.953516960144043
+off 3 4 1024 3.955742359161377
+Report: /llm-align/duyimin/ngram-qwen-joint-20261106/off-seed3/report.json

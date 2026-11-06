@@ -1,0 +1,38 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+`torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /llm-align/open_models/Qwen3/Qwen3-0.6B and are newly initialized: ['model.engram_layers.26.key_projs.0.bias', 'model.engram_layers.26.key_projs.0.weight', 'model.engram_layers.26.multi_head_embedding.embedding.weight', 'model.engram_layers.26.multi_head_embedding.offsets', 'model.engram_layers.26.norm1.0.weight', 'model.engram_layers.26.norm2.0.weight', 'model.engram_layers.26.short_conv.conv.weight', 'model.engram_layers.26.short_conv.norms.0.weight', 'model.engram_layers.26.value_proj.bias', 'model.engram_layers.26.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+full 3 1 32 4.454763889312744
+full 3 1 64 4.357999324798584
+full 3 1 96 4.5024824142456055
+full 3 1 128 4.3716206550598145
+full 3 1 160 4.383152961730957
+full 3 1 192 4.443239688873291
+full 3 1 224 4.301910877227783
+full 3 1 256 3.957760810852051
+full 3 2 288 3.814497947692871
+full 3 2 320 4.13644552230835
+full 3 2 352 3.667236566543579
+full 3 2 384 3.873032569885254
+full 3 2 416 3.9974682331085205
+full 3 2 448 3.9323031902313232
+full 3 2 480 4.360294818878174
+full 3 2 512 3.75449275970459
+full 3 3 544 3.887481212615967
+full 3 3 576 3.6438732147216797
+full 3 3 608 3.4680843353271484
+full 3 3 640 3.9809422492980957
+full 3 3 672 4.039238452911377
+full 3 3 704 4.2132086753845215
+full 3 3 736 3.538572311401367
+full 3 3 768 3.956071138381958
+full 3 4 800 3.8519206047058105
+full 3 4 832 3.313490867614746
+full 3 4 864 3.7259714603424072
+full 3 4 896 3.493647575378418
+full 3 4 928 3.856940746307373
+full 3 4 960 4.018517971038818
+full 3 4 992 3.9009499549865723
+full 3 4 1024 3.900743007659912
+The tokenizer you are loading from '/llm-align/duyimin/ngram-qwen-joint-20261106/full-seed3/checkpoint' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Report: /llm-align/duyimin/ngram-qwen-joint-20261106/full-seed3/report.json

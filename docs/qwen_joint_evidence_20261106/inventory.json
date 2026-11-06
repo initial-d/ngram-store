@@ -1,0 +1,1220 @@
+{
+  "full-seed3": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1365,
+        "sha256": "be666df6a154e692c590e609325afbb1b18fb3b48ad41e56827894d13cd56a14"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 343,
+        "sha256": "70d4f06514a30795024b9c489bd7bf344dd029d808b757ed4421ef786d0fca61"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "6595ed945aa9d2976212ad6957691b1225994e35410645c56b42fedaca0476cf"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2400524944,
+        "sha256": "05e9e734a70e342a0161780c45f8395042ed5358fe3aeae1056ca188c155bcf3"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "trainer_state.json",
+        "bytes": 113,
+        "sha256": "578c74438f07b76fdc56633ca79abebd2e56d69a6260f1292a3566e52d691a8b"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "bundle": [
+      {
+        "path": "backbone-00001.safetensors",
+        "bytes": 622329960,
+        "sha256": "5e934685d2e98ce82c05e3e042683a1274a9173cb044b3db377b137d36b2cda5"
+      },
+      {
+        "path": "backbone-00002.safetensors",
+        "bytes": 265893728,
+        "sha256": "0519081d7be5c68b8286ff1589fb0bf1315ce9c003b5811ae181268217dd95e7"
+      },
+      {
+        "path": "backbone-00003.safetensors",
+        "bytes": 264283056,
+        "sha256": "1d96ec2b53e83ecf435a7b3bd33da4308e7283bcd29ed27c0042000d373ee009"
+      },
+      {
+        "path": "backbone-00004.safetensors",
+        "bytes": 264287880,
+        "sha256": "65b9590051706700b9eb4d78700958fd43cd588055d8683d8b1be60c95e1cade"
+      },
+      {
+        "path": "backbone-00005.safetensors",
+        "bytes": 264283784,
+        "sha256": "14a392fe6e494964738cfca84bbdd4857497238c59710d69d334dd8cbf66464c"
+      },
+      {
+        "path": "backbone-00006.safetensors",
+        "bytes": 264287376,
+        "sha256": "c788ada527d4a924b4a85dace5dead1aeaad98981b5652819491e36442d82d6c"
+      },
+      {
+        "path": "backbone-00007.safetensors",
+        "bytes": 264283016,
+        "sha256": "332a7429143b5aeb5f296ba8aa332a595c47f856bc53e9aa73536bff56344f50"
+      },
+      {
+        "path": "backbone-00008.safetensors",
+        "bytes": 176191944,
+        "sha256": "a5f11150a77ac8d143091f5a0c397c2676cafe6226a9f3cb30ba820216f70937"
+      },
+      {
+        "path": "bundle.json",
+        "bytes": 3223,
+        "sha256": "18f516549b411c4e19eb0b4b1322ab0a186d8dd86707e8aa14a5f24786ee4d76"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1396,
+        "sha256": "05e59cf02877af31f154c7b8b26079443c75656f65726e6693daefa293a2607d"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 313,
+        "sha256": "aa4939d660f843f66766415ea188f244a48f25b7e90c06f1a42e32ea5bdca6a3"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "6595ed945aa9d2976212ad6957691b1225994e35410645c56b42fedaca0476cf"
+      },
+      {
+        "path": "memory/26/embedding.json",
+        "bytes": 775,
+        "sha256": "9695d063868e4b42d0f07610e7ecf62c24c13be0d3d5b33ad40e25f5a9ea1728"
+      },
+      {
+        "path": "memory/26/table.men",
+        "bytes": 14652511,
+        "sha256": "fe5640b9fa26455f05bfbefa74c8fc423de7cdd4888d0b4f79d0d435c67c4d69"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "bytes": 24266,
+        "sha256": "4949589d30383750e4505b46ee14238cfa42246cc3c9e9c5bff336e09196663a"
+      },
+      {
+        "path": "tokenizer/added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "tokenizer/chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "tokenizer/merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "tokenizer/special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer/tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer/tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "tokenizer/vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "full-seed7": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1365,
+        "sha256": "be666df6a154e692c590e609325afbb1b18fb3b48ad41e56827894d13cd56a14"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 343,
+        "sha256": "a4627908018a262f9c8d197b0458abb261bbe4cd267cbfcc27f97c326b976644"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "bcc045518a8119a0a0e37716573bcefaa764aeb858a3399c770b1c4e9b02a900"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2400524944,
+        "sha256": "d4aa2e35b2818c44963d7e53d4a474fc56e814dff652ddf4411a6c304ea9c77e"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "trainer_state.json",
+        "bytes": 113,
+        "sha256": "578c74438f07b76fdc56633ca79abebd2e56d69a6260f1292a3566e52d691a8b"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "bundle": [
+      {
+        "path": "backbone-00001.safetensors",
+        "bytes": 622329960,
+        "sha256": "5e934685d2e98ce82c05e3e042683a1274a9173cb044b3db377b137d36b2cda5"
+      },
+      {
+        "path": "backbone-00002.safetensors",
+        "bytes": 265893728,
+        "sha256": "e40c7173c5254dadede64cb25bbc9a855cc872af7ece69cba1717cd67bae9ba1"
+      },
+      {
+        "path": "backbone-00003.safetensors",
+        "bytes": 264283056,
+        "sha256": "1d96ec2b53e83ecf435a7b3bd33da4308e7283bcd29ed27c0042000d373ee009"
+      },
+      {
+        "path": "backbone-00004.safetensors",
+        "bytes": 264287880,
+        "sha256": "65b9590051706700b9eb4d78700958fd43cd588055d8683d8b1be60c95e1cade"
+      },
+      {
+        "path": "backbone-00005.safetensors",
+        "bytes": 264283784,
+        "sha256": "14a392fe6e494964738cfca84bbdd4857497238c59710d69d334dd8cbf66464c"
+      },
+      {
+        "path": "backbone-00006.safetensors",
+        "bytes": 264287376,
+        "sha256": "21b99b1d62e3f64a60395156bf3019ccbda1743114d3dc4c25d0a5c49f485aaa"
+      },
+      {
+        "path": "backbone-00007.safetensors",
+        "bytes": 264283016,
+        "sha256": "332a7429143b5aeb5f296ba8aa332a595c47f856bc53e9aa73536bff56344f50"
+      },
+      {
+        "path": "backbone-00008.safetensors",
+        "bytes": 176191944,
+        "sha256": "a5f11150a77ac8d143091f5a0c397c2676cafe6226a9f3cb30ba820216f70937"
+      },
+      {
+        "path": "bundle.json",
+        "bytes": 3223,
+        "sha256": "43ef70b084a30455f388fc18739487d20f7ff388334f6a1e4539879762575779"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1396,
+        "sha256": "05e59cf02877af31f154c7b8b26079443c75656f65726e6693daefa293a2607d"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 313,
+        "sha256": "4f3fd64c94edbc6e5c151c606370a484e28c8a4ccc5c90ac00c1eec097308045"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "bcc045518a8119a0a0e37716573bcefaa764aeb858a3399c770b1c4e9b02a900"
+      },
+      {
+        "path": "memory/26/embedding.json",
+        "bytes": 775,
+        "sha256": "c5f3dd70ddba832cd25544aa0f603134159a96fa1f71275dac832a25cf816f75"
+      },
+      {
+        "path": "memory/26/table.men",
+        "bytes": 14651775,
+        "sha256": "58aae3c6dd6ca076079d1bca08ffa2b183888b5d600cd1b41cae187b3673f383"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "bytes": 24266,
+        "sha256": "4949589d30383750e4505b46ee14238cfa42246cc3c9e9c5bff336e09196663a"
+      },
+      {
+        "path": "tokenizer/added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "tokenizer/chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "tokenizer/merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "tokenizer/special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer/tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer/tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "tokenizer/vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "full-seed11": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1365,
+        "sha256": "be666df6a154e692c590e609325afbb1b18fb3b48ad41e56827894d13cd56a14"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 344,
+        "sha256": "100c3f4aa6f193bcbc0483d5e27ab635d08affce4c45fc85270574bf57506526"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 611,
+        "sha256": "937c0f8b9273a602a692af9221751f5d53f36592b99a4b61a95186e9e64bd82d"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2400524944,
+        "sha256": "f0645e567bbd5a9ae50794dd6204aa687a1b391f3944b5eee9b61d643eec5c61"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "trainer_state.json",
+        "bytes": 113,
+        "sha256": "578c74438f07b76fdc56633ca79abebd2e56d69a6260f1292a3566e52d691a8b"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "bundle": [
+      {
+        "path": "backbone-00001.safetensors",
+        "bytes": 622329960,
+        "sha256": "5e934685d2e98ce82c05e3e042683a1274a9173cb044b3db377b137d36b2cda5"
+      },
+      {
+        "path": "backbone-00002.safetensors",
+        "bytes": 265893728,
+        "sha256": "aaa1a0b3c756e1360b7e6ab14ec2d1fd150625f06579e50e45a6819ffb5856fa"
+      },
+      {
+        "path": "backbone-00003.safetensors",
+        "bytes": 264283056,
+        "sha256": "1d96ec2b53e83ecf435a7b3bd33da4308e7283bcd29ed27c0042000d373ee009"
+      },
+      {
+        "path": "backbone-00004.safetensors",
+        "bytes": 264287880,
+        "sha256": "65b9590051706700b9eb4d78700958fd43cd588055d8683d8b1be60c95e1cade"
+      },
+      {
+        "path": "backbone-00005.safetensors",
+        "bytes": 264283784,
+        "sha256": "14a392fe6e494964738cfca84bbdd4857497238c59710d69d334dd8cbf66464c"
+      },
+      {
+        "path": "backbone-00006.safetensors",
+        "bytes": 264287376,
+        "sha256": "1ccfb4a578ccff501de04e50350c20f9b0f705dd4bc2180cfcbbc84c7b2cc86b"
+      },
+      {
+        "path": "backbone-00007.safetensors",
+        "bytes": 264283016,
+        "sha256": "332a7429143b5aeb5f296ba8aa332a595c47f856bc53e9aa73536bff56344f50"
+      },
+      {
+        "path": "backbone-00008.safetensors",
+        "bytes": 176191944,
+        "sha256": "a5f11150a77ac8d143091f5a0c397c2676cafe6226a9f3cb30ba820216f70937"
+      },
+      {
+        "path": "bundle.json",
+        "bytes": 3223,
+        "sha256": "4ba0ce5fc4c50ae98524d3807a1ad8c101ed60e4f117730080562d65106454b6"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1396,
+        "sha256": "05e59cf02877af31f154c7b8b26079443c75656f65726e6693daefa293a2607d"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 314,
+        "sha256": "4aeda9d34807530949c1a3d3c83c9e9e958d7c04e46851ea01caa17a85c1bc57"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 611,
+        "sha256": "937c0f8b9273a602a692af9221751f5d53f36592b99a4b61a95186e9e64bd82d"
+      },
+      {
+        "path": "memory/26/embedding.json",
+        "bytes": 775,
+        "sha256": "482e9da9775a9f4e64c7fdebe23b58f94a3c7fcdaa78ae2acb8b99caa037b6c5"
+      },
+      {
+        "path": "memory/26/table.men",
+        "bytes": 14652651,
+        "sha256": "1b569836f47f6a61b533e5eec3d92383cd46060b474540e3b02bb18cb64876ff"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "bytes": 24266,
+        "sha256": "4949589d30383750e4505b46ee14238cfa42246cc3c9e9c5bff336e09196663a"
+      },
+      {
+        "path": "tokenizer/added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "tokenizer/chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "tokenizer/merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "tokenizer/special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer/tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer/tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "tokenizer/vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "head-constant-seed3": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1365,
+        "sha256": "be666df6a154e692c590e609325afbb1b18fb3b48ad41e56827894d13cd56a14"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 343,
+        "sha256": "70d4f06514a30795024b9c489bd7bf344dd029d808b757ed4421ef786d0fca61"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "6595ed945aa9d2976212ad6957691b1225994e35410645c56b42fedaca0476cf"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2400524944,
+        "sha256": "8d4131c8bf3eab10a6d312c907547c5e58edcf98aad048c18ebecb369c1e60eb"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "trainer_state.json",
+        "bytes": 113,
+        "sha256": "578c74438f07b76fdc56633ca79abebd2e56d69a6260f1292a3566e52d691a8b"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "bundle": [
+      {
+        "path": "backbone-00001.safetensors",
+        "bytes": 622329960,
+        "sha256": "5e934685d2e98ce82c05e3e042683a1274a9173cb044b3db377b137d36b2cda5"
+      },
+      {
+        "path": "backbone-00002.safetensors",
+        "bytes": 265893728,
+        "sha256": "7939141eb5c3024215e43b31141761823a5b009f3b3338ea8ae7f3f14c11d277"
+      },
+      {
+        "path": "backbone-00003.safetensors",
+        "bytes": 264283056,
+        "sha256": "1d96ec2b53e83ecf435a7b3bd33da4308e7283bcd29ed27c0042000d373ee009"
+      },
+      {
+        "path": "backbone-00004.safetensors",
+        "bytes": 264287880,
+        "sha256": "65b9590051706700b9eb4d78700958fd43cd588055d8683d8b1be60c95e1cade"
+      },
+      {
+        "path": "backbone-00005.safetensors",
+        "bytes": 264283784,
+        "sha256": "14a392fe6e494964738cfca84bbdd4857497238c59710d69d334dd8cbf66464c"
+      },
+      {
+        "path": "backbone-00006.safetensors",
+        "bytes": 264287376,
+        "sha256": "35d75666be499990b9ddb2a40c386f78fdbcb7c640676f456bb4493518b3613e"
+      },
+      {
+        "path": "backbone-00007.safetensors",
+        "bytes": 264283016,
+        "sha256": "332a7429143b5aeb5f296ba8aa332a595c47f856bc53e9aa73536bff56344f50"
+      },
+      {
+        "path": "backbone-00008.safetensors",
+        "bytes": 176191944,
+        "sha256": "a5f11150a77ac8d143091f5a0c397c2676cafe6226a9f3cb30ba820216f70937"
+      },
+      {
+        "path": "bundle.json",
+        "bytes": 3223,
+        "sha256": "dbfd41a34fe262c674fcf99bb01d53d5c143268f7ca4a3bbc6ae394ebf4969ce"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1396,
+        "sha256": "05e59cf02877af31f154c7b8b26079443c75656f65726e6693daefa293a2607d"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 313,
+        "sha256": "aa4939d660f843f66766415ea188f244a48f25b7e90c06f1a42e32ea5bdca6a3"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "6595ed945aa9d2976212ad6957691b1225994e35410645c56b42fedaca0476cf"
+      },
+      {
+        "path": "memory/26/embedding.json",
+        "bytes": 774,
+        "sha256": "afd64cc632215bca1079303c3d85839fbf6e11370559dad26793e995e87ba016"
+      },
+      {
+        "path": "memory/26/table.men",
+        "bytes": 1307658,
+        "sha256": "72f57cbddb847c317060c13416edcc516f0b0e202ba46af9cf7b97543b8ffbd4"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "bytes": 24266,
+        "sha256": "4949589d30383750e4505b46ee14238cfa42246cc3c9e9c5bff336e09196663a"
+      },
+      {
+        "path": "tokenizer/added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "tokenizer/chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "tokenizer/merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "tokenizer/special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer/tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer/tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "tokenizer/vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "head-constant-seed7": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1365,
+        "sha256": "be666df6a154e692c590e609325afbb1b18fb3b48ad41e56827894d13cd56a14"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 343,
+        "sha256": "a4627908018a262f9c8d197b0458abb261bbe4cd267cbfcc27f97c326b976644"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "bcc045518a8119a0a0e37716573bcefaa764aeb858a3399c770b1c4e9b02a900"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2400524944,
+        "sha256": "8814cdac9b5d5e9e15b6af7e6e99483200494074e52beed8cacdbc674934d602"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "trainer_state.json",
+        "bytes": 113,
+        "sha256": "578c74438f07b76fdc56633ca79abebd2e56d69a6260f1292a3566e52d691a8b"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "bundle": [
+      {
+        "path": "backbone-00001.safetensors",
+        "bytes": 622329960,
+        "sha256": "5e934685d2e98ce82c05e3e042683a1274a9173cb044b3db377b137d36b2cda5"
+      },
+      {
+        "path": "backbone-00002.safetensors",
+        "bytes": 265893728,
+        "sha256": "50b6ea5d4190a2496d76ee89f7fefdfcb61a8daf59efcec5a32f9580f99f066c"
+      },
+      {
+        "path": "backbone-00003.safetensors",
+        "bytes": 264283056,
+        "sha256": "1d96ec2b53e83ecf435a7b3bd33da4308e7283bcd29ed27c0042000d373ee009"
+      },
+      {
+        "path": "backbone-00004.safetensors",
+        "bytes": 264287880,
+        "sha256": "65b9590051706700b9eb4d78700958fd43cd588055d8683d8b1be60c95e1cade"
+      },
+      {
+        "path": "backbone-00005.safetensors",
+        "bytes": 264283784,
+        "sha256": "14a392fe6e494964738cfca84bbdd4857497238c59710d69d334dd8cbf66464c"
+      },
+      {
+        "path": "backbone-00006.safetensors",
+        "bytes": 264287376,
+        "sha256": "3b490e1c0888ccab6a66c6ec2e0f5193a04576aa1830f50a5e22ee25fc1e5c67"
+      },
+      {
+        "path": "backbone-00007.safetensors",
+        "bytes": 264283016,
+        "sha256": "332a7429143b5aeb5f296ba8aa332a595c47f856bc53e9aa73536bff56344f50"
+      },
+      {
+        "path": "backbone-00008.safetensors",
+        "bytes": 176191944,
+        "sha256": "a5f11150a77ac8d143091f5a0c397c2676cafe6226a9f3cb30ba820216f70937"
+      },
+      {
+        "path": "bundle.json",
+        "bytes": 3223,
+        "sha256": "d2a39559814fdce296d78593f732c20499694d35e21cb1ea82d7b05c0154102c"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1396,
+        "sha256": "05e59cf02877af31f154c7b8b26079443c75656f65726e6693daefa293a2607d"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 313,
+        "sha256": "4f3fd64c94edbc6e5c151c606370a484e28c8a4ccc5c90ac00c1eec097308045"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 610,
+        "sha256": "bcc045518a8119a0a0e37716573bcefaa764aeb858a3399c770b1c4e9b02a900"
+      },
+      {
+        "path": "memory/26/embedding.json",
+        "bytes": 774,
+        "sha256": "ed05348eb64abd61d1bcf14c855d419e5e5cdd5c0e001ab947b2ef85e012430f"
+      },
+      {
+        "path": "memory/26/table.men",
+        "bytes": 1303561,
+        "sha256": "5abcae8c0fd689c6d3993e155c6993dc0c9d5fc16d434a5c7b2f66888d7f039d"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "bytes": 24266,
+        "sha256": "4949589d30383750e4505b46ee14238cfa42246cc3c9e9c5bff336e09196663a"
+      },
+      {
+        "path": "tokenizer/added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "tokenizer/chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "tokenizer/merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "tokenizer/special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer/tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer/tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "tokenizer/vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "head-constant-seed11": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1365,
+        "sha256": "be666df6a154e692c590e609325afbb1b18fb3b48ad41e56827894d13cd56a14"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 344,
+        "sha256": "100c3f4aa6f193bcbc0483d5e27ab635d08affce4c45fc85270574bf57506526"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 611,
+        "sha256": "937c0f8b9273a602a692af9221751f5d53f36592b99a4b61a95186e9e64bd82d"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2400524944,
+        "sha256": "58b6773a543f4c05e83e228a83e8917762c96d923d6737cdc7e6309f60cf5495"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "trainer_state.json",
+        "bytes": 113,
+        "sha256": "578c74438f07b76fdc56633ca79abebd2e56d69a6260f1292a3566e52d691a8b"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "bundle": [
+      {
+        "path": "backbone-00001.safetensors",
+        "bytes": 622329960,
+        "sha256": "5e934685d2e98ce82c05e3e042683a1274a9173cb044b3db377b137d36b2cda5"
+      },
+      {
+        "path": "backbone-00002.safetensors",
+        "bytes": 265893728,
+        "sha256": "785cddaa02793d36e468ef683583993bef27a2385d8d71e37194db1a06c90226"
+      },
+      {
+        "path": "backbone-00003.safetensors",
+        "bytes": 264283056,
+        "sha256": "1d96ec2b53e83ecf435a7b3bd33da4308e7283bcd29ed27c0042000d373ee009"
+      },
+      {
+        "path": "backbone-00004.safetensors",
+        "bytes": 264287880,
+        "sha256": "65b9590051706700b9eb4d78700958fd43cd588055d8683d8b1be60c95e1cade"
+      },
+      {
+        "path": "backbone-00005.safetensors",
+        "bytes": 264283784,
+        "sha256": "14a392fe6e494964738cfca84bbdd4857497238c59710d69d334dd8cbf66464c"
+      },
+      {
+        "path": "backbone-00006.safetensors",
+        "bytes": 264287376,
+        "sha256": "4c05b61e27b75201f78be122eb7cc5ac340fccff74332078a6b0a60f41a6a87b"
+      },
+      {
+        "path": "backbone-00007.safetensors",
+        "bytes": 264283016,
+        "sha256": "332a7429143b5aeb5f296ba8aa332a595c47f856bc53e9aa73536bff56344f50"
+      },
+      {
+        "path": "backbone-00008.safetensors",
+        "bytes": 176191944,
+        "sha256": "a5f11150a77ac8d143091f5a0c397c2676cafe6226a9f3cb30ba820216f70937"
+      },
+      {
+        "path": "bundle.json",
+        "bytes": 3223,
+        "sha256": "55beddcd37a8482a9c21b3d70275e98fca8d32cdbaa8e549e5dfa52e907710d5"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1396,
+        "sha256": "05e59cf02877af31f154c7b8b26079443c75656f65726e6693daefa293a2607d"
+      },
+      {
+        "path": "engram_config.json",
+        "bytes": 314,
+        "sha256": "4aeda9d34807530949c1a3d3c83c9e9e958d7c04e46851ea01caa17a85c1bc57"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 611,
+        "sha256": "937c0f8b9273a602a692af9221751f5d53f36592b99a4b61a95186e9e64bd82d"
+      },
+      {
+        "path": "memory/26/embedding.json",
+        "bytes": 774,
+        "sha256": "8bf0cde22b0c7003d8b46de6c7788f263d2760ab609e14b1129cda8dc95a0193"
+      },
+      {
+        "path": "memory/26/table.men",
+        "bytes": 1305730,
+        "sha256": "12eacc9146e96e39259cca21a59f485d9fad691fa7ee1f59c62dd1bd762d2e4a"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "bytes": 24266,
+        "sha256": "4949589d30383750e4505b46ee14238cfa42246cc3c9e9c5bff336e09196663a"
+      },
+      {
+        "path": "tokenizer/added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "tokenizer/chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "tokenizer/merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "tokenizer/special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer/tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer/tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "tokenizer/vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "off-seed3": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1360,
+        "sha256": "2bbf21a9dbb7e88059c28375f273da59ee0f290c4c4ee27bc7018d1daf69f641"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 121,
+        "sha256": "8b9afb365eaab1c8fc2395f618067ee2307b9821e207f12c5c52cf371a14b0e0"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2384234968,
+        "sha256": "54baf2ef8552d3a6d0399c5278b1e82492973b7122a3107de941645a64033316"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "off-seed7": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1360,
+        "sha256": "2bbf21a9dbb7e88059c28375f273da59ee0f290c4c4ee27bc7018d1daf69f641"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 121,
+        "sha256": "8b9afb365eaab1c8fc2395f618067ee2307b9821e207f12c5c52cf371a14b0e0"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2384234968,
+        "sha256": "08a17fed613b71a0b52957d2937687fadef00886c470432478c287e963ff67bf"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  },
+  "off-seed11": {
+    "checkpoint": [
+      {
+        "path": "added_tokens.json",
+        "bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "path": "chat_template.jinja",
+        "bytes": 4168,
+        "sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1360,
+        "sha256": "2bbf21a9dbb7e88059c28375f273da59ee0f290c4c4ee27bc7018d1daf69f641"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 121,
+        "sha256": "8b9afb365eaab1c8fc2395f618067ee2307b9821e207f12c5c52cf371a14b0e0"
+      },
+      {
+        "path": "merges.txt",
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 2384234968,
+        "sha256": "4ffd09a9647cfbb255c901d0b2f58ca9436d15bd86b2feabc37592a89693bbda"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 5404,
+        "sha256": "443bfa629eb16387a12edbf92a76f6a6f10b2af3b53d87ba1550adfcf45f7fa0"
+      },
+      {
+        "path": "vocab.json",
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ]
+  }
+}

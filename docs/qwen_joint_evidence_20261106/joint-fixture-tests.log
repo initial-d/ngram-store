@@ -1,0 +1,9 @@
+test_cpu_joint_prefix_checks_all_control_gradients_and_frozen_weights (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cpu_joint_prefix_checks_all_control_gradients_and_frozen_weights) ... ok
+test_cuda_joint_prefix_checks_all_control_gradients_and_frozen_weights (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cuda_joint_prefix_checks_all_control_gradients_and_frozen_weights) ... ok
+test_cpu_joint_training_exports_all_controls_and_reuses_prefixes (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cpu_joint_training_exports_all_controls_and_reuses_prefixes) ... ok
+test_cuda_joint_training_exports_all_controls_and_reuses_prefixes (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cuda_joint_training_exports_all_controls_and_reuses_prefixes) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 68.468s
+
+OK
