@@ -152,6 +152,109 @@ class TinyEngramCheckpointTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             FrozenTinyEngramPrefix(model)
 
+    def check_joint_prefix_fixture(self,device):
+        import copy
+        from tools.frozen_tinyengram_prefix import FrozenTinyEngramPrefix,check_reuse
+        from tools.tinyengram_checkpoint import load_upstream
+        from tools.train_tinyengram_joint import HeadConstantEmbedding
+        _,qwen=load_upstream(SOURCE)
+        for control in ("full","head-constant","off"):
+            model=copy.deepcopy(self.original)
+            del model.model.engram_layers["0"]
+            # Use the globals belonging to this model, not a newly loaded module.
+            setter=model.model.forward.__func__.__globals__["set_skip_engram"]
+            if control=="head-constant":
+                branch=model.model.engram_layers["2"]
+                original=branch.multi_head_embedding
+                branch.multi_head_embedding=HeadConstantEmbedding(original)
+                sample_ids=torch.zeros((2,3,original.num_heads),dtype=torch.int64)
+                a=branch.multi_head_embedding(sample_ids)
+                b=branch.multi_head_embedding(sample_ids+1)
+                self.assertTrue(torch.equal(a,b))
+                self.assertEqual(len(branch.multi_head_embedding.expanded()),len(original.embedding.weight))
+            for name,param in model.named_parameters():
+                param.requires_grad_(name.startswith("model.layers.2.") or "engram_layers" in name and control!="off")
+            model.to(device).eval()
+            with self.assertRaises(ValueError):FrozenTinyEngramPrefix(model)
+            reuse=FrozenTinyEngramPrefix(model,train_decoder_suffix=True)
+            fingerprint=reuse.frozen_weight_sha256()
+            result=check_reuse(model,reuse,self.ids,gradients=True,use_memory=control!="off",set_skip_memory=setter)
+            self.assertTrue(result["all_trainable_gradients_exact"])
+            old={n:v.detach().clone() for n,v in model.named_parameters() if n.startswith("model.layers.2.")}
+            optimizer=torch.optim.Adam([p for p in model.parameters() if p.requires_grad],lr=.001)
+            logits=reuse.forward(self.ids,reuse.capture(self.ids),use_memory=control!="off")
+            loss=torch.nn.functional.cross_entropy(logits[:,:-1].reshape(-1,32),self.ids[:,1:].to(device).reshape(-1))
+            loss.backward();optimizer.step();optimizer.zero_grad(set_to_none=True)
+            self.assertTrue(any(not torch.equal(old[n],p) for n,p in model.named_parameters() if n in old))
+            self.assertEqual(reuse.frozen_weight_sha256(),fingerprint)
+            self.assertTrue(check_reuse(model,reuse,self.ids,gradients=True,use_memory=control!="off",set_skip_memory=setter)["all_trainable_gradients_exact"])
+            model.model.layers[0].self_attn.q_proj.weight.requires_grad_(True)
+            with self.assertRaises(ValueError):FrozenTinyEngramPrefix(model,train_decoder_suffix=True)
+
+    def test_cpu_joint_prefix_checks_all_control_gradients_and_frozen_weights(self):
+        self.check_joint_prefix_fixture("cpu")
+
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_joint_prefix_checks_all_control_gradients_and_frozen_weights(self):
+        self.check_joint_prefix_fixture("cuda")
+
+    def run_joint_training_fixture(self,device):
+        import hashlib
+        from transformers import Qwen3ForCausalLM,AutoTokenizer
+        base_path=self.root/("joint-base-"+device)
+        base=Qwen3ForCausalLM(self.original.config)
+        base.load_state_dict({n:v for n,v in self.original.state_dict().items() if "engram_layers" not in n},strict=True)
+        base.save_pretrained(base_path,safe_serialization=True)
+        AutoTokenizer.from_pretrained(self.checkpoint,local_files_only=True).save_pretrained(base_path)
+        corpus=self.root/("joint-corpus-"+device+".txt")
+        corpus.write_text(" ".join(f"word{i%20}" for i in range(800)))
+        protocol=self.root/("joint-protocol-"+device+".json")
+        protocol.write_text(json.dumps({"schema_version":1,"controls":["full","head-constant","off"],"train_decoder_suffix":True,
+            "corpus_sha256":hashlib.sha256(corpus.read_bytes()).hexdigest(),"training_fraction":.8,"test_start_fraction":.9,
+            "seeds":[3],"window_tokens":8,"training_windows":8,"batch_size":2,"epochs":2,
+            "ngram_vocab_sizes":[17,23],"max_ngram_size":3,"n_embed_per_ngram":8,"n_head_per_ngram":2,
+            "layer_from_end":2,"kernel_size":3,"decoder_learning_rate":.001,"branch_learning_rate":.001,
+            "memory_learning_rate":.003,"gradient_clip":1.,"threads":1,"calibration_windows":2,"test_windows":2,
+            "calibration_window_start":2,"test_window_start":4,"minimum_ppl_effect":.01}))
+        results={}
+        for control in ("full","head-constant","off"):
+            output=self.root/("joint-"+device+"-"+control)
+            cmd=[os.sys.executable,"-m","tools.train_tinyengram_joint","--device",device,
+                 "--base-model",str(base_path),"--corpus",str(corpus),"--upstream-dir",str(SOURCE),
+                 "--native-library",str(self.library),"--protocol",str(protocol),"--output-dir",str(output),
+                 "--seed","3","--control",control]
+            if control!="full":cmd.extend(["--prefix-from",str(self.root/("joint-"+device+"-full"))])
+            run=subprocess.run(cmd,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+            self.assertEqual(run.returncode,0,run.stdout+run.stderr)
+            r=json.loads((output/"report.json").read_text());results[control]=r
+            self.assertEqual(r["status"],"passed")
+            self.assertEqual(r["steps"],8)
+            self.assertEqual(r["training_targets"],112)
+            self.assertTrue(r["frozen_weight_hash_unchanged"])
+            self.assertTrue(r["final_reuse_check"]["all_trainable_gradients_exact"])
+            self.assertNotEqual(r["initial_decoder_sha256"],r["trained_decoder_sha256"])
+            self.assertEqual(r["initial_decoder_sha256"],results["full"]["initial_decoder_sha256"])
+            self.assertEqual(r["initial_full_memory_sha256"],results["full"]["initial_full_memory_sha256"])
+            self.assertEqual(r["prefix_files"],results["full"]["prefix_files"])
+            if control=="off":
+                self.assertEqual(r["memory_trainable_parameters"],0)
+                self.assertEqual(r["changed_physical_memory_rows"],0)
+                self.assertTrue(all(x["logits_byte_exact"] for x in r["plain_reload_checks"].values()))
+            else:
+                self.assertGreater(r["changed_physical_memory_rows"],0)
+                for split in ("calibration","test"):
+                    self.assertTrue(r["quality"]["summary"][split]["native-fp32"]["all_logits_byte_exact"])
+        self.assertGreater(results["full"]["memory_trainable_parameters"],results["head-constant"]["memory_trainable_parameters"])
+        self.assertEqual(results["full"]["trainable_parameters"]-results["head-constant"]["trainable_parameters"],
+                         results["full"]["memory_trainable_parameters"]-results["head-constant"]["memory_trainable_parameters"])
+
+    def test_cpu_joint_training_exports_all_controls_and_reuses_prefixes(self):
+        self.run_joint_training_fixture("cpu")
+
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_joint_training_exports_all_controls_and_reuses_prefixes(self):
+        self.run_joint_training_fixture("cuda")
+
     def test_training_windows_remain_nonoverlapping_and_inside_training_segment(self):
         from tools.train_tinyengram_identity import sample_windows
         ids = torch.arange(137).unsqueeze(0)

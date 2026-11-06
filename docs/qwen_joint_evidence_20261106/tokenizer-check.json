@@ -1,0 +1,163 @@
+{
+  "status": "passed",
+  "command": "/llm-align/duyimin/meft-cuda-20261030/compat/bin/python ../verify-saved-tokenizers.py",
+  "script_sha256": "a92f21098ee55259d40f38f077bf8e3f9f8447d45536c757536ebb917a2aec58",
+  "checks": {
+    "full-seed3": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "full-seed7": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "full-seed11": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "head-constant-seed3": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "head-constant-seed7": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "head-constant-seed11": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "off-seed3": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "off-seed7": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    },
+    "off-seed11": {
+      "all_split_token_ids_exact": true,
+      "splits": {
+        "train": {
+          "tokens": 239995,
+          "token_ids_sha256": "893bb574468d5f697acc2f73a3653306a7a909dfd7a5571f48991ba9a41a5f5d"
+        },
+        "calibration": {
+          "tokens": 30366,
+          "token_ids_sha256": "b1af48ad1b988da246e1865e850627ab4104d5e296c7491a2746c529701fc0c2"
+        },
+        "test": {
+          "tokens": 31469,
+          "token_ids_sha256": "92b49e31357439aaa1aeb428a309f35aa54632047cde593ce2440d80ed91c80c"
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Pinned tokenizer versions and nonpadding/default input configuration only; original warnings retained in log"
+  ]
+}

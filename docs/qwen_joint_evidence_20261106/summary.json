@@ -1,0 +1,809 @@
+{
+  "all_seeds_confirmed_on_test": false,
+  "all_seeds_qualified_on_calibration": false,
+  "limitations": [
+    "fixed exploratory late-decoder adaptation, same sampling/optimizer schedule but different parameter counts",
+    "shared text windows and three seeds; bootstrap is not population/model-family confidence",
+    "unweighted trained constants and unweighted head-mean ablation are distinct controls",
+    "dense/prefix-cached quality oracle; no isolated serving or whole-model savings conclusion"
+  ],
+  "protocol": {
+    "batch_size": 4,
+    "branch_learning_rate": 0.0001,
+    "cache_contract": "CUDA FP32 computation, CPU FP32 stored prefixes, no KV cache or dropout; same-schedule full/cached logits and every trainable gradient checked before reuse; frozen weight hash unchanged after each seed",
+    "calibration_window_start": 64,
+    "calibration_windows": 64,
+    "checkpoint_choice": "final fixed epoch only; no seed, checkpoint, corpus or threshold selection using test",
+    "controls": [
+      "full",
+      "head-constant",
+      "off"
+    ],
+    "corpus_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+    "decoder_learning_rate": 1e-05,
+    "epochs": 4,
+    "gradient_clip": 1.0,
+    "kernel_size": 3,
+    "layer_from_end": 2,
+    "max_ngram_size": 4,
+    "memory_learning_rate": 0.0003,
+    "minimum_ppl_effect": 0.01,
+    "n_embed_per_ngram": 64,
+    "n_head_per_ngram": 2,
+    "native_contract": "all frozen source rows and original head offsets byte-preserved; include unused rows and metadata costs; staged CPU native lookup replaces GPU-resident source lookup during quality evaluation",
+    "ngram_vocab_sizes": [
+      8191,
+      16381,
+      32749
+    ],
+    "objective": "ordinary full-vocabulary next-token cross-entropy; same samples, seed-specific order, epochs and suffix LR for every control; no ablation penalty or identity regularization",
+    "precision": "FP32 parameters and activations, no autocast, TF32 disabled, deterministic algorithms; CUBLAS_WORKSPACE_CONFIG=:4096:8",
+    "qualification": "full must beat separately trained same-seed head-constant and memory-off AND its own branch-off/head-mean ablations by >=1% relative PPL with positive lower paired-window delta-NLL 95% bound on calibration; fixed final checkpoints and independent test confirmation",
+    "runtime_boundary": "quality oracle retains dense source and uses frozen-prefix reuse; training elapsed time and allocator peaks are not isolated native serving latency or memory savings",
+    "schema_version": 1,
+    "scope": "exploratory joint adaptation after frozen-backbone failure: last two decoder layers and branch; not foundation-scale training, released DeepSeek weights or equal-parameter architecture dominance",
+    "seeds": [
+      3,
+      7,
+      11
+    ],
+    "test_start_fraction": 0.9,
+    "test_window_start": 128,
+    "test_windows": 64,
+    "threads": 8,
+    "train_decoder_suffix": true,
+    "training_fraction": 0.8,
+    "training_sampling": "1024 evenly spaced nonoverlapping windows across the complete training segment; final incomplete window discarded",
+    "training_windows": 1024,
+    "window_tokens": 128
+  },
+  "schema_version": 1,
+  "seeds": {
+    "11": {
+      "splits": {
+        "calibration": {
+          "full_ppl": 52.0335139997989,
+          "independent_controls": {
+            "head-constant": {
+              "baseline_minus_full_nll": -0.008082658731206394,
+              "baseline_minus_full_nll_95ci": [
+                -0.011055699715379655,
+                -0.0051677621925009486
+              ],
+              "baseline_ppl": 51.61463995193891,
+              "baseline_relative_ppl_excess": -0.008050081873417337,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 52.0335139997989,
+              "targets": 8128,
+              "windows": 64
+            },
+            "off": {
+              "baseline_minus_full_nll": -0.008878957295317402,
+              "baseline_minus_full_nll_95ci": [
+                -0.011874155652179376,
+                -0.005948160450254579
+              ],
+              "baseline_ppl": 51.573555648115075,
+              "baseline_relative_ppl_excess": -0.008839655758894102,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 52.0335139997989,
+              "targets": 8128,
+              "windows": 64
+            }
+          },
+          "independent_controls_qualified": false,
+          "native_byte_exact": true,
+          "qualified": false,
+          "same_checkpoint_ablations": {
+            "head-mean": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  0.0021690165771786184,
+                  0.007191443153023543
+                ],
+                "relative_ppl_change_95ci": [
+                  0.0021713705952950847,
+                  0.0072173636784086635
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2437,
+              "candidate_nll": 3.9566064613919147,
+              "candidate_ppl": 52.279611698846544,
+              "delta_nll": 0.004718450415282849,
+              "max_absolute_logit_delta": 3.16092586517334,
+              "max_kl": 0.17439832959026935,
+              "mean_kl": 0.006873078920305391,
+              "p99_kl": 0.05423987197138202,
+              "relative_ppl_change": 0.0047295998315354465,
+              "source_correct": 2428,
+              "source_nll": 3.951888010976632,
+              "source_ppl": 52.0335139997989,
+              "targets": 8128,
+              "top1_changes": 304,
+              "windows": 64
+            },
+            "memory-off": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  -0.004858429614981494,
+                  0.0013295967407331555
+                ],
+                "relative_ppl_change_95ci": [
+                  -0.004846646535963028,
+                  0.0013304810463595036
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2426,
+              "candidate_nll": 3.9501283204857893,
+              "candidate_ppl": 51.94203163393931,
+              "delta_nll": -0.0017596904908425692,
+              "max_absolute_logit_delta": 4.588912010192871,
+              "max_kl": 0.5375990988666455,
+              "mean_kl": 0.007312919988250308,
+              "p99_kl": 0.05409989789841793,
+              "relative_ppl_change": -0.001758143143281463,
+              "source_correct": 2428,
+              "source_nll": 3.951888010976632,
+              "source_ppl": 52.0335139997989,
+              "targets": 8128,
+              "top1_changes": 294,
+              "windows": 64
+            }
+          },
+          "same_checkpoint_ablations_qualified": false
+        },
+        "test": {
+          "full_ppl": 65.07765856416772,
+          "independent_controls": {
+            "head-constant": {
+              "baseline_minus_full_nll": -0.007489086470751083,
+              "baseline_minus_full_nll_95ci": [
+                -0.010442656408974052,
+                -0.004613626607813777
+              ],
+              "baseline_ppl": 64.59210679087754,
+              "baseline_relative_ppl_excess": -0.007461113137797128,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 65.07765856416772,
+              "targets": 8128,
+              "windows": 64
+            },
+            "off": {
+              "baseline_minus_full_nll": -0.00850018544048492,
+              "baseline_minus_full_nll_95ci": [
+                -0.011424799671973107,
+                -0.005626377757871703
+              ],
+              "baseline_ppl": 64.52683078406105,
+              "baseline_relative_ppl_excess": -0.00846416100793714,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 65.07765856416772,
+              "targets": 8128,
+              "windows": 64
+            }
+          },
+          "independent_controls_qualified": false,
+          "native_byte_exact": true,
+          "qualified": false,
+          "same_checkpoint_ablations": {
+            "head-mean": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  0.004825765860464933,
+                  0.009911961744677863
+                ],
+                "relative_ppl_change_95ci": [
+                  0.004837428621572803,
+                  0.009961247943870556
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2278,
+              "candidate_nll": 4.182951772219458,
+              "candidate_ppl": 65.55908336902948,
+              "delta_nll": 0.007370468325184731,
+              "max_absolute_logit_delta": 3.0465030670166016,
+              "max_kl": 0.17439832959026935,
+              "mean_kl": 0.006680428737984387,
+              "p99_kl": 0.05194419232640155,
+              "relative_ppl_change": 0.007397697081972598,
+              "source_correct": 2289,
+              "source_nll": 4.1755813038942735,
+              "source_ppl": 65.07765856416772,
+              "targets": 8128,
+              "top1_changes": 315,
+              "windows": 64
+            },
+            "memory-off": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  -0.008755666270415364,
+                  -0.0025697013119120233
+                ],
+                "relative_ppl_change_95ci": [
+                  -0.008717447050746724,
+                  -0.00256640245579243
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2296,
+              "candidate_nll": 4.169996025383379,
+              "candidate_ppl": 64.71519488880264,
+              "delta_nll": -0.005585278510894298,
+              "max_absolute_logit_delta": 3.922236442565918,
+              "max_kl": 0.5375990988666455,
+              "mean_kl": 0.007459474470966511,
+              "p99_kl": 0.050389752513240155,
+              "relative_ppl_change": -0.005569709841476221,
+              "source_correct": 2289,
+              "source_nll": 4.1755813038942735,
+              "source_ppl": 65.07765856416772,
+              "targets": 8128,
+              "top1_changes": 332,
+              "windows": 64
+            }
+          },
+          "same_checkpoint_ablations_qualified": false
+        }
+      },
+      "trainable_parameters": {
+        "full": 35534080,
+        "head-constant": 31863488,
+        "off": 31461888
+      },
+      "training_seconds": {
+        "full": 54.42708572605625,
+        "head-constant": 54.4238757470157,
+        "off": 50.11144789098762
+      }
+    },
+    "3": {
+      "splits": {
+        "calibration": {
+          "full_ppl": 52.19863506343172,
+          "independent_controls": {
+            "head-constant": {
+              "baseline_minus_full_nll": -0.00910361464924847,
+              "baseline_minus_full_nll_95ci": [
+                -0.011283544504516577,
+                -0.006958851564570074
+              ],
+              "baseline_ppl": 51.725595257608646,
+              "baseline_relative_ppl_excess": -0.009062302208635154,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 52.19863506343172,
+              "targets": 8128,
+              "windows": 64
+            },
+            "off": {
+              "baseline_minus_full_nll": -0.009662823337154958,
+              "baseline_minus_full_nll_95ci": [
+                -0.011868389473149017,
+                -0.007486144431552838
+              ],
+              "baseline_ppl": 51.696677941514224,
+              "baseline_relative_ppl_excess": -0.009616288267069095,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 52.19863506343172,
+              "targets": 8128,
+              "windows": 64
+            }
+          },
+          "independent_controls_qualified": false,
+          "native_byte_exact": true,
+          "qualified": false,
+          "same_checkpoint_ablations": {
+            "head-mean": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  0.0010468241096876073,
+                  0.005793345606732788
+                ],
+                "relative_ppl_change_95ci": [
+                  0.001047372221288046,
+                  0.005810159487250934
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2422,
+              "candidate_nll": 3.9585110007815523,
+              "candidate_ppl": 52.37927515496537,
+              "delta_nll": 0.003454654444949856,
+              "max_absolute_logit_delta": 4.3767194747924805,
+              "max_kl": 0.5944557249695994,
+              "mean_kl": 0.006464713816418956,
+              "p99_kl": 0.04765785378339781,
+              "relative_ppl_change": 0.0034606286412304328,
+              "source_correct": 2418,
+              "source_nll": 3.9550563463366024,
+              "source_ppl": 52.19863506343172,
+              "targets": 8128,
+              "top1_changes": 254,
+              "windows": 64
+            },
+            "memory-off": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  -0.00673198069778813,
+                  -0.0012249949397957207
+                ],
+                "relative_ppl_change_95ci": [
+                  -0.006709371678673048,
+                  -0.001224244939774462
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2414,
+              "candidate_nll": 3.951145888288143,
+              "candidate_ppl": 51.99491307358102,
+              "delta_nll": -0.003910458048459464,
+              "max_absolute_logit_delta": 3.9511241912841797,
+              "max_kl": 0.08822488861321454,
+              "mean_kl": 0.006987276090877748,
+              "p99_kl": 0.04692679028052044,
+              "relative_ppl_change": -0.003902822163896473,
+              "source_correct": 2418,
+              "source_nll": 3.9550563463366024,
+              "source_ppl": 52.19863506343172,
+              "targets": 8128,
+              "top1_changes": 258,
+              "windows": 64
+            }
+          },
+          "same_checkpoint_ablations_qualified": false
+        },
+        "test": {
+          "full_ppl": 65.311804204741,
+          "independent_controls": {
+            "head-constant": {
+              "baseline_minus_full_nll": -0.011134600943189632,
+              "baseline_minus_full_nll_95ci": [
+                -0.01444072923609601,
+                -0.007897176688443806
+              ],
+              "baseline_ppl": 64.58861700018029,
+              "baseline_relative_ppl_excess": -0.011072840711820619,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 65.311804204741,
+              "targets": 8128,
+              "windows": 64
+            },
+            "off": {
+              "baseline_minus_full_nll": -0.012142719647109779,
+              "baseline_minus_full_nll_95ci": [
+                -0.015510746252713576,
+                -0.008887404890396782
+              ],
+              "baseline_ppl": 64.52353681710875,
+              "baseline_relative_ppl_excess": -0.012069294321761175,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 65.311804204741,
+              "targets": 8128,
+              "windows": 64
+            }
+          },
+          "independent_controls_qualified": false,
+          "native_byte_exact": true,
+          "qualified": false,
+          "same_checkpoint_ablations": {
+            "head-mean": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  0.002973846939819268,
+                  0.008257703487963107
+                ],
+                "relative_ppl_change_95ci": [
+                  0.0029782732092250063,
+                  0.00829189236381572
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2285,
+              "candidate_nll": 4.184820604457777,
+              "candidate_ppl": 65.68171685255612,
+              "delta_nll": 0.0056478156799339985,
+              "max_absolute_logit_delta": 3.004206657409668,
+              "max_kl": 0.1368624496429982,
+              "mean_kl": 0.00616531531389724,
+              "p99_kl": 0.04620167358795247,
+              "relative_ppl_change": 0.005663794658856977,
+              "source_correct": 2291,
+              "source_nll": 4.179172788777843,
+              "source_ppl": 65.311804204741,
+              "targets": 8128,
+              "top1_changes": 240,
+              "windows": 64
+            },
+            "memory-off": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  -0.013539320625957576,
+                  -0.006675889398573683
+                ],
+                "relative_ppl_change_95ci": [
+                  -0.01344807628411722,
+                  -0.006653655154241457
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2290,
+              "candidate_nll": 4.169066931546306,
+              "candidate_ppl": 64.65509632299317,
+              "delta_nll": -0.010105857231537563,
+              "max_absolute_logit_delta": 3.8183860778808594,
+              "max_kl": 0.19007349397744577,
+              "mean_kl": 0.007027400252179789,
+              "p99_kl": 0.04550684398034601,
+              "relative_ppl_change": -0.010054964638385408,
+              "source_correct": 2291,
+              "source_nll": 4.179172788777843,
+              "source_ppl": 65.311804204741,
+              "targets": 8128,
+              "top1_changes": 287,
+              "windows": 64
+            }
+          },
+          "same_checkpoint_ablations_qualified": false
+        }
+      },
+      "trainable_parameters": {
+        "full": 35534080,
+        "head-constant": 31863488,
+        "off": 31461888
+      },
+      "training_seconds": {
+        "full": 53.89096691599116,
+        "head-constant": 53.994656607043,
+        "off": 50.636710001155734
+      }
+    },
+    "7": {
+      "splits": {
+        "calibration": {
+          "full_ppl": 51.63488137435806,
+          "independent_controls": {
+            "head-constant": {
+              "baseline_minus_full_nll": -0.004591045912826441,
+              "baseline_minus_full_nll_95ci": [
+                -0.007163079465003023,
+                -0.002055745725736602
+              ],
+              "baseline_ppl": 51.398366603782605,
+              "baseline_relative_ppl_excess": -0.004580523171162063,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 51.63488137435806,
+              "targets": 8128,
+              "windows": 64
+            },
+            "off": {
+              "baseline_minus_full_nll": -0.005558898956702141,
+              "baseline_minus_full_nll_95ci": [
+                -0.008153195421339215,
+                -0.0030223471992468238
+              ],
+              "baseline_ppl": 51.34864460389075,
+              "baseline_relative_ppl_excess": -0.005543476867741107,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 51.63488137435806,
+              "targets": 8128,
+              "windows": 64
+            }
+          },
+          "independent_controls_qualified": false,
+          "native_byte_exact": true,
+          "qualified": false,
+          "same_checkpoint_ablations": {
+            "head-mean": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  0.0033152836433222926,
+                  0.007793088948774258
+                ],
+                "relative_ppl_change_95ci": [
+                  0.003320785274282445,
+                  0.007823534102331416
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2422,
+              "candidate_nll": 3.949730108740959,
+              "candidate_ppl": 51.92135182463708,
+              "delta_nll": 0.005532669008474045,
+              "max_absolute_logit_delta": 3.256805419921875,
+              "max_kl": 0.1887645165098382,
+              "mean_kl": 0.005179422603644702,
+              "p99_kl": 0.035738483840110954,
+              "relative_ppl_change": 0.0055480024869637495,
+              "source_correct": 2428,
+              "source_nll": 3.944197439732485,
+              "source_ppl": 51.63488137435806,
+              "targets": 8128,
+              "top1_changes": 209,
+              "windows": 64
+            },
+            "memory-off": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  -0.0027651184358933162,
+                  0.003540257018380932
+                ],
+                "relative_ppl_change_95ci": [
+                  -0.002761299017103867,
+                  0.003546531130063485
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2422,
+              "candidate_nll": 3.9445365825846066,
+              "candidate_ppl": 51.65239594509918,
+              "delta_nll": 0.0003391428521215545,
+              "max_absolute_logit_delta": 6.557426452636719,
+              "max_kl": 1.051551031645233,
+              "mean_kl": 0.006628457730992806,
+              "p99_kl": 0.04126853571389279,
+              "relative_ppl_change": 0.0003392003675604266,
+              "source_correct": 2428,
+              "source_nll": 3.944197439732485,
+              "source_ppl": 51.63488137435806,
+              "targets": 8128,
+              "top1_changes": 272,
+              "windows": 64
+            }
+          },
+          "same_checkpoint_ablations_qualified": false
+        },
+        "test": {
+          "full_ppl": 64.75930078053229,
+          "independent_controls": {
+            "head-constant": {
+              "baseline_minus_full_nll": -0.006210421222911933,
+              "baseline_minus_full_nll_95ci": [
+                -0.00877887308636748,
+                -0.003638131598027395
+              ],
+              "baseline_ppl": 64.35836452475269,
+              "baseline_relative_ppl_excess": -0.0061911764170888796,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 64.75930078053229,
+              "targets": 8128,
+              "windows": 64
+            },
+            "off": {
+              "baseline_minus_full_nll": -0.007297542348914554,
+              "baseline_minus_full_nll_95ci": [
+                -0.009813889319361859,
+                -0.004749224220328672
+              ],
+              "baseline_ppl": 64.28843720366373,
+              "baseline_relative_ppl_excess": -0.007270979939457567,
+              "bootstrap": {
+                "quantile": "linear interpolation",
+                "resamples": 10000,
+                "rng": "Python random.Random / randrange",
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "full_ppl": 64.75930078053229,
+              "targets": 8128,
+              "windows": 64
+            }
+          },
+          "independent_controls_qualified": false,
+          "native_byte_exact": true,
+          "qualified": false,
+          "same_checkpoint_ablations": {
+            "head-mean": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  0.004759435014823373,
+                  0.01033437846221183
+                ],
+                "relative_ppl_change_95ci": [
+                  0.004770779115683524,
+                  0.010387962578416038
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2302,
+              "candidate_nll": 4.178234607393509,
+              "candidate_ppl": 65.25055862008477,
+              "delta_nll": 0.007557275731117308,
+              "max_absolute_logit_delta": 2.871919631958008,
+              "max_kl": 0.1887645165098382,
+              "mean_kl": 0.005372400297821615,
+              "p99_kl": 0.03958088331657472,
+              "relative_ppl_change": 0.007585904011183723,
+              "source_correct": 2293,
+              "source_nll": 4.170677331662391,
+              "source_ppl": 64.75930078053229,
+              "targets": 8128,
+              "top1_changes": 228,
+              "windows": 64
+            },
+            "memory-off": {
+              "all_logits_byte_exact": false,
+              "bootstrap": {
+                "delta_nll_95ci": [
+                  -0.005013584365486027,
+                  0.0008690643697248888
+                ],
+                "relative_ppl_change_95ci": [
+                  -0.005001037328691307,
+                  0.0008694421155848153
+                ],
+                "resamples": 10000,
+                "seed": 731,
+                "unit": "paired nonoverlapping token window"
+              },
+              "candidate_correct": 2290,
+              "candidate_nll": 4.168636287639171,
+              "candidate_ppl": 64.62725899411474,
+              "delta_nll": -0.002041044023219918,
+              "max_absolute_logit_delta": 5.134195327758789,
+              "max_kl": 0.9881044262034747,
+              "mean_kl": 0.006854389012905856,
+              "p99_kl": 0.04193048104001019,
+              "relative_ppl_change": -0.002038962509262268,
+              "source_correct": 2293,
+              "source_nll": 4.170677331662391,
+              "source_ppl": 64.75930078053229,
+              "targets": 8128,
+              "top1_changes": 246,
+              "windows": 64
+            }
+          },
+          "same_checkpoint_ablations_qualified": false
+        }
+      },
+      "trainable_parameters": {
+        "full": 35534080,
+        "head-constant": 31863488,
+        "off": 31461888
+      },
+      "training_seconds": {
+        "full": 53.35200172290206,
+        "head-constant": 54.38419000222348,
+        "off": 50.35408018901944
+      }
+    }
+  },
+  "source_hashes": {
+    "full-seed11": {
+      "quality_sha256": "c7921331975ad64c9babc0cf8144a8ad54ce8b787ff21e671f01bb7b7f7db2e3",
+      "report_sha256": "a59795e0c0b23ae807bb2e1f6376a817c8447c1090f9f9578e9b04446d7b7f5f"
+    },
+    "full-seed3": {
+      "quality_sha256": "a9a8c9b82220d66af861d8b8db865a2c1181baa0a18ca39555f545835cc981c5",
+      "report_sha256": "b234f1ce0e8fff54483b070adcfdd3e380ad21b46b1d892d7c95a86095ae9f52"
+    },
+    "full-seed7": {
+      "quality_sha256": "98f521749859eea8405a5dd717828b65452941e63a95351b5ba32ad45715a7a8",
+      "report_sha256": "79c7f101e3aa9822a3728b40b485d5ae0a0e9906d599ad18d4112b428630158c"
+    },
+    "head-constant-seed11": {
+      "quality_sha256": "1a538f20dc07bd15f93b5472fecb8ca186f5fa6ac40fc5b77e28980402ca309b",
+      "report_sha256": "0d2a93f4a4e0afc2b7bd3c104bf696d7f2b59dadba3970c5e6d4090409936f22"
+    },
+    "head-constant-seed3": {
+      "quality_sha256": "dc6f0179879789e2894c5e943228d867cd1010c1d92236fd3cfb3f29d137dcf6",
+      "report_sha256": "af3d77defdbbfe5be859f4a959e50c82d5445bedef0251eb0fb2c84d5ec2422c"
+    },
+    "head-constant-seed7": {
+      "quality_sha256": "1713c81f4b1751e2f61515a21afc463893f42a616d50f1b2cf1608e418c88771",
+      "report_sha256": "c5befa6dd26e2a07aa61ff17be61f0ab66b00977f9f3d008bf490ad063811270"
+    },
+    "off-seed11": {
+      "quality_sha256": "e16d2167b15c5f7707003090e3797c894dd9e2b66a04075bba9eeaa8de48b3b5",
+      "report_sha256": "af3bd055ee72c532ffe3629c6c22eafd51dcbe9a209ad6d33dd627b8e74d0e98"
+    },
+    "off-seed3": {
+      "quality_sha256": "058c1d9f3a01da18c6cf9666c9410c86410c00da2d1476c52e5ea73716dbb647",
+      "report_sha256": "4e0f5aac0265e583a24268557527ec24baa323efe02a5f7dc76cfaa714ce528c"
+    },
+    "off-seed7": {
+      "quality_sha256": "7e855c9cd742e53c27c68bdf0c7949bc7d78b246fd41b453366dccf94bae7fd8",
+      "report_sha256": "a5756072b5258956009e75e707dcd9d388540341c5bfbd945f78497a63d0d08b"
+    }
+  }
+}

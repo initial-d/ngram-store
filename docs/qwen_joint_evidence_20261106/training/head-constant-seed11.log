@@ -1,0 +1,38 @@
+Token indices sequence length is longer than the specified maximum sequence length for this model (239995 > 131072). Running this sequence through the model will result in indexing errors
+`torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /llm-align/open_models/Qwen3/Qwen3-0.6B and are newly initialized: ['model.engram_layers.26.key_projs.0.bias', 'model.engram_layers.26.key_projs.0.weight', 'model.engram_layers.26.multi_head_embedding.embedding.weight', 'model.engram_layers.26.multi_head_embedding.offsets', 'model.engram_layers.26.norm1.0.weight', 'model.engram_layers.26.norm2.0.weight', 'model.engram_layers.26.short_conv.conv.weight', 'model.engram_layers.26.short_conv.norms.0.weight', 'model.engram_layers.26.value_proj.bias', 'model.engram_layers.26.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+head-constant 11 1 32 4.080148220062256
+head-constant 11 1 64 4.299859523773193
+head-constant 11 1 96 4.4356842041015625
+head-constant 11 1 128 4.369279861450195
+head-constant 11 1 160 4.0618791580200195
+head-constant 11 1 192 4.19579553604126
+head-constant 11 1 224 4.159386157989502
+head-constant 11 1 256 4.044248104095459
+head-constant 11 2 288 4.106287002563477
+head-constant 11 2 320 3.831160306930542
+head-constant 11 2 352 4.101432800292969
+head-constant 11 2 384 4.095824241638184
+head-constant 11 2 416 3.779402017593384
+head-constant 11 2 448 4.009652137756348
+head-constant 11 2 480 3.744342088699341
+head-constant 11 2 512 3.8824119567871094
+head-constant 11 3 544 4.104764461517334
+head-constant 11 3 576 3.98181414604187
+head-constant 11 3 608 3.851775646209717
+head-constant 11 3 640 4.023715972900391
+head-constant 11 3 672 4.033346652984619
+head-constant 11 3 704 3.4700496196746826
+head-constant 11 3 736 4.272907733917236
+head-constant 11 3 768 3.9430489540100098
+head-constant 11 4 800 4.101320743560791
+head-constant 11 4 832 3.820211410522461
+head-constant 11 4 864 3.940582036972046
+head-constant 11 4 896 3.9466123580932617
+head-constant 11 4 928 3.7359585762023926
+head-constant 11 4 960 3.748326063156128
+head-constant 11 4 992 4.2497663497924805
+head-constant 11 4 1024 3.8455164432525635
+The tokenizer you are loading from '/llm-align/duyimin/ngram-qwen-joint-20261106/head-constant-seed11/checkpoint' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Report: /llm-align/duyimin/ngram-qwen-joint-20261106/head-constant-seed11/report.json

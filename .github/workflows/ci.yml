@@ -36,6 +36,8 @@ jobs:
         run: python -S docs/qwen_quality_evidence_20261106/verify.py
       - name: Verify actual GPU training, codec pairing and isolated Qwen serving
         run: python -S docs/qwen_gpu_grid_evidence_20261106/verify.py
+      - name: Verify jointly trained Qwen against independent cheaper controls
+        run: python -S docs/qwen_joint_evidence_20261106/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter
