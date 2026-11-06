@@ -122,6 +122,7 @@ serving results remain in the [separate experiment](../qwen_gpu_grid_evidence_20
 ## Reproduce and audit
 
 ```bash
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
 python -m tools.train_tinyengram_joint --device cuda --seed 3 --control full \
   --base-model /path/to/Qwen3-0.6B --corpus /path/to/TinyShakespeare.txt \
   --upstream-dir /path/to/pinned/TinyEngram --native-library /path/to/libmeft_rows.so \
