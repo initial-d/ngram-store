@@ -24,29 +24,11 @@ from .faiss_row_codec import FaissRows, fit_codec
 from .frozen_tinyengram_prefix import FrozenTinyEngramPrefix
 from .lm_quality_metrics import next_token_metrics, summarize_windows
 from .quantized_memory import QuantizedRows, pack_quantized
+from .row_codec_utils import close_reader, read_rows, decode_complete
 from .tinyengram_checkpoint import load_upstream, source_revision
 from .train_tinyengram_identity import sample_windows, tensor_sha, write_json
 
 CODECS = ('fp16', 'int8', 'sq8', 'sq4', 'pq-8x8', 'cluster-8', 'opq-8x8')
-
-
-def close_reader(reader):
-    if isinstance(reader, QuantizedRows):
-        reader.close()
-    else:
-        reader.codes._mmap.close()
-
-
-def read_rows(reader, ids):
-    return reader.gather(ids) if isinstance(reader, QuantizedRows) else reader.rows(ids)
-
-
-def decode_complete(reader, shape):
-    result = np.empty(shape, dtype='<f4')
-    for start in range(0, shape[0], 4096):
-        stop = min(start+4096, shape[0])
-        result[start:stop] = read_rows(reader, np.arange(start,stop))
-    return result
 
 
 def main():

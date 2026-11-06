@@ -47,6 +47,12 @@ def write_json(path, value):
     temporary.replace(path)
 
 
+def heldout_windows(ids, length, count, start=0):
+    if min(length,count)<1 or start<0 or ids.ndim!=2 or ids.shape[0]!=1 or ids.shape[1]<(start+count)*length:
+        raise ValueError('insufficient complete held-out windows or invalid schedule')
+    return ids[0,start*length:(start+count)*length].reshape(count,length)
+
+
 def evaluate_seed(model, reuse, ids, prefixes, bundle, library):
     originals = {key: layer.multi_head_embedding for key, layer in model.model.engram_layers.items()}
     means, native = {}, {}
@@ -164,11 +170,13 @@ def main():
         if prefix_root:
             previous = json.loads((prefix_root/"report.json").read_text())
             match_fields = ("corpus_sha256","training_fraction","test_start_fraction","window_tokens",
-                            "training_windows","batch_size","layer_from_end","threads")
+                            "training_windows","batch_size","layer_from_end","threads","calibration_windows","test_windows")
             if (args.smoke or previous["smoke_only"] or previous["environment"]["device"] != args.device
                     or args.resume_from and previous["protocol"] != protocol
                     or any(previous["protocol"][k] != protocol[k] for k in match_fields)):
                 raise ValueError("resume requires the identical non-smoke protocol and device")
+            if any(previous['protocol'].get(s+'_window_start',0)!=protocol.get(s+'_window_start',0) for s in ('calibration','test')):
+                raise ValueError('prefix replay requires identical held-out window offsets')
             report["prefix_source"] = {"report_sha256":file_sha256(prefix_root/"report.json"),
                                 "source_code_sha":previous["code_sha"],"previous_status":previous["status"],
                                 "resume_final_checkpoints":bool(args.resume_from)}
@@ -212,8 +220,7 @@ def main():
         report["training_targets_per_seed"] = train_targets
         report["sampled_train_windows"] = {"count": len(training), "token_ids_sha256": tensor_sha(training),
                                            "window_indices_sha256": hashlib.sha256(selected.tobytes()).hexdigest()}
-        evaluation = {s: ids[0,length*protocol.get(s+"_window_start",0):
-                                  length*(protocol.get(s+"_window_start",0)+protocol[s+"_windows"])].reshape(-1,length)
+        evaluation = {s: heldout_windows(ids,length,protocol[s+"_windows"],protocol.get(s+"_window_start",0))
                       for s,ids in encoded.items() if s != "train"}
         for s,ids in evaluation.items():
             if len(ids) != protocol[s+"_windows"]:

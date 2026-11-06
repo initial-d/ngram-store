@@ -163,6 +163,13 @@ class TinyEngramCheckpointTest(unittest.TestCase):
         self.assertLess(int(windows.max()),len(ids[0]))
         with self.assertRaises(ValueError):
             sample_windows(ids,8,18)
+        from tools.train_tinyengram_identity import heldout_windows
+        first=heldout_windows(ids,8,3)
+        later=heldout_windows(ids,8,3,3)
+        self.assertLess(int(first.max()),int(later.min()))
+        self.assertTrue(torch.equal(later,ids[0,24:48].reshape(3,8)))
+        with self.assertRaises(ValueError):heldout_windows(ids,8,3,15)
+        with self.assertRaises(ValueError):heldout_windows(ids,8,3,-1)
 
     @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
     def test_cuda_frozen_prefix_preserves_full_logits_and_gradients(self):

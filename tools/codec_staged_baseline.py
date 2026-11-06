@@ -2,7 +2,7 @@
 from pathlib import Path
 import torch
 from .device_row_adapter import StagedMultiHeadEmbedding
-from .evaluate_tinyengram_codecs import close_reader, read_rows
+from .row_codec_utils import close_reader, read_rows
 from .faiss_row_codec import FaissRows
 from .quantized_memory import QuantizedRows
 
