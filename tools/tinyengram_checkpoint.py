@@ -461,7 +461,7 @@ class TinyEngramModel(nn.Module):
 def load_tinyengram_checkpoint(output_dir, *, upstream_dir, native_library=None,
                               native_cache_bytes=0, query_chunk_rows=65536, device="cpu",
                               prefetch_memory=False, staging_rows=65536, staging_slots=2,
-                              native_cache_policy="blocks"):
+                              native_cache_policy=None):
     """Construct on meta, assign original tensors, optionally place the backbone.
 
     Does not allocate original dense memory tables. File checksums scan the whole
@@ -469,8 +469,14 @@ def load_tinyengram_checkpoint(output_dir, *, upstream_dir, native_library=None,
     device=cuda/mps keeps tables/IDs on CPU and prefetches rows before decoder
     execution. CPU can use the same scheduler with prefetch_memory=True. CUDA
     overlap and performance need real hardware validation; MPS is synchronous.
+    With a nonzero CUDA cache, the default caches queried rows; explicit
+    'blocks' retains the earlier policy. CPU/MPS and zero-budget defaults use
+    blocks. The row policy was validated on repeated trained Qwen requests;
+    cold/distributed traffic may have a different tradeoff.
     """
     target = _device(device)
+    if native_cache_policy is None:
+        native_cache_policy='rows' if target.type=='cuda' and native_cache_bytes else 'blocks'
     root = Path(output_dir).resolve()
     manifest = _json(root / "bundle.json")
     if (manifest["schema_version"] != 1 or manifest["upstream_sha"] != UPSTREAM_SHA
