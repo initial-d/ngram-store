@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "corpus_sha256": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+  "training_fraction": 0.8,
+  "test_start_fraction": 0.9,
+  "seeds": [
+    3,
+    7,
+    11
+  ],
+  "window_tokens": 128,
+  "training_windows": 1024,
+  "training_sampling": "1024 evenly spaced nonoverlapping windows across the complete training segment; final incomplete window discarded",
+  "batch_size": 4,
+  "epochs": 1,
+  "ngram_vocab_sizes": [
+    8191,
+    16381,
+    32749
+  ],
+  "max_ngram_size": 4,
+  "n_embed_per_ngram": 64,
+  "n_head_per_ngram": 2,
+  "layer_from_end": 2,
+  "kernel_size": 3,
+  "branch_learning_rate": 0.0001,
+  "memory_learning_rate": 0.0003,
+  "gradient_clip": 1.0,
+  "threads": 8,
+  "calibration_windows": 64,
+  "test_windows": 64,
+  "minimum_ppl_effect": 0.01,
+  "objective": "ordinary full-vocabulary next-token cross-entropy; no ablation penalty or identity regularization",
+  "checkpoint_choice": "Fixed one epoch for every seed; no checkpoint selection; preserve original failed quality grid.",
+  "qualification": "each seed must beat both branch-off and per-head mean by >=1% relative PPL on calibration, with paired-window bootstrap lower delta-NLL bound >0; report independent test confirmation",
+  "cache_contract": "CUDA FP32 computation, CPU FP32 stored prefixes, no KV cache or dropout; same-schedule full/cached logits and every trainable gradient checked before reuse; frozen weight hash unchanged after each seed",
+  "precision": "FP32 parameters and activations, no autocast, TF32 disabled, deterministic algorithms; CUBLAS_WORKSPACE_CONFIG=:4096:8",
+  "scope": "Exploratory fixed low-learning-rate, one-epoch diagnostic after nine-model qualification failure. Original tests already observed; supplemental confirmation uses the next 64 unused test windows. No checkpoint or seed selection.",
+  "native_contract": "all frozen source rows and original head offsets byte-preserved; include unused rows and metadata costs; staged CPU native lookup replaces GPU-resident source lookup during quality evaluation",
+  "runtime_boundary": "quality oracle retains dense source and uses frozen-prefix reuse; training elapsed time and allocator peaks are not isolated native serving latency or memory savings",
+  "test_window_start": 64
+}

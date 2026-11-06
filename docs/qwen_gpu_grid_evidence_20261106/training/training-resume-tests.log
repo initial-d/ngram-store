@@ -1,0 +1,7 @@
+test_cpu_identity_training_exports_native_and_evaluates_complete_splits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cpu_identity_training_exports_native_and_evaluates_complete_splits) ... ok
+test_cuda_identity_training_exports_native_and_evaluates_complete_splits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cuda_identity_training_exports_native_and_evaluates_complete_splits) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 41.883s
+
+OK

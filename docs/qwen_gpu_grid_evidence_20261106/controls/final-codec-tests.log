@@ -1,0 +1,8 @@
+test_cpu_codec_original_ids_duplicates_and_closed_ticket_lifetime (tests.test_codec_staged_baseline.CodecStagingTest.test_cpu_codec_original_ids_duplicates_and_closed_ticket_lifetime) ... ok
+test_cuda_codec_original_ids_and_staging_slot_reuse (tests.test_codec_staged_baseline.CodecStagingTest.test_cuda_codec_original_ids_and_staging_slot_reuse) ... skipped 'real CUDA required'
+test_faiss_selected_rows_keep_head_offsets_and_duplicate_order (tests.test_codec_staged_baseline.CodecStagingTest.test_faiss_selected_rows_keep_head_offsets_and_duplicate_order) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.241s
+
+OK (skipped=1)

@@ -1,0 +1,61 @@
+test_cpu_identity_training_exports_native_and_evaluates_complete_splits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cpu_identity_training_exports_native_and_evaluates_complete_splits) ... ok
+test_cuda_identity_training_exports_native_and_evaluates_complete_splits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cuda_identity_training_exports_native_and_evaluates_complete_splits) ... FAIL
+
+======================================================================
+FAIL: test_cuda_identity_training_exports_native_and_evaluates_complete_splits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cuda_identity_training_exports_native_and_evaluates_complete_splits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tests/test_tinyengram_checkpoint.py", line 235, in test_cuda_identity_training_exports_native_and_evaluates_complete_splits
+    self.run_identity_training_fixture("cuda")
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tests/test_tinyengram_checkpoint.py", line 216, in run_identity_training_fixture
+    self.assertEqual(run.returncode,0,run.stderr)
+AssertionError: 1 != 0 : `torch_dtype` is deprecated! Use `dtype` instead!
+Some weights of EngramQwenForCausalLM were not initialized from the model checkpoint at /tmp/tmp14fkt9uo/identity-base-cuda and are newly initialized: ['model.engram_layers.1.key_projs.0.bias', 'model.engram_layers.1.key_projs.0.weight', 'model.engram_layers.1.multi_head_embedding.embedding.weight', 'model.engram_layers.1.multi_head_embedding.offsets', 'model.engram_layers.1.norm1.0.weight', 'model.engram_layers.1.norm2.0.weight', 'model.engram_layers.1.short_conv.conv.weight', 'model.engram_layers.1.short_conv.norms.0.weight', 'model.engram_layers.1.value_proj.bias', 'model.engram_layers.1.value_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tools/train_tinyengram_identity.py", line 353, in <module>
+    main()
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tools/train_tinyengram_identity.py", line 327, in main
+    windows = evaluate_seed(model,reuse,evaluation,cache_files,bundle,args.native_library)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tools/train_tinyengram_identity.py", line 96, in evaluate_seed
+    candidate = reuse.forward(sample, hidden, use_memory=name != "memory-off")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tools/frozen_tinyengram_prefix.py", line 90, in forward
+    hidden = hidden + self.branch(hidden_states=hidden.unsqueeze(2), input_ids=ids.to(self.device)).squeeze(2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/meft-cuda-20261030/upstream/engram.py", line 413, in forward
+    embeddings = self.multi_head_embedding(hash_input_ids).flatten(start_dim=-2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tools/device_row_adapter.py", line 212, in forward
+    return self.prefetch(input_ids).wait()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tools/device_row_adapter.py", line 171, in prefetch
+    ids = self.gather._global_ids(input_ids).reshape(-1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-qwen-identity-gpu-20261106/test-source/tools/engram_row_adapter.py", line 199, in _global_ids
+    raise ValueError("adapter supports CPU gather only")
+ValueError: adapter supports CPU gather only
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 22.846s
+
+FAILED (failures=1)

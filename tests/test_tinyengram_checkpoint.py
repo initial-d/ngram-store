@@ -126,6 +126,133 @@ class TinyEngramCheckpointTest(unittest.TestCase):
                 for name in ("head-mean", "native-fp32"):
                     self.assertEqual(result["windows"][name][split][i]["source_nll"], source)
 
+    def test_frozen_prefix_preserves_logits_gradients_and_optimizer_update(self):
+        import copy
+        import numpy as np
+        from tools.frozen_tinyengram_prefix import FrozenTinyEngramPrefix, check_reuse
+        model = copy.deepcopy(self.original)
+        del model.model.engram_layers["0"]
+        reuse = FrozenTinyEngramPrefix(model)
+        fingerprint = reuse.frozen_weight_sha256()
+        result = check_reuse(model, reuse, self.ids, gradients=True)
+        self.assertTrue(result["logits_byte_exact"])
+        self.assertTrue(result["branch_gradients_exact"])
+        states = reuse.capture(self.ids)
+        # Exercise serialization and the real optimizer, without reusing an
+        # inference-mode tensor or silently quantizing cached hidden states.
+        states = torch.from_numpy(np.array(states.numpy(), copy=True))
+        optimizer = torch.optim.Adam([p for p in model.parameters() if p.requires_grad],lr=.001)
+        logits = reuse.forward(self.ids,states)
+        loss = torch.nn.functional.cross_entropy(logits[:,:-1].reshape(-1,32),self.ids[:,1:].reshape(-1))
+        loss.backward()
+        optimizer.step()
+        self.assertEqual(reuse.frozen_weight_sha256(),fingerprint)
+        self.assertTrue(check_reuse(model,reuse,self.ids,gradients=True)["branch_gradients_exact"])
+        model.model.embed_tokens.weight.requires_grad_(True)
+        with self.assertRaises(ValueError):
+            FrozenTinyEngramPrefix(model)
+
+    def test_training_windows_remain_nonoverlapping_and_inside_training_segment(self):
+        from tools.train_tinyengram_identity import sample_windows
+        ids = torch.arange(137).unsqueeze(0)
+        windows,indices = sample_windows(ids,8,7)
+        self.assertEqual(tuple(windows.shape),(7,8))
+        self.assertEqual(len(set(indices.tolist())),7)
+        for i,window in zip(indices,windows):
+            self.assertTrue(torch.equal(window,ids[0,i*8:(i+1)*8]))
+        self.assertLess(int(windows.max()),len(ids[0]))
+        with self.assertRaises(ValueError):
+            sample_windows(ids,8,18)
+        from tools.train_tinyengram_identity import heldout_windows
+        first=heldout_windows(ids,8,3)
+        later=heldout_windows(ids,8,3,3)
+        self.assertLess(int(first.max()),int(later.min()))
+        self.assertTrue(torch.equal(later,ids[0,24:48].reshape(3,8)))
+        with self.assertRaises(ValueError):heldout_windows(ids,8,3,15)
+        with self.assertRaises(ValueError):heldout_windows(ids,8,3,-1)
+
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_frozen_prefix_preserves_full_logits_and_gradients(self):
+        import copy
+        from tools.frozen_tinyengram_prefix import FrozenTinyEngramPrefix, check_reuse
+        model = copy.deepcopy(self.original)
+        del model.model.engram_layers["0"]
+        model.to("cuda")
+        old = torch.are_deterministic_algorithms_enabled()
+        old_tf32 = torch.backends.cuda.matmul.allow_tf32
+        try:
+            torch.use_deterministic_algorithms(True)
+            torch.backends.cuda.matmul.allow_tf32 = False
+            reuse = FrozenTinyEngramPrefix(model)
+            result = check_reuse(model,reuse,self.ids,gradients=True)
+            self.assertTrue(result["logits_byte_exact"])
+            self.assertTrue(result["branch_gradients_exact"])
+            self.assertEqual(reuse.capture(self.ids).device.type,"cuda")
+        finally:
+            torch.use_deterministic_algorithms(old)
+            torch.backends.cuda.matmul.allow_tf32 = old_tf32
+
+    def run_identity_training_fixture(self,device):
+        import hashlib
+        from transformers import Qwen3ForCausalLM
+        base_path = self.root / ("identity-base-"+device)
+        base = Qwen3ForCausalLM(self.original.config)
+        state = {k:v for k,v in self.original.state_dict().items() if "engram_layers" not in k}
+        base.load_state_dict(state,strict=True)
+        base.save_pretrained(base_path,safe_serialization=True)
+        from transformers import AutoTokenizer
+        AutoTokenizer.from_pretrained(self.checkpoint,local_files_only=True).save_pretrained(base_path)
+        corpus = self.root / ("identity-corpus-"+device+".txt")
+        corpus.write_text(" ".join(f"word{i%20}" for i in range(400)))
+        protocol = self.root / ("identity-protocol-"+device+".json")
+        protocol.write_text(json.dumps({"schema_version":1,
+             "corpus_sha256":hashlib.sha256(corpus.read_bytes()).hexdigest(),
+             "training_fraction":.8,"test_start_fraction":.9,"seeds":[3],
+             "window_tokens":8,"training_windows":8,"batch_size":2,"epochs":2,
+             "ngram_vocab_sizes":[17,23],"max_ngram_size":3,
+             "n_embed_per_ngram":8,"n_head_per_ngram":2,"layer_from_end":2,
+             "kernel_size":3,"branch_learning_rate":.001,"memory_learning_rate":.003,
+             "gradient_clip":1.,"threads":1,"calibration_windows":2,"test_windows":2,
+             "minimum_ppl_effect":.01}))
+        output = self.root / ("identity-training-"+device)
+        run = subprocess.run([os.sys.executable,"-m","tools.train_tinyengram_identity",
+             "--device",device,"--base-model",str(base_path),"--corpus",str(corpus),
+             "--upstream-dir",str(SOURCE),"--native-library",str(self.library),
+             "--protocol",str(protocol),"--output-dir",str(output)],cwd=ROOT,
+             stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
+        report = json.loads((output/"report.json").read_text())
+        self.assertEqual(report["status"],"passed")
+        seed = report["seeds"]["3"]
+        self.assertEqual(seed["steps"],8)
+        self.assertTrue(seed["frozen_weight_hash_unchanged"])
+        self.assertGreater(seed["memory"]["changed_rows"],0)
+        self.assertTrue(seed["reuse_check"]["branch_gradients_exact"])
+        for split in ("calibration","test"):
+            summary = seed["quality"]["summary"][split]["native-fp32"]
+            self.assertEqual(summary["targets"],14)
+            self.assertTrue(summary["all_logits_byte_exact"])
+        self.assertTrue((output/"seed-3"/"checkpoint"/"model.safetensors").exists())
+        resumed = self.root / ("identity-resumed-"+device)
+        command = list(run.args)
+        command[command.index("--output-dir")+1] = str(resumed)
+        command.extend(["--resume-from",str(output)])
+        replay = subprocess.run(command,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        self.assertEqual(replay.returncode,0,replay.stderr)
+        resumed_report = json.loads((resumed/"report.json").read_text())
+        resumed_seed = resumed_report["seeds"]["3"]
+        self.assertEqual(resumed_seed["resumed_steps"],8)
+        self.assertEqual(resumed_seed["memory"],seed["memory"])
+        self.assertEqual(resumed_seed["losses"],seed["losses"])
+        self.assertEqual(resumed_seed["quality"]["summary"],seed["quality"]["summary"])
+
+    def test_cpu_identity_training_exports_native_and_evaluates_complete_splits(self):
+        self.run_identity_training_fixture("cpu")
+
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_identity_training_exports_native_and_evaluates_complete_splits(self):
+        self.run_identity_training_fixture("cuda")
+
     def check_staged_model(self, device, cache_policy="blocks"):
         import copy
         from tools.tinyengram_checkpoint import TinyEngramModel
@@ -160,6 +287,10 @@ class TinyEngramCheckpointTest(unittest.TestCase):
     @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
     def test_cuda_row_cache_full_and_cached_logits(self):
         self.check_staged_model("cuda", "rows")
+
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_default_cached_lookup_preserves_full_history_and_generation(self):
+        self.check_staged_model('cuda',None)
 
     def test_staged_cpu_model_prefetch_preserves_full_and_cached_logits(self):
         self.check_staged_model("cpu")

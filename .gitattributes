@@ -15,3 +15,6 @@ docs/cross_corpus_evidence_20261102/*.png linguist-generated=true
 # Preserve timed-out unittest stdout exactly, including its unfinished line.
 docs/cross_corpus_evidence_20261102/remote-worker-tests-retry.txt whitespace=-blank-at-eol
 docs/cross_corpus_evidence_20261102/updated-worker-test.txt whitespace=-blank-at-eol
+docs/qwen_gpu_grid_evidence_20261106/**/*.gz linguist-generated=true
+docs/qwen_gpu_grid_evidence_20261106/**/*.log linguist-generated=true
+docs/qwen_gpu_grid_evidence_20261106/runtime/** linguist-generated=true

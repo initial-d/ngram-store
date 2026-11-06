@@ -1,0 +1,107 @@
+#ifndef MEFT_ROWS_H
+#define MEFT_ROWS_H
+#include <stddef.h>
+#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Immutable CPU row storage. Each handle is single-threaded; use one per worker.
+ * Rows are opaque bytes: caller owns dtype, tensor shape and head offsets.
+ * All IDs are original global row IDs. Errors never cross the ABI as exceptions.
+ * Reads MEFTNAT1 versions 1 and 2 (optional lossless XOR prediction).
+ */
+typedef struct meft_rows meft_rows;
+meft_rows *meft_rows_open(const char *path, char *error, size_t error_capacity);
+void meft_rows_close(meft_rows *store);
+uint64_t meft_rows_count(const meft_rows *store);
+uint64_t meft_rows_width(const meft_rows *store);
+/* Optional decoded-block LRU cache, disabled at open. Setting a budget clears
+ * all entries; payload bytes never exceed budget. Hash/LRU metadata grows lazily
+ * with cached blocks; there is no fixed entry cap or full-table allocation.
+ * Metadata, scratch and query locations are additional memory. Single-worker only. */
+int meft_rows_set_cache_bytes(meft_rows *store, size_t budget);
+/* Cache policy: 0=decoded blocks (default), 1=queried rows from compressed
+ * blocks. Changing policy clears entries and retains the byte budget. Rows
+ * use forwarded IDs, so aliases share one byte-exact cache entry. Row mode
+ * favors sparse repeated queries; it does not avoid first-miss block decoding.
+ * Returns -1 for null store or invalid policy. No new artifact format. */
+int meft_rows_set_cache_policy(meft_rows *store, int rows);
+uint64_t meft_rows_cache_bytes(const meft_rows *store);
+/* output must contain count * width bytes and must not overlap ids.
+ * Failure may leave partial output; ignore it unless return value is zero.
+ * Reads are grouped by block and returned in original query order.
+ */
+int meft_rows_gather(meft_rows *store, const uint64_t *ids, size_t count,
+                     void *output, size_t output_bytes, char *error, size_t error_capacity);
+/* Gather in chunks of at most max_query_rows>0 requests, directly into the
+ * caller's complete output. Bounds query-location/sort scratch, not output,
+ * decoded blocks, cache or total RSS. Each chunk groups its own block reads;
+ * crossing chunks can repeat decoding. Last-query counters aggregate all chunks.
+ * Same original-ID order, no-overlapping-inputs and partial-error-output contract.
+ */
+int meft_rows_gather_chunked(meft_rows *store, const uint64_t *ids, size_t count,
+                             void *output, size_t output_bytes, size_t max_query_rows,
+                             char *error, size_t error_capacity);
+/* Bounded gather + sum/mean for ragged bags. offsets contains bags+1 entries,
+ * starts at 0 and ends at count. dtype: 1=LE float32, 2=LE IEEE float16,
+ * 3=LE bfloat16. Output is bags * (width / element_bytes) native float32.
+ * padding_id=UINT64_MAX disables padding; otherwise that row is excluded from
+ * both sum and mean denominator. Empty bags return zero. max_chunk_rows>0
+ * bounds staged rows. Reductions accumulate in float64 in original ID order;
+ * stored bytes stay exact, but sums are not bit-identical to float32 reduction.
+ * Same single-worker/no-overlapping-inputs/partial-error-output contract as gather.
+ */
+int meft_rows_embedding_bag(meft_rows *store, const uint64_t *ids, size_t count,
+                           const uint64_t *offsets, size_t bags, int dtype, int mean,
+                           uint64_t padding_id, size_t max_chunk_rows,
+                           float *output, size_t output_floats, char *error, size_t error_capacity);
+/* Weighted sum, with one LE scalar of the same dtype per query occurrence.
+ * weights_bytes must cover count * element_bytes; repeated IDs retain distinct
+ * weights. Padding excludes the row and its weight, even if nonfinite.
+ * Products and sums use float64. No weight normalization or weighted mean.
+ * Same capacities, staging bound and input/output ownership as the reducer above.
+ * Existing unweighted ABI remains available unchanged.
+ */
+int meft_rows_embedding_bag_weighted(meft_rows *store, const uint64_t *ids, size_t count,
+                                    const uint64_t *offsets, size_t bags, int dtype,
+                                    const void *weights, size_t weights_bytes,
+                                    uint64_t padding_id, size_t max_chunk_rows,
+                                    float *output, size_t output_floats,
+                                    char *error, size_t error_capacity);
+/* Compile source-specific bounded bags from per-bag sorted UNIQUE original IDs
+ * and positive integer counts. offsets spans count. mapping/row_l2 contain
+ * nrows entries; sizes/total_l2/defect_l2 contain groups entries. These immutable
+ * validated arrays describe the same partition and native artifact as the caller.
+ * IDs/weights need plan_capacity>=count slots; plan_offsets needs bags+1 slots,
+ * projection/exact need bag_capacity>=bags slots. Returns actual plan_count.
+ * Projection bounds use IEEE binary64 round-to-nearest with outward rounding;
+ * original-row/group order and rounded-mean defects match the Python reference.
+ * Exact-domain flags test complete equal-member counts independently of norms.
+ * No model/file changes, whole-table scan or store state. Scratch scales with
+ * the largest query bag, not nrows/groups. Same no-overlap/partial-error-output
+ * ownership contract as gather; ignore all output unless return value is zero.
+ */
+int meft_rows_compile_bounded_bags(const uint64_t *rows, const uint64_t *counts,
+    const uint64_t *offsets, size_t count, size_t bags,
+    const uint64_t *mapping, size_t nrows, const uint64_t *sizes, size_t groups,
+    const double *row_l2, const double *total_l2, const double *defect_l2,
+    uint64_t *plan_ids, float *plan_weights, uint64_t *plan_offsets,
+    double *projection, unsigned char *exact, size_t plan_capacity,
+    size_t bag_capacity, size_t *plan_count, char *error, size_t error_capacity);
+uint64_t meft_rows_last_block_reads(const meft_rows *store);
+uint64_t meft_rows_last_decompressions(const meft_rows *store);
+/* Successfully decoded compressed blocks in the last call, including repeated
+ * decoding across chunks. Input bytes are codec payload, decoded bytes are full
+ * block output. Excludes raw-row copies and cache hits. These are logical codec
+ * work counters, not disk I/O, page faults or bytes resident in the OS cache. */
+uint64_t meft_rows_last_compressed_bytes(const meft_rows *store);
+uint64_t meft_rows_last_decoded_bytes(const meft_rows *store);
+uint64_t meft_rows_last_cache_hits(const meft_rows *store);
+/* Distinct cached forwarded rows hit per gather, summed across chunk/bag calls.
+ * Block hits remain separate and are zero in row mode (and vice versa). */
+uint64_t meft_rows_last_row_cache_hits(const meft_rows *store);
+#ifdef __cplusplus
+}
+#endif
+#endif

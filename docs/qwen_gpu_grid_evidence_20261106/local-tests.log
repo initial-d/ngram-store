@@ -1,0 +1,25 @@
+.............ssssssss...sssssssss............sssssssssssssssssssssss.........s........ss.ssssssss.....ssss.....sssssssssss.s..................ss...s....s{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 5852, "build_seconds": 0.0014321669999999287}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 4744, "build_seconds": 0.001606541000000128}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 10448, "build_seconds": 0.46122774999999994}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 4922, "build_seconds": 0.010726957999999343}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 3221, "build_seconds": 0.009687624999999755}
+{"backend": "precomputed-hybrid-source", "complete_model_bytes": 5715}
+{"backend": "precomputed-hybrid-int8", "complete_model_bytes": 4985}
+{"backend": "precomputed-hybrid-ngram-int8", "complete_model_bytes": 5147}
+.s{"counts": {"original_rows": 3004, "selected_category_rows": 3003, "empty_rows": 1, "ag_input_overlap_rows": 1, "duplicate_rows": 1, "conflicting_category_duplicate_rows": 1}, "phase_stats": {"validation": {"documents": 600, "tokens": 1200, "oov_tokens": 600, "oov_heavy_documents": 600, "attempted_oov_ngrams": 4200, "missing_oov_ngrams": 4199, "truncated_documents": 0, "class_1": 600, "unique_oov_types": 600, "date_min": "2016-12-31", "date_max": "2017-01-01"}, "test": {"documents": 2400, "tokens": 4800, "oov_tokens": 2400, "oov_heavy_documents": 2400, "attempted_oov_ngrams": 16800, "missing_oov_ngrams": 16797, "truncated_documents": 0, "class_1": 2400, "unique_oov_types": 2400, "date_min": "2016-12-31", "date_max": "2017-01-01"}}}
+.....ssss.............sss.ssssssss.{"seed": 3, "backend": "source-resident", "complete_model_bytes": 2011, "build_seconds": 0.001527167000000773}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 2008, "build_seconds": 0.0016022500000012485}
+{"seed": 3, "backend": "linear-fused", "complete_model_bytes": 2009, "build_seconds": 0.005825500000000261}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 2883, "build_seconds": 0.0016801250000000323}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 2946, "build_seconds": 0.0016187500000004462}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 7999, "build_seconds": 0.03070341699999979}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 3478, "build_seconds": 0.006865624999999653}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 1670, "build_seconds": 0.007830499999998963}
+....{"seed": 7, "backend": "source-mmap", "complete_model_bytes": 2013, "build_seconds": 0.001992041999999472}
+{"seed": 7, "backend": "ngram-bounded", "complete_model_bytes": 8005, "build_seconds": 0.03401737500000124}
+{"seed": 7, "backend": "ngram-int8", "complete_model_bytes": 3485, "build_seconds": 0.0077324579999995535}
+.s.ssssssssssssssssssssssssss
+----------------------------------------------------------------------
+Ran 223 tests in 11.388s
+
+OK (skipped=114)

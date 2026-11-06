@@ -1,0 +1,9 @@
+test_cuda_default_cached_lookup_preserves_full_history_and_generation (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cuda_default_cached_lookup_preserves_full_history_and_generation) ... ok
+test_cpu_codec_original_ids_duplicates_and_closed_ticket_lifetime (tests.test_codec_staged_baseline.CodecStagingTest.test_cpu_codec_original_ids_duplicates_and_closed_ticket_lifetime) ... ok
+test_cuda_codec_original_ids_and_staging_slot_reuse (tests.test_codec_staged_baseline.CodecStagingTest.test_cuda_codec_original_ids_and_staging_slot_reuse) ... ok
+test_faiss_selected_rows_keep_head_offsets_and_duplicate_order (tests.test_codec_staged_baseline.CodecStagingTest.test_faiss_selected_rows_keep_head_offsets_and_duplicate_order) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 6.584s
+
+OK

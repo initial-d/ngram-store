@@ -26,6 +26,7 @@ from .engram_row_adapter import file_sha256
 from .prepare_device_gather import tensor_sha256
 from .tinyengram_checkpoint import load_tinyengram_checkpoint, source_revision
 from .verify_tinyengram_shared_cuda import _fingerprint
+from .codec_staged_baseline import CodecStagedBaseline
 
 
 class ResidentPrefetchedBaseline(DenseStagedBaseline):
@@ -46,10 +47,23 @@ class ResidentPrefetchedBaseline(DenseStagedBaseline):
 def load_mode(args):
     model = load_tinyengram_checkpoint(args.bundle, upstream_dir=args.upstream_dir,
         native_library=args.native_library, device="cuda", staging_rows=args.staging_rows,
-        staging_slots=2, native_cache_bytes=args.cache_bytes)
+        staging_slots=2, native_cache_bytes=args.cache_bytes,native_cache_policy=args.native_cache_policy)
     if args.mode == "native":
         return model
     manifest = json.loads((args.bundle / "bundle.json").read_text())
+    if args.mode == 'codec':
+        if len(manifest['layers'])!=1 or args.codec_directory is None:
+            raise ValueError('codec benchmark requires one memory layer and codec-directory')
+        for layer_id,item in manifest['layers'].items():
+            layer=model.model.model.engram_layers[layer_id]
+            original=layer.multi_head_embedding
+            replacement=CodecStagedBaseline(args.bundle/item['path'],args.codec_directory,
+                device='cuda',native_library=args.native_library,staging_rows=args.staging_rows,
+                staging_slots=2,native_cache_bytes=args.cache_bytes)
+            replacement.forward=original.forward
+            layer.multi_head_embedding=replacement
+            original.close()
+        return model
     with safe_open(args.checkpoint / "model.safetensors", framework="pt", device="cpu") as source:
         for layer_id, item in manifest["layers"].items():
             fixture = args.output_dir / (args.mode + "-dense-memory-" + layer_id)
@@ -73,32 +87,43 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("checkpoint", "bundle", "corpus", "upstream-dir", "native-library", "output-dir"):
         parser.add_argument("--" + name, type=Path, required=True)
-    parser.add_argument("--mode", choices=("resident", "dense-offload", "native"), required=True)
+    parser.add_argument("--mode", choices=("resident", "dense-offload", "native", "codec"), required=True)
+    parser.add_argument('--codec-directory',type=Path)
+    parser.add_argument('--report-name',help='unique filename stem for multiple codec workers against one resident reference')
+    parser.add_argument('--corpus-fraction',type=float,default=.8,help='start of chronological calibration segment in whole corpus')
+    parser.add_argument('--allocator-fraction',type=float,default=.10)
     parser.add_argument("--tokens", default="32,128")
     parser.add_argument("--decode-tokens", type=int, default=16)
     parser.add_argument("--warmup", type=int, default=2)
     parser.add_argument("--repeat", type=int, default=5)
     parser.add_argument("--staging-rows", type=int, default=256)
     parser.add_argument("--cache-bytes", type=int, default=1048576)
+    parser.add_argument('--native-cache-policy',choices=('blocks','rows'),default='blocks')
     args = parser.parse_args()
     counts = [int(v) for v in args.tokens.split(",")]
     if min(*counts, args.decode_tokens, args.repeat, args.staging_rows) < 1 or min(args.warmup, args.cache_bytes) < 0:
         parser.error("positive token counts/repeat/staging and nonnegative warmup/cache required")
+    if not 0 <= args.corpus_fraction < .9 or not 0 < args.allocator_fraction <= .5:
+        parser.error('invalid corpus or allocator fraction')
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    path = args.output_dir / (args.mode + ".json")
+    if args.report_name and (Path(args.report_name).name!=args.report_name or args.report_name in ('.','..')):
+        parser.error('report-name must be a filename stem')
+    path = args.output_dir / ((args.report_name or args.mode) + ".json")
     if path.exists():
         parser.error("previous report exists; choose a fresh output directory")
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     report = {"status": "failed", "mode": args.mode, "commit": source_revision(),
+              'native_cache_policy':args.native_cache_policy,
               "command": shlex.join(sys.orig_argv), "inputs": _fingerprint(args.checkpoint, args.bundle, args.corpus),
               "source_hashes": {name: file_sha256(Path(__file__).parent / name) for name in
                                 ("benchmark_tinyengram_cuda.py", "benchmark_device_gather.py",
-                                 "device_row_adapter.py", "tinyengram_checkpoint.py")},
+                                 "device_row_adapter.py", "tinyengram_checkpoint.py",'codec_staged_baseline.py','row_codec_utils.py')},
               "settings": {"tokens": counts, "decode_tokens": args.decode_tokens, "warmup": args.warmup,
-                           "repeat": args.repeat, "staging_rows": args.staging_rows, "cache_bytes": args.cache_bytes},
+                           "repeat": args.repeat, "staging_rows": args.staging_rows, "cache_bytes": args.cache_bytes,
+                           "corpus_fraction":args.corpus_fraction,"allocator_fraction":args.allocator_fraction},
               "software": {"python": sys.version, "torch": torch.__version__, "transformers": transformers.__version__,
                            "cuda_runtime": torch.version.cuda}, "cases": [],
-              "limitations": ["One small trained Qwen3-0.6B branch: 648x8 float32 memory, not large-table memory savings.",
+              "limitations": ["Actual trained Qwen3-0.6B branch; memory dimensions reported from bundle, backbone dominates whole-model bytes.",
                               "Eager unpadded batch-one inference, fixed-length greedy decode; no deployment traffic or quality benchmark.",
                               "Same host hash/prefetch schedule for all modes; resident is a controlled baseline, not upstream GPU hashing.",
                               "Warm wall-clock measurements include host work and per-token greedy ID readback; prefill excludes logits D2H hashing.",
@@ -127,20 +152,20 @@ def main():
         if (runtime_uuid if runtime_uuid.startswith("GPU-") else "GPU-" + runtime_uuid) != uuid:
             raise ValueError("CUDA device differs from monitored GPU")
         free, total = torch.cuda.mem_get_info()
-        cap = int(total * .04)
+        cap = int(total * args.allocator_fraction)
         report.update(allocator_limit_bytes=cap, reserve_bytes=2 * 1024**3)
         if free < cap + 2 * 1024**3:
             report.update(status="blocked", error="insufficient free memory for capped model plus reserve")
             return 2
-        torch.cuda.set_per_process_memory_fraction(.04)
+        torch.cuda.set_per_process_memory_fraction(args.allocator_fraction)
         probe = torch.empty(1, device="cuda")
         torch.cuda.synchronize()
         monitor_pid = monitor_client_pid(gpu_snapshot(uuid, own_pid=0))
         report.update(monitor_client_pid=monitor_pid, worker_namespace_pid=os.getpid())
         del probe
         tokenizer = AutoTokenizer.from_pretrained(args.bundle / "tokenizer", local_files_only=True, trust_remote_code=False)
-        text = args.corpus.read_text()[:16384]
-        segment = text[int(len(text) * .8):int(len(text) * .9)]
+        text = args.corpus.read_text()
+        segment = text[int(len(text) * args.corpus_fraction):int(len(text) * .9)]
         ids = tokenizer(segment, return_tensors="pt", add_special_tokens=False).input_ids
         if ids.shape[1] < max(counts):
             raise ValueError("insufficient chronological validation tokens")
@@ -153,6 +178,9 @@ def main():
                 raise ValueError("resident reference provenance/settings differ")
         started = time.perf_counter()
         model = load_mode(args)
+        manifest=json.loads((args.bundle/'bundle.json').read_text())
+        report['memory']={key:{'head_sizes':item['head_sizes'],'weight_sha256':item['weight_sha256']} for key,item in manifest['layers'].items()}
+        report['codec_files']=None if args.codec_directory is None else {f.name:{'bytes':f.stat().st_size,'sha256':file_sha256(f)} for f in args.codec_directory.iterdir() if f.is_file()}
         torch.cuda.synchronize()
         report["open_seconds"] = time.perf_counter() - started
         report["rss_after_open"] = rss()
@@ -166,12 +194,11 @@ def main():
                     output = forward()
                     torch.cuda.synchronize()
                     digest = tensor_sha256(output)
-                    generated = output.tolist() if method != "prefill" else None
                     del output
                     key = f"{count}/{method}"
                     if reference is not None:
                         oracle = next(c for c in reference["cases"] if c["key"] == key)
-                        if oracle["output_sha256"] != digest or oracle["input_ids_sha256"] != tensor_sha256(sample):
+                        if oracle["input_ids_sha256"] != tensor_sha256(sample) or args.mode!='codec' and oracle["output_sha256"]!=digest:
                             raise AssertionError("storage baseline changed same-schedule output: " + key)
                     for _ in range(args.warmup):
                         output = forward()
@@ -195,8 +222,8 @@ def main():
                         report.update(status="blocked", error="competition during timing", gpu_during=after)
                         return 2
                     report["cases"].append({"key": key, "input_tokens": count, "method": method,
-                        "input_ids_sha256": tensor_sha256(sample), "output_sha256": digest, "generated_ids": generated,
-                        "same_schedule_byte_exact": True if reference is not None else None, "seconds": times,
+                        "input_ids_sha256": tensor_sha256(sample), "output_sha256": digest,
+                        "same_schedule_byte_exact": digest==oracle['output_sha256'] if reference is not None else None, "seconds": times,
                         "median_seconds": statistics.median(times), "p95_seconds": float(np.percentile(times, 95)),
                         "tokens_per_second": (count if method == "prefill" else args.decode_tokens) / statistics.median(times),
                         "gpu_peak_allocated_bytes": torch.cuda.max_memory_allocated(),
