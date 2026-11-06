@@ -126,6 +126,44 @@ class TinyEngramCheckpointTest(unittest.TestCase):
                 for name in ("head-mean", "native-fp32"):
                     self.assertEqual(result["windows"][name][split][i]["source_nll"], source)
 
+    def test_frozen_prefix_preserves_logits_gradients_and_optimizer_update(self):
+        import copy
+        import numpy as np
+        from tools.frozen_tinyengram_prefix import FrozenTinyEngramPrefix, check_reuse
+        model = copy.deepcopy(self.original)
+        del model.model.engram_layers["0"]
+        reuse = FrozenTinyEngramPrefix(model)
+        fingerprint = reuse.frozen_weight_sha256()
+        result = check_reuse(model, reuse, self.ids, gradients=True)
+        self.assertTrue(result["logits_byte_exact"])
+        self.assertTrue(result["branch_gradients_exact"])
+        states = reuse.capture(self.ids)
+        # Exercise serialization and the real optimizer, without reusing an
+        # inference-mode tensor or silently quantizing cached hidden states.
+        states = torch.from_numpy(np.array(states.numpy(), copy=True))
+        optimizer = torch.optim.Adam([p for p in model.parameters() if p.requires_grad],lr=.001)
+        logits = reuse.forward(self.ids,states)
+        loss = torch.nn.functional.cross_entropy(logits[:,:-1].reshape(-1,32),self.ids[:,1:].reshape(-1))
+        loss.backward()
+        optimizer.step()
+        self.assertEqual(reuse.frozen_weight_sha256(),fingerprint)
+        self.assertTrue(check_reuse(model,reuse,self.ids,gradients=True)["branch_gradients_exact"])
+        model.model.embed_tokens.weight.requires_grad_(True)
+        with self.assertRaises(ValueError):
+            FrozenTinyEngramPrefix(model)
+
+    def test_training_windows_remain_nonoverlapping_and_inside_training_segment(self):
+        from tools.train_tinyengram_identity import sample_windows
+        ids = torch.arange(137).unsqueeze(0)
+        windows,indices = sample_windows(ids,8,7)
+        self.assertEqual(tuple(windows.shape),(7,8))
+        self.assertEqual(len(set(indices.tolist())),7)
+        for i,window in zip(indices,windows):
+            self.assertTrue(torch.equal(window,ids[0,i*8:(i+1)*8]))
+        self.assertLess(int(windows.max()),len(ids[0]))
+        with self.assertRaises(ValueError):
+            sample_windows(ids,8,18)
+
     def check_staged_model(self, device, cache_policy="blocks"):
         import copy
         from tools.tinyengram_checkpoint import TinyEngramModel
