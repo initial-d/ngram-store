@@ -1,0 +1,64 @@
+The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:   0%|          | 1/723 [00:02<24:07,  2.01s/it]Loading weights:  24%|██▎       | 171/723 [00:02<00:04, 111.54it/s]Loading weights:  35%|███▍      | 251/723 [00:02<00:03, 118.24it/s]Loading weights:  41%|████▏     | 300/723 [00:03<00:03, 115.22it/s]Loading weights:  46%|████▌     | 334/723 [00:03<00:03, 111.57it/s]Loading weights:  50%|████▉     | 360/723 [00:03<00:03, 111.24it/s]Loading weights:  53%|█████▎    | 381/723 [00:03<00:02, 118.63it/s]Loading weights:  55%|█████▌    | 401/723 [00:04<00:02, 108.48it/s]Loading weights:  58%|█████▊    | 417/723 [00:04<00:02, 103.32it/s]Loading weights:  70%|██████▉   | 504/723 [00:04<00:01, 210.11it/s]Loading weights:  83%|████████▎ | 602/723 [00:04<00:00, 333.25it/s]Loading weights:  97%|█████████▋| 698/723 [00:04<00:00, 446.55it/s]Loading weights: 100%|██████████| 723/723 [00:04<00:00, 153.19it/s]
+{"stage": "rag-eval", "top_k": 1, "batches": 0, "choices": 4}
+{"stage": "rag-eval", "top_k": 1, "batches": 100, "choices": 798}
+{"stage": "rag-eval", "top_k": 1, "batches": 200, "choices": 1598}
+{"stage": "rag-eval", "top_k": 1, "batches": 300, "choices": 2397}
+{"stage": "rag-eval", "top_k": 1, "batches": 400, "choices": 3190}
+{"stage": "rag-eval", "top_k": 1, "batches": 500, "choices": 3990}
+{"stage": "rag-eval", "top_k": 1, "batches": 600, "choices": 4790}
+{"stage": "rag-eval", "top_k": 1, "batches": 700, "choices": 5590}
+{"stage": "rag-eval", "top_k": 1, "batches": 800, "choices": 6390}
+{"stage": "rag-eval", "top_k": 1, "batches": 900, "choices": 7183}
+{"stage": "rag-eval", "top_k": 1, "batches": 1000, "choices": 7983}
+{"stage": "rag-eval", "top_k": 1, "batches": 1100, "choices": 8783}
+{"stage": "rag-eval", "top_k": 1, "batches": 1200, "choices": 9583}
+{"stage": "rag-eval", "top_k": 1, "batches": 1300, "choices": 10383}
+{"stage": "rag-eval", "top_k": 1, "batches": 1400, "choices": 11180}
+{"stage": "rag-eval", "top_k": 1, "batches": 1500, "choices": 11980}
+{"stage": "rag-eval", "top_k": 1, "batches": 1600, "choices": 12780}
+{"stage": "rag-eval", "top_k": 1, "batches": 1700, "choices": 13575}
+{"stage": "rag-eval", "top_k": 1, "batches": 1800, "choices": 14375}
+{"stage": "rag-eval", "top_k": 1, "batches": 1900, "choices": 15175}
+{"stage": "rag-eval", "top_k": 1, "batches": 2000, "choices": 15975}
+{"stage": "rag-eval", "top_k": 1, "batches": 2100, "choices": 16771}
+{"stage": "rag-eval", "top_k": 1, "batches": 2200, "choices": 17571}
+{"stage": "rag-eval", "top_k": 1, "batches": 2300, "choices": 18365}
+{"stage": "rag-eval", "top_k": 1, "batches": 2400, "choices": 19163}
+{"stage": "rag-eval", "top_k": 1, "batches": 2500, "choices": 19961}
+{"stage": "rag-eval", "top_k": 1, "batches": 2600, "choices": 20756}
+{"stage": "rag-eval", "top_k": 1, "batches": 2700, "choices": 21544}
+{"stage": "rag-eval", "top_k": 1, "batches": 2800, "choices": 22336}
+{"stage": "rag-eval", "top_k": 1, "batches": 2900, "choices": 23126}
+{"stage": "rag-eval", "top_k": 1, "batches": 3000, "choices": 23909}
+{"stage": "rag-eval", "top_k": 3, "batches": 0, "choices": 2}
+{"stage": "rag-eval", "top_k": 3, "batches": 100, "choices": 788}
+{"stage": "rag-eval", "top_k": 3, "batches": 200, "choices": 1582}
+{"stage": "rag-eval", "top_k": 3, "batches": 300, "choices": 2381}
+{"stage": "rag-eval", "top_k": 3, "batches": 400, "choices": 3175}
+{"stage": "rag-eval", "top_k": 3, "batches": 500, "choices": 3968}
+{"stage": "rag-eval", "top_k": 3, "batches": 600, "choices": 4767}
+{"stage": "rag-eval", "top_k": 3, "batches": 700, "choices": 5567}
+{"stage": "rag-eval", "top_k": 3, "batches": 800, "choices": 6364}
+{"stage": "rag-eval", "top_k": 3, "batches": 900, "choices": 7159}
+{"stage": "rag-eval", "top_k": 3, "batches": 1000, "choices": 7959}
+{"stage": "rag-eval", "top_k": 3, "batches": 1100, "choices": 8752}
+{"stage": "rag-eval", "top_k": 3, "batches": 1200, "choices": 9552}
+{"stage": "rag-eval", "top_k": 3, "batches": 1300, "choices": 10345}
+{"stage": "rag-eval", "top_k": 3, "batches": 1400, "choices": 11145}
+{"stage": "rag-eval", "top_k": 3, "batches": 1500, "choices": 11945}
+{"stage": "rag-eval", "top_k": 3, "batches": 1600, "choices": 12740}
+{"stage": "rag-eval", "top_k": 3, "batches": 1700, "choices": 13540}
+{"stage": "rag-eval", "top_k": 3, "batches": 1800, "choices": 14333}
+{"stage": "rag-eval", "top_k": 3, "batches": 1900, "choices": 15131}
+{"stage": "rag-eval", "top_k": 3, "batches": 2000, "choices": 15931}
+{"stage": "rag-eval", "top_k": 3, "batches": 2100, "choices": 16729}
+{"stage": "rag-eval", "top_k": 3, "batches": 2200, "choices": 17527}
+{"stage": "rag-eval", "top_k": 3, "batches": 2300, "choices": 18327}
+{"stage": "rag-eval", "top_k": 3, "batches": 2400, "choices": 19127}
+{"stage": "rag-eval", "top_k": 3, "batches": 2500, "choices": 19920}
+{"stage": "rag-eval", "top_k": 3, "batches": 2600, "choices": 20713}
+{"stage": "rag-eval", "top_k": 3, "batches": 2700, "choices": 21506}
+{"stage": "rag-eval", "top_k": 3, "batches": 2800, "choices": 22299}
+{"stage": "rag-eval", "top_k": 3, "batches": 2900, "choices": 23091}
+{"stage": "rag-eval", "top_k": 3, "batches": 3000, "choices": 23882}

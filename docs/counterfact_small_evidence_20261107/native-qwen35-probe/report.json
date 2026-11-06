@@ -1,0 +1,221 @@
+{
+  "status": "passed",
+  "environment": {
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.3.0",
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "cuda": "13.0",
+    "tf32": false,
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.counterfact_native --run /llm-align/duyimin/ngram-counterfact-capacity-20261106/probe-runs/qwen35-1024-large-s3 --base /llm-align/open_models/Qwen3.5/Qwen3.5-4B --upstream /llm-align/duyimin/meft-cuda-20261030/upstream --prepared /llm-align/duyimin/ngram-counterfact-capacity-20261106/prepared-qwen35-1024 --output /llm-align/duyimin/ngram-counterfact-capacity-20261106/native-qwen35-probe --native-library /llm-align/duyimin/ngram-counterfact-capacity-20261106/source-native/build/libmeft_rows.so --requests 16",
+    "code_sha": "b81bfaae14af2dc12acb44e6df1d377f35e6a2f5",
+    "source_hashes": {
+      "counterfact_runner.py": "8cd24498e82c62a98ad7424144f1949b0f74f72e93e0b2ed06b041485d123f67",
+      "counterfact_retrieval.py": "14d2d1d491ddea572dd52e2441fbb07201e7c8de67fc45f61227746bb7c7d93b",
+      "counterfact_native.py": "21334ae4e1846312017651fede609bef2b31820eb9dc010fab1bf3c92636c28d",
+      "counterfact_models.py": "aa5e71421f5428da0fd9d34b498b24767edebccaecacf2b3847a64d9e776647b",
+      "counterfact_preflight.py": "e9cf2d771e7cdec6de2461cb12e557db546fc1564bdc1ba5e6e5ba2000a3d461",
+      "counterfact_data.py": "bf189ce0c3a40079674d73587a6c8de029693a650abd99ff9d4a4f08c04e1d85",
+      "counterfact_analyze.py": "9dcfbf2cb0d03d96884a966589941af9a91d1ea036889df05332b4755649428c",
+      "counterfact_capacity.py": "4e43a2048752637484144db959c58716672a2fa1970ef3adc266e3e5d9880b9b",
+      "late_memory_replay.py": "5f0189f15853200a81ec54f696b2b894225a512ca74811f89d107f4a891b6e9e"
+    },
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "bc11cba9-e025-335f-83a8-9ec15f87a496",
+    "gpu_memory": 84987740160
+  },
+  "source_run_report_sha256": "cfdff3b16f013216779b34b780c9876757f5a530f9393d11b3aae8edd4cc925d",
+  "source_delta_sha256": "147f2307182dc9969309e9f1b0265def883dde20089cbc25bc2b7e9192363ae1",
+  "native_library_sha256": "8598d422671bd78e931ca0a9bb4cab8f2fccf3be7e3599a8b10f8b91285eaebc",
+  "protocol_sha256": "62b3ee9f6489800bde73fbca370f934e626d044474c30836b2f50c39c9b2ad35",
+  "all_original_rows_byte_exact": true,
+  "table": {
+    "schema_version": 1,
+    "table_file": "table.men",
+    "shape": [
+      917516,
+      32
+    ],
+    "dtype": "torch.float32",
+    "byteorder": "little",
+    "head_sizes": [
+      65521,
+      65537,
+      131071,
+      131101,
+      262139,
+      262147
+    ],
+    "offsets": [
+      0,
+      65521,
+      131058,
+      262129,
+      393230,
+      655369
+    ],
+    "weight_sha256": "f24d19974b46734f3cca0449677fefe31e109619e2ca70e7554fd06ee23f61c5",
+    "artifact_sha256": "5849747d638ddecd86802120e7038344b1919efeae38453124dcb76fd925e9b0",
+    "input_bytes": 117442048,
+    "artifact_bytes": 118484784,
+    "unique_rows": 917516,
+    "row_map_bytes": 7340128,
+    "block_rows": 32,
+    "max_block_bytes": null,
+    "backend": "native",
+    "predictor": "xor",
+    "contract": "unchanged local-head IDs plus original offsets; byte-exact CPU gather"
+  },
+  "export_and_row_verification_seconds": 13.95510720089078,
+  "requests": [
+    {
+      "case_id": 1,
+      "group": "rewrite",
+      "input_tokens": 10,
+      "input_ids_sha256": "e68fdf086a1aebbfea85f6ae299036191186157e6b3b4c57e9f7d84500a2c9ea",
+      "next_token_logits_sha256": "513d834166dc8c610d246c98a666d3cf8caaae9872d26c7ad0c8806bfee39a41",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "paraphrase",
+      "input_tokens": 18,
+      "input_ids_sha256": "6a4aaa35936dbfee2096c3e85d517e1c94196ba4cea19253c8226a23fd4b3c69",
+      "next_token_logits_sha256": "26a979b4a405ad1993bf76d4463f42ed83a79811e293093830e5df066179839d",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "paraphrase",
+      "input_tokens": 22,
+      "input_ids_sha256": "b896a76ffab8752f1b907f27486415cc484eca686d282d37e7a926b490705c58",
+      "next_token_logits_sha256": "2215c7ddd77c79a570389d388f3fa85dde68d5b59bb9f0dccba77f2ec198277f",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 9,
+      "input_ids_sha256": "1ac32329c0905e91840e3f8d182123ee70e1d25f05dd3f557cd4cbdf9b24adc5",
+      "next_token_logits_sha256": "6a64a84ef50caf8a4d21dc76aca74c08f218dff836fcf7e262a7440ba94007a2",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 8,
+      "input_ids_sha256": "6bfd53b079d32fc9252ba846344852cd5f5cf0919983512a2fa7d773909a4dab",
+      "next_token_logits_sha256": "32d68175703d268cec41c282cc319c713dc14b3b5d5c4f3dacddd235e85e780e",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 7,
+      "input_ids_sha256": "41a44be57e07d206537434f4a6afb8cacb65b70e1b300d18faf155c454abef8b",
+      "next_token_logits_sha256": "75109e6c2d29166ecbc7128023b60219b60ff8a32a3323597da406b629d13acc",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 6,
+      "input_ids_sha256": "67265e17c754d2af1476c029d9afcccfb5a18de5958525848bd568ddb9476db0",
+      "next_token_logits_sha256": "3784969a22ec9627e40a1cba29c8234b016d11efcc73f3e77ee197c5d010122b",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 6,
+      "input_ids_sha256": "0a33866a6b84315352eb1207d9fafcd8a926190f9af8da6979458ad69b63050b",
+      "next_token_logits_sha256": "b963be752b8b349cd4357ee7667110e194babc93ab6fef7864ebbb53b3da2201",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 7,
+      "input_ids_sha256": "9e00fdd2ed10c167258fb8ac7bdf15dab2ba7f2b1658aa54ba9aeb6f43621ce0",
+      "next_token_logits_sha256": "57c93709175f0920d1bb26243a457e02cb7c4aa326d609056c0951db8cb7b973",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 7,
+      "input_ids_sha256": "af71f1d3b37ef7020df2459562dcab090887853a1446054174bba12d6896a2d7",
+      "next_token_logits_sha256": "67fceb6f545a6c8a3515070f85bb00e03d0cb3eed09650342d892243a489217c",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 9,
+      "input_ids_sha256": "de23e7edd08e5311b77318de0d95141cd02a241a00dce556e63a51ef6c34bee9",
+      "next_token_logits_sha256": "dfbb0f554fef5cbf206cf947ba331715028ef47d7db80c1f59e9002a80f5de33",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 5,
+      "input_ids_sha256": "5108bfa177e6c44293ae3605b22f499c53a3209401612686f7ff346cbc7ed4eb",
+      "next_token_logits_sha256": "4913112a752b95b16c221e1c3dd72b09bd6e1d5e88669e30dd52874429e02da6",
+      "byte_exact": true
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_tokens": 9,
+      "input_ids_sha256": "6f290142aaddcf2bfb8a0ff3daad2930a2f51ade70a0c9441dd68e58b1275a4a",
+      "next_token_logits_sha256": "fb5e72fdc943e666226986687d97cf120675384e2d1e4dc1779928143f149a45",
+      "byte_exact": true
+    },
+    {
+      "case_id": 2,
+      "group": "rewrite",
+      "input_tokens": 6,
+      "input_ids_sha256": "21ac5aa49e7906da8f3c4349652b3902bf9182e5f872d5eadca01f973830d2e1",
+      "next_token_logits_sha256": "aebecdb91c1b2b9478837088b2a26ac4d9f1ce70e1c7445f73c8fd22b7303c5f",
+      "byte_exact": true
+    },
+    {
+      "case_id": 2,
+      "group": "paraphrase",
+      "input_tokens": 18,
+      "input_ids_sha256": "fa65b4b02f5f1ef8c82ae07a24213b287220f8857fa60a14995da17b8424a186",
+      "next_token_logits_sha256": "a09b40f36b4dbf3da8bda4d0930fcdda2a506293918e47a6681bcd21d2729ef4",
+      "byte_exact": true
+    },
+    {
+      "case_id": 2,
+      "group": "paraphrase",
+      "input_tokens": 11,
+      "input_ids_sha256": "726440a13b5a7330154e6b9bcf81c960e91faf725029d99f969c559c934db9a6",
+      "next_token_logits_sha256": "0e27cfa627907a292aa7017fd77d9ef6153aef083565754b8d56b994f375a4ad",
+      "byte_exact": true
+    }
+  ],
+  "limitations": [
+    "Interface/fidelity only, not memory necessity, comparison with editing methods, or serving superiority",
+    "Resident and native modules coexist during validation; no comparative peak-memory or latency claim",
+    "No KV cache, padding, distributed serving or generated-answer quality is measured here"
+  ],
+  "independent_native_bundle_reopen_byte_exact": true,
+  "bundle_bytes": 122503741,
+  "source_delta_bytes": 121457072,
+  "staging_stats": {
+    "queries": 16,
+    "copy_chunks": 16,
+    "slot_allocations": 2,
+    "slot_reuses": 14,
+    "reuse_waits": 0,
+    "staging_bytes": 1048576,
+    "staging_byte_limit": 1048576,
+    "pinned": true
+  },
+  "elapsed_seconds": 91.99356732401066,
+  "startup_limitation": "Current reopen constructs a dense temporary row module before replacing it; no bounded native-startup claim"
+}

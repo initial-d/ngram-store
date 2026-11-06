@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "environment": {
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.3.0",
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "cuda": "13.0",
+    "tf32": false,
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.counterfact_preflight --base /llm-align/open_models/Qwen3.5/Qwen3.5-4B --upstream /llm-align/duyimin/meft-cuda-20261030/upstream --data /llm-align/duyimin/ngram-counterfact-capacity-20261106/data/multi_counterfact.json --oracle /llm-align/duyimin/ngram-counterfact-capacity-20261106/official-counterfact.py --output /llm-align/duyimin/ngram-counterfact-capacity-20261106/qwen35-preflight.json",
+    "code_sha": "9c35e8f8c3eca2967d6ba50d4a7e6f7576a6f55c",
+    "source_hashes": {
+      "counterfact_retrieval.py": "14d2d1d491ddea572dd52e2441fbb07201e7c8de67fc45f61227746bb7c7d93b",
+      "counterfact_models.py": "ff67a724ee08de05fae54ec88514a83d474286da8f77ddbd2b4745480a33c339",
+      "counterfact_preflight.py": "e9cf2d771e7cdec6de2461cb12e557db546fc1564bdc1ba5e6e5ba2000a3d461",
+      "counterfact_data.py": "bf189ce0c3a40079674d73587a6c8de029693a650abd99ff9d4a4f08c04e1d85",
+      "counterfact_capacity.py": "de42e2d5a29d12d41c72a3ab608dadbc0d02ea2b5e19f13947496c10df80e0a6",
+      "late_memory_replay.py": "98d0f7ed4ba6ad0b6c8a2d7f7fd51cd61ef810a6c70c1b2d69db5c8e1fa16c6d"
+    },
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "0e8947d0-b90d-8e5a-06dd-342ef5db3cc8",
+    "gpu_memory": 84987740160
+  },
+  "base": "/llm-align/open_models/Qwen3.5/Qwen3.5-4B",
+  "loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "masked_replay": {
+    "logits_byte_exact": true,
+    "all_masked_gradients_exact": true,
+    "trainable_gradients": 115
+  },
+  "official_oracle_max_nll_delta": 0.0013632774353027344,
+  "same_logits_official_formula_max_delta": 0.0,
+  "batch_rank_changes": 0,
+  "batch_target_accuracy_changes": 0,
+  "official_oracle_choices": 104,
+  "official_oracle_sha256": "b00d9810305580dddfeb5e65129db4d56bcbfee1edf020605e21bf4f5033aeb7",
+  "physical_rows": 3628,
+  "frozen_weight_sha256": "b88c44fbf4a4cd5a8f83b28df2e6df1f87b6dfc6881874fb1d369d432bcb08e1",
+  "trainable_parameters": 893632000,
+  "elapsed_seconds": 72.12010447098874
+}

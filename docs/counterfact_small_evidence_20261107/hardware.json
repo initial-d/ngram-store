@@ -1,0 +1,17 @@
+{
+  "cpu_models": [
+    "AMD EPYC 7742 64-Core Processor"
+  ],
+  "logical_cpus": 255,
+  "torch_intraop_threads_per_job": 4,
+  "torch_interop_threads": 1,
+  "packages": {
+    "torch": "2.11.0",
+    "transformers": "5.3.0",
+    "numpy": "2.2.6",
+    "safetensors": "0.7.0",
+    "triton": "3.6.0",
+    "flash-linear-attention": "0.5.2",
+    "fla-core": "0.5.2"
+  }
+}

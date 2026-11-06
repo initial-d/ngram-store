@@ -1,0 +1,18 @@
+The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:   0%|          | 1/723 [00:03<43:47,  3.64s/it]Loading weights:  35%|███▍      | 252/723 [00:03<00:04, 94.38it/s]Loading weights:  52%|█████▏    | 376/723 [00:05<00:03, 89.64it/s]Loading weights:  62%|██████▏   | 447/723 [00:05<00:02, 95.80it/s]Loading weights:  75%|███████▌  | 544/723 [00:05<00:01, 136.38it/s]Loading weights:  85%|████████▍ | 612/723 [00:06<00:00, 169.46it/s]Loading weights:  94%|█████████▎| 677/723 [00:06<00:00, 199.54it/s]Loading weights: 100%|██████████| 723/723 [00:06<00:00, 114.00it/s]
+{"stage": "base-eval", "batches": 0, "choices": 5}
+{"stage": "base-eval", "batches": 200, "choices": 1598}
+{"stage": "base-eval", "batches": 400, "choices": 3195}
+{"stage": "base-eval", "batches": 600, "choices": 4795}
+{"stage": "base-eval", "batches": 800, "choices": 6395}
+{"stage": "base-eval", "batches": 1000, "choices": 7995}
+{"stage": "base-eval", "batches": 1200, "choices": 9595}
+{"stage": "base-eval", "batches": 1400, "choices": 11190}
+{"stage": "base-eval", "batches": 1600, "choices": 12790}
+{"stage": "base-eval", "batches": 1800, "choices": 14386}
+{"stage": "base-eval", "batches": 2000, "choices": 15982}
+{"stage": "base-eval", "batches": 2200, "choices": 17582}
+{"stage": "base-eval", "batches": 2400, "choices": 19173}
+{"stage": "base-eval", "batches": 2600, "choices": 20773}
+{"stage": "base-eval", "batches": 2800, "choices": 22359}
+{"stage": "base-eval", "batches": 3000, "choices": 23935}

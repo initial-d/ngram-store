@@ -1,0 +1,105 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:02<13:00,  2.52s/it]Loading weights:  76%|███████▌  | 237/311 [00:02<00:00, 126.98it/s]Loading weights: 100%|██████████| 311/311 [00:02<00:00, 110.57it/s]
+The tied weights mapping and config for this model specifies to tie model.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+{"stage": "cache", "shard": 4, "done": 0, "batches": 7816, "elapsed": 0.2809474861714989}
+{"stage": "cache", "shard": 4, "done": 100, "batches": 7816, "elapsed": 5.430656783049926}
+{"stage": "cache", "shard": 4, "done": 200, "batches": 7816, "elapsed": 10.582002255134284}
+{"stage": "cache", "shard": 4, "done": 300, "batches": 7816, "elapsed": 15.722341496031731}
+{"stage": "cache", "shard": 4, "done": 400, "batches": 7816, "elapsed": 20.868580586044118}
+{"stage": "cache", "shard": 4, "done": 500, "batches": 7816, "elapsed": 26.02091438206844}
+{"stage": "cache", "shard": 4, "done": 600, "batches": 7816, "elapsed": 31.16203850018792}
+{"stage": "cache", "shard": 4, "done": 700, "batches": 7816, "elapsed": 36.36543087102473}
+{"stage": "cache", "shard": 4, "done": 800, "batches": 7816, "elapsed": 41.52361045801081}
+{"stage": "cache", "shard": 4, "done": 900, "batches": 7816, "elapsed": 46.66822252399288}
+{"stage": "cache", "shard": 4, "done": 1000, "batches": 7816, "elapsed": 51.825716549064964}
+{"stage": "cache", "shard": 4, "done": 1100, "batches": 7816, "elapsed": 56.98245649714954}
+{"stage": "cache", "shard": 4, "done": 1200, "batches": 7816, "elapsed": 62.16201543412171}
+{"stage": "cache", "shard": 4, "done": 1300, "batches": 7816, "elapsed": 67.39700871403329}
+{"stage": "cache", "shard": 4, "done": 1400, "batches": 7816, "elapsed": 72.56432718411088}
+{"stage": "cache", "shard": 4, "done": 1500, "batches": 7816, "elapsed": 77.71887802402489}
+{"stage": "cache", "shard": 4, "done": 1600, "batches": 7816, "elapsed": 82.87628691317514}
+{"stage": "cache", "shard": 4, "done": 1700, "batches": 7816, "elapsed": 88.02044850215316}
+{"stage": "cache", "shard": 4, "done": 1800, "batches": 7816, "elapsed": 93.1558597360272}
+{"stage": "cache", "shard": 4, "done": 1900, "batches": 7816, "elapsed": 98.35792162897997}
+{"stage": "cache", "shard": 4, "done": 2000, "batches": 7816, "elapsed": 103.50176488119178}
+{"stage": "cache", "shard": 4, "done": 2100, "batches": 7816, "elapsed": 108.66739800805226}
+{"stage": "cache", "shard": 4, "done": 2200, "batches": 7816, "elapsed": 113.80964964604937}
+{"stage": "cache", "shard": 4, "done": 2300, "batches": 7816, "elapsed": 118.9373878291808}
+{"stage": "cache", "shard": 4, "done": 2400, "batches": 7816, "elapsed": 124.08202685415745}
+{"stage": "cache", "shard": 4, "done": 2500, "batches": 7816, "elapsed": 129.28490058216266}
+{"stage": "cache", "shard": 4, "done": 2600, "batches": 7816, "elapsed": 134.4271219081711}
+{"stage": "cache", "shard": 4, "done": 2700, "batches": 7816, "elapsed": 139.56812883308157}
+{"stage": "cache", "shard": 4, "done": 2800, "batches": 7816, "elapsed": 144.69932786514983}
+{"stage": "cache", "shard": 4, "done": 2900, "batches": 7816, "elapsed": 149.83848434314132}
+{"stage": "cache", "shard": 4, "done": 3000, "batches": 7816, "elapsed": 154.97305203415453}
+{"stage": "cache", "shard": 4, "done": 3100, "batches": 7816, "elapsed": 160.19277918012813}
+{"stage": "cache", "shard": 4, "done": 3200, "batches": 7816, "elapsed": 165.32271457300521}
+{"stage": "cache", "shard": 4, "done": 3300, "batches": 7816, "elapsed": 170.4495325970929}
+{"stage": "cache", "shard": 4, "done": 3400, "batches": 7816, "elapsed": 175.57078384514898}
+{"stage": "cache", "shard": 4, "done": 3500, "batches": 7816, "elapsed": 180.7002376120072}
+{"stage": "cache", "shard": 4, "done": 3600, "batches": 7816, "elapsed": 185.85084877116606}
+{"stage": "cache", "shard": 4, "done": 3700, "batches": 7816, "elapsed": 191.0969098121859}
+{"stage": "cache", "shard": 4, "done": 3800, "batches": 7816, "elapsed": 196.24459664407186}
+{"stage": "cache", "shard": 4, "done": 3900, "batches": 7816, "elapsed": 201.36329826316796}
+{"stage": "cache", "shard": 4, "done": 4000, "batches": 7816, "elapsed": 206.49433170212433}
+{"stage": "cache", "shard": 4, "done": 4100, "batches": 7816, "elapsed": 211.62818079511635}
+{"stage": "cache", "shard": 4, "done": 4200, "batches": 7816, "elapsed": 216.74391792807728}
+{"stage": "cache", "shard": 4, "done": 4300, "batches": 7816, "elapsed": 221.86393431108445}
+{"stage": "cache", "shard": 4, "done": 4400, "batches": 7816, "elapsed": 227.06465203710832}
+{"stage": "cache", "shard": 4, "done": 4500, "batches": 7816, "elapsed": 232.18496049707755}
+{"stage": "cache", "shard": 4, "done": 4600, "batches": 7816, "elapsed": 237.32366510108113}
+{"stage": "cache", "shard": 4, "done": 4700, "batches": 7816, "elapsed": 242.47384617710486}
+{"stage": "cache", "shard": 4, "done": 4800, "batches": 7816, "elapsed": 247.66787170316093}
+{"stage": "cache", "shard": 4, "done": 4900, "batches": 7816, "elapsed": 252.82605652906932}
+{"stage": "cache", "shard": 4, "done": 5000, "batches": 7816, "elapsed": 258.0560413461644}
+{"stage": "cache", "shard": 4, "done": 5100, "batches": 7816, "elapsed": 263.2063450640999}
+{"stage": "cache", "shard": 4, "done": 5200, "batches": 7816, "elapsed": 268.3353597379755}
+{"stage": "cache", "shard": 4, "done": 5300, "batches": 7816, "elapsed": 273.5030542330351}
+{"stage": "cache", "shard": 4, "done": 5400, "batches": 7816, "elapsed": 278.6583870870527}
+{"stage": "cache", "shard": 4, "done": 5500, "batches": 7816, "elapsed": 283.788287979085}
+{"stage": "cache", "shard": 4, "done": 5600, "batches": 7816, "elapsed": 289.0339075520169}
+{"stage": "cache", "shard": 4, "done": 5700, "batches": 7816, "elapsed": 294.19761983305216}
+{"stage": "cache", "shard": 4, "done": 5800, "batches": 7816, "elapsed": 299.3682732281741}
+{"stage": "cache", "shard": 4, "done": 5900, "batches": 7816, "elapsed": 304.53746051201597}
+{"stage": "cache", "shard": 4, "done": 6000, "batches": 7816, "elapsed": 309.72876885998994}
+{"stage": "cache", "shard": 4, "done": 6100, "batches": 7816, "elapsed": 314.90153188304976}
+{"stage": "cache", "shard": 4, "done": 6200, "batches": 7816, "elapsed": 320.17986619705334}
+{"stage": "cache", "shard": 4, "done": 6300, "batches": 7816, "elapsed": 325.37096921214834}
+{"stage": "cache", "shard": 4, "done": 6400, "batches": 7816, "elapsed": 330.5539895561524}
+{"stage": "cache", "shard": 4, "done": 6500, "batches": 7816, "elapsed": 335.735096037155}
+{"stage": "cache", "shard": 4, "done": 6600, "batches": 7816, "elapsed": 340.951066626003}
+{"stage": "cache", "shard": 4, "done": 6700, "batches": 7816, "elapsed": 346.146273030201}
+{"stage": "cache", "shard": 4, "done": 6800, "batches": 7816, "elapsed": 351.3937160221394}
+{"stage": "cache", "shard": 4, "done": 6900, "batches": 7816, "elapsed": 356.7778889799956}
+{"stage": "cache", "shard": 4, "done": 7000, "batches": 7816, "elapsed": 362.0195158631541}
+{"stage": "cache", "shard": 4, "done": 7100, "batches": 7816, "elapsed": 367.27036774205044}
+{"stage": "cache", "shard": 4, "done": 7200, "batches": 7816, "elapsed": 372.50046800705604}
+{"stage": "cache", "shard": 4, "done": 7300, "batches": 7816, "elapsed": 377.72886756504886}
+{"stage": "cache", "shard": 4, "done": 7400, "batches": 7816, "elapsed": 382.96759707899764}
+{"stage": "cache", "shard": 4, "done": 7500, "batches": 7816, "elapsed": 388.38529940717854}
+{"stage": "cache", "shard": 4, "done": 7600, "batches": 7816, "elapsed": 393.60806877398863}
+{"stage": "cache", "shard": 4, "done": 7700, "batches": 7816, "elapsed": 398.82591865514405}
+{"stage": "cache", "shard": 4, "done": 7800, "batches": 7816, "elapsed": 404.0416295041796}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/llm-align/duyimin/ngram-counterfact-capacity-20261106/source-frozen/tools/counterfact_capacity.py", line 318, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/llm-align/duyimin/ngram-counterfact-capacity-20261106/source-frozen/tools/counterfact_capacity.py", line 315, in main
+    args=parser.parse_args();globals()[args.action](args)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/ngram-counterfact-capacity-20261106/source-frozen/tools/counterfact_capacity.py", line 116, in cache
+    write(stem.with_suffix('.json'),report);print(json.dumps({k:v for k,v in report.items() if k!='sequences'}),flush=True)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type set is not JSON serializable

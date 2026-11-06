@@ -1,0 +1,17 @@
+{
+  "scope": "Clarifies the unchanged stock runtime; no change to training settings or kernels",
+  "torch_matmul_tf32": false,
+  "torch_cudnn_tf32": false,
+  "fla_solver_precision": "tf32",
+  "fla_solver_file": "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/site-packages/fla/ops/gated_delta_rule/chunk_fwd.py",
+  "fla_solver_sha256": "1760a7dd26db2118bb1af7b9b7c115a27c97372e6a4d2e913d1542c9fedcda9e",
+  "fla_solver_precision_line": [
+    "    SOLVE_TRIL_DOT_PRECISION = tl.constexpr('tf32')",
+    "    SOLVE_TRIL_DOT_PRECISION = tl.constexpr('ieee')"
+  ],
+  "limitations": [
+    "PyTorch TF32 flags do not override Triton explicit input_precision",
+    "same-batch native/replay fidelity is separate from padded/unpadded batch arithmetic",
+    "four-case preflight ranking parity is not a full-benchmark near-tie guarantee"
+  ]
+}

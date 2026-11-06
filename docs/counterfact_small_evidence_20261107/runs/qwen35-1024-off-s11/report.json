@@ -1,0 +1,424 @@
+{
+  "status": "complete",
+  "environment": {
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.3.0",
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "cuda": "13.0",
+    "tf32": false,
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.counterfact_capacity train --base /llm-align/open_models/Qwen3.5/Qwen3.5-4B --output /llm-align/duyimin/ngram-counterfact-capacity-20261106/runs/qwen35-1024-off-s11 --upstream /llm-align/duyimin/meft-cuda-20261030/upstream --prepared /llm-align/duyimin/ngram-counterfact-capacity-20261106/prepared-qwen35-1024 --cache /llm-align/duyimin/ngram-counterfact-capacity-20261106/cache-qwen35-1024 --protocol /llm-align/duyimin/ngram-counterfact-capacity-20261106/source-frozen/benchmarks/counterfact_capacity_v1.json --seed 11 --variant off",
+    "code_sha": "537debf3e8d9715afc464a9e6db8e97e34fb0bfe",
+    "source_hashes": {
+      "counterfact_runner.py": "8cd24498e82c62a98ad7424144f1949b0f74f72e93e0b2ed06b041485d123f67",
+      "counterfact_retrieval.py": "14d2d1d491ddea572dd52e2441fbb07201e7c8de67fc45f61227746bb7c7d93b",
+      "counterfact_models.py": "ff67a724ee08de05fae54ec88514a83d474286da8f77ddbd2b4745480a33c339",
+      "counterfact_preflight.py": "e9cf2d771e7cdec6de2461cb12e557db546fc1564bdc1ba5e6e5ba2000a3d461",
+      "counterfact_data.py": "bf189ce0c3a40079674d73587a6c8de029693a650abd99ff9d4a4f08c04e1d85",
+      "counterfact_capacity.py": "2c1349a5c2f3f2618c7695e5156fed06a119de4bd35f6ef1ac33b505e8bd6a4d",
+      "late_memory_replay.py": "98d0f7ed4ba6ad0b6c8a2d7f7fd51cd61ef810a6c70c1b2d69db5c8e1fa16c6d"
+    },
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "739011e2-6861-76a1-aacc-ec382e95e733",
+    "gpu_memory": 84987740160
+  },
+  "seed": 11,
+  "variant": "off",
+  "protocol": {
+    "schema_version": 1,
+    "dataset": "MEMIT official MultiCounterFact",
+    "data_sha256": "977a6acce4705507b5fd6bfcea8f61cd78f9ed0f9cd9c9a6bcd6c8a3ed61c833",
+    "official_source_commit": "80426fd9316cf9a50c5ba15e0912f2c2c5bfe84b",
+    "models": [
+      "Qwen3-0.6B",
+      "Qwen3.5-4B"
+    ],
+    "edit_counts": [
+      1024,
+      20877
+    ],
+    "case_selection": "First N official MultiCounterFact records; nested sets shared by all seeds and variants",
+    "seeds": [
+      3,
+      7,
+      11
+    ],
+    "batch_size": 8,
+    "suffix_layers": 8,
+    "epochs": 10,
+    "suffix_lr": 1e-05,
+    "branch_lr": 0.0001,
+    "row_lr": 0.001,
+    "clip_norm": 1.0,
+    "optimizer": "Adam default betas/eps, no weight decay",
+    "precision": "FP32; deterministic algorithms; eager full attention; TF32 disabled",
+    "targets": "Official rewrite target_new tokens followed by EOS only; prompt loss masked",
+    "batch_rule": "Exact token lengths, no padding, duplicate fill to B8; filler targets masked and excluded from exposure counts",
+    "initialization": "Immutable local vendor backbone; module-name and seed keyed branch initialization; other projections shared across capacity variants",
+    "checkpoint_rule": "Final fixed epoch only; no test-based parameter or checkpoint selection",
+    "variants": {
+      "small": {
+        "control": "full",
+        "vocab_sizes": [
+          257,
+          521,
+          1031
+        ]
+      },
+      "mid": {
+        "control": "full",
+        "vocab_sizes": [
+          4093,
+          8191,
+          16381
+        ]
+      },
+      "large": {
+        "control": "full",
+        "vocab_sizes": [
+          65521,
+          131071,
+          262139
+        ]
+      },
+      "head-constant": {
+        "control": "head-constant",
+        "vocab_sizes": [
+          4093,
+          8191,
+          16381
+        ]
+      },
+      "off": {
+        "control": "off",
+        "vocab_sizes": [
+          4093,
+          8191,
+          16381
+        ]
+      },
+      "adapter": {
+        "control": "adapter",
+        "vocab_sizes": [
+          65521,
+          131071,
+          262139
+        ]
+      }
+    },
+    "engram": {
+      "max_ngram_size": 4,
+      "heads_per_order": 2,
+      "embedding_dim_per_order": 64,
+      "kernel_size": 3
+    },
+    "metrics": [
+      "rewrite success",
+      "paraphrase success",
+      "neighborhood success",
+      "three-way harmonic score",
+      "official teacher-forced full-target accuracy"
+    ],
+    "evaluation": "Every official rewrite, paraphrase and neighborhood of every edited case; new and true candidates retained; no generation-side metrics in this protocol",
+    "calibration": "Official case index modulo 10 equals zero; all other cases are test. Both folds' rewrite updates are trained, as in batch knowledge editing; paraphrases and neighborhoods never train",
+    "retrieval_baseline": "Unedited base model with inverted-index BM25 over training rewrite/new facts only; top-1 and top-3 chosen using calibration harmonic score only",
+    "interpretation": "Counterfactual knowledge updating, not verification of contemporary facts. Benchmarks do not establish superiority to MEMIT/ROME editing algorithms. Full-table wins must retain locality and beat independently trained cheaper controls; native storage claims require separate source-qualified fidelity/serving runs"
+  },
+  "protocol_sha256": "1a33c174723ada0a991130de77cdc06177da6de003319049fd9daa2732106825",
+  "prepared_sha256": "d8e1bfdd96a8e0b7a165c09471c9d1a680d574dc8d624537024fb719e3a4fb5e",
+  "elapsed_seconds": 446.8130979521666,
+  "loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "base_model": "/llm-align/open_models/Qwen3.5/Qwen3.5-4B",
+  "frozen_weight_sha256": "b88c44fbf4a4cd5a8f83b28df2e6df1f87b6dfc6881874fb1d369d432bcb08e1",
+  "trained_parameter_names": [
+    "model.language_model.layers.24.linear_attn.dt_bias",
+    "model.language_model.layers.24.linear_attn.A_log",
+    "model.language_model.layers.24.linear_attn.conv1d.weight",
+    "model.language_model.layers.24.linear_attn.norm.weight",
+    "model.language_model.layers.24.linear_attn.out_proj.weight",
+    "model.language_model.layers.24.linear_attn.in_proj_qkv.weight",
+    "model.language_model.layers.24.linear_attn.in_proj_z.weight",
+    "model.language_model.layers.24.linear_attn.in_proj_b.weight",
+    "model.language_model.layers.24.linear_attn.in_proj_a.weight",
+    "model.language_model.layers.24.mlp.gate_proj.weight",
+    "model.language_model.layers.24.mlp.up_proj.weight",
+    "model.language_model.layers.24.mlp.down_proj.weight",
+    "model.language_model.layers.24.input_layernorm.weight",
+    "model.language_model.layers.24.post_attention_layernorm.weight",
+    "model.language_model.layers.25.linear_attn.dt_bias",
+    "model.language_model.layers.25.linear_attn.A_log",
+    "model.language_model.layers.25.linear_attn.conv1d.weight",
+    "model.language_model.layers.25.linear_attn.norm.weight",
+    "model.language_model.layers.25.linear_attn.out_proj.weight",
+    "model.language_model.layers.25.linear_attn.in_proj_qkv.weight",
+    "model.language_model.layers.25.linear_attn.in_proj_z.weight",
+    "model.language_model.layers.25.linear_attn.in_proj_b.weight",
+    "model.language_model.layers.25.linear_attn.in_proj_a.weight",
+    "model.language_model.layers.25.mlp.gate_proj.weight",
+    "model.language_model.layers.25.mlp.up_proj.weight",
+    "model.language_model.layers.25.mlp.down_proj.weight",
+    "model.language_model.layers.25.input_layernorm.weight",
+    "model.language_model.layers.25.post_attention_layernorm.weight",
+    "model.language_model.layers.26.linear_attn.dt_bias",
+    "model.language_model.layers.26.linear_attn.A_log",
+    "model.language_model.layers.26.linear_attn.conv1d.weight",
+    "model.language_model.layers.26.linear_attn.norm.weight",
+    "model.language_model.layers.26.linear_attn.out_proj.weight",
+    "model.language_model.layers.26.linear_attn.in_proj_qkv.weight",
+    "model.language_model.layers.26.linear_attn.in_proj_z.weight",
+    "model.language_model.layers.26.linear_attn.in_proj_b.weight",
+    "model.language_model.layers.26.linear_attn.in_proj_a.weight",
+    "model.language_model.layers.26.mlp.gate_proj.weight",
+    "model.language_model.layers.26.mlp.up_proj.weight",
+    "model.language_model.layers.26.mlp.down_proj.weight",
+    "model.language_model.layers.26.input_layernorm.weight",
+    "model.language_model.layers.26.post_attention_layernorm.weight",
+    "model.language_model.layers.27.self_attn.q_proj.weight",
+    "model.language_model.layers.27.self_attn.k_proj.weight",
+    "model.language_model.layers.27.self_attn.v_proj.weight",
+    "model.language_model.layers.27.self_attn.o_proj.weight",
+    "model.language_model.layers.27.self_attn.q_norm.weight",
+    "model.language_model.layers.27.self_attn.k_norm.weight",
+    "model.language_model.layers.27.mlp.gate_proj.weight",
+    "model.language_model.layers.27.mlp.up_proj.weight",
+    "model.language_model.layers.27.mlp.down_proj.weight",
+    "model.language_model.layers.27.input_layernorm.weight",
+    "model.language_model.layers.27.post_attention_layernorm.weight",
+    "model.language_model.layers.28.linear_attn.dt_bias",
+    "model.language_model.layers.28.linear_attn.A_log",
+    "model.language_model.layers.28.linear_attn.conv1d.weight",
+    "model.language_model.layers.28.linear_attn.norm.weight",
+    "model.language_model.layers.28.linear_attn.out_proj.weight",
+    "model.language_model.layers.28.linear_attn.in_proj_qkv.weight",
+    "model.language_model.layers.28.linear_attn.in_proj_z.weight",
+    "model.language_model.layers.28.linear_attn.in_proj_b.weight",
+    "model.language_model.layers.28.linear_attn.in_proj_a.weight",
+    "model.language_model.layers.28.mlp.gate_proj.weight",
+    "model.language_model.layers.28.mlp.up_proj.weight",
+    "model.language_model.layers.28.mlp.down_proj.weight",
+    "model.language_model.layers.28.input_layernorm.weight",
+    "model.language_model.layers.28.post_attention_layernorm.weight",
+    "model.language_model.layers.29.linear_attn.dt_bias",
+    "model.language_model.layers.29.linear_attn.A_log",
+    "model.language_model.layers.29.linear_attn.conv1d.weight",
+    "model.language_model.layers.29.linear_attn.norm.weight",
+    "model.language_model.layers.29.linear_attn.out_proj.weight",
+    "model.language_model.layers.29.linear_attn.in_proj_qkv.weight",
+    "model.language_model.layers.29.linear_attn.in_proj_z.weight",
+    "model.language_model.layers.29.linear_attn.in_proj_b.weight",
+    "model.language_model.layers.29.linear_attn.in_proj_a.weight",
+    "model.language_model.layers.29.mlp.gate_proj.weight",
+    "model.language_model.layers.29.mlp.up_proj.weight",
+    "model.language_model.layers.29.mlp.down_proj.weight",
+    "model.language_model.layers.29.input_layernorm.weight",
+    "model.language_model.layers.29.post_attention_layernorm.weight",
+    "model.language_model.layers.30.linear_attn.dt_bias",
+    "model.language_model.layers.30.linear_attn.A_log",
+    "model.language_model.layers.30.linear_attn.conv1d.weight",
+    "model.language_model.layers.30.linear_attn.norm.weight",
+    "model.language_model.layers.30.linear_attn.out_proj.weight",
+    "model.language_model.layers.30.linear_attn.in_proj_qkv.weight",
+    "model.language_model.layers.30.linear_attn.in_proj_z.weight",
+    "model.language_model.layers.30.linear_attn.in_proj_b.weight",
+    "model.language_model.layers.30.linear_attn.in_proj_a.weight",
+    "model.language_model.layers.30.mlp.gate_proj.weight",
+    "model.language_model.layers.30.mlp.up_proj.weight",
+    "model.language_model.layers.30.mlp.down_proj.weight",
+    "model.language_model.layers.30.input_layernorm.weight",
+    "model.language_model.layers.30.post_attention_layernorm.weight",
+    "model.language_model.layers.31.self_attn.q_proj.weight",
+    "model.language_model.layers.31.self_attn.k_proj.weight",
+    "model.language_model.layers.31.self_attn.v_proj.weight",
+    "model.language_model.layers.31.self_attn.o_proj.weight",
+    "model.language_model.layers.31.self_attn.q_norm.weight",
+    "model.language_model.layers.31.self_attn.k_norm.weight",
+    "model.language_model.layers.31.mlp.gate_proj.weight",
+    "model.language_model.layers.31.mlp.up_proj.weight",
+    "model.language_model.layers.31.mlp.down_proj.weight",
+    "model.language_model.layers.31.input_layernorm.weight",
+    "model.language_model.layers.31.post_attention_layernorm.weight"
+  ],
+  "trainable_parameters": 892512384,
+  "memory_parameters": 0,
+  "physical_rows": 0,
+  "prefix_files": [
+    {
+      "file": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/cache-qwen35-1024/shard-0.f32",
+      "sha256": "2efae9046f8d7e01ddc7265770c653aeefc0fb55a5a50b26c130016d12a7eb81"
+    },
+    {
+      "file": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/cache-qwen35-1024/shard-1.f32",
+      "sha256": "fce85599dd3b8089da24b9a10c5b50dc97f42c74e1d28dc23228242ab07553d1"
+    },
+    {
+      "file": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/cache-qwen35-1024/shard-2.f32",
+      "sha256": "7a49aa9bb608fa7b0af105d7036d9dafeea43abf02514e688894e7046d81fcdc"
+    }
+  ],
+  "replay_check": {
+    "logits_byte_exact": true,
+    "all_masked_gradients_exact": true,
+    "trainable_gradients": 106
+  },
+  "epochs": [
+    {
+      "epoch": 0,
+      "mean_batch_loss": 2.514032937862255,
+      "actual_sequences": 1024,
+      "steps": 135,
+      "elapsed_seconds": 21.436061745043844
+    },
+    {
+      "epoch": 1,
+      "mean_batch_loss": 1.2124079783750925,
+      "actual_sequences": 1024,
+      "steps": 270,
+      "elapsed_seconds": 19.584807422943413
+    },
+    {
+      "epoch": 2,
+      "mean_batch_loss": 0.3769281654571387,
+      "actual_sequences": 1024,
+      "steps": 405,
+      "elapsed_seconds": 19.566936764866114
+    },
+    {
+      "epoch": 3,
+      "mean_batch_loss": 0.06947311708227735,
+      "actual_sequences": 1024,
+      "steps": 540,
+      "elapsed_seconds": 19.527492876164615
+    },
+    {
+      "epoch": 4,
+      "mean_batch_loss": 0.029891107506901556,
+      "actual_sequences": 1024,
+      "steps": 675,
+      "elapsed_seconds": 19.48344176192768
+    },
+    {
+      "epoch": 5,
+      "mean_batch_loss": 0.035700118083293465,
+      "actual_sequences": 1024,
+      "steps": 810,
+      "elapsed_seconds": 19.559919523075223
+    },
+    {
+      "epoch": 6,
+      "mean_batch_loss": 0.0074579774093481155,
+      "actual_sequences": 1024,
+      "steps": 945,
+      "elapsed_seconds": 19.58459356892854
+    },
+    {
+      "epoch": 7,
+      "mean_batch_loss": 0.00452540573772711,
+      "actual_sequences": 1024,
+      "steps": 1080,
+      "elapsed_seconds": 19.53741181595251
+    },
+    {
+      "epoch": 8,
+      "mean_batch_loss": 0.007644939245874917,
+      "actual_sequences": 1024,
+      "steps": 1215,
+      "elapsed_seconds": 19.55884361709468
+    },
+    {
+      "epoch": 9,
+      "mean_batch_loss": 0.0005684641399334901,
+      "actual_sequences": 1024,
+      "steps": 1350,
+      "elapsed_seconds": 19.59630715288222
+    }
+  ],
+  "training_seconds": 198.6011359000113,
+  "delta": {
+    "bytes": 3570063240,
+    "sha256": "37b48a0f4eadedc6a5faedb25f23abe0149b5298c33efaaf69bef6b362554f63"
+  },
+  "evaluation_seconds": 135.3507534461096,
+  "metrics": {
+    "all": {
+      "rewrite": {
+        "cases": 1024,
+        "prompts": 1024,
+        "success": 1.0,
+        "teacher_forced_accuracy": 1.0
+      },
+      "paraphrase": {
+        "cases": 1024,
+        "prompts": 2048,
+        "success": 0.87890625,
+        "teacher_forced_accuracy": 0.65625
+      },
+      "neighborhood": {
+        "cases": 1024,
+        "prompts": 10240,
+        "success": 0.45712890625,
+        "teacher_forced_accuracy": 0.137890625
+      },
+      "harmonic_score": 0.6935863662016599
+    },
+    "calibration": {
+      "rewrite": {
+        "cases": 103,
+        "prompts": 103,
+        "success": 1.0,
+        "teacher_forced_accuracy": 1.0
+      },
+      "paraphrase": {
+        "cases": 103,
+        "prompts": 206,
+        "success": 0.9174757281553398,
+        "teacher_forced_accuracy": 0.6796116504854369
+      },
+      "neighborhood": {
+        "cases": 103,
+        "prompts": 1030,
+        "success": 0.474757281553398,
+        "teacher_forced_accuracy": 0.12135922330097088
+      },
+      "harmonic_score": 0.7149178108683039
+    },
+    "test": {
+      "rewrite": {
+        "cases": 921,
+        "prompts": 921,
+        "success": 1.0,
+        "teacher_forced_accuracy": 1.0
+      },
+      "paraphrase": {
+        "cases": 921,
+        "prompts": 1842,
+        "success": 0.8745928338762216,
+        "teacher_forced_accuracy": 0.6536373507057546
+      },
+      "neighborhood": {
+        "cases": 921,
+        "prompts": 9210,
+        "success": 0.45515743756786103,
+        "teacher_forced_accuracy": 0.13973941368078174
+      },
+      "harmonic_score": 0.6911755705440374
+    }
+  },
+  "score_artifacts": {
+    "choice-scores.json": {
+      "sha256": "e4da33500d899aa8e9f068f623c2514848e5db60f20dcd7502e576d5a7ff656a",
+      "bytes": 1690424
+    },
+    "case-scores.json": {
+      "sha256": "d770eddd6c3e05df00b5701cab352cd9c57d5a5f8d2ca9aaa6caccd3ddd50e68",
+      "bytes": 3072049
+    }
+  },
+  "optimizer_steps": 1350,
+  "peak_cuda_allocated": 32546181120
+}

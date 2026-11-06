@@ -1,0 +1,8 @@
+test_cache_coverage_failure_and_partial_not_overwritten (tests.test_counterfact_resume.ResumeTest) ... ok
+test_complete_cache_reuse_and_corruption (tests.test_counterfact_resume.ResumeTest) ... ok
+test_training_delta_and_protocol_verified (tests.test_counterfact_resume.ResumeTest) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.005s
+
+OK

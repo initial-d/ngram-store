@@ -1,0 +1,38 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:00<03:00,  1.72it/s]Loading weights:  83%|████████▎ | 257/311 [00:00<00:00, 505.26it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 408.18it/s]
+The tied weights mapping and config for this model specifies to tie model.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+{"stage": "train", "epoch": 0, "batch": 0, "loss": 14.943676948547363, "steps": 1}
+{"stage": "train", "epoch": 0, "batch": 100, "loss": 2.037977695465088, "steps": 101}
+{"stage": "train", "epoch": 1, "batch": 0, "loss": 1.8758467435836792, "steps": 135}
+{"stage": "train", "epoch": 1, "batch": 100, "loss": 2.716214895248413, "steps": 235}
+{"stage": "train", "epoch": 2, "batch": 0, "loss": 1.0684295892715454, "steps": 269}
+{"stage": "train", "epoch": 2, "batch": 100, "loss": 1.5606967210769653, "steps": 369}
+{"stage": "train", "epoch": 3, "batch": 0, "loss": 0.31776219606399536, "steps": 403}
+{"stage": "train", "epoch": 3, "batch": 100, "loss": 0.27840059995651245, "steps": 503}
+{"stage": "train", "epoch": 4, "batch": 0, "loss": 0.003966285847127438, "steps": 537}
+{"stage": "train", "epoch": 4, "batch": 100, "loss": 0.22915756702423096, "steps": 637}
+{"stage": "train", "epoch": 5, "batch": 0, "loss": 0.07823901623487473, "steps": 671}
+{"stage": "train", "epoch": 5, "batch": 100, "loss": 0.21855995059013367, "steps": 771}
+{"stage": "train", "epoch": 6, "batch": 0, "loss": 0.00033501925645396113, "steps": 805}
+{"stage": "train", "epoch": 6, "batch": 100, "loss": 0.002920411992818117, "steps": 905}
+{"stage": "train", "epoch": 7, "batch": 0, "loss": 4.219487891532481e-05, "steps": 939}
+{"stage": "train", "epoch": 7, "batch": 100, "loss": 0.00010125795961357653, "steps": 1039}
+{"stage": "train", "epoch": 8, "batch": 0, "loss": 7.262389408424497e-05, "steps": 1073}
+{"stage": "train", "epoch": 8, "batch": 100, "loss": 4.576462379191071e-05, "steps": 1173}
+{"stage": "train", "epoch": 9, "batch": 0, "loss": 0.21213233470916748, "steps": 1207}
+{"stage": "train", "epoch": 9, "batch": 100, "loss": 6.079118975321762e-05, "steps": 1307}
+{"stage": "eval", "batches": 0, "choices": 5}
+{"stage": "eval", "batches": 200, "choices": 1598}
+{"stage": "eval", "batches": 400, "choices": 3195}
+{"stage": "eval", "batches": 600, "choices": 4795}
+{"stage": "eval", "batches": 800, "choices": 6388}
+{"stage": "eval", "batches": 1000, "choices": 7988}
+{"stage": "eval", "batches": 1200, "choices": 9587}
+{"stage": "eval", "batches": 1400, "choices": 11187}
+{"stage": "eval", "batches": 1600, "choices": 12787}
+{"stage": "eval", "batches": 1800, "choices": 14387}
+{"stage": "eval", "batches": 2000, "choices": 15986}
+{"stage": "eval", "batches": 2200, "choices": 17582}
+{"stage": "eval", "batches": 2400, "choices": 19177}
+{"stage": "eval", "batches": 2600, "choices": 20765}
+{"stage": "eval", "batches": 2800, "choices": 22343}
+{"stage": "eval", "batches": 3000, "choices": 23919}

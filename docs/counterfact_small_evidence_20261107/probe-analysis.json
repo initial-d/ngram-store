@@ -1,0 +1,428 @@
+{
+  "status": "partial",
+  "completed_trained_runs": 4,
+  "expected_trained_runs": 72,
+  "runs": [
+    {
+      "run": "qwen06-1024-adapter-s3",
+      "report_sha256": "6687e1563a07171c3e186f0a06160ceaf7f8aafaf983aee64ee23e2bb927054a",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.9990234375,
+            "teacher_forced_accuracy": 0.9814453125
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.79248046875,
+            "teacher_forced_accuracy": 0.4072265625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.43271484375,
+            "teacher_forced_accuracy": 0.09111328125
+          },
+          "harmonic_score": 0.6559055858078009
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9805825242718447
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.7864077669902912,
+            "teacher_forced_accuracy": 0.3300970873786408
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.44854368932038835,
+            "teacher_forced_accuracy": 0.09223300970873786
+          },
+          "harmonic_score": 0.6665123071990879
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.998914223669924,
+            "teacher_forced_accuracy": 0.9815418023887079
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.7931596091205212,
+            "teacher_forced_accuracy": 0.4158523344191097
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.4309446254071661,
+            "teacher_forced_accuracy": 0.09098805646036916
+          },
+          "harmonic_score": 0.6546857725541425
+        }
+      },
+      "case_scores_sha256": "4dffd658ceb2133e7ae9ad01102e010b4b7e8b9066e389774ee1f58c9c717ed8",
+      "near_ties_at_0_0014_nll": 0,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.43132137030995105
+      },
+      "trainable_parameters": 29761536,
+      "memory_parameters": 29761536,
+      "physical_rows": 0,
+      "training_seconds": 165.97154752188362,
+      "delta": {
+        "bytes": 119046344,
+        "sha256": "db8706b067e84c7c9b452d624e24b5b19604dad977d48d1b832a715cdb0a5164"
+      }
+    },
+    {
+      "run": "qwen06-1024-large-s3",
+      "report_sha256": "df6ede9c9aabc570c45bb59fe8e2a40539c3f81d52018d21174c94de6effab3c",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5126953125,
+            "teacher_forced_accuracy": 0.16259765625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.60302734375,
+            "teacher_forced_accuracy": 0.17861328125
+          },
+          "harmonic_score": 0.6509320781804523
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5097087378640777,
+            "teacher_forced_accuracy": 0.1407766990291262
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6029126213592233,
+            "teacher_forced_accuracy": 0.18640776699029127
+          },
+          "harmonic_score": 0.6492775847132742
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5130293159609121,
+            "teacher_forced_accuracy": 0.16503800217155265
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.6030401737242128,
+            "teacher_forced_accuracy": 0.1777415852334419
+          },
+          "harmonic_score": 0.6511164626509276
+        }
+      },
+      "case_scores_sha256": "d02f47c979cb113665685f1ed1b48085547320a20fb77de364fb2269416747f5",
+      "near_ties_at_0_0014_nll": 7,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.6030451332245785
+      },
+      "trainable_parameters": 29761920,
+      "memory_parameters": 29761920,
+      "physical_rows": 917516,
+      "training_seconds": 173.95433151489124,
+      "delta": {
+        "bytes": 119048616,
+        "sha256": "aaf8ea66796d891731730a5ab7b1184622bff30e2faf8f230ae5361956469314"
+      }
+    },
+    {
+      "run": "qwen35-1024-adapter-s3",
+      "report_sha256": "aa4eaec710d1238a575bc73d9a90fec4038c688b15000c25128afae63db79a99",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 0.9814453125,
+            "teacher_forced_accuracy": 0.92578125
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.87939453125,
+            "teacher_forced_accuracy": 0.52587890625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.36376953125,
+            "teacher_forced_accuracy": 0.07646484375
+          },
+          "harmonic_score": 0.6116152099927061
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 0.9805825242718447,
+            "teacher_forced_accuracy": 0.912621359223301
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.8446601941747572,
+            "teacher_forced_accuracy": 0.48058252427184467
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.3893203883495146,
+            "teacher_forced_accuracy": 0.070873786407767
+          },
+          "harmonic_score": 0.6286292100406445
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 0.9815418023887079,
+            "teacher_forced_accuracy": 0.9272529858849077
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.8832790445168295,
+            "teacher_forced_accuracy": 0.5309446254071661
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.3609120521172638,
+            "teacher_forced_accuracy": 0.07709011943539631
+          },
+          "harmonic_score": 0.609544431433286
+        }
+      },
+      "case_scores_sha256": "617894babf33d45e719d47884d1d6417fc49b9ac62df0acd87590da92f00fbcf",
+      "near_ties_at_0_0014_nll": 3,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.36095704187058186
+      },
+      "trainable_parameters": 30361600,
+      "memory_parameters": 30361600,
+      "physical_rows": 0,
+      "training_seconds": 234.5728056470398,
+      "delta": {
+        "bytes": 121446600,
+        "sha256": "c2b1401404c33d3ac69a75a9f9e869f5d78eb85d341b7121f0c2738bc9de670d"
+      }
+    },
+    {
+      "run": "qwen35-1024-large-s3",
+      "report_sha256": "cfdff3b16f013216779b34b780c9876757f5a530f9393d11b3aae8edd4cc925d",
+      "status": "complete",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.525390625,
+            "teacher_forced_accuracy": 0.203125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.5833984375,
+            "teacher_forced_accuracy": 0.2021484375
+          },
+          "harmonic_score": 0.649710643328382
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.49514563106796117,
+            "teacher_forced_accuracy": 0.19902912621359223
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5699029126213593,
+            "teacher_forced_accuracy": 0.17281553398058253
+          },
+          "harmonic_score": 0.6283653307959253
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5287730727470141,
+            "teacher_forced_accuracy": 0.20358306188925082
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5849077090119436,
+            "teacher_forced_accuracy": 0.20542888165038
+          },
+          "harmonic_score": 0.6520545782054696
+        }
+      },
+      "case_scores_sha256": "517bd1fca98dec521baa12eb9dda03327d392b8c1972ac00f0e6131680d8c770",
+      "near_ties_at_0_0014_nll": 4,
+      "unedited_neighbor_diagnostic": {
+        "prompts": 9195,
+        "success": 0.5849918433931485
+      },
+      "trainable_parameters": 30364032,
+      "memory_parameters": 30364032,
+      "physical_rows": 917516,
+      "training_seconds": 243.9607658199966,
+      "delta": {
+        "bytes": 121457072,
+        "sha256": "147f2307182dc9969309e9f1b0265def883dde20089cbc25bc2b7e9192363ae1"
+      }
+    }
+  ],
+  "large_vs_control": [
+    {
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "adapter",
+      "seeds": [
+        3
+      ],
+      "complete_three_seed_pair": false,
+      "paired_seeds": 1,
+      "paired_cases": 921,
+      "harmonic_delta": -0.0035693099032149123,
+      "harmonic_delta_interval95": [
+        -0.02238251429617853,
+        0.014492270926778385
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0010857763300760048,
+          "interval95": [
+            0.0,
+            0.0032573289902280145
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.28013029315960913,
+          "interval95": [
+            -0.30998914223669927,
+            -0.250271444082519
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.1720955483170466,
+          "interval95": [
+            0.15005157437567795,
+            0.19457654723127069
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    },
+    {
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "adapter",
+      "seeds": [
+        3
+      ],
+      "complete_three_seed_pair": false,
+      "paired_seeds": 1,
+      "paired_cases": 921,
+      "harmonic_delta": 0.04251014677218279,
+      "harmonic_delta_interval95": [
+        0.021535969301855536,
+        0.0628898311934469
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.018458197611292082,
+          "interval95": [
+            0.009771986970684043,
+            0.02714440825190012
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.35450597176981535,
+          "interval95": [
+            -0.3838219326818675,
+            -0.32464712269272533
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.22399565689467826,
+          "interval95": [
+            0.20249728555917482,
+            0.2471254071661225
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee"
+    }
+  ],
+  "interpretation": "Partial pairs are provisional. Retain all official metrics and failures; no backend or algorithm dominance follows from these comparisons alone."
+}

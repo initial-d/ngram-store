@@ -1,0 +1,4 @@
+Verified 40 small-grid runs, 4 exploratory probes, RAG calibration selection, all scalar scores, paired point estimates and 2 native reopen reports.
+Preserved six cache process failures; recovered manifest ranges cover the full prepared 0.6B data. Raw hidden states remain private.
+Full 20,877-edit grid is not included; native fidelity passed but both artifacts expanded.
+Bootstrap intervals are hash-archived; use --bootstrap with NumPy to recompute them.
