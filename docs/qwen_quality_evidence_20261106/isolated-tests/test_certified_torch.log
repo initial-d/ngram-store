@@ -1,0 +1,6 @@
+test_cpu_fixed_and_ragged_bags_padding_and_rejection (tests.test_certified_torch.CertifiedTorchTests.test_cpu_fixed_and_ragged_bags_padding_and_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.510s
+
+OK

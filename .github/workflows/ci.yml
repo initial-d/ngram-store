@@ -32,6 +32,8 @@ jobs:
         run: python -S docs/news_classifier_evidence_20261105/verify.py
       - name: Verify independent news, hybrid fairness and paired bootstrap evidence
         run: python -S docs/news_shift_evidence_20261105/verify.py
+      - name: Verify held-out Qwen memory identity qualification
+        run: python -S docs/qwen_quality_evidence_20261106/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter

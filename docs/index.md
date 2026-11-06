@@ -19,6 +19,7 @@
 
 ## Source-linked trained results
 
+- [Held-out Qwen: memory branch effect, head-constant control and native output identity](qwen_quality_evidence_20261106/README.md)
 - [Independent news: 15 controls, fair hybrids and the necessity boundary](news_shift_evidence_20261105/README.md)
 - [Actual legacy FastText model and matched layout controls](fasttext_native_evidence_20261031/README.md)
 - [Original DATrie / mark-compact contribution ablations](structural_native_evidence_20261030/README.md)

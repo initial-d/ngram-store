@@ -1,0 +1,19 @@
+test_bundle_corruption_and_unknown_config_are_rejected (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_bundle_corruption_and_unknown_config_are_rejected) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_byte_capped_blocks_preserve_full_and_cached_logits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_byte_capped_blocks_preserve_full_and_cached_logits) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_cached_chunks_and_greedy_generation_preserve_hash_and_nonzero_conv_history (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cached_chunks_and_greedy_generation_preserve_hash_and_nonzero_conv_history) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_complete_forward_rows_and_tied_backbone_survive_without_source_checkpoint (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_complete_forward_rows_and_tied_backbone_survive_without_source_checkpoint) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_complete_quality_oracle_on_trained_fixture (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_complete_quality_oracle_on_trained_fixture) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_cpu_row_cache_full_and_cached_logits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cpu_row_cache_full_and_cached_logits) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_cuda_row_cache_full_and_cached_logits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_cuda_row_cache_full_and_cached_logits) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_gate_warmup_requires_checkpoint_step_metadata (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_gate_warmup_requires_checkpoint_step_metadata) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_incomplete_checkpoint_fails_before_publishing_bundle (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_incomplete_checkpoint_fails_before_publishing_bundle) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_independent_requests_and_invalid_cache_inputs (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_independent_requests_and_invalid_cache_inputs) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_indexed_input_shards_preserve_full_model (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_indexed_input_shards_preserve_full_model) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_staged_cpu_model_prefetch_preserves_full_and_cached_logits (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_staged_cpu_model_prefetch_preserves_full_and_cached_logits) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_staged_cuda_backbone_host_hashes_and_device_decode_history (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_staged_cuda_backbone_host_hashes_and_device_decode_history) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+test_staged_mps_backbone_host_hashes_and_device_decode_history (tests.test_tinyengram_checkpoint.TinyEngramCheckpointTest.test_staged_mps_backbone_host_hashes_and_device_decode_history) ... skipped 'pinned TinyEngram source, transformers 4.57.3, PyTorch and C compiler required'
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.000s
+
+OK (skipped=14)

@@ -1,0 +1,10 @@
+test_bootstrap_weights_targets_and_is_repeatable (tests.test_lm_quality_metrics.NextTokenMetricsTest.test_bootstrap_weights_targets_and_is_repeatable) ... ok
+test_identical_logits_and_invalid_targets (tests.test_lm_quality_metrics.NextTokenMetricsTest.test_identical_logits_and_invalid_targets) ... ok
+test_kl_direction_matches_analytic_distribution (tests.test_lm_quality_metrics.NextTokenMetricsTest.test_kl_direction_matches_analytic_distribution) ... ok
+test_shift_and_final_position_exclusion (tests.test_lm_quality_metrics.NextTokenMetricsTest.test_shift_and_final_position_exclusion) ... ok
+test_branch_effect_alone_does_not_qualify_identity (tests.test_lm_quality_metrics.QualificationTest.test_branch_effect_alone_does_not_qualify_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.008s
+
+OK

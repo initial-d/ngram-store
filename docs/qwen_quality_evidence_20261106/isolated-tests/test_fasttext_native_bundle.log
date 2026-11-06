@@ -1,0 +1,8 @@
+test_documented_plain_text_prepare_train_export_query_workflow (tests.test_fasttext_native_bundle.NativeFastTextTest.test_documented_plain_text_prepare_train_export_query_workflow) ... skipped 'legacy bundled DATrie/FastText require Linux x86-64'
+test_real_model_all_rows_and_legacy_inference_are_exact (tests.test_fasttext_native_bundle.NativeFastTextTest.test_real_model_all_rows_and_legacy_inference_are_exact) ... skipped 'legacy bundled DATrie/FastText require Linux x86-64'
+test_rejects_truncated_duplicate_and_out_of_range_registry (tests.test_fasttext_native_bundle.RegistryTest.test_rejects_truncated_duplicate_and_out_of_range_registry) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK (skipped=2)

@@ -92,6 +92,40 @@ class TinyEngramCheckpointTest(unittest.TestCase):
         return load_tinyengram_checkpoint(path, upstream_dir=SOURCE, native_library=self.library,
                                          native_cache_bytes=2048, query_chunk_rows=3, **kwargs)
 
+    def test_complete_quality_oracle_on_trained_fixture(self):
+        import hashlib
+        # This trained miniature fixture checks the evaluator plumbing, not
+        # the usefulness of the real Qwen branch or compression quality.
+        checkpoint = self.root / "quality-checkpoint"
+        shutil.copytree(self.checkpoint, checkpoint)
+        (checkpoint / "trainer_state.json").write_text('{"global_step": 0}')
+        corpus = self.root / "quality-corpus.txt"
+        corpus.write_text(" " * 16384 + " ".join(f"word{i % 20}" for i in range(80)))
+        protocol = self.root / "quality-protocol.json"
+        protocol.write_text(json.dumps({
+            "schema_version": 1, "excluded_prefix_characters": 16384,
+            "window_tokens": 8, "calibration_windows": 2, "test_windows": 2,
+            "threads": 1, "minimum_ppl_effect": .01,
+            "corpus_sha256": hashlib.sha256(corpus.read_bytes()).hexdigest(),
+        }))
+        report = self.root / "quality-report.json"
+        subprocess.run([
+            os.sys.executable, "-m", "tools.evaluate_tinyengram_quality",
+            "--checkpoint", str(checkpoint), "--bundle", str(self.export(checkpoint)),
+            "--corpus", str(corpus), "--upstream-dir", str(SOURCE),
+            "--native-library", str(self.library), "--protocol", str(protocol),
+            "--report-out", str(report),
+        ], cwd=ROOT, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        result = json.loads(report.read_text())
+        self.assertEqual(result["status"], "passed")
+        for split in ("calibration", "test"):
+            self.assertEqual(result["summary"][split]["native-fp32"]["targets"], 14)
+            self.assertTrue(result["summary"][split]["native-fp32"]["all_logits_byte_exact"])
+            for i in range(2):
+                source = result["windows"]["memory-off"][split][i]["source_nll"]
+                for name in ("head-mean", "native-fp32"):
+                    self.assertEqual(result["windows"][name][split][i]["source_nll"], source)
+
     def check_staged_model(self, device, cache_policy="blocks"):
         import copy
         from tools.tinyengram_checkpoint import TinyEngramModel

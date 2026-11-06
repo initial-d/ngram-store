@@ -1,0 +1,15 @@
+test_automatic_fallback_and_forced_native_requirement (tests.test_budgeted_bags.BudgetedBagTests.test_automatic_fallback_and_forced_native_requirement) ... ok
+test_bounds_enclose_exact_fraction_source_sums_and_means (tests.test_budgeted_bags.BudgetedBagTests.test_bounds_enclose_exact_fraction_source_sums_and_means) ... ok
+test_cancellation_padding_empty_batches_and_explicit_budgets (tests.test_budgeted_bags.BudgetedBagTests.test_cancellation_padding_empty_batches_and_explicit_budgets) ... ok
+test_centered_bound_improves_partial_and_unequal_queries (tests.test_budgeted_bags.BudgetedBagTests.test_centered_bound_improves_partial_and_unequal_queries) ... ok
+test_chunk_invariance_hash_binding_cleanup_and_source_mismatch (tests.test_budgeted_bags.BudgetedBagTests.test_chunk_invariance_hash_binding_cleanup_and_source_mismatch) ... ok
+test_cli_opt_in_gate_and_default_strict_path (tests.test_budgeted_bags.BudgetedBagTests.test_cli_opt_in_gate_and_default_strict_path) ... ok
+test_native_and_python_compilers_preserve_all_bound_bytes_and_gates (tests.test_budgeted_bags.BudgetedBagTests.test_native_and_python_compilers_preserve_all_bound_bytes_and_gates) ... ok
+test_native_compiler_differential_randomized_arithmetic_queries (tests.test_budgeted_bags.BudgetedBagTests.test_native_compiler_differential_randomized_arithmetic_queries) ... ok
+test_native_pointer_abi_rejects_malformed_inputs_and_capacities (tests.test_budgeted_bags.BudgetedBagTests.test_native_pointer_abi_rejects_malformed_inputs_and_capacities) ... ok
+test_nonfinite_native_output_is_refused (tests.test_budgeted_bags.BudgetedBagTests.test_nonfinite_native_output_is_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.416s
+
+OK

@@ -1,0 +1,3 @@
+d1e65a71c94756b3e17925e193f5acda7fff804985420342150d038c8d7e531a  /llm-align/duyimin/ngram-qwen-quality-20261106/libmeft_rows.so
+997a391f38ae2403a59702482c316ffa24fe9fdf48076237b5442b8d2d26358d  /llm-align/duyimin/ngram-qwen-quality-20261106/source/native/meft_rows.c
+cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
