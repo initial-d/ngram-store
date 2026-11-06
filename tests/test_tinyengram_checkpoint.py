@@ -185,6 +185,55 @@ class TinyEngramCheckpointTest(unittest.TestCase):
             torch.use_deterministic_algorithms(old)
             torch.backends.cuda.matmul.allow_tf32 = old_tf32
 
+    def run_identity_training_fixture(self,device):
+        import hashlib
+        from transformers import Qwen3ForCausalLM
+        base_path = self.root / ("identity-base-"+device)
+        base = Qwen3ForCausalLM(self.original.config)
+        state = {k:v for k,v in self.original.state_dict().items() if "engram_layers" not in k}
+        base.load_state_dict(state,strict=True)
+        base.save_pretrained(base_path,safe_serialization=True)
+        from transformers import AutoTokenizer
+        AutoTokenizer.from_pretrained(self.checkpoint,local_files_only=True).save_pretrained(base_path)
+        corpus = self.root / ("identity-corpus-"+device+".txt")
+        corpus.write_text(" ".join(f"word{i%20}" for i in range(400)))
+        protocol = self.root / ("identity-protocol-"+device+".json")
+        protocol.write_text(json.dumps({"schema_version":1,
+             "corpus_sha256":hashlib.sha256(corpus.read_bytes()).hexdigest(),
+             "training_fraction":.8,"test_start_fraction":.9,"seeds":[3],
+             "window_tokens":8,"training_windows":8,"batch_size":2,"epochs":2,
+             "ngram_vocab_sizes":[17,23],"max_ngram_size":3,
+             "n_embed_per_ngram":8,"n_head_per_ngram":2,"layer_from_end":2,
+             "kernel_size":3,"branch_learning_rate":.001,"memory_learning_rate":.003,
+             "gradient_clip":1.,"threads":1,"calibration_windows":2,"test_windows":2,
+             "minimum_ppl_effect":.01}))
+        output = self.root / ("identity-training-"+device)
+        run = subprocess.run([os.sys.executable,"-m","tools.train_tinyengram_identity",
+             "--device",device,"--base-model",str(base_path),"--corpus",str(corpus),
+             "--upstream-dir",str(SOURCE),"--native-library",str(self.library),
+             "--protocol",str(protocol),"--output-dir",str(output)],cwd=ROOT,
+             stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
+        report = json.loads((output/"report.json").read_text())
+        self.assertEqual(report["status"],"passed")
+        seed = report["seeds"]["3"]
+        self.assertEqual(seed["steps"],8)
+        self.assertTrue(seed["frozen_weight_hash_unchanged"])
+        self.assertGreater(seed["memory"]["changed_rows"],0)
+        self.assertTrue(seed["reuse_check"]["branch_gradients_exact"])
+        for split in ("calibration","test"):
+            summary = seed["quality"]["summary"][split]["native-fp32"]
+            self.assertEqual(summary["targets"],14)
+            self.assertTrue(summary["all_logits_byte_exact"])
+        self.assertTrue((output/"seed-3"/"checkpoint"/"model.safetensors").exists())
+
+    def test_cpu_identity_training_exports_native_and_evaluates_complete_splits(self):
+        self.run_identity_training_fixture("cpu")
+
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_identity_training_exports_native_and_evaluates_complete_splits(self):
+        self.run_identity_training_fixture("cuda")
+
     def check_staged_model(self, device, cache_policy="blocks"):
         import copy
         from tools.tinyengram_checkpoint import TinyEngramModel
