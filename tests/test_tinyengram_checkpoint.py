@@ -288,6 +288,10 @@ class TinyEngramCheckpointTest(unittest.TestCase):
     def test_cuda_row_cache_full_and_cached_logits(self):
         self.check_staged_model("cuda", "rows")
 
+    @unittest.skipUnless(torch is not None and torch.cuda.is_available(), "real CUDA required")
+    def test_cuda_default_cached_lookup_preserves_full_history_and_generation(self):
+        self.check_staged_model('cuda',None)
+
     def test_staged_cpu_model_prefetch_preserves_full_and_cached_logits(self):
         self.check_staged_model("cpu")
 
