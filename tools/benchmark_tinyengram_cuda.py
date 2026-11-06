@@ -89,6 +89,7 @@ def main():
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--mode", choices=("resident", "dense-offload", "native", "codec"), required=True)
     parser.add_argument('--codec-directory',type=Path)
+    parser.add_argument('--report-name',help='unique filename stem for multiple codec workers against one resident reference')
     parser.add_argument('--corpus-fraction',type=float,default=.8,help='start of chronological calibration segment in whole corpus')
     parser.add_argument('--allocator-fraction',type=float,default=.10)
     parser.add_argument("--tokens", default="32,128")
@@ -104,7 +105,9 @@ def main():
     if not 0 <= args.corpus_fraction < .9 or not 0 < args.allocator_fraction <= .5:
         parser.error('invalid corpus or allocator fraction')
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    path = args.output_dir / (args.mode + ".json")
+    if args.report_name and (Path(args.report_name).name!=args.report_name or args.report_name in ('.','..')):
+        parser.error('report-name must be a filename stem')
+    path = args.output_dir / ((args.report_name or args.mode) + ".json")
     if path.exists():
         parser.error("previous report exists; choose a fresh output directory")
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
@@ -112,7 +115,7 @@ def main():
               "command": shlex.join(sys.orig_argv), "inputs": _fingerprint(args.checkpoint, args.bundle, args.corpus),
               "source_hashes": {name: file_sha256(Path(__file__).parent / name) for name in
                                 ("benchmark_tinyengram_cuda.py", "benchmark_device_gather.py",
-                                 "device_row_adapter.py", "tinyengram_checkpoint.py")},
+                                 "device_row_adapter.py", "tinyengram_checkpoint.py",'codec_staged_baseline.py','row_codec_utils.py')},
               "settings": {"tokens": counts, "decode_tokens": args.decode_tokens, "warmup": args.warmup,
                            "repeat": args.repeat, "staging_rows": args.staging_rows, "cache_bytes": args.cache_bytes,
                            "corpus_fraction":args.corpus_fraction,"allocator_fraction":args.allocator_fraction},
