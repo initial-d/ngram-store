@@ -19,6 +19,7 @@
 
 ## Source-linked trained results
 
+- [Independent n-gram keys: complete 0.6B/4B matched hash controls and paired uncertainty](ngram_identity_evidence_20261107/README.md)
 - [Eight-GPU Qwen: trained identity controls, complete codecs and faster native hot paths](qwen_gpu_grid_evidence_20261106/README.md)
 - [Held-out Qwen: memory branch effect, head-constant control and native output identity](qwen_quality_evidence_20261106/README.md)
 - [Independent news: 15 controls, fair hybrids and the necessity boundary](news_shift_evidence_20261105/README.md)

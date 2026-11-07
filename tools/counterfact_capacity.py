@@ -49,7 +49,8 @@ def environment():
     e={'python':sys.version,'torch':torch.__version__,'transformers':transformers.__version__,
        'numpy':np.__version__,'os':platform.platform(),'cuda':torch.version.cuda,'tf32':False,
        'command':shlex.join(sys.orig_argv),'code_sha':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
-       'source_hashes':{p.name:sha(p) for p in [*Path(__file__).parent.glob('counterfact*.py'),Path(__file__).parent/'late_memory_replay.py']}}
+       'source_hashes':{p.name:sha(p) for p in [*Path(__file__).parent.glob('counterfact*.py'),Path(__file__).parent/'late_memory_replay.py',
+                                             *Path(__file__).parent.glob('ngram_identity.py')]}}
     if torch.cuda.is_available():
         p=torch.cuda.get_device_properties(0)
         e.update(gpu=p.name,gpu_uuid=str(p.uuid),gpu_memory=p.total_memory)
@@ -174,6 +175,16 @@ def train(args):
         control=variant['control'];enabled=control!='off'
         model,tok,replay,module,cfg,loading=setup(args.base,args.upstream,control,variant['vocab_sizes'],args.seed,
             suffix_layers=protocol['suffix_layers'],train_decoder_suffix=protocol.get('train_decoder_suffix',True))
+        if protocol.get('identity_control'):
+            from .ngram_identity import Vocabulary,configure_memory
+            identity_path=getattr(args,'identity_vocabulary',None)
+            if identity_path is None:raise ValueError('identity protocol requires its training-only vocabulary')
+            vocabulary=Vocabulary.load(identity_path)
+            if vocabulary.metadata['prepared_sha256']!=sha(args.prepared/'prepare.json'):
+                raise ValueError('identity vocabulary comes from different prepared data')
+            report['identity']=configure_memory(replay,module,vocabulary,variant['identity']=='exact',args.seed)
+            report['identity'].update(vocabulary_sha256=sha(identity_path),vocabulary_file_bytes=identity_path.stat().st_size)
+            report['identity_vocabulary_metadata']=vocabulary.metadata
         report.update(loading=loading,base_model=str(args.base),frozen_weight_sha256=replay.frozen_hash(),
             frozen_decoder_suffix_sha256=replay.frozen_suffix_hash(),
             trained_parameter_names=[n for n,p in model.named_parameters() if p.requires_grad],
@@ -221,6 +232,15 @@ def train(args):
         state={n:p.detach().cpu().contiguous() for n,p in model.named_parameters() if p.requires_grad}
         save_file(state,str(args.output/'delta.safetensors'));del state
         report['delta']={'bytes':(args.output/'delta.safetensors').stat().st_size,'sha256':sha(args.output/'delta.safetensors')}
+        if protocol.get('identity_control'):
+            import shutil
+            if sha(identity_path)!=report['identity']['vocabulary_sha256']:raise ValueError('identity vocabulary changed during training')
+            shutil.copyfile(identity_path,args.output/'vocabulary.npz')
+            write(args.output/'model-recipe.json',{'base_model':str(args.base),'protocol':protocol,'seed':args.seed,'variant':args.variant,
+                'vocabulary':'vocabulary.npz','vocabulary_sha256':report['identity']['vocabulary_sha256'],
+                'delta':'delta.safetensors','delta_sha256':report['delta']['sha256'],'identity':report['identity'],
+                'contract':'Immutable original base plus trained branch delta and training-only canonical key vocabulary'})
+            report['identity_bundle_bytes']=sum((args.output/p).stat().st_size for p in ('delta.safetensors','vocabulary.npz','model-recipe.json'))
         report['status']='evaluating';save();scores={};evaluation_started=time.perf_counter()
         all_eval=sorted({p[k] for c in payload['cases'] for pairs in c['groups'].values() for p in pairs for k in ('new','true')})
         with torch.no_grad():
@@ -234,6 +254,21 @@ def train(args):
         report['evaluation_seconds']=time.perf_counter()-evaluation_started
         report['metrics']={s:summarize([c for c in cases if s=='all' or c['split']==s]) for s in ('all','calibration','test')}
         report['score_artifacts']={p:{'sha256':sha(args.output/p),'bytes':(args.output/p).stat().st_size} for p in ('choice-scores.json','case-scores.json')}
+        if protocol.get('identity_control') and variant['identity']=='hash':
+            # Same trained hash weights, but the usual open-vocabulary bucket
+            # lookup at test time. Keep this deployment control separate.
+            replay.memory.hash_mapping.native_oov=True;scores_native={};native_started=time.perf_counter()
+            with torch.no_grad():
+                for n,valid in enumerate(batch_indices(all_eval,seq,protocol['batch_size'])):
+                    b=filled(valid,protocol['batch_size']);ids=ids_for(b,seq);k=max(len(seq[i]['target_ids']) for i in b)+1
+                    logits=replay.forward(ids,prefixes.get(b,replay.device),True,k)
+                    scores_native.update(choice_scores(logits,b,seq,len(valid)))
+                    if n%200==0:print(json.dumps({'stage':'native-oov-eval','batches':n,'choices':len(scores_native)}),flush=True)
+            native=case_metrics(payload['cases'],scores_native);write(args.output/'case-scores-native-oov.json',native)
+            report['native_oov_control']={'same_trained_delta':True,'case_scores_sha256':sha(args.output/'case-scores-native-oov.json'),
+                'evaluation_seconds':time.perf_counter()-native_started,
+                'metrics':{s:summarize([c for c in native if s=='all' or c['split']==s]) for s in ('all','calibration','test')}}
+            replay.memory.hash_mapping.native_oov=False
         report.update(status='complete',optimizer_steps=steps,peak_cuda_allocated=torch.cuda.max_memory_allocated());save()
     except BaseException as error:
         report.update(status='failed',error=repr(error),traceback=traceback.format_exc());save();raise
@@ -316,7 +351,9 @@ def main():
             p.add_argument('--shard',type=int,required=True);p.add_argument('--shards',type=int,required=True);p.add_argument('--suffix',type=int,default=8)
         else:
             p.add_argument('--cache',type=Path,required=True);p.add_argument('--protocol',type=Path,required=True)
-            if name=='train':p.add_argument('--seed',type=int,required=True);p.add_argument('--variant',required=True)
+            if name=='train':
+                p.add_argument('--seed',type=int,required=True);p.add_argument('--variant',required=True)
+                p.add_argument('--identity-vocabulary',type=Path)
     p=sub.add_parser('retrieval')
     for x in ('base','data','protocol','output'):p.add_argument('--'+x,type=Path,required=True)
     p.add_argument('--edits',type=int,required=True)

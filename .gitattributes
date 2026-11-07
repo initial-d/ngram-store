@@ -18,3 +18,7 @@ docs/cross_corpus_evidence_20261102/updated-worker-test.txt whitespace=-blank-at
 docs/qwen_gpu_grid_evidence_20261106/**/*.gz linguist-generated=true
 docs/qwen_gpu_grid_evidence_20261106/**/*.log linguist-generated=true
 docs/qwen_gpu_grid_evidence_20261106/runtime/** linguist-generated=true
+docs/ngram_identity_evidence_20261107/reports/** linguist-generated=true
+docs/ngram_identity_evidence_20261107/runtime/** linguist-generated=true
+docs/ngram_identity_evidence_20261107/*.npz linguist-generated=true
+docs/ngram_identity_evidence_20261107/*.log linguist-generated=true

@@ -1,0 +1,543 @@
+{
+  "status": "complete",
+  "environment": {
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.3.0",
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "cuda": "13.0",
+    "tf32": false,
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.counterfact_capacity train --base /llm-align/open_models/Qwen3/Qwen3-0.6B --upstream /llm-align/duyimin/meft-cuda-20261030/upstream --prepared /llm-align/duyimin/ngram-identity-vs-hash-20261107/prepared-qwen06-1024 --cache /llm-align/duyimin/ngram-identity-vs-hash-20261107/cache-qwen06-1024 --identity-vocabulary /llm-align/duyimin/ngram-identity-vs-hash-20261107/vocab-qwen06-1024/vocabulary.npz --protocol /llm-align/duyimin/ngram-identity-vs-hash-20261107/source/benchmarks/ngram_identity_v1.json --seed 11 --variant hash --output /llm-align/duyimin/ngram-identity-vs-hash-20261107/runs/qwen06-1024-hash-s11",
+    "code_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+    "source_hashes": {
+      "counterfact_runner.py": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+      "counterfact_identity.py": "ac26ef2ae4afbbd6e7042bd762448f7d901a02e5b5ade3f8f497d2c4cde9c9c4",
+      "counterfact_retrieval.py": "14d2d1d491ddea572dd52e2441fbb07201e7c8de67fc45f61227746bb7c7d93b",
+      "counterfact_native.py": "21334ae4e1846312017651fede609bef2b31820eb9dc010fab1bf3c92636c28d",
+      "counterfact_models.py": "aa5e71421f5428da0fd9d34b498b24767edebccaecacf2b3847a64d9e776647b",
+      "counterfact_preflight.py": "e9cf2d771e7cdec6de2461cb12e557db546fc1564bdc1ba5e6e5ba2000a3d461",
+      "counterfact_identity_runner.py": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+      "counterfact_data.py": "bf189ce0c3a40079674d73587a6c8de029693a650abd99ff9d4a4f08c04e1d85",
+      "counterfact_analyze.py": "9dcfbf2cb0d03d96884a966589941af9a91d1ea036889df05332b4755649428c",
+      "counterfact_resume.py": "246bb92c72dbacde543913255e4be500adce698df2cbb27b6f214e9d5b480d28",
+      "counterfact_capacity.py": "7d127ca29cdb3bd5fb90ae0ed6ebe37e174e4befb2fcf4787bc6b90401c9766b",
+      "late_memory_replay.py": "5f0189f15853200a81ec54f696b2b894225a512ca74811f89d107f4a891b6e9e",
+      "ngram_identity.py": "971b2ac7c1c1abd5b4bb481b47fcb20837cdc4ef6c8df9c9057d389b2a5055df"
+    },
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "bc11cba9-e025-335f-83a8-9ec15f87a496",
+    "gpu_memory": 84987740160
+  },
+  "seed": 11,
+  "variant": "hash",
+  "protocol": {
+    "schema_version": 1,
+    "identity_control": true,
+    "dataset": "MEMIT official MultiCounterFact",
+    "data_sha256": "977a6acce4705507b5fd6bfcea8f61cd78f9ed0f9cd9c9a6bcd6c8a3ed61c833",
+    "models": [
+      "Qwen3-0.6B",
+      "Qwen3.5-4B"
+    ],
+    "edit_counts": [
+      1024,
+      20877
+    ],
+    "seeds": [
+      3,
+      7,
+      11
+    ],
+    "batch_size": 8,
+    "suffix_layers": 8,
+    "train_decoder_suffix": false,
+    "epochs": 20,
+    "suffix_lr": 1e-05,
+    "branch_lr": 0.001,
+    "row_lr": 0.01,
+    "clip_norm": 1.0,
+    "optimizer": "Adam defaults; no weight decay; same order and exposures across paired controls",
+    "precision": "FP32 parameters and optimizer; PyTorch TF32 disabled; installed FLA solver internal TF32 disclosed",
+    "variants": {
+      "exact": {
+        "control": "full",
+        "vocab_sizes": [
+          257,
+          521,
+          1031
+        ],
+        "identity": "exact"
+      },
+      "hash": {
+        "control": "full",
+        "vocab_sizes": [
+          257,
+          521,
+          1031
+        ],
+        "identity": "hash"
+      }
+    },
+    "vocab_sizes_note": "Constructor placeholders only; replaced before training by training-vocabulary-dependent head sizes",
+    "vocabulary": "Only rewrite training inputs before terminal EOS; preserve pinned Engram compressed-token normalization, padding and orders 2/3/4; never add evaluation keys",
+    "head_layout": "Two dimension-32 heads per order; hash uses original consecutive-prime rule at U buckets plus a reserved zero row. Exact has U logical key rows plus zero and never-addressed padding to match hash physical row bytes/parameters exactly",
+    "initialization": "Exact per-key rows clone corresponding matched hash bucket rows, including all heads; identical nonrow parameters and initial effective vectors by seed",
+    "primary_oov": "Unseen canonical keys use identical all-zero embedding in both variants; zero rows remain frozen",
+    "deployment_control": "The same trained hash checkpoint is separately evaluated with its ordinary open-vocabulary bucket lookup; no extra training or evaluation-vocabulary indexing",
+    "targets": "Rewrite target_new and EOS only; all prompt losses and duplicate fillers masked",
+    "checkpoint_rule": "Final fixed epoch only; no test-based model, epoch, key-domain or hyperparameter selection",
+    "calibration": "Official case index modulo 10 equals zero; other cases test; both folds rewrite facts edited, paraphrases/neighborhoods never trained",
+    "metrics": [
+      "official rewrite success",
+      "official paraphrase success",
+      "official neighborhood success",
+      "harmonic score",
+      "teacher-forced full-target accuracy",
+      "key coverage",
+      "individual and joint hash-address collisions",
+      "row and key bytes"
+    ],
+    "primary_comparison": "Exact minus equal-row-budget hash under identical trained-key coverage, paired by seed and official case; report all ES/PS/NS and 2000 paired bootstrap replicates",
+    "claim_gate": "Positive test harmonic-score interval with no more than 2 percentage points test locality regression; separately test against the open-vocabulary hash deployment control. Three seeds and shared subjects limit inference",
+    "limitations": "Frozen-backbone learned-memory editing, not pretraining or verified real facts. Canonical normalization still merges raw token identities. Full vocabulary key/index costs count in storage. No advantage is claimed before complete results; no generation metrics or native serving dominance follows"
+  },
+  "protocol_sha256": "3c948f02c829d51818cadc3ce71ce951ccd14c54206c532b88d67b8c6acae1e7",
+  "prepared_sha256": "0c6a8c44fac633479dadb6c1ddc0ba95e67b8692dcea0318b709b009c2329563",
+  "elapsed_seconds": 385.87119144713506,
+  "identity": {
+    "addressing": "shared-hash-bucket",
+    "head_sizes": [
+      5432,
+      5438,
+      6702,
+      6704,
+      7394,
+      7412
+    ],
+    "physical_rows": 39082,
+    "row_bytes": 5002496,
+    "unique_keys_per_order": {
+      "2": 5430,
+      "3": 6693,
+      "4": 7390
+    },
+    "logical_exact_rows_with_zero_sentinels": 39032,
+    "initialization": "Exact key vectors clone matched hash vectors per head; all nonrow parameters identical by seed",
+    "oov": "All-zero per-head embedding for unseen canonical keys in the primary pair",
+    "collision_audit": {
+      "2": {
+        "unique_training_keys": 5430,
+        "training_occurrences": 9148,
+        "heads": [
+          {
+            "buckets": 5431,
+            "occupied_buckets": 3480,
+            "keys_in_shared_buckets": 3387,
+            "training_occurrences_in_shared_buckets": 5945,
+            "max_bucket_keys": 6
+          },
+          {
+            "buckets": 5437,
+            "occupied_buckets": 3406,
+            "keys_in_shared_buckets": 3472,
+            "training_occurrences_in_shared_buckets": 6030,
+            "max_bucket_keys": 6
+          }
+        ],
+        "distinct_joint_head_addresses": 5430,
+        "key_bytes_uncompressed": 86880
+      },
+      "3": {
+        "unique_training_keys": 6693,
+        "training_occurrences": 9148,
+        "heads": [
+          {
+            "buckets": 6701,
+            "occupied_buckets": 4265,
+            "keys_in_shared_buckets": 4193,
+            "training_occurrences_in_shared_buckets": 5850,
+            "max_bucket_keys": 6
+          },
+          {
+            "buckets": 6703,
+            "occupied_buckets": 4251,
+            "keys_in_shared_buckets": 4183,
+            "training_occurrences_in_shared_buckets": 5727,
+            "max_bucket_keys": 5
+          }
+        ],
+        "distinct_joint_head_addresses": 6693,
+        "key_bytes_uncompressed": 160632
+      },
+      "4": {
+        "unique_training_keys": 7390,
+        "training_occurrences": 9148,
+        "heads": [
+          {
+            "buckets": 7393,
+            "occupied_buckets": 4604,
+            "keys_in_shared_buckets": 4798,
+            "training_occurrences_in_shared_buckets": 6061,
+            "max_bucket_keys": 7
+          },
+          {
+            "buckets": 7411,
+            "occupied_buckets": 4714,
+            "keys_in_shared_buckets": 4617,
+            "training_occurrences_in_shared_buckets": 5580,
+            "max_bucket_keys": 6
+          }
+        ],
+        "distinct_joint_head_addresses": 7389,
+        "key_bytes_uncompressed": 236480
+      }
+    },
+    "vocabulary_sha256": "069b57252cb53513df0a8774ccd79fed33e18f08f455034178542faa525faa30",
+    "vocabulary_file_bytes": 101289
+  },
+  "identity_vocabulary_metadata": {
+    "domain": "Canonical compressed-token training keys only, orders 2/3/4; terminal EOS output excluded",
+    "lookup_sha256": "c898bd8c276c4e04930e22311f2c4bb32c7f8ac1a03924a3fb47de15e95f4e99",
+    "normalization": "Same pinned Engram compressed tokenizer as hash controls; not raw-token identity",
+    "oov_rule": "All-zero per-head embedding for unseen canonical keys in the primary pair",
+    "pad_id": 107431,
+    "prepared_sha256": "0c6a8c44fac633479dadb6c1ddc0ba95e67b8692dcea0318b709b009c2329563",
+    "schema_version": 1,
+    "training_sequences": 1024
+  },
+  "loading": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "base_model": "/llm-align/open_models/Qwen3/Qwen3-0.6B",
+  "frozen_weight_sha256": "60ac677181c3058c755ef9afaf042a3c68de8c03cb5964806d4994389905ca53",
+  "frozen_decoder_suffix_sha256": "252d6a67dc6e365a355bf45c4a67680c364503fcaa8ea476b0bc2f57f62f759d",
+  "trained_parameter_names": [
+    "ngram_memory.multi_head_embedding.embedding.weight",
+    "ngram_memory.short_conv.conv.weight",
+    "ngram_memory.short_conv.norms.0.weight",
+    "ngram_memory.value_proj.weight",
+    "ngram_memory.value_proj.bias",
+    "ngram_memory.key_projs.0.weight",
+    "ngram_memory.key_projs.0.bias",
+    "ngram_memory.norm1.0.weight",
+    "ngram_memory.norm2.0.weight"
+  ],
+  "trainable_parameters": 1652032,
+  "memory_parameters": 1652032,
+  "physical_rows": 39082,
+  "prefix_files": [
+    {
+      "file": "/llm-align/duyimin/ngram-identity-vs-hash-20261107/cache-qwen06-1024/shard-0.f32",
+      "sha256": "17e66a32cff4c10ea518721a7812c639466337de22076463ce83e00f0cb767b3"
+    },
+    {
+      "file": "/llm-align/duyimin/ngram-identity-vs-hash-20261107/cache-qwen06-1024/shard-1.f32",
+      "sha256": "6741db422f0c12e4ba311909e76b7354e2bc635d1fa8474f85edead2d1c2f703"
+    }
+  ],
+  "replay_check": {
+    "logits_byte_exact": true,
+    "all_masked_gradients_exact": true,
+    "trainable_gradients": 9
+  },
+  "epochs": [
+    {
+      "epoch": 0,
+      "mean_batch_loss": 10.484679456967026,
+      "actual_sequences": 1024,
+      "steps": 134,
+      "elapsed_seconds": 10.15411761496216
+    },
+    {
+      "epoch": 1,
+      "mean_batch_loss": 3.1351078962212178,
+      "actual_sequences": 1024,
+      "steps": 268,
+      "elapsed_seconds": 8.493843595962971
+    },
+    {
+      "epoch": 2,
+      "mean_batch_loss": 2.317839460586434,
+      "actual_sequences": 1024,
+      "steps": 402,
+      "elapsed_seconds": 8.494018549099565
+    },
+    {
+      "epoch": 3,
+      "mean_batch_loss": 1.875484836190494,
+      "actual_sequences": 1024,
+      "steps": 536,
+      "elapsed_seconds": 8.490955586079508
+    },
+    {
+      "epoch": 4,
+      "mean_batch_loss": 1.4045589093619317,
+      "actual_sequences": 1024,
+      "steps": 670,
+      "elapsed_seconds": 8.54163373587653
+    },
+    {
+      "epoch": 5,
+      "mean_batch_loss": 0.9354590153766434,
+      "actual_sequences": 1024,
+      "steps": 804,
+      "elapsed_seconds": 8.535511581925675
+    },
+    {
+      "epoch": 6,
+      "mean_batch_loss": 0.49058679818634443,
+      "actual_sequences": 1024,
+      "steps": 938,
+      "elapsed_seconds": 8.465590671170503
+    },
+    {
+      "epoch": 7,
+      "mean_batch_loss": 0.20947383771956302,
+      "actual_sequences": 1024,
+      "steps": 1072,
+      "elapsed_seconds": 8.55596979195252
+    },
+    {
+      "epoch": 8,
+      "mean_batch_loss": 0.08880037130655916,
+      "actual_sequences": 1024,
+      "steps": 1206,
+      "elapsed_seconds": 8.805290603078902
+    },
+    {
+      "epoch": 9,
+      "mean_batch_loss": 0.03974397751457517,
+      "actual_sequences": 1024,
+      "steps": 1340,
+      "elapsed_seconds": 8.5163498360198
+    },
+    {
+      "epoch": 10,
+      "mean_batch_loss": 0.01882230590007254,
+      "actual_sequences": 1024,
+      "steps": 1474,
+      "elapsed_seconds": 8.468277607811615
+    },
+    {
+      "epoch": 11,
+      "mean_batch_loss": 0.011580313498557392,
+      "actual_sequences": 1024,
+      "steps": 1608,
+      "elapsed_seconds": 8.459469564026222
+    },
+    {
+      "epoch": 12,
+      "mean_batch_loss": 0.007382961466157837,
+      "actual_sequences": 1024,
+      "steps": 1742,
+      "elapsed_seconds": 8.501840222859755
+    },
+    {
+      "epoch": 13,
+      "mean_batch_loss": 0.005753626936608787,
+      "actual_sequences": 1024,
+      "steps": 1876,
+      "elapsed_seconds": 8.466498678084463
+    },
+    {
+      "epoch": 14,
+      "mean_batch_loss": 0.004858542300166507,
+      "actual_sequences": 1024,
+      "steps": 2010,
+      "elapsed_seconds": 8.46495392685756
+    },
+    {
+      "epoch": 15,
+      "mean_batch_loss": 0.004121900301986138,
+      "actual_sequences": 1024,
+      "steps": 2144,
+      "elapsed_seconds": 8.636400430928916
+    },
+    {
+      "epoch": 16,
+      "mean_batch_loss": 0.003541331073189321,
+      "actual_sequences": 1024,
+      "steps": 2278,
+      "elapsed_seconds": 8.54781504580751
+    },
+    {
+      "epoch": 17,
+      "mean_batch_loss": 0.0031245549417052198,
+      "actual_sequences": 1024,
+      "steps": 2412,
+      "elapsed_seconds": 8.497136966092512
+    },
+    {
+      "epoch": 18,
+      "mean_batch_loss": 0.0027439760173664,
+      "actual_sequences": 1024,
+      "steps": 2546,
+      "elapsed_seconds": 8.733808038989082
+    },
+    {
+      "epoch": 19,
+      "mean_batch_loss": 0.002439482770894946,
+      "actual_sequences": 1024,
+      "steps": 2680,
+      "elapsed_seconds": 8.58687243098393
+    }
+  ],
+  "training_seconds": 173.06900014402345,
+  "delta": {
+    "bytes": 6609040,
+    "sha256": "559deb4c931d4c780123a3345793f1dd7481a865ac1b5e62f82d4c2a99f4af6e"
+  },
+  "identity_bundle_bytes": 6717117,
+  "evaluation_seconds": 97.62306989403442,
+  "metrics": {
+    "all": {
+      "rewrite": {
+        "cases": 1024,
+        "prompts": 1024,
+        "success": 1.0,
+        "teacher_forced_accuracy": 1.0
+      },
+      "paraphrase": {
+        "cases": 1024,
+        "prompts": 2048,
+        "success": 0.5009765625,
+        "teacher_forced_accuracy": 0.13818359375
+      },
+      "neighborhood": {
+        "cases": 1024,
+        "prompts": 10240,
+        "success": 0.58076171875,
+        "teacher_forced_accuracy": 0.15625
+      },
+      "harmonic_score": 0.6358656266624074
+    },
+    "calibration": {
+      "rewrite": {
+        "cases": 103,
+        "prompts": 103,
+        "success": 1.0,
+        "teacher_forced_accuracy": 1.0
+      },
+      "paraphrase": {
+        "cases": 103,
+        "prompts": 206,
+        "success": 0.5436893203883495,
+        "teacher_forced_accuracy": 0.1650485436893204
+      },
+      "neighborhood": {
+        "cases": 103,
+        "prompts": 1030,
+        "success": 0.5728155339805825,
+        "teacher_forced_accuracy": 0.16601941747572818
+      },
+      "harmonic_score": 0.6543006139019077
+    },
+    "test": {
+      "rewrite": {
+        "cases": 921,
+        "prompts": 921,
+        "success": 1.0,
+        "teacher_forced_accuracy": 1.0
+      },
+      "paraphrase": {
+        "cases": 921,
+        "prompts": 1842,
+        "success": 0.496199782844734,
+        "teacher_forced_accuracy": 0.13517915309446255
+      },
+      "neighborhood": {
+        "cases": 921,
+        "prompts": 9210,
+        "success": 0.5816503800217155,
+        "teacher_forced_accuracy": 0.15515743756786102
+      },
+      "harmonic_score": 0.6336381870078257
+    }
+  },
+  "score_artifacts": {
+    "choice-scores.json": {
+      "sha256": "ae52d105fafcb050ad95365e8648c99e977b6c8e969e96b8a86f40c977041d73",
+      "bytes": 1685788
+    },
+    "case-scores.json": {
+      "sha256": "30917f15002b7d4ee3326d4f00a65d91c0db9fda4d5bd9521e9a688e43383d8f",
+      "bytes": 3065379
+    }
+  },
+  "native_oov_control": {
+    "same_trained_delta": true,
+    "case_scores_sha256": "fe88b694bd7ebb49a4f33f5a0a1578b0542b220d54acb0c170d4a1842971c744",
+    "evaluation_seconds": 94.23940810398199,
+    "metrics": {
+      "all": {
+        "rewrite": {
+          "cases": 1024,
+          "prompts": 1024,
+          "success": 1.0,
+          "teacher_forced_accuracy": 1.0
+        },
+        "paraphrase": {
+          "cases": 1024,
+          "prompts": 2048,
+          "success": 0.51708984375,
+          "teacher_forced_accuracy": 0.14306640625
+        },
+        "neighborhood": {
+          "cases": 1024,
+          "prompts": 10240,
+          "success": 0.58212890625,
+          "teacher_forced_accuracy": 0.15166015625
+        },
+        "harmonic_score": 0.6449210074569418
+      },
+      "calibration": {
+        "rewrite": {
+          "cases": 103,
+          "prompts": 103,
+          "success": 1.0,
+          "teacher_forced_accuracy": 1.0
+        },
+        "paraphrase": {
+          "cases": 103,
+          "prompts": 206,
+          "success": 0.5194174757281553,
+          "teacher_forced_accuracy": 0.1650485436893204
+        },
+        "neighborhood": {
+          "cases": 103,
+          "prompts": 1030,
+          "success": 0.5883495145631068,
+          "teacher_forced_accuracy": 0.16116504854368932
+        },
+        "harmonic_score": 0.6486621672090914
+      },
+      "test": {
+        "rewrite": {
+          "cases": 921,
+          "prompts": 921,
+          "success": 1.0,
+          "teacher_forced_accuracy": 1.0
+        },
+        "paraphrase": {
+          "cases": 921,
+          "prompts": 1842,
+          "success": 0.5168295331161781,
+          "teacher_forced_accuracy": 0.14060803474484257
+        },
+        "neighborhood": {
+          "cases": 921,
+          "prompts": 9210,
+          "success": 0.5814332247557004,
+          "teacher_forced_accuracy": 0.1505971769815418
+        },
+        "harmonic_score": 0.6445012787723785
+      }
+    }
+  },
+  "optimizer_steps": 2680,
+  "peak_cuda_allocated": 3265276928
+}

@@ -1,0 +1,142 @@
+{
+  "status": "built",
+  "base": "/llm-align/open_models/Qwen3/Qwen3-0.6B",
+  "prepared_sha256": "0c6a8c44fac633479dadb6c1ddc0ba95e67b8692dcea0318b709b009c2329563",
+  "vocabulary_sha256": "069b57252cb53513df0a8774ccd79fed33e18f08f455034178542faa525faa30",
+  "vocabulary_file_bytes": 101289,
+  "metadata": {
+    "schema_version": 1,
+    "prepared_sha256": "0c6a8c44fac633479dadb6c1ddc0ba95e67b8692dcea0318b709b009c2329563",
+    "training_sequences": 1024,
+    "pad_id": 107431,
+    "lookup_sha256": "c898bd8c276c4e04930e22311f2c4bb32c7f8ac1a03924a3fb47de15e95f4e99",
+    "domain": "Canonical compressed-token training keys only, orders 2/3/4; terminal EOS output excluded",
+    "normalization": "Same pinned Engram compressed tokenizer as hash controls; not raw-token identity",
+    "oov_rule": "All-zero per-head embedding for unseen canonical keys in the primary pair"
+  },
+  "collision_audit_seed3": {
+    "2": {
+      "unique_training_keys": 5430,
+      "training_occurrences": 9148,
+      "heads": [
+        {
+          "buckets": 5431,
+          "occupied_buckets": 3453,
+          "keys_in_shared_buckets": 3398,
+          "training_occurrences_in_shared_buckets": 5539,
+          "max_bucket_keys": 6
+        },
+        {
+          "buckets": 5437,
+          "occupied_buckets": 3426,
+          "keys_in_shared_buckets": 3453,
+          "training_occurrences_in_shared_buckets": 5744,
+          "max_bucket_keys": 6
+        }
+      ],
+      "distinct_joint_head_addresses": 5430,
+      "key_bytes_uncompressed": 86880
+    },
+    "3": {
+      "unique_training_keys": 6693,
+      "training_occurrences": 9148,
+      "heads": [
+        {
+          "buckets": 6701,
+          "occupied_buckets": 4265,
+          "keys_in_shared_buckets": 4175,
+          "training_occurrences_in_shared_buckets": 5822,
+          "max_bucket_keys": 6
+        },
+        {
+          "buckets": 6703,
+          "occupied_buckets": 4243,
+          "keys_in_shared_buckets": 4202,
+          "training_occurrences_in_shared_buckets": 5606,
+          "max_bucket_keys": 6
+        }
+      ],
+      "distinct_joint_head_addresses": 6691,
+      "key_bytes_uncompressed": 160632
+    },
+    "4": {
+      "unique_training_keys": 7390,
+      "training_occurrences": 9148,
+      "heads": [
+        {
+          "buckets": 7393,
+          "occupied_buckets": 4696,
+          "keys_in_shared_buckets": 4605,
+          "training_occurrences_in_shared_buckets": 5711,
+          "max_bucket_keys": 6
+        },
+        {
+          "buckets": 7411,
+          "occupied_buckets": 4692,
+          "keys_in_shared_buckets": 4626,
+          "training_occurrences_in_shared_buckets": 5856,
+          "max_bucket_keys": 6
+        }
+      ],
+      "distinct_joint_head_addresses": 7390,
+      "key_bytes_uncompressed": 236480
+    }
+  },
+  "question_prefix_coverage": {
+    "calibration": {
+      "rewrite": {
+        "question_prefix_positions": 862,
+        "known_by_order": {
+          "2": 862,
+          "3": 862,
+          "4": 862
+        }
+      },
+      "paraphrase": {
+        "question_prefix_positions": 4059,
+        "known_by_order": {
+          "2": 1562,
+          "3": 911,
+          "4": 538
+        }
+      },
+      "neighborhood": {
+        "question_prefix_positions": 8272,
+        "known_by_order": {
+          "2": 3904,
+          "3": 2758,
+          "4": 2019
+        }
+      }
+    },
+    "test": {
+      "rewrite": {
+        "question_prefix_positions": 7249,
+        "known_by_order": {
+          "2": 7249,
+          "3": 7249,
+          "4": 7249
+        }
+      },
+      "paraphrase": {
+        "question_prefix_positions": 36537,
+        "known_by_order": {
+          "2": 13516,
+          "3": 7773,
+          "4": 4531
+        }
+      },
+      "neighborhood": {
+        "question_prefix_positions": 74142,
+        "known_by_order": {
+          "2": 35507,
+          "3": 24691,
+          "4": 18267
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 3.30531368101947,
+  "code_sha": "f4217e2127a4b24631f6dbf1bb30ab2578018a4a",
+  "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.counterfact_identity build --base /llm-align/open_models/Qwen3/Qwen3-0.6B --upstream /llm-align/duyimin/meft-cuda-20261030/upstream --prepared /llm-align/duyimin/ngram-identity-vs-hash-20261107/prepared-qwen06-1024 --output /llm-align/duyimin/ngram-identity-vs-hash-20261107/vocab-qwen06-1024"
+}
