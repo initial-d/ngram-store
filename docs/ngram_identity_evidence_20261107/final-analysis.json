@@ -1,0 +1,3335 @@
+{
+  "status": "complete-audited",
+  "completed_trained_runs": 24,
+  "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+  "analyzer_sha256": "6e4cf9b550a89adc4233b959279a2f81668837bf4e7f981e37a4e2b241e4ecd5",
+  "analyzed_at_utc": "2026-11-07T07:03:03Z",
+  "runs": [
+    {
+      "run": "qwen06-1024-exact-s11",
+      "report_sha256": "729af7b90c8ce94bc83864aba5ea44d61e772a2544ef82bfaa1b6fc7f9ca8f30",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.515625,
+            "teacher_forced_accuracy": 0.15576171875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.60400390625,
+            "teacher_forced_accuracy": 0.1638671875
+          },
+          "harmonic_score": 0.6528818113481151
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5242718446601942,
+            "teacher_forced_accuracy": 0.1553398058252427
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6116504854368932,
+            "teacher_forced_accuracy": 0.17281553398058253
+          },
+          "harmonic_score": 0.6604542807221898
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5146579804560261,
+            "teacher_forced_accuracy": 0.15580890336590664
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.6031487513572205,
+            "teacher_forced_accuracy": 0.16286644951140064
+          },
+          "harmonic_score": 0.652031632474918
+        }
+      },
+      "trainable_parameters": 1652032,
+      "physical_rows": 39082,
+      "row_bytes": 5002496,
+      "identity_bundle_bytes": 6717119,
+      "training_seconds": 168.04995195614174,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen06-1024-exact-s3",
+      "report_sha256": "d48cf7e0c400d93ba53658ada93395e6de6800ef5946b17d0134ccabef263172",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5078125,
+            "teacher_forced_accuracy": 0.16748046875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.59326171875,
+            "teacher_forced_accuracy": 0.17138671875
+          },
+          "harmonic_score": 0.6444921997198155
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5145631067961165,
+            "teacher_forced_accuracy": 0.1553398058252427
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5922330097087378,
+            "teacher_forced_accuracy": 0.17669902912621357
+          },
+          "harmonic_score": 0.6476794657762938
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.507057546145494,
+            "teacher_forced_accuracy": 0.16883821932681867
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5933767643865364,
+            "teacher_forced_accuracy": 0.1707926167209555
+          },
+          "harmonic_score": 0.644131699097042
+        }
+      },
+      "trainable_parameters": 1652032,
+      "physical_rows": 39082,
+      "row_bytes": 5002496,
+      "identity_bundle_bytes": 6717118,
+      "training_seconds": 169.44998103100806,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen06-1024-exact-s7",
+      "report_sha256": "6b9bac16cdcb031af39cb45bd31c347ed2270ca5892679eddc72926dc4fe0bd5",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5166015625,
+            "teacher_forced_accuracy": 0.17333984375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.60859375,
+            "teacher_forced_accuracy": 0.17529296875
+          },
+          "harmonic_score": 0.6551849137238879
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5048543689320388,
+            "teacher_forced_accuracy": 0.1650485436893204
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6116504854368932,
+            "teacher_forced_accuracy": 0.16990291262135923
+          },
+          "harmonic_score": 0.649957013425038
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5179153094462541,
+            "teacher_forced_accuracy": 0.1742671009771987
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.6082519001085777,
+            "teacher_forced_accuracy": 0.1758957654723127
+          },
+          "harmonic_score": 0.655755864774835
+        }
+      },
+      "trainable_parameters": 1652032,
+      "physical_rows": 39082,
+      "row_bytes": 5002496,
+      "identity_bundle_bytes": 6717118,
+      "training_seconds": 170.6941535959486,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen06-1024-hash-s11",
+      "report_sha256": "db738cc219228cebc6897c9e2688982dea44a238a9bb11542e2141d404fc4745",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5009765625,
+            "teacher_forced_accuracy": 0.13818359375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.58076171875,
+            "teacher_forced_accuracy": 0.15625
+          },
+          "harmonic_score": 0.6358656266624074
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5436893203883495,
+            "teacher_forced_accuracy": 0.1650485436893204
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5728155339805825,
+            "teacher_forced_accuracy": 0.16601941747572818
+          },
+          "harmonic_score": 0.6543006139019077
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.496199782844734,
+            "teacher_forced_accuracy": 0.13517915309446255
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5816503800217155,
+            "teacher_forced_accuracy": 0.15515743756786102
+          },
+          "harmonic_score": 0.6336381870078257
+        }
+      },
+      "trainable_parameters": 1652032,
+      "physical_rows": 39082,
+      "row_bytes": 5002496,
+      "identity_bundle_bytes": 6717117,
+      "training_seconds": 173.06900014402345,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.51708984375,
+            "teacher_forced_accuracy": 0.14306640625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.58212890625,
+            "teacher_forced_accuracy": 0.15166015625
+          },
+          "harmonic_score": 0.6449210074569418
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5194174757281553,
+            "teacher_forced_accuracy": 0.1650485436893204
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5883495145631068,
+            "teacher_forced_accuracy": 0.16116504854368932
+          },
+          "harmonic_score": 0.6486621672090914
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5168295331161781,
+            "teacher_forced_accuracy": 0.14060803474484257
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5814332247557004,
+            "teacher_forced_accuracy": 0.1505971769815418
+          },
+          "harmonic_score": 0.6445012787723785
+        }
+      }
+    },
+    {
+      "run": "qwen06-1024-hash-s3",
+      "report_sha256": "cc36b59829e5d23934ec49678327ae17bf5cedb6a03e83286bcafc17ebb706d7",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.49560546875,
+            "teacher_forced_accuracy": 0.142578125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.594140625,
+            "teacher_forced_accuracy": 0.16142578125
+          },
+          "harmonic_score": 0.6381841924934648
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.46601941747572817,
+            "teacher_forced_accuracy": 0.1407766990291262
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6077669902912621,
+            "teacher_forced_accuracy": 0.17864077669902914
+          },
+          "harmonic_score": 0.6261478404623314
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.498914223669924,
+            "teacher_forced_accuracy": 0.14277958740499458
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5926167209554831,
+            "teacher_forced_accuracy": 0.15950054288816504
+          },
+          "harmonic_score": 0.6394156456269541
+        }
+      },
+      "trainable_parameters": 1652032,
+      "physical_rows": 39082,
+      "row_bytes": 5002496,
+      "identity_bundle_bytes": 6717116,
+      "training_seconds": 172.18004777515307,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.51025390625,
+            "teacher_forced_accuracy": 0.1337890625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.59501953125,
+            "teacher_forced_accuracy": 0.1595703125
+          },
+          "harmonic_score": 0.6464924092908761
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5145631067961165,
+            "teacher_forced_accuracy": 0.13592233009708737
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6077669902912621,
+            "teacher_forced_accuracy": 0.17378640776699028
+          },
+          "harmonic_score": 0.6537708708274765
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.509771986970684,
+            "teacher_forced_accuracy": 0.13355048859934854
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5935939196525516,
+            "teacher_forced_accuracy": 0.15798045602605862
+          },
+          "harmonic_score": 0.6456730081695321
+        }
+      }
+    },
+    {
+      "run": "qwen06-1024-hash-s7",
+      "report_sha256": "57433098f05d857bc74329923e9e14f1a54adc4eb4c764fe627601a13df89b21",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5166015625,
+            "teacher_forced_accuracy": 0.15087890625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.5849609375,
+            "teacher_forced_accuracy": 0.1595703125
+          },
+          "harmonic_score": 0.6458218830484604
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5242718446601942,
+            "teacher_forced_accuracy": 0.16990291262135923
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5922330097087378,
+            "teacher_forced_accuracy": 0.16116504854368932
+          },
+          "harmonic_score": 0.6527511724684589
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5157437567861021,
+            "teacher_forced_accuracy": 0.1487513572204126
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5841476655808904,
+            "teacher_forced_accuracy": 0.15939196525515745
+          },
+          "harmonic_score": 0.6450443113006649
+        }
+      },
+      "trainable_parameters": 1652032,
+      "physical_rows": 39082,
+      "row_bytes": 5002496,
+      "identity_bundle_bytes": 6717116,
+      "training_seconds": 171.02516286401078,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.51171875,
+            "teacher_forced_accuracy": 0.138671875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.59921875,
+            "teacher_forced_accuracy": 0.15830078125
+          },
+          "harmonic_score": 0.6489239175129008
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.48058252427184467,
+            "teacher_forced_accuracy": 0.14563106796116504
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.6116504854368932,
+            "teacher_forced_accuracy": 0.1669902912621359
+          },
+          "harmonic_score": 0.6361689106487148
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5152008686210641,
+            "teacher_forced_accuracy": 0.13789359391965256
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.597828447339848,
+            "teacher_forced_accuracy": 0.15732899022801303
+          },
+          "harmonic_score": 0.6502357603033342
+        }
+      }
+    },
+    {
+      "run": "qwen06-20877-exact-s11",
+      "report_sha256": "e92ca2fa221a8ebfd5c613abaa1b5f1d1491699a55b6f6e90675b4714fa6aca6",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6323226517219908,
+            "teacher_forced_accuracy": 0.28141016429563637
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.6239210614551899,
+            "teacher_forced_accuracy": 0.20077118359917612
+          },
+          "harmonic_score": 0.7169764312725673
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6609195402298851,
+            "teacher_forced_accuracy": 0.2959770114942529
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.6112068965517241,
+            "teacher_forced_accuracy": 0.19516283524904215
+          },
+          "harmonic_score": 0.7230395417098974
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6291447123316835,
+            "teacher_forced_accuracy": 0.27979136728937143
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6253339720048965,
+            "teacher_forced_accuracy": 0.20139443291287457
+          },
+          "harmonic_score": 0.7162289243807618
+        }
+      },
+      "trainable_parameters": 18990528,
+      "physical_rows": 580910,
+      "row_bytes": 74356480,
+      "identity_bundle_bytes": 77414515,
+      "training_seconds": 3396.7860445510596,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen06-20877-exact-s3",
+      "report_sha256": "a2d54c401406e9aea52be02443a96d1a7092e0ec3e691e129b11094a4d2e4ac8",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6325381999329406,
+            "teacher_forced_accuracy": 0.29125353259567943
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.6233462662259903,
+            "teacher_forced_accuracy": 0.20521147674474302
+          },
+          "harmonic_score": 0.7168155650744185
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6618773946360154,
+            "teacher_forced_accuracy": 0.30938697318007663
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.6133620689655173,
+            "teacher_forced_accuracy": 0.20603448275862069
+          },
+          "harmonic_score": 0.7244255622202713
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6292777689073394,
+            "teacher_forced_accuracy": 0.2892383841609452
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6244557986055671,
+            "teacher_forced_accuracy": 0.2051200170312417
+          },
+          "harmonic_score": 0.7159019950199806
+        }
+      },
+      "trainable_parameters": 18990528,
+      "physical_rows": 580910,
+      "row_bytes": 74356480,
+      "identity_bundle_bytes": 77414514,
+      "training_seconds": 3392.0068377240095,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen06-20877-exact-s7",
+      "report_sha256": "62aef0286968a97422b65c4c71a2380f3b262bc78a70455fa5c8ce86e3f86f9a",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9996647027829669
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6328734971499737,
+            "teacher_forced_accuracy": 0.2838769938209513
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.6303012884993054,
+            "teacher_forced_accuracy": 0.20209800258657853
+          },
+          "harmonic_score": 0.7200050481169763
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990421455938697
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6551724137931034,
+            "teacher_forced_accuracy": 0.3081896551724138
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.6205459770114943,
+            "teacher_forced_accuracy": 0.19741379310344828
+          },
+          "harmonic_score": 0.7250229714447272
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6303954441428495,
+            "teacher_forced_accuracy": 0.2811751556761935
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6313853850657299,
+            "teacher_forced_accuracy": 0.20261855340890947
+          },
+          "harmonic_score": 0.7194029624627171
+        }
+      },
+      "trainable_parameters": 18990528,
+      "physical_rows": 580910,
+      "row_bytes": 74356480,
+      "identity_bundle_bytes": 77414514,
+      "training_seconds": 3431.7608957679477,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen06-20877-hash-s11",
+      "report_sha256": "f2bfe5457916318ac88394c26c6459bb0946477100d0ff340c6b06d410cbb280",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6307659146429084,
+            "teacher_forced_accuracy": 0.2932413660966614
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.6235426545959669,
+            "teacher_forced_accuracy": 0.20529290606887962
+          },
+          "harmonic_score": 0.7161419350359254
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6621168582375478,
+            "teacher_forced_accuracy": 0.31082375478927204
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.6099137931034483,
+            "teacher_forced_accuracy": 0.201772030651341
+          },
+          "harmonic_score": 0.7229118799432013
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6272819202724998,
+            "teacher_forced_accuracy": 0.29128745542604717
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6250572143275321,
+            "teacher_forced_accuracy": 0.20568417691202298
+          },
+          "harmonic_score": 0.7153019403853851
+        }
+      },
+      "trainable_parameters": 18990528,
+      "physical_rows": 580910,
+      "row_bytes": 74356480,
+      "identity_bundle_bytes": 77414513,
+      "training_seconds": 3456.1120148990303,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6098098385783398,
+            "teacher_forced_accuracy": 0.2756143124012071
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5980169564592613,
+            "teacher_forced_accuracy": 0.16406092829429517
+          },
+          "harmonic_score": 0.6957249555266116
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6400862068965517,
+            "teacher_forced_accuracy": 0.29238505747126436
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5908045977011493,
+            "teacher_forced_accuracy": 0.1603927203065134
+          },
+          "harmonic_score": 0.7050700183513356
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6064452605247751,
+            "teacher_forced_accuracy": 0.27375059875459046
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.598818457608175,
+            "teacher_forced_accuracy": 0.16446857203683005
+          },
+          "harmonic_score": 0.6946199248565179
+        }
+      }
+    },
+    {
+      "run": "qwen06-20877-hash-s3",
+      "report_sha256": "d97067b2f07abaa377bf8cf87284d9dab8615a380e29080c678c80328b5f3e1f",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6231259280547972,
+            "teacher_forced_accuracy": 0.27305168367102556
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.626665708674618,
+            "teacher_forced_accuracy": 0.20724241988791495
+          },
+          "harmonic_score": 0.7141906294142492
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.648227969348659,
+            "teacher_forced_accuracy": 0.2907088122605364
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.6159482758620689,
+            "teacher_forced_accuracy": 0.20478927203065136
+          },
+          "harmonic_score": 0.7200840876177638
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6203363670232583,
+            "teacher_forced_accuracy": 0.2710894672414711
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6278567246793336,
+            "teacher_forced_accuracy": 0.20751503539304914
+          },
+          "harmonic_score": 0.7134790216630869
+        }
+      },
+      "trainable_parameters": 18990528,
+      "physical_rows": 580910,
+      "row_bytes": 74356480,
+      "identity_bundle_bytes": 77414512,
+      "training_seconds": 3401.513408421073,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6083968003065574,
+            "teacher_forced_accuracy": 0.26912391627149496
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.6019686736600086,
+            "teacher_forced_accuracy": 0.16499018058150117
+          },
+          "harmonic_score": 0.6968835130034158
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6269157088122606,
+            "teacher_forced_accuracy": 0.28544061302681994
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5940613026819924,
+            "teacher_forced_accuracy": 0.16240421455938697
+          },
+          "harmonic_score": 0.7011903615098846
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6063388152642504,
+            "teacher_forced_accuracy": 0.2673106604928416
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6028474107190377,
+            "teacher_forced_accuracy": 0.16527755601681834
+          },
+          "harmonic_score": 0.6963727725456329
+        }
+      }
+    },
+    {
+      "run": "qwen06-20877-hash-s7",
+      "report_sha256": "a1c364a804b79e3e12fb60003c5179eeb644e4fc658243105c810a9af9072b18",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9996647027829669
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6324663505292906,
+            "teacher_forced_accuracy": 0.27731474828758923
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.610130765914643,
+            "teacher_forced_accuracy": 0.19123916271494948
+          },
+          "harmonic_score": 0.7108828374499931
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9985632183908046
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6508620689655172,
+            "teacher_forced_accuracy": 0.29669540229885055
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.6056513409961686,
+            "teacher_forced_accuracy": 0.18855363984674328
+          },
+          "harmonic_score": 0.7164112693148754
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997871094789504
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6304220554579807,
+            "teacher_forced_accuracy": 0.27516099845654374
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6106285592633988,
+            "teacher_forced_accuracy": 0.1915376017882804
+          },
+          "harmonic_score": 0.7102448104023458
+        }
+      },
+      "trainable_parameters": 18990528,
+      "physical_rows": 580910,
+      "row_bytes": 74356480,
+      "identity_bundle_bytes": 77414512,
+      "training_seconds": 3426.9191832658835,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9996647027829669
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6113426258562054,
+            "teacher_forced_accuracy": 0.26344781338314893
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5883651865689514,
+            "teacher_forced_accuracy": 0.1508214781817311
+          },
+          "harmonic_score": 0.691982677459694
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9985632183908046
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6197318007662835,
+            "teacher_forced_accuracy": 0.266044061302682
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5845306513409961,
+            "teacher_forced_accuracy": 0.1486590038314176
+          },
+          "harmonic_score": 0.6937417885051299
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997871094789504
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.610410346479323,
+            "teacher_forced_accuracy": 0.2631592953323753
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.5887913140667411,
+            "teacher_forced_accuracy": 0.15106179147373464
+          },
+          "harmonic_score": 0.6917803155062187
+        }
+      }
+    },
+    {
+      "run": "qwen35-1024-exact-s11",
+      "report_sha256": "09686838d601258060882d81676af5ca96c463c6517935ce772ba522d35ea234",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.51025390625,
+            "teacher_forced_accuracy": 0.18896484375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.58037109375,
+            "teacher_forced_accuracy": 0.21904296875
+          },
+          "harmonic_score": 0.6406363153317738
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.49514563106796117,
+            "teacher_forced_accuracy": 0.1796116504854369
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5640776699029126,
+            "teacher_forced_accuracy": 0.19611650485436893
+          },
+          "harmonic_score": 0.6259894087490494
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.511943539630836,
+            "teacher_forced_accuracy": 0.19001085776330076
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5821932681867535,
+            "teacher_forced_accuracy": 0.2216069489685125
+          },
+          "harmonic_score": 0.6422630852478173
+        }
+      },
+      "trainable_parameters": 2233088,
+      "physical_rows": 38424,
+      "row_bytes": 4918272,
+      "identity_bundle_bytes": 9041099,
+      "training_seconds": 243.49472675006837,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen35-1024-exact-s3",
+      "report_sha256": "9c377684150bf9097ee01c00af1bb8b540074b6374ee998a4dff751ab11a977d",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.51806640625,
+            "teacher_forced_accuracy": 0.20068359375
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.5734375,
+            "teacher_forced_accuracy": 0.20693359375
+          },
+          "harmonic_score": 0.6418315391449544
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5,
+            "teacher_forced_accuracy": 0.15048543689320387
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5621359223300971,
+            "teacher_forced_accuracy": 0.1912621359223301
+          },
+          "harmonic_score": 0.6277556920852909
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5200868621064061,
+            "teacher_forced_accuracy": 0.20629750271444083
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.574701411509229,
+            "teacher_forced_accuracy": 0.20868621064060802
+          },
+          "harmonic_score": 0.6433916521948031
+        }
+      },
+      "trainable_parameters": 2233088,
+      "physical_rows": 38424,
+      "row_bytes": 4918272,
+      "identity_bundle_bytes": 9041098,
+      "training_seconds": 241.35796553781256,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen35-1024-exact-s7",
+      "report_sha256": "e1f25c897f07ef35dd3eeeceab4df1a3b9bafe36934eff80f2ec448a7b8b60c9",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.537109375,
+            "teacher_forced_accuracy": 0.203125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.54560546875,
+            "teacher_forced_accuracy": 0.18544921875
+          },
+          "harmonic_score": 0.639026037682957
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5388349514563107,
+            "teacher_forced_accuracy": 0.19902912621359223
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.554368932038835,
+            "teacher_forced_accuracy": 0.1796116504854369
+          },
+          "harmonic_score": 0.6438170632193053
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5369163952225842,
+            "teacher_forced_accuracy": 0.20358306188925082
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5446254071661238,
+            "teacher_forced_accuracy": 0.18610206297502715
+          },
+          "harmonic_score": 0.6384864618306434
+        }
+      },
+      "trainable_parameters": 2233088,
+      "physical_rows": 38424,
+      "row_bytes": 4918272,
+      "identity_bundle_bytes": 9041098,
+      "training_seconds": 239.5018828320317,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen35-1024-hash-s11",
+      "report_sha256": "7a6afdd98a03e7077643a30af7f78896fc2c00b0d5708fa57cd20300b7d679bb",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5146484375,
+            "teacher_forced_accuracy": 0.17919921875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.58134765625,
+            "teacher_forced_accuracy": 0.21748046875
+          },
+          "harmonic_score": 0.6433329644460816
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.49514563106796117,
+            "teacher_forced_accuracy": 0.16019417475728157
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5533980582524272,
+            "teacher_forced_accuracy": 0.21650485436893205
+          },
+          "harmonic_score": 0.6215522771007056
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5168295331161781,
+            "teacher_forced_accuracy": 0.18132464712269272
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5844733984799131,
+            "teacher_forced_accuracy": 0.21758957654723127
+          },
+          "harmonic_score": 0.6457423468442696
+        }
+      },
+      "trainable_parameters": 2233088,
+      "physical_rows": 38424,
+      "row_bytes": 4918272,
+      "identity_bundle_bytes": 9041097,
+      "training_seconds": 238.9679729300551,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.47802734375,
+            "teacher_forced_accuracy": 0.1650390625
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.581640625,
+            "teacher_forced_accuracy": 0.19462890625
+          },
+          "harmonic_score": 0.6235443846909429
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.4854368932038835,
+            "teacher_forced_accuracy": 0.1553398058252427
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5621359223300971,
+            "teacher_forced_accuracy": 0.18932038834951456
+          },
+          "harmonic_score": 0.6199718746207714
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.4771986970684039,
+            "teacher_forced_accuracy": 0.16612377850162866
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5838219326818676,
+            "teacher_forced_accuracy": 0.1952225841476656
+          },
+          "harmonic_score": 0.6239063218396116
+        }
+      }
+    },
+    {
+      "run": "qwen35-1024-hash-s3",
+      "report_sha256": "4db08002ed2c0f97ffa5c37d54211e2a6431f3e341d0ec81311cb506d809c5bf",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5078125,
+            "teacher_forced_accuracy": 0.1923828125
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.57158203125,
+            "teacher_forced_accuracy": 0.20556640625
+          },
+          "harmonic_score": 0.6357601175114707
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5048543689320388,
+            "teacher_forced_accuracy": 0.1796116504854369
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5640776699029126,
+            "teacher_forced_accuracy": 0.19708737864077672
+          },
+          "harmonic_score": 0.6311039933154614
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.50814332247557,
+            "teacher_forced_accuracy": 0.19381107491856678
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5724212812160695,
+            "teacher_forced_accuracy": 0.206514657980456
+          },
+          "harmonic_score": 0.6362788624997937
+        }
+      },
+      "trainable_parameters": 2233088,
+      "physical_rows": 38424,
+      "row_bytes": 4918272,
+      "identity_bundle_bytes": 9041096,
+      "training_seconds": 239.42971480614506,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.48193359375,
+            "teacher_forced_accuracy": 0.169921875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.5802734375,
+            "teacher_forced_accuracy": 0.19228515625
+          },
+          "harmonic_score": 0.625221412999252
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5,
+            "teacher_forced_accuracy": 0.13106796116504854
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5679611650485437,
+            "teacher_forced_accuracy": 0.17572815533980585
+          },
+          "harmonic_score": 0.63016157989228
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.4799131378935939,
+            "teacher_forced_accuracy": 0.1742671009771987
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5816503800217155,
+            "teacher_forced_accuracy": 0.1941368078175896
+          },
+          "harmonic_score": 0.6246153080468161
+        }
+      }
+    },
+    {
+      "run": "qwen35-1024-hash-s7",
+      "report_sha256": "07addfe45983f4a7d58a00a9d2ba0f64d0cd298043f32528724821d721938ab5",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.5185546875,
+            "teacher_forced_accuracy": 0.18701171875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.55458984375,
+            "teacher_forced_accuracy": 0.1875
+          },
+          "harmonic_score": 0.6340388490978418
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5388349514563107,
+            "teacher_forced_accuracy": 0.1650485436893204
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5572815533980583,
+            "teacher_forced_accuracy": 0.18349514563106795
+          },
+          "harmonic_score": 0.6451223134247759
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.5162866449511401,
+            "teacher_forced_accuracy": 0.18946796959826276
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5542888165038002,
+            "teacher_forced_accuracy": 0.18794788273615634
+          },
+          "harmonic_score": 0.6327749411032509
+        }
+      },
+      "trainable_parameters": 2233088,
+      "physical_rows": 38424,
+      "row_bytes": 4918272,
+      "identity_bundle_bytes": 9041096,
+      "training_seconds": 239.35995192197151,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 1024,
+            "prompts": 1024,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 1024,
+            "prompts": 2048,
+            "success": 0.49609375,
+            "teacher_forced_accuracy": 0.17138671875
+          },
+          "neighborhood": {
+            "cases": 1024,
+            "prompts": 10240,
+            "success": 0.5609375,
+            "teacher_forced_accuracy": 0.1765625
+          },
+          "harmonic_score": 0.6251982612431838
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 103,
+            "prompts": 103,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 103,
+            "prompts": 206,
+            "success": 0.5242718446601942,
+            "teacher_forced_accuracy": 0.16019417475728157
+          },
+          "neighborhood": {
+            "cases": 103,
+            "prompts": 1030,
+            "success": 0.5679611650485437,
+            "teacher_forced_accuracy": 0.1786407766990291
+          },
+          "harmonic_score": 0.6426609703997559
+        },
+        "test": {
+          "rewrite": {
+            "cases": 921,
+            "prompts": 921,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 921,
+            "prompts": 1842,
+            "success": 0.49294245385450597,
+            "teacher_forced_accuracy": 0.17263843648208468
+          },
+          "neighborhood": {
+            "cases": 921,
+            "prompts": 9210,
+            "success": 0.5601520086862106,
+            "teacher_forced_accuracy": 0.1763300760043431
+          },
+          "harmonic_score": 0.6231999833258905
+        }
+      }
+    },
+    {
+      "run": "qwen35-20877-exact-s11",
+      "report_sha256": "5f083887ba945d4ebbc05ea4bbbb6879e5e2e034a465599b1cd9eb257b8cbc11",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6816113426258562,
+            "teacher_forced_accuracy": 0.3962734109306893
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.618522776260957,
+            "teacher_forced_accuracy": 0.16828567322891222
+          },
+          "harmonic_score": 0.7345978568939836
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.7037835249042146,
+            "teacher_forced_accuracy": 0.41977969348659006
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.6193486590038314,
+            "teacher_forced_accuracy": 0.1692528735632184
+          },
+          "harmonic_score": 0.7434039803752179
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6791473734631965,
+            "teacher_forced_accuracy": 0.3936611847357496
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6184309968598648,
+            "teacher_forced_accuracy": 0.16817818936611847
+          },
+          "harmonic_score": 0.7335986164337068
+        }
+      },
+      "trainable_parameters": 19382080,
+      "physical_rows": 574330,
+      "row_bytes": 73514240,
+      "identity_bundle_bytes": 78986749,
+      "training_seconds": 4642.858740875963,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen35-20877-exact-s3",
+      "report_sha256": "65341e56212c50b4627ab80c927444d5ffa139f4e38a3312933fad828458f839",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.7063993868850889,
+            "teacher_forced_accuracy": 0.4136849164151937
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.6018393447334387,
+            "teacher_forced_accuracy": 0.14283182449585669
+          },
+          "harmonic_score": 0.7357985799738888
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 1.0
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.7236590038314177,
+            "teacher_forced_accuracy": 0.4410919540229885
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5993773946360154,
+            "teacher_forced_accuracy": 0.14070881226053641
+          },
+          "harmonic_score": 0.7406924153719296
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9996806642184257
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.704481345468093,
+            "teacher_forced_accuracy": 0.4106392037894513
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.6021129384214168,
+            "teacher_forced_accuracy": 0.143067752408324
+          },
+          "harmonic_score": 0.7352396968747114
+        }
+      },
+      "trainable_parameters": 19382080,
+      "physical_rows": 574330,
+      "row_bytes": 73514240,
+      "identity_bundle_bytes": 78986749,
+      "training_seconds": 4664.727408601902,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen35-20877-exact-s7",
+      "report_sha256": "d8126c0f00361855688b191077ba301c0c009e4f6df99e857a12413769b333a5",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.7085309191933707,
+            "teacher_forced_accuracy": 0.42597116443933514
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5950855007903435,
+            "teacher_forced_accuracy": 0.14120323801312448
+          },
+          "harmonic_score": 0.7331733410939348
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.7243773946360154,
+            "teacher_forced_accuracy": 0.444683908045977
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5870210727969349,
+            "teacher_forced_accuracy": 0.14118773946360152
+          },
+          "harmonic_score": 0.7345717481136511
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.999733886848688
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.7067699185693757,
+            "teacher_forced_accuracy": 0.4238916387247858
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.5959816914151898,
+            "teacher_forced_accuracy": 0.14120496034914046
+          },
+          "harmonic_score": 0.7329960490201541
+        }
+      },
+      "trainable_parameters": 19382080,
+      "physical_rows": 574330,
+      "row_bytes": 73514240,
+      "identity_bundle_bytes": 78986748,
+      "training_seconds": 4645.089781260118,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651"
+    },
+    {
+      "run": "qwen35-20877-hash-s11",
+      "report_sha256": "29f85a5aebe7cf0a65307924df26f5dbbd77cfea5a92671530bf1d09c7b41c6e",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 0.9999521003975667,
+            "teacher_forced_accuracy": 0.9996168031805336
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6875987929300187,
+            "teacher_forced_accuracy": 0.3667672558317766
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5915600900512525,
+            "teacher_forced_accuracy": 0.1453130239019016
+          },
+          "harmonic_score": 0.7237933056101079
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6997126436781609,
+            "teacher_forced_accuracy": 0.37667624521072796
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5990421455938697,
+            "teacher_forced_accuracy": 0.1475095785440613
+          },
+          "harmonic_score": 0.7319769454869043
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 0.9999467773697376,
+            "teacher_forced_accuracy": 0.9996274415881633
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6862525946032253,
+            "teacher_forced_accuracy": 0.3656660812177338
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.5907286178082921,
+            "teacher_forced_accuracy": 0.14506892330618978
+          },
+          "harmonic_score": 0.722879839244223
+        }
+      },
+      "trainable_parameters": 19382080,
+      "physical_rows": 574330,
+      "row_bytes": 73514240,
+      "identity_bundle_bytes": 78986747,
+      "training_seconds": 4673.134652003879,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 0.9999521003975667,
+            "teacher_forced_accuracy": 0.9996168031805336
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6182641184078173,
+            "teacher_forced_accuracy": 0.2950615509891268
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5836422857690281,
+            "teacher_forced_accuracy": 0.1262681419744216
+          },
+          "harmonic_score": 0.6927034048783144
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6372126436781609,
+            "teacher_forced_accuracy": 0.31273946360153254
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5791187739463601,
+            "teacher_forced_accuracy": 0.12849616858237548
+          },
+          "harmonic_score": 0.6983083637678082
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 0.9999467773697376,
+            "teacher_forced_accuracy": 0.9996274415881633
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6161583905476609,
+            "teacher_forced_accuracy": 0.29309702485496836
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.5841449784448347,
+            "teacher_forced_accuracy": 0.12602054393528128
+          },
+          "harmonic_score": 0.6920548803394808
+        }
+      }
+    },
+    {
+      "run": "qwen35-20877-hash-s3",
+      "report_sha256": "5e6af058e1699ccaa6b4237be542b617e81672f33637eca47a523e169cf09e6e",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995689035781004
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6841739713560377,
+            "teacher_forced_accuracy": 0.3733534511663553
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5831393399434786,
+            "teacher_forced_accuracy": 0.12388753173348661
+          },
+          "harmonic_score": 0.7183095204565613
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6992337164750958,
+            "teacher_forced_accuracy": 0.3970306513409962
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.574808429118774,
+            "teacher_forced_accuracy": 0.12404214559386974
+          },
+          "harmonic_score": 0.7194508515750885
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995742189579009
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6825003991697269,
+            "teacher_forced_accuracy": 0.3707222310926606
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.5840651444994411,
+            "teacher_forced_accuracy": 0.12387034967268083
+          },
+          "harmonic_score": 0.7181606374727113
+        }
+      },
+      "trainable_parameters": 19382080,
+      "physical_rows": 574330,
+      "row_bytes": 73514240,
+      "identity_bundle_bytes": 78986747,
+      "training_seconds": 4693.123223303817,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995689035781004
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6161804857019687,
+            "teacher_forced_accuracy": 0.29307371748814487
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5859079369641232,
+            "teacher_forced_accuracy": 0.1211380945538152
+          },
+          "harmonic_score": 0.6928960304874795
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995210727969349
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6446360153256705,
+            "teacher_forced_accuracy": 0.3146551724137931
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5741379310344827,
+            "teacher_forced_accuracy": 0.11661877394636015
+          },
+          "harmonic_score": 0.6988112474677814
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9995742189579009
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.61301825536218,
+            "teacher_forced_accuracy": 0.2906753951780297
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.5872159242109746,
+            "teacher_forced_accuracy": 0.12164032146468678
+          },
+          "harmonic_score": 0.6921654442990057
+        }
+      }
+    },
+    {
+      "run": "qwen35-20877-hash-s7",
+      "report_sha256": "2e694dd45314cf88a3deca0da3c1a99e7727e2e575d8b9cec360d20e539be528",
+      "metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6807970493844901,
+            "teacher_forced_accuracy": 0.38827417732432823
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5973319921444652,
+            "teacher_forced_accuracy": 0.15431335919911865
+          },
+          "harmonic_score": 0.7241169060108874
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990421455938697
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6970785440613027,
+            "teacher_forced_accuracy": 0.4039750957854406
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.5889846743295019,
+            "teacher_forced_accuracy": 0.1485153256704981
+          },
+          "harmonic_score": 0.7259711502969703
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997871094789504
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6789877055724094,
+            "teacher_forced_accuracy": 0.3865293522805897
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.59825961999042,
+            "teacher_forced_accuracy": 0.1549576880089414
+          },
+          "harmonic_score": 0.7238865463361771
+        }
+      },
+      "trainable_parameters": 19382080,
+      "physical_rows": 574330,
+      "row_bytes": 73514240,
+      "identity_bundle_bytes": 78986746,
+      "training_seconds": 4696.212426826125,
+      "source_sha": "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+      "native_oov_metrics": {
+        "all": {
+          "rewrite": {
+            "cases": 20877,
+            "prompts": 20877,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997126023854002
+          },
+          "paraphrase": {
+            "cases": 20877,
+            "prompts": 41754,
+            "success": 0.6186952148297169,
+            "teacher_forced_accuracy": 0.29865402117162426
+          },
+          "neighborhood": {
+            "cases": 20877,
+            "prompts": 208770,
+            "success": 0.5920055563538822,
+            "teacher_forced_accuracy": 0.12772428988839393
+          },
+          "harmonic_score": 0.6967867347359403
+        },
+        "calibration": {
+          "rewrite": {
+            "cases": 2088,
+            "prompts": 2088,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9990421455938697
+          },
+          "paraphrase": {
+            "cases": 2088,
+            "prompts": 4176,
+            "success": 0.6350574712643678,
+            "teacher_forced_accuracy": 0.30699233716475094
+          },
+          "neighborhood": {
+            "cases": 2088,
+            "prompts": 20880,
+            "success": 0.578544061302682,
+            "teacher_forced_accuracy": 0.12131226053639847
+          },
+          "harmonic_score": 0.69716573816156
+        },
+        "test": {
+          "rewrite": {
+            "cases": 18789,
+            "prompts": 18789,
+            "success": 1.0,
+            "teacher_forced_accuracy": 0.9997871094789504
+          },
+          "paraphrase": {
+            "cases": 18789,
+            "prompts": 37578,
+            "success": 0.6168768960562031,
+            "teacher_forced_accuracy": 0.29772739368779605
+          },
+          "neighborhood": {
+            "cases": 18789,
+            "prompts": 187890,
+            "success": 0.5935015168449624,
+            "teacher_forced_accuracy": 0.1284368513491937
+          },
+          "harmonic_score": 0.6967047612883926
+        }
+      }
+    }
+  ],
+  "exact_vs_control": [
+    {
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.011224167086084424,
+      "harmonic_delta_interval95": [
+        0.0020206296632998277,
+        0.020993353012575874
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.00959102424900471,
+          "interval95": [
+            -0.005428881650380024,
+            0.02497737965979007
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.015454216431414425,
+          "interval95": [
+            0.0008686210640613506,
+            0.028375859572927032
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "hash",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": 0.004716053470088188,
+          "group_deltas": [
+            0.0,
+            0.008143322475570036,
+            0.0007600434310536253
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.010711553474170299,
+          "group_deltas": [
+            0.0,
+            0.0021715526601520097,
+            0.024104234527687396
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": 0.01839344546709254,
+          "group_deltas": [
+            0.0,
+            0.018458197611292082,
+            0.021498371335505473
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": true,
+      "gate_positive_H_with_NS_interval_within_2pp": true,
+      "mean_per_seed_H_delta": 0.01127368413711701,
+      "exact_group_means": [
+        1.0,
+        0.5132102786825914,
+        0.6015924719507786
+      ],
+      "control_group_means": [
+        1.0,
+        0.5036192544335867,
+        0.5861382555193642
+      ]
+    },
+    {
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.0038138642965713787,
+      "harmonic_delta_interval95": [
+        -0.005911911738066369,
+        0.01314366397897719
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": -0.0007238508867173366,
+          "interval95": [
+            -0.016286644951140072,
+            0.01411961635903002
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.010640608034744425,
+          "interval95": [
+            -0.00293250090481354,
+            0.024031849439013864
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen06",
+      "edits": 1024,
+      "control": "hash-native-oov",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": -0.0015413090724899492,
+          "group_deltas": [
+            0.0,
+            -0.002714440825190012,
+            -0.00021715526601495672
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.005520104471500753,
+          "group_deltas": [
+            0.0,
+            0.002714440825190012,
+            0.010423452768729469
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": 0.007530353702539738,
+          "group_deltas": [
+            0.0,
+            -0.0021715526601520097,
+            0.021715526601520208
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": false,
+      "gate_positive_H_with_NS_interval_within_2pp": false,
+      "mean_per_seed_H_delta": 0.0038363830338501805,
+      "exact_group_means": [
+        1.0,
+        0.5132102786825914,
+        0.6015924719507786
+      ],
+      "control_group_means": [
+        1.0,
+        0.5139341295693087,
+        0.5909518639160342
+      ]
+    },
+    {
+      "paired_seeds": 3,
+      "paired_cases": 18789,
+      "harmonic_delta": 0.004125921146463929,
+      "harmonic_delta_interval95": [
+        0.0004152069846156598,
+        0.008610206033683409
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.0035925275427111103,
+          "interval95": [
+            -0.0016239555058810639,
+            0.009359421292600293
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.005877552468644742,
+          "interval95": [
+            -0.0036039704082164365,
+            0.01937450103786132
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen06",
+      "edits": 20877,
+      "control": "hash",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": 0.0024229733568954526,
+          "group_deltas": [
+            0.0,
+            0.008941401884081102,
+            -0.0034009260737625224
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.009158152060368296,
+          "group_deltas": [
+            0.0,
+            -2.6611315131153113e-05,
+            0.020756825802324075
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": 0.0009269839953782721,
+          "group_deltas": [
+            0.0,
+            0.0018627920591836045,
+            0.0002767576773680114
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": true,
+      "gate_positive_H_with_NS_interval_within_2pp": true,
+      "mean_per_seed_H_delta": 0.004169369804214007,
+      "exact_group_means": [
+        1.0,
+        0.6296059751272908,
+        0.6270583852254317
+      ],
+      "control_group_means": [
+        1.0,
+        0.6260134475845797,
+        0.6211808327567869
+      ]
+    },
+    {
+      "paired_seeds": 3,
+      "paired_cases": 18789,
+      "harmonic_delta": 0.022899684931951048,
+      "harmonic_delta_interval95": [
+        0.019038471877527968,
+        0.027313134943662304
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.021874501037841276,
+          "interval95": [
+            0.017642636649103104,
+            0.02605314279631692
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.030239324427418612,
+          "interval95": [
+            0.021386449518338055,
+            0.040995396242493154
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen06",
+      "edits": 20877,
+      "control": "hash-native-oov",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": 0.019529222474343078,
+          "group_deltas": [
+            0.0,
+            0.022938953643089066,
+            0.021608387886518532
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.027622646956497965,
+          "group_deltas": [
+            0.0,
+            0.01998509766352652,
+            0.04259407099898682
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": 0.021608999524243222,
+          "group_deltas": [
+            0.0,
+            0.022699451806908355,
+            0.02651551439671951
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": true,
+      "gate_positive_H_with_NS_interval_within_2pp": true,
+      "mean_per_seed_H_delta": 0.022920289651694754,
+      "exact_group_means": [
+        1.0,
+        0.6296059751272908,
+        0.6270583852254317
+      ],
+      "control_group_means": [
+        1.0,
+        0.6077314740894495,
+        0.5968190607980131
+      ]
+    },
+    {
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.0033305072703078142,
+      "harmonic_delta_interval95": [
+        -0.005645705539213733,
+        0.011655393187637605
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.009229098805646041,
+          "interval95": [
+            -0.008686210640608039,
+            0.026601520086862118
+          ]
+        },
+        "neighborhood": {
+          "delta": -0.0032211364458912817,
+          "interval95": [
+            -0.011509229098804391,
+            0.004887803112560314
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "hash",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": 0.007112789695009392,
+          "group_deltas": [
+            0.0,
+            0.011943539630836053,
+            0.0022801302931596545
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.0057115207273922275,
+          "group_deltas": [
+            0.0,
+            0.02062975027144409,
+            -0.009663409337676843
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": -0.003479261596452621,
+          "group_deltas": [
+            0.0,
+            -0.004885993485342022,
+            -0.0022801302931606537
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": false,
+      "gate_positive_H_with_NS_interval_within_2pp": false,
+      "mean_per_seed_H_delta": 0.0031150162753163326,
+      "exact_group_means": [
+        1.0,
+        0.5229822656532754,
+        0.5671733622873706
+      ],
+      "control_group_means": [
+        1.0,
+        0.5137531668476294,
+        0.5703944987332619
+      ]
+    },
+    {
+      "paired_seeds": 3,
+      "paired_cases": 921,
+      "harmonic_delta": 0.017638945490159985,
+      "harmonic_delta_interval95": [
+        0.00937953552765522,
+        0.026181124842558016
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.039630836047774176,
+          "interval95": [
+            0.024249004705030774,
+            0.05555555555555558
+          ]
+        },
+        "neighborhood": {
+          "delta": -0.008034744842561614,
+          "interval95": [
+            -0.018060079623595255,
+            0.0016295693087229896
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen35",
+      "edits": 1024,
+      "control": "hash-native-oov",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": 0.018776344147987012,
+          "group_deltas": [
+            0.0,
+            0.04017372421281218,
+            -0.006948968512486053
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.015286478504753065,
+          "group_deltas": [
+            0.0,
+            0.043973941368078195,
+            -0.015526601520086447
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": 0.01835676340820558,
+          "group_deltas": [
+            0.0,
+            0.034744842562432154,
+            -0.0016286644951146734
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": true,
+      "gate_positive_H_with_NS_interval_within_2pp": true,
+      "mean_per_seed_H_delta": 0.017473195353648552,
+      "exact_group_means": [
+        1.0,
+        0.5229822656532754,
+        0.5671733622873706
+      ],
+      "control_group_means": [
+        1.0,
+        0.48335142960550126,
+        0.5752081071299322
+      ]
+    },
+    {
+      "paired_seeds": 3,
+      "paired_cases": 18789,
+      "harmonic_delta": 0.012433138776951291,
+      "harmonic_delta_interval95": [
+        0.008688237315180028,
+        0.01679031294029439
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 1.7740876754102075e-05,
+          "interval95": [
+            0.0,
+            0.00010644526052472347
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.014219312718434574,
+          "interval95": [
+            -0.006599606152536075,
+            0.02838673337236328
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.014490748132773734,
+          "interval95": [
+            -0.0009220820693008863,
+            0.027636649103204465
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen35",
+      "edits": 20877,
+      "control": "hash",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": 0.017079059402000163,
+          "group_deltas": [
+            0.0,
+            0.02198094629836611,
+            0.018047793921975752
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.00910950268397559,
+          "group_deltas": [
+            0.0,
+            0.02778221299696626,
+            -0.0022779285752325684
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": 0.010718777189483553,
+          "group_deltas": [
+            5.322263026241725e-05,
+            -0.007105221140028761,
+            0.02770237905157158
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": true,
+      "gate_positive_H_with_NS_interval_within_2pp": true,
+      "mean_per_seed_H_delta": 0.012302446425153102,
+      "exact_group_means": [
+        1.0,
+        0.6967995458335551,
+        0.6055085422321822
+      ],
+      "control_group_means": [
+        0.9999822591232459,
+        0.6825802331151205,
+        0.5910177940994085
+      ]
+    },
+    {
+      "paired_seeds": 3,
+      "paired_cases": 18789,
+      "harmonic_delta": 0.04045109069533581,
+      "harmonic_delta_interval95": [
+        0.03654949326029337,
+        0.04402452164078749
+      ],
+      "group_deltas": {
+        "rewrite": {
+          "delta": 1.7740876754102075e-05,
+          "interval95": [
+            0.0,
+            0.00010644526052472347
+          ]
+        },
+        "paraphrase": {
+          "delta": 0.08144836517820708,
+          "interval95": [
+            0.06341077226036511,
+            0.0942040555644259
+          ]
+        },
+        "neighborhood": {
+          "delta": 0.017221069065244565,
+          "interval95": [
+            0.0037786736920747605,
+            0.0340148491138609
+          ]
+        }
+      },
+      "bootstrap": "Paired resampling of training seeds and official cases; 2000 replicates, fixed RNG",
+      "limitations": "Three seeds cannot establish broad training variability; cases can share subjects and neighborhood prompts, so case resampling is not an independence guarantee",
+      "model": "qwen35",
+      "edits": 20877,
+      "control": "hash-native-oov",
+      "seeds": [
+        3,
+        7,
+        11
+      ],
+      "seed_results": [
+        {
+          "seed": 3,
+          "harmonic_delta": 0.043074252575704186,
+          "group_deltas": [
+            0.0,
+            0.09146309010591303,
+            0.014897014210439652
+          ]
+        },
+        {
+          "seed": 7,
+          "harmonic_delta": 0.03629128773176071,
+          "group_deltas": [
+            0.0,
+            0.08989302251317255,
+            0.0024801745702270894
+          ]
+        },
+        {
+          "seed": 11,
+          "harmonic_delta": 0.04154373609422346,
+          "group_deltas": [
+            5.322263026241725e-05,
+            0.06298898291553567,
+            0.03428601841502488
+          ]
+        }
+      ],
+      "gate_positive_H_with_NS_point_within_2pp": true,
+      "gate_positive_H_with_NS_interval_within_2pp": true,
+      "mean_per_seed_H_delta": 0.04030309213389612,
+      "exact_group_means": [
+        1.0,
+        0.6967995458335551,
+        0.6055085422321822
+      ],
+      "control_group_means": [
+        0.9999822591232459,
+        0.615351180655348,
+        0.5882874731669376
+      ]
+    }
+  ],
+  "input_sha256": {
+    "runs/qwen06-1024-exact-s11/case-scores.json": "070b20cb5eeca9f721ca24eacc2265a8b6b62740ca65cb6cf6db4514fafc5ea8",
+    "runs/qwen06-1024-exact-s11/report.json": "729af7b90c8ce94bc83864aba5ea44d61e772a2544ef82bfaa1b6fc7f9ca8f30",
+    "runs/qwen06-1024-exact-s3/case-scores.json": "bed7ba57e7fb11795ff4353d60be7178f5163915df5ac8590624f24d1106361c",
+    "runs/qwen06-1024-exact-s3/report.json": "d48cf7e0c400d93ba53658ada93395e6de6800ef5946b17d0134ccabef263172",
+    "runs/qwen06-1024-exact-s7/case-scores.json": "8b57f0cc2b21e7b641f014a20405b5a5184b0cec38ff2c7382ac31b8ea70d0b4",
+    "runs/qwen06-1024-exact-s7/report.json": "6b9bac16cdcb031af39cb45bd31c347ed2270ca5892679eddc72926dc4fe0bd5",
+    "runs/qwen06-1024-hash-s11/case-scores.json": "30917f15002b7d4ee3326d4f00a65d91c0db9fda4d5bd9521e9a688e43383d8f",
+    "runs/qwen06-1024-hash-s11/report.json": "db738cc219228cebc6897c9e2688982dea44a238a9bb11542e2141d404fc4745",
+    "runs/qwen06-1024-hash-s11/case-scores-native-oov.json": "fe88b694bd7ebb49a4f33f5a0a1578b0542b220d54acb0c170d4a1842971c744",
+    "runs/qwen06-1024-hash-s3/case-scores.json": "1ee1b00f911acab7061c7e52fb7f16fef6eb1c9711cde03bbafca50ae188310e",
+    "runs/qwen06-1024-hash-s3/report.json": "cc36b59829e5d23934ec49678327ae17bf5cedb6a03e83286bcafc17ebb706d7",
+    "runs/qwen06-1024-hash-s3/case-scores-native-oov.json": "ca32258e687cb3edc2d0e487e19057b37dbf2742cb421bcc276d71265f7647de",
+    "runs/qwen06-1024-hash-s7/case-scores.json": "88410dd17bf6aadfb5db47f1aff3fa61c4af127937b10108f83990c9cfe170d5",
+    "runs/qwen06-1024-hash-s7/report.json": "57433098f05d857bc74329923e9e14f1a54adc4eb4c764fe627601a13df89b21",
+    "runs/qwen06-1024-hash-s7/case-scores-native-oov.json": "c4a5fd129770e5680c6a0bb796743b01c37b12e3fee3449d2e754f1503acfda9",
+    "runs/qwen06-20877-exact-s11/case-scores.json": "fe6ac0564c01bb1649f690658a6623279c4603c88d2b68c3a8c55b90a094bbd6",
+    "runs/qwen06-20877-exact-s11/report.json": "e92ca2fa221a8ebfd5c613abaa1b5f1d1491699a55b6f6e90675b4714fa6aca6",
+    "runs/qwen06-20877-exact-s3/case-scores.json": "3639ca4da71ba00e5ba39d65064b4643649332366cad3c011dce3b6dfc3f799f",
+    "runs/qwen06-20877-exact-s3/report.json": "a2d54c401406e9aea52be02443a96d1a7092e0ec3e691e129b11094a4d2e4ac8",
+    "runs/qwen06-20877-exact-s7/case-scores.json": "c21288b6800db365303c2a885c0f81c779370782d9b15e7138b7826e13112f85",
+    "runs/qwen06-20877-exact-s7/report.json": "62aef0286968a97422b65c4c71a2380f3b262bc78a70455fa5c8ce86e3f86f9a",
+    "runs/qwen06-20877-hash-s11/case-scores.json": "060439ca3b9138031624a16197b5d32b999fa5fe0dfaa1932e85500accd600ca",
+    "runs/qwen06-20877-hash-s11/report.json": "f2bfe5457916318ac88394c26c6459bb0946477100d0ff340c6b06d410cbb280",
+    "runs/qwen06-20877-hash-s11/case-scores-native-oov.json": "e10b0f6fd2f0ccd1a02b0f9fa3f06a5670aa6eb6dc7d3547a91214592e9fe9d1",
+    "runs/qwen06-20877-hash-s3/case-scores.json": "090f83ecb6ebda94654ef63b0650fcc6fef30f7923ffa9b5d6906b855e7b8748",
+    "runs/qwen06-20877-hash-s3/report.json": "d97067b2f07abaa377bf8cf87284d9dab8615a380e29080c678c80328b5f3e1f",
+    "runs/qwen06-20877-hash-s3/case-scores-native-oov.json": "38512567536c37c107d46dc13b325e1a267a1cc6b8d2f99801483f676b9bd085",
+    "runs/qwen06-20877-hash-s7/case-scores.json": "35e6a9fd3d8f417f07ccb7ab6cfe46de5a570509f8951413d9b0c61530a1453b",
+    "runs/qwen06-20877-hash-s7/report.json": "a1c364a804b79e3e12fb60003c5179eeb644e4fc658243105c810a9af9072b18",
+    "runs/qwen06-20877-hash-s7/case-scores-native-oov.json": "a00bae7e3f512c64ceae3741083cb6d5582807644ff0e3fc7e359a901ec52017",
+    "runs/qwen35-1024-exact-s11/case-scores.json": "f1b128cf40c21259a6c0e956480469613b6ee935ebd16a3c53041fea7021533c",
+    "runs/qwen35-1024-exact-s11/report.json": "09686838d601258060882d81676af5ca96c463c6517935ce772ba522d35ea234",
+    "runs/qwen35-1024-exact-s3/case-scores.json": "218f2eddb5e356673fe6ab6f5bd23bf5a3939e395a4b5ddd27709ac72ef84ff1",
+    "runs/qwen35-1024-exact-s3/report.json": "9c377684150bf9097ee01c00af1bb8b540074b6374ee998a4dff751ab11a977d",
+    "runs/qwen35-1024-exact-s7/case-scores.json": "edb06f1c43a6794e7e9a6b413e190589dd652abf7813f15f86e8da35a6f6dba9",
+    "runs/qwen35-1024-exact-s7/report.json": "e1f25c897f07ef35dd3eeeceab4df1a3b9bafe36934eff80f2ec448a7b8b60c9",
+    "runs/qwen35-1024-hash-s11/case-scores.json": "c7281bfb5ad848445c329e1cba34843cf8cb06e55280f8e8e4711a85be34a6a7",
+    "runs/qwen35-1024-hash-s11/report.json": "7a6afdd98a03e7077643a30af7f78896fc2c00b0d5708fa57cd20300b7d679bb",
+    "runs/qwen35-1024-hash-s11/case-scores-native-oov.json": "4896872382fbbe0c1ec5ce3b11549efca2e4b5e5a318cfb8f0a3078e751011ed",
+    "runs/qwen35-1024-hash-s3/case-scores.json": "e67f95d48ff1cf2d704c239d12724b5992c34e3dbbd85e0a89492b25aab5593f",
+    "runs/qwen35-1024-hash-s3/report.json": "4db08002ed2c0f97ffa5c37d54211e2a6431f3e341d0ec81311cb506d809c5bf",
+    "runs/qwen35-1024-hash-s3/case-scores-native-oov.json": "e8cb76376ec6354e1bf7293a178f5ded2b95f3d7c2f8844abcbcec9bf16c2bc7",
+    "runs/qwen35-1024-hash-s7/case-scores.json": "d97ccdf3bf16ba17e0ca61f70a92c0e321fff07abe93ea3e9e455e4d8a7af836",
+    "runs/qwen35-1024-hash-s7/report.json": "07addfe45983f4a7d58a00a9d2ba0f64d0cd298043f32528724821d721938ab5",
+    "runs/qwen35-1024-hash-s7/case-scores-native-oov.json": "ecbff3939e93574ffb8b950eca5bf774026fe7b4246af8bf7fdbf3161d12bc49",
+    "runs/qwen35-20877-exact-s11/case-scores.json": "74169945b700ea05d00dcc4fac5d5054a75f5e5bb0f686a58823906e9b6e2e56",
+    "runs/qwen35-20877-exact-s11/report.json": "5f083887ba945d4ebbc05ea4bbbb6879e5e2e034a465599b1cd9eb257b8cbc11",
+    "runs/qwen35-20877-exact-s3/case-scores.json": "5c05c60ddb208d5c106068fed4d5d0cb8fbbaeea9c474c2f3d5df8a063c09367",
+    "runs/qwen35-20877-exact-s3/report.json": "65341e56212c50b4627ab80c927444d5ffa139f4e38a3312933fad828458f839",
+    "runs/qwen35-20877-exact-s7/case-scores.json": "8161dd21a47609eb61fddc9c852704aa2cf7aed231f37349291e5c903277d1ed",
+    "runs/qwen35-20877-exact-s7/report.json": "d8126c0f00361855688b191077ba301c0c009e4f6df99e857a12413769b333a5",
+    "runs/qwen35-20877-hash-s11/case-scores.json": "7502f22dd9f1e109d30694f531e2bf4359997e08674065e8c07c13c5b3311ad3",
+    "runs/qwen35-20877-hash-s11/report.json": "29f85a5aebe7cf0a65307924df26f5dbbd77cfea5a92671530bf1d09c7b41c6e",
+    "runs/qwen35-20877-hash-s11/case-scores-native-oov.json": "a63efd09b2df3b759ada99113e55d3d5fb545c7ba2d171f8135577c0bbef4aea",
+    "runs/qwen35-20877-hash-s3/case-scores.json": "db846c417bd521bfafecd1247bf6508bd34b1327006b6f9545c410e45baf798e",
+    "runs/qwen35-20877-hash-s3/report.json": "5e6af058e1699ccaa6b4237be542b617e81672f33637eca47a523e169cf09e6e",
+    "runs/qwen35-20877-hash-s3/case-scores-native-oov.json": "a9cfb77159f9701ad5c7eb3056698cc8308fc0ddfa8b514bc5fb897e0943108c",
+    "runs/qwen35-20877-hash-s7/case-scores.json": "1e3498c405a15dacbe073057200839afb0c0f9d7d92e6b5ecb257de958a393c1",
+    "runs/qwen35-20877-hash-s7/report.json": "2e694dd45314cf88a3deca0da3c1a99e7727e2e575d8b9cec360d20e539be528",
+    "runs/qwen35-20877-hash-s7/case-scores-native-oov.json": "684be2b6f27f8dce44de6276b5684436bc01b08c9776856d0355a8c5723ae826"
+  },
+  "paired_test_arrays_sha256": "baeff248d7f039c913de598b8b3e1839469f44076838b836d5beb4fdf02b6b52",
+  "bootstrap_rng_seed": 20261106,
+  "bootstrap_replicates": 2000,
+  "limitations": [
+    "Frozen Qwen backbone counterfactual editing, not pretraining or verified factual knowledge",
+    "Three seeds and related subjects limit uncertainty; bootstrap intervals are pointwise, not corrected for eight comparisons",
+    "Exact per-key rows clone hash initial vectors; this does not establish naturally occurring 99 percent cosine",
+    "Keys are canonicalized by the existing compressed tokenizer",
+    "Equal physical row parameters, but full bundle includes vocabulary, delta and recipe costs; no native compression or serving superiority is tested"
+  ]
+}

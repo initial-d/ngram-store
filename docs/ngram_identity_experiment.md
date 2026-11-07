@@ -54,8 +54,10 @@ Keep the vocabulary, delta and model recipe together for reproducibility.
 Reports count the padded row table and complete delta/vocabulary/recipe bytes;
 the shared immutable base is still required. Canonical-key files and indexes
 have costs, while ordinary open-vocabulary hash lookup does not need the full
-training-key dictionary. Neither a quality win nor native compression/query
-superiority is claimed before source-qualified complete results.
+training-key dictionary. The [complete 24-model results](ngram_identity_evidence_20261107/README.md)
+support an independent-row quality advantage at 20,877 edits under this protocol;
+some 1,024-edit intervals cross zero. Native compression/query superiority and
+full-model pretraining remain untested by this experiment.
 
 The finite task-specific queue preserves the previous queue's active GPUs and
 checks compute-process occupancy before launching. Only a separately audited,

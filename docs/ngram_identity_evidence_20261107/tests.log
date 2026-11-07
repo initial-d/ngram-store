@@ -1,0 +1,9 @@
+test_oov_rules_and_preserved_normalization (tests.test_ngram_identity.IdentityTest.test_oov_rules_and_preserved_normalization) ... ok
+test_saved_identity_and_individual_vs_joint_collisions (tests.test_ngram_identity.IdentityTest.test_saved_identity_and_individual_vs_joint_collisions) ... ok
+test_training_only_causal_keys (tests.test_ngram_identity.IdentityTest.test_training_only_causal_keys) ... ok
+test_initial_vectors_gradients_and_frozen_unknown (tests.test_ngram_identity.PairedEmbeddingTest.test_initial_vectors_gradients_and_frozen_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.230s
+
+OK
