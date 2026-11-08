@@ -74,6 +74,17 @@ jobs:
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
       - name: Check both decoder architectures, target masking and gradients
         run: python -m unittest tests.test_counterfact_data tests.test_counterfact_retrieval tests.test_late_memory_replay tests.test_ngram_identity -v
+      - name: Fetch pinned memory source for CPU native reopen fixtures
+        run: |
+          mkdir -p /tmp/meft-counterfact-source
+          curl -fL https://raw.githubusercontent.com/AutoArk/TinyEngram/317f23832aa8f8e382a0916ec469e81ba12b6dff/engram.py -o /tmp/meft-counterfact-source/engram.py
+          python -m pip install sympy loguru safetensors
+      - name: Verify exact-key and legacy full Qwen native requests on CPU
+        env:
+          MEFT_COUNTERFACT_SOURCE: /tmp/meft-counterfact-source
+          HF_HUB_OFFLINE: "1"
+          OMP_NUM_THREADS: "1"
+        run: python -m unittest tests.test_counterfact_native -v
       - name: Reproduce all independent-key paired bootstrap intervals on CPU
         run: python docs/ngram_identity_evidence_20261107/verify.py --bootstrap
 

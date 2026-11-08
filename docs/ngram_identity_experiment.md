@@ -64,3 +64,31 @@ checks compute-process occupancy before launching. Only a separately audited,
 authorized occupancy helper can terminate known occupancy programs. Unknown
 processes and all training/evaluation processes are retained. Files and caches
 stay under `/llm-align/duyimin/`.
+
+## Export and independently reopen the trained identity model
+
+`counterfact_native` restores the training-only vocabulary and configured head
+sizes before loading an identity delta. The exported bundle keeps that vocabulary,
+nonrow weights, native row table, source fingerprints and the lookup mode. It
+preserves exact keys' zero-unknown behavior. `--native-oov` is supported only for
+the identity hash control and is retained when that native bundle is reopened.
+Legacy hash-only runs continue to use their original configuration.
+
+```bash
+python -m tools.counterfact_native \
+  --run /path/to/completed/exact-run \
+  --base /path/to/original/Qwen \
+  --upstream /path/to/pinned/TinyEngram \
+  --prepared /path/to/matching/prepared-data \
+  --native-library /path/to/libmeft_rows.so \
+  --output /path/to/new/native-bundle --device cpu --requests 16
+```
+
+The default device remains CUDA. This command checks all original vector bytes
+and actual question-prefix outputs, including an independently reopened model.
+The CPU interface fixtures use a tiny real Qwen model and pinned Engram code;
+they establish checkpoint/addressing compatibility, not the compression,
+performance or downstream quality of the 24 trained research checkpoints.
+Dense temporary construction, Python key dictionaries and coexistence of models
+remain explicit costs. DATrie/mark-compact ablations and matched full-model
+capacity/query measurements on those real checkpoints are still required.
