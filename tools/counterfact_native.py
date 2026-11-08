@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import time
 
 import torch
@@ -19,18 +20,49 @@ from .engram_row_adapter import export_multihead
 
 
 class NativeHashMemory(torch.nn.Module):
-    """Let the unchanged Engram hash on CPU and return native rows on CUDA."""
+    """Keep token/hash/identity addressing on CPU; stage rows to the model."""
     def __init__(self,source):super().__init__();self.source=source
     def forward(self,hidden_states,input_ids):
         return self.source(hidden_states=hidden_states,input_ids=input_ids.cpu())
 
 
-def restore(run,base,upstream):
+def configure_identity(replay,module,folder,spec):
+    """Reconstruct trained local-head IDs before loading weights or native rows."""
+    if not spec['protocol'].get('identity_control'):
+        if spec.get('native_oov',False):raise ValueError('native OOV requires a trained identity hash control')
+        return
+    from .ngram_identity import Vocabulary,configure_memory
+    path=folder/spec['vocabulary']
+    if sha(path)!=spec['vocabulary_sha256']:raise ValueError('identity vocabulary checksum changed')
+    vocabulary=Vocabulary.load(path)
+    if spec.get('prepared_sha256',vocabulary.metadata['prepared_sha256'])!=vocabulary.metadata['prepared_sha256']:
+        raise ValueError('identity vocabulary/data mismatch')
+    variant=spec['protocol']['variants'][spec['variant']]['identity']
+    if variant not in ('exact','hash'):raise ValueError('unsupported identity variant')
+    info=configure_memory(replay,module,vocabulary,variant=='exact',spec['seed'])
+    for key in ('addressing','head_sizes','physical_rows','row_bytes','unique_keys_per_order'):
+        if info[key]!=spec['identity'][key]:raise ValueError('identity layout changed: '+key)
+    if spec.get('native_oov',False):
+        if variant!='hash':raise ValueError('native OOV cannot change an exact-key model')
+        replay.memory.hash_mapping.native_oov=True
+
+
+def restore(run,base,upstream,*,device='cuda',native_oov=False):
     r=json.loads((run/'report.json').read_text());p=r['protocol'];v=p['variants'][r['variant']]
     if r['status']!='complete' or v['control']!='full' or sha(run/'delta.safetensors')!=r['delta']['sha256']:
         raise ValueError('a completed, hash-verified full-row source run is required')
     model,tok,replay,module,cfg,loading=setup(base,upstream,'full',v['vocab_sizes'],r['seed'],
-        suffix_layers=p['suffix_layers'],train_decoder_suffix=p.get('train_decoder_suffix',True))
+        device=device,suffix_layers=p['suffix_layers'],train_decoder_suffix=p.get('train_decoder_suffix',True))
+    if p.get('identity_control'):
+        recipe=json.loads((run/'model-recipe.json').read_text())
+        for key,value in (('protocol',p),('seed',r['seed']),('variant',r['variant']),
+                          ('delta_sha256',r['delta']['sha256']),('identity',r['identity'])):
+            if recipe[key]!=value:raise ValueError('source identity recipe changed: '+key)
+        if recipe['vocabulary_sha256']!=r['identity']['vocabulary_sha256']:
+            raise ValueError('source identity vocabulary changed')
+        configure_identity(replay,module,run,{**recipe,'prepared_sha256':r['prepared_sha256'],'native_oov':native_oov})
+    elif native_oov:
+        raise ValueError('native OOV requires a trained identity hash control')
     state=load_file(str(run/'delta.safetensors'),device='cpu')
     expected={n:p for n,p in model.named_parameters() if p.requires_grad}
     if state.keys()!=expected.keys():raise ValueError('delta does not contain exactly the registered trained parameters')
@@ -49,10 +81,28 @@ def restore(run,base,upstream):
 def digest(x):return hashlib.sha256(x.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes()).hexdigest()
 
 
-def reopen(bundle,upstream,native_library):
+def attach_native(model,replay,bundle,native_library,device):
+    branch=replay.memory;source=branch.multi_head_embedding
+    offsets=source.offsets.detach().cpu().tolist()+[len(source.embedding.weight)]
+    heads=[b-a for a,b in zip(offsets,offsets[1:])]
+    staged=StagedMultiHeadEmbedding(bundle/'memory',device=device,native_library=native_library,
+        native_cache_bytes=1024**2,native_cache_policy='rows',staging_rows=4096,staging_slots=2)
+    meta=staged.gather.metadata
+    if (meta['shape']!=[sum(heads),source.embedding_dim] or meta['head_sizes']!=heads
+            or meta['offsets']!=offsets[:-1] or staged.dtype!=source.embedding.weight.dtype):
+        staged.close();raise ValueError('native local-head layout differs from configured branch')
+    branch.multi_head_embedding=staged;wrapped=NativeHashMemory(branch).eval()
+    model.ngram_memory=wrapped;replay.memory=wrapped
+    return staged
+
+
+def reopen(bundle,upstream,native_library,*,device='cuda'):
     recipe=json.loads((bundle/'model-recipe.json').read_text());p=recipe['protocol'];v=p['variants'][recipe['variant']]
     model,tok,replay,module,cfg,loading=setup(recipe['base_model'],upstream,'full',v['vocab_sizes'],recipe['seed'],
-        suffix_layers=p['suffix_layers'],train_decoder_suffix=p.get('train_decoder_suffix',True))
+        device=device,suffix_layers=p['suffix_layers'],train_decoder_suffix=p.get('train_decoder_suffix',True))
+    configure_identity(replay,module,bundle,recipe)
+    if 'memory_manifest_sha256' in recipe and sha(bundle/'memory/embedding.json')!=recipe['memory_manifest_sha256']:
+        raise ValueError('native memory manifest changed')
     path=bundle/recipe['nonrow_delta']
     if sha(path)!=recipe['nonrow_delta_sha256']:raise ValueError('nonrow delta changed')
     state=load_file(str(path),device='cpu')
@@ -63,24 +113,29 @@ def reopen(bundle,upstream,native_library):
             x=state[n]
             if p.shape!=x.shape or p.dtype!=x.dtype:raise ValueError('nonrow shape/dtype changed')
             p.copy_(x)
+    if 'frozen_weight_sha256' in recipe and replay.frozen_hash()!=recipe['frozen_weight_sha256']:
+        raise ValueError('native immutable backbone changed')
+    if 'frozen_decoder_suffix_sha256' in recipe and replay.frozen_suffix_hash()!=recipe['frozen_decoder_suffix_sha256']:
+        raise ValueError('native immutable decoder suffix changed')
     model.requires_grad_(False).eval();module.set_global_step(recipe['global_step'])
-    staged=StagedMultiHeadEmbedding(bundle/'memory',device='cuda',native_library=native_library,
-        native_cache_bytes=1024**2,native_cache_policy='rows',staging_rows=4096,staging_slots=2)
-    branch=replay.memory
-    if (len(branch.multi_head_embedding.embedding.weight),branch.multi_head_embedding.embedding_dim)!=tuple(staged.gather.metadata['shape']):
-        staged.close();raise ValueError('native row shape differs from configured branch')
-    branch.multi_head_embedding=staged;wrapped=NativeHashMemory(branch);model.ngram_memory=wrapped;replay.memory=wrapped
+    staged=attach_native(model,replay,bundle,native_library,device)
     return model,replay,staged
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for n in ('run','base','upstream','prepared','output','native-library'):parser.add_argument('--'+n,type=Path,required=True)
-    parser.add_argument('--requests',type=int,default=16);args=parser.parse_args()
+    parser.add_argument('--requests',type=int,default=16)
+    parser.add_argument('--device',choices=('cpu','cuda'),default='cuda')
+    parser.add_argument('--native-oov',action='store_true',help='Use ordinary open-vocabulary lookup for an identity hash checkpoint')
+    args=parser.parse_args()
     if not 1<=args.requests<=64:raise ValueError('request check count must be between 1 and 64')
     if args.output.exists():raise ValueError('fresh output required')
     args.output.mkdir(parents=True);started=time.perf_counter();env=environment()
-    r,model,replay,state=restore(args.run,args.base,args.upstream)
+    r,model,replay,state=restore(args.run,args.base,args.upstream,device=args.device,native_oov=args.native_oov)
+    prepared=json.loads((args.prepared/'prepare.json').read_text())
+    if sha(args.prepared/'prepare.json')!=r['prepared_sha256'] or sha(args.prepared/'sequences.json')!=prepared['payload_sha256']:
+        raise ValueError('source prepared requests changed')
     payload=json.loads((args.prepared/'sequences.json').read_text());seq=payload['sequences'];requests=[]
     for c in payload['cases']:
         if c['split']!='test':continue
@@ -99,8 +154,7 @@ def main():
     offsets=source.offsets.cpu().tolist()+[len(weight)];heads=[b-a for a,b in zip(offsets,offsets[1:])]
     export_started=time.perf_counter()
     packed=export_multihead(weight,heads,args.output/'memory',block_rows=32,backend='native',deduplicate=False,predictor='xor')
-    staged=StagedMultiHeadEmbedding(args.output/'memory',device='cuda',native_library=args.native_library,
-        native_cache_bytes=1024**2,native_cache_policy='rows',staging_rows=4096,staging_slots=2)
+    staged=attach_native(model,replay,args.output,args.native_library,args.device)
     try:
         for start in range(0,len(weight),256):
             end=min(start+256,len(weight))
@@ -113,8 +167,6 @@ def main():
             'limitations':['Interface/fidelity only, not memory necessity, comparison with editing methods, or serving superiority',
                 'Resident and native modules coexist during validation; no comparative peak-memory or latency claim',
                 'No KV cache, padding, distributed serving or generated-answer quality is measured here']}
-        branch.multi_head_embedding=staged;wrapped=NativeHashMemory(branch)
-        model.ngram_memory=wrapped;replay.memory=wrapped
         with torch.no_grad():
             for (case,g,ids),expected in zip(requests,references):
                 actual=replay.complete(ids,True,1).detach().cpu()
@@ -127,9 +179,18 @@ def main():
         recipe={'base_model':str(args.base),'seed':r['seed'],'variant':r['variant'],'protocol':r['protocol'],
             'global_step':r['optimizer_steps'],'nonrow_delta':'nonrow-delta.safetensors','memory':'memory/embedding.json',
             'nonrow_delta_sha256':sha(args.output/'nonrow-delta.safetensors'),
+            'memory_manifest_sha256':sha(args.output/'memory/embedding.json'),
+            'frozen_weight_sha256':r['frozen_weight_sha256'],
             'contract':'Immutable original base plus nonrow delta and native original-ID rows; no original row delta needed'}
+        if 'frozen_decoder_suffix_sha256' in r:recipe['frozen_decoder_suffix_sha256']=r['frozen_decoder_suffix_sha256']
+        if r['protocol'].get('identity_control'):
+            shutil.copyfile(args.run/'vocabulary.npz',args.output/'vocabulary.npz')
+            if sha(args.output/'vocabulary.npz')!=r['identity']['vocabulary_sha256']:
+                raise ValueError('identity vocabulary changed during export')
+            recipe.update(vocabulary='vocabulary.npz',vocabulary_sha256=r['identity']['vocabulary_sha256'],
+                identity=r['identity'],prepared_sha256=r['prepared_sha256'],native_oov=args.native_oov)
         write(args.output/'model-recipe.json',recipe)
-        independent,independent_replay,independent_staged=reopen(args.output,args.upstream,args.native_library)
+        independent,independent_replay,independent_staged=reopen(args.output,args.upstream,args.native_library,device=args.device)
         try:
             with torch.no_grad():
                 for (_,_,ids),expected in zip(requests,references):
@@ -139,6 +200,7 @@ def main():
         finally:independent_staged.close();independent_replay.close()
         report.update(status='passed',bundle_bytes=sum(p.stat().st_size for p in args.output.rglob('*') if p.is_file()),
             source_delta_bytes=r['delta']['bytes'],staging_stats=staged.stats,elapsed_seconds=time.perf_counter()-started,
+            execution_device=args.device,identity=r.get('identity'),native_oov=args.native_oov,
             startup_limitation='Current reopen constructs a dense temporary row module before replacing it; no bounded native-startup claim')
         write(args.output/'report.json',report);print(json.dumps(report),flush=True)
     finally:staged.close();replay.close()
