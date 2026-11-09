@@ -143,16 +143,23 @@ or total RSS. The retained table still supports arbitrary future queries.
 ## Native layout and construction
 
 `MEFTNAT1` is a binary little-endian format: versioned fixed-size header,
-8-byte original-row-ID forwarding map, 32-byte block descriptors and block
+optional 8-byte-per-original-row forwarding map, 32-byte block descriptors and block
 payloads. The schema lives beside the reader in `native/meft_rows.c`.
 Rows are opaque source bytes; dtype/endian reconstruction belongs to the caller.
 Version 1 uses raw/zlib blocks. Optional version 2 adds previous-row bitwise XOR
-followed by zlib. The new reader accepts both; old readers reject version 2.
-The C ABI and map/descriptor widths are unchanged.
+followed by zlib. Version 3 supports these same codecs but omits forwarding:
+it requires `unique_rows == nrows` and physical row IDs equal original IDs.
+The current reader accepts all three; older readers reject unsupported versions.
+The C ABI and descriptor widths are unchanged.
 
 The exporter shares only byte-identical rows when `deduplicate=True`. With
 `deduplicate=False`, it streams the source using a block buffer and temporary
-map/payload files, avoiding a dictionary of every unique row. Descriptor memory
+payload file, avoiding a dictionary of every unique row. Without a permutation
+or representatives, these exports use v3 and save exactly `8 * nrows` bytes.
+Use `implicit_identity=False` in `pack_native` or the embedding exporters to
+write v1/v2 for older compiled readers. Deduplication, explicit permutations
+(including identity permutations) and mark/compact exports keep their v1/v2 map.
+Descriptor memory
 still grows with the number of blocks. It retains all rows for arbitrary future
 queries; it does not prune according to a sample query trace.
 

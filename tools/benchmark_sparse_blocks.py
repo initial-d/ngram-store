@@ -22,14 +22,16 @@ from .prepare_public_benchmark import file_sha256
 def describe_table(path):
     with path.open('rb') as stream:
         magic, version, rows, width, unique, block_rows, count = HEADER.unpack(stream.read(HEADER.size))
-        if magic != b'MEFTNAT1' or version not in (1, 2):
+        if magic != b'MEFTNAT1' or version not in (1, 2, 3) or (version == 3 and unique != rows):
             raise ValueError('invalid table header')
-        stream.seek(HEADER.size + rows * 8)
+        row_map_bytes = 0 if version == 3 else rows * 8
+        stream.seek(HEADER.size + row_map_bytes)
         codecs = [0, 0, 0]
         for _ in range(count):
             _, _, _, codec = DESC.unpack(stream.read(DESC.size))
             codecs[codec] += 1
-    return dict(n_rows=rows, row_bytes=width, unique_rows=unique, block_rows=block_rows,
+    return dict(format_version=version, row_map_bytes=row_map_bytes,
+                n_rows=rows, row_bytes=width, unique_rows=unique, block_rows=block_rows,
                 blocks=count, artifact_bytes=path.stat().st_size, raw_blocks=codecs[0],
                 zlib_blocks=codecs[1], xor_blocks=codecs[2])
 
