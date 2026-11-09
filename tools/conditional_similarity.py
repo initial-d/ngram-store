@@ -22,7 +22,7 @@ def frequency_bins(counts):
 
 
 def related(a, b):
-    """Immediate ancestry or equal-length length-1 prefix/suffix siblings."""
+    """Any proper ancestry or equal-length length-1 prefix/suffix siblings."""
     if a == b:
         return True
     if len(a) == len(b):

@@ -71,6 +71,23 @@ class ConditionalSimilarityTest(unittest.TestCase):
         self.assertEqual(result['measured_pairs'], 120)
         self.assertIsNone(spearman(np.ones(3), np.arange(3)))
 
+    def test_best_ancestor_control_holds_descendant_and_candidate_count_fixed(self):
+        from tools.conditional_similarity import audit_relation
+        keys = ['ab', 'abc', 'abcdef', 'xy', 'uvw', 'uvwxyz']
+        counts = np.array([10, 5, 5, 10, 5, 5])
+        rows = np.array([[1, 0]] * 3 + [[0, 1]] * 3, dtype=np.float32)
+        pairs = np.array([[0, 1], [0, 2], [1, 2]])
+        parent_controls = np.array([4, 5, 5])
+        child_controls = np.array([3, 3, 4])
+        result = audit_relation(rows, keys, counts, 'ancestor',
+            signatures=np.array([0, 1, 1, 2, 3, 3]),
+            prepared=(pairs, 3, parent_controls, child_controls))
+        best = result['ancestry_diagnostics']['best_per_child_matched_candidate_count']
+        self.assertEqual(best['candidate_rows'], 2)
+        self.assertEqual(best['source_ge_0_99_rows'], 2)
+        self.assertEqual(best['control_ge_0_99_rows'], 0)
+        self.assertEqual(result['ancestry_diagnostics']['child_anchored_unmatched_pairs'], 0)
+
     def test_frequency_multiplicity_and_center_sampling_reproduce_source(self):
         try:
             import torch
