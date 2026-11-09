@@ -29,6 +29,10 @@ class ConditionalSimilarityTest(unittest.TestCase):
         parent, _ = structural_pairs(keys, 'parent')
         self.assertIn((0, 1), list(map(tuple, parent)))
         self.assertIn((8, 1), list(map(tuple, parent)))
+        ancestor_keys = ['ab', 'abc', 'abcdef', 'xyz']
+        ancestor, _ = structural_pairs(ancestor_keys, 'ancestor')
+        self.assertIn((0, 2), list(map(tuple, ancestor)))
+        self.assertTrue(related('ab', 'abcdef'))
         control = matched_controls(keys, counts, parent)
         bins = frequency_bins(counts)
         for (a, b), c in zip(parent, control):
@@ -68,6 +72,10 @@ class ConditionalSimilarityTest(unittest.TestCase):
         self.assertIsNone(spearman(np.ones(3), np.arange(3)))
 
     def test_frequency_multiplicity_and_center_sampling_reproduce_source(self):
+        try:
+            import torch
+        except ImportError:
+            self.skipTest('optional PyTorch unavailable')
         from tools.analyze_conditional_similarity import metadata
         from tools.train_ngram_similarity import prepare
         text = 'aaaa cat aaaa dog cat aaaa dog cat'

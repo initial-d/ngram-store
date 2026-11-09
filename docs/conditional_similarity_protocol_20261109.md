@@ -93,3 +93,27 @@ claims separate. Mixed or opposite signs require narrowing/rejecting the
 corresponding frequency/length hypothesis. No "first discovery" claim follows
 from this experiment. All new work is CPU-only; original assets are read-only,
 and remote writes stay in a new directory under the user's own workspace.
+
+## User clarification and refined ancestry analysis
+
+After the initial immediate-parent/sibling analysis, the user clarified that
+the intended claim concerns containment: parent **or ancestor** nodes of the
+prefix/suffix tree. Siblings are auxiliary observations outside this claim.
+Before calculating the new all-ancestor results, fix the following refinement:
+
+- Enumerate every registered proper prefix/suffix ancestor of length >=2,
+  deduplicating pairs, and keep immediate-parent results separately.
+- Record both ancestor-anchored and descendant-anchored frequency/length-matched
+  unrelated controls. Reject every proper ancestor relation in control pairs.
+- For per-descendant best matches, compare equal matched candidate counts while
+  holding the descendant fixed; a best-of-many search alone is not a gain.
+- Report ancestor frequency while holding both lengths and descendant frequency
+  bin, and descendant frequency while holding both lengths and ancestor bin.
+  For length trends also hold the other length and both frequency bins.
+- Record occurrence coverage `descendant_count / ancestor_count`, its relation
+  to cosine, and frequency trends inside identical-incidence pairs. These are
+  explanatory follow-ups motivated by the initial differing frequency signs;
+  they are not prospective confirmation of an unseen hypothesis.
+- Qwen sibling observations remain an auxiliary transfer check. Cross-order
+  parent/ancestor vectors occupy different heads; raw cross-head cosine does
+  not establish the user's containment mechanism.

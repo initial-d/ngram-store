@@ -66,7 +66,9 @@ def comparisons(keys, counts, relation):
     cache_key = (h.hexdigest(), relation)
     if cache_key not in CACHE:
         pairs, population = structural_pairs(keys, relation)
-        CACHE[cache_key] = (pairs, population, matched_controls(keys, counts, pairs))
+        controls = matched_controls(keys, counts, pairs)
+        child_controls = matched_controls(keys, counts, pairs[:, ::-1]) if relation in ('parent', 'ancestor') else None
+        CACHE[cache_key] = (pairs, population, controls, child_controls)
     return CACHE[cache_key]
 
 
@@ -120,7 +122,7 @@ def legacy(args, report):
             'corpus_sha256': digest(args.corpus), 'rows': len(keys), 'dimension': rows.shape[1],
             'initialization': 'Not retained by original run; no initialization reconstruction claimed',
             'exposures': 'Recreated from exact saved sampling algorithm, seed and source context pool; no original center-event hash retained',
-            'relations': analyze(rows, keys, counts, ('parent', 'prefix', 'suffix'), signatures=signatures, exposures=exposure),
+            'relations': analyze(rows, keys, counts, ('parent', 'ancestor'), signatures=signatures, exposures=exposure),
             'storage': storage(rows, keys, counts, out, args.native_library)}
         publish(args, report, out.name, result)
 
@@ -151,7 +153,7 @@ def checkpoints(args, report):
             'source_checkpoint_sha256': digest(path), 'source_training_report_sha256': digest(args.training_root / 'report.json'),
             'sampled_center_events_sha256': event_hash, 'corpus_sha256': digest(corpus),
             'rows': len(rows), 'dimension': rows.shape[1],
-            'relations': analyze(rows, keys, counts, ('parent', 'prefix', 'suffix'), initial=initial, signatures=signatures, exposures=exposure),
+            'relations': analyze(rows, keys, counts, ('parent', 'ancestor'), initial=initial, signatures=signatures, exposures=exposure),
             'storage': storage(rows, keys, counts, out, args.native_library)}
         publish(args, report, out.name, result)
 

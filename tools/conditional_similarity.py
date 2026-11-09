@@ -27,9 +27,9 @@ def related(a, b):
         return True
     if len(a) == len(b):
         return a[:-1] == b[:-1] or a[1:] == b[1:]
-    if abs(len(a) - len(b)) == 1:
+    if len(a) != len(b):
         short, long = (a, b) if len(a) < len(b) else (b, a)
-        return short == long[:-1] or short == long[1:]
+        return short == long[:len(short)] or short == long[-len(short):]
     return False
 
 
@@ -48,10 +48,11 @@ def unrank_pair(n, k):
 def structural_pairs(keys, relation, limit=LIMIT, seed=SEED):
     if len(set(keys)) != len(keys) or limit < 1:
         raise ValueError('unique keys and positive sample limit required')
-    if relation == 'parent':
+    if relation in ('parent', 'ancestor'):
         lookup = {key: i for i, key in enumerate(keys)}
         pairs = sorted({(lookup[parent], i) for i, key in enumerate(keys)
-                        for parent in (key[:-1], key[1:]) if parent in lookup})
+                        for length in ([len(key) - 1] if relation == 'parent' else range(2, len(key)))
+                        for parent in (key[:length], key[-length:]) if parent in lookup})
         # Parent enumeration is small and complete; the cap applies to siblings.
         return np.asarray(pairs, dtype=np.int64).reshape(-1, 2), len(pairs)
     if relation not in ('prefix', 'suffix'):
@@ -164,9 +165,15 @@ def spearman(x, y):
 
 def conditional_trend(x, y, strata):
     groups = []
-    for group in sorted(set(strata.tolist())):
-        select = (strata == group) & np.isfinite(y)
-        n = int(select.sum())
+    order = np.argsort(strata, kind='stable')
+    boundaries = np.r_[0, np.flatnonzero(np.diff(strata[order])) + 1, len(order)]
+    for start, end in zip(boundaries, boundaries[1:]):
+        if start == end:
+            continue
+        group = strata[order[start]]
+        select = order[start:end]
+        select = select[np.isfinite(y[select])]
+        n = len(select)
         rho = spearman(x[select], y[select]) if n >= 50 else None
         groups.append({'stratum': int(group), 'valid_pairs': n, 'spearman': rho})
     measured = [g for g in groups if g['spearman'] is not None]
@@ -183,17 +190,82 @@ def trends(metrics, lengths, frequency):
             for name, values in (('cosine', c), ('ge_0_99', indicator))}
 
 
+def covariate_trend(x, y, axes):
+    groups, inverse = np.unique(np.column_stack(axes), axis=0, return_inverse=True)
+    result = conditional_trend(x, y, inverse)
+    result['stratum_values'] = groups.tolist()
+    return result
+
+
+def ancestry_diagnostics(metrics, keys, counts, pairs, signatures, child_controls, rows):
+    a, b = pairs.T
+    la = np.array([len(keys[i]) for i in a]); lb = np.array([len(keys[i]) for i in b])
+    fa, fb = counts[a], counts[b]
+    ba, bb = frequency_bins(fa), frequency_bins(fb)
+    c = metrics['cosine']
+    if (fb > fa).any():
+        raise ValueError('ancestor occurrences must cover all descendant occurrences')
+    fraction = fb / fa
+    result = {'ancestor_frequency_holding_lengths_and_child_bin': covariate_trend(fa, c, (la, lb, bb)),
+              'child_frequency_holding_lengths_and_ancestor_bin': covariate_trend(fb, c, (la, lb, ba)),
+              'child_length_holding_ancestor_length_and_frequency_bins': covariate_trend(lb, c, (la, ba, bb)),
+              'ancestor_length_holding_child_length_and_frequency_bins': covariate_trend(la, c, (lb, ba, bb)),
+              'coverage_fraction_holding_lengths': covariate_trend(fraction, c, (la, lb)), 'coverage_cells': []}
+    for lower, upper in ((0, .25), (.25, .5), (.5, .75), (.75, .9), (.9, 1), (1, 1)):
+        select = (fraction == 1) if lower == upper else ((fraction >= lower) & (fraction < upper))
+        result['coverage_cells'].append({'lower': lower, 'upper': upper,
+                                         'source': summarize(metrics, select)})
+    if signatures is not None:
+        same = signatures[a] == signatures[b]
+        if ((fa == fb) & ~same).any():
+            raise ValueError('equal ancestor/child occurrence counts must imply equal host multiplicities')
+        result['identical_incidence_frequency_holding_lengths'] = covariate_trend(
+            fb, np.where(same, c, np.nan), (la, lb))
+    if child_controls is not None:
+        matched = child_controls >= 0
+        comparison = pair_metrics(rows, np.column_stack((child_controls[matched], b[matched])))
+        result['child_anchored_source'] = summarize(metrics, matched)
+        result['child_anchored_control'] = summarize(comparison)
+        result['child_anchored_unmatched_pairs'] = int((~matched).sum())
+        ratios = np.maximum(fa[matched], counts[child_controls[matched]]) / np.minimum(fa[matched], counts[child_controls[matched]])
+        result['child_anchored_frequency_ratio'] = distribution(ratios)
+        source_best, control_best, joint_source, joint_control = [], [], [], []
+        children = b[matched]
+        order = np.argsort(children, kind='stable')
+        boundaries = np.r_[0, np.flatnonzero(np.diff(children[order])) + 1, len(order)]
+        source_cosines, source_ratios = c[matched], metrics['norm_ratio'][matched]
+        for start, end in zip(boundaries, boundaries[1:]):
+            if start == end:
+                continue
+            select = order[start:end]
+            source_cos, source_ratio = source_cosines[select], source_ratios[select]
+            control_cos, control_ratio = comparison['cosine'][select], comparison['norm_ratio'][select]
+            if not np.isfinite(source_cos).all() or not np.isfinite(control_cos).all():
+                continue
+            source_best.append(float(source_cos.max())); control_best.append(float(control_cos.max()))
+            joint_source.append(bool(((source_cos >= .99) & (source_ratio >= .99)).any()))
+            joint_control.append(bool(((control_cos >= .99) & (control_ratio >= .99)).any()))
+        result['best_per_child_matched_candidate_count'] = {
+            'candidate_rows': len(source_best), 'source_best_cosine': distribution(source_best),
+            'control_best_cosine': distribution(control_best),
+            'source_ge_0_99_rows': sum(v >= .99 for v in source_best),
+            'control_ge_0_99_rows': sum(v >= .99 for v in control_best),
+            'source_joint_0_99_rows': sum(joint_source), 'control_joint_0_99_rows': sum(joint_control),
+            'scope': 'Equal matched candidate counts per descendant; this is not direct-retained compaction'}
+    return result
+
+
 def audit_relation(rows, keys, counts, relation, *, initial=None, signatures=None, exposures=None, limit=LIMIT, prepared=None):
     if prepared is None:
         pairs, population = structural_pairs(keys, relation, limit)
         controls = matched_controls(keys, counts, pairs)
     else:
-        pairs, population, controls = prepared
+        pairs, population, controls = prepared[:3]
     source = pair_metrics(rows, pairs)
     matches = controls >= 0
     comparison = pair_metrics(rows, np.column_stack((pairs[matches, 0], controls[matches])))
     length = np.asarray([len(keys[b]) for _, b in pairs])
-    frequency = counts[pairs[:, 1]] if relation == 'parent' else counts[pairs].max(axis=1)
+    frequency = counts[pairs[:, 1]] if relation in ('parent', 'ancestor') else counts[pairs].max(axis=1)
     bins = frequency_bins(frequency)
     cells = []
     for l, f in sorted(set(zip(length.tolist(), bins.tolist()))):
@@ -214,7 +286,7 @@ def audit_relation(rows, keys, counts, relation, *, initial=None, signatures=Non
               'paired_mean_cosine_difference': float((source['cosine'][matches][valid_comparison] - comparison['cosine'][valid_comparison]).mean()) if valid_comparison.any() else None,
               'cells': cells, 'conditional_trends': trends(source, length, frequency),
               'max_frequency_trends': trends(source, length, counts[pairs].max(axis=1)),
-              'child_parent_frequency_ratio': distribution(counts[pairs[:, 1]] / counts[pairs[:, 0]]) if relation == 'parent' else None}
+              'child_parent_frequency_ratio': distribution(counts[pairs[:, 1]] / counts[pairs[:, 0]]) if relation in ('parent', 'ancestor') else None}
     for name, gate in [('cosine_0_99', source['cosine'] >= .99),
                        ('cosine_and_norm_0_99', (source['cosine'] >= .99) & (source['norm_ratio'] >= .99))]:
         touched = np.unique(pairs[gate].reshape(-1))
@@ -226,6 +298,9 @@ def audit_relation(rows, keys, counts, relation, *, initial=None, signatures=Non
         result['identical_incidence'] = summarize(source, same)
         result['different_incidence'] = summarize(source, ~same)
         result['matched_control_identical_incidence'] = summarize(comparison, signatures[a] == signatures[controls[matches]])
+    if relation in ('parent', 'ancestor'):
+        child_controls = prepared[3] if prepared is not None and len(prepared) == 4 else None
+        result['ancestry_diagnostics'] = ancestry_diagnostics(source, keys, counts, pairs, signatures, child_controls, rows)
     if initial is not None:
         initial_metrics = pair_metrics(initial, pairs)
         update_metrics = pair_metrics(rows.astype(np.float64) - initial.astype(np.float64), pairs)
@@ -235,7 +310,7 @@ def audit_relation(rows, keys, counts, relation, *, initial=None, signatures=Non
         result['excluding_initial_ge_0_99_trends'] = trends(
             {k: np.where(initial_metrics['cosine'] < .99, v, np.nan) for k, v in source.items()}, length, frequency)
     if exposures is not None:
-        exposure = exposures[pairs[:, 1]] if relation == 'parent' else exposures[pairs].max(axis=1)
+        exposure = exposures[pairs[:, 1]] if relation in ('parent', 'ancestor') else exposures[pairs].max(axis=1)
         # Unupdated rows are disclosed, not mislabelled as frequency one.
         updated = exposure > 0
         result['zero_sampled_exposure_pairs'] = int((~updated).sum())
