@@ -173,7 +173,8 @@ def train(args):
         if sha(args.prepared/'sequences.json')!=meta['payload_sha256']:raise ValueError('IDs changed')
         payload=json.loads((args.prepared/'sequences.json').read_text());seq=payload['sequences'];samples=payload['train']
         control=variant['control'];enabled=control!='off'
-        model,tok,replay,module,cfg,loading=setup(args.base,args.upstream,control,variant['vocab_sizes'],args.seed,
+        independent_identity = protocol.get('independent_identity_controls', False) and control in ('head-constant', 'adapter')
+        model,tok,replay,module,cfg,loading=setup(args.base,args.upstream,'full' if independent_identity else control,variant['vocab_sizes'],args.seed,
             suffix_layers=protocol['suffix_layers'],train_decoder_suffix=protocol.get('train_decoder_suffix',True))
         if protocol.get('identity_control'):
             from .ngram_identity import Vocabulary,configure_memory
@@ -182,9 +183,31 @@ def train(args):
             vocabulary=Vocabulary.load(identity_path)
             if vocabulary.metadata['prepared_sha256']!=sha(args.prepared/'prepare.json'):
                 raise ValueError('identity vocabulary comes from different prepared data')
-            report['identity']=configure_memory(replay,module,vocabulary,variant['identity']=='exact',args.seed)
+            report['identity']=configure_memory(replay,module,vocabulary,independent_identity or variant['identity']=='exact',args.seed)
             report['identity'].update(vocabulary_sha256=sha(identity_path),vocabulary_file_bytes=identity_path.stat().st_size)
             report['identity_vocabulary_metadata']=vocabulary.metadata
+            if independent_identity:
+                from .counterfact_models import HeadConstantEmbedding, ConstantAddressMapping
+                from .late_memory_replay import DenseMemoryAdapter
+                source_branch = replay.memory
+                budget = sum(p.numel() for p in source_branch.parameters())
+                report['initial_source_identity'] = dict(report['identity'])
+                if control == 'head-constant':
+                    source_branch.multi_head_embedding = HeadConstantEmbedding(source_branch.multi_head_embedding).to(replay.device)
+                    source_branch.hash_mapping = ConstantAddressMapping(replay.layer_id, source_branch.multi_head_embedding.num_heads)
+                    report['identity'].update(addressing='head-constant', physical_rows=source_branch.multi_head_embedding.num_heads,
+                        row_bytes=source_branch.multi_head_embedding.embedding.weight.numel() * 4,
+                        initialization='Mean of each complete exact-key source initialization, including original sentinels and budget padding',
+                        key_registry_required_for_inference=False)
+                else:
+                    torch.manual_seed(int.from_bytes(hashlib.sha256(f'{args.seed}:adapter'.encode()).digest()[:8], 'little'))
+                    branch = DenseMemoryAdapter(replay.text.config.hidden_size, budget).to(replay.device)
+                    replay.memory = branch
+                    model.ngram_memory = branch
+                    report['identity'].update(addressing='parameter-matched-hidden-adapter', physical_rows=0, row_bytes=0,
+                        target_parameter_budget=budget, actual_parameter_budget=sum(p.numel() for p in branch.parameters()),
+                        key_registry_required_for_inference=False)
+                    del source_branch
         report.update(loading=loading,base_model=str(args.base),frozen_weight_sha256=replay.frozen_hash(),
             frozen_decoder_suffix_sha256=replay.frozen_suffix_hash(),
             trained_parameter_names=[n for n,p in model.named_parameters() if p.requires_grad],
