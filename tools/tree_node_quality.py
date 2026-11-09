@@ -364,7 +364,9 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
     word_rows = np.load(common / ('cached-word-rows.npy' if cached else 'word-rows.npy'), mmap_mode='r')
     word_lookup = {w: i for i, w in enumerate(load(common / 'word-keys.json'))}
     index_path = common / ('keys.datrie' if index_kind == 'datrie' else 'keys.flat')
-    index = StructuralIndex(index_path, job['structural_library'])
+    structural_library = os.environ.get('MEFT_QUERY_STRUCTURAL_LIBRARY', job['structural_library'])
+    index = StructuralIndex(index_path, structural_library)
+    measured['structural_library_sha256'] = digest(structural_library)
     measured['load_seconds'] = time.perf_counter() - start
     inputs = load(common / 'query-strings.json')
     measured['query'] = {}; plans = {}

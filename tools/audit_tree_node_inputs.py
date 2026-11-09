@@ -77,8 +77,9 @@ def main():
         assert hidden.tobytes() == np.load(common / 'lexical-source-hidden.npy').tobytes()
         assert hidden[:len(words)].tobytes() == np.load(common / 'cached-word-rows.npy').tobytes()
         job = load(model['jobs'][0])
+        structural_library = os.environ.get('MEFT_QUERY_STRUCTURAL_LIBRARY', job['structural_library'])
         for kind, name in (('datrie', 'keys.datrie'), ('hash', 'keys.flat')):
-            with StructuralIndex(common / name, job['structural_library']) as index:
+            with StructuralIndex(common / name, structural_library) as index:
                 assert index.lookup(grams, index=kind) == list(range(len(grams)))
         evaluations = {}
         for i, split in enumerate(SPLITS):
@@ -99,7 +100,8 @@ def main():
             assert query[name] == picked
             assert hidden[[lexical_ids[w] for w in picked]].tobytes() == np.load(common / (name + '-query-reference.npy')).tobytes()
         report['models'].append({'name': model['name'], 'known_words_verified': len(words),
-            'canonical_cached_words_byte_exact': True, 'both_indexes_all_ids_verified': len(grams),
+            'canonical_cached_words_byte_exact': True, 'structural_library_sha256': digest(structural_library),
+            'both_indexes_all_ids_verified': len(grams),
             'training_occurrence_weights_verified': True, 'fit_original_ids_sha256': metadata['fit_original_ids_sha256'],
             'checkpoint_sha256': digest(checkpoint), 'metadata_sha256': digest(common / 'metadata.json'),
             'cached_word_serving_file': {'bytes': (common / 'cached-word-rows.npy').stat().st_size,
