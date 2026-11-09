@@ -1,0 +1,1615 @@
+{
+  "block_sweeps": [
+    {
+      "run": "qwen06-20877-exact-s3",
+      "variants": [
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 32,
+          "build_and_verify_seconds": 8.759973759995773,
+          "bundle_bytes": 77976311,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 0.521924,
+          "full_bundle_with_shared_base_bytes": 1597181410,
+          "memory_artifact_bytes": 74917946,
+          "memory_manifest_sha256": "88f7586e1e5d2bcf0ba5cdff2667453fabd94af6abac2bfcb93c078bed08e92a",
+          "name": "xor-b32",
+          "p50_ms": 0.06579,
+          "recipe_sha256": "c239b473b9615324a9bc38ae1cea55edfbf51681a8e34c9d71f730eaac3baa5e",
+          "row_payload_to_memory_artifact_factor": 0.9925055873795579,
+          "source_bundle_to_native_bundle_factor": 0.9927952862504614,
+          "structurally_merged_rows": 0,
+          "table_sha256": "df0081dd5675584ee9018afaabe43d4a7eb592f3e88db939671466a02e06e14c"
+        },
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 128,
+          "build_and_verify_seconds": 7.598307558102533,
+          "bundle_bytes": 76906245,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 1.4704395,
+          "full_bundle_with_shared_base_bytes": 1596111344,
+          "memory_artifact_bytes": 73847880,
+          "memory_manifest_sha256": "7b2641945fa1ed98d84aea882f55951cf739e3d15cf7ad8eb09627cbbfa5c8a7",
+          "name": "xor-b128",
+          "p50_ms": 0.065721,
+          "recipe_sha256": "d13efd0d14a79caa82a3cd27cb5728ba77a9160812fb56786da2824a8a07179d",
+          "row_payload_to_memory_artifact_factor": 1.006887130679987,
+          "source_bundle_to_native_bundle_factor": 1.0066089431358922,
+          "structurally_merged_rows": 0,
+          "table_sha256": "45791509d65a747909e39512b6bd83298742cee5adda4b652c705137d83444ee"
+        },
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 512,
+          "build_and_verify_seconds": 9.440199975855649,
+          "bundle_bytes": 76784755,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 5.4811495,
+          "full_bundle_with_shared_base_bytes": 1595989854,
+          "memory_artifact_bytes": 73726390,
+          "memory_manifest_sha256": "c3e2beef0b8c5c64037958bb0667584aa46564864c9161b72c519cda8612afce",
+          "name": "xor-b512",
+          "p50_ms": 0.063905,
+          "recipe_sha256": "60b12606921333afafc05f5cc3cefd644b2b89e5f4ef3b6d953a9440396ce234",
+          "row_payload_to_memory_artifact_factor": 1.0085463292045087,
+          "source_bundle_to_native_bundle_factor": 1.0082016150211068,
+          "structurally_merged_rows": 0,
+          "table_sha256": "c04d52bd3001b4c36665bfc30255b7eaf8b44e28b749e1ee4ae32a4792c0a95e"
+        },
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 2048,
+          "build_and_verify_seconds": 10.5080737110693,
+          "bundle_bytes": 76755148,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 21.024273,
+          "full_bundle_with_shared_base_bytes": 1595960247,
+          "memory_artifact_bytes": 73696783,
+          "memory_manifest_sha256": "14c82c025b480a7b2ad730fb2ecf454a0df335aa1eab73ffffb158f908c8a0de",
+          "name": "xor-b2048",
+          "p50_ms": 0.063835,
+          "recipe_sha256": "3cba9adc4c4483d61dd700b0f3c684700244b91459358d78e8f032ee58d0e885",
+          "row_payload_to_memory_artifact_factor": 1.0089515033512386,
+          "source_bundle_to_native_bundle_factor": 1.0085905117400074,
+          "structurally_merged_rows": 0,
+          "table_sha256": "7d6839fe86394967f743ef6cf559e5472456a83a321621dce73e405e1094004e"
+        }
+      ]
+    },
+    {
+      "run": "qwen35-20877-exact-s3",
+      "variants": [
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 32,
+          "build_and_verify_seconds": 8.77018086402677,
+          "bundle_bytes": 79596565,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 0.5204925,
+          "full_bundle_with_shared_base_bytes": 9422505519,
+          "memory_artifact_bytes": 74123717,
+          "memory_manifest_sha256": "d9fef53b9deb2eaebd875420e15ff3e8c64e0ad385dd397c2827105d5ffaa95f",
+          "name": "xor-b32",
+          "p50_ms": 0.06579,
+          "recipe_sha256": "b587fee5ab473f4a0e1317682f968d490a0ba5b4a49dae7df3e0742d4dceb464",
+          "row_payload_to_memory_artifact_factor": 0.9917775710033537,
+          "source_bundle_to_native_bundle_factor": 0.9923386643632172,
+          "structurally_merged_rows": 0,
+          "table_sha256": "e333ee43091307023bbc84e5cd9b3a63fd2b0955c8749d4de39786760eb3525a"
+        },
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 128,
+          "build_and_verify_seconds": 7.5973420010413975,
+          "bundle_bytes": 78527944,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 1.4432369999999999,
+          "full_bundle_with_shared_base_bytes": 9421436898,
+          "memory_artifact_bytes": 73055096,
+          "memory_manifest_sha256": "61136baf676ff68331467b16735db0cf1f3e3e86acf356c555906b9113e89d58",
+          "name": "xor-b128",
+          "p50_ms": 0.062438,
+          "recipe_sha256": "c5eb6281327bd9e87b408cf2e2cec96c93b1428502e50b6ac1a563314ca30d64",
+          "row_payload_to_memory_artifact_factor": 1.0062849003716319,
+          "source_bundle_to_native_bundle_factor": 1.0058425698755082,
+          "structurally_merged_rows": 0,
+          "table_sha256": "2daadd8038037d98967c7fcfbbfa25e59c34329be1ea02d10d81b5be800231dc"
+        },
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 512,
+          "build_and_verify_seconds": 9.274215643992648,
+          "bundle_bytes": 78406400,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 5.393288500000001,
+          "full_bundle_with_shared_base_bytes": 9421315354,
+          "memory_artifact_bytes": 72933552,
+          "memory_manifest_sha256": "5604976b0dc2bf367154fee16d6bd480685121c97e57e84907a3be3acaf5c3d0",
+          "name": "xor-b512",
+          "p50_ms": 0.064324,
+          "recipe_sha256": "7f0270403f9aefb6b8bd7de7fe06391296cb812093f7d7db8e32a2bcd5f86eca",
+          "row_payload_to_memory_artifact_factor": 1.0079618774086307,
+          "source_bundle_to_native_bundle_factor": 1.0074018064851848,
+          "structurally_merged_rows": 0,
+          "table_sha256": "4daf635053b4ae303ef48044c90653723c9f6e29045cf603c189a3b9eace0f65"
+        },
+        {
+          "all_original_rows_byte_exact": true,
+          "block_rows": 2048,
+          "build_and_verify_seconds": 10.676211600890383,
+          "bundle_bytes": 78376609,
+          "datrie_index_bytes": 0,
+          "first_trace_p50_ms": 20.3551925,
+          "full_bundle_with_shared_base_bytes": 9421285563,
+          "memory_artifact_bytes": 72903761,
+          "memory_manifest_sha256": "042807b62166bdd569df312eabdb6ba175b188d6c2a4dd53cb584cf84e0512c9",
+          "name": "xor-b2048",
+          "p50_ms": 0.065721,
+          "recipe_sha256": "72e81005ead47d9c67c83015134ee05ab761ecea80bddea3b5a99982a7fe0af7",
+          "row_payload_to_memory_artifact_factor": 1.008373765518078,
+          "source_bundle_to_native_bundle_factor": 1.0077847205663109,
+          "structurally_merged_rows": 0,
+          "table_sha256": "0633a4ecd7e7c058396e9d5903b29898e0caf93275d4c540c54ca6f5c530171d"
+        }
+      ]
+    }
+  ],
+  "native_complete_prefix_pairs": 512,
+  "rss_audits": [
+    {
+      "cpu_query_rss": {
+        "datrie-layout": {
+          "rss_after_open": {
+            "anonymous_bytes": 574652416,
+            "current_bytes": 827592704,
+            "file_backed_bytes": 252940288,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 827592704,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 574701568,
+            "current_bytes": 836136960,
+            "file_backed_bytes": 261435392,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 836136960,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569229312,
+            "current_bytes": 821489664,
+            "file_backed_bytes": 252260352,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821489664,
+            "shared_memory_bytes": 0
+          }
+        },
+        "dense": {
+          "rss_after_open": {
+            "anonymous_bytes": 649375744,
+            "current_bytes": 901709824,
+            "file_backed_bytes": 252334080,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 975974400,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 649437184,
+            "current_bytes": 902447104,
+            "file_backed_bytes": 253009920,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 975974400,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569638912,
+            "current_bytes": 821821440,
+            "file_backed_bytes": 252182528,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821821440,
+            "shared_memory_bytes": 0
+          }
+        },
+        "raw-mmap": {
+          "rss_after_open": {
+            "anonymous_bytes": 574492672,
+            "current_bytes": 826933248,
+            "file_backed_bytes": 252440576,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 826933248,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 574701568,
+            "current_bytes": 830918656,
+            "file_backed_bytes": 256217088,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 830918656,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569253888,
+            "current_bytes": 821542912,
+            "file_backed_bytes": 252289024,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821542912,
+            "shared_memory_bytes": 0
+          }
+        },
+        "xor": {
+          "rss_after_open": {
+            "anonymous_bytes": 574656512,
+            "current_bytes": 827518976,
+            "file_backed_bytes": 252862464,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 827518976,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 574705664,
+            "current_bytes": 836050944,
+            "file_backed_bytes": 261345280,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 836050944,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569233408,
+            "current_bytes": 821415936,
+            "file_backed_bytes": 252182528,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821415936,
+            "shared_memory_bytes": 0
+          }
+        }
+      },
+      "limitation": "Separate seed-3 process-wide RSS audits; 3 model prefixes, 64 CPU row prefixes. No timing or cross-seed RSS inference.",
+      "model_rss": {
+        "native": {
+          "rss_after_open": {
+            "anonymous_bytes": 2812387328,
+            "current_bytes": 3164426240,
+            "file_backed_bytes": 343646208,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 5750480896,
+            "shared_memory_bytes": 8392704
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 3173896192,
+            "current_bytes": 3551653888,
+            "file_backed_bytes": 358088704,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 5750480896,
+            "shared_memory_bytes": 19668992
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 671997952,
+            "current_bytes": 931651584,
+            "file_backed_bytes": 259653632,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 931651584,
+            "shared_memory_bytes": 0
+          }
+        },
+        "source": {
+          "rss_after_open": {
+            "anonymous_bytes": 2866233344,
+            "current_bytes": 3218030592,
+            "file_backed_bytes": 343404544,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 5750341632,
+            "shared_memory_bytes": 8392704
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 3192717312,
+            "current_bytes": 3568791552,
+            "file_backed_bytes": 356405248,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 5750341632,
+            "shared_memory_bytes": 19668992
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 672272384,
+            "current_bytes": 931889152,
+            "file_backed_bytes": 259616768,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 931889152,
+            "shared_memory_bytes": 0
+          }
+        }
+      },
+      "run": "qwen06-20877-exact-s3"
+    },
+    {
+      "cpu_query_rss": {
+        "datrie-layout": {
+          "rss_after_open": {
+            "anonymous_bytes": 574763008,
+            "current_bytes": 827572224,
+            "file_backed_bytes": 252809216,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 827572224,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 574812160,
+            "current_bytes": 835801088,
+            "file_backed_bytes": 260988928,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 835801088,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569368576,
+            "current_bytes": 821506048,
+            "file_backed_bytes": 252137472,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821506048,
+            "shared_memory_bytes": 0
+          }
+        },
+        "dense": {
+          "rss_after_open": {
+            "anonymous_bytes": 649576448,
+            "current_bytes": 902078464,
+            "file_backed_bytes": 252502016,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 975331328,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 649637888,
+            "current_bytes": 902815744,
+            "file_backed_bytes": 253177856,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 975331328,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569638912,
+            "current_bytes": 821989376,
+            "file_backed_bytes": 252350464,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821989376,
+            "shared_memory_bytes": 0
+          }
+        },
+        "raw-mmap": {
+          "rss_after_open": {
+            "anonymous_bytes": 574603264,
+            "current_bytes": 826896384,
+            "file_backed_bytes": 252293120,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 826896384,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 574828544,
+            "current_bytes": 830881792,
+            "file_backed_bytes": 256053248,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 830881792,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569368576,
+            "current_bytes": 821510144,
+            "file_backed_bytes": 252141568,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821510144,
+            "shared_memory_bytes": 0
+          }
+        },
+        "xor": {
+          "rss_after_open": {
+            "anonymous_bytes": 574676992,
+            "current_bytes": 827678720,
+            "file_backed_bytes": 253001728,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 827678720,
+            "shared_memory_bytes": 0
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 574726144,
+            "current_bytes": 835956736,
+            "file_backed_bytes": 261230592,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 835956736,
+            "shared_memory_bytes": 0
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 569270272,
+            "current_bytes": 821592064,
+            "file_backed_bytes": 252321792,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 821592064,
+            "shared_memory_bytes": 0
+          }
+        }
+      },
+      "limitation": "Separate seed-3 process-wide RSS audits; 3 model prefixes, 64 CPU row prefixes. No timing or cross-seed RSS inference.",
+      "model_rss": {
+        "native": {
+          "rss_after_open": {
+            "anonymous_bytes": 2502430720,
+            "current_bytes": 2857160704,
+            "file_backed_bytes": 344240128,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 28547088384,
+            "shared_memory_bytes": 10489856
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 2839654400,
+            "current_bytes": 3218194432,
+            "file_backed_bytes": 358871040,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 28547088384,
+            "shared_memory_bytes": 19668992
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 672059392,
+            "current_bytes": 931676160,
+            "file_backed_bytes": 259616768,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 931676160,
+            "shared_memory_bytes": 0
+          }
+        },
+        "source": {
+          "rss_after_open": {
+            "anonymous_bytes": 2562191360,
+            "current_bytes": 2916478976,
+            "file_backed_bytes": 343797760,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 28547276800,
+            "shared_memory_bytes": 10489856
+          },
+          "rss_after_query": {
+            "anonymous_bytes": 2860277760,
+            "current_bytes": 3237044224,
+            "file_backed_bytes": 357097472,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 28547276800,
+            "shared_memory_bytes": 19668992
+          },
+          "rss_before_open": {
+            "anonymous_bytes": 673230848,
+            "current_bytes": 932720640,
+            "file_backed_bytes": 259489792,
+            "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+            "process_peak_bytes": 932720640,
+            "shared_memory_bytes": 0
+          }
+        }
+      },
+      "run": "qwen35-20877-exact-s3"
+    }
+  ],
+  "runs": [
+    {
+      "cpu_queries": {
+        "datrie-exact": {
+          "p50_ms": 0.066279,
+          "p95_ms": 0.071378,
+          "rss_after_open_bytes": 827584512,
+          "rss_after_query_bytes": 836177920
+        },
+        "datrie-layout": {
+          "p50_ms": 0.067118,
+          "p95_ms": 0.073333,
+          "rss_after_open_bytes": 827731968,
+          "rss_after_query_bytes": 836325376
+        },
+        "dedup-xor": {
+          "p50_ms": 0.065232,
+          "p95_ms": 0.0713815,
+          "rss_after_open_bytes": 827527168,
+          "rss_after_query_bytes": 836120576
+        },
+        "dense": {
+          "p50_ms": 0.044489,
+          "p95_ms": 0.04777105,
+          "rss_after_open_bytes": 901537792,
+          "rss_after_query_bytes": 902275072
+        },
+        "identity": {
+          "p50_ms": 0.064812,
+          "p95_ms": 0.07040345,
+          "rss_after_open_bytes": 827613184,
+          "rss_after_query_bytes": 836206592
+        },
+        "raw-mmap": {
+          "p50_ms": 0.056292,
+          "p95_ms": 0.063835,
+          "rss_after_open_bytes": 827035648,
+          "rss_after_query_bytes": 831021056
+        },
+        "xor": {
+          "p50_ms": 0.065302,
+          "p95_ms": 0.071867,
+          "rss_after_open_bytes": 827674624,
+          "rss_after_query_bytes": 836268032
+        }
+      },
+      "gzip_bytes": 69026100,
+      "model_costs": {
+        "source": {
+          "cuda_after_open": {
+            "allocated_bytes": 3083542528,
+            "peak_allocated_bytes": 3084007424,
+            "reserved_bytes": 3087007744
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 3093110784,
+            "peak_allocated_bytes": 3095241216,
+            "reserved_bytes": 3110076416
+          },
+          "open_seconds": 12.615862149046734,
+          "p50_ms": 45.496997,
+          "p95_ms": 46.20361665,
+          "requests_per_second": 22.008928058076254,
+          "rss_after_open": {
+            "current_bytes": 3183247360,
+            "process_peak_bytes": 5750206464
+          },
+          "rss_after_query": {
+            "current_bytes": 3558936576,
+            "process_peak_bytes": 5750206464
+          }
+        },
+        "xor": {
+          "cuda_after_open": {
+            "allocated_bytes": 3009184768,
+            "peak_allocated_bytes": 3009184768,
+            "reserved_bytes": 3009413120
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 3018753024,
+            "peak_allocated_bytes": 3020883456,
+            "reserved_bytes": 3036676096
+          },
+          "open_seconds": 11.7111501081381,
+          "p50_ms": 45.789179000000004,
+          "p95_ms": 46.599506149999996,
+          "requests_per_second": 21.83445325221661,
+          "rss_after_open": {
+            "current_bytes": 3165503488,
+            "process_peak_bytes": 5750370304
+          },
+          "rss_after_query": {
+            "current_bytes": 3561111552,
+            "process_peak_bytes": 5750370304
+          }
+        }
+      },
+      "model_startup_cuda_allocated_reduction_bytes": 74357760,
+      "native_over_source_p50_ratio": 1.0064220062699962,
+      "row_bytes": 74356480,
+      "run": "qwen06-20877-exact-s11",
+      "source_bundle_bytes": 77414515,
+      "variants": {
+        "datrie-exact": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 47.40794232604094,
+          "bundle_bytes": 126483470,
+          "datrie_index_bytes": 48518192,
+          "full_bundle_with_shared_base_bytes": 1645688569,
+          "memory_artifact_bytes": 123425104,
+          "memory_manifest_sha256": "e1205e0f55ea9e5322c48af8120601b4c6f2a428efd12651b62361d4be1c0c03",
+          "name": "datrie-exact",
+          "recipe_sha256": "56f04442bb4d32b960b8a8c0889f23af8ff8d7c49f84e4dcf6d17fbae85bf1c2",
+          "row_payload_to_memory_artifact_factor": 0.6024421093459237,
+          "source_bundle_to_native_bundle_factor": 0.6120524286691376,
+          "structurally_merged_rows": 0,
+          "table_sha256": "a89891dcd5a71fad164f639ea669299ad6b15bae067d5afecea2ac3d8b6b0dfe"
+        },
+        "datrie-layout": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 21.186794572044164,
+          "bundle_bytes": 126483471,
+          "datrie_index_bytes": 48518192,
+          "full_bundle_with_shared_base_bytes": 1645688570,
+          "memory_artifact_bytes": 123425105,
+          "memory_manifest_sha256": "e1205e0f55ea9e5322c48af8120601b4c6f2a428efd12651b62361d4be1c0c03",
+          "name": "datrie-layout",
+          "recipe_sha256": "56f04442bb4d32b960b8a8c0889f23af8ff8d7c49f84e4dcf6d17fbae85bf1c2",
+          "row_payload_to_memory_artifact_factor": 0.6024421044648899,
+          "source_bundle_to_native_bundle_factor": 0.6120524238301461,
+          "structurally_merged_rows": 0,
+          "table_sha256": "a89891dcd5a71fad164f639ea669299ad6b15bae067d5afecea2ac3d8b6b0dfe"
+        },
+        "dedup-xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.667269489960745,
+          "bundle_bytes": 77963754,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597168853,
+          "memory_artifact_bytes": 74905388,
+          "memory_manifest_sha256": "945e6470bbddc67125115c1a009f17e8146efce2b2e46f4e529efb56aa332977",
+          "name": "dedup-xor",
+          "recipe_sha256": "71cc6f088b519a4ff61b6126ebcf9f978d10b3462dc57d7ccda9ad76297ff358",
+          "row_payload_to_memory_artifact_factor": 0.9926719824213447,
+          "source_bundle_to_native_bundle_factor": 0.992955200694928,
+          "structurally_merged_rows": 0,
+          "table_sha256": "e6a0b3f9cd8a71319ee485f24f91f6166621cdc086a280b8224c57f483e6963b"
+        },
+        "identity": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 4.868840908166021,
+          "bundle_bytes": 77967165,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597172264,
+          "memory_artifact_bytes": 74908799,
+          "memory_manifest_sha256": "0d4093d0ca922220ceb6d2afde9a200f7b55f73df48cf3233bba60b3fead4fd7",
+          "name": "identity",
+          "recipe_sha256": "27f692ea4ea431ff909498bdcc15b2bb495011c65007e495c80ad13fb74951c2",
+          "row_payload_to_memory_artifact_factor": 0.9926267807337293,
+          "source_bundle_to_native_bundle_factor": 0.9929117597132074,
+          "structurally_merged_rows": 0,
+          "table_sha256": "782daebb22a4c65843e6688a57fe1257f995010ee8b5526732564da6cfde70e1"
+        },
+        "xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.479234986007214,
+          "bundle_bytes": 77963929,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597169028,
+          "memory_artifact_bytes": 74905563,
+          "memory_manifest_sha256": "deda76b82bfe06925913f8c23d338d00e35853082e577e69414f523db137378e",
+          "name": "xor",
+          "recipe_sha256": "04c80d6332f995caae34eab54a7655576895522ac2a0ed79e7876a3ddf4477a5",
+          "row_payload_to_memory_artifact_factor": 0.992669663266532,
+          "source_bundle_to_native_bundle_factor": 0.9929529718801113,
+          "structurally_merged_rows": 0,
+          "table_sha256": "620aad46700ea5d0649dc7750885b72263da1004ce3090620d7716ce048721ed"
+        }
+      }
+    },
+    {
+      "cpu_queries": {
+        "datrie-exact": {
+          "p50_ms": 0.064394,
+          "p95_ms": 0.069073,
+          "rss_after_open_bytes": 827674624,
+          "rss_after_query_bytes": 836268032
+        },
+        "datrie-layout": {
+          "p50_ms": 0.063416,
+          "p95_ms": 0.06816945,
+          "rss_after_open_bytes": 827572224,
+          "rss_after_query_bytes": 836165632
+        },
+        "dedup-xor": {
+          "p50_ms": 0.06579,
+          "p95_ms": 0.07054,
+          "rss_after_open_bytes": 827625472,
+          "rss_after_query_bytes": 836165632
+        },
+        "dense": {
+          "p50_ms": 0.042533,
+          "p95_ms": 0.044978,
+          "rss_after_open_bytes": 901529600,
+          "rss_after_query_bytes": 902238208
+        },
+        "identity": {
+          "p50_ms": 0.063346,
+          "p95_ms": 0.068096,
+          "rss_after_open_bytes": 827674624,
+          "rss_after_query_bytes": 836165632
+        },
+        "raw-mmap": {
+          "p50_ms": 0.054407,
+          "p95_ms": 0.058178,
+          "rss_after_open_bytes": 826974208,
+          "rss_after_query_bytes": 831148032
+        },
+        "xor": {
+          "p50_ms": 0.06621,
+          "p95_ms": 0.071028,
+          "rss_after_open_bytes": 827682816,
+          "rss_after_query_bytes": 836182016
+        }
+      },
+      "gzip_bytes": 69037878,
+      "model_costs": {
+        "datrie-layout": {
+          "cuda_after_open": {
+            "allocated_bytes": 3009184768,
+            "peak_allocated_bytes": 3009184768,
+            "reserved_bytes": 3009413120
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 3018753024,
+            "peak_allocated_bytes": 3020883456,
+            "reserved_bytes": 3036676096
+          },
+          "open_seconds": 11.763737295055762,
+          "p50_ms": 46.337956500000004,
+          "p95_ms": 48.55860455,
+          "requests_per_second": 21.48919555028236,
+          "rss_after_open": {
+            "current_bytes": 3178385408,
+            "process_peak_bytes": 5750628352
+          },
+          "rss_after_query": {
+            "current_bytes": 3577782272,
+            "process_peak_bytes": 5750628352
+          }
+        },
+        "source": {
+          "cuda_after_open": {
+            "allocated_bytes": 3083542528,
+            "peak_allocated_bytes": 3084007424,
+            "reserved_bytes": 3087007744
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 3093110784,
+            "peak_allocated_bytes": 3095241216,
+            "reserved_bytes": 3110076416
+          },
+          "open_seconds": 14.343325447058305,
+          "p50_ms": 45.444441499999996,
+          "p95_ms": 46.660837199999996,
+          "requests_per_second": 21.965335674123637,
+          "rss_after_open": {
+            "current_bytes": 3209510912,
+            "process_peak_bytes": 5750235136
+          },
+          "rss_after_query": {
+            "current_bytes": 3571335168,
+            "process_peak_bytes": 5750235136
+          }
+        },
+        "xor": {
+          "cuda_after_open": {
+            "allocated_bytes": 3009184768,
+            "peak_allocated_bytes": 3009184768,
+            "reserved_bytes": 3009413120
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 3018753024,
+            "peak_allocated_bytes": 3020883456,
+            "reserved_bytes": 3036676096
+          },
+          "open_seconds": 12.090268251020461,
+          "p50_ms": 46.161747000000005,
+          "p95_ms": 48.5179989,
+          "requests_per_second": 21.546722590921814,
+          "rss_after_open": {
+            "current_bytes": 3191328768,
+            "process_peak_bytes": 5750202368
+          },
+          "rss_after_query": {
+            "current_bytes": 3574452224,
+            "process_peak_bytes": 5750202368
+          }
+        }
+      },
+      "model_startup_cuda_allocated_reduction_bytes": 74357760,
+      "native_over_source_p50_ratio": 1.0157842296290518,
+      "row_bytes": 74356480,
+      "run": "qwen06-20877-exact-s3",
+      "source_bundle_bytes": 77414514,
+      "variants": {
+        "datrie-exact": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 45.173613019054756,
+          "bundle_bytes": 126495226,
+          "datrie_index_bytes": 48518192,
+          "full_bundle_with_shared_base_bytes": 1645700325,
+          "memory_artifact_bytes": 123436861,
+          "memory_manifest_sha256": "f3c94947648cf1a4f9fcae0451358b7cbfa524c8e7daad62ea537db00af0b142",
+          "name": "datrie-exact",
+          "recipe_sha256": "24416b7d2b5497a941d63bf1a0c9c698776fa629ac039466e4c618630bc000f1",
+          "row_payload_to_memory_artifact_factor": 0.6023847284969439,
+          "source_bundle_to_native_bundle_factor": 0.6119955388672138,
+          "structurally_merged_rows": 0,
+          "table_sha256": "5dac0cb1a0d16a0fd00e2fdfe42b7d73191404bc468bfcdaa4e6ca81b4019d2a"
+        },
+        "datrie-layout": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 21.565971940057352,
+          "bundle_bytes": 126495227,
+          "datrie_index_bytes": 48518192,
+          "full_bundle_with_shared_base_bytes": 1645700326,
+          "memory_artifact_bytes": 123436862,
+          "memory_manifest_sha256": "f3c94947648cf1a4f9fcae0451358b7cbfa524c8e7daad62ea537db00af0b142",
+          "name": "datrie-layout",
+          "recipe_sha256": "24416b7d2b5497a941d63bf1a0c9c698776fa629ac039466e4c618630bc000f1",
+          "row_payload_to_memory_artifact_factor": 0.6023847236168398,
+          "source_bundle_to_native_bundle_factor": 0.6119955340291219,
+          "structurally_merged_rows": 0,
+          "table_sha256": "5dac0cb1a0d16a0fd00e2fdfe42b7d73191404bc468bfcdaa4e6ca81b4019d2a"
+        },
+        "dedup-xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.601338485023007,
+          "bundle_bytes": 77976354,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597181453,
+          "memory_artifact_bytes": 74917989,
+          "memory_manifest_sha256": "ce55c17623ad8d67dead023330b8f7ed6c24590672d60d2949827eca2d340d32",
+          "name": "dedup-xor",
+          "recipe_sha256": "22a0cff94e8fbb2b32bbcd277db1cd71385c83bb872643294e438ec9619672c9",
+          "row_payload_to_memory_artifact_factor": 0.9925050177201099,
+          "source_bundle_to_native_bundle_factor": 0.9927947387742699,
+          "structurally_merged_rows": 0,
+          "table_sha256": "a10386cb6aa76d4ad03e471d2a392c774ebb29612e3c95b323c6ac9dbaade39b"
+        },
+        "identity": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 6.326080119004473,
+          "bundle_bytes": 77978362,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597183461,
+          "memory_artifact_bytes": 74919997,
+          "memory_manifest_sha256": "9f61f3891ac540db86352ddf5a96cb850ae93f6e19b5826315e46149fcce74e9",
+          "name": "identity",
+          "recipe_sha256": "85388a9dffa4fc5dde9395d06b91527e9b36b50b21702af5885cb81a1aef58b4",
+          "row_payload_to_memory_artifact_factor": 0.9924784166769254,
+          "source_bundle_to_native_bundle_factor": 0.9927691735817687,
+          "structurally_merged_rows": 0,
+          "table_sha256": "a34d4e60947e3d51b490a60c2964f405ad96d974528238627518cf3da83ba3d0"
+        },
+        "xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.726092812139541,
+          "bundle_bytes": 77976311,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597181410,
+          "memory_artifact_bytes": 74917946,
+          "memory_manifest_sha256": "88f7586e1e5d2bcf0ba5cdff2667453fabd94af6abac2bfcb93c078bed08e92a",
+          "name": "xor",
+          "recipe_sha256": "c239b473b9615324a9bc38ae1cea55edfbf51681a8e34c9d71f730eaac3baa5e",
+          "row_payload_to_memory_artifact_factor": 0.9925055873795579,
+          "source_bundle_to_native_bundle_factor": 0.9927952862504614,
+          "structurally_merged_rows": 0,
+          "table_sha256": "df0081dd5675584ee9018afaabe43d4a7eb592f3e88db939671466a02e06e14c"
+        }
+      }
+    },
+    {
+      "cpu_queries": {
+        "datrie-exact": {
+          "p50_ms": 0.064813,
+          "p95_ms": 0.069981,
+          "rss_after_open_bytes": 827600896,
+          "rss_after_query_bytes": 836194304
+        },
+        "datrie-layout": {
+          "p50_ms": 0.063486,
+          "p95_ms": 0.068514,
+          "rss_after_open_bytes": 827625472,
+          "rss_after_query_bytes": 836218880
+        },
+        "dedup-xor": {
+          "p50_ms": 0.064324,
+          "p95_ms": 0.069492,
+          "rss_after_open_bytes": 827654144,
+          "rss_after_query_bytes": 836284416
+        },
+        "dense": {
+          "p50_ms": 0.044,
+          "p95_ms": 0.046884899999999986,
+          "rss_after_open_bytes": 901500928,
+          "rss_after_query_bytes": 902238208
+        },
+        "identity": {
+          "p50_ms": 0.067117,
+          "p95_ms": 0.072844,
+          "rss_after_open_bytes": 827588608,
+          "rss_after_query_bytes": 836182016
+        },
+        "raw-mmap": {
+          "p50_ms": 0.055384,
+          "p95_ms": 0.059574,
+          "rss_after_open_bytes": 826871808,
+          "rss_after_query_bytes": 830857216
+        },
+        "xor": {
+          "p50_ms": 0.06621,
+          "p95_ms": 0.070959,
+          "rss_after_open_bytes": 827830272,
+          "rss_after_query_bytes": 836423680
+        }
+      },
+      "gzip_bytes": 69029489,
+      "model_costs": {
+        "source": {
+          "cuda_after_open": {
+            "allocated_bytes": 3083542528,
+            "peak_allocated_bytes": 3084007424,
+            "reserved_bytes": 3087007744
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 3093110784,
+            "peak_allocated_bytes": 3095241216,
+            "reserved_bytes": 3110076416
+          },
+          "open_seconds": 12.45161847397685,
+          "p50_ms": 45.510721000000004,
+          "p95_ms": 46.026181650000005,
+          "requests_per_second": 21.98837594835446,
+          "rss_after_open": {
+            "current_bytes": 3205828608,
+            "process_peak_bytes": 5749964800
+          },
+          "rss_after_query": {
+            "current_bytes": 3559428096,
+            "process_peak_bytes": 5749964800
+          }
+        },
+        "xor": {
+          "cuda_after_open": {
+            "allocated_bytes": 3009184768,
+            "peak_allocated_bytes": 3009184768,
+            "reserved_bytes": 3009413120
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 3018753024,
+            "peak_allocated_bytes": 3020883456,
+            "reserved_bytes": 3036676096
+          },
+          "open_seconds": 12.281057158950716,
+          "p50_ms": 45.1741555,
+          "p95_ms": 45.79077775,
+          "requests_per_second": 22.13159816645617,
+          "rss_after_open": {
+            "current_bytes": 3178045440,
+            "process_peak_bytes": 5750444032
+          },
+          "rss_after_query": {
+            "current_bytes": 3578531840,
+            "process_peak_bytes": 5750444032
+          }
+        }
+      },
+      "model_startup_cuda_allocated_reduction_bytes": 74357760,
+      "native_over_source_p50_ratio": 0.9926046985720133,
+      "row_bytes": 74356480,
+      "run": "qwen06-20877-exact-s7",
+      "source_bundle_bytes": 77414514,
+      "variants": {
+        "datrie-exact": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 46.192195310024545,
+          "bundle_bytes": 126487418,
+          "datrie_index_bytes": 48518192,
+          "full_bundle_with_shared_base_bytes": 1645692517,
+          "memory_artifact_bytes": 123429053,
+          "memory_manifest_sha256": "3c574c372b0e554fd31751ca0eb67d98e72a1c5fcc111e909cbbed1a2bd6f413",
+          "name": "datrie-exact",
+          "recipe_sha256": "5d3fef9e24d236a1e4a67344a9c0b414279840ed817ae3851b6f08d776c54209",
+          "row_payload_to_memory_artifact_factor": 0.6024228347599815,
+          "source_bundle_to_native_bundle_factor": 0.6120333170213025,
+          "structurally_merged_rows": 0,
+          "table_sha256": "eb04e57ce6ea491b2124539ce47b695efa8e0265e5ffb1999135fc18754f7db9"
+        },
+        "datrie-layout": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 20.757868439890444,
+          "bundle_bytes": 126487419,
+          "datrie_index_bytes": 48518192,
+          "full_bundle_with_shared_base_bytes": 1645692518,
+          "memory_artifact_bytes": 123429054,
+          "memory_manifest_sha256": "3c574c372b0e554fd31751ca0eb67d98e72a1c5fcc111e909cbbed1a2bd6f413",
+          "name": "datrie-layout",
+          "recipe_sha256": "5d3fef9e24d236a1e4a67344a9c0b414279840ed817ae3851b6f08d776c54209",
+          "row_payload_to_memory_artifact_factor": 0.60242282987926,
+          "source_bundle_to_native_bundle_factor": 0.6120333121826131,
+          "structurally_merged_rows": 0,
+          "table_sha256": "eb04e57ce6ea491b2124539ce47b695efa8e0265e5ffb1999135fc18754f7db9"
+        },
+        "dedup-xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.201603244058788,
+          "bundle_bytes": 77967849,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597172948,
+          "memory_artifact_bytes": 74909484,
+          "memory_manifest_sha256": "9c3b71f4a83b80a3cd287432af474e07c592f5e0656aa2c2db1a1bddcadaad12",
+          "name": "dedup-xor",
+          "recipe_sha256": "5dcfaaf5690aa472690cd35dfde63f4cfc88eadba3a886e36777891457b25556",
+          "row_payload_to_memory_artifact_factor": 0.9926177037876807,
+          "source_bundle_to_native_bundle_factor": 0.9929030362245853,
+          "structurally_merged_rows": 0,
+          "table_sha256": "74206f98dc14607013a5da56c32e3cab3fb7e3108830e4d10687e90c4f918c48"
+        },
+        "identity": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 5.815704581094906,
+          "bundle_bytes": 77970958,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597176057,
+          "memory_artifact_bytes": 74912593,
+          "memory_manifest_sha256": "bb67c8b78773a37daab510c37009229a4b2a2da0a1d4a0510a7a893d818b8029",
+          "name": "identity",
+          "recipe_sha256": "4f14db164b3171aba189eaeab399581c5e56b281576f051f454ee4cb1922e0dd",
+          "row_payload_to_memory_artifact_factor": 0.9925765084650053,
+          "source_bundle_to_native_bundle_factor": 0.9928634453869349,
+          "structurally_merged_rows": 0,
+          "table_sha256": "c23fb134254d43d96f1d1ffea5aae4b2aaf25bc1723005cdd85d31d4a18b9137"
+        },
+        "xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.674896655138582,
+          "bundle_bytes": 77967947,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 1597173046,
+          "memory_artifact_bytes": 74909582,
+          "memory_manifest_sha256": "c26d35611d31e27219d71b950262240f6703b6a81f4c537620cb924935d451f9",
+          "name": "xor",
+          "recipe_sha256": "c46892b7552121aec2ece50015ab235d51b513959a105238651902b1ca6e29b1",
+          "row_payload_to_memory_artifact_factor": 0.9926164052016737,
+          "source_bundle_to_native_bundle_factor": 0.9929017882181764,
+          "structurally_merged_rows": 0,
+          "table_sha256": "ca19a37d246f759739c941a1b333a10746dbe096b1590de6bc1774c7cf42d798"
+        }
+      }
+    },
+    {
+      "cpu_queries": {
+        "datrie-exact": {
+          "p50_ms": 0.06621,
+          "p95_ms": 0.07187045,
+          "rss_after_open_bytes": 827580416,
+          "rss_after_query_bytes": 835903488
+        },
+        "datrie-layout": {
+          "p50_ms": 0.063835,
+          "p95_ms": 0.06949205,
+          "rss_after_open_bytes": 827650048,
+          "rss_after_query_bytes": 835973120
+        },
+        "dedup-xor": {
+          "p50_ms": 0.06572,
+          "p95_ms": 0.072845,
+          "rss_after_open_bytes": 827592704,
+          "rss_after_query_bytes": 835915776
+        },
+        "dense": {
+          "p50_ms": 0.044978,
+          "p95_ms": 0.047702,
+          "rss_after_open_bytes": 900644864,
+          "rss_after_query_bytes": 901382144
+        },
+        "identity": {
+          "p50_ms": 0.065302,
+          "p95_ms": 0.07095805,
+          "rss_after_open_bytes": 827781120,
+          "rss_after_query_bytes": 836104192
+        },
+        "raw-mmap": {
+          "p50_ms": 0.055873,
+          "p95_ms": 0.0614635,
+          "rss_after_open_bytes": 826875904,
+          "rss_after_query_bytes": 830861312
+        },
+        "xor": {
+          "p50_ms": 0.06628,
+          "p95_ms": 0.071378,
+          "rss_after_open_bytes": 827613184,
+          "rss_after_query_bytes": 835936256
+        }
+      },
+      "gzip_bytes": 68308608,
+      "model_costs": {
+        "source": {
+          "cuda_after_open": {
+            "allocated_bytes": 18236708864,
+            "peak_allocated_bytes": 18237173760,
+            "reserved_bytes": 18257805312
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 18246277120,
+            "peak_allocated_bytes": 18256043008,
+            "reserved_bytes": 18266193920
+          },
+          "open_seconds": 56.40321705304086,
+          "p50_ms": 77.90380400000001,
+          "p95_ms": 79.10506559999999,
+          "requests_per_second": 12.81248723968861,
+          "rss_after_open": {
+            "current_bytes": 2928664576,
+            "process_peak_bytes": 28546367488
+          },
+          "rss_after_query": {
+            "current_bytes": 3241197568,
+            "process_peak_bytes": 28546367488
+          }
+        },
+        "xor": {
+          "cuda_after_open": {
+            "allocated_bytes": 18163193344,
+            "peak_allocated_bytes": 18163193344,
+            "reserved_bytes": 18182307840
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 18172761600,
+            "peak_allocated_bytes": 18182527488,
+            "reserved_bytes": 18192793600
+          },
+          "open_seconds": 55.22817057510838,
+          "p50_ms": 78.1114775,
+          "p95_ms": 79.77124009999999,
+          "requests_per_second": 12.765770074332364,
+          "rss_after_open": {
+            "current_bytes": 2852970496,
+            "process_peak_bytes": 28546904064
+          },
+          "rss_after_query": {
+            "current_bytes": 3214368768,
+            "process_peak_bytes": 28546904064
+          }
+        }
+      },
+      "model_startup_cuda_allocated_reduction_bytes": 73515520,
+      "native_over_source_p50_ratio": 1.002665768413568,
+      "row_bytes": 73514240,
+      "run": "qwen35-20877-exact-s11",
+      "source_bundle_bytes": 78986749,
+      "variants": {
+        "datrie-exact": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 46.53654782404192,
+          "bundle_bytes": 128350887,
+          "datrie_index_bytes": 48741424,
+          "full_bundle_with_shared_base_bytes": 9471259841,
+          "memory_artifact_bytes": 122878039,
+          "memory_manifest_sha256": "e01cfe588ac99e0edf818725e2e1f663ddf88c53315c6f6e64af78fe54f94064",
+          "name": "datrie-exact",
+          "recipe_sha256": "bfa5086db2543b864fa5ad78cf685ea93ddf76866c72f3a7e3cec7f2863728c2",
+          "row_payload_to_memory_artifact_factor": 0.5982699642529289,
+          "source_bundle_to_native_bundle_factor": 0.6153969859203232,
+          "structurally_merged_rows": 0,
+          "table_sha256": "66c5201e656d29e06c71eda7cfe4fd0be1c558d8df9b8c93ab35b1838f6edb62"
+        },
+        "datrie-layout": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 20.89935507811606,
+          "bundle_bytes": 128350888,
+          "datrie_index_bytes": 48741424,
+          "full_bundle_with_shared_base_bytes": 9471259842,
+          "memory_artifact_bytes": 122878040,
+          "memory_manifest_sha256": "e01cfe588ac99e0edf818725e2e1f663ddf88c53315c6f6e64af78fe54f94064",
+          "name": "datrie-layout",
+          "recipe_sha256": "bfa5086db2543b864fa5ad78cf685ea93ddf76866c72f3a7e3cec7f2863728c2",
+          "row_payload_to_memory_artifact_factor": 0.5982699593841178,
+          "source_bundle_to_native_bundle_factor": 0.6153969811256779,
+          "structurally_merged_rows": 0,
+          "table_sha256": "66c5201e656d29e06c71eda7cfe4fd0be1c558d8df9b8c93ab35b1838f6edb62"
+        },
+        "dedup-xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 9.279336762148887,
+          "bundle_bytes": 79607990,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422516944,
+          "memory_artifact_bytes": 74135142,
+          "memory_manifest_sha256": "0189afe4d3a2e7c049ac7048073cc20140b16065d49f1a4938b59f589561193b",
+          "name": "dedup-xor",
+          "recipe_sha256": "44921ae1b2743959f729ea8dd5c554f417554d429b0da047049349c06968cc97",
+          "row_payload_to_memory_artifact_factor": 0.9916247277168498,
+          "source_bundle_to_native_bundle_factor": 0.9921962481404191,
+          "structurally_merged_rows": 0,
+          "table_sha256": "6791e42ee3b65bf47d278ae15df64558b51850dbfc4dbec9815ce0bb32716627"
+        },
+        "identity": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 5.849619682179764,
+          "bundle_bytes": 79608908,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422517862,
+          "memory_artifact_bytes": 74136060,
+          "memory_manifest_sha256": "d921889ec2c088a27b03c3d5f7174baa13a937107b2976feb8bb0e5b6cb21ce5",
+          "name": "identity",
+          "recipe_sha256": "d985b0fb41732293c564a22fee91fa1affd5e2b250a6ffe1d5e14236ade2e816",
+          "row_payload_to_memory_artifact_factor": 0.9916124487867308,
+          "source_bundle_to_native_bundle_factor": 0.9921848067555455,
+          "structurally_merged_rows": 0,
+          "table_sha256": "3ffc6562eb9c4db36f2850f3be9c8d0aef92a362a52ec7b356eae669929dc0d0"
+        },
+        "xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.557633580872789,
+          "bundle_bytes": 79608214,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422517168,
+          "memory_artifact_bytes": 74135366,
+          "memory_manifest_sha256": "ed946f1b74e559a965507cab30a6a72aef33cd37f058b0e9b49a4880cccbc6af",
+          "name": "xor",
+          "recipe_sha256": "1e1ff3210405c6c2675dd88bb9261f0adcd3e7dde7f1ebf9755e5e6d0094d913",
+          "row_payload_to_memory_artifact_factor": 0.991621731522847,
+          "source_bundle_to_native_bundle_factor": 0.9921934563184648,
+          "structurally_merged_rows": 0,
+          "table_sha256": "8baa91ec01456bdbbe5494e22355dc79ff3c873e40f7d812aa5a9274993342ab"
+        }
+      }
+    },
+    {
+      "cpu_queries": {
+        "datrie-exact": {
+          "p50_ms": 0.064324,
+          "p95_ms": 0.069562,
+          "rss_after_open_bytes": 827531264,
+          "rss_after_query_bytes": 835833856
+        },
+        "datrie-layout": {
+          "p50_ms": 0.063904,
+          "p95_ms": 0.069073,
+          "rss_after_open_bytes": 827629568,
+          "rss_after_query_bytes": 835952640
+        },
+        "dedup-xor": {
+          "p50_ms": 0.064813,
+          "p95_ms": 0.069492,
+          "rss_after_open_bytes": 827633664,
+          "rss_after_query_bytes": 835923968
+        },
+        "dense": {
+          "p50_ms": 0.043022,
+          "p95_ms": 0.045467,
+          "rss_after_open_bytes": 900616192,
+          "rss_after_query_bytes": 901332992
+        },
+        "identity": {
+          "p50_ms": 0.064324,
+          "p95_ms": 0.069562,
+          "rss_after_open_bytes": 827691008,
+          "rss_after_query_bytes": 835948544
+        },
+        "raw-mmap": {
+          "p50_ms": 0.055314,
+          "p95_ms": 0.05915505,
+          "rss_after_open_bytes": 826765312,
+          "rss_after_query_bytes": 830734336
+        },
+        "xor": {
+          "p50_ms": 0.063905,
+          "p95_ms": 0.069073,
+          "rss_after_open_bytes": 827686912,
+          "rss_after_query_bytes": 836214784
+        }
+      },
+      "gzip_bytes": 68297571,
+      "model_costs": {
+        "datrie-layout": {
+          "cuda_after_open": {
+            "allocated_bytes": 18163193344,
+            "peak_allocated_bytes": 18163193344,
+            "reserved_bytes": 18182307840
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 18172761600,
+            "peak_allocated_bytes": 18182527488,
+            "reserved_bytes": 18192793600
+          },
+          "open_seconds": 55.69518336094916,
+          "p50_ms": 78.003782,
+          "p95_ms": 79.66143115,
+          "requests_per_second": 12.786428302579932,
+          "rss_after_open": {
+            "current_bytes": 2865725440,
+            "process_peak_bytes": 28547235840
+          },
+          "rss_after_query": {
+            "current_bytes": 3226316800,
+            "process_peak_bytes": 28547235840
+          }
+        },
+        "source": {
+          "cuda_after_open": {
+            "allocated_bytes": 18236708864,
+            "peak_allocated_bytes": 18237173760,
+            "reserved_bytes": 18257805312
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 18246277120,
+            "peak_allocated_bytes": 18256043008,
+            "reserved_bytes": 18534629376
+          },
+          "open_seconds": 63.42998194601387,
+          "p50_ms": 80.2844865,
+          "p95_ms": 86.9755531,
+          "requests_per_second": 12.286126692392097,
+          "rss_after_open": {
+            "current_bytes": 2945343488,
+            "process_peak_bytes": 28546240512
+          },
+          "rss_after_query": {
+            "current_bytes": 3396829184,
+            "process_peak_bytes": 28546240512
+          }
+        },
+        "xor": {
+          "cuda_after_open": {
+            "allocated_bytes": 18163193344,
+            "peak_allocated_bytes": 18163193344,
+            "reserved_bytes": 18182307840
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 18172761600,
+            "peak_allocated_bytes": 18182527488,
+            "reserved_bytes": 18192793600
+          },
+          "open_seconds": 55.77898306795396,
+          "p50_ms": 79.2545365,
+          "p95_ms": 86.49128359999999,
+          "requests_per_second": 12.40497252046805,
+          "rss_after_open": {
+            "current_bytes": 2857463808,
+            "process_peak_bytes": 28546641920
+          },
+          "rss_after_query": {
+            "current_bytes": 3216502784,
+            "process_peak_bytes": 28546641920
+          }
+        }
+      },
+      "model_startup_cuda_allocated_reduction_bytes": 73515520,
+      "native_over_source_p50_ratio": 0.9871712450947793,
+      "row_bytes": 73514240,
+      "run": "qwen35-20877-exact-s3",
+      "source_bundle_bytes": 78986749,
+      "variants": {
+        "datrie-exact": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 45.30801236699335,
+          "bundle_bytes": 128338273,
+          "datrie_index_bytes": 48741424,
+          "full_bundle_with_shared_base_bytes": 9471247227,
+          "memory_artifact_bytes": 122865425,
+          "memory_manifest_sha256": "619ef8b282974fde62c9efe9791bc22800bab75f0a47815d9638b6b7a36ac659",
+          "name": "datrie-exact",
+          "recipe_sha256": "0f8573f819fc3e80dcdf5886866ac8eed772bc4a5f9ac709191ed3667f21cd39",
+          "row_payload_to_memory_artifact_factor": 0.5983313857417577,
+          "source_bundle_to_native_bundle_factor": 0.6154574715213754,
+          "structurally_merged_rows": 0,
+          "table_sha256": "97abe1528e617a366e581b46f3331df5afa1f186c27a8c4a6215b8ba48de6a4c"
+        },
+        "datrie-layout": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 21.68056462914683,
+          "bundle_bytes": 128338274,
+          "datrie_index_bytes": 48741424,
+          "full_bundle_with_shared_base_bytes": 9471247228,
+          "memory_artifact_bytes": 122865426,
+          "memory_manifest_sha256": "619ef8b282974fde62c9efe9791bc22800bab75f0a47815d9638b6b7a36ac659",
+          "name": "datrie-layout",
+          "recipe_sha256": "0f8573f819fc3e80dcdf5886866ac8eed772bc4a5f9ac709191ed3667f21cd39",
+          "row_payload_to_memory_artifact_factor": 0.5983313808719468,
+          "source_bundle_to_native_bundle_factor": 0.6154574667257875,
+          "structurally_merged_rows": 0,
+          "table_sha256": "97abe1528e617a366e581b46f3331df5afa1f186c27a8c4a6215b8ba48de6a4c"
+        },
+        "dedup-xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.39436887204647,
+          "bundle_bytes": 79596449,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422505403,
+          "memory_artifact_bytes": 74123601,
+          "memory_manifest_sha256": "3b822c6671159d21127c282fc673281f1ce886701c46d049e925e8b0c6394018",
+          "name": "dedup-xor",
+          "recipe_sha256": "2094867074a966cd9924be2fd924e75b58e1f352d9348d249ec2380c0651c41f",
+          "row_payload_to_memory_artifact_factor": 0.9917791230892844,
+          "source_bundle_to_native_bundle_factor": 0.9923401105494041,
+          "structurally_merged_rows": 0,
+          "table_sha256": "94fd14f35d549f102af047da0ff9beb1ad224205eb5a83aa26c2b849e138fa1e"
+        },
+        "identity": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 6.1337686001788825,
+          "bundle_bytes": 79597255,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422506209,
+          "memory_artifact_bytes": 74124407,
+          "memory_manifest_sha256": "a7092b1b4bc3557c550fac3b661fbc8f7e748bbd48c3e191261ddc7cd2786c6a",
+          "name": "identity",
+          "recipe_sha256": "3cdb29953b81d99dfa6a88f14046403d3486f660534c2e05e659c3075cfd83a6",
+          "row_payload_to_memory_artifact_factor": 0.9917683388684647,
+          "source_bundle_to_native_bundle_factor": 0.9923300621359368,
+          "structurally_merged_rows": 0,
+          "table_sha256": "6ae39c950d328aaf72b3146a273c33c1074c3240fe86ccad7768ceea5bef0186"
+        },
+        "xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.962520248955116,
+          "bundle_bytes": 79596565,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422505519,
+          "memory_artifact_bytes": 74123717,
+          "memory_manifest_sha256": "d9fef53b9deb2eaebd875420e15ff3e8c64e0ad385dd397c2827105d5ffaa95f",
+          "name": "xor",
+          "recipe_sha256": "b587fee5ab473f4a0e1317682f968d490a0ba5b4a49dae7df3e0742d4dceb464",
+          "row_payload_to_memory_artifact_factor": 0.9917775710033537,
+          "source_bundle_to_native_bundle_factor": 0.9923386643632172,
+          "structurally_merged_rows": 0,
+          "table_sha256": "e333ee43091307023bbc84e5cd9b3a63fd2b0955c8749d4de39786760eb3525a"
+        }
+      }
+    },
+    {
+      "cpu_queries": {
+        "datrie-exact": {
+          "p50_ms": 0.064254,
+          "p95_ms": 0.069492,
+          "rss_after_open_bytes": 827719680,
+          "rss_after_query_bytes": 836042752
+        },
+        "datrie-layout": {
+          "p50_ms": 0.065791,
+          "p95_ms": 0.071029,
+          "rss_after_open_bytes": 827834368,
+          "rss_after_query_bytes": 836157440
+        },
+        "dedup-xor": {
+          "p50_ms": 0.065301,
+          "p95_ms": 0.069911,
+          "rss_after_open_bytes": 827609088,
+          "rss_after_query_bytes": 835932160
+        },
+        "dense": {
+          "p50_ms": 0.043512,
+          "p95_ms": 0.046238499999999995,
+          "rss_after_open_bytes": 900628480,
+          "rss_after_query_bytes": 901365760
+        },
+        "identity": {
+          "p50_ms": 0.064393,
+          "p95_ms": 0.069492,
+          "rss_after_open_bytes": 827584512,
+          "rss_after_query_bytes": 835907584
+        },
+        "raw-mmap": {
+          "p50_ms": 0.054407,
+          "p95_ms": 0.058178,
+          "rss_after_open_bytes": 827166720,
+          "rss_after_query_bytes": 831152128
+        },
+        "xor": {
+          "p50_ms": 0.064394,
+          "p95_ms": 0.069562,
+          "rss_after_open_bytes": 827678720,
+          "rss_after_query_bytes": 836001792
+        }
+      },
+      "gzip_bytes": 68306630,
+      "model_costs": {
+        "source": {
+          "cuda_after_open": {
+            "allocated_bytes": 18236708864,
+            "peak_allocated_bytes": 18237173760,
+            "reserved_bytes": 18257805312
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 18246277120,
+            "peak_allocated_bytes": 18256043008,
+            "reserved_bytes": 18266193920
+          },
+          "open_seconds": 56.91940059699118,
+          "p50_ms": 78.5278715,
+          "p95_ms": 79.4713027,
+          "requests_per_second": 12.708594172664341,
+          "rss_after_open": {
+            "current_bytes": 2932686848,
+            "process_peak_bytes": 28547522560
+          },
+          "rss_after_query": {
+            "current_bytes": 3223158784,
+            "process_peak_bytes": 28547522560
+          }
+        },
+        "xor": {
+          "cuda_after_open": {
+            "allocated_bytes": 18163193344,
+            "peak_allocated_bytes": 18163193344,
+            "reserved_bytes": 18182307840
+          },
+          "cuda_after_query": {
+            "allocated_bytes": 18172761600,
+            "peak_allocated_bytes": 18182527488,
+            "reserved_bytes": 18192793600
+          },
+          "open_seconds": 57.659609221853316,
+          "p50_ms": 77.8635405,
+          "p95_ms": 78.55382804999999,
+          "requests_per_second": 12.824681812345196,
+          "rss_after_open": {
+            "current_bytes": 2849046528,
+            "process_peak_bytes": 28547424256
+          },
+          "rss_after_query": {
+            "current_bytes": 3208929280,
+            "process_peak_bytes": 28547424256
+          }
+        }
+      },
+      "model_startup_cuda_allocated_reduction_bytes": 73515520,
+      "native_over_source_p50_ratio": 0.991540188377575,
+      "row_bytes": 73514240,
+      "run": "qwen35-20877-exact-s7",
+      "source_bundle_bytes": 78986748,
+      "variants": {
+        "datrie-exact": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 46.28631526394747,
+          "bundle_bytes": 128346990,
+          "datrie_index_bytes": 48741424,
+          "full_bundle_with_shared_base_bytes": 9471255944,
+          "memory_artifact_bytes": 122874143,
+          "memory_manifest_sha256": "a38057c24777b23d831c397585d2865a151abc3d0f5808e69a60534c1b9011e0",
+          "name": "datrie-exact",
+          "recipe_sha256": "f3279459172cea5deed753bd5ad0b9706d17bf5761f7fb8a2a0501a035af1164",
+          "row_payload_to_memory_artifact_factor": 0.5982889337425531,
+          "source_bundle_to_native_bundle_factor": 0.6154156634292709,
+          "structurally_merged_rows": 0,
+          "table_sha256": "4077f0c8c8589e6592103a0b322724451db49b40c3c228ceda39dee7c9052e98"
+        },
+        "datrie-layout": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 21.8568643189501,
+          "bundle_bytes": 128346991,
+          "datrie_index_bytes": 48741424,
+          "full_bundle_with_shared_base_bytes": 9471255945,
+          "memory_artifact_bytes": 122874144,
+          "memory_manifest_sha256": "a38057c24777b23d831c397585d2865a151abc3d0f5808e69a60534c1b9011e0",
+          "name": "datrie-layout",
+          "recipe_sha256": "f3279459172cea5deed753bd5ad0b9706d17bf5761f7fb8a2a0501a035af1164",
+          "row_payload_to_memory_artifact_factor": 0.5982889288734333,
+          "source_bundle_to_native_bundle_factor": 0.6154156586343345,
+          "structurally_merged_rows": 0,
+          "table_sha256": "4077f0c8c8589e6592103a0b322724451db49b40c3c228ceda39dee7c9052e98"
+        },
+        "dedup-xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.125603280961514,
+          "bundle_bytes": 79604511,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422513465,
+          "memory_artifact_bytes": 74131664,
+          "memory_manifest_sha256": "dcee9e6b06abe1a4326f7fc485524e550194aa46a99c2ba5d3d62a30cc370e98",
+          "name": "dedup-xor",
+          "recipe_sha256": "58b6d7e7bc19fe6da7fe0724caad81516c435810f86593be5223483068c6caba",
+          "row_payload_to_memory_artifact_factor": 0.9916712513022775,
+          "source_bundle_to_native_bundle_factor": 0.9922395980800636,
+          "structurally_merged_rows": 0,
+          "table_sha256": "128f640ec4f86a5935394cacad20669cbb148deba4bd9cdbaeee71e895e026bb"
+        },
+        "identity": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 5.411442992975935,
+          "bundle_bytes": 79605580,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422514534,
+          "memory_artifact_bytes": 74132733,
+          "memory_manifest_sha256": "3b0d0f3294a941163d7d195fde496b18863f9131ce6e861cac4cd87edf9cd0cc",
+          "name": "identity",
+          "recipe_sha256": "3845f76a44da279596b1bd0e3c498fc3cca4d6e846706e3c3ef5c510acbbd02a",
+          "row_payload_to_memory_artifact_factor": 0.9916569513227038,
+          "source_bundle_to_native_bundle_factor": 0.9922262735853441,
+          "structurally_merged_rows": 0,
+          "table_sha256": "3a471840ae71bd40e96d870d9532a75897cd695fd341f881b56759e300c32993"
+        },
+        "xor": {
+          "all_original_rows_byte_exact": true,
+          "build_and_verify_seconds": 8.356674515875056,
+          "bundle_bytes": 79604751,
+          "datrie_index_bytes": 0,
+          "full_bundle_with_shared_base_bytes": 9422513705,
+          "memory_artifact_bytes": 74131904,
+          "memory_manifest_sha256": "b72f140619d56e3dc39d14317a9b509984639fd6d30663ede9b0648b927c8995",
+          "name": "xor",
+          "recipe_sha256": "4ec3804ffae9d600795232ba856331ba7e368a8c20c55f4d83b09a3787246b39",
+          "row_payload_to_memory_artifact_factor": 0.99166804079388,
+          "source_bundle_to_native_bundle_factor": 0.9922366065814339,
+          "structurally_merged_rows": 0,
+          "table_sha256": "71b262a07932e34f033274606e39192ccd37c4183ef9778ce72dd7b47e9607b9"
+        }
+      }
+    }
+  ],
+  "status": "verified",
+  "trained_checkpoints": 6
+}

@@ -1,0 +1,50 @@
+{
+  "environment": {
+    "affinity": [
+      123
+    ],
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python /llm-align/duyimin/ngram-native-real-20261109/source/tools/benchmark_counterfact_model.py --run /llm-align/duyimin/ngram-identity-vs-hash-20261107/runs/qwen35-20877-exact-s3 --base /llm-align/open_models/Qwen3.5/Qwen3.5-4B --upstream /llm-align/duyimin/ngram-native-real-20261109/upstream --prepared /llm-align/duyimin/ngram-identity-vs-hash-20261107/prepared-qwen35-20877 --bundle /llm-align/duyimin/ngram-native-real-20261109/results/qwen35-20877-exact-s3/xor --mode source --device cuda --native-library /llm-align/duyimin/ngram-native-real-20261109/source/build/libmeft_rows.so --output /llm-align/duyimin/ngram-native-real-20261109/results/qwen35-20877-exact-s3/model-source.json --requests 64 --warmup 1 --repeat 3",
+    "commit": "a4c2b2be3279b1c081e0cee0390e7377d8a4f35e",
+    "cpu": "AMD EPYC 7742 64-Core Processor",
+    "device": "cuda",
+    "gpu": "selected CUDA device; details recorded after initialization",
+    "interop_threads": 1,
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "pytorch": "2.11.0+cu130",
+    "source_sha256": "9d69524e1f4abd31b9baa8f40fc3d2881aaa23e905832dd12020719038f3e2ff",
+    "threads": 1
+  },
+  "error": "ValueError('selected GPU is contended; measurement blocked')",
+  "execution_device": "cuda",
+  "gpu_before": {
+    "compute_pids": [
+      2490767
+    ],
+    "driver": "535.54.03",
+    "external_compute_pids": [
+      2490767
+    ],
+    "free_mib": 80589,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-0d6f5ec3-1a8c-b91d-cab5-0cf73accebf8",
+    "utilization_percent": 44
+  },
+  "limitations": [
+    "Fixed official test prefixes; next-token FP32 logits, not full MultiCounterFact metrics or generation.",
+    "Batch one, eager attention, complete uncached forwards; no concurrent serving, KV cache or padding.",
+    "Checksums/frozen-weight validation warm filesystem and contribute to startup time/peak RSS.",
+    "Model base dominates these roughly 74 MB memory tables; no billion-row capacity extrapolation.",
+    "Existing shared host; no paid APIs or new training. Monetary/energy cost unmeasured."
+  ],
+  "mode": "source",
+  "repeat": 3,
+  "requests": [],
+  "rss_before_open": {
+    "current_bytes": 932302848,
+    "process_peak_bytes": 932302848
+  },
+  "status": "failed",
+  "warmup": 1
+}
