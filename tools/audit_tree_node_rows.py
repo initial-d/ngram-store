@@ -27,6 +27,7 @@ def audit(path, output):
     construction_decoded = decoded
     rounding = None
     validation_one_thread = None
+    validation_one_thread_blocks = None
     if not matched_build:
         # OPQ reverse transforms have thread-dependent FP32 matrix rounding.
         # Match the original four-thread build byte for byte, while auditing
@@ -51,10 +52,12 @@ def audit(path, output):
             'serialized_serving_files_sha256_verified': True}
         reader.close(); faiss.omp_set_num_threads(1); reader = Reader(job)
         validation_one_thread = {}
+        validation_one_thread_blocks = {}
         changes = []
         for cached in (0, 1):
-            q, _ = score_candidate(evaluate_hidden(reader, common, cached), common, 'validation')
+            q, blocks = score_candidate(evaluate_hidden(reader, common, cached), common, 'validation')
             validation_one_thread[str(cached)] = q
+            validation_one_thread_blocks[str(cached)] = blocks
             for budget in BUDGETS:
                 before, after = quality_gate(build['validation'][str(cached)], budget), quality_gate(q, budget)
                 if before != after:
@@ -73,6 +76,7 @@ def audit(path, output):
         'construction_decoded_row_sha256': array_digest(construction_decoded.astype('<f4')),
         'construction_relative_frobenius': float(np.linalg.norm(a - construction_decoded.astype(np.float64)) / np.linalg.norm(a)),
         'thread_rounding': rounding, 'validation_at_query_threads': validation_one_thread,
+        'validation_at_query_threads_paired_blocks': validation_one_thread_blocks,
         'undefined_zero_norm_rows': int((~valid).sum()),
         'relative_l2': {'p50': float(np.median(error)), 'p95': float(np.quantile(error, .95)),
             'maximum': float(error.max()),
