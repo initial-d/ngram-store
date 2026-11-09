@@ -76,7 +76,8 @@ Keep the known-word-only precomputation boundary visible; do not present a
 known-only serving advantage as an arbitrary n-gram requirement.
 
 Validation alone selects the smallest complete bytes at loss increases
-.01%/.1%/.5%/1%/2%; .1% is primary. Require discrimination decline <=.5
+.01%/.1%/.5%/1%/2% in both all-center and nonempty-OOV strata; .1% is primary.
+Require discrimination decline <=.5
 percentage point in both all-center and nonempty-OOV strata. Keep the selected
 candidate frozen for original test and new confirmation. Record pointwise
 paired 128-token-block bootstrap intervals (2000 resamples, fixed seed 42).
@@ -87,7 +88,9 @@ types, fixed seed 42, preserving empty bags. In fresh one-thread processes,
 measure string-to-key lookup, original-ID count/schedule construction, selected
 row decode and weighted aggregate together, plus precompiled replay separately.
 Use 64-input batches, two warmups and 15 randomized repeats, report p50/p95,
-per-batch samples, load time and anonymous/file-backed/peak RSS. Selected
+per-batch samples, load time and anonymous/file-backed/peak RSS. Native row
+blocks use the existing 8192-byte maximum uncompressed block budget, keeping
+its precision-specific block-row limits visible. Selected
 bundles get a separate matched 0/1MiB native-cache retiming; table bytes and
 quality remain unchanged. Warm shared CPU results are not exclusive/disk-cold
 or production latency. Record per-candidate fresh build peak RSS, wall time,
