@@ -248,10 +248,38 @@ def publish_variant(directory, recipe, entry, started, args, *, merged=0):
                       'memory_bytes': memory_bytes, 'merged': merged}), flush=True)
 
 
+def sweep(args):
+    """Diagnose fixed lossless block-size tradeoffs on an already verified table."""
+    manifest = json.loads((args.fixture / 'manifest.json').read_text())
+    if manifest['status'] != 'passed' or file_sha256(args.fixture / 'rows.f32') != manifest['source_row_sha256']:
+        raise ValueError('verified fixture and original rows required')
+    args.output.mkdir(parents=True, exist_ok=False)
+    for name in ('rows.f32', 'nonrow-delta.safetensors', 'vocabulary.npz', 'queries.npz'):
+        shutil.copyfile(args.fixture / name, args.output / name)
+    entry = {**manifest, 'status': 'building', 'environment': environment(), 'variants': [],
+             'source_fixture_manifest_sha256': file_sha256(args.fixture / 'manifest.json'),
+             'diagnostic': 'Post-baseline fixed block-size sweep; all candidates disclosed, no quality-based selection'}
+    recipe = json.loads((args.fixture / 'xor/model-recipe.json').read_text())
+    array = np.memmap(args.output / 'rows.f32', mode='c', dtype='<f4', shape=tuple(entry['shape']))
+    weight = torch.from_numpy(array)
+    for block in args.block_sizes:
+        directory = args.output / f'xor-b{block}'
+        directory.mkdir()
+        started = time.perf_counter()
+        export_multihead(weight, entry['head_sizes'], directory / 'memory', block_rows=block,
+                         backend='native', deduplicate=False, predictor='xor')
+        publish_variant(directory, recipe, entry, started, args)
+        entry['variants'][-1]['block_rows'] = block
+    entry['status'] = 'passed'
+    write(args.output / 'manifest.json', entry)
+
+
 def worker(args):
     manifest = json.loads((args.fixture / 'manifest.json').read_text())
     if manifest['status'] != 'passed' or file_sha256(args.fixture / 'queries.npz') != manifest['queries_sha256']:
         raise ValueError('verified fixture and original requests required')
+    if args.mode not in ('dense', 'raw-mmap') and args.mode not in {v['name'] for v in manifest['variants']}:
+        raise ValueError('mode is not in the verified fixture')
     with np.load(args.fixture / 'queries.npz', allow_pickle=False) as f:
         queries = [torch.from_numpy(f[c['key']].copy()) for c in manifest['cases']]
     for c, q in zip(manifest['cases'], queries):
@@ -336,20 +364,28 @@ def main():
     bench = sub.add_parser('worker')
     for name in ('fixture', 'native-library', 'output'):
         bench.add_argument('--' + name, type=Path, required=True)
-    bench.add_argument('--mode', choices=('dense', 'raw-mmap', 'identity', 'xor', 'dedup-xor', 'datrie-layout', 'datrie-exact'), required=True)
+    bench.add_argument('--mode', required=True, help='dense, raw-mmap, or an exact variant name from the verified manifest')
     bench.add_argument('--cache-bytes', type=int, default=1048576)
     bench.add_argument('--warmup', type=int, default=3)
     bench.add_argument('--repeat', type=int, default=20)
+    sizes = sub.add_parser('sweep')
+    for name in ('fixture', 'native-library', 'output'):
+        sizes.add_argument('--' + name, type=Path, required=True)
+    sizes.add_argument('--block-sizes', default='32,128,512,2048')
     args = p.parse_args()
     if args.action == 'prepare' and (args.block_rows < 1 or not 1 <= args.requests <= 1024):
         p.error('positive block rows and 1..1024 real requests required')
     if args.action == 'worker' and (args.repeat < 1 or args.warmup < 0 or args.cache_bytes < 0):
         p.error('positive repeat, nonnegative warmup and cache required')
+    if args.action == 'sweep':
+        args.block_sizes = [int(n) for n in args.block_sizes.split(',')]
+        if not args.block_sizes or min(args.block_sizes) < 1 or len(set(args.block_sizes)) != len(args.block_sizes):
+            p.error('distinct positive block sizes required')
     if args.output.exists():
         p.error('fresh output required')
     torch.set_num_threads(1)
     torch.set_num_interop_threads(1)
-    (prepare if args.action == 'prepare' else worker)(args)
+    {'prepare': prepare, 'worker': worker, 'sweep': sweep}[args.action](args)
 
 
 if __name__ == '__main__':

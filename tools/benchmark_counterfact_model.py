@@ -49,6 +49,10 @@ def worker(args):
             torch.cuda.set_per_process_memory_fraction(.65)
             probe = torch.empty(1, device='cuda')
             torch.cuda.synchronize()
+            runtime_uuid = str(torch.cuda.get_device_properties(0).uuid)
+            runtime_uuid = runtime_uuid if runtime_uuid.startswith('GPU-') else 'GPU-' + runtime_uuid
+            if runtime_uuid != uuid:
+                raise ValueError('CUDA runtime and monitoring selected different GPUs')
             monitor_pid = monitor_client_pid(gpu_snapshot(uuid, own_pid=0))
             del probe
             report.update(cuda_runtime=torch.version.cuda, gpu_name=torch.cuda.get_device_name(0),

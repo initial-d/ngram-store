@@ -19,7 +19,7 @@ class CounterfactStorageTest(unittest.TestCase):
         fixture.CounterfactNativeTest.tearDownClass()
 
     def test_trained_bundle_reopens_and_native_worker_never_needs_source_rows(self):
-        from tools.benchmark_counterfact_storage import prepare, worker
+        from tools.benchmark_counterfact_storage import prepare, worker, sweep
         from tools.counterfact_native import reopen, digest
         torch, SOURCE = fixture.torch, fixture.SOURCE
         run, model, replay = self.helper.fixture('exact')
@@ -39,6 +39,14 @@ class CounterfactStorageTest(unittest.TestCase):
         self.assertEqual(manifest['unaddressed_budget_padding_rows'],
                          r['identity']['physical_rows'] - r['identity']['logical_exact_rows_with_zero_sentinels'])
         self.assertTrue(all(v['all_original_rows_byte_exact'] for v in manifest['variants']))
+        sweep_output = self.helper.root / 'sweep-check'
+        sweep(SimpleNamespace(fixture=output, output=sweep_output, native_library=self.helper.library,
+                              block_sizes=[32, 128]))
+        for block in (32, 128):
+            report = sweep_output / f'query-b{block}.json'
+            worker(SimpleNamespace(fixture=sweep_output, native_library=self.helper.library,
+                mode=f'xor-b{block}', output=report, cache_bytes=1024, warmup=0, repeat=1))
+            self.assertTrue(json.loads(report.read_text())['all_query_outputs_byte_exact'])
         for variant in manifest['variants']:
             native_model, native, staged = reopen(output / variant['name'], SOURCE, self.helper.library, device='cpu')
             try:
