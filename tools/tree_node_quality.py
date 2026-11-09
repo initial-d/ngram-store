@@ -166,7 +166,8 @@ class Reader:
         from .faiss_row_codec import FaissRows
         from .quantized_memory import QuantizedRows
         self.mapping = None
-        self.reader = (FaissRows(job['directory']) if job['backend'] in ('faiss', 'dedup') else
+        self.reader = (FaissRows(job['directory'], native_library=job['native_library'], cache_bytes=cache_bytes)
+                       if job['backend'] in ('faiss', 'dedup') else
                        QuantizedRows(job['directory'], job['native_library'], cache_bytes=cache_bytes))
         if job['backend'] == 'dedup':
             self.mapping = np.load(Path(job['directory']) / 'original-to-code.npy', mmap_mode='r')
@@ -278,7 +279,13 @@ def build_job(job_path):
         planning = {'seconds': time.perf_counter() - start, 'mapping_sha256': array_digest(mapping.astype('<u8')),
             'retained_rows': int(np.sum(mapping == np.arange(len(mapping)))), 'fidelity': fidelity_before_quantization}
     expected = None
-    if job['backend'] == 'constant':
+    if job.get('native_codes_source'):
+        from .faiss_row_codec import pack_codec_native
+        pack_codec_native(job['native_codes_source'], directory, native_library=job['native_library'],
+            max_block_bytes=8192, row_order=order)
+        if job['backend'] == 'dedup':
+            original_encoded_hash = load(job['native_codes_source_report'])['original_encoded_code_sha256']
+    elif job['backend'] == 'constant':
         if job['encoding'] == 'zero':
             vector = np.zeros(source.shape[1], dtype=np.float32)
         elif job['encoding'] == 'mean':
@@ -341,11 +348,14 @@ def build_job(job_path):
         'maximum_dedup_decode_difference': maximum_decode_difference if job['backend'] == 'dedup' else None,
         'cosine': job.get('cosine'), 'norm_ratio': job.get('norm_ratio')}
     result['model_bytes'] = result['row_bundle_bytes'] + result['common_model_bytes']
-    for cached in (False, True):
-        hidden = evaluate_hidden(with_reader, common, cached)
-        quality, blocks = score_candidate(hidden, common, 'validation')
-        result['validation'][str(int(cached))] = quality
-        write(Path(job['report']).with_name(job['name'] + f'-validation-cache{int(cached)}-blocks.json.gz'), blocks)
+    if job.get('quality_contract') == 'deferred-llm':
+        result['quality_contract'] = 'Codec construction only; actual Qwen evaluation is required before qualification'
+    else:
+        for cached in (False, True):
+            hidden = evaluate_hidden(with_reader, common, cached)
+            quality, blocks = score_candidate(hidden, common, 'validation')
+            result['validation'][str(int(cached))] = quality
+            write(Path(job['report']).with_name(job['name'] + f'-validation-cache{int(cached)}-blocks.json.gz'), blocks)
     with_reader.close()
     result['status'] = 'complete'
     write(job['report'], result)
@@ -419,7 +429,7 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
     write(path, measured)
 
 
-def prepare_model(checkpoint_path, training, split, out, native_library, structural_library):
+def prepare_model(checkpoint_path, training, split, out, native_library, structural_library, *, expected=None):
     import torch
     from .benchmark_faiss_cotraining import objective, evaluate
     from .structural_native import StructuralPlan
@@ -427,7 +437,7 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
     from .train_ngram_similarity import ngrams
     preparation_started = time.perf_counter()
     checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=True)
-    expected = next(r for r in training['runs'] if (r['convention'], r['order'], r['seed']) ==
+    expected = expected or next(r for r in training['runs'] if (r['convention'], r['order'], r['seed']) ==
         (checkpoint_path.parent.parent.name, checkpoint['order'], checkpoint['seed']))
     assert digest(checkpoint_path) == expected['checkpoint_sha256']
     common = out / 'common'; common.mkdir(parents=True)
