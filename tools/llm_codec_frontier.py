@@ -147,7 +147,7 @@ def reopen_codec(job, upstream, *, device='cuda', cache_bytes=0, profile=False):
         nonlocal staged
         if len(list_of_N) != len(metadata['head_sizes']) or D != metadata['shape'][1]:
             raise ValueError('source head constructor differs')
-        staged = CodecMultiHeadEmbedding(reader, metadata['head_sizes'], device, profile=profile)
+        staged = CodecMultiHeadEmbedding(reader, metadata['head_sizes'], device, profile=profile, zero_sentinels=True)
         return staged
     try:
         p = recipe['protocol']; v = p['variants'][recipe['variant']]
@@ -213,6 +213,8 @@ def quality_worker(args):
     from .counterfact_data import batch_indices, case_metrics, summarize
     from .counterfact_native import digest as tensor_digest
     env = qwen_environment(); faiss.omp_set_num_threads(1)
+    env['codec_frontier_source_sha256'] = digest(__file__)
+    env['codec_adapter_source_sha256'] = digest(Path(__file__).with_name('codec_memory_adapter.py'))
     out = args.model; prepared = load(out / 'prepared.json'); common = out / 'common'
     metadata = load(common / 'metadata.json'); recipe = load(common / 'model-recipe.json')
     source_prepared = Path(metadata['prepared']); pre = load(source_prepared / 'prepare.json')
@@ -238,11 +240,12 @@ def quality_worker(args):
     ledger = out / (args.split + '-ledger.json')
     progress = {'status': 'running', 'environment': env, 'split': args.split,
         'protocol_sha256': digest(args.protocol), 'frozen_selection_sha256': frozen_hash,
+        'oov_contract_sha256': digest(Path(args.protocol).with_name('memory_application_oov_contract_v1.json')),
         'model': out.name, 'cases': len(cases), 'choices': len(indices),
         'batch_schedule_sha256': schedule_hash, 'candidates': [], 'failures': []}
     prior = load(ledger) if ledger.exists() else None
     if prior:
-        for field in ('protocol_sha256', 'split', 'batch_schedule_sha256', 'frozen_selection_sha256'):
+        for field in ('protocol_sha256', 'oov_contract_sha256', 'split', 'batch_schedule_sha256', 'frozen_selection_sha256'):
             if prior[field] != progress[field]: raise ValueError('existing quality schedule changed')
         progress['failures'] = prior.get('failures', [])
     write(ledger, progress)
@@ -250,7 +253,13 @@ def quality_worker(args):
     completed = {}; validated_requests = {}; source_scores = load(Path(metadata['source_run']) / 'choice-scores.json')
     try:
         for job_path in jobs:
-            job = load(job_path); decoded_hash = verify_candidate(job)
+            job = load(job_path)
+            wait_started = time.monotonic()
+            while not Path(job['report']).exists():
+                if not args.wait_build_seconds or time.monotonic() - wait_started > args.wait_build_seconds:
+                    raise ValueError('candidate construction has not completed: ' + job['name'])
+                time.sleep(10)
+            decoded_hash = verify_candidate(job)
             result_path = out / 'quality' / (job['name'] + '-' + args.split + '.json')
             if model is None:
                 model, replay, staged = reopen_codec(job, args.upstream, device=args.device)
@@ -258,7 +267,7 @@ def quality_worker(args):
                 if len(prefixes.index) != len(sequences): raise ValueError('incomplete immutable prefix cache')
             else:
                 staged.close()
-                staged = CodecMultiHeadEmbedding(Reader(job), metadata['head_sizes'], args.device)
+                staged = CodecMultiHeadEmbedding(Reader(job), metadata['head_sizes'], args.device, zero_sentinels=True)
                 replay.memory.source.multi_head_embedding = staged
             checks = []
             with torch.no_grad():
@@ -309,6 +318,8 @@ def quality_worker(args):
                     'case_scores': str(scores_path), 'case_scores_sha256': digest(scores_path),
                     'evaluation_seconds': time.perf_counter() - started, 'environment': env,
                     'quality_reused_from': None}
+                result['oov_contract_sha256'] = progress['oov_contract_sha256']
+                result['zero_sentinel_contract'] = 'Original local-ID zero outputs are exactly zero for all codecs; approximation of stored physical rows is reported separately'
                 if job['name'] == 'raw-fp32':
                     mismatch = sum(scores[k] != source_scores[k] for k in scores)
                     result['source_original_choice_score_mismatches'] = mismatch
@@ -374,6 +385,8 @@ def main():
     parser.add_argument('--jobs', type=int, default=16)
     parser.add_argument('--split', choices=('calibration', 'test'), default='calibration')
     parser.add_argument('--device', choices=('cpu', 'cuda'), default='cuda')
+    parser.add_argument('--wait-build-seconds', type=int, default=0,
+        help='Bounded wait for an immutable candidate report when quality overlaps construction')
     args = parser.parse_args()
     if args.phase != 'quality' and os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         parser.error('CPU preparation/build/selection requires empty CUDA_VISIBLE_DEVICES')

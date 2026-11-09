@@ -66,6 +66,12 @@ class CachedMemoryDecode(torch.nn.Module):
 @contextmanager
 def cached_memory_session(replay, global_step):
     original = replay.memory
+    from .late_memory_replay import DenseMemoryAdapter
+    if isinstance(original, DenseMemoryAdapter):
+        # This separately trained control is pointwise in hidden states and
+        # has no n-gram or convolution history to retain.
+        yield original
+        return
     cached = CachedMemoryDecode(original, global_step=global_step)
     replay.memory = cached; replay.model.ngram_memory = cached
     try: yield cached

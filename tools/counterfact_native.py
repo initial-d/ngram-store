@@ -89,6 +89,48 @@ def restore(run,base,upstream,*,device='cuda',native_oov=False):
 def digest(x):return hashlib.sha256(x.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes()).hexdigest()
 
 
+def restore_independent_control(run, upstream, *, device='cuda'):
+    """Reopen trained constants/adapters without an unused large key registry."""
+    from .counterfact_models import ConstantAddressMapping
+    from .late_memory_replay import DenseMemoryAdapter
+    run = Path(run); report = json.loads((run / 'report.json').read_text())
+    protocol = report['protocol']; variant = protocol['variants'][report['variant']]
+    control = variant['control']
+    if (report['status'] != 'complete' or not protocol.get('independent_identity_controls')
+            or control not in ('head-constant', 'adapter')
+            or sha(run / 'delta.safetensors') != report['delta']['sha256']):
+        raise ValueError('complete independently trained control required')
+    model, tokenizer, replay, module, config, loading = setup(report['base_model'], upstream,
+        'head-constant' if control == 'head-constant' else 'full', variant['vocab_sizes'], report['seed'],
+        device=device, suffix_layers=protocol['suffix_layers'],
+        train_decoder_suffix=protocol.get('train_decoder_suffix', True))
+    try:
+        if control == 'head-constant':
+            replay.memory.hash_mapping = ConstantAddressMapping(replay.layer_id, replay.memory.multi_head_embedding.num_heads)
+        else:
+            branch = DenseMemoryAdapter(replay.text.config.hidden_size, report['identity']['target_parameter_budget']).to(replay.device)
+            replay.memory = branch; model.ngram_memory = branch
+        state = load_file(str(run / 'delta.safetensors'), device='cpu')
+        expected = {n: p for n, p in model.named_parameters() if p.requires_grad}
+        if state.keys() != expected.keys(): raise ValueError('independent delta parameter domain changed')
+        with torch.no_grad():
+            for name, parameter in expected.items():
+                value = state[name]
+                if value.shape != parameter.shape or value.dtype != parameter.dtype:
+                    raise ValueError('independent trained parameter shape/dtype changed')
+                parameter.copy_(value)
+        if sum(p.numel() for p in expected.values()) != report['trainable_parameters']:
+            raise ValueError('independent parameter count changed')
+        if replay.frozen_hash() != report['frozen_weight_sha256']:
+            raise ValueError('independent frozen backbone changed')
+        if replay.frozen_suffix_hash() != report['frozen_decoder_suffix_sha256']:
+            raise ValueError('independent frozen decoder changed')
+        module.set_global_step(report['optimizer_steps']); model.requires_grad_(False).eval()
+        return report, model, replay
+    except BaseException:
+        replay.close(); raise
+
+
 def check_native_layout(staged,heads,dim,dtype=torch.float32):
     offsets=[sum(heads[:i]) for i in range(len(heads))]
     meta=staged.gather.metadata

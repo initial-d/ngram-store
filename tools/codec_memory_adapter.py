@@ -12,7 +12,7 @@ class CodecMultiHeadEmbedding(torch.nn.Module):
     immutable. CPU decoding and synchronous device copies are deliberate;
     this adapter adds no gradient, CUDA graph or asynchronous overlap contract.
     """
-    def __init__(self, reader, head_sizes, device, *, staging_rows=4096, profile=False):
+    def __init__(self, reader, head_sizes, device, *, staging_rows=4096, profile=False, zero_sentinels=False):
         super().__init__()
         if not head_sizes or any(type(n) is not int or n < 1 for n in head_sizes):
             raise ValueError('positive head sizes required')
@@ -31,6 +31,7 @@ class CodecMultiHeadEmbedding(torch.nn.Module):
         self._closed = False
         self._lock = threading.Lock()
         self.profile = profile
+        self.zero_sentinels = zero_sentinels
         self.stats = {'calls': 0, 'requested_rows': 0, 'staged_bytes': 0,
             'maximum_chunk_rows': 0, 'decode_seconds': 0., 'transfer_seconds': 0.}
         physical = reader.metadata['rows']
@@ -73,6 +74,12 @@ class CodecMultiHeadEmbedding(torch.nn.Module):
                     self.stats['transfer_seconds'] += time.perf_counter() - started
                 self.stats['staged_bytes'] += values.nbytes
                 self.stats['maximum_chunk_rows'] = max(self.stats['maximum_chunk_rows'], len(selected))
+            if self.zero_sentinels:
+                # Reserved local zero IDs mean unseen canonical keys in the
+                # exact-key Qwen application. PQ/SQ/cluster reconstruction must
+                # not introduce a nonzero OOV feature. This is model semantics,
+                # separate from the codec's approximate stored-row contract.
+                output.masked_fill_((local == 0).to(self.device).unsqueeze(-1), 0.)
             return output
         finally:
             self._lock.release()

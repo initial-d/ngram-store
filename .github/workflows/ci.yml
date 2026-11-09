@@ -99,7 +99,7 @@ jobs:
           MEFT_COUNTERFACT_SOURCE: /tmp/meft-counterfact-source
           HF_HUB_OFFLINE: "1"
           OMP_NUM_THREADS: "1"
-        run: python -m unittest tests.test_counterfact_native tests.test_counterfact_storage tests.test_llm_codec_frontier tests.test_cached_memory_decode -v
+        run: python -m unittest tests.test_counterfact_native tests.test_counterfact_storage tests.test_llm_codec_frontier tests.test_cached_memory_decode tests.test_independent_control_reopen -v
       - name: Reproduce all independent-key paired bootstrap intervals on CPU
         run: python docs/ngram_identity_evidence_20261107/verify.py --bootstrap
 

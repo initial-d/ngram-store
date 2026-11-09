@@ -56,7 +56,9 @@ class LlmCodecTests(unittest.TestCase):
                 reader = Reader(job)
                 try: decoded = reader.rows(np.arange(len(rows)))
                 finally: reader.close()
-                with torch.no_grad(): source.memory.multi_head_embedding.embedding.weight.copy_(torch.from_numpy(decoded))
+                effective = decoded.copy()
+                effective[source.memory.multi_head_embedding.offsets.cpu().numpy()] = 0.
+                with torch.no_grad(): source.memory.multi_head_embedding.embedding.weight.copy_(torch.from_numpy(effective))
                 actual_model, actual, staged = reopen_codec(job, Path(fixture.SOURCE), device='cpu')
                 try:
                     self.assertFalse(any('multi_head_embedding' in n for n, _ in actual_model.named_parameters()))

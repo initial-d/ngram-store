@@ -33,6 +33,17 @@ class CodecMemoryTests(unittest.TestCase):
         self.assertTrue(reader.closed)
         with self.assertRaises(ValueError): adapter(ids)
 
+    def test_reserved_zero_ids_remain_zero_after_a_lossy_reader(self):
+        class Reader:
+            metadata = {'rows': 4, 'dim': 2}
+            mapping = None
+            def rows(self, ids): return np.ones((len(ids), 2), dtype=np.float32)
+            def close(self): pass
+        adapter = CodecMultiHeadEmbedding(Reader(), [2, 2], 'cpu', zero_sentinels=True)
+        self.assertTrue(torch.equal(adapter(torch.tensor([[0, 1], [1, 0]])),
+            torch.tensor([[[0., 0.], [1., 1.]], [[1., 1.], [0., 0.]]])))
+        adapter.close()
+
 
 if __name__ == '__main__':
     unittest.main()

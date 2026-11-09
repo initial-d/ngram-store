@@ -58,7 +58,7 @@ def cpu_worker(args):
     heads = [n for order in mapping.vocab_size_across_layers[mapping.layer_ids[0]] for n in order]
     if heads != metadata['head_sizes']:
         raise ValueError('CPU original head layout changed')
-    staged = CodecMultiHeadEmbedding(Reader(job, cache_bytes=args.cache_bytes), heads, 'cpu', profile=True)
+    staged = CodecMultiHeadEmbedding(Reader(job, cache_bytes=args.cache_bytes), heads, 'cpu', profile=True, zero_sentinels=True)
     report = {'status': 'running', 'environment': environment(), 'phase_source_sha256':digest(__file__),
         'phase_source_file':'tools/benchmark_llm_codec_serving.py', 'job_sha256': digest(args.job),
         'cache_bytes': args.cache_bytes, 'rss_before_open': before,
@@ -106,7 +106,7 @@ def gpu_worker(args):
     import torch
     from .benchmark_device_gather import gpu_snapshot, monitor_client_pid
     from .cached_memory_decode import cached_memory_session, generate_cached
-    from .counterfact_native import restore, digest as tensor_digest
+    from .counterfact_native import restore, restore_independent_control, digest as tensor_digest
     from .llm_codec_frontier import reopen_codec, original_row_digest
     from .tree_node_quality import environment
     torch.set_num_threads(1); torch.set_num_interop_threads(1); faiss.omp_set_num_threads(1)
@@ -144,6 +144,14 @@ def gpu_worker(args):
         if args.mode == 'source':
             _, model, replay, state = restore(Path(metadata['source_run']), Path(recipe['base_model']), args.upstream)
             del state
+        elif args.mode == 'independent':
+            control_report, model, replay = restore_independent_control(args.control_run, args.upstream)
+            if (control_report['prepared_sha256'] != recipe['prepared_sha256']
+                    or control_report['seed'] != recipe['seed']
+                    or control_report['frozen_weight_sha256'] != recipe['frozen_weight_sha256']):
+                raise ValueError('independent control uses a different source/data')
+            report['independent_control_report_sha256'] = digest(args.control_run / 'report.json')
+            report['independent_control_delta_bytes'] = control_report['delta']['bytes']
         else:
             model, replay, staged = reopen_codec(job, args.upstream, cache_bytes=args.cache_bytes)
         gc.collect(); torch.cuda.synchronize()
@@ -188,7 +196,7 @@ def gpu_worker(args):
                                     use_cache=True, logits_to_keep=1)
                             torch.cuda.synchronize(); decode_ms.append((time.perf_counter_ns()-start)/1e6)
                         report['samples'].append({'prefill_ms':prefill_ms, 'decode_ms':decode_ms,
-                            'memory_history_tokens':cache.history_length})
+                            'memory_history_tokens':getattr(cache, 'history_length', 0)})
                     snapshot()
         if staged is not None:
             staged.profile=True
@@ -207,6 +215,11 @@ def gpu_worker(args):
             rss_after_query=memory(),host_loadavg=list(os.getloadavg()),source_row_bytes=metadata['shape'][0]*128,
             complete_serving_bytes=load(job['report'])['model_bytes']+(common/'metadata.json').stat().st_size,
             base_model_bytes=metadata['base_bytes'])
+        if args.mode == 'independent':
+            report.update(source_row_bytes=control_report['identity']['row_bytes'],
+                complete_serving_bytes=control_report['delta']['bytes']+(args.control_run/'report.json').stat().st_size,
+                independent_registry_required=False,
+                independent_serving_files=['delta.safetensors','report.json'])
     except BaseException as error:
         report.update(status='failed',error=repr(error));raise
     finally:
@@ -219,7 +232,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('phase',choices=('cpu','gpu'))
     for name in ('job','output','upstream'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--mode',choices=('source','codec'),default='codec')
+    parser.add_argument('--mode',choices=('source','codec','independent'),default='codec')
+    parser.add_argument('--control-run',type=Path)
     parser.add_argument('--cache-bytes',type=int,default=0)
     parser.add_argument('--requests',type=int,default=32)
     parser.add_argument('--repeat',type=int,default=3)
@@ -229,6 +243,7 @@ def main():
     args=parser.parse_args()
     if args.output.exists() or args.requests<1 or args.repeat<1 or args.warmup<0 or args.cache_bytes<0:
         parser.error('fresh output and valid positive budgets required')
+    if args.mode == 'independent' and args.control_run is None: parser.error('independent mode requires a trained control run')
     args.output.parent.mkdir(parents=True,exist_ok=True)
     if args.phase=='cpu':cpu_worker(args)
     else:gpu_worker(args)
