@@ -1,0 +1,9 @@
+{
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "c_compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "cxx_compiler": "c++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "filesystem_type": "ceph",
+  "qwen35_attention_note": "Transformers logged missing optional fast path; torch fallback used equally for both variants.",
+  "build_command": "make native structural-native",
+  "gpu_use": "Finite inference benchmarks on two A100 80GB cards; no training."
+}

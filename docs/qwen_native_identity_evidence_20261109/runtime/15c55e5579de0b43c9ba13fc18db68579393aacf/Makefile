@@ -1,0 +1,104 @@
+#
+# Copyright (c) 2016-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+#
+
+CXX = c++
+CXXFLAGS = -pthread -std=c++0x -march=native -fPIC
+OBJS = args.o dictionary.o productquantizer.o matrix.o qmatrix.o vector.o model.o utils.o fasttext.o ftindex.o
+INCLUDES = -I. -I./mylib/include
+LIBS = -L./mylib/lib -ltrie -lpub
+LIBNAME = libfasttext
+PYTHON ?= python3
+
+.PHONY: opt debug test clean native structural-native fasttext-native
+
+# Optional Linux FastText facade; retain the original binary/library targets.
+fasttext-native:
+	mkdir -p build
+	$(CC) -std=c11 -O2 -fPIC -c native/meft_rows.c -o build/meft_rows_fasttext.o
+	$(CXX) $(CXXFLAGS) -O2 -DMEFT_NATIVE_FASTTEXT -Isrc -Inative $(INCLUDES) $(addprefix src/,$(OBJS:.o=.cc)) native/fasttext_bundle.cc src/main.cc build/meft_rows_fasttext.o $(LIBS) -lz -o build/fasttext-native
+
+# Optional original-algorithm bridge; bundled archives require Linux x86-64.
+structural-native:
+	mkdir -p build
+	$(CXX) -std=c++11 -O2 -Wall -Wextra -Werror -fPIC -shared -Isrc -Imylib/include native/meft_structural.cc $(LIBS) -o build/libmeft_structural.so
+
+# Standalone C ABI: does not depend on the bundled legacy C++ libraries.
+# On macOS use: make native NATIVE_SHARED='-dynamiclib' NATIVE_EXT=dylib
+CC ?= cc
+NATIVE_SHARED ?= -shared
+NATIVE_EXT ?= so
+native:
+	mkdir -p build
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -fPIC $(NATIVE_SHARED) native/meft_rows.c -lz -o build/libmeft_rows.$(NATIVE_EXT)
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -Inative examples/native_gather.c native/meft_rows.c -lz -o build/native_gather
+
+opt: CXXFLAGS += -O1 -funroll-loops
+opt: fasttext $(LIBNAME).a index cut_ngram print_ngrams bench_ftindex
+
+debug: CXXFLAGS += -g -O0 -fno-inline
+debug: fasttext
+
+args.o: src/args.cc src/args.h
+	$(CXX) $(CXXFLAGS) -c src/args.cc
+
+dictionary.o: src/dictionary.cc src/dictionary.h src/args.h
+	$(CXX) $(CXXFLAGS) -c src/dictionary.cc $(INCLUDES)
+
+productquantizer.o: src/productquantizer.cc src/productquantizer.h src/utils.h
+	$(CXX) $(CXXFLAGS) -c src/productquantizer.cc
+
+matrix.o: src/matrix.cc src/matrix.h src/utils.h
+	$(CXX) $(CXXFLAGS) -c src/matrix.cc
+
+qmatrix.o: src/qmatrix.cc src/qmatrix.h src/utils.h
+	$(CXX) $(CXXFLAGS) -c src/qmatrix.cc
+
+vector.o: src/vector.cc src/vector.h src/utils.h
+	$(CXX) $(CXXFLAGS) -c src/vector.cc
+
+model.o: src/model.cc src/model.h src/args.h
+	$(CXX) $(CXXFLAGS) -c src/model.cc
+
+utils.o: src/utils.cc src/utils.h
+	$(CXX) $(CXXFLAGS) -c src/utils.cc
+
+fasttext.o: src/fasttext.cc src/*.h
+	$(CXX) $(CXXFLAGS) -c src/fasttext.cc $(INCLUDES)
+
+ftindex.o: src/ftindex.cc src/*.h
+	$(CXX) $(CXXFLAGS) -c src/ftindex.cc $(INCLUDES)
+
+fasttext: $(OBJS) src/fasttext.cc
+	$(CXX) $(CXXFLAGS) $(OBJS) src/main.cc -o fasttext $(INCLUDES) $(LIBS)
+	ar -x ./mylib/lib/libtrie.a
+	ar -x ./mylib/lib/libpub.a
+#$(LIBNAME).a: $(OBJS)
+#	ar r $(LIBNAME).a $^
+$(LIBNAME).a: $(OBJS)
+	ar r $(LIBNAME).a *.o
+
+index: $(OBJS) src/index.cc
+	$(CXX) $(CXXFLAGS) $(OBJS) src/index.cc -o index $(INCLUDES) $(LIBS)
+
+cut_ngram: $(OBJS) src/cut_ngram.cc
+	$(CXX) $(CXXFLAGS) $(OBJS) src/cut_ngram.cc -o cut_ngram $(INCLUDES) $(LIBS)
+
+print_ngrams: $(OBJS) src/print_ngrams.cc
+	$(CXX) $(CXXFLAGS) $(OBJS) src/print_ngrams.cc -o print_ngrams $(INCLUDES) $(LIBS)
+	ar -x ./mylib/lib/libtrie.a
+	ar -x ./mylib/lib/libpub.a
+
+bench_ftindex: $(OBJS) src/bench_ftindex.cc
+	$(CXX) $(CXXFLAGS) $(OBJS) src/bench_ftindex.cc -o bench_ftindex $(INCLUDES) $(LIBS)
+
+test:
+	$(PYTHON) -m unittest discover -s tests
+
+clean:
+	rm -rf *.o fasttext index cut_ngram print_ngrams bench_ftindex $(LIBNAME).a

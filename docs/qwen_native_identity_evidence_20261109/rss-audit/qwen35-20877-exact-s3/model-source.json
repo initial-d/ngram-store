@@ -1,0 +1,137 @@
+{
+  "cuda_after_open": {
+    "allocated_bytes": 18236708864,
+    "peak_allocated_bytes": 18237173760,
+    "reserved_bytes": 18257805312
+  },
+  "cuda_after_query": {
+    "allocated_bytes": 18246277120,
+    "peak_allocated_bytes": 18253816832,
+    "reserved_bytes": 18264096768
+  },
+  "cuda_runtime": "13.0",
+  "environment": {
+    "affinity": [
+      125
+    ],
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python /llm-align/duyimin/ngram-native-real-20261109/rss-source/tools/benchmark_counterfact_model.py --run /llm-align/duyimin/ngram-identity-vs-hash-20261107/runs/qwen35-20877-exact-s3 --base /llm-align/open_models/Qwen3.5/Qwen3.5-4B --upstream /llm-align/duyimin/ngram-native-real-20261109/upstream --prepared /llm-align/duyimin/ngram-identity-vs-hash-20261107/prepared-qwen35-20877 --bundle /llm-align/duyimin/ngram-native-real-20261109/results/qwen35-20877-exact-s3/xor --mode source --device cuda --native-library /llm-align/duyimin/ngram-native-real-20261109/source/build/libmeft_rows.so --output /llm-align/duyimin/ngram-native-real-20261109/rss-audit/qwen35-20877-exact-s3/model-source.json --requests 3 --warmup 0 --repeat 1",
+    "commit": "ccff5da9983778c241db49068a55263b2f2fd92f",
+    "cpu": "AMD EPYC 7742 64-Core Processor",
+    "device": "cuda",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "interop_threads": 1,
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "pytorch": "2.11.0+cu130",
+    "source_sha256": "3ff84943addf26ad73c929aa2d4c2c4252c57d12b20325e585a33a385adc928e",
+    "threads": 1
+  },
+  "execution_device": "cuda",
+  "gpu_after_timing": {
+    "compute_pids": [
+      2527227
+    ],
+    "driver": "535.54.03",
+    "external_compute_pids": [],
+    "free_mib": 63117,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-0d6f5ec3-1a8c-b91d-cab5-0cf73accebf8",
+    "utilization_percent": 29
+  },
+  "gpu_before": {
+    "compute_pids": [],
+    "driver": "535.54.03",
+    "external_compute_pids": [],
+    "free_mib": 81042,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-0d6f5ec3-1a8c-b91d-cab5-0cf73accebf8",
+    "utilization_percent": 0
+  },
+  "gpu_before_timing": {
+    "compute_pids": [
+      2527227
+    ],
+    "driver": "535.54.03",
+    "external_compute_pids": [],
+    "free_mib": 63117,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-0d6f5ec3-1a8c-b91d-cab5-0cf73accebf8",
+    "utilization_percent": 21
+  },
+  "gpu_name": "NVIDIA A100-SXM4-80GB",
+  "limitations": [
+    "Fixed official test prefixes; next-token FP32 logits, not full MultiCounterFact metrics or generation.",
+    "Batch one, eager attention, complete uncached forwards; no concurrent serving, KV cache or padding.",
+    "Checksums/frozen-weight validation warm filesystem and contribute to startup time/peak RSS.",
+    "Model base dominates these roughly 74 MB memory tables; no billion-row capacity extrapolation.",
+    "Existing shared host; no paid APIs or new training. Monetary/energy cost unmeasured."
+  ],
+  "memory_row_parameter_present": true,
+  "mode": "source",
+  "monitor_pid": 2527227,
+  "open_seconds": 56.87449498102069,
+  "p50_ms": 78.460126,
+  "p95_ms": 80.1067336,
+  "repeat": 1,
+  "requests": [
+    {
+      "case_id": 1,
+      "group": "rewrite",
+      "input_ids_sha256": "e68fdf086a1aebbfea85f6ae299036191186157e6b3b4c57e9f7d84500a2c9ea",
+      "input_tokens": 10,
+      "next_token_logits_sha256": "d0a5c29925cb753d77dbda1e985ff2d5308290d58f15be9773bee13caf3a645a"
+    },
+    {
+      "case_id": 1,
+      "group": "paraphrase",
+      "input_ids_sha256": "6a4aaa35936dbfee2096c3e85d517e1c94196ba4cea19253c8226a23fd4b3c69",
+      "input_tokens": 18,
+      "next_token_logits_sha256": "292cecbfa75c6a1e6f63ec101b33052c1d7b49f9bbb621e11b554c03f24f3126"
+    },
+    {
+      "case_id": 1,
+      "group": "paraphrase",
+      "input_ids_sha256": "b896a76ffab8752f1b907f27486415cc484eca686d282d37e7a926b490705c58",
+      "input_tokens": 22,
+      "next_token_logits_sha256": "4adb25c843ef42468325615a9a77b32f994f813a758bbeae073dbcd89d2ea0d3"
+    }
+  ],
+  "requests_per_second": 12.682408706473577,
+  "rss_after_open": {
+    "anonymous_bytes": 2562191360,
+    "current_bytes": 2916478976,
+    "file_backed_bytes": 343797760,
+    "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+    "process_peak_bytes": 28547276800,
+    "shared_memory_bytes": 10489856
+  },
+  "rss_after_query": {
+    "anonymous_bytes": 2860277760,
+    "current_bytes": 3237044224,
+    "file_backed_bytes": 357097472,
+    "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+    "process_peak_bytes": 28547276800,
+    "shared_memory_bytes": 19668992
+  },
+  "rss_before_open": {
+    "anonymous_bytes": 673230848,
+    "current_bytes": 932720640,
+    "file_backed_bytes": 259489792,
+    "measurement": "Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead",
+    "process_peak_bytes": 932720640,
+    "shared_memory_bytes": 0
+  },
+  "samples_ms": [
+    80.28969,
+    77.798309,
+    78.460126
+  ],
+  "source_delta_sha256": "aef709ca070b293b637fc0c9e40a839120fba1d6de15461f94ed8b957e787375",
+  "source_row_bytes": 73514240,
+  "source_run_report_sha256": "65341e56212c50b4627ab80c927444d5ffa139f4e38a3312933fad828458f839",
+  "staging_stats": null,
+  "status": "passed",
+  "warmup": 0,
+  "worker_namespace_pid": 2086693
+}

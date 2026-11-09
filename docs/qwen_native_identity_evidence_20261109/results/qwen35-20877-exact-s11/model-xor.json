@@ -1,0 +1,750 @@
+{
+  "cuda_after_open": {
+    "allocated_bytes": 18163193344,
+    "peak_allocated_bytes": 18163193344,
+    "reserved_bytes": 18182307840
+  },
+  "cuda_after_query": {
+    "allocated_bytes": 18172761600,
+    "peak_allocated_bytes": 18182527488,
+    "reserved_bytes": 18192793600
+  },
+  "cuda_runtime": "13.0",
+  "environment": {
+    "affinity": [
+      123
+    ],
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python /llm-align/duyimin/ngram-native-real-20261109/source/tools/benchmark_counterfact_model.py --run /llm-align/duyimin/ngram-identity-vs-hash-20261107/runs/qwen35-20877-exact-s11 --base /llm-align/open_models/Qwen3.5/Qwen3.5-4B --upstream /llm-align/duyimin/ngram-native-real-20261109/upstream --prepared /llm-align/duyimin/ngram-identity-vs-hash-20261107/prepared-qwen35-20877 --bundle /llm-align/duyimin/ngram-native-real-20261109/results/qwen35-20877-exact-s11/xor --mode native --device cuda --native-library /llm-align/duyimin/ngram-native-real-20261109/source/build/libmeft_rows.so --output /llm-align/duyimin/ngram-native-real-20261109/results/qwen35-20877-exact-s11/model-xor.json --requests 64 --warmup 1 --repeat 3",
+    "commit": "15c55e5579de0b43c9ba13fc18db68579393aacf",
+    "cpu": "AMD EPYC 7742 64-Core Processor",
+    "device": "cuda",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "interop_threads": 1,
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "pytorch": "2.11.0+cu130",
+    "source_sha256": "e0807c740a944667db04ab7e9570725bf0aea35fea544c486f436004625d993e",
+    "threads": 1
+  },
+  "execution_device": "cuda",
+  "gpu_after_timing": {
+    "compute_pids": [
+      2523339
+    ],
+    "driver": "535.54.03",
+    "external_compute_pids": [],
+    "free_mib": 63165,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-0d6f5ec3-1a8c-b91d-cab5-0cf73accebf8",
+    "utilization_percent": 28
+  },
+  "gpu_before": {
+    "compute_pids": [],
+    "driver": "535.54.03",
+    "external_compute_pids": [],
+    "free_mib": 81042,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-0d6f5ec3-1a8c-b91d-cab5-0cf73accebf8",
+    "utilization_percent": 0
+  },
+  "gpu_before_timing": {
+    "compute_pids": [
+      2523339
+    ],
+    "driver": "535.54.03",
+    "external_compute_pids": [],
+    "free_mib": 63165,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-0d6f5ec3-1a8c-b91d-cab5-0cf73accebf8",
+    "utilization_percent": 30
+  },
+  "gpu_name": "NVIDIA A100-SXM4-80GB",
+  "limitations": [
+    "Fixed official test prefixes; next-token FP32 logits, not full MultiCounterFact metrics or generation.",
+    "Batch one, eager attention, complete uncached forwards; no concurrent serving, KV cache or padding.",
+    "Checksums/frozen-weight validation warm filesystem and contribute to startup time/peak RSS.",
+    "Model base dominates these roughly 74 MB memory tables; no billion-row capacity extrapolation.",
+    "Existing shared host; no paid APIs or new training. Monetary/energy cost unmeasured."
+  ],
+  "memory_row_parameter_present": false,
+  "mode": "native",
+  "monitor_pid": 2523339,
+  "open_seconds": 55.22817057510838,
+  "p50_ms": 78.1114775,
+  "p95_ms": 79.77124009999999,
+  "repeat": 3,
+  "requests": [
+    {
+      "case_id": 1,
+      "group": "rewrite",
+      "input_ids_sha256": "e68fdf086a1aebbfea85f6ae299036191186157e6b3b4c57e9f7d84500a2c9ea",
+      "input_tokens": 10,
+      "next_token_logits_sha256": "0b1fecd3acc33dbec7cea766fe215bb763f8bbc5d03930d47abaf5d75e0a07dd"
+    },
+    {
+      "case_id": 1,
+      "group": "paraphrase",
+      "input_ids_sha256": "6a4aaa35936dbfee2096c3e85d517e1c94196ba4cea19253c8226a23fd4b3c69",
+      "input_tokens": 18,
+      "next_token_logits_sha256": "e97977c7f7d990a875833bd93f4ca3404f3f31114f2cc636e7c2a8b44444c274"
+    },
+    {
+      "case_id": 1,
+      "group": "paraphrase",
+      "input_ids_sha256": "b896a76ffab8752f1b907f27486415cc484eca686d282d37e7a926b490705c58",
+      "input_tokens": 22,
+      "next_token_logits_sha256": "7e5d4f6dd7fdb3d417224e34d8a316cabcd66abb95d5d546dea439cfb9654376"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "1ac32329c0905e91840e3f8d182123ee70e1d25f05dd3f557cd4cbdf9b24adc5",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "bee4661348fcb540afa33c5cfe5b2e55c8508e4fac7475a4eb40da98bfecadae"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "6bfd53b079d32fc9252ba846344852cd5f5cf0919983512a2fa7d773909a4dab",
+      "input_tokens": 8,
+      "next_token_logits_sha256": "72b25a8a263c3270ac44b5265c2f919117247c931235edd4deb025796d2ea3be"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "41a44be57e07d206537434f4a6afb8cacb65b70e1b300d18faf155c454abef8b",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "175300610a40e4a7b4096e47866125fce7c1ff7f84c4d39c0aa7e8a68690e9a0"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "67265e17c754d2af1476c029d9afcccfb5a18de5958525848bd568ddb9476db0",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "6acccfc8c92cea741c766f0484039fbbc22703f6bc95d66576848707ad245a99"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "0a33866a6b84315352eb1207d9fafcd8a926190f9af8da6979458ad69b63050b",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "3de3bb7371df429486bda60175e3db787b69245735cc397e73a984e4ad05b0ef"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "9e00fdd2ed10c167258fb8ac7bdf15dab2ba7f2b1658aa54ba9aeb6f43621ce0",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "f4f9f9deb71b590a5df12bc8dc2b1f9707fde8a197294707d3585360c6a6a206"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "af71f1d3b37ef7020df2459562dcab090887853a1446054174bba12d6896a2d7",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "0154030e3a2d010d38bdd64e902d30e45ead56f4312dfc3d447b7e6836e05318"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "de23e7edd08e5311b77318de0d95141cd02a241a00dce556e63a51ef6c34bee9",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "9b306ceeb9451253168f0a694a31322934cda3c1239d88cbdceacf724e258ba1"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "5108bfa177e6c44293ae3605b22f499c53a3209401612686f7ff346cbc7ed4eb",
+      "input_tokens": 5,
+      "next_token_logits_sha256": "4778aa392f22f01dac5130d25c4aa0e8947512569d38bd015cafc9e11123ea8d"
+    },
+    {
+      "case_id": 1,
+      "group": "neighborhood",
+      "input_ids_sha256": "6f290142aaddcf2bfb8a0ff3daad2930a2f51ade70a0c9441dd68e58b1275a4a",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "6addae15b8ee9da997e4e50c36b4a0674eddb26be3f25d4f11ec3cb37073510e"
+    },
+    {
+      "case_id": 2,
+      "group": "rewrite",
+      "input_ids_sha256": "21ac5aa49e7906da8f3c4349652b3902bf9182e5f872d5eadca01f973830d2e1",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "543e5166b079a43c01caa314ec00caa78c4ffe02f5b28314e08f6e0877ce3ad4"
+    },
+    {
+      "case_id": 2,
+      "group": "paraphrase",
+      "input_ids_sha256": "fa65b4b02f5f1ef8c82ae07a24213b287220f8857fa60a14995da17b8424a186",
+      "input_tokens": 18,
+      "next_token_logits_sha256": "b8e5a03d5e89d66c950f4f29bc4e66e3b6569e96bdc0ca05a80494c28d4d6cf0"
+    },
+    {
+      "case_id": 2,
+      "group": "paraphrase",
+      "input_ids_sha256": "726440a13b5a7330154e6b9bcf81c960e91faf725029d99f969c559c934db9a6",
+      "input_tokens": 11,
+      "next_token_logits_sha256": "9fb0627645d35cf1bfb8e3e7e1aa30d04e0ac762e46964c2633ae8bc8a3a217a"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "a73435af791579c1995af7e3cf0ba869ca08fc85f07f6f50e799cb841d80659f",
+      "input_tokens": 5,
+      "next_token_logits_sha256": "30d1b1367146410d1f858520c2d620c32cdc351ec3bfc02a1a22ebc85fcb8e63"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "2a99d8830bc72eded308e62c8214f0df75924b3acb52629bad2455977526b800",
+      "input_tokens": 5,
+      "next_token_logits_sha256": "71bc7d74d3f239ee27a355d2f02c3ef4733ca0b1bfc94e2e54153f202eac66b2"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "4b823d96b7d7a9bd320a1bf4e46ad4938ffe24a015149c39660446673ae80892",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "040e68dbd7f585bcd20af8b29bad816fc99ecc589198ab1a3dfb07759cfb18ae"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "a8f2bffb8e16f130286e37b11fbc7e4a7c4ae4ab28f13d7b774b01066d5061e8",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "089a7769d8c8e51cc4887525925e6e6a8f223911ff0e7051da1ef7ba2179d3c3"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "d8402a7895d886f71deef205f7cb8f3f35e3b26899585e78baf85d73cfd5f540",
+      "input_tokens": 5,
+      "next_token_logits_sha256": "cf6dd11f67cf78165655db92ff9aa32f29535f20f084f519d388873f90038b4e"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "6f7a58dc6d6a488ddb29e265344e287a0c0361c745c9659e4df3c3b8d6d83346",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "8cc18dc3497bb1a40521684832b52e85d2c384d6dacf27a889df2e9730c6be84"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "21df5eae520ea081838fefc35dac256de6436aa75e0595f5c380dda874ac33ff",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "07be99709a434083ac89da8b3c0435f6828d86cb9bcffe7933f4c2136a1e73b5"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "55d0c9093542fd8927d6e65e795bee58d502c742ef6eddc08bcf35fa30d8cdfc",
+      "input_tokens": 5,
+      "next_token_logits_sha256": "bcd831a4a5d69176795545afd5d6bb83d14b7e9208ace654a11cecb28484949e"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "54df6416347542287756b61609ed34016e27bc62cf125da086408b816c679d61",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "d5a68a287d2bfaf583fd374f6def37791dc10942b9c3a0dee166afaaf051a6f9"
+    },
+    {
+      "case_id": 2,
+      "group": "neighborhood",
+      "input_ids_sha256": "28529473cd6a223ea51143ce47382164fdbd842652368516d110fbb7021a2725",
+      "input_tokens": 4,
+      "next_token_logits_sha256": "8c08fdaf2c338c1fc5093f03de5749a3e968d4b2bb5d64f97cbcb87952d416a2"
+    },
+    {
+      "case_id": 3,
+      "group": "rewrite",
+      "input_ids_sha256": "098cfa0e9c4ff34b29769d0abb52349d34fe5fb7f2ab4062de1cf2e565a285af",
+      "input_tokens": 10,
+      "next_token_logits_sha256": "98f3434fce323f980652252e7d763d6cd8ffa2144847abb74fbbbb3cc254a368"
+    },
+    {
+      "case_id": 3,
+      "group": "paraphrase",
+      "input_ids_sha256": "0ff5abcaffd4b2402fa35c46cdd5d49b36fc058ce19a13b86d063e758e4012d0",
+      "input_tokens": 15,
+      "next_token_logits_sha256": "1fb1bb98e2663decc518314b4a9b54772e20497ba3a6b21ccdaf741e66d12b66"
+    },
+    {
+      "case_id": 3,
+      "group": "paraphrase",
+      "input_ids_sha256": "e2125928481575b85f557ab03e728f1158108c2c81d5c93b144f41939f3cd9b7",
+      "input_tokens": 16,
+      "next_token_logits_sha256": "db8e72e06e4f6289071aed942f6327b9aa50c9c0e808a946042ba8bb100b8e76"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "76807550806adb105ae2ea9e0779f382783c2d86f2d906b0aab23449282b9a09",
+      "input_tokens": 5,
+      "next_token_logits_sha256": "db35846e482773388454404239d17abe202c7eb6174bcf7a3833c69b99e3daa0"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "561b425226804626192c72d34fc3f5c60555eae29ab16861ff78726d5e088902",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "391c63d81a3bddd77d243c52b3c646b450de9c00239b466734326d4096a2d9dd"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "9a7d22fe11b3376b98eeed62feb9c1e9749614414ad1fff92e668a3f8bc5d43a",
+      "input_tokens": 4,
+      "next_token_logits_sha256": "4fd19e0359e558a733cdf74ba4ea3b0e2a61340c41a0505b9cf11714dd7c6439"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "e30672f68d967bdd138ff40f3b74915078bee1fdc17881ea35189b0ecf48d4e2",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "e14209e5df1f9411c43ce7215e572212844ac5b32d0dbfd8b11cccbcb0557276"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "0fdb60f1598d54e487f2b5acfb5a5042d98ac2ff01b6390921b3ccb88c61a361",
+      "input_tokens": 8,
+      "next_token_logits_sha256": "9303827d65b45b898061646722044686de8dad0a142fad1e001c5fdf39327b30"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "5d40c7777d99ff843d3eec891816b97306111b20a6a7e763ceed7fd5472577f3",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "ff2c31acb2b6fae43ca7a13ab883300b9fdad8999a9bbb08ceeaaac2145c60e5"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "bb663b5fecdf7021e76e07a360239a0b10b6e471f17aacbb32d05297af34719c",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "17d125977214a226d5fe6fdd29c664140ba8fe8aed240a67e1f8a73ae8ece1e7"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "0dcadb8ad09293ef828994c5da879407af1f37f9317e6cca5b1b334c998e2ace",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "aebf27fe2a4b94f61e0dbd926fd38f089b57c2159db51cb34edcb1df14656b42"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "cd5a57d79ea8dfd394ec858237cc061087097d5ee1c47d45427d943692c89b64",
+      "input_tokens": 5,
+      "next_token_logits_sha256": "babd1a1955503e043350f5e5ca98ba88a4e37e68d014ddc7f1482c6b3fc58625"
+    },
+    {
+      "case_id": 3,
+      "group": "neighborhood",
+      "input_ids_sha256": "c71c402ab635ffdd53556a5e7b2d936e772022b76d86110793c253e325c7da6b",
+      "input_tokens": 4,
+      "next_token_logits_sha256": "0b76fd22406a2157302f821833abba9bc922219c828234118e53ac48c7310ade"
+    },
+    {
+      "case_id": 5,
+      "group": "rewrite",
+      "input_ids_sha256": "9f12932c1c0906596a61c234864459489f94daf0a38ddbafe8d51fcdf1511e9b",
+      "input_tokens": 11,
+      "next_token_logits_sha256": "40fa5a1f79190ce04ffa39902fcd180730560a30f247ae8afab2f6bc266785ab"
+    },
+    {
+      "case_id": 5,
+      "group": "paraphrase",
+      "input_ids_sha256": "f2201077b44db6fcf9c6c2844bca54d760c056bdbe46c02fd326df52865c8c97",
+      "input_tokens": 25,
+      "next_token_logits_sha256": "87e96da0e4ede40c594fa8bcee9c057811e411e7abc1a7cd395dc79b81c2fc8d"
+    },
+    {
+      "case_id": 5,
+      "group": "paraphrase",
+      "input_ids_sha256": "7d2911c37d7c406c23069e90a5e7f951c60287c3a30cc151c0818c77df168825",
+      "input_tokens": 12,
+      "next_token_logits_sha256": "db299c097b64a4d1254edbd65c193b6a1ca79d72c57da44ca6ec3134b2227b39"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "0f87ea3118b39c46c8f460ffb7772ed67bd863fa59218a92f33ede52e83ae36e",
+      "input_tokens": 8,
+      "next_token_logits_sha256": "c6ccef4d24c2e41f2257136ca039e572a5f00b804fe3140f11d5fa744da181ed"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "83caecccde209915a20de5bd87aecc22e983a492c81481a16563f0cf2b1f34c6",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "a6a0f9ec7659197eb2e0fa445ef7546b5e6f91ad899ad042d9d4686acd9fd8bc"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "b64d9b12a6d612835e1f278dc81018153d545894885c3e70bcb0feb9ff2855c5",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "07bb40731866c6862c081240bf795ecb5b0a6386d3ba49e764fad53c48b95e01"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "603409a777abae4dfda19d21c66588a2d2d9726956a76774be5b500078ffd4db",
+      "input_tokens": 11,
+      "next_token_logits_sha256": "abccece483e418f9a601e04bbd0ac9d3b5d1c6ede920653c2c02c44d076162d6"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "1b847fccc30a33760e1339a0a1f22cefd668ac4185ce54e534bb154ad70182c0",
+      "input_tokens": 10,
+      "next_token_logits_sha256": "ea7be60eb93e84865ddf90c164df6ba8ddf798d8b0b261a83ccce1a2e3f6406a"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "a9cfe9ef1d6af4a0721ebb4dbb5296993957f324f1ee4e485d27cc7729eee8b3",
+      "input_tokens": 10,
+      "next_token_logits_sha256": "624976577eaf4778f86a342529faf994488b9a7cf1dc1f55ff0423aad9e4270d"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "99c6b539ec45b611a2091ddc089ab33c3bbd767ed00debd8233ed5ba260f2cd3",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "cff5a36297b2db8070302f294d810a213667fa0c342413b8a1de2557370ea5cc"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "36b8dba4597c1a1b1fcec911780e505df97eb932fe1cd1d95ddc29525b2264e1",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "cc42d86e5806d9494b6d8030a70287d32e4f116081cbe94546d78cabb77c43c5"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "259514157420e0b6c38d2e2121366913bf303835884f3c1db065d5bc3147b35e",
+      "input_tokens": 14,
+      "next_token_logits_sha256": "9172d34f59532097b0c6070f6fe0c6bc2571c012d4175d55f6c5b12b300e1158"
+    },
+    {
+      "case_id": 5,
+      "group": "neighborhood",
+      "input_ids_sha256": "7a9aded4827c9acf909aa37eb74a93bec646bca2391b01ac0a3aa8060e2b6739",
+      "input_tokens": 9,
+      "next_token_logits_sha256": "bf3ff017c05ef92a447984faeb3169708ae26966240aebb89c7df629caf86846"
+    },
+    {
+      "case_id": 6,
+      "group": "rewrite",
+      "input_ids_sha256": "32045612747806b3ea5b8bcd4f38a8cd2a117a5e8b210d374e400d24d6a17c9d",
+      "input_tokens": 10,
+      "next_token_logits_sha256": "14f6d27c1d8ace078515f06d82f950147e8c8357c81ccbbef54a22d3124934c5"
+    },
+    {
+      "case_id": 6,
+      "group": "paraphrase",
+      "input_ids_sha256": "07e10642e87dcf8c2586d303c838412ad1dbe32a584e3ca2b2b1251b4ad25576",
+      "input_tokens": 23,
+      "next_token_logits_sha256": "489f47ddab31f492610b956f7d0aba0de4459d5b1f7ff8c999f1d7e298daff3c"
+    },
+    {
+      "case_id": 6,
+      "group": "paraphrase",
+      "input_ids_sha256": "3a4df6e759bca75a172c6944618e49838c9287311ccef00b031c81d5926cd673",
+      "input_tokens": 31,
+      "next_token_logits_sha256": "28d5d4e08735569772c5c6e7d46034460bdcbb1ae5d27dd710cabf02c3e913ac"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "41ba38dec2137ba3ff8f038d78e583f0aa51d25db257856f3933457716878c85",
+      "input_tokens": 10,
+      "next_token_logits_sha256": "13a3340ff3aa2e97b8c7a713f96749c85d355be8dc87b993b474e35f441de500"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "ff4c41bf9647f2b0545a79573d50bb6ef511ca6beb1351cb26759c22f6ed7b49",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "a9beef5c352a62f4fa6e47e7cd43072691fb1653e6c995518784d82f3e9f0b3a"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "6a4c2c5f379772f11a2f225f49ca5bd7d7ae37b8de981f1484c5d3e362609ea6",
+      "input_tokens": 8,
+      "next_token_logits_sha256": "aa6b0b37cbd570368e3d7f20be04052d3b5880c5896a671c5d32d588230532cc"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "435b06311b58b3bbb99e016506a0f73d7db3b18292879aef5d75573c320280ea",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "b156b83abc015e83388fbe753c0fda463f9cda849580883bde6e527f59e2f2de"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "c4f62dfcdd98fb1cbdabb842a9d8e4215f91c54dda1cb07ed27557ded85be275",
+      "input_tokens": 4,
+      "next_token_logits_sha256": "874956b57df401c2e3d71a85b0655bd82efa1b2101a52d378a3a3c06fc1b7b3a"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "45e6e0d6951c28e93c0a98d503a965ba75c0a275eb31189329cf2b92cf670ce8",
+      "input_tokens": 7,
+      "next_token_logits_sha256": "4b6470564c051d6c80b3b8740884cf7e6740ed388e1ce92b318eb1ce818ddb88"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "40c7aceeaf09bd10b82a3415d7b7c97a8489619950e3c9eefaf52da3c2c1d115",
+      "input_tokens": 6,
+      "next_token_logits_sha256": "7556be6e319038ab9a62c4ee3c6bb41a28c4cdccaebdd03e032b1d725f0e85e0"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "19ee9001e7cc2806482708a97c42eaf5f0c2f52e318247a5d7b6313fb0de324a",
+      "input_tokens": 8,
+      "next_token_logits_sha256": "e9627b9171adbe1bd9afabe755857fe0f42952895bcef648640d136d0c95853a"
+    },
+    {
+      "case_id": 6,
+      "group": "neighborhood",
+      "input_ids_sha256": "888080d448e3b70cdd735922368d48622855f69ac856324fde55dbcb39deeddd",
+      "input_tokens": 3,
+      "next_token_logits_sha256": "4085c63f5f8d561f5e248365b82a07068d94e198c40cddc149093bd19a2a0231"
+    }
+  ],
+  "requests_per_second": 12.765770074332364,
+  "rss_after_open": {
+    "current_bytes": 2852970496,
+    "process_peak_bytes": 28546904064
+  },
+  "rss_after_query": {
+    "current_bytes": 3214368768,
+    "process_peak_bytes": 28546904064
+  },
+  "rss_before_open": {
+    "current_bytes": 931594240,
+    "process_peak_bytes": 931594240
+  },
+  "samples_ms": [
+    79.300387,
+    77.906144,
+    77.909007,
+    77.586689,
+    78.267084,
+    78.216938,
+    78.208906,
+    78.008322,
+    78.097719,
+    78.178595,
+    77.726722,
+    77.915572,
+    77.529978,
+    78.240544,
+    77.767927,
+    82.762143,
+    78.207998,
+    77.717293,
+    78.17629,
+    78.154989,
+    77.831833,
+    78.07984,
+    78.046595,
+    77.917458,
+    78.174334,
+    77.807668,
+    78.011604,
+    78.028716,
+    77.843147,
+    78.091083,
+    78.104354,
+    77.886728,
+    78.002665,
+    78.269458,
+    77.790207,
+    78.06175,
+    78.064545,
+    77.972424,
+    78.111477,
+    77.619864,
+    78.007763,
+    77.698436,
+    78.155408,
+    77.724486,
+    77.693617,
+    77.588156,
+    77.770722,
+    82.853007,
+    78.715606,
+    77.846011,
+    77.699832,
+    77.863611,
+    77.820029,
+    77.975706,
+    78.091573,
+    77.94302,
+    78.359345,
+    78.510342,
+    78.498468,
+    78.174405,
+    78.543935,
+    78.644158,
+    78.455935,
+    78.085846,
+    77.997496,
+    77.990791,
+    78.071179,
+    77.235248,
+    78.212747,
+    78.278469,
+    78.320582,
+    78.175802,
+    78.844811,
+    79.51934,
+    78.334271,
+    78.26478,
+    79.387898,
+    80.546147,
+    79.114958,
+    81.494732,
+    78.922894,
+    78.358436,
+    78.668323,
+    78.327148,
+    79.274406,
+    78.984285,
+    78.36123,
+    78.125166,
+    78.400551,
+    78.409979,
+    77.954404,
+    77.806271,
+    77.60003,
+    78.264709,
+    78.360322,
+    78.021591,
+    78.398176,
+    78.464805,
+    77.864029,
+    78.444481,
+    78.548125,
+    78.213655,
+    78.294043,
+    78.02257,
+    77.992747,
+    77.745299,
+    78.225947,
+    77.637884,
+    77.958176,
+    77.640258,
+    77.681814,
+    85.401657,
+    77.798239,
+    77.54709,
+    78.285033,
+    77.955801,
+    77.72728,
+    77.695153,
+    77.776448,
+    77.630759,
+    79.15372,
+    78.921916,
+    78.091503,
+    78.035211,
+    79.464583,
+    78.745497,
+    78.374919,
+    79.431479,
+    80.730668,
+    78.36123,
+    77.851319,
+    77.584803,
+    78.289363,
+    78.497561,
+    78.287827,
+    78.314366,
+    78.13655,
+    78.29977,
+    77.867871,
+    78.778603,
+    77.811997,
+    78.321072,
+    77.868709,
+    77.771769,
+    80.528128,
+    78.597852,
+    78.263312,
+    78.271764,
+    78.016284,
+    78.178664,
+    77.993166,
+    77.788741,
+    78.301167,
+    77.978081,
+    80.079118,
+    79.159377,
+    77.79775,
+    78.201363,
+    78.523052,
+    79.10504,
+    80.191703,
+    79.00419,
+    77.602334,
+    78.319046,
+    78.046176,
+    78.112875,
+    77.798728,
+    77.721973,
+    77.809065,
+    77.519502,
+    79.324063,
+    78.426951,
+    77.670918,
+    77.434505,
+    77.602822,
+    77.605127,
+    82.699844,
+    78.719866,
+    77.980874,
+    78.131313,
+    77.691312,
+    77.794537,
+    77.783573,
+    77.789718,
+    78.376385,
+    78.207021,
+    78.121884,
+    77.768556,
+    78.111478,
+    78.260519,
+    78.038145,
+    77.887706
+  ],
+  "source_delta_sha256": "fef3fc59a0710ff687508dffaf9ebf4842b8bf15c4f01ce9fc89ab7c70de258b",
+  "source_row_bytes": 73514240,
+  "source_run_report_sha256": "5f083887ba945d4ebbc05ea4bbbb6879e5e2e034a465599b1cd9eb257b8cbc11",
+  "staging_stats": {
+    "copy_chunks": 320,
+    "pinned": true,
+    "queries": 320,
+    "reuse_waits": 0,
+    "slot_allocations": 2,
+    "slot_reuses": 318,
+    "staging_byte_limit": 1048576,
+    "staging_bytes": 1048576
+  },
+  "status": "passed",
+  "warmup": 1,
+  "worker_namespace_pid": 2086242
+}

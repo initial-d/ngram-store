@@ -56,8 +56,12 @@ the shared immutable base is still required. Canonical-key files and indexes
 have costs, while ordinary open-vocabulary hash lookup does not need the full
 training-key dictionary. The [complete 24-model results](ngram_identity_evidence_20261107/README.md)
 support an independent-row quality advantage at 20,877 edits under this protocol;
-some 1,024-edit intervals cross zero. Native compression/query superiority and
-full-model pretraining remain untested by this experiment.
+some 1,024-edit intervals cross zero. The
+[same-checkpoint native cost audit](qwen_native_identity_evidence_20261109/README.md)
+now measures storage, CPU queries and complete CUDA forwards: offload preserves
+observed logit bytes and releases row-table CUDA allocation, but the default
+format and added DATrie index provide no compression advantage on these FP32
+rows. Full-model pretraining remains untested.
 
 The finite task-specific queue preserves the previous queue's active GPUs and
 checks compute-process occupancy before launching. Only a separately audited,
@@ -94,5 +98,8 @@ allocating a dense memory-row tensor or recreating its training initialization.
 Source-run export still loads source vectors, and the validation command keeps
 reference and native models together. Base loading, Python key dictionaries,
 file-backed metadata and allocator RSS remain separate costs; this is not a
-total startup-memory cap. DATrie/mark-compact ablations and matched full-model
-capacity/query measurements on the real checkpoints are still required.
+total startup-memory cap. The
+[real-checkpoint audit](qwen_native_identity_evidence_20261109/README.md) includes
+DATrie layout/exact mark-compact controls and separate-process complete model
+measurements on six trained large-edit checkpoints. Larger learned tables,
+optimized serving and training-time integration remain separate evidence gaps.
