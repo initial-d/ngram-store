@@ -174,6 +174,15 @@ controls only. High cosine does not establish identical bytes or a universal
 ratio. The [native XOR codec](native_xor_compression_20261020.md) is a reversible
 baseline; structural grouping must not depend on unavailable training signatures.
 
+The [conditional ancestor follow-up](conditional_similarity_evidence_20261109/README.md)
+enumerates parents and all registered prefix/suffix ancestors in 27 existing
+character models. Some reach .99 beyond descendant-fixed, frequency/length-matched
+unrelated controls. Ancestor frequency is conditionally negative, descendant
+frequency positive, and length effects are mixed; training coverage and
+initialization are more precise hypotheses. Legacy approximate savings are much
+larger than average-derivative savings. This is post-hoc evidence for a conditional
+sharing opportunity, not universal similarity or task-quality preservation.
+
 The [approximate curves](approximate_ngram_compression_20261018.md) constrain
 representative cosine and norm ratio. At max order 12, joint 0.99 gives
 2.14–2.16× n-gram table compression and 0.98 gives about 2.35× on that reference.

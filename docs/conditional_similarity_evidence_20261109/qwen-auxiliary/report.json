@@ -1,0 +1,54 @@
+{
+  "cost_assumptions": "Existing CPU and existing trained vectors; no training, GPU work, downloads or paid services",
+  "environment": {
+    "analysis_source_sha256": "d5e2a6ca088abcc3d9ed6a2e7d93cb64f5a24a08012b74dd28eaf1c88921efc1",
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.analyze_conditional_similarity qwen --training-root /llm-align/duyimin/ngram-native-real-20261109/results --output /llm-align/duyimin/ngram-conditional-similarity-20261109/qwen --upstream /llm-align/duyimin/ngram-native-real-20261109/upstream",
+    "commit": "50b02aa4d0c20149cf2d9d71b243a2abea4a1137",
+    "cpu": "AMD EPYC 7742 64-Core Processor",
+    "gpu": "unused",
+    "interop_threads": 1,
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "a8cdec56c109b683bd58a71293f3c1c695a356e853fe9e7504c0de16db02ffa6",
+    "threads": 1,
+    "torch": "2.11.0+cu130"
+  },
+  "kind": "qwen",
+  "limitations": [
+    "Post-hoc existing-checkpoint analysis; known aggregate results before fixed new strata.",
+    "Finite small SGNS and frozen-backbone editing, not production/pretraining or universal similarity.",
+    "Sibling sampling is uniform over pairs; observed unique-row coverage is not extrapolated.",
+    "Matched controls use count bins; disclose residual imbalance and unmatched pairs.",
+    "Spearman coefficients describe correlated pair observations; no independent-pair significance claim.",
+    "Approximate row sharing is not source-byte losslessness or a task-quality guarantee."
+  ],
+  "protocol_sha256": "1cd94d9a058181df97bff41af6408cdd7780b5488c66bde93576e547e29e9ac1",
+  "runs": [
+    {
+      "analysis_sha256": "d671f144534a5ba3145526c32fd9d38af741501b49b8438e2a0ebc3b74085547",
+      "name": "qwen06-20877-exact-s11"
+    },
+    {
+      "analysis_sha256": "2bdd62456138699a179f5298fda2c8384e4070df1d10f5f633f853aee623948e",
+      "name": "qwen06-20877-exact-s3"
+    },
+    {
+      "analysis_sha256": "38528fedbcc28b858a48cd2bec862d7c6cc09a1bccf3aaa2d46ae0963116e812",
+      "name": "qwen06-20877-exact-s7"
+    },
+    {
+      "analysis_sha256": "50bf575a1ddaf7a0632f4ada080492133b50bdc059a512a2f6f1afb12c109175",
+      "name": "qwen35-20877-exact-s11"
+    },
+    {
+      "analysis_sha256": "bb2359e8765badf4ec53206e611c6d67a732e6be5ae632c7d3342be935c88d07",
+      "name": "qwen35-20877-exact-s3"
+    },
+    {
+      "analysis_sha256": "c428f0d56be75b6b17690949af3dc5bb0552910374775872013bddb7dd864737",
+      "name": "qwen35-20877-exact-s7"
+    }
+  ],
+  "status": "complete"
+}
