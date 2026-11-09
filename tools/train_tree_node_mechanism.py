@@ -39,7 +39,7 @@ def write(path, value):
 
 def environment():
     import torch
-    return {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+    return {'commit': os.environ.get('MEFT_SOURCE_COMMIT') or subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
             'source_sha256': digest(__file__), 'command': shlex.join([sys.executable, *sys.argv]),
             'python': sys.version, 'numpy': np.__version__, 'torch': torch.__version__,
             'os': platform.platform(), 'cpu': platform.processor(), 'device': 'cpu',
