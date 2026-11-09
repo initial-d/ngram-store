@@ -46,6 +46,8 @@ jobs:
         run: python -S docs/ngram_identity_evidence_20261107/verify.py
       - name: Verify real Qwen native storage, complete request pairs and memory costs
         run: python -S docs/qwen_native_identity_evidence_20261109/verify.py
+      - name: Verify matched identity-format bytes and fresh CPU reader controls
+        run: python -S docs/identity_format_evidence_20261109/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter

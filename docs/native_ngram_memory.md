@@ -159,6 +159,10 @@ or representatives, these exports use v3 and save exactly `8 * nrows` bytes.
 Use `implicit_identity=False` in `pack_native` or the embedding exporters to
 write v1/v2 for older compiled readers. Deduplication, explicit permutations
 (including identity permutations) and mark/compact exports keep their v1/v2 map.
+The [real Qwen format audit](identity_format_evidence_20261109/README.md) checks
+six trained tables, unchanged codec payloads, actual old-reader compatibility
+and 76 fresh CPU workers; 32-row v3 artifacts save 5.4–5.5% against raw FP32
+here, with no demonstrated query speed advantage.
 Descriptor memory
 still grows with the number of blocks. It retains all rows for arbitrary future
 queries; it does not prune according to a sample query trace.

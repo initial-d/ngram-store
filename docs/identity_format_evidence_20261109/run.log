@@ -1,0 +1,84 @@
+{"fixture": "qwen06-20877-exact-s3", "block_rows": 32, "saved_bytes": 4647280}
+{"fixture": "qwen06-20877-exact-s3", "block_rows": 128, "saved_bytes": 4647280}
+{"fixture": "qwen06-20877-exact-s3", "block_rows": 512, "saved_bytes": 4647280}
+{"fixture": "qwen06-20877-exact-s3", "block_rows": 2048, "saved_bytes": 4647280}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b32-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b32-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b32-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b128-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b128-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b128-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b128-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b128-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b128-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b512-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b512-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b512-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b512-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b512-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b512-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b2048-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b2048-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b2048-c0"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "old-v2-b2048-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v2-b2048-c1048576"}
+{"fixture": "qwen06-20877-exact-s3", "completed_worker": "new-v3-b2048-c1048576"}
+{"fixture": "qwen06-20877-exact-s7", "block_rows": 32, "saved_bytes": 4647280}
+{"fixture": "qwen06-20877-exact-s7", "completed_worker": "old-v2-b32-c0"}
+{"fixture": "qwen06-20877-exact-s7", "completed_worker": "new-v2-b32-c0"}
+{"fixture": "qwen06-20877-exact-s7", "completed_worker": "new-v3-b32-c0"}
+{"fixture": "qwen06-20877-exact-s7", "completed_worker": "new-v3-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s7", "completed_worker": "new-v2-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s7", "completed_worker": "old-v2-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s11", "block_rows": 32, "saved_bytes": 4647280}
+{"fixture": "qwen06-20877-exact-s11", "completed_worker": "old-v2-b32-c0"}
+{"fixture": "qwen06-20877-exact-s11", "completed_worker": "new-v2-b32-c0"}
+{"fixture": "qwen06-20877-exact-s11", "completed_worker": "new-v3-b32-c0"}
+{"fixture": "qwen06-20877-exact-s11", "completed_worker": "new-v3-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s11", "completed_worker": "new-v2-b32-c1048576"}
+{"fixture": "qwen06-20877-exact-s11", "completed_worker": "old-v2-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "block_rows": 32, "saved_bytes": 4594640}
+{"fixture": "qwen35-20877-exact-s3", "block_rows": 128, "saved_bytes": 4594640}
+{"fixture": "qwen35-20877-exact-s3", "block_rows": 512, "saved_bytes": 4594640}
+{"fixture": "qwen35-20877-exact-s3", "block_rows": 2048, "saved_bytes": 4594640}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b32-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b32-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b32-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b128-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b128-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b128-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b128-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b128-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b128-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b512-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b512-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b512-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b512-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b512-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b512-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b2048-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b2048-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b2048-c0"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "old-v2-b2048-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v2-b2048-c1048576"}
+{"fixture": "qwen35-20877-exact-s3", "completed_worker": "new-v3-b2048-c1048576"}
+{"fixture": "qwen35-20877-exact-s7", "block_rows": 32, "saved_bytes": 4594640}
+{"fixture": "qwen35-20877-exact-s7", "completed_worker": "old-v2-b32-c0"}
+{"fixture": "qwen35-20877-exact-s7", "completed_worker": "new-v2-b32-c0"}
+{"fixture": "qwen35-20877-exact-s7", "completed_worker": "new-v3-b32-c0"}
+{"fixture": "qwen35-20877-exact-s7", "completed_worker": "new-v3-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s7", "completed_worker": "new-v2-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s7", "completed_worker": "old-v2-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s11", "block_rows": 32, "saved_bytes": 4594640}
+{"fixture": "qwen35-20877-exact-s11", "completed_worker": "old-v2-b32-c0"}
+{"fixture": "qwen35-20877-exact-s11", "completed_worker": "new-v2-b32-c0"}
+{"fixture": "qwen35-20877-exact-s11", "completed_worker": "new-v3-b32-c0"}
+{"fixture": "qwen35-20877-exact-s11", "completed_worker": "new-v3-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s11", "completed_worker": "new-v2-b32-c1048576"}
+{"fixture": "qwen35-20877-exact-s11", "completed_worker": "old-v2-b32-c1048576"}
