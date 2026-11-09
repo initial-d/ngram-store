@@ -69,7 +69,8 @@ def main():
         assert array_digest(fit_ids.astype('<u8')) == metadata['fit_original_ids_sha256']
         class Oracle:
             mapping = None
-            metadata = {'rows': len(rows), 'dim': rows.shape[1]}
+            def __init__(self):
+                self.metadata = {'rows': len(rows), 'dim': rows.shape[1]}
             def rows(self, found):
                 return rows[found]
         reader = Oracle()
