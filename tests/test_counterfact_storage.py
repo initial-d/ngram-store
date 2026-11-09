@@ -56,6 +56,19 @@ class CounterfactStorageTest(unittest.TestCase):
             self.assertEqual(result['status'], 'passed')
             self.assertTrue(result['all_query_outputs_byte_exact'])
             self.assertEqual(len(result['samples_ms']), 6)
+        from tools.benchmark_counterfact_model import worker as model_worker
+        paired = []
+        for mode in ('source', 'native'):
+            path = output / ('model-' + mode + '.json')
+            model_worker(SimpleNamespace(run=run, base=self.helper.base, upstream=SOURCE,
+                prepared=self.helper.prepared, native_library=self.helper.library,
+                output=path, mode=mode, bundle=output / 'xor', device='cpu',
+                requests=3, warmup=0, repeat=1))
+            result = json.loads(path.read_text())
+            self.assertEqual(result['status'], 'passed')
+            self.assertEqual(result['memory_row_parameter_present'], mode == 'source')
+            paired.append(result['requests'])
+        self.assertEqual(paired[0], paired[1])
 
 
 if __name__ == '__main__':
