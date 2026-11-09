@@ -540,6 +540,9 @@ def execute_jobs(jobs, phase, workers, root):
             raise RuntimeError(f'{job["name"]} {phase} {cached}: exit {result.returncode}; {log}')
         return {'job_sha256': digest(path), 'name': job['name'], 'model': Path(job['common']).parent.name, 'cached': cached}
     requested = [(path, cached) for path in jobs for cached in ((None,) if phase == 'build' else (0, 1))]
+    np.random.default_rng(42).shuffle(requested)
+    report['execution_schedule_sha256'] = hashlib.sha256(json.dumps(requested).encode()).hexdigest()
+    write(root / (phase + '-progress.json'), report)
     with ThreadPoolExecutor(max_workers=workers) as executor:
         pending = {executor.submit(execute, path, cached): (path, cached) for path, cached in requested}
         for future in as_completed(pending):

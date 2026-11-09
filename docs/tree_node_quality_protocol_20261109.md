@@ -122,8 +122,10 @@ initialization sensitivity from an unsupported universal length rule.
 
 CPU only, empty CUDA_VISIBLE_DEVICES. Write exclusively in a new task directory
 under /llm-align/duyimin; original sources are read-only and GPU processes are
-untouched. At most nine independent model jobs, up to four fitting threads
-each; query workers have one thread. Preserve contention/load metadata and
+untouched. Use nine training trajectories at once. The preflight reports 255
+visible CPUs and load below 10; use at most 24 fresh codec/query workers,
+up to four fitting threads each and one thread for queries, with a fixed
+randomized execution order. Preserve contention/load metadata and
 stage final selected retimings after this task's builders/training exit.
 
 Record complete source SHA, commands, Python/PyTorch/NumPy/FAISS, OS/CPU,
