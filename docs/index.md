@@ -19,6 +19,7 @@
 
 ## Source-linked trained results
 
+- [Conditional ancestor similarity: complete frequency/length controls and approximate capacity](conditional_similarity_evidence_20261109/README.md)
 - [Real Qwen native offload: complete logit pairs and storage costs](qwen_native_identity_evidence_20261109/README.md)
 - [Identity format: remove redundant maps on the same trained Qwen tables](identity_format_evidence_20261109/README.md)
 - [Independent n-gram keys: complete 0.6B/4B matched hash controls and paired uncertainty](ngram_identity_evidence_20261107/README.md)

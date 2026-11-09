@@ -1,0 +1,7 @@
+{
+  "python": "3.12.14",
+  "matplotlib": "3.11.2",
+  "command": "artifacts/conditional-similarity-20261109/plot-env/bin/python docs/conditional_similarity_evidence_20261109/plot.py",
+  "inputs": "summary.json and all order-12 character analysis.json; archived metrics only",
+  "uncertainty": "Three-seed range, not an inferential confidence interval"
+}

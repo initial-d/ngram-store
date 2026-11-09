@@ -1,0 +1,102 @@
+{
+  "cost_assumptions": "Existing CPU and existing trained vectors; no training, GPU work, downloads or paid services",
+  "environment": {
+    "analysis_source_sha256": "b37a8a1cfdaf63f475d27ca633aac3d6d4d82f366110ae661a626e2b0c986924",
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python -m tools.analyze_conditional_similarity checkpoints --training-root /llm-align/duyimin/ngram-cross-corpus-20261102/training --output /llm-align/duyimin/ngram-conditional-similarity-20261109/refined-enwik8 --native-library /llm-align/duyimin/ngram-conditional-similarity-20261109/source/build/libmeft_rows.so",
+    "commit": "f2b2727bc79b6aa8c3a9467659fed2acfedcc4a6",
+    "cpu": "AMD EPYC 7742 64-Core Processor",
+    "gpu": "unused",
+    "interop_threads": 1,
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "ed56cacebe0cd219fa7a022cb4ea5b56da87edcbf41655ad69b064d6ff2d520a",
+    "threads": 1,
+    "torch": "2.11.0+cu130"
+  },
+  "kind": "checkpoints",
+  "limitations": [
+    "Post-hoc existing-checkpoint analysis; known aggregate results before fixed new strata.",
+    "Finite small SGNS and frozen-backbone editing, not production/pretraining or universal similarity.",
+    "Sibling sampling is uniform over pairs; observed unique-row coverage is not extrapolated.",
+    "Matched controls use count bins; disclose residual imbalance and unmatched pairs.",
+    "Spearman coefficients describe correlated pair observations; no independent-pair significance claim.",
+    "Approximate row sharing is not source-byte losslessness or a task-quality guarantee."
+  ],
+  "protocol_sha256": "306291bd09a2f1ac730f686669c553ec9185fda339eff4336995e453844c9b66",
+  "runs": [
+    {
+      "analysis_sha256": "0430e66097f3cf9b3cbac3b594d35bc754af8b3c3900a557399246d9786a6508",
+      "name": "legacy-order-4-s3"
+    },
+    {
+      "analysis_sha256": "f453fa11a12d11d9aafd84baf43d488c5464f7a96d506384defe92b8656a9409",
+      "name": "legacy-order-4-s7"
+    },
+    {
+      "analysis_sha256": "b3ce42dad463b9f865ac3155bb855b27537f73911c47a467f173f8913ae4da06",
+      "name": "legacy-order-4-s11"
+    },
+    {
+      "analysis_sha256": "099c8ac2a922826e032a6914b1c97770b09f990f4eb1c4bba119cda6d6b45dfc",
+      "name": "legacy-order-8-s3"
+    },
+    {
+      "analysis_sha256": "12670b0250a52f1b7d5666f0d35849fdf2995aef8166beff4c617587c07f80c0",
+      "name": "legacy-order-8-s7"
+    },
+    {
+      "analysis_sha256": "7609fe295767f32101ae8c4ff430192dd99bd2bf2d695d3402e4a2457a8be1a7",
+      "name": "legacy-order-8-s11"
+    },
+    {
+      "analysis_sha256": "b03442dccff858b4f3936b5129f6eb6221e09031e92286ae37bbf6eefa58c1c2",
+      "name": "legacy-order-12-s3"
+    },
+    {
+      "analysis_sha256": "4f19e527122f9d8204e0706226631a612f80f5903138952a607642307de368ff",
+      "name": "legacy-order-12-s7"
+    },
+    {
+      "analysis_sha256": "731cedc69ad3ad5baab804a2aee4fd39a09d4ab50462bd1fab9230e626d105d3",
+      "name": "legacy-order-12-s11"
+    },
+    {
+      "analysis_sha256": "c7a2116150a70774ff2e9aea8716fbf2f42ee5524d6a84e29ae88d9ec2bf8061",
+      "name": "average-order-4-s3"
+    },
+    {
+      "analysis_sha256": "af4659941ea22ab61dc66cb1a9afd12487ca54aeb636e0ba2ce1287525420abe",
+      "name": "average-order-4-s7"
+    },
+    {
+      "analysis_sha256": "04e3f053dd83d97e82bd5576c44f7ec33ac52f83fae55dc6ab4d54fa367c368e",
+      "name": "average-order-4-s11"
+    },
+    {
+      "analysis_sha256": "6a1b822918da9a65f243fd74e0e1dd1eb4267f8e75bf155364a5993f4d5ac132",
+      "name": "average-order-8-s3"
+    },
+    {
+      "analysis_sha256": "d0028aa8e84839e2ad8430e85448fa66fea7c41b74bf21d829350661c0d56bd8",
+      "name": "average-order-8-s7"
+    },
+    {
+      "analysis_sha256": "faf5a7ef4321a357832127448166c6aa902c415a8fddc39a2b7842fa00951d79",
+      "name": "average-order-8-s11"
+    },
+    {
+      "analysis_sha256": "9819807ce5daf67940dd96d349d7444a6b92a2d9e150225eb787082eb9646c53",
+      "name": "average-order-12-s3"
+    },
+    {
+      "analysis_sha256": "2ccbacc18e0236f6458639779b52441b4fcb7353b9f9442957869f4616f111a1",
+      "name": "average-order-12-s7"
+    },
+    {
+      "analysis_sha256": "c3d4f02184f87172083b9192600fa9404cbdc544d8cef92d396776e3df58c187",
+      "name": "average-order-12-s11"
+    }
+  ],
+  "status": "complete"
+}

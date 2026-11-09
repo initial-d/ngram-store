@@ -1,6 +1,6 @@
 # Co-training contribution claims
 
-Updated 2026-11-04. This is a contribution framework for the next paper, not a
+Updated 2026-11-09. This is a contribution framework for the next paper, not a
 claim that the research area is unoccupied. Each statement has its own evidence
 and scope. Publication dates document disclosure; they do not establish novelty
 over all earlier work.
@@ -22,6 +22,15 @@ Sources: [trained evidence](cotraining_evidence_20261031/README.md),
 [independent-corpus replication](cross_corpus_evidence_20261102/README.md),
 [API and assumptions](cotraining_groups.md),
 [derived numerical ledger](cotraining_claims_20261101/claim-ledger.json).
+
+The [conditional ancestor analysis](conditional_similarity_evidence_20261109/README.md)
+refines C1 with 27 existing character models and all registered prefix/suffix
+ancestors. Some related rows exceed .99 beyond matched unrelated controls,
+but ancestor and descendant frequency have opposite conditional associations;
+length effects are mixed. Coverage and initialization are more precise mechanism
+hypotheses. Legacy approximate native-table savings are much stronger than
+standard average-derivative savings. This is post-hoc characterization, not a
+new universal law, task-quality guarantee or independent first-discovery claim.
 
 ## Supporting claims with narrower scope
 

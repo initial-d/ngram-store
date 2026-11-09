@@ -1,0 +1,1894 @@
+{
+  "auxiliary_qwen_tables": 6,
+  "auxiliary_sampled_sibling_pairs": 3600000,
+  "auxiliary_sibling_cosine_ge_0_99_pairs": 7,
+  "capacity_scope": "Approximate n-gram-only native table versus v3 identity; excludes key registry, word/output weights and task quality",
+  "primary_character_models": 27,
+  "primary_relations": 54,
+  "runs": [
+    {
+      "ancestor_pair99_fraction": 0.12444057682744904,
+      "ancestor_pairs": 16088,
+      "best_per_child": {
+        "candidate_rows": 4933,
+        "control_best_cosine": {
+          "max": 0.9997613190817471,
+          "mean": 0.3495835445202292,
+          "median": 0.3620954770814194,
+          "min": -0.5843422149811114,
+          "n": 4933,
+          "p10": 0.013930601134456615,
+          "p90": 0.6477277536620876
+        },
+        "control_ge_0_99_rows": 81,
+        "control_joint_0_99_rows": 62,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998285613684376,
+          "mean": 0.7385939284163435,
+          "median": 0.8349196331951572,
+          "min": -0.6223176782904565,
+          "n": 4933,
+          "p10": 0.3123668148485195,
+          "p90": 0.9981783964812476
+        },
+        "source_ge_0_99_rows": 1639,
+        "source_joint_0_99_rows": 1392
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.09431754822300044,
+          "merged_row_fraction": 0.2514532158259891,
+          "native_byte_saving_fraction": 0.23390388191502376,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.0055754634403725285
+        },
+        {
+          "changed_occurrence_fraction": 0.10010096707032612,
+          "merged_row_fraction": 0.2957059816238515,
+          "native_byte_saving_fraction": 0.2780462010291982,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.00588775771839298
+        }
+      ],
+      "child_anchored_control99_fraction": 0.005131093173143107,
+      "child_anchored_source99_fraction": 0.1252737625930793,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5882147153176044,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32406924430335476,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.1341244886148483,
+        "coverage_fraction_holding_lengths": 0.556085229539607,
+        "identical_incidence_frequency_holding_lengths": 0.7865209779951514
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 4,
+      "parent_pair99_fraction": 0.19087683730359858,
+      "rows": 5333,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.1266782695176529,
+      "ancestor_pairs": 16088,
+      "best_per_child": {
+        "candidate_rows": 4933,
+        "control_best_cosine": {
+          "max": 0.9997372639224047,
+          "mean": 0.34383046385300914,
+          "median": 0.35133121916942256,
+          "min": -0.5822427282537038,
+          "n": 4933,
+          "p10": 0.007014067606894177,
+          "p90": 0.6541419202809876
+        },
+        "control_ge_0_99_rows": 79,
+        "control_joint_0_99_rows": 64,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998354611308644,
+          "mean": 0.740667016496944,
+          "median": 0.8349757999113534,
+          "min": -0.6157318073347173,
+          "n": 4933,
+          "p10": 0.316766580774415,
+          "p90": 0.9982800061630759
+        },
+        "source_ge_0_99_rows": 1671,
+        "source_joint_0_99_rows": 1416
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.0945978962931407,
+          "merged_row_fraction": 0.25707856741046314,
+          "native_byte_saving_fraction": 0.2395421446610856,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.0055019763015643815
+        },
+        {
+          "changed_occurrence_fraction": 0.10056664766355726,
+          "merged_row_fraction": 0.3020813800862554,
+          "native_byte_saving_fraction": 0.2844781284965042,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.00567491214804633
+        }
+      ],
+      "child_anchored_control99_fraction": 0.005005944559164008,
+      "child_anchored_source99_fraction": 0.1275264376447031,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.596236231895267,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32915869432563294,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.1330898327136151,
+        "coverage_fraction_holding_lengths": 0.5610299950114528,
+        "identical_incidence_frequency_holding_lengths": 0.8099012532963612
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 4,
+      "parent_pair99_fraction": 0.1944247339077547,
+      "rows": 5333,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.12294878170064645,
+      "ancestor_pairs": 16088,
+      "best_per_child": {
+        "candidate_rows": 4933,
+        "control_best_cosine": {
+          "max": 0.9996488833201208,
+          "mean": 0.3513615928675713,
+          "median": 0.3653327789040771,
+          "min": -0.7477056713069131,
+          "n": 4933,
+          "p10": 0.010630872831815137,
+          "p90": 0.6523554504587402
+        },
+        "control_ge_0_99_rows": 77,
+        "control_joint_0_99_rows": 60,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998422108340689,
+          "mean": 0.7383798427008836,
+          "median": 0.8301565268051231,
+          "min": -0.6773814142293684,
+          "n": 4933,
+          "p10": 0.3156217929609884,
+          "p90": 0.9982060212282187
+        },
+        "source_ge_0_99_rows": 1624,
+        "source_joint_0_99_rows": 1402
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.09489964896453937,
+          "merged_row_fraction": 0.25239077442340146,
+          "native_byte_saving_fraction": 0.23480948889943032,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.005567058833606562
+        },
+        {
+          "changed_occurrence_fraction": 0.09991302423000863,
+          "merged_row_fraction": 0.2928933058316145,
+          "native_byte_saving_fraction": 0.2752247360600917,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.005712874027284039
+        }
+      ],
+      "child_anchored_control99_fraction": 0.004880795945184907,
+      "child_anchored_source99_fraction": 0.12377197922533008,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5882275034312477,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32794350780442183,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.13118462706615278,
+        "coverage_fraction_holding_lengths": 0.5564200100462646,
+        "identical_incidence_frequency_holding_lengths": 0.8090114450360744
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 4,
+      "parent_pair99_fraction": 0.18864673086670045,
+      "rows": 5333,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.2896986443312322,
+      "ancestor_pairs": 81067,
+      "best_per_child": {
+        "candidate_rows": 13024,
+        "control_best_cosine": {
+          "max": 0.9997239304261422,
+          "mean": 0.5215130069440712,
+          "median": 0.5343447345916978,
+          "min": -0.7000880323615013,
+          "n": 13024,
+          "p10": 0.14820680126793387,
+          "p90": 0.9933936055329484
+        },
+        "control_ge_0_99_rows": 1429,
+        "control_joint_0_99_rows": 1262,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.999848314496277,
+          "mean": 0.8997740025792602,
+          "median": 0.9944010520212573,
+          "min": -0.7406957521691918,
+          "n": 13024,
+          "p10": 0.6218662497940391,
+          "p90": 0.9986827890882826
+        },
+        "source_ge_0_99_rows": 8402,
+        "source_joint_0_99_rows": 7676
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.2449084029402597,
+          "merged_row_fraction": 0.4944129916567342,
+          "native_byte_saving_fraction": 0.46720379985005434,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.010550238155926279
+        },
+        {
+          "changed_occurrence_fraction": 0.2582457081756738,
+          "merged_row_fraction": 0.5511769964243146,
+          "native_byte_saving_fraction": 0.5248512727043565,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010835667312309692
+        }
+      ],
+      "child_anchored_control99_fraction": 0.025875493652593156,
+      "child_anchored_source99_fraction": 0.29257870410743875,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5252378188313369,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.33364636947091086,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.021795712402908018,
+        "coverage_fraction_holding_lengths": 0.6036748532793442,
+        "identical_incidence_frequency_holding_lengths": 0.700961152710769
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 8,
+      "parent_pair99_fraction": 0.49280147425807197,
+      "rows": 13424,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.2933129386803508,
+      "ancestor_pairs": 81067,
+      "best_per_child": {
+        "candidate_rows": 13024,
+        "control_best_cosine": {
+          "max": 0.9997701116603871,
+          "mean": 0.520824022789061,
+          "median": 0.530957978127071,
+          "min": -0.790271496236151,
+          "n": 13024,
+          "p10": 0.14702429083471047,
+          "p90": 0.9938840699731378
+        },
+        "control_ge_0_99_rows": 1414,
+        "control_joint_0_99_rows": 1248,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998743350451502,
+          "mean": 0.9004465503573442,
+          "median": 0.9945903825548172,
+          "min": -0.6766127146553121,
+          "n": 13024,
+          "p10": 0.6215852319578067,
+          "p90": 0.9987217547180932
+        },
+        "source_ge_0_99_rows": 8500,
+        "source_joint_0_99_rows": 7762
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.24255366999806666,
+          "merged_row_fraction": 0.49821215733015495,
+          "native_byte_saving_fraction": 0.4711897356143079,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.008490927458305585
+        },
+        {
+          "changed_occurrence_fraction": 0.258636322386929,
+          "merged_row_fraction": 0.5578069129916567,
+          "native_byte_saving_fraction": 0.5317351699622306,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010658181636007598
+        }
+      ],
+      "child_anchored_control99_fraction": 0.025800744994954466,
+      "child_anchored_source99_fraction": 0.2962289302221281,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5218819974927895,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32554753812873516,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.018281271216900697,
+        "coverage_fraction_holding_lengths": 0.5992058655089547,
+        "identical_incidence_frequency_holding_lengths": 0.7230820605555506
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 8,
+      "parent_pair99_fraction": 0.4990210004990978,
+      "rows": 13424,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.2926838294250435,
+      "ancestor_pairs": 81067,
+      "best_per_child": {
+        "candidate_rows": 13024,
+        "control_best_cosine": {
+          "max": 0.9996956964505166,
+          "mean": 0.5218552256217945,
+          "median": 0.5356356746543172,
+          "min": -0.8060806899409414,
+          "n": 13024,
+          "p10": 0.14792133898639076,
+          "p90": 0.9934315336025066
+        },
+        "control_ge_0_99_rows": 1435,
+        "control_joint_0_99_rows": 1274,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998281755479794,
+          "mean": 0.9001296984231332,
+          "median": 0.9942818551170683,
+          "min": -0.7080003994364339,
+          "n": 13024,
+          "p10": 0.6154512380823421,
+          "p90": 0.9986229033975571
+        },
+        "source_ge_0_99_rows": 8428,
+        "source_joint_0_99_rows": 7722
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.24615639561722963,
+          "merged_row_fraction": 0.49724374255065557,
+          "native_byte_saving_fraction": 0.4702931053195115,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.010421456086644538
+        },
+        {
+          "changed_occurrence_fraction": 0.2585033557311785,
+          "merged_row_fraction": 0.5544547079856973,
+          "native_byte_saving_fraction": 0.5283764297143205,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010607039235499056
+        }
+      ],
+      "child_anchored_control99_fraction": 0.026087281515902776,
+      "child_anchored_source99_fraction": 0.2955935666321992,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5269270104304032,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.3187627990965741,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.020859024048813263,
+        "coverage_fraction_holding_lengths": 0.5982904244135059,
+        "identical_incidence_frequency_holding_lengths": 0.7087240418014572
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 8,
+      "parent_pair99_fraction": 0.49667908012439055,
+      "rows": 13424,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.31866897807433575,
+      "ancestor_pairs": 91719,
+      "best_per_child": {
+        "candidate_rows": 13732,
+        "control_best_cosine": {
+          "max": 0.9997754847888916,
+          "mean": 0.5422570319781054,
+          "median": 0.5576498204190898,
+          "min": -0.6976207267196803,
+          "n": 13732,
+          "p10": 0.15263575097054952,
+          "p90": 0.9962243321574138
+        },
+        "control_ge_0_99_rows": 1827,
+        "control_joint_0_99_rows": 1643,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998705750638027,
+          "mean": 0.9046579164634284,
+          "median": 0.9947699726773676,
+          "min": -0.7661675790058228,
+          "n": 13732,
+          "p10": 0.6399265196055965,
+          "p90": 0.9987055616431623
+        },
+        "source_ge_0_99_rows": 9152,
+        "source_joint_0_99_rows": 8478
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.25272610373908916,
+          "merged_row_fraction": 0.5167704500424568,
+          "native_byte_saving_fraction": 0.4892035530854577,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.008793702544328184
+        },
+        {
+          "changed_occurrence_fraction": 0.2688816122041237,
+          "merged_row_fraction": 0.5723889046136428,
+          "native_byte_saving_fraction": 0.5457284430996149,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010351513333846043
+        }
+      ],
+      "child_anchored_control99_fraction": 0.03753619837258723,
+      "child_anchored_source99_fraction": 0.3218049086644865,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.518513695556374,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32700821561189686,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.07357365011366618,
+        "coverage_fraction_holding_lengths": 0.6033749485555695,
+        "identical_incidence_frequency_holding_lengths": 0.6896552380576746
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 12,
+      "parent_pair99_fraction": 0.5196810253796016,
+      "rows": 14132,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.32040253382614287,
+      "ancestor_pairs": 91719,
+      "best_per_child": {
+        "candidate_rows": 13732,
+        "control_best_cosine": {
+          "max": 0.9997706452240372,
+          "mean": 0.5402005010537188,
+          "median": 0.5507276010693409,
+          "min": -0.7297052717234546,
+          "n": 13732,
+          "p10": 0.15450702205044506,
+          "p90": 0.9962762566273834
+        },
+        "control_ge_0_99_rows": 1825,
+        "control_joint_0_99_rows": 1671,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998854857692305,
+          "mean": 0.9051184459530488,
+          "median": 0.9949597233552754,
+          "min": -0.7348015130352166,
+          "n": 13732,
+          "p10": 0.6369952588899316,
+          "p90": 0.9987830977114576
+        },
+        "source_ge_0_99_rows": 9212,
+        "source_joint_0_99_rows": 8512
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.254641345460221,
+          "merged_row_fraction": 0.5219360317011039,
+          "native_byte_saving_fraction": 0.49441580334225477,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.008643770458980023
+        },
+        {
+          "changed_occurrence_fraction": 0.2695051431597567,
+          "merged_row_fraction": 0.5764223039909425,
+          "native_byte_saving_fraction": 0.549828442928288,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.011475504231453226
+        }
+      ],
+      "child_anchored_control99_fraction": 0.037657318402536916,
+      "child_anchored_source99_fraction": 0.32355564364285005,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5073057384501038,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.33264560138532534,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.06781326944051927,
+        "coverage_fraction_holding_lengths": 0.5987944215416775,
+        "identical_incidence_frequency_holding_lengths": 0.7197276963513853
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 12,
+      "parent_pair99_fraction": 0.5225212103557514,
+      "rows": 14132,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.3199010019734188,
+      "ancestor_pairs": 91719,
+      "best_per_child": {
+        "candidate_rows": 13732,
+        "control_best_cosine": {
+          "max": 0.9997774485452559,
+          "mean": 0.542493967124178,
+          "median": 0.5572003339545584,
+          "min": -0.8032188382400482,
+          "n": 13732,
+          "p10": 0.14991272003780773,
+          "p90": 0.9960817645463879
+        },
+        "control_ge_0_99_rows": 1847,
+        "control_joint_0_99_rows": 1667,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998515565286484,
+          "mean": 0.9050690579504653,
+          "median": 0.9948913301670677,
+          "min": -0.7525916024478719,
+          "n": 13732,
+          "p10": 0.6387469316821414,
+          "p90": 0.9986939560478518
+        },
+        "source_ge_0_99_rows": 9111,
+        "source_joint_0_99_rows": 8432
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.2539580238650067,
+          "merged_row_fraction": 0.5176195867534673,
+          "native_byte_saving_fraction": 0.4900499992146088,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.008759388467689585
+        },
+        {
+          "changed_occurrence_fraction": 0.2687996912628792,
+          "merged_row_fraction": 0.5708321539767902,
+          "native_byte_saving_fraction": 0.5441639087351213,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010644673591546193
+        }
+      ],
+      "child_anchored_control99_fraction": 0.03791056937424988,
+      "child_anchored_source99_fraction": 0.3230491416994241,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5181124575037706,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.3207162862570377,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.07275280997862431,
+        "coverage_fraction_holding_lengths": 0.5998908462053055,
+        "identical_incidence_frequency_holding_lengths": 0.7026686472116059
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 12,
+      "parent_pair99_fraction": 0.5190620107053125,
+      "rows": 14132,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.13406340057636887,
+      "ancestor_pairs": 17350,
+      "best_per_child": {
+        "candidate_rows": 5332,
+        "control_best_cosine": {
+          "max": 0.9998635117879613,
+          "mean": 0.2933813869586512,
+          "median": 0.29613694618467135,
+          "min": -0.553863902322727,
+          "n": 5332,
+          "p10": -0.011012007613190466,
+          "p90": 0.5828041395965495
+        },
+        "control_ge_0_99_rows": 98,
+        "control_joint_0_99_rows": 94,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999767333759353,
+          "mean": 0.7019240647432673,
+          "median": 0.7811816323275093,
+          "min": -0.526878117883826,
+          "n": 5332,
+          "p10": 0.24859058338520665,
+          "p90": 0.9994115752229074
+        },
+        "source_ge_0_99_rows": 1885,
+        "source_joint_0_99_rows": 1791
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.11498337977469983,
+          "merged_row_fraction": 0.2986967854039965,
+          "native_byte_saving_fraction": 0.28020649588611823,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.004526586051953694
+        },
+        {
+          "changed_occurrence_fraction": 0.11712070332302436,
+          "merged_row_fraction": 0.31346655082536923,
+          "native_byte_saving_fraction": 0.29514970297216914,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.005523543068971052
+        }
+      ],
+      "child_anchored_control99_fraction": 0.0061671469740634,
+      "child_anchored_source99_fraction": 0.13406340057636887,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5881120767528304,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.39439991071736163,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.07629928627970245,
+        "coverage_fraction_holding_lengths": 0.6028041698652444,
+        "identical_incidence_frequency_holding_lengths": 0.6667313432097246
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.20697739848072774,
+      "rows": 5755,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.13446685878962536,
+      "ancestor_pairs": 17350,
+      "best_per_child": {
+        "candidate_rows": 5332,
+        "control_best_cosine": {
+          "max": 0.9999184825961567,
+          "mean": 0.29799689623598336,
+          "median": 0.2984717709957767,
+          "min": -0.5833431614489846,
+          "n": 5332,
+          "p10": -0.010192351523810138,
+          "p90": 0.5915681794093545
+        },
+        "control_ge_0_99_rows": 99,
+        "control_joint_0_99_rows": 94,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999748028528718,
+          "mean": 0.7027909408981298,
+          "median": 0.7763828483836452,
+          "min": -0.5331653620037005,
+          "n": 5332,
+          "p10": 0.24833300352961227,
+          "p90": 0.9993926670578044
+        },
+        "source_ge_0_99_rows": 1890,
+        "source_joint_0_99_rows": 1796
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.11513580272115786,
+          "merged_row_fraction": 0.2992180712423979,
+          "native_byte_saving_fraction": 0.2807475360181967,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.004430725093130212
+        },
+        {
+          "changed_occurrence_fraction": 0.11689955395874374,
+          "merged_row_fraction": 0.31416159860990445,
+          "native_byte_saving_fraction": 0.29591604040424613,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.00464083444994558
+        }
+      ],
+      "child_anchored_control99_fraction": 0.00622478386167147,
+      "child_anchored_source99_fraction": 0.13446685878962536,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5792171864551382,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.39727601587188544,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.07720882267580102,
+        "coverage_fraction_holding_lengths": 0.5989360061808096,
+        "identical_incidence_frequency_holding_lengths": 0.6747777144249352
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.2075400919065929,
+      "rows": 5755,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.1344092219020173,
+      "ancestor_pairs": 17350,
+      "best_per_child": {
+        "candidate_rows": 5332,
+        "control_best_cosine": {
+          "max": 0.9998735575553741,
+          "mean": 0.2964011853838446,
+          "median": 0.298548519287964,
+          "min": -0.6482217970710308,
+          "n": 5332,
+          "p10": -0.0048056514163689135,
+          "p90": 0.5780107413860279
+        },
+        "control_ge_0_99_rows": 98,
+        "control_joint_0_99_rows": 96,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999772067497952,
+          "mean": 0.7013714402230422,
+          "median": 0.7772345231102514,
+          "min": -0.5031358797046315,
+          "n": 5332,
+          "p10": 0.24478657251898944,
+          "p90": 0.9993953203417137
+        },
+        "source_ge_0_99_rows": 1890,
+        "source_joint_0_99_rows": 1783
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.11477515914248483,
+          "merged_row_fraction": 0.29800173761946136,
+          "native_byte_saving_fraction": 0.27964101687642495,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.004504429724421538
+        },
+        {
+          "changed_occurrence_fraction": 0.11700162289610402,
+          "merged_row_fraction": 0.31364031277150306,
+          "native_byte_saving_fraction": 0.2954258015483693,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.004878193961192172
+        }
+      ],
+      "child_anchored_control99_fraction": 0.0061671469740634,
+      "child_anchored_source99_fraction": 0.1344092219020173,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5892823696632561,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.39306973337857226,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.08192734508746485,
+        "coverage_fraction_holding_lengths": 0.6038353229131144,
+        "identical_incidence_frequency_holding_lengths": 0.6672326758170556
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.2074463096689487,
+      "rows": 5755,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.33015621639587855,
+      "ancestor_pairs": 102294,
+      "best_per_child": {
+        "candidate_rows": 15475,
+        "control_best_cosine": {
+          "max": 0.9999659624769388,
+          "mean": 0.4699520266684547,
+          "median": 0.4536319485870512,
+          "min": -0.6502185295707815,
+          "n": 15475,
+          "p10": 0.13857011624091736,
+          "p90": 0.9956829946615817
+        },
+        "control_ge_0_99_rows": 1622,
+        "control_joint_0_99_rows": 1547,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999702066501598,
+          "mean": 0.8947219174328871,
+          "median": 0.997683592022564,
+          "min": -0.5827475578040817,
+          "n": 15475,
+          "p10": 0.5642661542564945,
+          "p90": 0.9995426708371158
+        },
+        "source_ge_0_99_rows": 11314,
+        "source_joint_0_99_rows": 10936
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.3218340561828442,
+          "merged_row_fraction": 0.6077494024405585,
+          "native_byte_saving_fraction": 0.579936026370381,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.007861164339993188
+        },
+        {
+          "changed_occurrence_fraction": 0.3296354437892751,
+          "merged_row_fraction": 0.639388602339917,
+          "native_byte_saving_fraction": 0.6123989221236203,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010601366538502102
+        }
+      ],
+      "child_anchored_control99_fraction": 0.023668002737315477,
+      "child_anchored_source99_fraction": 0.33013979861179,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5283038372943673,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.38483290760405275,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.021488463117301737,
+        "coverage_fraction_holding_lengths": 0.6357267346244068,
+        "identical_incidence_frequency_holding_lengths": 0.5998998999974765
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.5748812562602992,
+      "rows": 15898,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.33038105851760613,
+      "ancestor_pairs": 102294,
+      "best_per_child": {
+        "candidate_rows": 15475,
+        "control_best_cosine": {
+          "max": 0.9999647331038775,
+          "mean": 0.4720951106717485,
+          "median": 0.45765005269333303,
+          "min": -0.6063546897950036,
+          "n": 15475,
+          "p10": 0.13797442682036784,
+          "p90": 0.9956029497459126
+        },
+        "control_ge_0_99_rows": 1625,
+        "control_joint_0_99_rows": 1550,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999691607389666,
+          "mean": 0.8945033560584943,
+          "median": 0.9976988404118591,
+          "min": -0.6119042576853974,
+          "n": 15475,
+          "p10": 0.5656902390992712,
+          "p90": 0.9995149265086755
+        },
+        "source_ge_0_99_rows": 11314,
+        "source_joint_0_99_rows": 10914
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.3208123952703054,
+          "merged_row_fraction": 0.6065542835576803,
+          "native_byte_saving_fraction": 0.5788520017831191,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.007553916413179543
+        },
+        {
+          "changed_occurrence_fraction": 0.3300134866801313,
+          "merged_row_fraction": 0.6397031073090955,
+          "native_byte_saving_fraction": 0.6129162099794014,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.011102445215448141
+        }
+      ],
+      "child_anchored_control99_fraction": 0.02369733111741128,
+      "child_anchored_source99_fraction": 0.33036464952585787,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5286441098765924,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.38956535923921054,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.020293902859316745,
+        "coverage_fraction_holding_lengths": 0.6383196998551484,
+        "identical_incidence_frequency_holding_lengths": 0.5936110591965507
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.5746227664868009,
+      "rows": 15898,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.3325317222906524,
+      "ancestor_pairs": 102294,
+      "best_per_child": {
+        "candidate_rows": 15475,
+        "control_best_cosine": {
+          "max": 0.9999684447222162,
+          "mean": 0.47262989390190796,
+          "median": 0.45725998689419733,
+          "min": -0.5287607880383929,
+          "n": 15475,
+          "p10": 0.13907864111225213,
+          "p90": 0.9957986465221637
+        },
+        "control_ge_0_99_rows": 1626,
+        "control_joint_0_99_rows": 1549,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999688305775906,
+          "mean": 0.8941495591396518,
+          "median": 0.9976924150969517,
+          "min": -0.6234521805927657,
+          "n": 15475,
+          "p10": 0.56083738800435,
+          "p90": 0.9995299857632615
+        },
+        "source_ge_0_99_rows": 11380,
+        "source_joint_0_99_rows": 11009
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.32253343553092817,
+          "merged_row_fraction": 0.6125927789659077,
+          "native_byte_saving_fraction": 0.5849784659375863,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.009079189737909672
+        },
+        {
+          "changed_occurrence_fraction": 0.32997899026634064,
+          "merged_row_fraction": 0.6430368599823877,
+          "native_byte_saving_fraction": 0.6162403119644213,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010007810356827528
+        }
+      ],
+      "child_anchored_control99_fraction": 0.023707107244109883,
+      "child_anchored_source99_fraction": 0.33251539739955027,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5296690807808886,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.3856246505408971,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.020914216183890496,
+        "coverage_fraction_holding_lengths": 0.6359913520604469,
+        "identical_incidence_frequency_holding_lengths": 0.6036381235517626
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.5785970467543378,
+      "rows": 15898,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.3658598633522314,
+      "ancestor_pairs": 137580,
+      "best_per_child": {
+        "candidate_rows": 17714,
+        "control_best_cosine": {
+          "max": 0.9999697637970867,
+          "mean": 0.512986607918793,
+          "median": 0.49420544459963145,
+          "min": -0.6138486016505842,
+          "n": 17714,
+          "p10": 0.16040797507641041,
+          "p90": 0.9981571273146086
+        },
+        "control_ge_0_99_rows": 2493,
+        "control_joint_0_99_rows": 2378,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999663903322905,
+          "mean": 0.9085386925992871,
+          "median": 0.9978350940458907,
+          "min": -0.570145458814214,
+          "n": 17714,
+          "p10": 0.6195116414877316,
+          "p90": 0.9995422678023775
+        },
+        "source_ge_0_99_rows": 13538,
+        "source_joint_0_99_rows": 13175
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.3492736115652822,
+          "merged_row_fraction": 0.644869603572807,
+          "native_byte_saving_fraction": 0.6166629824394663,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.008837214334471571
+        },
+        {
+          "changed_occurrence_fraction": 0.3578761369665817,
+          "merged_row_fraction": 0.6754700336329051,
+          "native_byte_saving_fraction": 0.6482149177622348,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.011411326932624317
+        }
+      ],
+      "child_anchored_control99_fraction": 0.031088271210094783,
+      "child_anchored_source99_fraction": 0.3658486945397453,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5170035576541452,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.3746758132939694,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.01665016655970706,
+        "coverage_fraction_holding_lengths": 0.6356586485416762,
+        "identical_incidence_frequency_holding_lengths": 0.5763802303348237
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.6176362661247071,
+      "rows": 18137,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.3663032417502544,
+      "ancestor_pairs": 137580,
+      "best_per_child": {
+        "candidate_rows": 17714,
+        "control_best_cosine": {
+          "max": 0.9999655924146773,
+          "mean": 0.5145607757074909,
+          "median": 0.49639269707054,
+          "min": -0.6609654849323345,
+          "n": 17714,
+          "p10": 0.1608634083437558,
+          "p90": 0.9981768213311542
+        },
+        "control_ge_0_99_rows": 2491,
+        "control_joint_0_99_rows": 2360,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999655415672517,
+          "mean": 0.9084472979347689,
+          "median": 0.9978626741703891,
+          "min": -0.6978119830685425,
+          "n": 17714,
+          "p10": 0.6175106022321397,
+          "p90": 0.999520380522446
+        },
+        "source_ge_0_99_rows": 13537,
+        "source_joint_0_99_rows": 13149
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.3495181883123844,
+          "merged_row_fraction": 0.6434912058223521,
+          "native_byte_saving_fraction": 0.615402749018809,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.008252584370221095
+        },
+        {
+          "changed_occurrence_fraction": 0.3568802636924693,
+          "merged_row_fraction": 0.6744775872525776,
+          "native_byte_saving_fraction": 0.6473214296301795,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.00856893223103234
+        }
+      ],
+      "child_anchored_control99_fraction": 0.031088271210094783,
+      "child_anchored_source99_fraction": 0.36629208582892364,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5187034154953002,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.38724487664628043,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.014028879980025933,
+        "coverage_fraction_holding_lengths": 0.6393197010590224,
+        "identical_incidence_frequency_holding_lengths": 0.572156550615483
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.6172975414232083,
+      "rows": 18137,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.36320686146242187,
+      "ancestor_pairs": 137580,
+      "best_per_child": {
+        "candidate_rows": 17714,
+        "control_best_cosine": {
+          "max": 0.9999644289488189,
+          "mean": 0.5114786632438414,
+          "median": 0.49271109406181895,
+          "min": -0.5414803025392715,
+          "n": 17714,
+          "p10": 0.16329824239399654,
+          "p90": 0.9981291410697185
+        },
+        "control_ge_0_99_rows": 2471,
+        "control_joint_0_99_rows": 2345,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9999646471224857,
+          "mean": 0.9080811454411944,
+          "median": 0.9978556381291238,
+          "min": -0.6334298568557527,
+          "n": 17714,
+          "p10": 0.6114304250803821,
+          "p90": 0.9995427883202339
+        },
+        "source_ge_0_99_rows": 13492,
+        "source_joint_0_99_rows": 13130
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.34880067310403473,
+          "merged_row_fraction": 0.6420025362518609,
+          "native_byte_saving_fraction": 0.6137751623936024,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.008137813043078652
+        },
+        {
+          "changed_occurrence_fraction": 0.3573230241757133,
+          "merged_row_fraction": 0.6727132381319954,
+          "native_byte_saving_fraction": 0.6454243739449501,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010616401439053538
+        }
+      ],
+      "child_anchored_control99_fraction": 0.030870209920334943,
+      "child_anchored_source99_fraction": 0.3631956155143339,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5177691700067651,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.38845109913475595,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.021182040841746963,
+        "coverage_fraction_holding_lengths": 0.6394535029735828,
+        "identical_incidence_frequency_holding_lengths": 0.5711493824685461
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.6142207920512603,
+      "rows": 18137,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.03129682997118156,
+      "ancestor_pairs": 17350,
+      "best_per_child": {
+        "candidate_rows": 5332,
+        "control_best_cosine": {
+          "max": 0.9993864275943201,
+          "mean": 0.6019682725750322,
+          "median": 0.6955361328013747,
+          "min": -0.8538485499674976,
+          "n": 5332,
+          "p10": 0.1587553058038164,
+          "p90": 0.9088284563814857
+        },
+        "control_ge_0_99_rows": 38,
+        "control_joint_0_99_rows": 30,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998347615459168,
+          "mean": 0.7689271425886908,
+          "median": 0.8604543256198216,
+          "min": -0.7920098687306015,
+          "n": 5332,
+          "p10": 0.4274103153805557,
+          "p90": 0.9862038229348894
+        },
+        "source_ge_0_99_rows": 401,
+        "source_joint_0_99_rows": 262
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.05597256386963755,
+          "merged_row_fraction": 0.043266724587315376,
+          "native_byte_saving_fraction": 0.026638197152110132,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.0072625028502098215
+        },
+        {
+          "changed_occurrence_fraction": 0.07651019498569334,
+          "merged_row_fraction": 0.05855777584708949,
+          "native_byte_saving_fraction": 0.04207013216596778,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.009946877807804079
+        }
+      ],
+      "child_anchored_control99_fraction": 0.0026512968299711817,
+      "child_anchored_source99_fraction": 0.03129682997118156,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.48338152426364506,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.3768395629431591,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.07576959262524542,
+        "coverage_fraction_holding_lengths": 0.48404133363640567,
+        "identical_incidence_frequency_holding_lengths": 0.7043814512953279
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.04754759448560442,
+      "rows": 5755,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.030605187319884725,
+      "ancestor_pairs": 17350,
+      "best_per_child": {
+        "candidate_rows": 5332,
+        "control_best_cosine": {
+          "max": 0.9993661595697421,
+          "mean": 0.6005694441158211,
+          "median": 0.6918309856269211,
+          "min": -0.8377990527522879,
+          "n": 5332,
+          "p10": 0.15041954291615728,
+          "p90": 0.9064161743669203
+        },
+        "control_ge_0_99_rows": 39,
+        "control_joint_0_99_rows": 34,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998025947937205,
+          "mean": 0.7675259943077619,
+          "median": 0.8615709858298044,
+          "min": -0.8404739771195134,
+          "n": 5332,
+          "p10": 0.4233672111619581,
+          "p90": 0.9863324776350504
+        },
+        "source_ge_0_99_rows": 398,
+        "source_joint_0_99_rows": 260
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.05871549644629983,
+          "merged_row_fraction": 0.04291920069504779,
+          "native_byte_saving_fraction": 0.02636211480336359,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.0074770741018181635
+        },
+        {
+          "changed_occurrence_fraction": 0.07698719715295711,
+          "merged_row_fraction": 0.05751520417028671,
+          "native_byte_saving_fraction": 0.041073200177335956,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.01063368408960412
+        }
+      ],
+      "child_anchored_control99_fraction": 0.0027089337175792505,
+      "child_anchored_source99_fraction": 0.030605187319884725,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.48382922614080964,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.3868824552916553,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.07920686499270202,
+        "coverage_fraction_holding_lengths": 0.4884970099865433,
+        "identical_incidence_frequency_holding_lengths": 0.7005079791183615
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.04642220763387415,
+      "rows": 5755,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.030028818443804034,
+      "ancestor_pairs": 17350,
+      "best_per_child": {
+        "candidate_rows": 5332,
+        "control_best_cosine": {
+          "max": 0.9993072275848578,
+          "mean": 0.6033994847844767,
+          "median": 0.7029798256715278,
+          "min": -0.8137462154124725,
+          "n": 5332,
+          "p10": 0.16024827476628156,
+          "p90": 0.9078108369948178
+        },
+        "control_ge_0_99_rows": 40,
+        "control_joint_0_99_rows": 31,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998076379339965,
+          "mean": 0.769683825594886,
+          "median": 0.8601515827775468,
+          "min": -0.7390786804184297,
+          "n": 5332,
+          "p10": 0.4350017181794341,
+          "p90": 0.9854964821633652
+        },
+        "source_ge_0_99_rows": 391,
+        "source_joint_0_99_rows": 258
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.058921675699767626,
+          "merged_row_fraction": 0.0422241529105126,
+          "native_byte_saving_fraction": 0.025575028232713404,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.007335506407707474
+        },
+        {
+          "changed_occurrence_fraction": 0.0763244295196976,
+          "merged_row_fraction": 0.057688966116420506,
+          "native_byte_saving_fraction": 0.04121849754654383,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.010203564756800801
+        }
+      ],
+      "child_anchored_control99_fraction": 0.00276657060518732,
+      "child_anchored_source99_fraction": 0.030028818443804034,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.48220395381672376,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.37993238374235844,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.08015225209633592,
+        "coverage_fraction_holding_lengths": 0.48434282231627923,
+        "identical_incidence_frequency_holding_lengths": 0.7177513163172654
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.045578167495076434,
+      "rows": 5755,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.025387608266369485,
+      "ancestor_pairs": 102294,
+      "best_per_child": {
+        "candidate_rows": 15475,
+        "control_best_cosine": {
+          "max": 0.999342936969421,
+          "mean": 0.7544610995332419,
+          "median": 0.8313448968695213,
+          "min": -0.9211640019236195,
+          "n": 15475,
+          "p10": 0.4766166060681694,
+          "p90": 0.9575364393712853
+        },
+        "control_ge_0_99_rows": 311,
+        "control_joint_0_99_rows": 245,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9998092763040288,
+          "mean": 0.8370624832868379,
+          "median": 0.89237727782339,
+          "min": -0.8911948895470128,
+          "n": 15475,
+          "p10": 0.6283400197245352,
+          "p90": 0.985232515106387
+        },
+        "source_ge_0_99_rows": 1034,
+        "source_joint_0_99_rows": 726
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.09242250829567869,
+          "merged_row_fraction": 0.040193735061013966,
+          "native_byte_saving_fraction": 0.022339931910061783,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.00931127893324144
+        },
+        {
+          "changed_occurrence_fraction": 0.11524401250943926,
+          "merged_row_fraction": 0.05032079506856208,
+          "native_byte_saving_fraction": 0.03236592747197464,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.012383067756328994
+        }
+      ],
+      "child_anchored_control99_fraction": 0.006765079675432594,
+      "child_anchored_source99_fraction": 0.025359272656173625,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.24064535813389512,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.42989904821160124,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.01935510467978386,
+        "coverage_fraction_holding_lengths": 0.33081498731263825,
+        "identical_incidence_frequency_holding_lengths": 0.7064941681854742
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.04791754176225403,
+      "rows": 15898,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.024683754667917963,
+      "ancestor_pairs": 102294,
+      "best_per_child": {
+        "candidate_rows": 15475,
+        "control_best_cosine": {
+          "max": 0.9994359689351859,
+          "mean": 0.7550763609004816,
+          "median": 0.8326664058307475,
+          "min": -0.918964218947087,
+          "n": 15475,
+          "p10": 0.4704804613547234,
+          "p90": 0.9574136751701943
+        },
+        "control_ge_0_99_rows": 280,
+        "control_joint_0_99_rows": 223,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9997625937955023,
+          "mean": 0.8372879650010766,
+          "median": 0.8917266296810916,
+          "min": -0.9032877095486694,
+          "n": 15475,
+          "p10": 0.6315960116550676,
+          "p90": 0.9852002864181206
+        },
+        "source_ge_0_99_rows": 1016,
+        "source_joint_0_99_rows": 717
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.0935745940055629,
+          "merged_row_fraction": 0.040885645993206696,
+          "native_byte_saving_fraction": 0.02311754408223554,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.010332293067765497
+        },
+        {
+          "changed_occurrence_fraction": 0.11415902941268202,
+          "merged_row_fraction": 0.04962888413636935,
+          "native_byte_saving_fraction": 0.03177313039585428,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.012218006534141988
+        }
+      ],
+      "child_anchored_control99_fraction": 0.006334930100694105,
+      "child_anchored_source99_fraction": 0.02465539153387428,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.23668414139751665,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.4436631256911432,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.019873636318932335,
+        "coverage_fraction_holding_lengths": 0.3311063676431518,
+        "identical_incidence_frequency_holding_lengths": 0.7237914831200105
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.046398914342951306,
+      "rows": 15898,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.02509433593368135,
+      "ancestor_pairs": 102294,
+      "best_per_child": {
+        "candidate_rows": 15475,
+        "control_best_cosine": {
+          "max": 0.9994574732251433,
+          "mean": 0.7547880246043438,
+          "median": 0.8317061453901421,
+          "min": -0.9245128541465424,
+          "n": 15475,
+          "p10": 0.46845904878442224,
+          "p90": 0.9576056317954894
+        },
+        "control_ge_0_99_rows": 291,
+        "control_joint_0_99_rows": 228,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9997696835602626,
+          "mean": 0.836833995268631,
+          "median": 0.8901341948807674,
+          "min": -0.792804161070314,
+          "n": 15475,
+          "p10": 0.6219376619756939,
+          "p90": 0.9846994213144148
+        },
+        "source_ge_0_99_rows": 1035,
+        "source_joint_0_99_rows": 730
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.09215031741426223,
+          "merged_row_fraction": 0.040885645993206696,
+          "native_byte_saving_fraction": 0.02313058364318521,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.009233943108832547
+        },
+        {
+          "changed_occurrence_fraction": 0.11550911508665215,
+          "merged_row_fraction": 0.05126430997609762,
+          "native_byte_saving_fraction": 0.03343561249726601,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.012270823643969732
+        }
+      ],
+      "child_anchored_control99_fraction": 0.006462019747775931,
+      "child_anchored_source99_fraction": 0.025065988855215562,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.24342002420612197,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.43879224009714834,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.022631393655284885,
+        "coverage_fraction_holding_lengths": 0.33236574637010413,
+        "identical_incidence_frequency_holding_lengths": 0.7205891976105228
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.04775598565381757,
+      "rows": 15898,
+      "seed": 11
+    },
+    {
+      "ancestor_pair99_fraction": 0.022808547754034018,
+      "ancestor_pairs": 137580,
+      "best_per_child": {
+        "candidate_rows": 17714,
+        "control_best_cosine": {
+          "max": 0.9995500790009827,
+          "mean": 0.7681360367240021,
+          "median": 0.8375741695240108,
+          "min": -0.9123389161091877,
+          "n": 17714,
+          "p10": 0.5103239597262836,
+          "p90": 0.9614859869014742
+        },
+        "control_ge_0_99_rows": 377,
+        "control_joint_0_99_rows": 303,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9997802754134621,
+          "mean": 0.8408184302864211,
+          "median": 0.8890617975059181,
+          "min": -0.852389120784412,
+          "n": 17714,
+          "p10": 0.6574088447334216,
+          "p90": 0.9845598090594885
+        },
+        "source_ge_0_99_rows": 1109,
+        "source_joint_0_99_rows": 794
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.0987738732578974,
+          "merged_row_fraction": 0.03881568065280917,
+          "native_byte_saving_fraction": 0.020992852937773088,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.009626719038259264
+        },
+        {
+          "changed_occurrence_fraction": 0.11791662049886449,
+          "merged_row_fraction": 0.04681038760544743,
+          "native_byte_saving_fraction": 0.028971003755861147,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.01243765424835478
+        }
+      ],
+      "child_anchored_control99_fraction": 0.007523114496714544,
+      "child_anchored_source99_fraction": 0.022787404779903472,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.15704952626698934,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.4646425455741086,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.027966194644562035,
+        "coverage_fraction_holding_lengths": 0.27239089373716474,
+        "identical_incidence_frequency_holding_lengths": 0.7339059868384004
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.04533265588393034,
+      "rows": 18137,
+      "seed": 3
+    },
+    {
+      "ancestor_pair99_fraction": 0.02190725396133159,
+      "ancestor_pairs": 137580,
+      "best_per_child": {
+        "candidate_rows": 17714,
+        "control_best_cosine": {
+          "max": 0.9994787017811215,
+          "mean": 0.76895261995539,
+          "median": 0.8374040205606497,
+          "min": -0.9136200942568184,
+          "n": 17714,
+          "p10": 0.5101244350383062,
+          "p90": 0.9597949105111747
+        },
+        "control_ge_0_99_rows": 359,
+        "control_joint_0_99_rows": 301,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9997481050362321,
+          "mean": 0.8410087712533885,
+          "median": 0.8899518129139761,
+          "min": -0.9315520486116448,
+          "n": 17714,
+          "p10": 0.6544115355556884,
+          "p90": 0.9847753471294188
+        },
+        "source_ge_0_99_rows": 1084,
+        "source_joint_0_99_rows": 761
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.09346164829413349,
+          "merged_row_fraction": 0.03738214699233611,
+          "native_byte_saving_fraction": 0.019522401180931404,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.009774599536026699
+        },
+        {
+          "changed_occurrence_fraction": 0.11490332687434521,
+          "merged_row_fraction": 0.04554226167502894,
+          "native_byte_saving_fraction": 0.027646668939463437,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.012659226156013746
+        }
+      ],
+      "child_anchored_control99_fraction": 0.007385009013199976,
+      "child_anchored_source99_fraction": 0.02188608478222946,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.15228735507461622,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.47838581364921107,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.026589380349156633,
+        "coverage_fraction_holding_lengths": 0.27338357691093196,
+        "identical_incidence_frequency_holding_lengths": 0.7517867490354097
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.04349789708414486,
+      "rows": 18137,
+      "seed": 7
+    },
+    {
+      "ancestor_pair99_fraction": 0.022641372292484373,
+      "ancestor_pairs": 137580,
+      "best_per_child": {
+        "candidate_rows": 17714,
+        "control_best_cosine": {
+          "max": 0.9994872528651705,
+          "mean": 0.7687814241968466,
+          "median": 0.8388003420946768,
+          "min": -0.9097494422162548,
+          "n": 17714,
+          "p10": 0.5018573633498,
+          "p90": 0.9608783382262128
+        },
+        "control_ge_0_99_rows": 375,
+        "control_joint_0_99_rows": 317,
+        "scope": "Equal matched candidate counts per descendant; this is not direct-retained compaction",
+        "source_best_cosine": {
+          "max": 0.9997787869662562,
+          "mean": 0.8410203254990968,
+          "median": 0.8885373745420313,
+          "min": -0.820514335774381,
+          "n": 17714,
+          "p10": 0.6532654459753636,
+          "p90": 0.9840305801614082
+        },
+        "source_ge_0_99_rows": 1097,
+        "source_joint_0_99_rows": 794
+      },
+      "capacity": [
+        {
+          "changed_occurrence_fraction": 0.09488902161193642,
+          "merged_row_fraction": 0.03842972928268181,
+          "native_byte_saving_fraction": 0.020637448601682262,
+          "norm_ratio": 0.99,
+          "weighted_relative_frobenius": 0.009519358483641363
+        },
+        {
+          "changed_occurrence_fraction": 0.11556408946734517,
+          "merged_row_fraction": 0.04570766940508353,
+          "native_byte_saving_fraction": 0.027816563284311924,
+          "norm_ratio": 0.95,
+          "weighted_relative_frobenius": 0.012424544977146382
+        }
+      ],
+      "child_anchored_control99_fraction": 0.007537651916031866,
+      "child_anchored_source99_fraction": 0.02262022445775426,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.1566981824853207,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.4780823216404529,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.025011734896980376,
+        "coverage_fraction_holding_lengths": 0.27487912741863774,
+        "identical_incidence_frequency_holding_lengths": 0.7482240502419852
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.04490925000705676,
+      "rows": 18137,
+      "seed": 11
+    }
+  ],
+  "seed_medians": [
+    {
+      "ancestor_pair99_fraction": 0.12444057682744904,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.23480948889943032,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.2780462010291982,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.005005944559164008,
+      "child_anchored_source99_fraction": 0.1252737625930793,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5882275034312477,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32794350780442183,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.1330898327136151,
+        "coverage_fraction_holding_lengths": 0.5564200100462646,
+        "identical_incidence_frequency_holding_lengths": 0.8090114450360744
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 4,
+      "parent_pair99_fraction": 0.19087683730359858
+    },
+    {
+      "ancestor_pair99_fraction": 0.2926838294250435,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.4702931053195115,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.5283764297143205,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.025875493652593156,
+      "child_anchored_source99_fraction": 0.2955935666321992,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5252378188313369,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32554753812873516,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.020859024048813263,
+        "coverage_fraction_holding_lengths": 0.5992058655089547,
+        "identical_incidence_frequency_holding_lengths": 0.7087240418014572
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 8,
+      "parent_pair99_fraction": 0.49667908012439055
+    },
+    {
+      "ancestor_pair99_fraction": 0.3199010019734188,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.4900499992146088,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.5457284430996149,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.037657318402536916,
+      "child_anchored_source99_fraction": 0.3230491416994241,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5181124575037706,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.32700821561189686,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.07275280997862431,
+        "coverage_fraction_holding_lengths": 0.5998908462053055,
+        "identical_incidence_frequency_holding_lengths": 0.7026686472116059
+      },
+      "convention": "legacy",
+      "dataset": "tinyshakespeare",
+      "order": 12,
+      "parent_pair99_fraction": 0.5196810253796016
+    },
+    {
+      "ancestor_pair99_fraction": 0.1344092219020173,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.28020649588611823,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.2954258015483693,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.0061671469740634,
+      "child_anchored_source99_fraction": 0.1344092219020173,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5881120767528304,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.39439991071736163,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.07720882267580102,
+        "coverage_fraction_holding_lengths": 0.6028041698652444,
+        "identical_incidence_frequency_holding_lengths": 0.6672326758170556
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.2074463096689487
+    },
+    {
+      "ancestor_pair99_fraction": 0.33038105851760613,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.579936026370381,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.6129162099794014,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.02369733111741128,
+      "child_anchored_source99_fraction": 0.33036464952585787,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5286441098765924,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.3856246505408971,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.020914216183890496,
+        "coverage_fraction_holding_lengths": 0.6359913520604469,
+        "identical_incidence_frequency_holding_lengths": 0.5998998999974765
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.5748812562602992
+    },
+    {
+      "ancestor_pair99_fraction": 0.3658598633522314,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.615402749018809,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.6473214296301795,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.031088271210094783,
+      "child_anchored_source99_fraction": 0.3658486945397453,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.5177691700067651,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.38724487664628043,
+        "child_length_holding_ancestor_length_and_frequency_bins": 0.01665016655970706,
+        "coverage_fraction_holding_lengths": 0.6393197010590224,
+        "identical_incidence_frequency_holding_lengths": 0.572156550615483
+      },
+      "convention": "legacy",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.6172975414232083
+    },
+    {
+      "ancestor_pair99_fraction": 0.030605187319884725,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.02636211480336359,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.04121849754654383,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.0027089337175792505,
+      "child_anchored_source99_fraction": 0.030605187319884725,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.48338152426364506,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.37993238374235844,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.07920686499270202,
+        "coverage_fraction_holding_lengths": 0.48434282231627923,
+        "identical_incidence_frequency_holding_lengths": 0.7043814512953279
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 4,
+      "parent_pair99_fraction": 0.04642220763387415
+    },
+    {
+      "ancestor_pair99_fraction": 0.02509433593368135,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.02311754408223554,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.03236592747197464,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.006462019747775931,
+      "child_anchored_source99_fraction": 0.025065988855215562,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.24064535813389512,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.43879224009714834,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.019873636318932335,
+        "coverage_fraction_holding_lengths": 0.3311063676431518,
+        "identical_incidence_frequency_holding_lengths": 0.7205891976105228
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 8,
+      "parent_pair99_fraction": 0.04775598565381757
+    },
+    {
+      "ancestor_pair99_fraction": 0.022641372292484373,
+      "capacity": [
+        {
+          "native_byte_saving_fraction": 0.020637448601682262,
+          "norm_ratio": 0.99
+        },
+        {
+          "native_byte_saving_fraction": 0.027816563284311924,
+          "norm_ratio": 0.95
+        }
+      ],
+      "child_anchored_control99_fraction": 0.007523114496714544,
+      "child_anchored_source99_fraction": 0.02262022445775426,
+      "conditional_rho": {
+        "ancestor_frequency_holding_lengths_and_child_bin": -0.1566981824853207,
+        "child_frequency_holding_lengths_and_ancestor_bin": 0.4780823216404529,
+        "child_length_holding_ancestor_length_and_frequency_bins": -0.026589380349156633,
+        "coverage_fraction_holding_lengths": 0.27338357691093196,
+        "identical_incidence_frequency_holding_lengths": 0.7482240502419852
+      },
+      "convention": "average",
+      "dataset": "enwik8",
+      "order": 12,
+      "parent_pair99_fraction": 0.04490925000705676
+    }
+  ],
+  "status": "verified"
+}
