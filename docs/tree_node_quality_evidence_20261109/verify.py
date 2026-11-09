@@ -10,6 +10,8 @@ import json
 import math
 from pathlib import Path
 import statistics
+import tarfile
+from functools import lru_cache
 
 ROOT = Path(__file__).resolve().parent
 BUDGETS = (.0001, .001, .005, .01, .02)
@@ -32,6 +34,12 @@ def digest(path):
         for b in iter(lambda: f.read(8 << 20), b''):
             h.update(b)
     return h.hexdigest()
+
+
+@lru_cache(maxsize=None)
+def snapshot_digest(root, commit, source):
+    with tarfile.open(root / 'runtime' / (commit + '.tar.gz'), 'r:gz') as archive:
+        return hashlib.sha256(archive.extractfile(source).read()).hexdigest()
 
 
 def close(a, b, tol=1e-10):
@@ -57,12 +65,11 @@ def env(e, root):
     assert e['device'] == 'cpu' and e['gpu'] == 'unused' and e['threads'] == 1
     assert e['numpy'] and e['torch'] and len(e['loadavg']) == 3
     assert len(e['commit']) == 40
-    snapshot = root / 'runtime' / e['commit']
     source = ('tools/train_tree_node_mechanism.py' if 'tools.train_tree_node_mechanism' in e['command']
               else 'tools/tree_node_quality.py')
     if source == 'tools/tree_node_quality.py':
         assert e['faiss']
-    assert e['source_sha256'] == digest(snapshot / source), (e['command'], source)
+    assert e['source_sha256'] == snapshot_digest(root, e['commit'], source), (e['command'], source)
     assert '/llm-align/' not in e['command']
 
 
@@ -140,6 +147,13 @@ def verify(root=ROOT):
     for name, value in manifest['files'].items():
         p = root / name
         assert p.stat().st_size == value['bytes'] and digest(p) == value['sha256'], name
+    for commit, inventory in load(root / 'runtime/inventory.json').items():
+        archive_path = root / 'runtime' / (commit + '.tar.gz')
+        assert digest(archive_path) == inventory['archive_sha256']
+        with tarfile.open(archive_path, 'r:gz') as archive:
+            files = {m.name: hashlib.sha256(archive.extractfile(m).read()).hexdigest()
+                     for m in archive.getmembers() if m.isfile()}
+        assert files == inventory['files']
     prepare, selection, complete, publication = [load(root / x) for x in
         ('prepare.json', 'selection.json', 'complete.json', 'publication.json')]
     raw_hashes = publication['private_input_sha256']
@@ -155,7 +169,7 @@ def verify(root=ROOT):
     assert selection['selection_uses'] == 'validation only'
     for e in (prepare['environment'], selection['environment'], publication['environment']):
         env(e, root)
-    coverage, final_requests, summary = set(), set(), []
+    coverage, final_requests, row_reports, summary = set(), set(), {}, []
     for prepared, chosen in zip(prepare['models'], selection['models']):
         name = prepared['name']; folder = root / 'models' / name
         assert name == chosen['name']
@@ -175,6 +189,27 @@ def verify(root=ROOT):
         assert [meta['evaluations'][s]['tokens'] for s in SPLITS] == [20000, 20000, 100000]
         grid = load(folder / 'grid.json.gz'); assert len(grid) == 204
         by_name = {g['build']['name']: g for g in grid}; assert len(by_name) == 204
+        rows = load(folder / 'row-fidelity.json.gz')
+        assert len(rows) == 204 and {r['report']['name'] for r in rows} == set(by_name)
+        for item in rows:
+            r = item['report']; build = by_name[r['name']]['build']
+            env(r['environment'], root)
+            assert r['status'] == 'complete' and r['rows'] == meta['shape'][0]
+            assert r['private_build_report_sha256'] == by_name[r['name']]['private_build_sha256']
+            assert r['decoded_row_sha256'] == build['decoded_row_sha256'] and r['job_sha256'] == build['job_sha256']
+            close(r['relative_l2']['global'], build['stored_row_relative_frobenius'])
+            assert 0 <= r['undefined_zero_norm_rows'] <= r['rows']
+            assert 0 <= r['relative_l2']['p50'] <= r['relative_l2']['p95'] <= r['relative_l2']['maximum']
+            if r['cosine']['minimum'] is not None:
+                assert -1.00000001 <= r['cosine']['minimum'] <= r['cosine']['p05'] <= r['cosine']['p50'] <= 1.00000001
+                assert 0 <= r['norm_ratio']['minimum'] <= r['norm_ratio']['p50'] <= 1.00000001
+            if build['family'].startswith('tree-'):
+                assert 0 <= r['post_encoding_rows_outside_original_joint_gate'] <= r['rows']
+                if build['encoding'] == 'fp32':
+                    assert r['post_encoding_rows_outside_original_joint_gate'] == 0
+            if build['encoding'] == 'fp32' and build['family'] in ('raw', 'dense', 'native-identity'):
+                assert r['source_row_bytes_preserved'] is True and r['relative_l2']['maximum'] == 0
+            row_reports[name, r['name']] = item['private_report_sha256']
         assert {f: sum(g['build']['family'] == f for g in grid) for f in FAMILIES} == {
             'raw': 3, 'dense': 1, 'constant': 3, 'native-identity': 9,
             'tree-datrie': 75, 'tree-reference': 75, 'faiss': 19, 'faiss-dedup': 19}
@@ -247,6 +282,12 @@ def verify(root=ROOT):
         assert seen == expected
         print(name + ': 204 candidates, 408 audits, paired blocks, frozen choices and ' + str(len(seen)) + ' final timings verified')
     assert coverage == {(c, n, s) for c in ('legacy', 'average') for n in (4, 8, 12) for s in (3, 7, 11)}
+    row_controller = load(root / 'row-audit-controller.json')
+    assert row_controller['status'] == 'complete' and not row_controller['failures']
+    assert row_controller['requested'] == len(row_controller['complete']) == len(row_reports) == 3672
+    assert row_controller['frozen_selection_sha256'] == raw_hashes['selection.json']
+    for r in row_controller['complete']:
+        assert row_reports[r['model'], r['name']] == r['report_sha256']
     controller = load(root / 'retiming-controller.json')
     assert controller['status'] == 'complete' and controller['workers'] == 1 and not controller['failures']
     requests = {(r['model'], r['name'], r['cached'], r['index'], r['cache']) for r in controller['requests']}
