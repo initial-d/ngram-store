@@ -81,5 +81,60 @@ class TreeNodeQualityTests(unittest.TestCase):
         self.assertIsNone(select(candidates, .001, False))
 
 
+@unittest.skipIf(np is None, 'optional NumPy required')
+class RetimingRecoveryTests(unittest.TestCase):
+    def test_resume_preserves_verified_results_and_retries_original_schedule(self):
+        import hashlib, json, tempfile
+        from pathlib import Path
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from tools.finalize_tree_node_quality import retime
+        from tools.tree_node_quality import write, digest, load
+        names = ('raw-fp32', 'raw-fp16', 'raw-int8', 'dense-fp32',
+                 'native-none-fp32', 'native-none-fp16', 'native-none-int8',
+                 'constant-zero', 'constant-mean', 'constant-weighted-mean')
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); frontier = root / 'frontier'; out = root / 'retiming'
+            frontier.mkdir(); write(frontier / 'selection.json', {'frozen': True})
+            jobs = {}
+            for name in names:
+                path = root / (name + '-job.json'); job = {'backend': 'raw', 'report': str(root / (name + '.json'))}
+                write(path, job); jobs[name] = (str(path), job)
+            selected = {'choices': []}; model = {'name': 'fixture'}
+            def run(command, stdout, stderr):
+                path = Path(command[command.index('--job') + 1]); job = load(path)
+                cached = int(command[command.index('--cached') + 1]); kind = command[command.index('--index') + 1]
+                name = path.name.removesuffix('-job.json')
+                report = Path(job['report']).with_name(f'{name}-cache{cached}-{kind}-rowcache0-retiming.json')
+                write(report, {'status': 'complete', 'fixture': True})
+                return SimpleNamespace(returncode=0)
+            args = SimpleNamespace(frontier=frontier, output=out, resume=False)
+            with patch('tools.finalize_tree_node_quality.check_selection', return_value=[(model, selected, jobs, {})]), \
+                 patch('tools.finalize_tree_node_quality.environment', return_value={'fixture': True}), \
+                 patch('tools.finalize_tree_node_quality.subprocess.run', side_effect=run):
+                retime(args)
+            full = load(out / 'report.json'); retained = full['complete'][0]; failed = full['requests'][1]
+            partial = {**full, 'status': 'running', 'complete': [retained],
+                       'failures': [{'request': failed, 'returncode': 1}]}
+            write(out / 'report.json', partial); prior = (out / 'report.json').read_bytes()
+            original_log = (out / '0001.log').read_bytes(); args.resume = True
+            with patch('tools.finalize_tree_node_quality.check_selection', return_value=[(model, selected, jobs, {})]), \
+                 patch('tools.finalize_tree_node_quality.environment', return_value={'recovery': True}), \
+                 patch('tools.finalize_tree_node_quality.subprocess.run', side_effect=run) as worker:
+                retime(args)
+            recovered = load(out / 'report.json')
+            self.assertEqual(worker.call_count, 39)
+            self.assertEqual(recovered['requests'], full['requests'])
+            self.assertEqual(recovered['execution_schedule_sha256'], full['execution_schedule_sha256'])
+            self.assertEqual(recovered['complete'][0], retained)
+            self.assertEqual(len(recovered['complete']), 40)
+            self.assertEqual(recovered['failures'], [])
+            self.assertEqual(recovered['resume']['prior_failures'], partial['failures'])
+            self.assertEqual(recovered['resume']['source_report_sha256'], hashlib.sha256(prior).hexdigest())
+            self.assertEqual((out / 'report.before-resume.json').read_bytes(), prior)
+            self.assertEqual((out / '0001.log').read_bytes(), original_log)
+            self.assertTrue((out / '0001.retry.log').exists())
+
+
 if __name__ == '__main__':
     unittest.main()
