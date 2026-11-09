@@ -34,19 +34,21 @@ def main():
             axes[1].plot([4, 8, 12], y, color=color, marker='o' if j == 0 else 's',
                          linestyle='-' if j == 0 else '--', label=f'{label}, norm >= {q}')
     axes[0].set_xticks(range(6), ['[0,.25)', '[.25,.5)', '[.5,.75)', '[.75,.9)', '[.9,1)', '1'])
-    axes[0].set_xlabel('Descendant occurrences / ancestor occurrences')
-    axes[0].set_ylabel('Ancestor pairs with cosine >= 0.99 (%)')
-    axes[0].set_title('Registered ancestors, maximum order 12\nMedian and range across 3 seeds')
+    axes[0].set_xlabel('Longer-fragment occurrences / shorter-fragment occurrences')
+    axes[0].set_ylabel('Node-containment pairs with cosine >= 0.99 (%)')
+    axes[0].set_title('Prefix/suffix tree paths, maximum order 12\nMedian and range across 3 seeds')
     axes[0].legend(fontsize=9, loc='upper left')
     axes[1].set_xticks([4, 8, 12]); axes[1].set_xlabel('Maximum character n-gram order')
     axes[1].set_ylabel('Native table byte saving vs identity table (%)')
-    axes[1].set_title('Approximate ancestor compaction, cosine >= 0.99\nN-gram table only; task quality not measured')
+    axes[1].set_title('Approximate prefix/suffix compaction, cosine >= 0.99\nN-gram table only; task quality not measured')
     axes[1].legend(fontsize=8, loc='upper left')
     for ax in axes:
         ax.set_ylim(-2, 100 if ax is axes[0] else 75)
         ax.grid(axis='y', alpha=.2); ax.spines[['top', 'right']].set_visible(False)
     fig.savefig(ROOT / 'ancestry.png', dpi=150)
     fig.savefig(ROOT / 'ancestry.svg', metadata={'Date': None})
+    svg = ROOT / 'ancestry.svg'
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines()) + '\n')
     (ROOT / 'plot-environment.json').write_text(json.dumps({
         'python': platform.python_version(), 'matplotlib': matplotlib.__version__,
         'command': 'artifacts/conditional-similarity-20261109/plot-env/bin/python docs/conditional_similarity_evidence_20261109/plot.py',

@@ -174,10 +174,10 @@ controls only. High cosine does not establish identical bytes or a universal
 ratio. The [native XOR codec](native_xor_compression_20261020.md) is a reversible
 baseline; structural grouping must not depend on unavailable training signatures.
 
-The [conditional ancestor follow-up](conditional_similarity_evidence_20261109/README.md)
-enumerates parents and all registered prefix/suffix ancestors in 27 existing
-character models. Some reach .99 beyond descendant-fixed, frequency/length-matched
-unrelated controls. Ancestor frequency is conditionally negative, descendant
+The [conditional tree-node follow-up](conditional_similarity_evidence_20261109/README.md)
+enumerates parent–child and multi-level containment pairs in prefix/suffix tries in 27 existing
+character models. Some reach .99 beyond longer-string-fixed, frequency/length-matched
+unrelated controls. Shorter-fragment frequency is conditionally negative, longer-fragment
 frequency positive, and length effects are mixed; training coverage and
 initialization are more precise hypotheses. Legacy approximate savings are much
 larger than average-derivative savings. This is post-hoc evidence for a conditional

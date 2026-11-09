@@ -23,10 +23,10 @@ Sources: [trained evidence](cotraining_evidence_20261031/README.md),
 [API and assumptions](cotraining_groups.md),
 [derived numerical ledger](cotraining_claims_20261101/claim-ledger.json).
 
-The [conditional ancestor analysis](conditional_similarity_evidence_20261109/README.md)
-refines C1 with 27 existing character models and all registered prefix/suffix
-ancestors. Some related rows exceed .99 beyond matched unrelated controls,
-but ancestor and descendant frequency have opposite conditional associations;
+The [conditional tree-node analysis](conditional_similarity_evidence_20261109/README.md)
+refines C1 with 27 existing character models and all registered prefix/suffix tree-node
+containment pairs. Some related rows exceed .99 beyond matched unrelated controls,
+but shorter- and longer-fragment frequency have opposite conditional associations;
 length effects are mixed. Coverage and initialization are more precise mechanism
 hypotheses. Legacy approximate native-table savings are much stronger than
 standard average-derivative savings. This is post-hoc characterization, not a
