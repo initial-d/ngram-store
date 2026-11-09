@@ -397,14 +397,17 @@ def build_job(job_path):
     write(job['report'], result)
 
 
-def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=False):
+def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=False, quality_only=False):
     import faiss
     faiss.omp_set_num_threads(1)
     from .benchmark_faiss_cotraining import evaluate, fidelity
     from .structural_native import StructuralIndex
     job = load(job_path); common = Path(job['common']); metadata = load(common / 'metadata.json')
+    if selected and quality_only:
+        raise ValueError('Final serving measurement cannot use a quality-only audit')
     measured = {'environment': environment(), 'job_sha256': digest(job_path), 'cached_known_words': cached,
                 'index_kind': index_kind, 'native_cache_bytes': cache_bytes, 'memory_before_open': memory()}
+    measured['measurement_purpose'] = 'quality-and-reopening-only' if quality_only else 'query-and-quality'
     start = time.perf_counter()
     reader = Reader(job, cache_bytes=cache_bytes)
     word_rows = np.load(common / ('cached-word-rows.npy' if cached else 'word-rows.npy'), mmap_mode='r')
@@ -432,11 +435,11 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
             'known_cache_hits': sum(w >= 0 for w in ids) if cached else 0,
             'original_ngram_occurrences': sum(map(len, bags)), 'reducer_occurrences': len(plans[name]['ids']),
             'replay_samples_ms': [], 'complete_samples_ms': [], 'batch_complete_samples_ms': []}
-    for _ in range(2):
+    for _ in range(0 if quality_only else 2):
         for name, plan in plans.items():
             evaluate(reader, plan, word_rows, batch_bags=64)
     rng = np.random.default_rng(42)
-    for _ in range(15):
+    for _ in range(1 if quality_only else 15):
         for name in rng.permutation(list(plans)):
             start = time.perf_counter()
             output = evaluate(reader, plans[name], word_rows, batch_bags=64)
@@ -649,6 +652,7 @@ def main():
     parser.add_argument('--structural-library', type=Path)
     parser.add_argument('--job', type=Path)
     parser.add_argument('--cached', type=int, choices=(0, 1), default=0)
+    parser.add_argument('--quality-only', action='store_true', help='One full query/fidelity pass per trace; final performance is measured separately')
     parser.add_argument('--jobs', type=int, default=9)
     args = parser.parse_args()
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
@@ -656,7 +660,7 @@ def main():
     if args.phase == 'build':
         build_job(args.job); return
     if args.phase == 'audit':
-        query_job(args.job, args.cached); return
+        query_job(args.job, args.cached, quality_only=args.quality_only); return
     root = args.output.resolve()
     if args.phase == 'prepare':
         import torch

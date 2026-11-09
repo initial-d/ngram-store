@@ -1,0 +1,329 @@
+"""Stdlib verification of complete finite memory-application evidence.
+
+Checks public artifact hashes, candidate counts, all quality arithmetic, frozen
+choices, full-request provenance, paired intervals and serial serving samples.
+Private model execution is represented by immutable reports and source hashes.
+"""
+import argparse
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+import statistics
+import tarfile
+
+BUDGETS = (.0001, .001, .005, .01, .02)
+STRATA = ('all', 'known', 'oov_nonempty', 'oov_empty')
+GROUPS = ('rewrite', 'paraphrase', 'neighborhood')
+
+
+def load(path):
+    if path.suffix == '.gz':
+        with gzip.open(path, 'rt') as stream:
+            return json.load(stream)
+    return json.loads(path.read_text())
+
+
+def digest(path):
+    result = hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(8 << 20), b''):
+            result.update(block)
+    return result.hexdigest()
+
+
+def close(a, b):
+    assert math.isfinite(a) and math.isfinite(b) and math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-10), (a, b)
+
+
+def quantile(values, p):
+    values = sorted(values); at = (len(values) - 1) * p
+    low, high = math.floor(at), math.ceil(at)
+    return values[low] + (at - low) * (values[high] - values[low])
+
+
+def source(environment, inventory):
+    assert environment['python'] and environment['torch'] and environment['os']
+    commit = environment['commit']; assert commit in inventory
+    assert environment['source_sha256'] == inventory[commit]['files']['tools/tree_node_quality.py']['original_sha256']
+    assert '/' + 'llm-align/' not in environment['command']
+
+
+def gate(quality, budget):
+    return all(quality[s]['pairs'] > 0 and quality[s]['loss_relative_change'] <= budget
+               and quality[s]['discrimination_change'] >= -.005 for s in ('all', 'oov_nonempty'))
+
+
+def paired(blocks, quality, total):
+    assert set(blocks) == set(STRATA)
+    for name, block in blocks.items():
+        ids = block['block_ids']; assert ids == sorted(set(ids))
+        assert all(len(v) == len(ids) for v in block.values())
+        assert all(0 <= i <= (total['tokens'] - 1) // 128 for i in ids)
+        count = sum(block['count']); q = quality[name]
+        assert count == q['pairs'] and all(isinstance(v, int) and v > 0 for v in block['count'])
+        if count:
+            candidate, baseline = sum(block['candidate_loss']), sum(block['baseline_loss'])
+            win, refwin = sum(block['candidate_discrimination']), sum(block['baseline_discrimination'])
+            close(q['sgns_loss_per_pair'], candidate / count)
+            close(q['baseline_sgns_loss_per_pair'], baseline / count)
+            close(q['context_discrimination'], win / count)
+            close(q['baseline_context_discrimination'], refwin / count)
+            close(q['loss_relative_change'], candidate / baseline - 1)
+            close(q['discrimination_change'], (win - refwin) / count)
+        else:
+            assert q['loss_relative_change'] is q['discrimination_change'] is None
+    assert quality['all']['pairs'] == total['pairs']
+    for field in ('count', 'candidate_loss', 'baseline_loss', 'candidate_discrimination', 'baseline_discrimination'):
+        parts = {}
+        for name in STRATA[1:]:
+            for key, value in zip(blocks[name]['block_ids'], blocks[name][field]):
+                parts[key] = parts.get(key, 0) + value
+        assert set(parts) == set(blocks['all']['block_ids'])
+        for key, value in zip(blocks['all']['block_ids'], blocks['all'][field]):
+            close(value, parts[key])
+
+
+def intervals(value):
+    if value['observed_blocks'] == 0:
+        assert value['interval'] is None
+        return
+    assert value['repeats'] == len(value['samples']) == 2000 and value['block_tokens'] == 128 and value['seed'] == 42
+    for index, field in enumerate(('loss_relative_change_95_percent_interval', 'discrimination_change_95_percent_interval')):
+        for endpoint, probability in enumerate((.025, .975)):
+            close(value[field][endpoint], quantile([row[index] for row in value['samples']], probability))
+
+
+def metrics(cases):
+    result = {}
+    assert len({c['case_id'] for c in cases}) == len(cases)
+    for name in GROUPS:
+        success = []; accuracy = []
+        for case in cases:
+            rows = case['groups'][name]; assert rows
+            for row in rows:
+                assert row['success'] == (row['target_true'] < row['target_new'] if name == 'neighborhood' else row['target_new'] < row['target_true'])
+                assert math.isfinite(row['target_new']) and math.isfinite(row['target_true'])
+            success.append(sum(r['success'] for r in rows) / len(rows))
+            accuracy.append(sum(r['correct'] for r in rows) / len(rows))
+        result[name] = {'cases': len(cases), 'prompts': sum(len(c['groups'][name]) for c in cases),
+                        'success': math.fsum(success) / len(cases), 'teacher_forced_accuracy': math.fsum(accuracy) / len(cases)}
+    values = [result[name]['success'] for name in GROUPS]
+    result['harmonic_score'] = 3 / sum(1 / v for v in values) if all(values) else 0.
+    return result
+
+
+def check_metrics(actual, expected):
+    close(actual['harmonic_score'], expected['harmonic_score'])
+    for name in GROUPS:
+        assert actual[name]['cases'] == expected[name]['cases'] and actual[name]['prompts'] == expected[name]['prompts']
+        close(actual[name]['success'], expected[name]['success'])
+        close(actual[name]['teacher_forced_accuracy'], expected[name]['teacher_forced_accuracy'])
+
+
+def metric_values(value):
+    return [value['harmonic_score']] + [value[name]['success'] for name in GROUPS]
+
+
+def long_timing(report, metadata):
+    assert report['status'] == 'complete' and report['all_original_rows_verified'] == metadata['shape'][0]
+    assert report['load_seconds'] >= 0 and report['memory_after_query']['peak_bytes'] > 0
+    for name, result in report['query'].items():
+        assert result['inputs'] == metadata['query_types'][name]
+        repeats = 1 if report.get('measurement_purpose') == 'quality-and-reopening-only' else 15
+        assert len(result['complete_samples_ms']) == len(result['replay_samples_ms']) == repeats
+        assert all(v > 0 for v in result['complete_samples_ms'])
+        close(result['complete_p50_ms'], statistics.median(result['complete_samples_ms']))
+        close(result['complete_p95_ms'], quantile(result['complete_samples_ms'], .95))
+        close(result['replay_p50_ms'], statistics.median(result['replay_samples_ms']))
+        close(result['inputs_per_second'], result['inputs'] * 1000 / result['complete_p50_ms'])
+
+
+def llm_timing(report, phase):
+    assert report['status'] == 'passed' and report['open_seconds'] >= 0
+    if phase == 'cpu':
+        for category in ('query', 'row_only'):
+            for split in ('calibration', 'test'):
+                result = report[category][split]
+                values = result.get('warm_samples_ms', result.get('samples_ms'))
+                assert values and all(v > 0 for v in values)
+                close(result['p50_ms'], statistics.median(values))
+                close(result['p95_ms'], quantile(values, .95))
+    else:
+        assert report['gpu_before']['compute_pids'] == report['gpu_before']['external_compute_pids'] == []
+        assert report['gpu_before']['utilization_percent'] <= 5
+        assert report['gpu_samples'] and all(not v['external_compute_pids'] and len(v['compute_pids']) == 1 for v in report['gpu_samples'])
+        assert report['batch_size'] in (1, 8) and report['decode_steps'] == 16
+        prefill = [v['prefill_ms'] for v in report['samples']]
+        decode = [d for v in report['samples'] for d in v['decode_ms']]
+        assert all(len(v['decode_ms']) == 16 for v in report['samples'])
+        assert len(report['samples']) == len(report['requests']) * 3 and len(report['requests']) == 32
+        close(report['prefill_p50_ms'], statistics.median(prefill)); close(report['prefill_p95_ms'], quantile(prefill, .95))
+        close(report['decode_p50_ms'], statistics.median(decode)); close(report['decode_p95_ms'], quantile(decode, .95))
+        close(report['decode_tokens_per_second'], report['batch_size'] * 1000 / statistics.mean(decode))
+        if report['mode'] == 'independent':
+            assert report['independent_registry_required'] is False and report['independent_serving_files'] == ['delta.safetensors', 'report.json']
+
+
+def verify(root):
+    manifest = load(root / 'manifest.json')
+    names = {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file() and p.name != 'manifest.json'}
+    assert names == set(manifest['files'])
+    for name, entry in manifest['files'].items():
+        path = root / name
+        assert path.stat().st_size == entry['bytes'] and digest(path) == entry['sha256'], name
+    publication = load(root / 'publication.json'); assert publication['status'] == 'complete'
+    assert (publication['long_models'], publication['long_candidates'], publication['long_heldout_workers'],
+            publication['llm_models'], publication['llm_candidates'], publication['independent_controls']) == (108, 28188, 56376, 6, 1566, 12)
+    private = publication['private_input_sha256']; private_bytes = publication['private_input_bytes']
+    inventory = load(root / 'runtime/inventory.json')
+    assert set(inventory) == set(publication['source_commits'])
+    for commit, entry in inventory.items():
+        path = root / 'runtime' / (commit + '.tar.gz'); assert digest(path) == entry['archive_sha256']
+        with tarfile.open(path, 'r:gz') as archive:
+            assert {m.name for m in archive.getmembers()} == set(entry['files'])
+            for member in archive.getmembers():
+                value = archive.extractfile(member).read(); expected = entry['files'][member.name]
+                assert len(value) == expected['bytes'] and hashlib.sha256(value).hexdigest() == expected['published_sha256']
+    prepare = load(root / 'long/prepare.json'); frozen = load(root / 'long/selection.json')
+    complete = load(root / 'long/quality-complete.json')
+    assert prepare['status'] == complete['status'] == 'complete' and len(prepare['models']) == len(frozen['models']) == 108
+    assert complete['frozen_selection_sha256'] == private['long/selection.json']
+    long_coverage = set(); long_retimings = set()
+    for prepared, selected in zip(prepare['models'], frozen['models']):
+        name = prepared['name']; folder = root / 'long/models' / name
+        assert name == selected['name'] and len(prepared['jobs']) == 261
+        metadata = load(folder / 'metadata.json'); grid = load(folder / 'grid.json.gz')
+        blocks = {b['name']: b['blocks'] for b in load(folder / 'paired-blocks.json.gz')}
+        assert len(grid) == len(blocks) == 261 and len({g['build']['name'] for g in grid}) == 261
+        source(metadata['environment'], inventory) if 'environment' in metadata else None
+        costs = {}; builds = {}
+        for entry in grid:
+            built = entry['build']; candidate = built['name']; long_coverage.add((name, candidate))
+            source(built['environment'], inventory)
+            assert built['status'] == 'complete' and built['job_sha256'] == entry['private_job_sha256']
+            assert sum(v['bytes'] for v in built['serving_files'].values()) == built['row_bundle_bytes']
+            assert built['model_bytes'] == built['row_bundle_bytes'] + built['common_model_bytes']
+            assert entry['complete_serving_bytes'] == built['model_bytes'] + private_bytes['long/models/' + name + '/metadata.json']
+            assert selected['costs'][candidate]['complete_serving_bytes'] == entry['complete_serving_bytes']
+            assert selected['costs'][candidate]['raw_build_report_sha256'] == entry['private_build_sha256']
+            row = entry['row_audit']; assert row['status'] == 'complete' and row['rows'] == metadata['shape'][0]
+            assert row['decoded_row_sha256'] == built['decoded_row_sha256']
+            assert row['private_build_report_sha256'] == entry['private_build_sha256']
+            for cached in ('0', '1'):
+                paired(blocks[candidate][cached]['validation'], built['validation'][cached], metadata['evaluations']['validation'])
+                audit = entry['audits'][cached]['report']; long_timing(audit, metadata)
+                assert audit['job_sha256'] == entry['private_job_sha256'] and audit['decoded_row_sha256'] == built['decoded_row_sha256']
+                for split in ('test', 'confirmation'):
+                    paired(blocks[candidate][cached][split], audit['quality'][split], metadata['evaluations'][split])
+            costs[candidate] = entry['complete_serving_bytes']; builds[candidate] = built
+        assert len(selected['choices']) == 2 * len(BUDGETS) * len({v['family'] for v in builds.values()})
+        for choice in selected['choices']:
+            eligible = [b for b in builds.values() if b['family'] == choice['family'] and gate(b['validation'][str(choice['cached'])], choice['budget'])]
+            best = min(eligible, key=lambda b: (costs[b['name']], b['name'])) if eligible else None
+            assert choice['name'] == (best['name'] if best else None)
+        for interval in load(folder / 'selected-intervals.json.gz'):
+            assert (interval['name'], interval['cached']) in {(c['name'], c['cached']) for c in selected['choices']}
+            for value in interval['strata'].values():
+                intervals(value)
+        for timing in load(folder / 'retimings.json.gz'):
+            request = timing['request']; key = tuple(request[k] for k in ('model', 'name', 'cached', 'index', 'cache'))
+            assert key not in long_retimings; long_retimings.add(key)
+            long_timing(timing['report'], metadata)
+    assert len(long_coverage) == 28188
+    training = load(root / 'long/training-selection.json'); assert len(training['groups']) == 18
+    for group in training['groups']:
+        assert len(group['points']) == 6
+        best = min(group['points'], key=lambda p: (p['absolute_validation_loss'], -p['absolute_validation_discrimination'], p['name']))
+        assert best['name'] == group['chosen'] and best['name'] in {m['name'] for m in prepare['models']}
+    controller = load(root / 'long/retiming-controller.json')
+    assert controller['status'] == 'complete' and controller['workers'] == 1
+    assert len(controller['requests']) == len(controller['complete']) == len(long_retimings)
+    prepare = load(root / 'llm/prepare.json'); frozen = load(root / 'llm/selection.json')
+    assert len(prepare['models']) == len(frozen['models']) == 6
+    llm_coverage = set(); control_count = 0; case_cache = {}
+    def case_values(path):
+        if path not in case_cache:
+            case_cache[path] = load(root / path)
+        return case_cache[path]
+    timer_keys = {'cpu': set(), 'gpu': set()}
+    for prepared, selected in zip(prepare['models'], frozen['models']):
+        name = prepared['name']; folder = root / 'llm/models' / name
+        assert name == selected['name']; metadata = load(folder / 'metadata.json')
+        grid = load(folder / 'grid.json.gz'); assert len(grid) == 261
+        calibration = load(folder / 'calibration-ledger.json'); test = load(folder / 'test-ledger.json')
+        assert calibration['status'] == test['status'] == 'complete' and len(calibration['candidates']) == 261
+        assert test['frozen_selection_sha256'] == private['llm/selection.json']
+        values = {}; identities = {}
+        for entry in grid:
+            built = entry['build']; candidate = built['name']; llm_coverage.add((name, candidate))
+            assert built['status'] == 'complete' and built['job_sha256'] == entry['private_job_sha256']
+            assert built['model_bytes'] == built['row_bundle_bytes'] + built['common_model_bytes']
+            assert built['row_bundle_bytes'] == sum(v['bytes'] for v in built['serving_files'].values())
+            assert entry['complete_serving_bytes'] == built['model_bytes'] + private_bytes['llm/models/' + name + '/metadata.json']
+            assert entry['row_audit']['decoded_row_sha256'] == built['decoded_row_sha256']
+            for split, quality in entry['quality'].items():
+                result = quality['report']; cases = case_values(quality['public_case_scores'])
+                assert result['status'] == 'complete' and result['job_sha256'] == entry['private_job_sha256']
+                assert result['decoded_row_sha256'] == built['decoded_row_sha256'] and len(result['complete_request_checks']) == 16
+                assert all(c['split'] == split for c in cases)
+                check_metrics(metrics(cases), result['metrics'])
+                assert result['oov_contract_sha256'] == private['oov-contract.json']
+                key = (split, result['decoded_row_sha256'])
+                if key in identities:
+                    leader = identities[key]
+                    assert leader['complete_request_checks'] == result['complete_request_checks']
+                    check_metrics(leader['metrics'], result['metrics'])
+                else:
+                    assert result['quality_reused_from'] is None
+                    identities[key] = result
+            assert 'calibration' in entry['quality']
+            values[candidate] = entry
+        baseline = metric_values(values['raw-fp32']['quality']['calibration']['report']['metrics'])
+        for choice in selected['choices']:
+            eligible = [v for v in values.values() if v['build']['family'] == choice['family'] and all(
+                a - b <= choice['budget_pp'] / 100 for a, b in zip(baseline, metric_values(v['quality']['calibration']['report']['metrics'])))]
+            best = min(eligible, key=lambda v: (v['complete_serving_bytes'], v['build']['name'])) if eligible else None
+            assert choice['name'] == (best['build']['name'] if best else None)
+            if best:
+                assert 'test' in best['quality']
+        controls = load(folder / 'controls.json.gz'); assert {c['name'] for c in controls} == {'head-constant', 'adapter', 'exact', 'hash'}
+        reference = next(c for c in controls if c['name'] == 'exact')['report']
+        for control in controls:
+            report = control['report']; cases = case_values(control['public_case_scores'])
+            assert report['status'] == 'complete' and report['seed'] == metadata['seed']
+            for split in ('calibration', 'test'):
+                check_metrics(metrics([c for c in cases if c['split'] == split]), report['metrics'][split])
+            if control['name'] in ('head-constant', 'adapter'):
+                control_count += 1
+                assert report['optimizer_steps'] == reference['optimizer_steps'] and len(report['epochs']) == 20
+                assert report['prepared_sha256'] == reference['prepared_sha256']
+                assert report['frozen_weight_sha256'] == reference['frozen_weight_sha256']
+                assert report['frozen_decoder_suffix_sha256'] == reference['frozen_decoder_suffix_sha256']
+                assert [e['actual_sequences'] for e in report['epochs']] == [e['actual_sequences'] for e in reference['epochs']]
+            if control['name'] == 'adapter':
+                assert abs(report['trainable_parameters'] - reference['trainable_parameters']) <= 12000
+        for phase in ('cpu', 'gpu'):
+            for timing in load(folder / ('retimings-' + phase + '.json.gz')):
+                request = timing['request']; key = tuple(request.get(k) for k in ('model', 'name', 'mode', 'cache', 'batch'))
+                assert key not in timer_keys[phase]; timer_keys[phase].add(key)
+                llm_timing(timing['report'], phase)
+    assert len(llm_coverage) == 1566 and control_count == 12
+    for phase in ('cpu', 'gpu'):
+        controller = load(root / ('llm/retiming-' + phase + '-controller.json'))
+        assert controller['status'] == 'complete' and controller['workers'] == 1
+        assert len(controller['requests']) == len(controller['complete']) == len(timer_keys[phase])
+    print(json.dumps({'status': 'passed', 'long_candidates': len(long_coverage), 'long_heldout_workers': 56376,
+                      'llm_candidates': len(llm_coverage), 'independent_controls': control_count,
+                      'long_final_timings': len(long_retimings), 'llm_final_timings': {k: len(v) for k, v in timer_keys.items()}}))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, required=True)
+    args = parser.parse_args(); verify(args.root)
+
+
+if __name__ == '__main__':
+    main()

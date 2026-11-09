@@ -88,6 +88,8 @@ def cpu_worker(args):
             for category in ('query', 'row_only'):
                 samples = report[category][split].get('warm_samples_ms', report[category][split].get('samples_ms'))
                 report[category][split].update(p50_ms=float(np.median(samples)), p95_ms=float(np.quantile(samples, .95)))
+        report['rss_after_queries_before_integrity'] = memory()
+        report['staging_after_queries_before_integrity'] = dict(staged.stats)
         rows_hash = original_row_digest(staged.reader, metadata['shape'][0])
         if rows_hash != load(job['report'])['decoded_row_sha256']:
             raise ValueError('CPU serving changed decoded original row bytes')
@@ -198,10 +200,12 @@ def gpu_worker(args):
                         report['samples'].append({'prefill_ms':prefill_ms, 'decode_ms':decode_ms,
                             'memory_history_tokens':getattr(cache, 'history_length', 0)})
                     snapshot()
+        report['rss_after_queries_before_integrity'] = memory()
         if staged is not None:
             staged.profile=True
             generate_cached(replay, prefixes[0], steps=args.decode_steps, global_step=recipe['global_step'], continuation=continuations[0])
             report['staging_stats']=staged.stats
+            report['rss_after_staging_probe_before_integrity'] = memory()
             row_hash=original_row_digest(staged.reader,metadata['shape'][0])
             if row_hash!=load(job['report'])['decoded_row_sha256']:raise ValueError('GPU worker original row decode changed')
             report['decoded_row_sha256']=row_hash

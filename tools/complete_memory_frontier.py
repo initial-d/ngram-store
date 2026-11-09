@@ -43,6 +43,7 @@ def execute_resumable(jobs, phase, workers, root):
             Path(job['directory']).rename(str(job['directory']) + '.failed-' + str(time.time_ns()))
         log = root / (hashlib.sha256(json.dumps(pair).encode()).hexdigest() + '-' + str(time.time_ns()) + '.log')
         command = [sys.executable, '-m', 'tools.tree_node_quality', phase, '--job', path]
+        if phase == 'audit': command.append('--quality-only')
         if cached is not None: command += ['--cached', str(cached)]
         with log.open('w') as stream:
             result = subprocess.run(command, stdout=stream, stderr=subprocess.STDOUT)
