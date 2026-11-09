@@ -79,6 +79,32 @@ class RealStructuralTest(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, "arguments"):
                         index.lookup(["a"], index="flat")
 
+    def test_saved_flat_index_reopens_binary_and_hash_original_ids(self):
+        keys = {0: "a", 2: "ab", 3: "记忆", 4: "\na"}
+        raw = struct.pack("<10f", *([1., 0.] * 5))
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "keys.flat"
+            with StructuralPlan(raw, 2, keys, self.library) as plan:
+                plan.save_index(path, index="flat")
+            with StructuralIndex(path, self.library) as index:
+                for kind in ("flat", "hash"):
+                    self.assertEqual(index.lookup(list(keys.values()) + ["missing", ""], index=kind),
+                                     list(keys) + [None, None])
+                    self.assertEqual(index.lookup([], index=kind), [])
+                with self.assertRaisesRegex(ValueError, "arguments"):
+                    index.lookup(["a"], index="datrie")
+            saved = path.read_bytes()
+            for length in (8, 16, 23, len(saved) - 1):
+                path.write_bytes(saved[:length])
+                with self.assertRaises(ValueError):
+                    StructuralIndex(path, self.library)
+            for offset, value in ((8, 2**64 - 1), (16, 1), (24, 0)):
+                broken = bytearray(saved)
+                struct.pack_into("<Q", broken, offset, value)
+                path.write_bytes(broken)
+                with self.assertRaises(ValueError):
+                    StructuralIndex(path, self.library)
+
     def test_joint_final_guard_rejects_direction_norm_and_chain_drift(self):
         keys = {i: key for i, key in enumerate(["a", "ab", "abc", "ax", "ay", "az"]) }
         rows = [(1., 0.), (.996, .089), (.984, .178), (-1., 0.), (2., 0.), (math.nan, 0.)]

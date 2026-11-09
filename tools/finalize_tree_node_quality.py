@@ -55,7 +55,6 @@ def check_selection(root):
 
 def retime(args):
     models = check_selection(args.frontier)
-    args.output.mkdir(parents=True, exist_ok=False)
     requests = []
     for model, selected, jobs, _ in models:
         pairs = {(c['name'], c['cached']) for c in selected['choices'] if c['name']}
@@ -71,13 +70,36 @@ def retime(args):
                     requests.append({'model': model['name'], 'name': name, 'job': path,
                         'cached': cached, 'index': index, 'cache': cache})
     random.Random(42).shuffle(requests)
-    report = {'status': 'running', 'environment': environment(),
-        'frozen_selection_sha256': digest(args.frontier / 'selection.json'),
-        'workers': 1, 'requests': requests, 'complete': [], 'failures': [],
-        'execution_schedule_sha256': hashlib.sha256(json.dumps(requests, sort_keys=True).encode()).hexdigest()}
+    if args.resume:
+        report = load(args.output / 'report.json')
+        assert report['requests'] == requests and report['workers'] == 1
+        assert report['frozen_selection_sha256'] == digest(args.frontier / 'selection.json')
+        history = args.output / 'report.before-resume.json'
+        assert not history.exists()
+        history.write_bytes((args.output / 'report.json').read_bytes())
+        report['resume'] = {'source_report_sha256': digest(history),
+            'prior_failures': report['failures'], 'environment': environment()}
+        report['failures'] = []
+        report['status'] = 'running'
+    else:
+        args.output.mkdir(parents=True, exist_ok=False)
+        report = {'status': 'running', 'environment': environment(),
+            'frozen_selection_sha256': digest(args.frontier / 'selection.json'),
+            'workers': 1, 'requests': requests, 'complete': [], 'failures': [],
+            'execution_schedule_sha256': hashlib.sha256(json.dumps(requests, sort_keys=True).encode()).hexdigest()}
+    retained = set()
+    for item in report['complete']:
+        r = item['request']; job = load(r['job'])
+        path = Path(job['report']).with_name(r['name'] +
+            f'-cache{r["cached"]}-{r["index"]}-rowcache{r["cache"]}-retiming.json')
+        assert r in requests and digest(path) == item['report_sha256']
+        retained.add(json.dumps(r, sort_keys=True))
+    assert len(retained) == len(report['complete'])
     write(args.output / 'report.json', report)
     for i, request in enumerate(requests):
-        log = args.output / f'{i:04d}.log'
+        if json.dumps(request, sort_keys=True) in retained:
+            continue
+        log = args.output / (f'{i:04d}.retry.log' if args.resume else f'{i:04d}.log')
         with log.open('w') as f:
             result = subprocess.run([sys.executable, '-m', 'tools.finalize_tree_node_quality',
                 'query', '--job', request['job'], '--cached', str(request['cached']),
@@ -214,6 +236,7 @@ def main():
     parser.add_argument('phase', choices=('retime', 'publish', 'query'))
     for name in ('frontier', 'mechanism', 'analysis', 'retiming', 'output', 'job'):
         parser.add_argument('--' + name, type=Path)
+    parser.add_argument('--resume', action='store_true', help='Verify and retain completed timings; retry failed/unexecuted requests in the original schedule.')
     parser.add_argument('--cached', type=int, choices=(0, 1), default=0)
     parser.add_argument('--index', choices=('datrie', 'hash'), default='datrie')
     parser.add_argument('--cache', type=int, choices=(0, 1048576), default=0)

@@ -17,6 +17,7 @@ struct Plan {
     std::unordered_map<std::string, uint64_t> hash;
     std::vector<uint64_t> representatives, order;
     bool built = false;
+    bool keys_loaded = false;
     ~Plan() { if (index) dastrie_delete_unsafe(index); }
 };
 struct DeleteDATrie { void operator()(DATrie* t) const { if (t) datrie_delete_unsafe(t); } };
@@ -129,6 +130,7 @@ extern "C" void* meft_structural_build(const char* const* keys, const uint64_t* 
         for (size_t i = 0; i < nrows; ++i)
             require(p->representatives[p->representatives[i]] == p->representatives[i], "non-idempotent plan");
         p->built = true;
+        p->keys_loaded = true;
         return p.release();
     } catch (const std::exception& e) { fail(error, error_size, e.what()); return nullptr; }
     catch (...) { fail(error, error_size, "structural build failed"); return nullptr; }
@@ -150,7 +152,7 @@ extern "C" int meft_structural_lookup(void* plan, const char* const* keys, size_
     try {
         Plan* p = static_cast<Plan*>(plan);
         require(p && (!count || (keys && ids)) && index >= 0 && index <= 2 &&
-                (index == 1 || p->built), "invalid lookup arguments");
+                (index == 1 ? p->index != nullptr : p->keys_loaded), "invalid lookup arguments");
         for (size_t i = 0; i < count; ++i) {
             require(keys[i], "null query key");
             ids[i] = UINT64_MAX;
@@ -195,8 +197,50 @@ extern "C" void* meft_structural_open_index(const char* path, char* error, size_
     try {
         require(path, "null index path");
         std::unique_ptr<Plan> p(new Plan);
-        p->index = dastrie_load_from_file(path);
-        require(p->index, "cannot load trusted DASTrie index");
+        std::ifstream in(path, std::ios::binary | std::ios::ate);
+        require(static_cast<bool>(in), "cannot open index");
+        const std::streamoff length = in.tellg();
+        require(length >= 8, "truncated index");
+        in.seekg(0);
+        char magic[8]; in.read(magic, 8);
+        if (std::string(magic, 8) == "MEFTKEY1") {
+            auto read_u64 = [&in]() {
+                unsigned char bytes[8];
+                in.read(reinterpret_cast<char*>(bytes), 8);
+                require(static_cast<bool>(in), "truncated flat index");
+                uint64_t value = 0;
+                for (size_t i = 0; i < 8; ++i) value |= uint64_t(bytes[i]) << (8 * i);
+                return value;
+            };
+            const uint64_t count = read_u64();
+            require(count <= (uint64_t(length) - 16) / 16 && count < SIZE_MAX,
+                    "invalid flat index count");
+            std::vector<uint64_t> offsets(count + 1), ids(count);
+            for (auto& offset : offsets) offset = read_u64();
+            for (auto& id : ids) id = read_u64();
+            const uint64_t header = 24 + 16 * count;
+            require(header <= uint64_t(length) && offsets[0] == 0 &&
+                    offsets.back() == uint64_t(length) - header, "invalid flat index size");
+            std::string data(static_cast<size_t>(offsets.back()), '\0');
+            if (!data.empty()) in.read(&data[0], data.size());
+            require(static_cast<bool>(in), "truncated flat key bytes");
+            std::set<uint64_t> seen_ids;
+            p->flat.reserve(count); p->hash.reserve(count);
+            for (size_t i = 0; i < count; ++i) {
+                require(offsets[i] < offsets[i + 1] && offsets[i + 1] <= data.size(),
+                        "invalid flat key offsets");
+                std::string key = data.substr(offsets[i], offsets[i + 1] - offsets[i]);
+                require(key.find('\0') == std::string::npos &&
+                        (i == 0 || p->flat.back().first < key) && ids[i] != UINT64_MAX &&
+                        seen_ids.insert(ids[i]).second, "invalid flat key or original ID");
+                p->flat.emplace_back(key, ids[i]); p->hash.emplace(key, ids[i]);
+            }
+            p->keys_loaded = true;
+        } else {
+            in.close();
+            p->index = dastrie_load_from_file(path);
+            require(p->index, "cannot load trusted DASTrie index");
+        }
         return p.release();
     } catch (const std::exception& e) { fail(error, error_size, e.what()); return nullptr; }
     catch (...) { fail(error, error_size, "index load failed"); return nullptr; }
