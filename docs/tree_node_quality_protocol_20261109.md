@@ -35,6 +35,9 @@ For every checkpoint compare the same original-ID domain:
 
 - Raw FP32/FP16/symmetric per-row INT8 (scale stored with each row), and a
   dense in-memory FP32 control.
+- Frozen no-ngram, global-mean and training-occurrence-weighted-mean row
+  controls. Preserve the original bag denominator and evaluate both ordinary
+  and known-cache inference; these test whether distinct rows are needed.
 - Native identity layouts in original and DATrie-planned order, all three
   precisions, plus native exact encoded-byte deduplication controls.
 - Prefix/suffix tree parent-child and multi-level node sharing, cosine gates

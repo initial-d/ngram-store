@@ -174,9 +174,14 @@ class Reader:
                          'dim': self.reader.metadata.get('dim', self.reader.metadata.get('shape', [0, 0])[1])}
         if job['backend'] == 'dense':
             self.reader.table = np.array(self.reader.table)
+        self.constant = job['backend'] == 'constant'
+        if self.constant:
+            self.metadata['rows'] = load(Path(job['common']) / 'metadata.json')['shape'][0]
 
     def rows(self, ids):
         from .quantized_memory import QuantizedRows
+        if self.constant:
+            return np.repeat(self.reader.gather(np.array([0], dtype=np.int64)), len(ids), axis=0)
         return self.reader.gather(ids) if isinstance(self.reader, QuantizedRows) else self.reader.rows(ids)
 
     def close(self):
@@ -273,7 +278,16 @@ def build_job(job_path):
         planning = {'seconds': time.perf_counter() - start, 'mapping_sha256': array_digest(mapping.astype('<u8')),
             'retained_rows': int(np.sum(mapping == np.arange(len(mapping)))), 'fidelity': fidelity_before_quantization}
     expected = None
-    if job['backend'] in ('native', 'raw', 'dense'):
+    if job['backend'] == 'constant':
+        if job['encoding'] == 'zero':
+            vector = np.zeros(source.shape[1], dtype=np.float32)
+        elif job['encoding'] == 'mean':
+            vector = source.astype(np.float64).mean(0).astype(np.float32)
+        else:
+            vector = np.average(source.astype(np.float64), axis=0, weights=np.load(common / 'source-occurrence-counts.npy')).astype(np.float32)
+        pack_quantized(vector[None], directory, 'fp32', native=False)
+        expected = np.repeat(vector[None], len(source), axis=0)
+    elif job['backend'] in ('native', 'raw', 'dense'):
         pack_quantized(source, directory, job['encoding'], native=job['backend'] == 'native',
             representatives=mapping.tolist() if job['planner'] in ('datrie', 'reference') else None,
             row_order=order, deduplicate=job['planner'] == 'byte-dedup', max_block_bytes=8192)
@@ -423,6 +437,10 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
     bags = [[gram_ids[g] for g in ngrams(w, checkpoint['order']) if g in gram_ids] for w in keys]
     word_ids = np.asarray([i if i < len(words) else -1 for i in range(len(keys))], dtype='<i8')
     np.save(common / 'source-rows.npy', source)
+    occurrence = np.zeros(len(source), dtype=np.int64)
+    for w, bag in zip(words, bags[:len(words)]):
+        np.add.at(occurrence, bag, counts[w])
+    np.save(common / 'source-occurrence-counts.npy', occurrence)
     np.save(common / 'word-rows.npy', rows[1:len(words) + 1])
     np.save(common / 'output-rows.npy', checkpoint['output_rows'].numpy())
     np.save(common / 'lexical-word-ids.npy', word_ids)
@@ -441,6 +459,10 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
         def rows(self, ids):
             return source[ids]
     oracle = Oracle(); hidden = evaluate(oracle, plan_for(bags, word_ids, oracle), rows[1:len(words) + 1], batch_bags=64)
+    from .benchmark_heldout_compression import compose
+    original_forward = compose(checkpoint['input_rows'], checkpoint['bags'], checkpoint['lengths']).numpy()
+    original_forward_relative_l2 = float(np.linalg.norm(hidden[:len(words)].astype(np.float64) - original_forward) /
+                                       np.linalg.norm(original_forward.astype(np.float64)))
     np.save(common / 'cached-word-rows.npy', hidden[:len(words)])
     np.save(common / 'lexical-source-hidden.npy', hidden)
     query = {}; rng = np.random.default_rng(42)
@@ -466,6 +488,7 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
         'common_serving_files': {name: {'bytes': (common / name).stat().st_size, 'sha256': digest(common / name)} for name in file_names},
         'index_bytes': {'datrie': (common / 'keys.datrie').stat().st_size, 'hash': (common / 'keys.flat').stat().st_size},
         'known_cache_file_bytes': (common / 'cached-word-rows.npy').stat().st_size,
+        'canonical_source_reducer_vs_original_fp32_forward_relative_l2': original_forward_relative_l2,
         'common_index_construction': index_construction,
         'common_preparation_seconds': time.perf_counter() - preparation_started,
         'query_types': {name: len(v) for name, v in query.items()}}
@@ -486,6 +509,8 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
         for planner in ('none', 'layout', 'byte-dedup'):
             add('native-' + planner + '-' + encoding, 'native-identity', 'native', encoding, planner)
     add('dense-fp32', 'dense', 'dense', 'fp32')
+    for encoding in ('zero', 'mean', 'weighted-mean'):
+        add('constant-' + encoding, 'constant', 'constant', encoding)
     for planner in ('datrie', 'reference'):
         for cosine in GATES:
             for norm in GATES:
@@ -496,7 +521,7 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
         add('faiss-' + encoding, 'faiss', 'faiss', encoding)
         add('dedup-' + encoding, 'faiss-dedup', 'dedup', encoding,
             direct_directory=str(out / 'bundles' / ('faiss-' + encoding)))
-    assert len(jobs) == 201
+    assert len(jobs) == 204
     write(out / 'jobs.json', jobs)
     return {'name': out.name, 'metadata_sha256': digest(common / 'metadata.json'), 'jobs': jobs}
 
@@ -536,7 +561,7 @@ def freeze_selection(root):
         choices = []
         for cached in (0, 1):
             for budget in BUDGETS:
-                for family in ('raw', 'dense', 'native-identity', 'tree-datrie', 'tree-reference', 'faiss', 'faiss-dedup'):
+                for family in ('raw', 'dense', 'constant', 'native-identity', 'tree-datrie', 'tree-reference', 'faiss', 'faiss-dedup'):
                     chosen = select([c for c in candidates if c['family'] == family], budget, cached)
                     choices.append({'cached': cached, 'budget': budget, 'family': family,
                         'name': chosen['name'] if chosen else None, 'model_bytes': chosen['model_bytes'] if chosen else None})
