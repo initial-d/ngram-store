@@ -24,7 +24,7 @@ from safetensors import safe_open
 from safetensors.torch import save_file
 from transformers import AutoTokenizer
 
-from .benchmark_device_gather import rss
+from .benchmark_device_gather import rss as process_rss
 from .engram_row_adapter import MappedMultiHeadEmbedding, export_multihead, file_sha256, head_offsets
 from .late_memory_replay import load_engram
 from .ngram_identity import IdentityMapping, Vocabulary
@@ -40,6 +40,20 @@ def write(path, value):
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def rss():
+    result = process_rss()
+    if sys.platform == 'linux':
+        fields = {}
+        for line in Path('/proc/self/status').read_text().splitlines():
+            key, _, value = line.partition(':')
+            if key in ('RssAnon', 'RssFile', 'RssShmem'):
+                fields[key] = int(value.strip().split()[0]) * 1024
+        result.update(anonymous_bytes=fields.get('RssAnon'), file_backed_bytes=fields.get('RssFile'),
+                      shared_memory_bytes=fields.get('RssShmem'),
+                      measurement='Linux /proc/self/status; process-wide RSS, including allocator/import/model overhead')
+    return result
 
 
 def environment():

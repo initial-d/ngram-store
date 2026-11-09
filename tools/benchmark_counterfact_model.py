@@ -15,8 +15,8 @@ import time
 import numpy as np
 import torch
 
-from .benchmark_counterfact_storage import environment, write
-from .benchmark_device_gather import gpu_snapshot, monitor_client_pid, rss
+from .benchmark_counterfact_storage import environment, write, rss
+from .benchmark_device_gather import gpu_snapshot, monitor_client_pid
 from .counterfact_native import restore, reopen, digest
 from .engram_row_adapter import file_sha256
 
