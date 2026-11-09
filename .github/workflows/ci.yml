@@ -48,7 +48,7 @@ jobs:
         run: python -S docs/qwen_native_identity_evidence_20261109/verify.py
       - name: Verify matched identity-format bytes and fresh CPU reader controls
         run: python -S docs/identity_format_evidence_20261109/verify.py
-      - name: Verify conditional ancestor similarity provenance and complete counts
+      - name: Verify conditional prefix/suffix node similarity provenance and complete counts
         run: python -S docs/conditional_similarity_evidence_20261109/verify.py
 
   torch-adapter:

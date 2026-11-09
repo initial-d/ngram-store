@@ -117,3 +117,12 @@ Before calculating the new all-ancestor results, fix the following refinement:
 - Qwen sibling observations remain an auxiliary transfer check. Cross-order
   parent/ancestor vectors occupy different heads; raw cross-head cosine does
   not establish the user's containment mechanism.
+
+## Public terminology clarification (after analysis)
+
+The public description uses parent–child, grandparent–grandchild and larger
+node-containment gaps on a prefix/suffix trie path. A prefix trie over reversed
+strings represents the original strings' suffix relationships. This is the
+same measured containment relation; original report field names and recorded
+pre-analysis snapshots retain their terminology. No pair definition, threshold
+or result changes with this wording clarification.

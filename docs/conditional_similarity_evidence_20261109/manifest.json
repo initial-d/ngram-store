@@ -2,16 +2,16 @@
   "description": "Aggregate-only CPU ancestry analysis, immutable source snapshots and derived summary; no weights or keys",
   "files": {
     "README.md": {
-      "bytes": 9715,
-      "sha256": "7e38c7ddc0bc760d84bd1ad8e7b8854cf3e162294b7d263b716ded4803862a0a"
+      "bytes": 10591,
+      "sha256": "b1a8a211e38ce56845f5cd2d7cc8c2a89b1a32e8a01bd4271c43d8533e5af142"
     },
     "ancestry.png": {
-      "bytes": 187466,
-      "sha256": "6888a10d9d4b97ea0f92513299e12928dfb1407d3cd112d20d1ac26fecb78ca3"
+      "bytes": 193187,
+      "sha256": "830b826f318435fbdcd019710070ce0644874ab4212c6e34385175a403bed7cf"
     },
     "ancestry.svg": {
-      "bytes": 100110,
-      "sha256": "31d65198dba570636046ce840dd0e516e6ebe3fa93191338a3c863a29a449576"
+      "bytes": 101934,
+      "sha256": "51209d26c44b2282e17b8867a30a1f08285e1c4eba1a5ab5d50eaa8810e60c79"
     },
     "enwik8/average-order-12-s11/analysis.json": {
       "bytes": 911844,
@@ -94,8 +94,8 @@
       "sha256": "633561d7f2c64ec21621fdede1d82468ca538dd19cdd820f4f2734b4badec4af"
     },
     "plot.py": {
-      "bytes": 3438,
-      "sha256": "2881883c5a4bf38d46dc496fc10f5bec95ce855f2d00c4ae4ba38caf9d6d63bf"
+      "bytes": 3593,
+      "sha256": "9ac53fcc5ff6676255ac6911a4591769546008d24665b02a1ff529bba97cced3"
     },
     "qwen-auxiliary/qwen06-20877-exact-s11/analysis.json": {
       "bytes": 602586,
@@ -277,5 +277,6 @@
       "bytes": 13038,
       "sha256": "e5227d8af8024d364e97f40b6b8d6b73a1c06082cf0b5dfd9bf6f3c242aae561"
     }
-  }
+  },
+  "presentation_revision": "2026-11-09: use prefix/suffix trie parent-child and multi-level node containment in prose/chart labels; measured reports, source snapshots and derived values unchanged"
 }
