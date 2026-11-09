@@ -121,7 +121,7 @@ initialization sensitivity from an unsupported universal length rule.
 ## Execution and publication
 
 CPU only, empty CUDA_VISIBLE_DEVICES. Write exclusively in a new task directory
-under /llm-align/duyimin; original sources are read-only and GPU processes are
+under the user-designated task workspace; original sources are read-only and GPU processes are
 untouched. Use nine training trajectories at once. The preflight reports 255
 visible CPUs and load below 10; use at most 24 fresh codec/query workers,
 up to four fitting threads each and one thread for queries, with a fixed
@@ -136,3 +136,38 @@ score/block evidence, reproducible code snapshots and a stdlib verifier;
 do not publish corpora, raw token/string keys, weights or internal hostnames.
 Finish the complete requested grid, quality audits, query measurements,
 mechanism experiment, figures, evidence verifier and required CI before merging.
+
+## Post-selection accounting and verification disclosure
+
+The frozen build ledger omitted the common reader `metadata.json`. The final
+publication adds its actual file bytes uniformly to every candidate within each
+model, preserving the raw reports and selection hash. A model-wide constant
+cannot change the selected name; corrected complete-serving bytes are used in
+headline ratios. Runtime code/dependencies remain outside model-file costs.
+
+An additional all-row reopening pass audits post-encoding cosine, norm ratio,
+relative-L2 distributions and occurrence-weighted error for every candidate.
+It runs after the grid audits and before sequential final retiming, without
+changing candidates, gates or frozen choices. Original-row merge gates remain
+distinct from fidelity after quantization. The original phase-specific protocol
+files and source revisions are retained in the runtime archives.
+
+### Persisted hash-index repair during final retiming
+
+The initial retiming failed for persisted `keys.flat`: the native loader only
+opened DASTrie serialization, despite built plans already supporting binary
+and `std::unordered_map` lookup. The repair adds checked MEFTKEY1 loading and
+constructs an owned hash table from the same original key/ID pairs. It does
+not substitute sorted binary search for hash lookup. Hash runtime allocations
+remain in observed RSS; the serialized key file remains in the byte ledger.
+
+The interrupted request schedule, failed worker logs and verified completed
+DATrie reports are retained. Recovery checks each retained report hash and
+retries only failed or unexecuted requests, sequentially in the original fixed
+order, from a separately archived source revision and compiled library. No
+validation choice, input, codec or candidate count changes. The repaired
+library is selected outside the immutable build jobs; new query reports and
+the full-domain input audit record its SHA256. All hash/DATrie original IDs
+and canonical known-word source aggregates are checked again. This correction
+was made after selection and is disclosed with the failed run, rather than
+rewriting the original measurement history.

@@ -1,0 +1,176 @@
+{
+  "environment": {
+    "command": "${ENV_ROOT}/bin/python ${RUN_ROOT}/source/tools/train_tree_node_mechanism.py --training-root ${TRAINING_ROOT} --output ${RUN_ROOT}/mechanism --jobs 9",
+    "commit": "fb4e30bb75f66b0b641012a8038932d6711ece87",
+    "cpu": "x86_64",
+    "device": "cpu",
+    "gpu": "unused",
+    "interop_threads": 1,
+    "loadavg": [
+      7.98681640625,
+      8.1748046875,
+      8.33984375
+    ],
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "13de811f89b1b0a2f10005f35981544da9f86a905a9b83de6e27e3046e5cf4ba",
+    "threads": 1,
+    "torch": "2.11.0+cu130"
+  },
+  "failures": [],
+  "jobs": 9,
+  "status": "complete",
+  "steps": [
+    2000,
+    8000,
+    32000
+  ],
+  "training_root_report_sha256": "58448edb797500e8e0ae59378556f46749c19a89e805037830435b97bd7517f5",
+  "trajectories": [
+    {
+      "name": "order-4-seed-11/legacy-init-1",
+      "report_sha256": "82e037fe19fef63e40c7f4048aad62eb81dedf98d52e9d96da6d835a85221d83"
+    },
+    {
+      "name": "order-4-seed-11/legacy-init-0.1",
+      "report_sha256": "b6f0f3f4616e9ee2d6111f04a2aeec958c3aa4d32d704c7519c656eb080d7624"
+    },
+    {
+      "name": "order-4-seed-11/average-init-1",
+      "report_sha256": "f990e16065efaece5fb60e35b437dc875bc60fd40ea019432d00e37a6d2941b0"
+    },
+    {
+      "name": "order-4-seed-11/average-init-0.1",
+      "report_sha256": "81ea79d44c9b60512af128417c1d1816093bd9669deb34634f0f9025015c3736"
+    },
+    {
+      "name": "order-4-seed-7/legacy-init-1",
+      "report_sha256": "1edec68b4bc61ba422a327968ef97bd623c25e4dd676ac56412c66f5cbe21231"
+    },
+    {
+      "name": "order-4-seed-7/legacy-init-0.1",
+      "report_sha256": "afe882474f0bb3144ab3a06ec4dbd82f8ee5f5ddbf29e8f65e67cd2eb3af81c1"
+    },
+    {
+      "name": "order-4-seed-7/average-init-1",
+      "report_sha256": "97d8b87ca28ffa04bd18f882352576b4ae2b778419d4a6df369965c73a13ed5a"
+    },
+    {
+      "name": "order-4-seed-7/average-init-0.1",
+      "report_sha256": "7291ddbea9d821f43121d56e8b9f6851b2e2e346496462433258a944a0ecc024"
+    },
+    {
+      "name": "order-4-seed-3/legacy-init-1",
+      "report_sha256": "c89901c46c22a3ed0e9e34a9c4f154ea7e464ded3322e02fe892dadad1e320ad"
+    },
+    {
+      "name": "order-4-seed-3/legacy-init-0.1",
+      "report_sha256": "b9cab0a85df514e2093b1acef7cbed04250d527c7ad162a0567c21d3b3301da1"
+    },
+    {
+      "name": "order-4-seed-3/average-init-1",
+      "report_sha256": "f0a73b66484d692c2143af7c965a4c819b161ef2bff3705534a9acc9cb442b7b"
+    },
+    {
+      "name": "order-4-seed-3/average-init-0.1",
+      "report_sha256": "b00b3df329d86881113897261f9aeb79a0e6f6a0464e131aa7eee69b38898c58"
+    },
+    {
+      "name": "order-8-seed-7/legacy-init-1",
+      "report_sha256": "d3717a4cf611cfcfe52a60e3c8ce893daa916da24f1e89dd4196562ccade900b"
+    },
+    {
+      "name": "order-8-seed-7/legacy-init-0.1",
+      "report_sha256": "573c88a1096b07ef426427e93d4ec63b411acf47cbb243aa04ead353bb054a59"
+    },
+    {
+      "name": "order-8-seed-7/average-init-1",
+      "report_sha256": "4899027a5c9ac41e23ddd4229fc5de2ca2bc176c5e8d78d999db486440b863a5"
+    },
+    {
+      "name": "order-8-seed-7/average-init-0.1",
+      "report_sha256": "5271b2392e326ce5af322e6d30628e002796282d5969d737b8014220c1313e28"
+    },
+    {
+      "name": "order-12-seed-7/legacy-init-1",
+      "report_sha256": "47121f93329dc17552e34fbfc7773d3967a6256ff46ba27e15cf8366a0d51608"
+    },
+    {
+      "name": "order-12-seed-7/legacy-init-0.1",
+      "report_sha256": "1aba69440d0ae6bb830aa10934fa90e88860822d74b651aeaf2e8077944d6222"
+    },
+    {
+      "name": "order-12-seed-7/average-init-1",
+      "report_sha256": "b20ee8808c209cad2993b9bdee55ae3f490c223c22958fee74c4bb0d5621adba"
+    },
+    {
+      "name": "order-12-seed-7/average-init-0.1",
+      "report_sha256": "0d754ac4533229433978726987f3d500aea7fbf580d3566bf96571a016804858"
+    },
+    {
+      "name": "order-8-seed-11/legacy-init-1",
+      "report_sha256": "6bc37907278cbbae49cb2b2aa5161d2c60ca1084fbe09ef238d11b00b8184f0e"
+    },
+    {
+      "name": "order-8-seed-11/legacy-init-0.1",
+      "report_sha256": "89a1d6bec75c35e4631d98260a79625011945726027b1b03fa4c240f27c4bf78"
+    },
+    {
+      "name": "order-8-seed-11/average-init-1",
+      "report_sha256": "00dbf04215c9685a574ed2739a190c89d20c4b9482630bfa3705588cc30d286e"
+    },
+    {
+      "name": "order-8-seed-11/average-init-0.1",
+      "report_sha256": "2c1019835c201b70e5fd0b6402ba8388c3886192d9b950906eca89753245a869"
+    },
+    {
+      "name": "order-8-seed-3/legacy-init-1",
+      "report_sha256": "e880099c17d37467d5f4d5528083ddb7d2bc5e1803ebf200e1c39bd4d425553d"
+    },
+    {
+      "name": "order-8-seed-3/legacy-init-0.1",
+      "report_sha256": "6a8f938e734920e01137d150e8933887e7337b9f516c5eb868ebcba3d33eac3d"
+    },
+    {
+      "name": "order-8-seed-3/average-init-1",
+      "report_sha256": "0cecc88d1fbe195e5cc90ee018eff4798b5634beaf0095200a7c61ee9af599eb"
+    },
+    {
+      "name": "order-8-seed-3/average-init-0.1",
+      "report_sha256": "c599a6e043c288f1c61830119f6536b1e7f55d4684cedba2ada5357153667363"
+    },
+    {
+      "name": "order-12-seed-11/legacy-init-1",
+      "report_sha256": "6b46c547d81e390e631c6e09b3cc67ca471f52d77c6156e8f0d4457cb66abc9d"
+    },
+    {
+      "name": "order-12-seed-11/legacy-init-0.1",
+      "report_sha256": "0863e336ae36853b330aa6027aed22f1f67618daa9dd95bcd567a78240b8132b"
+    },
+    {
+      "name": "order-12-seed-11/average-init-1",
+      "report_sha256": "1cd151bad6940c20010a137b404abb7463c6a21cc6dbeb264f0f09f0349ac39b"
+    },
+    {
+      "name": "order-12-seed-11/average-init-0.1",
+      "report_sha256": "c393f95200a89f85bd19087e200bc7b860469b15139a939fa0374d2570942172"
+    },
+    {
+      "name": "order-12-seed-3/legacy-init-1",
+      "report_sha256": "eb49fb20257bec875719ebb2d311714b1cf5e5c43b569eb64ecfef072b2f6bc7"
+    },
+    {
+      "name": "order-12-seed-3/legacy-init-0.1",
+      "report_sha256": "a745294ff1cbb0556bac7315f4166cdecf17feebfe55c2b1cec61aa0cc22406c"
+    },
+    {
+      "name": "order-12-seed-3/average-init-1",
+      "report_sha256": "afaf1898af008b129b23cb16b8d5af3d03923c848acffe15eed10daf67aadc93"
+    },
+    {
+      "name": "order-12-seed-3/average-init-0.1",
+      "report_sha256": "18d5c091e4d107cb65db4e9a926b4eb9ba27eef51719ce178ab93779de9e48ae"
+    }
+  ]
+}

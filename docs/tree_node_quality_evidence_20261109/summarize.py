@@ -3,12 +3,12 @@ import json
 from pathlib import Path
 import statistics
 
-from verify import ROOT, load, gate
+from verify import ROOT, load, gate, resolve_evidence
 
 
 def summarize(root=ROOT):
     selection = load(root / 'selection.json')
-    records, comparisons, controls = [], [], []
+    records, comparisons, controls, query_controls = [], [], [], []
     for model in selection['models']:
         folder = root / 'models' / model['name']
         metadata = load(folder / 'metadata.json')
@@ -16,6 +16,18 @@ def summarize(root=ROOT):
         timings = {(r['name'], r['cached_known_words'], r['index_kind'], r['native_cache_bytes']): r
                    for r in load(folder / 'retimings.json.gz')}
         ci = {(c['name'], c['cached'], c['split']): c for c in load(folder / 'selected-intervals.json.gz')}
+        for (name, cached, index, cache), t in sorted(timings.items()):
+            ref = timings['raw-fp32', cached, index, 0]
+            query_controls.append({'model': model['name'], 'convention': metadata['convention'],
+                'order': metadata['order'], 'seed': metadata['seed'], 'name': name,
+                'family': grid[name]['build']['family'], 'cached': cached,
+                'index': index, 'native_cache_bytes': cache,
+                'complete_serving_bytes': grid[name]['complete_serving_bytes']
+                    - metadata['index_bytes']['datrie'] + metadata['index_bytes'][index],
+                'load_seconds': t['load_seconds'], 'query_rss_bytes': t['memory_after_query']['rss_bytes'],
+                'query_anonymous_bytes': t['memory_after_query']['anonymous_bytes'],
+                'complete_query_p50_ms': {s: t['query'][s]['complete_p50_ms'] for s in ('known', 'oov')},
+                'query_speedup_to_matched_raw_fp32': {s: ref['query'][s]['complete_p50_ms'] / t['query'][s]['complete_p50_ms'] for s in ('known', 'oov')}})
         original_bytes = grid['raw-fp32']['complete_serving_bytes']
         for choice in model['choices']:
             if not choice['name']:
@@ -69,7 +81,7 @@ def summarize(root=ROOT):
                         'oov_complete_speed_ratio': b['complete_query_p50_ms']['oov'] / a['complete_query_p50_ms']['oov'],
                         'both_confirmation_budget_pass': a['confirmation_budget_pass'] and b['confirmation_budget_pass']})
     mechanisms = []
-    for path in sorted((root / 'points').glob('*/report.json')):
+    for path in sorted(resolve_evidence(root / 'points').glob('*/report.json')):
         r = load(path); relations = load(path.parent / 'conditional.json.gz')['relations']
         mechanisms.append({'name': path.parent.name, 'convention': r['convention'], 'order': r['order'],
             'seed': r['seed'], 'scale': r['ngram_initialization_scale'], 'steps': r['point']['steps'],
@@ -111,7 +123,7 @@ def summarize(root=ROOT):
         'confirmation_failures': sum(r['family'] == f and not r['confirmation_budget_pass'] for r in primary)}
              for f in ('raw', 'dense', 'constant', 'native-identity', 'tree-datrie', 'tree-reference', 'faiss', 'faiss-dedup')}
     return {'primary_budget': .001, 'frozen_choices': records, 'primary_family_tally': tally,
-        'primary_comparisons': comparisons, 'necessity_controls': controls,
+        'primary_comparisons': comparisons, 'necessity_controls': controls, 'query_controls': query_controls,
         'mechanism_points': mechanisms, 'mechanism_groups': mechanism_groups,
         'scope': 'Finite frozen SGNS context task and shared-CPU complete string embedding queries; no LLM or universal dominance claim.'}
 

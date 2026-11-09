@@ -1,0 +1,60 @@
+..........................ss..............................Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00, 440.16it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 25425.53it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 27457.01it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 30375.82it/s]
+.Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 30531.79it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 26021.27it/s]
+.Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 28090.78it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 25919.34it/s]
+.Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 27332.41it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 27922.14it/s]
+.Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 28761.53it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 26253.96it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 30583.47it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 28169.95it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 30091.73it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 23718.17it/s]
+.Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 25269.61it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 28556.96it/s]
+.....Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00, 1079.89it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 26471.43it/s]
+{"run": "run-exact-3", "completed_variant": "identity", "memory_bytes": 13629, "merged": 0}
+{"run": "run-exact-3", "completed_variant": "xor", "memory_bytes": 13628, "merged": 0}
+{"run": "run-exact-3", "completed_variant": "dedup-xor", "memory_bytes": 14053, "merged": 0}
+{"run": "run-exact-3", "status": "passed", "row_bytes": 15104, "variants": [{"name": "identity", "memory_artifact_bytes": 13629, "bundle_bytes": 70376, "structurally_merged_rows": 0}, {"name": "xor", "memory_artifact_bytes": 13628, "bundle_bytes": 70375, "structurally_merged_rows": 0}, {"name": "dedup-xor", "memory_artifact_bytes": 14053, "bundle_bytes": 70800, "structurally_merged_rows": 0}]}
+{"run": "run-exact-3", "completed_variant": "xor-b32", "memory_bytes": 13628, "merged": 0}
+{"run": "run-exact-3", "completed_variant": "xor-b128", "memory_bytes": 12903, "merged": 0}
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 26397.06it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 27264.19it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 36258.26it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 27308.57it/s]
+Loading weights:   0%|          | 0/112 [00:00<?, ?it/s]Loading weights: 100%|██████████| 112/112 [00:00<00:00, 29690.43it/s]
+........ss.s..................s........ss...............The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+.s.s.......................................................{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 5852, "build_seconds": 0.0014253342524170876}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 4745, "build_seconds": 0.0012037502601742744}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 10452, "build_seconds": 0.43646654207259417}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 4952, "build_seconds": 0.009346541948616505}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 3222, "build_seconds": 0.0077718752436339855}
+{"backend": "precomputed-hybrid-source", "complete_model_bytes": 5715}
+{"backend": "precomputed-hybrid-int8", "complete_model_bytes": 4986}
+{"backend": "precomputed-hybrid-ngram-int8", "complete_model_bytes": 5177}
+.s{"counts": {"original_rows": 3004, "selected_category_rows": 3003, "empty_rows": 1, "ag_input_overlap_rows": 1, "duplicate_rows": 1, "conflicting_category_duplicate_rows": 1}, "phase_stats": {"validation": {"documents": 600, "tokens": 1200, "oov_tokens": 600, "oov_heavy_documents": 600, "attempted_oov_ngrams": 4200, "missing_oov_ngrams": 4199, "truncated_documents": 0, "class_1": 600, "unique_oov_types": 600, "date_min": "2016-12-31", "date_max": "2017-01-01"}, "test": {"documents": 2400, "tokens": 4800, "oov_tokens": 2400, "oov_heavy_documents": 2400, "attempted_oov_ngrams": 16800, "missing_oov_ngrams": 16797, "truncated_documents": 0, "class_1": 2400, "unique_oov_types": 2400, "date_min": "2016-12-31", "date_max": "2017-01-01"}}}
+..................................sssssssss.{"seed": 3, "backend": "source-resident", "complete_model_bytes": 2012, "build_seconds": 0.0009652501903474331}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 2008, "build_seconds": 0.0010163327679038048}
+{"seed": 3, "backend": "linear-fused", "complete_model_bytes": 2009, "build_seconds": 0.003883874975144863}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 2883, "build_seconds": 0.0012242081575095654}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 2946, "build_seconds": 0.0011499589309096336}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 8001, "build_seconds": 0.028690208215266466}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 3508, "build_seconds": 0.006462832912802696}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 1670, "build_seconds": 0.008793917018920183}
+....{"seed": 7, "backend": "source-mmap", "complete_model_bytes": 2014, "build_seconds": 0.0013557090424001217}
+{"seed": 7, "backend": "ngram-bounded", "complete_model_bytes": 8007, "build_seconds": 0.031465083826333284}
+{"seed": 7, "backend": "ngram-int8", "complete_model_bytes": 3514, "build_seconds": 0.006903999950736761}
+.s.ssssssssssssssssssssssss..{"retimed": 1, "expected": 40, "failures": 0}
+{"retimed": 21, "expected": 40, "failures": 0}
+{"retimed": 21, "expected": 40, "failures": 0}
+...............
+----------------------------------------------------------------------
+Ran 277 tests in 35.018s
+
+OK (skipped=45)

@@ -1,0 +1,15 @@
+....E.....
+======================================================================
+ERROR: test_engine_cli_uses_original_key_ids_after_structural_compaction (test_structural_native.RealStructuralTest.test_engine_cli_uses_original_key_ids_after_structural_compaction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "${RUN_ROOT}/query-repair-source/tests/test_structural_native.py", line 149, in test_engine_cli_uses_original_key_ids_after_structural_compaction
+    from ngram_store.cli import pack_store,main
+  File "${RUN_ROOT}/query-repair-source/ngram_store/__init__.py", line 2, in <module>
+    import meft_memory as _compatible
+ModuleNotFoundError: No module named 'meft_memory'
+
+----------------------------------------------------------------------
+Ran 10 tests in 4.471s
+
+FAILED (errors=1)

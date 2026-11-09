@@ -1,0 +1,569 @@
+{
+  "complete": [
+    {
+      "name": "order-4-seed-11-legacy-init-1-step-2000",
+      "report_sha256": "5d277478c7cc93c07488c6149cee9fa2caf626a3f242572fccc20dcb7f768159"
+    },
+    {
+      "name": "order-4-seed-11-legacy-init-1-step-8000",
+      "report_sha256": "0bb7ce5901c4d8ef2ceddc911769149263e1a8071e638d66648e960cb9a07c1b"
+    },
+    {
+      "name": "order-4-seed-11-legacy-init-0.1-step-2000",
+      "report_sha256": "b535b16279abec8e98f95fbcb7b42420455f0c9f2741e969d00fc6ab72fdf474"
+    },
+    {
+      "name": "order-4-seed-11-legacy-init-1-step-32000",
+      "report_sha256": "6e474b373b2e5c779c24dcbd8c411c55f2116e9eaa9ab40a8ca1c433dcf36f32"
+    },
+    {
+      "name": "order-4-seed-11-average-init-0.1-step-8000",
+      "report_sha256": "09a54a420be5ebaa1d25f577e91e2f6ca0428def7a2eaae0f7382621dca1301c"
+    },
+    {
+      "name": "order-4-seed-11-legacy-init-0.1-step-8000",
+      "report_sha256": "4231fce0184d3166883b57307b4e08eb59e31137e85b840f9b8dbd8534bca8be"
+    },
+    {
+      "name": "order-4-seed-7-legacy-init-1-step-2000",
+      "report_sha256": "4eb8364c113f38cd489616bc50cab6bd94acfea539dc949cfbfad6949f4980e9"
+    },
+    {
+      "name": "order-4-seed-11-legacy-init-0.1-step-32000",
+      "report_sha256": "0f90287c0ac74ad555e6cbe4045a6f286d0745059b571c6e627969daf871c1aa"
+    },
+    {
+      "name": "order-4-seed-11-average-init-0.1-step-32000",
+      "report_sha256": "fce0eecd022035d873c9921a456a6dec142a86c15f7358ebeea628d89e8ddbea"
+    },
+    {
+      "name": "order-4-seed-11-average-init-0.1-step-2000",
+      "report_sha256": "6d43772c3962ae3cdc677c41f8dd2a6734aa34d8f227e72ea37440a1df5ac978"
+    },
+    {
+      "name": "order-4-seed-11-average-init-1-step-32000",
+      "report_sha256": "e6717e7dfe314ed13f64b1c11917bf123f732ca4aae0404274af35d774c4f61c"
+    },
+    {
+      "name": "order-4-seed-7-legacy-init-1-step-32000",
+      "report_sha256": "9e07a2512765b4ffbbcef5aa5f547c97f7b91c577e4bd42bd1c8d3b5357ab3fa"
+    },
+    {
+      "name": "order-4-seed-7-legacy-init-0.1-step-8000",
+      "report_sha256": "f11329d3354ac94f0e7ccbe99a5687ab90181f2a3d26311c2e1e253849f12a1b"
+    },
+    {
+      "name": "order-4-seed-11-average-init-1-step-2000",
+      "report_sha256": "d9af32c3f710c09ea48812c878490ea48dc30e2b62e792fd313c78965113a98d"
+    },
+    {
+      "name": "order-4-seed-11-average-init-1-step-8000",
+      "report_sha256": "1e733529a9512329d8a358ccdb1490192cd0e9bbf9bb7e0651801f78f1bbd474"
+    },
+    {
+      "name": "order-4-seed-7-legacy-init-1-step-8000",
+      "report_sha256": "32da28747eefa12544fc2333a7894e977a03a8a7aa719057395590c8562c9275"
+    },
+    {
+      "name": "order-4-seed-7-average-init-0.1-step-32000",
+      "report_sha256": "4a39992df64ffd3bcb8e7ee3109e1d2379f6201ac9bc4b41cf1637db6b53c8dc"
+    },
+    {
+      "name": "order-4-seed-7-average-init-0.1-step-2000",
+      "report_sha256": "7d973181893f0f982069346895943cf92700482017828e6d83d158b5fa4ac4f1"
+    },
+    {
+      "name": "order-4-seed-7-average-init-1-step-2000",
+      "report_sha256": "80c2eb35cc776007e65567b7f6a5c116ee1e1a9c6c10a28e05976c86ad681206"
+    },
+    {
+      "name": "order-4-seed-7-legacy-init-0.1-step-2000",
+      "report_sha256": "5c56f5620f0e0978a03055ecfcaaca4a0659e7e9e1698a18ff05f2ec97c7c7a5"
+    },
+    {
+      "name": "order-4-seed-7-legacy-init-0.1-step-32000",
+      "report_sha256": "6504c68a01c5efa933520263d915c47f92ce1bc48df7e7a2a38be07cf2c84bd9"
+    },
+    {
+      "name": "order-4-seed-7-average-init-1-step-32000",
+      "report_sha256": "ca8a0401f237cd1868da55fb48c757b50168c74f0e1e97b1db005b05afed070a"
+    },
+    {
+      "name": "order-4-seed-7-average-init-0.1-step-8000",
+      "report_sha256": "3abc7170e424000c55971cb3e059728858455ade07740a4db85d4fa8ec25104f"
+    },
+    {
+      "name": "order-4-seed-7-average-init-1-step-8000",
+      "report_sha256": "d5f38080e0fa742dabc46139a825903c8cd473172745541e2c3849194dacb9fd"
+    },
+    {
+      "name": "order-4-seed-3-legacy-init-1-step-2000",
+      "report_sha256": "4bf25c8df108780749c918dce162780f37831e93065008e2c16b692c78e3cbff"
+    },
+    {
+      "name": "order-4-seed-3-legacy-init-1-step-8000",
+      "report_sha256": "a2ecec171ec22ba82ad5f79bd3ff81fe80b2c82bc3a84d52d23e101ea551e9b7"
+    },
+    {
+      "name": "order-4-seed-3-legacy-init-1-step-32000",
+      "report_sha256": "73121cc4faaee8bb9710601e31b1667882e90e0272762ce84403f21e03935c6e"
+    },
+    {
+      "name": "order-4-seed-3-legacy-init-0.1-step-2000",
+      "report_sha256": "a3c143099347f417ce35e646b1c283091e26353bcb1b7a3e2f996d3afb0e0fbe"
+    },
+    {
+      "name": "order-4-seed-3-legacy-init-0.1-step-8000",
+      "report_sha256": "40dea15f8f626d41b112e787c012aae21c01b4213307acdcbb3eecfebbb7466b"
+    },
+    {
+      "name": "order-4-seed-3-legacy-init-0.1-step-32000",
+      "report_sha256": "8b89b23a8bd4a6806d538f5897d8afebb0fee3230ffe6f9b17f59e93941ea11b"
+    },
+    {
+      "name": "order-4-seed-3-average-init-1-step-2000",
+      "report_sha256": "0ca92a3b403954a8d82c14c51d6616a38f6be28c7b5d77f0a332dbad736e3ae8"
+    },
+    {
+      "name": "order-4-seed-3-average-init-0.1-step-2000",
+      "report_sha256": "e80634786e5b7ee6f2584eedc465f67951c5087c23dc230b71c5dae0f2c7af88"
+    },
+    {
+      "name": "order-4-seed-3-average-init-0.1-step-8000",
+      "report_sha256": "eeb2e5faf07ee199c2170b3e1bc992729af857629e2e453a9c112632c5246bc8"
+    },
+    {
+      "name": "order-4-seed-3-average-init-1-step-8000",
+      "report_sha256": "e2345d6f47c082b256707c8e9e9df1d9584147b80e9839f64f58d92ed4ddb0d6"
+    },
+    {
+      "name": "order-4-seed-3-average-init-1-step-32000",
+      "report_sha256": "ca61983b4404d2b446dfd6420c3afa1e4f3cf5eb799789ac5e4d20b2c35e5268"
+    },
+    {
+      "name": "order-4-seed-3-average-init-0.1-step-32000",
+      "report_sha256": "86d178e5af9f1ce338547abc152b7b868188e8cd5a02259c457a90c3791bbab0"
+    },
+    {
+      "name": "order-8-seed-7-legacy-init-1-step-8000",
+      "report_sha256": "55cd61181bb6fc9c6164af60fee7a51642c3dec1855f9b33cba1801d23be72ba"
+    },
+    {
+      "name": "order-8-seed-7-legacy-init-0.1-step-8000",
+      "report_sha256": "f88088827e1754c7d9267227e2b7182809b1c89b978e05ddf452228fdda54b52"
+    },
+    {
+      "name": "order-8-seed-7-legacy-init-1-step-2000",
+      "report_sha256": "6aab082baa5c7f324e85c6745228bd0ad64a6252c8a391bd2d2fa74502bf2dd4"
+    },
+    {
+      "name": "order-8-seed-7-legacy-init-0.1-step-32000",
+      "report_sha256": "06fb6be7cfe076ba55ea0098e21d6a2b9151b99740110067f03123b56e16e596"
+    },
+    {
+      "name": "order-8-seed-7-legacy-init-0.1-step-2000",
+      "report_sha256": "8e2497373a0e905b96cdc6976599d10d976f97bc0c524c3a6a37df9a58cd9d2d"
+    },
+    {
+      "name": "order-8-seed-7-average-init-1-step-2000",
+      "report_sha256": "436c7b0e4224cf318a557e16734b1b32f40a3dbdaf6e8b07fabbeee75cccb310"
+    },
+    {
+      "name": "order-8-seed-7-average-init-0.1-step-8000",
+      "report_sha256": "b8f79dadd6a3950a0f3fdfd33b639628638551ad29ba8ca12f0c1c2a2e45dd50"
+    },
+    {
+      "name": "order-8-seed-7-legacy-init-1-step-32000",
+      "report_sha256": "eb2d6cd329c453c8fe47c01c40228ea691b749f4617c2f1a25dcdda6d2218249"
+    },
+    {
+      "name": "order-8-seed-7-average-init-1-step-32000",
+      "report_sha256": "a489e3571c4bc2ffc575e68c9de9f7f531e922e65f201d8bc818fa140d1f6b71"
+    },
+    {
+      "name": "order-8-seed-7-average-init-0.1-step-2000",
+      "report_sha256": "178d9802737c330cba822ab1a6d8fdbfcf9e10e41e947422604afa8322ccc34b"
+    },
+    {
+      "name": "order-8-seed-7-average-init-0.1-step-32000",
+      "report_sha256": "1d65ce34f53a3aa5f417d0423e33da7ca28a632d84e36aeb5c55b6f2bd81e0db"
+    },
+    {
+      "name": "order-8-seed-7-average-init-1-step-8000",
+      "report_sha256": "cb9c22b6d34d7f672884c7e0e436337aff30fa1ed2cf33bce417505ad583bb70"
+    },
+    {
+      "name": "order-12-seed-7-legacy-init-1-step-2000",
+      "report_sha256": "617b71815f1e7d757541e4488152782932cda450db1d686824d924cd362427f3"
+    },
+    {
+      "name": "order-12-seed-7-legacy-init-1-step-8000",
+      "report_sha256": "b27c315fa586f3c8944ce60907ba4c2c8375161d4c850aa8ca251bcb4d9b13d9"
+    },
+    {
+      "name": "order-12-seed-7-legacy-init-1-step-32000",
+      "report_sha256": "c31f90cbdb4b0cb423b9b4114c8f30decdca9ea6dbb85f29f1a3261684bc5003"
+    },
+    {
+      "name": "order-12-seed-7-legacy-init-0.1-step-2000",
+      "report_sha256": "c434b66d263bd4dfe627aad5c28661fb9535d28764a9c0f9359b2142471b8426"
+    },
+    {
+      "name": "order-12-seed-7-legacy-init-0.1-step-8000",
+      "report_sha256": "69d0643faee9164eb8eeda6f597c6831b13d0e3b90320ca73ea47494152bf044"
+    },
+    {
+      "name": "order-12-seed-7-legacy-init-0.1-step-32000",
+      "report_sha256": "94d67fe570dc6a96bd4bc96538340e777369aed6f627a370e7b25fdc45160f21"
+    },
+    {
+      "name": "order-12-seed-7-average-init-1-step-8000",
+      "report_sha256": "d43d0e249a005e92c4023e16d54e40aafa05dc172a985d2d7384ddb71b37e9ea"
+    },
+    {
+      "name": "order-12-seed-7-average-init-1-step-2000",
+      "report_sha256": "d5c73b0259290afab813d1c2a7dfdbe0fc7037d01568ebc692440fdd9ac36281"
+    },
+    {
+      "name": "order-12-seed-7-average-init-1-step-32000",
+      "report_sha256": "d0895636d70f7cd4cf6923bfa18624b53f03c8d915522079557c5362a1fe1316"
+    },
+    {
+      "name": "order-12-seed-7-average-init-0.1-step-32000",
+      "report_sha256": "306faf52cef5e545fe1d0bb46b35126ef1f93f48fa7a44e2f611ef7ae4b5fa1e"
+    },
+    {
+      "name": "order-12-seed-7-average-init-0.1-step-2000",
+      "report_sha256": "81cb821e3ab1e6b213d6eb34f937029d8d9129405c7d10c3f26f7fbdc36f8bac"
+    },
+    {
+      "name": "order-12-seed-7-average-init-0.1-step-8000",
+      "report_sha256": "32a34f659c99485ca2d0ffa1956c1a3bf5397930e6a3f70bec040f770178ac52"
+    },
+    {
+      "name": "order-8-seed-11-legacy-init-1-step-2000",
+      "report_sha256": "5bf0ed1722d95e9d4734db113e94c4e0552c279bc54ad066d097bf4575be191b"
+    },
+    {
+      "name": "order-8-seed-11-legacy-init-1-step-8000",
+      "report_sha256": "ef896ee9526c25fe3236b0169ee487b6b6d9f1a12cb90902b0d42da2c69b8293"
+    },
+    {
+      "name": "order-8-seed-11-legacy-init-0.1-step-8000",
+      "report_sha256": "cc27bada3ecf1c99f5ff793abef6d64f7e350e1822b2b05575bf3732b1d77a53"
+    },
+    {
+      "name": "order-8-seed-11-legacy-init-1-step-32000",
+      "report_sha256": "ab8699960915b677d5ea851a42e016b64f26316988ab8e382940861cd3930f2f"
+    },
+    {
+      "name": "order-8-seed-11-legacy-init-0.1-step-2000",
+      "report_sha256": "0ddd1db8b295b6acfc6dda29b97d9ab3063fee39f5b5fce25d3cf776509abb83"
+    },
+    {
+      "name": "order-8-seed-11-average-init-1-step-32000",
+      "report_sha256": "776ea4321842944564f29d001ab063793310c285551afe28869ac6761067b671"
+    },
+    {
+      "name": "order-8-seed-11-average-init-1-step-8000",
+      "report_sha256": "1428e8e751bb0cb85cb14561be0f0cc1d06820a935f6976d89bb69c428120d70"
+    },
+    {
+      "name": "order-8-seed-11-average-init-0.1-step-32000",
+      "report_sha256": "74304c9c16c30fed3a8faf540db0ab34c43369905f568882b34840924f8ba450"
+    },
+    {
+      "name": "order-8-seed-11-average-init-0.1-step-8000",
+      "report_sha256": "94b90a503097238b1f13018fb76bf2c76ebc4c4ba610697e8efdee20f6cf0793"
+    },
+    {
+      "name": "order-8-seed-11-legacy-init-0.1-step-32000",
+      "report_sha256": "efbf349d0c00fd958093e3255a2f90ab78beafa6974692c9e0ca69cfe32fe9d8"
+    },
+    {
+      "name": "order-8-seed-11-average-init-1-step-2000",
+      "report_sha256": "fcb87c0d4bec34061107864662c63c231f4939f2d0c57a7fbfc01e3d561da352"
+    },
+    {
+      "name": "order-8-seed-11-average-init-0.1-step-2000",
+      "report_sha256": "0587446457bd424b71fce3d49e9baa7e8694c0fb728b1dddff97f72d744d7886"
+    },
+    {
+      "name": "order-8-seed-3-legacy-init-1-step-2000",
+      "report_sha256": "6fd1fd0a3fa3f912d73f49a1ec15ee22178e387b73236b830e7f10b63d0d34eb"
+    },
+    {
+      "name": "order-8-seed-3-legacy-init-1-step-8000",
+      "report_sha256": "c3993e8218608e8f5445f36eeecc8f2577b60e2799182ef7a43cc2b5ff3ad582"
+    },
+    {
+      "name": "order-8-seed-3-legacy-init-1-step-32000",
+      "report_sha256": "6668d03f700b96050a59c1b98fa216ed3ba99eb1d6ff411a8a516769827e1379"
+    },
+    {
+      "name": "order-8-seed-3-legacy-init-0.1-step-2000",
+      "report_sha256": "b406f640623b1e17aefbaf55017199c0de41a001cce35328f9b5ed44bd607f10"
+    },
+    {
+      "name": "order-8-seed-3-legacy-init-0.1-step-32000",
+      "report_sha256": "cae42e90ef736f24152cae14fd63ab51584f83cbcb5c89c0b37d5f651a3d5b9a"
+    },
+    {
+      "name": "order-8-seed-3-legacy-init-0.1-step-8000",
+      "report_sha256": "9419788dabb2d39b400c4a0180fd69468e02cb397bfe07092a182e12bb1c3d33"
+    },
+    {
+      "name": "order-8-seed-3-average-init-1-step-8000",
+      "report_sha256": "d3eb7d1e2fe08d6d98111bbaca6311fe5d04d14a908e503e8afce465759e5071"
+    },
+    {
+      "name": "order-8-seed-3-average-init-1-step-2000",
+      "report_sha256": "f74c251d2341416e0e537619dbe39c13c08e13e4003d50cc1bf43457f73b1dc5"
+    },
+    {
+      "name": "order-8-seed-3-average-init-1-step-32000",
+      "report_sha256": "35efff67a448da6285a781b74cb6f18e85f2b460a67a2174a192f1629ada33c0"
+    },
+    {
+      "name": "order-8-seed-3-average-init-0.1-step-2000",
+      "report_sha256": "bf91161ea75dac48450e73578812adcc3356dc46ce1e8170dd46e72a2dc4439e"
+    },
+    {
+      "name": "order-8-seed-3-average-init-0.1-step-8000",
+      "report_sha256": "bb9da5b1ec7fce1cb497dcdc8e9725ec8765ad4d1ba6b656d03965425ba9c56e"
+    },
+    {
+      "name": "order-8-seed-3-average-init-0.1-step-32000",
+      "report_sha256": "32c45d00b66b25da01e4d411a8851efb1cbaefa95d39daa398638225dfcc4ab7"
+    },
+    {
+      "name": "order-12-seed-11-legacy-init-1-step-8000",
+      "report_sha256": "4940bfaaefbb5d6c3164e4cc1a6d07f626b5dc41a5e157ec78318b527d7dc704"
+    },
+    {
+      "name": "order-12-seed-11-legacy-init-1-step-32000",
+      "report_sha256": "12e743147437d56c6ea8f17a0c5ce4bf78112ecd63e5c1ed4fc136f1c6837f20"
+    },
+    {
+      "name": "order-12-seed-11-legacy-init-1-step-2000",
+      "report_sha256": "ef3310ae783710721c9170c92993247d7bd9a9d54f6bdc0242522119aba9beca"
+    },
+    {
+      "name": "order-12-seed-11-legacy-init-0.1-step-8000",
+      "report_sha256": "fae2a2e7f3e48e114ea4c69475042db3a3aa751722870fadaa27e4817ff84808"
+    },
+    {
+      "name": "order-12-seed-11-legacy-init-0.1-step-2000",
+      "report_sha256": "aeb3c5e5b07f559f56be0f7e989239aa212154759b1facb8427c0307c0d35b75"
+    },
+    {
+      "name": "order-12-seed-11-legacy-init-0.1-step-32000",
+      "report_sha256": "67129574d6b2dfdbeda43fd68261218ccaad1021f270e826cdc0a91d3d887281"
+    },
+    {
+      "name": "order-12-seed-11-average-init-0.1-step-2000",
+      "report_sha256": "90c64e9e833c803a53d87eb177a08e5cf02ef169645275415daa500058dc72e9"
+    },
+    {
+      "name": "order-12-seed-11-average-init-1-step-8000",
+      "report_sha256": "975482c4ddfd74bb98d2ba9a8c930b5398106fac961cd1034022122a47d872e0"
+    },
+    {
+      "name": "order-12-seed-11-average-init-1-step-32000",
+      "report_sha256": "ea50d464a79fbc3f0f71869898274738a93185e30566b8a92abe1d35650cfb78"
+    },
+    {
+      "name": "order-12-seed-11-average-init-1-step-2000",
+      "report_sha256": "2218d2382b780a1cdfdfb92f6a44edb7c9d3526b012bcc4700a8a822bda3d347"
+    },
+    {
+      "name": "order-12-seed-11-average-init-0.1-step-8000",
+      "report_sha256": "bea23558202b1577ef0c09b35ee255fdc58595ceb7f07a11705f395217ff24b6"
+    },
+    {
+      "name": "order-12-seed-11-average-init-0.1-step-32000",
+      "report_sha256": "3c97f2f25e6f345b3fb865cc4db507cf0b0c21b3e0adced253f1c55a30027e83"
+    },
+    {
+      "name": "order-12-seed-3-legacy-init-1-step-2000",
+      "report_sha256": "e1626cd4c3515245aa486d4d8f863dfaa3548f8bb0d3ec8edcb3e679bf75a7cf"
+    },
+    {
+      "name": "order-12-seed-3-legacy-init-1-step-8000",
+      "report_sha256": "bdaa27b611f5880617983f348661d50a9ebb91024eaa5649ca1ae58a3a20eb24"
+    },
+    {
+      "name": "order-12-seed-3-legacy-init-0.1-step-2000",
+      "report_sha256": "04d013a2123341befdcb26e4d47f4bede3194a67c79a0e7d99c6fd7495fad7bc"
+    },
+    {
+      "name": "order-12-seed-3-legacy-init-1-step-32000",
+      "report_sha256": "6a199e3abd68253a0395cb09355b1d77d05e504d87d46091ec760dbcd01c0cf4"
+    },
+    {
+      "name": "order-12-seed-3-legacy-init-0.1-step-8000",
+      "report_sha256": "3c2f4cc67d18cd86e8bbbc1756c681d77fe03e9974df5633c8334b57c668bca4"
+    },
+    {
+      "name": "order-12-seed-3-legacy-init-0.1-step-32000",
+      "report_sha256": "2c92c8349331b1319246f25f184d937b9d7bf119a40c76aee89fcefbf6401c3b"
+    },
+    {
+      "name": "order-12-seed-3-average-init-1-step-8000",
+      "report_sha256": "e0288026905ac0062d250a080fda778546e40fcdc9886d282dee375cc86cd913"
+    },
+    {
+      "name": "order-12-seed-3-average-init-1-step-2000",
+      "report_sha256": "2ef6ab68186e283c73129f317eb3fc5c8a00762d6fba4d48d4a26fd07fa82497"
+    },
+    {
+      "name": "order-12-seed-3-average-init-0.1-step-2000",
+      "report_sha256": "27c56a9266dd4f1126bad0347e8f666f7596db5956a6e41d9b124109e8433408"
+    },
+    {
+      "name": "order-12-seed-3-average-init-1-step-32000",
+      "report_sha256": "769f23ca25bfa0417fe47d30eb973cc400f045dac826d90a189528dcdcfdba3b"
+    },
+    {
+      "name": "order-12-seed-3-average-init-0.1-step-32000",
+      "report_sha256": "e293c786918f212a11abfe683e2f547a4616012b153a7da2178da3645602a9ae"
+    },
+    {
+      "name": "order-12-seed-3-average-init-0.1-step-8000",
+      "report_sha256": "877eb924feb28679431302e7f5d22a64239d8ec3ca9e7f19f45244f163d83642"
+    }
+  ],
+  "environment": {
+    "command": "${ENV_ROOT}/bin/python ${RUN_ROOT}/analysis-source/tools/analyze_tree_node_mechanism.py --mechanism ${RUN_ROOT}/mechanism --frontier ${RUN_ROOT}/frontier --training-root ${TRAINING_ROOT} --native-library ${RUN_ROOT}/frontier-source/build/libmeft_rows.so --structural-library ${RUN_ROOT}/frontier-source/build/libmeft_structural.so --output ${RUN_ROOT}/mechanism-analysis --jobs 24",
+    "commit": "0a23eee254551772ffc6057ea971daf8e70b7b42",
+    "cpu": "x86_64",
+    "device": "cpu",
+    "faiss": "1.15.0",
+    "faiss_compile_options": "OPTIMIZE DD AVX2 ",
+    "gpu": "unused",
+    "loadavg": [
+      41.39501953125,
+      36.98974609375,
+      23.9892578125
+    ],
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "355d0d77ac818391c2d4870e91b9ee63b3d40d77d262e5e4c4de5f9d31a791ee",
+    "threads": 1,
+    "torch": "2.11.0"
+  },
+  "failures": [],
+  "jobs": [
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-11-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-7-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-4-seed-3-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-7-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-7-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-11-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-8-seed-3-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-11-average-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-legacy-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-legacy-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-legacy-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-legacy-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-legacy-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-legacy-init-0.1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-average-init-1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-average-init-1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-average-init-1-step-32000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-average-init-0.1-step-2000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-average-init-0.1-step-8000.json",
+    "${RUN_ROOT}/mechanism-analysis/jobs/order-12-seed-3-average-init-0.1-step-32000.json"
+  ],
+  "source_factorial_report_sha256": "8495fed9281a7498622cc850146fb8d2fa847258d3c535d8954aab7da9bcf10b",
+  "status": "complete"
+}

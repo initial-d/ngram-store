@@ -1,0 +1,7 @@
+{"preflight_passed": "raw-fp32"}
+{"preflight_passed": "native-none-fp32"}
+{"preflight_passed": "tree-datrie-c0.99-n0.99-fp32"}
+{"preflight_passed": "tree-reference-c0.99-n0.99-fp16"}
+{"preflight_passed": "faiss-sq8"}
+{"preflight_passed": "dedup-sq8"}
+{"preflight_passed": "constant-mean"}

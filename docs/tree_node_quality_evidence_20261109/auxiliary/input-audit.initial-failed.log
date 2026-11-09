@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "${RUN_ROOT}/query-repair-source/tools/audit_tree_node_inputs.py", line 117, in <module>
+    main()
+  File "${RUN_ROOT}/query-repair-source/tools/audit_tree_node_inputs.py", line 70, in main
+    class Oracle:
+  File "${RUN_ROOT}/query-repair-source/tools/audit_tree_node_inputs.py", line 72, in Oracle
+    metadata = {'rows': len(rows), 'dim': rows.shape[1]}
+                            ^^^^
+NameError: name 'rows' is not defined

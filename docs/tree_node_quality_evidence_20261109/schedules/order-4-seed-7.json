@@ -1,0 +1,31 @@
+{
+  "corpus_sha256": "9e6a67d78ccf79669ec41ef959f4a0007230588e00fb9b81e676a88065e661f1",
+  "environment": {
+    "command": "${ENV_ROOT}/bin/python ${RUN_ROOT}/source/tools/train_tree_node_mechanism.py --training-root ${TRAINING_ROOT} --output ${RUN_ROOT}/mechanism --steps 2000,8000,32000 --worker 4 7",
+    "commit": "fb4e30bb75f66b0b641012a8038932d6711ece87",
+    "cpu": "x86_64",
+    "device": "cpu",
+    "gpu": "unused",
+    "interop_threads": 1,
+    "loadavg": [
+      10.68017578125,
+      8.75634765625,
+      8.52783203125
+    ],
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "13de811f89b1b0a2f10005f35981544da9f86a905a9b83de6e27e3046e5cf4ba",
+    "threads": 1,
+    "torch": "2.11.0+cu130"
+  },
+  "initial_row_sha256": "f3b08d1d57d99578b419674c8af3cf4f356750faff307139a891f2653b00be68",
+  "maximum_steps": 32000,
+  "negative_schedule_sha256": "37c8e0554ff0438e9766b1ce2c4a3d256260dc6b9919731911833e38cef41453",
+  "order": 4,
+  "pair_schedule_sha256": "08bb44c394625ef6fb29672c450d3a47d9c5c67b7aeefa7caeda17e6abffd4a9",
+  "preparation_seconds": 8.225657959003001,
+  "seed": 7,
+  "source_training_report_sha256": "58448edb797500e8e0ae59378556f46749c19a89e805037830435b97bd7517f5",
+  "training_pool_sha256": "dd5aa5a6c77494063b8a4052e585d81e256528468512e0c73bdc8d9820f7a227"
+}

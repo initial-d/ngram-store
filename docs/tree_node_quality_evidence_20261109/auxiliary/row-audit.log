@@ -1,0 +1,80 @@
+{"reopened": 50, "failures": 0}
+{"reopened": 100, "failures": 0}
+{"reopened": 150, "failures": 0}
+{"reopened": 200, "failures": 6}
+{"reopened": 250, "failures": 6}
+{"reopened": 300, "failures": 6}
+{"reopened": 350, "failures": 6}
+{"reopened": 400, "failures": 12}
+{"reopened": 450, "failures": 12}
+{"reopened": 500, "failures": 12}
+{"reopened": 550, "failures": 12}
+{"reopened": 600, "failures": 18}
+{"reopened": 650, "failures": 18}
+{"reopened": 700, "failures": 18}
+{"reopened": 750, "failures": 18}
+{"reopened": 800, "failures": 24}
+{"reopened": 850, "failures": 24}
+{"reopened": 900, "failures": 24}
+{"reopened": 950, "failures": 24}
+{"reopened": 1000, "failures": 30}
+{"reopened": 1050, "failures": 30}
+{"reopened": 1100, "failures": 30}
+{"reopened": 1150, "failures": 30}
+{"reopened": 1200, "failures": 36}
+{"reopened": 1250, "failures": 36}
+{"reopened": 1300, "failures": 36}
+{"reopened": 1350, "failures": 36}
+{"reopened": 1400, "failures": 42}
+{"reopened": 1450, "failures": 42}
+{"reopened": 1500, "failures": 42}
+{"reopened": 1550, "failures": 42}
+{"reopened": 1600, "failures": 48}
+{"reopened": 1650, "failures": 48}
+{"reopened": 1700, "failures": 48}
+{"reopened": 1750, "failures": 48}
+{"reopened": 1800, "failures": 54}
+{"reopened": 1850, "failures": 54}
+{"reopened": 1900, "failures": 54}
+{"reopened": 1950, "failures": 54}
+{"reopened": 2000, "failures": 60}
+{"reopened": 2050, "failures": 60}
+{"reopened": 2100, "failures": 60}
+{"reopened": 2150, "failures": 60}
+{"reopened": 2200, "failures": 66}
+{"reopened": 2250, "failures": 66}
+{"reopened": 2300, "failures": 66}
+{"reopened": 2350, "failures": 66}
+{"reopened": 2400, "failures": 72}
+{"reopened": 2450, "failures": 72}
+{"reopened": 2500, "failures": 72}
+{"reopened": 2550, "failures": 72}
+{"reopened": 2600, "failures": 78}
+{"reopened": 2650, "failures": 78}
+{"reopened": 2700, "failures": 78}
+{"reopened": 2750, "failures": 78}
+{"reopened": 2800, "failures": 84}
+{"reopened": 2850, "failures": 84}
+{"reopened": 2900, "failures": 84}
+{"reopened": 2950, "failures": 84}
+{"reopened": 3000, "failures": 90}
+{"reopened": 3050, "failures": 90}
+{"reopened": 3100, "failures": 90}
+{"reopened": 3150, "failures": 90}
+{"reopened": 3200, "failures": 96}
+{"reopened": 3250, "failures": 96}
+{"reopened": 3300, "failures": 96}
+{"reopened": 3350, "failures": 102}
+{"reopened": 3400, "failures": 102}
+{"reopened": 3450, "failures": 102}
+{"reopened": 3500, "failures": 102}
+{"reopened": 3550, "failures": 105}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "${RUN_ROOT}/row-audit-source/tools/audit_tree_node_rows.py", line 99, in <module>
+    main()
+  File "${RUN_ROOT}/row-audit-source/tools/audit_tree_node_rows.py", line 95, in main
+    assert report['status'] == 'complete'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

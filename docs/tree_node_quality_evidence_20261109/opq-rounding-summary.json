@@ -1,0 +1,1410 @@
+{
+  "candidates": [
+    {
+      "model": "legacy-order-4-seed-3",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1543121634556452e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-3",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.116246987085092e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-3",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.116246987085092e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-3",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1543121634556452e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-3",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1504588121936376e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-3",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1504588121936376e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-7",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.0728836059570312e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1242359617741417e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-7",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1534572285881914e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-7",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.0728836059570312e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1242359617741417e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-7",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1534572285881914e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-7",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1357598601489824e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-7",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1357598601489824e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-11",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.0728836059570312e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1504576496317967e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-11",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1514778367683645e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-11",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1514778367683645e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-11",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1480291714015066e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-11",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1480291714015066e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-4-seed-11",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.0728836059570312e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1504576496317967e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-3",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.094833199716522e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-3",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1167297580010886e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-3",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.094833199716522e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-3",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1167297580010886e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-3",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1104314988059388e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-3",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1104314988059388e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-7",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.101913987284222e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-7",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.101913987284222e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-7",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.090237611382798e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-7",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1292853463843784e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-7",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1292853463843784e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-7",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.090237611382798e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-11",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.0132789611816406e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1174794422354769e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-11",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.0132789611816406e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1174794422354769e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-11",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1026859283447266e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1465069176887745e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-11",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.3113021850585938e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1221213457491475e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-11",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.3113021850585938e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1221213457491475e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-8-seed-11",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1026859283447266e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1465069176887745e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-3",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.6689300537109375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1239079336813144e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-3",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.6689300537109375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1239079336813144e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-3",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.13233728447668e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-3",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1215194162652073e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-3",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1215194162652073e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-3",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.13233728447668e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-7",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1549882066689905e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-7",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.3113021850585938e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1365368199389356e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-7",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1308650608778752e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-7",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1549882066689905e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-7",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.3113021850585938e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1365368199389356e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-7",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.430511474609375e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1308650608778752e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-11",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1272348376972931e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-11",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1023680393385503e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-11",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1137002174283477e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-11",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1023680393385503e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-11",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1137002174283477e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "legacy-order-12-seed-11",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 1.1920928955078125e-06,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1272348376972931e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-3",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 6.556510925292969e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.179495022414726e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-3",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1920079102407778e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-3",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 6.556510925292969e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.179495022414726e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-3",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.168895804526239e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-3",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.168895804526239e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-3",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1920079102407778e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-7",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 6.556510925292969e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1216279693890901e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-7",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 6.556510925292969e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1216279693890901e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-7",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1708622682978879e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-7",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 9.5367431640625e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1708622682978879e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-7",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1423609126247467e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-7",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1423609126247467e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-11",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0865249250376383e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-11",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.364418029785156e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1305186459870942e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-11",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0974444585904643e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-11",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.364418029785156e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1305186459870942e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-11",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0974444585904643e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-4-seed-11",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0865249250376383e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-3",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.172325134277344e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.064578419958577e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-3",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.172325134277344e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.064578419958577e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-3",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1216299653149498e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-3",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1216299653149498e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-3",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0796688585209554e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-3",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0796688585209554e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-7",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.104294954886824e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-7",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.104294954886824e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-7",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0550927083460321e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-7",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0550927083460321e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-7",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0655784644861965e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-7",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0655784644861965e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-11",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0981070946189043e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-11",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0981070946189043e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-11",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0796538273416891e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-11",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0796538273416891e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-11",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 8.344650268554688e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1169250531896901e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-8-seed-11",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 8.344650268554688e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1169250531896901e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-3",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.364418029785156e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1033475940080996e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-3",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.364418029785156e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1033475940080996e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-3",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1300083295535996e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-3",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 7.152557373046875e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1626939423930865e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-3",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 7.152557373046875e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1626939423930865e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-3",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1300083295535996e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-7",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.364418029785156e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1201404882399682e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-7",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1230978863724376e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-7",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0986909634336497e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-7",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1230978863724376e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-7",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 4.76837158203125e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0986909634336497e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-7",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.364418029785156e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1201404882399682e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-11",
+      "name": "faiss-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0793126525886557e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-11",
+      "name": "faiss-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 7.152557373046875e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1004744944938514e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-11",
+      "name": "dedup-opq-8x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0793126525886557e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-11",
+      "name": "dedup-opq-32x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 7.152557373046875e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.1004744944938514e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-11",
+      "name": "faiss-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0820801639900636e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    },
+    {
+      "model": "average-order-12-seed-11",
+      "name": "dedup-opq-64x8",
+      "thread_rounding": {
+        "construction_omp_threads": 4,
+        "construction_reconstruction_byte_exact_to_build": true,
+        "maximum_absolute_difference": 5.960464477539062e-07,
+        "query_omp_threads": 1,
+        "relative_frobenius_difference": 1.0820801639900636e-07,
+        "serialized_serving_files_sha256_verified": true,
+        "validation_gate_changes": []
+      }
+    }
+  ],
+  "changed_candidates": 0,
+  "repaired": 108
+}

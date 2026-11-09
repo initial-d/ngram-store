@@ -1,0 +1,32 @@
+{
+  "affinity_cpus": 255,
+  "compiler": "c++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "cpu_model": "AMD EPYC 7742 64-Core Processor",
+  "gpu": "unused; no GPU process inspected or changed in this CPU experiment",
+  "initial_failure": "Source export lacked examples/native_gather.c. Build failed before training; corrected export compiled and source replay passed. Failed build retained.",
+  "loadavg_at_archive": [
+    38.34033203125,
+    43.83935546875,
+    33.99169921875
+  ],
+  "machine": "x86_64",
+  "make": "GNU Make 4.3",
+  "metering": "Existing machine/assets; no paid service, energy or currency meter",
+  "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "raw_auxiliary_sha256": {
+    "analyze-mechanism.sh": "c53b88594ac782193a3002af856fc657e32638b075a955ebe0bc14133286fca0",
+    "build-initial-missing-example.log": "58222fa6b3b20dd8b1800721b513ecb23f7e0f2313df2d5b8abfef62dee49dc5",
+    "build.log": "de6103fcea525ae2a4b2e5a5ccd9768f6a2f46f0146cc80a920e7e4fe85642e1",
+    "finalize-v2.sh": "94cacae4793c98217c565fd291a8a7b8ad2b79a77e6c927fcc3c1bd57221a740",
+    "finalize.sh": "7d886921d3cc43d444003d2e409878b8f0ec2c590720f71e0187170a2fc8cdd9",
+    "frontier-build.log": "de6103fcea525ae2a4b2e5a5ccd9768f6a2f46f0146cc80a920e7e4fe85642e1",
+    "frontier-prepare.sh": "24fa23920851a4845da24aad7e767abddd29b0dc7c31592e605ddd3bb36ff8dc",
+    "full-frontier.sh": "bfa4765b22724be11d8f931a7765954ba43eb61d2850bfb746dcf01383e9bbed",
+    "mechanism-preflight.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight.log": "e03973b3e1e4e844620469a67316d82879aeed900ee887eb7f06b383508c84f6",
+    "preflight.sh": "059dc14045e4ea39926296437199b9aca4e6470d3e73298e31cb47792d6ec5a9",
+    "run-mechanism.sh": "807afd24d67ad4def60670b73ad85af9c6fd9f96936c4c1d2a1fd48b3f65b671"
+  },
+  "task_filesystem_type": "ceph",
+  "visible_cpus": 255
+}

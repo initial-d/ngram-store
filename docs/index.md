@@ -19,6 +19,7 @@
 
 ## Source-linked trained results
 
+- [Complete tree-sharing frontier: all/OOV quality, full FAISS controls, key indexes, caches and training mechanism](tree_node_quality_evidence_20261109/README.md)
 - [Conditional prefix/suffix tree-node similarity: complete frequency/length controls and approximate capacity](conditional_similarity_evidence_20261109/README.md)
 - [Real Qwen native offload: complete logit pairs and storage costs](qwen_native_identity_evidence_20261109/README.md)
 - [Identity format: remove redundant maps on the same trained Qwen tables](identity_format_evidence_20261109/README.md)

@@ -14,6 +14,7 @@ import tarfile
 from functools import lru_cache
 
 ROOT = Path(__file__).resolve().parent
+RAW_ROOT = ROOT.parents[1] / 'artifacts/tree-node-quality-20261109/raw'
 BUDGETS = (.0001, .001, .005, .01, .02)
 FAMILIES = ('raw', 'dense', 'constant', 'native-identity', 'tree-datrie',
             'tree-reference', 'faiss', 'faiss-dedup')
@@ -22,6 +23,7 @@ SPLITS = ('validation', 'test', 'confirmation')
 
 
 def load(path):
+    path = resolve_evidence(path)
     if path.suffix == '.gz':
         with gzip.open(path, 'rt') as f:
             return json.load(f)
@@ -29,11 +31,21 @@ def load(path):
 
 
 def digest(path):
+    path = resolve_evidence(path)
     h = hashlib.sha256()
     with path.open('rb') as f:
         for b in iter(lambda: f.read(8 << 20), b''):
             h.update(b)
     return h.hexdigest()
+
+
+def resolve_evidence(path):
+    if path.exists():
+        return path
+    try:
+        return RAW_ROOT / path.relative_to(ROOT)
+    except ValueError:
+        return path
 
 
 @lru_cache(maxsize=None)
@@ -65,7 +77,7 @@ def env(e, root):
     assert e['device'] == 'cpu' and e['gpu'] == 'unused' and e['threads'] == 1
     assert e['numpy'] and e['torch'] and len(e['loadavg']) == 3
     assert len(e['commit']) == 40
-    source = ('tools/train_tree_node_mechanism.py' if 'tools.train_tree_node_mechanism' in e['command']
+    source = ('tools/train_tree_node_mechanism.py' if 'train_tree_node_mechanism' in e['command']
               else 'tools/tree_node_quality.py')
     if source == 'tools/tree_node_quality.py':
         assert e['faiss']
@@ -147,6 +159,13 @@ def verify(root=ROOT):
     for name, value in manifest['files'].items():
         p = root / name
         assert p.stat().st_size == value['bytes'] and digest(p) == value['sha256'], name
+    raw_manifest = load(root / 'raw-manifest.json')
+    members = [n for a in raw_manifest['assets'] for n in a['members']]
+    assert len(members) == len(set(members)) and set(members) == set(raw_manifest['files'])
+    for name, value in raw_manifest['files'].items():
+        p = resolve_evidence(root / name)
+        assert p.is_file(), 'Run fetch_raw.py first: ' + name
+        assert p.stat().st_size == value['bytes'] and digest(p) == value['sha256'], name
     for commit, inventory in load(root / 'runtime/inventory.json').items():
         archive_path = root / 'runtime' / (commit + '.tar.gz')
         assert digest(archive_path) == inventory['archive_sha256']
@@ -154,6 +173,22 @@ def verify(root=ROOT):
             files = {m.name: hashlib.sha256(archive.extractfile(m).read()).hexdigest()
                      for m in archive.getmembers() if m.isfile()}
         assert files == inventory['files']
+    for item in load(root / 'auxiliary/source-path-redactions.json')['archives']:
+        assert len(item['original_archive_sha256']) == 64
+        assert digest(root / item['archive']) == item['published_archive_sha256']
+        with tarfile.open(root / item['archive'], 'r:gz') as archive:
+            for record in item['files']:
+                assert len(record['original_sha256']) == 64
+                data = archive.extractfile(record['file']).read()
+                assert hashlib.sha256(data).hexdigest() == record['published_sha256']
+                assert b'/llm-align/' not in data.replace(b"'/llm-align/'", b'')
+    recovery = load(root / 'retiming-recovery.json')
+    assert recovery['native_source_sha256'] == snapshot_digest(root, recovery['source_commit'], 'native/meft_structural.cc')
+    assert recovery['regression_tests']['run'] == 10 and recovery['regression_tests']['failures'] == recovery['regression_tests']['errors'] == recovery['regression_tests']['skipped'] == 0
+    codec_metadata = {(v['model'], v['name']): v for v in load(root / 'faiss-codec-metadata.json')}
+    assert len(codec_metadata) == 18 * 38
+    retiming_records = {tuple(v['request'][k] for k in ('model', 'name', 'cached', 'index', 'cache')): v
+                       for v in load(root / 'retiming-record-integrity.json')}
     prepare, selection, complete, publication = [load(root / x) for x in
         ('prepare.json', 'selection.json', 'complete.json', 'publication.json')]
     raw_hashes = publication['private_input_sha256']
@@ -167,6 +202,13 @@ def verify(root=ROOT):
     assert prepare['corpus_zip_sha256'] == original['corpus_zip_sha256']
     assert prepare['confirmation_token_range'] == [200000, 300000]
     assert selection['selection_uses'] == 'validation only'
+    integrity = load(root / 'input-integrity.json')
+    assert integrity['status'] == 'complete' and len(integrity['models']) == 18
+    assert integrity['source_prepare_report_sha256'] == raw_hashes['prepare.json']
+    assert integrity['source_training_report_sha256'] == prepare['source_training_report_sha256']
+    env(integrity['environment'], root)
+    assert integrity['phase_source_sha256'] == snapshot_digest(root, integrity['environment']['commit'], 'tools/audit_tree_node_inputs.py')
+    input_models = {m['name']: m for m in integrity['models']}
     for e in (prepare['environment'], selection['environment'], publication['environment']):
         env(e, root)
     coverage, final_requests, row_reports, summary = set(), set(), {}, []
@@ -174,6 +216,21 @@ def verify(root=ROOT):
         name = prepared['name']; folder = root / 'models' / name
         assert name == chosen['name']
         meta = load(folder / 'metadata.json')
+        audited = input_models[name]
+        assert audited['metadata_sha256'] == raw_hashes['models/' + name + '/metadata.json']
+        assert audited['checkpoint_sha256'] == meta['source_checkpoint_sha256']
+        assert audited['canonical_cached_words_byte_exact'] is audited['training_occurrence_weights_verified'] is True
+        assert audited['known_words_verified'] >= meta['query_types']['known']
+        assert audited['structural_library_sha256'] == recovery['compiled_library_sha256']
+        assert audited['both_indexes_all_ids_verified'] == meta['shape'][0]
+        assert audited['cached_word_serving_file']['bytes'] == meta['known_cache_file_bytes']
+        assert len(audited['cached_word_serving_file']['sha256']) == 64
+        assert audited['fit_original_ids_sha256'] == meta['fit_original_ids_sha256']
+        assert audited['query_type_samples_verified'] == meta['query_types']
+        for split, value in audited['evaluations'].items():
+            assert value['arrays_and_source_scores_byte_exact'] is True
+            assert value['pairs'] == meta['evaluations'][split]['pairs']
+            assert value['evaluation_sha256'] == meta['evaluations'][split]['sha256']
         cost = load(folder / 'complete-cost.json')
         assert cost['reader_metadata_file']['sha256'] == raw_hashes['models/' + name + '/metadata.json']
         assert cost['reader_metadata_file']['bytes'] > 0
@@ -196,8 +253,28 @@ def verify(root=ROOT):
             env(r['environment'], root)
             assert r['status'] == 'complete' and r['rows'] == meta['shape'][0]
             assert r['private_build_report_sha256'] == by_name[r['name']]['private_build_sha256']
-            assert r['decoded_row_sha256'] == build['decoded_row_sha256'] and r['job_sha256'] == build['job_sha256']
-            close(r['relative_l2']['global'], build['stored_row_relative_frobenius'])
+            assert r.get('construction_decoded_row_sha256', r['decoded_row_sha256']) == build['decoded_row_sha256']
+            assert r['job_sha256'] == build['job_sha256']
+            close(r.get('construction_relative_frobenius', r['relative_l2']['global']), build['stored_row_relative_frobenius'])
+            if r.get('thread_rounding'):
+                drift = r['thread_rounding']
+                assert build['encoding'].startswith('opq-')
+                assert drift['construction_omp_threads'] == 4 and drift['query_omp_threads'] == 1
+                assert drift['construction_reconstruction_byte_exact_to_build'] is drift['serialized_serving_files_sha256_verified'] is True
+                assert drift['maximum_absolute_difference'] > 0 and drift['relative_frobenius_difference'] > 0
+                assert r['decoded_row_sha256'] != build['decoded_row_sha256']
+                assert r['phase_source_sha256'] == snapshot_digest(root, r['environment']['commit'], 'tools/audit_tree_node_rows.py')
+                changes = []
+                for c in (0, 1):
+                    q = r['validation_at_query_threads'][str(c)]
+                    paired(r['validation_at_query_threads_paired_blocks'][str(c)], q, meta['evaluations']['validation'])
+                    for budget in BUDGETS:
+                        before, after = gate(build['validation'][str(c)], budget), gate(q, budget)
+                        if before != after:
+                            changes.append({'cached': c, 'budget': budget, 'construction_pass': before, 'query_pass': after})
+                assert changes == drift['validation_gate_changes']
+            else:
+                assert r['decoded_row_sha256'] == build['decoded_row_sha256']
             assert 0 <= r['undefined_zero_norm_rows'] <= r['rows']
             assert 0 <= r['relative_l2']['p50'] <= r['relative_l2']['p95'] <= r['relative_l2']['maximum']
             if r['cosine']['minimum'] is not None:
@@ -244,6 +321,10 @@ def verify(root=ROOT):
             assert g['complete_serving_bytes'] == b['row_bundle_bytes'] + cost['adjusted_common_model_bytes']
             assert b['common_model_bytes'] == meta['common_model_bytes']
             env(b['environment'], root)
+            if b['family'] in ('faiss', 'faiss-dedup'):
+                codec = codec_metadata[name, n]
+                assert codec['private_metadata_sha256'] == b['serving_files']['codec.json']['sha256']
+                assert codec['metadata']['training_threads'] == 4 and codec['metadata']['seed'] == 42
             if b['family'].startswith('tree-'):
                 assert b['cosine'] in (.99, .98, .97, .95, .9) and b['norm_ratio'] in (.99, .98, .97, .95, .9)
                 f = b['planning']['fidelity']
@@ -254,7 +335,7 @@ def verify(root=ROOT):
                 assert a['cached_known_words'] == int(cached) and a['index_kind'] == 'datrie' and a['native_cache_bytes'] == 0
                 env(a['environment'], root); timing(a, meta)
         seen = set()
-        with gzip.open(folder / 'paired-blocks.jsonl.gz', 'rt') as stream:
+        with gzip.open(resolve_evidence(folder / 'paired-blocks.jsonl.gz'), 'rt') as stream:
             for line in stream:
                 record = json.loads(line); n = record['name']
                 assert n not in seen; seen.add(n); g = by_name[n]
@@ -279,6 +360,16 @@ def verify(root=ROOT):
             assert identity not in seen; seen.add(identity); final_requests.add((name, *identity))
             assert r['job_sha256'] == by_name[r['name']]['build']['job_sha256']
             env(r['environment'], root); timing(r, meta)
+            if r['index_kind'] == 'hash' or r.get('structural_library_sha256'):
+                assert r['structural_library_sha256'] == recovery['compiled_library_sha256']
+            original_record = retiming_records[(name, *identity)]
+            assert original_record['public_record_sha256'] == hashlib.sha256(json.dumps(r, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+        reference_outputs = {(r['name'], r['cached_known_words'], s): q['output_sha256']
+                             for r in retimed if r['index_kind'] == 'datrie' and r['native_cache_bytes'] == 0
+                             for s, q in r['query'].items()}
+        for r in retimed:
+            assert all(q['output_sha256'] == reference_outputs[r['name'], r['cached_known_words'], s]
+                       for s, q in r['query'].items())
         assert seen == expected
         print(name + ': 204 candidates, 408 audits, paired blocks, frozen choices and ' + str(len(seen)) + ' final timings verified')
     assert coverage == {(c, n, s) for c in ('legacy', 'average') for n in (4, 8, 12) for s in (3, 7, 11)}
@@ -288,14 +379,41 @@ def verify(root=ROOT):
     assert row_controller['frozen_selection_sha256'] == raw_hashes['selection.json']
     for r in row_controller['complete']:
         assert row_reports[r['model'], r['name']] == r['report_sha256']
+    failure = load(root / 'row-audit-initial-failure.json')
+    assert failure['status'] == 'failed' and len(failure['complete']) == 3564 and len(failure['failures']) == 108
+    assert failure['private_report_sha256'] == row_controller['initial_failure_report_sha256']
+    assert len(row_controller['repaired']) == 108 and not row_controller['repair_failures']
+    initial_row_logs = load(root / 'auxiliary/row-initial-failure-logs.json.gz')
+    assert {(v['model'], v['name']) for v in initial_row_logs} == {(v['model'], v['name']) for v in row_controller['repaired']}
+    rounding = load(root / 'opq-rounding-summary.json')
+    assert rounding['repaired'] == len(rounding['candidates']) == 108
+    assert rounding['changed_candidates'] == sum(bool(v['thread_rounding']['validation_gate_changes']) for v in rounding['candidates']) == 0
     controller = load(root / 'retiming-controller.json')
     assert controller['status'] == 'complete' and controller['workers'] == 1 and not controller['failures']
     requests = {(r['model'], r['name'], r['cached'], r['index'], r['cache']) for r in controller['requests']}
     assert requests == final_requests and len(requests) == len(controller['complete']) == publication['retiming_requests']
     assert controller['frozen_selection_sha256'] == raw_hashes['selection.json']
+    assert set(retiming_records) == final_requests
+    for item in controller['complete']:
+        key = tuple(item['request'][k] for k in ('model', 'name', 'cached', 'index', 'cache'))
+        assert retiming_records[key]['private_report_sha256'] == item['report_sha256']
+    before = load(root / 'retiming-before-resume.json')
+    initial = load(root / 'retiming-initial-interrupted.json')
+    assert before['private_report_sha256'] == recovery['recovery_source_report_sha256'] == controller['resume']['source_report_sha256']
+    assert before['requests'] == initial['requests'] == controller['requests']
+    assert before['execution_schedule_sha256'] == controller['execution_schedule_sha256']
+    assert before['complete'] == initial['complete']
+    assert all(v in controller['complete'] for v in before['complete'])
+    assert recovery['retained_before_resume'] == len(before['complete'])
+    assert initial['failures'] == controller['resume']['prior_failures'] and all(v['request']['index'] == 'hash' for v in initial['failures'])
+    assert recovery['initial_failures'] == len(initial['failures'])
+    env(controller['environment'], root); env(controller['resume']['environment'], root)
+    initial_retime_logs = load(root / 'auxiliary/retiming-initial-failure-logs.json.gz')
+    assert {tuple(v['request'][k] for k in ('model','name','cached','index','cache')) for v in initial_retime_logs} == {tuple(v['request'][k] for k in ('model','name','cached','index','cache')) for v in initial['failures']}
     training, analysis = load(root / 'mechanism-training.json'), load(root / 'mechanism-analysis.json')
     assert training['status'] == analysis['status'] == 'complete' and not training['failures'] and not analysis['failures']
     assert len(training['trajectories']) == 36 and len(analysis['complete']) == len(analysis['jobs']) == 108
+    assert training['training_root_report_sha256'] == prepare['source_training_report_sha256']
     assert analysis['source_factorial_report_sha256'] == raw_hashes['mechanism-training.json']
     spec = importlib.util.spec_from_file_location('conditional_verifier', root.parent / 'conditional_similarity_evidence_20261109/verify.py')
     previous = importlib.util.module_from_spec(spec); spec.loader.exec_module(previous)
@@ -306,10 +424,18 @@ def verify(root=ROOT):
         assert r['status'] == 'complete' and [p['steps'] for p in r['checkpoints']] == [2000, 8000, 32000]
         env(r['environment'], root)
         key = (r['convention'], r['order'], r['seed'], r['ngram_initialization_scale'])
+        old = next(v for v in original['runs'] if (v['convention'], v['order'], v['seed']) == key[:3])
+        assert r['source_checkpoint_sha256'] == old['checkpoint_sha256']
         assert key not in trajectories; trajectories.add(key)
         schedule_path = 'schedules/order-' + str(r['order']) + '-seed-' + str(r['seed']) + '.json'
         assert r['schedule_sha256'] == raw_hashes[schedule_path]
+        schedule = load(root / schedule_path)
+        assert schedule['maximum_steps'] == 32000
+        assert schedule['source_training_report_sha256'] == prepare['source_training_report_sha256']
+        assert schedule['corpus_sha256'] == original['tokenized_corpus_sha256']
         for p in r['checkpoints']:
+            if p['steps'] == 2000:
+                assert p['sampled_center_events_sha256'] == old['sampled_center_events_sha256']
             if p['steps'] == 2000 and r['ngram_initialization_scale'] == 1:
                 assert p['original_input_bytes_replayed'] is p['original_output_bytes_replayed'] is True
                 replay += 1
@@ -337,6 +463,12 @@ def verify(root=ROOT):
                         b = load(folder / f'{variant}-{split}-cache{cached}-blocks.json.gz')
                         meta = load(root / f'models/{d["convention"]}-order-{d["order"]}-seed-{d["seed"]}/metadata.json')
                         paired(b, v['quality'][str(cached)][split], meta['evaluations'][split])
+                        for s in STRATA:
+                            q, source_q = v['quality'][str(cached)][split][s], d['source_quality'][split][s]
+                            assert q['pairs'] == source_q['pairs']
+                            if q['pairs']:
+                                close(q['baseline_sgns_loss_per_pair'], source_q['sgns_loss_per_pair'])
+                                close(q['baseline_context_discrimination'], source_q['context_discrimination'])
                         if not cached and split != 'validation':
                             for s, ci in load(folder / f'{variant}-{split}-intervals.json.gz').items():
                                 intervals(ci); assert ci['observed_blocks'] == len(b[s]['count'])
@@ -346,10 +478,13 @@ def verify(root=ROOT):
     assert points == {p['name'] for p in analysis['complete']}
     for p in analysis['complete']:
         assert p['report_sha256'] == raw_hashes['points/' + p['name'] + '/report.json']
-    assert set(p.name for p in (root / 'points').iterdir()) == points
+    assert set(p.name for p in resolve_evidence(root / 'points').iterdir()) == points
     print('36 trajectories / 108 points; all 18 source input/output replays; conditional counts and intervals verified')
     print('Primary frozen choices: ' + str(len(summary)) + '; test failures ' + str(sum(not s['test_pass'] for s in summary))
           + '; confirmation failures ' + str(sum(not s['confirmation_pass'] for s in summary)))
+    import summarize as derived
+    assert load(root / 'summary.json') == derived.summarize(root)
+    print('Paper-facing summary independently reconstructed from the archived reports')
     return summary
 
 

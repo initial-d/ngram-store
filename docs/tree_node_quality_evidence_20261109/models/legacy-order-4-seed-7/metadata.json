@@ -1,0 +1,81 @@
+{
+  "canonical_source_reducer_vs_original_fp32_forward_relative_l2": 7.36268222930852e-08,
+  "common_index_construction": {
+    "all_original_ids_verified": 5755,
+    "memory": {
+      "anonymous_bytes": 457637888,
+      "file_backed_bytes": 214663168,
+      "peak_bytes": 720707584,
+      "rss_bytes": 672301056
+    },
+    "seconds": 0.035053374944254756
+  },
+  "common_model_bytes": 1290433,
+  "common_preparation_seconds": 2.1345849661156535,
+  "common_serving_files": {
+    "keys.datrie": {
+      "bytes": 47152,
+      "sha256": "dde5114c707d83c3c90dd7b854bb735af24cc3558210eceb2bd905cd28b5095e"
+    },
+    "output-rows.npy": {
+      "bytes": 614528,
+      "sha256": "917ed2bec58b85e6ffa42b4e37a2b5a5c4ba786492252c638b49acd3cdf3fad8"
+    },
+    "word-keys.json": {
+      "bytes": 14225,
+      "sha256": "926cbbe70e9e576aaca7e87624611e42735baf008ca6effc4ae9962ea661c846"
+    },
+    "word-rows.npy": {
+      "bytes": 614528,
+      "sha256": "9b4f3f429350a69ed6822b2e2555a1b0f55d654ecd42055518d708275690a925"
+    }
+  },
+  "convention": "legacy",
+  "evaluations": {
+    "confirmation": {
+      "all_valid_context_pairs_scored": true,
+      "negative_seed": 44,
+      "negative_target_collision_fraction": 0.0035009808085097777,
+      "pairs": 247245,
+      "registered_target_token_fraction": 0.61812,
+      "sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+      "tokens": 100000
+    },
+    "test": {
+      "all_valid_context_pairs_scored": true,
+      "negative_seed": 43,
+      "negative_target_collision_fraction": 0.0033930723179618613,
+      "pairs": 52283,
+      "registered_target_token_fraction": 0.65355,
+      "sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+      "tokens": 20000
+    },
+    "validation": {
+      "all_valid_context_pairs_scored": true,
+      "negative_seed": 42,
+      "negative_target_collision_fraction": 0.0033577838626506506,
+      "pairs": 50033,
+      "registered_target_token_fraction": 0.62545,
+      "sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+      "tokens": 20000
+    }
+  },
+  "fit_original_ids_sha256": "72d13014e2065454127dc9261e7b839b0a9cd1e9a61d0fef8dd6d58d51905978",
+  "index_bytes": {
+    "datrie": 47152,
+    "hash": 112290
+  },
+  "known_cache_file_bytes": 614528,
+  "order": 4,
+  "query_types": {
+    "known": 512,
+    "oov": 512
+  },
+  "seed": 7,
+  "shape": [
+    5755,
+    128
+  ],
+  "source_checkpoint_sha256": "fa598bb9bd27ecfbece21721e7e025df145b3ec06c8a22110d2790c027f25277",
+  "source_row_sha256": "36cc9026b418ebff8deca12da50c166555dbe6d2633e6d72efc6c2d01e6ef313"
+}

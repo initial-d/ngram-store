@@ -1,0 +1,18 @@
+{
+  "compiled_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+  "initial_failures": 134,
+  "native_source_sha256": "51461eacd789b2f9de2bdefecfc1a96c37e99397339d39d2ed0240dbc562ac60",
+  "new_query_library_environment": "MEFT_QUERY_STRUCTURAL_LIBRARY",
+  "query_implementation": "std::unordered_map, separate from sorted binary search",
+  "recovery_source_report_sha256": "1fe2c9cddbe15dfdca57d6f4683d43fba5a410979f753d8e2c97283ce5ff16a8",
+  "regression_tests": {
+    "errors": 0,
+    "failures": 0,
+    "private_success_log_sha256": "44c09f10556dff59fec8fb84ec4961f5748d6795ecea57bacf6b9bf2a1b8a7f8",
+    "run": 10,
+    "skipped": 0
+  },
+  "retained_before_resume": 126,
+  "serialization": "MEFTKEY1 sorted UTF-8 key bytes, offsets and original IDs",
+  "source_commit": "76901984cc55dfed36715228529fec89b1270179"
+}
