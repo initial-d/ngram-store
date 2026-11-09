@@ -23,7 +23,43 @@ def audit(path, output):
         decoded.append(reader.rows(reader.mapping[ids] if reader.mapping is not None else ids))
     decoded = np.concatenate(decoded)
     build = load(job['report'])
-    assert array_digest(decoded.astype('<f4')) == build['decoded_row_sha256']
+    matched_build = array_digest(decoded.astype('<f4')) == build['decoded_row_sha256']
+    construction_decoded = decoded
+    rounding = None
+    validation_one_thread = None
+    if not matched_build:
+        # OPQ reverse transforms have thread-dependent FP32 matrix rounding.
+        # Match the original four-thread build byte for byte, while auditing
+        # the actual one-thread serving values rather than changing its mode.
+        assert job.get('encoding', '').startswith('opq-')
+        import faiss
+        from .tree_node_quality import evaluate_hidden, score_candidate, quality_gate, BUDGETS
+        for name, recorded in build['serving_files'].items():
+            assert digest(Path(job['directory']) / name) == recorded['sha256']
+        reader.close(); faiss.omp_set_num_threads(4); reader = Reader(job)
+        construction = []
+        for start in range(0, len(source), 4096):
+            ids = np.arange(start, min(start + 4096, len(source)))
+            construction.append(reader.rows(reader.mapping[ids] if reader.mapping is not None else ids))
+        construction_decoded = np.concatenate(construction)
+        assert array_digest(construction_decoded.astype('<f4')) == build['decoded_row_sha256']
+        difference = decoded.astype(np.float64) - construction_decoded.astype(np.float64)
+        rounding = {'construction_omp_threads': 4, 'query_omp_threads': 1,
+            'maximum_absolute_difference': float(np.abs(difference).max()),
+            'relative_frobenius_difference': float(np.linalg.norm(difference) / np.linalg.norm(construction_decoded.astype(np.float64))),
+            'construction_reconstruction_byte_exact_to_build': True,
+            'serialized_serving_files_sha256_verified': True}
+        reader.close(); faiss.omp_set_num_threads(1); reader = Reader(job)
+        validation_one_thread = {}
+        changes = []
+        for cached in (0, 1):
+            q, _ = score_candidate(evaluate_hidden(reader, common, cached), common, 'validation')
+            validation_one_thread[str(cached)] = q
+            for budget in BUDGETS:
+                before, after = quality_gate(build['validation'][str(cached)], budget), quality_gate(q, budget)
+                if before != after:
+                    changes.append({'cached': cached, 'budget': budget, 'construction_pass': before, 'query_pass': after})
+        rounding['validation_gate_changes'] = changes
     a, b = source.astype(np.float64), decoded.astype(np.float64)
     an, bn = np.linalg.norm(a, axis=1), np.linalg.norm(b, axis=1)
     valid = (an > 0) & (bn > 0)
@@ -31,8 +67,12 @@ def audit(path, output):
     ratio = np.minimum(an[valid], bn[valid]) / np.maximum(an[valid], bn[valid])
     error = np.linalg.norm(a - b, axis=1) / np.maximum(an, 1e-30)
     result = {'environment': environment(), 'name': job['name'], 'rows': len(a),
+        'phase_source_sha256': digest(__file__),
         'private_build_report_sha256': digest(job['report']), 'job_sha256': digest(path),
         'decoded_row_sha256': array_digest(decoded.astype('<f4')),
+        'construction_decoded_row_sha256': array_digest(construction_decoded.astype('<f4')),
+        'construction_relative_frobenius': float(np.linalg.norm(a - construction_decoded.astype(np.float64)) / np.linalg.norm(a)),
+        'thread_rounding': rounding, 'validation_at_query_threads': validation_one_thread,
         'undefined_zero_norm_rows': int((~valid).sum()),
         'relative_l2': {'p50': float(np.median(error)), 'p95': float(np.quantile(error, .95)),
             'maximum': float(error.max()),
@@ -63,6 +103,8 @@ def main():
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         parser.error('CPU only; empty CUDA_VISIBLE_DEVICES required')
     if args.job:
+        import faiss
+        faiss.omp_set_num_threads(1)
         audit(args.job, args.output); return
     selection_hash = digest(args.frontier / 'selection.json')
     args.output.mkdir(parents=True, exist_ok=False)
