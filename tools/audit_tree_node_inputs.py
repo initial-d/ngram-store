@@ -60,6 +60,13 @@ def main():
         assert bags == load(common / 'lexical-bags.json')
         assert ids.tobytes() == np.load(common / 'lexical-word-ids.npy').tobytes()
         assert np.array_equal([bool(b) for b in bags], np.load(common / 'lexical-nonempty.npy'))
+        occurrence = np.zeros(len(rows), dtype=np.int64)
+        for word, bag in zip(words, bags[:len(words)]):
+            np.add.at(occurrence, bag, counts[word])
+        assert occurrence.tobytes() == np.load(common / 'source-occurrence-counts.npy').tobytes()
+        fit_ids = np.random.default_rng(42).choice(len(rows), min(16384, len(rows)), replace=False)
+        assert fit_ids.tobytes() == np.load(common / 'fit-original-ids.npy').tobytes()
+        assert array_digest(fit_ids.astype('<u8')) == metadata['fit_original_ids_sha256']
         class Oracle:
             mapping = None
             metadata = {'rows': len(rows), 'dim': rows.shape[1]}
@@ -93,6 +100,7 @@ def main():
             assert hidden[[lexical_ids[w] for w in picked]].tobytes() == np.load(common / (name + '-query-reference.npy')).tobytes()
         report['models'].append({'name': model['name'], 'known_words_verified': len(words),
             'canonical_cached_words_byte_exact': True, 'both_indexes_all_ids_verified': len(grams),
+            'training_occurrence_weights_verified': True, 'fit_original_ids_sha256': metadata['fit_original_ids_sha256'],
             'checkpoint_sha256': digest(checkpoint), 'metadata_sha256': digest(common / 'metadata.json'),
             'cached_word_serving_file': {'bytes': (common / 'cached-word-rows.npy').stat().st_size,
                                        'sha256': digest(common / 'cached-word-rows.npy')},
