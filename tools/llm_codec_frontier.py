@@ -283,6 +283,8 @@ def quality_worker(args):
                 if (result['job_sha256'] != digest(job_path) or result['decoded_row_sha256'] != decoded_hash
                         or result['batch_schedule_sha256'] != schedule_hash or result['complete_request_checks'] != checks):
                     raise ValueError('existing quality evidence differs')
+                if digest(result['case_scores']) != result['case_scores_sha256']:
+                    raise ValueError('completed official case scores changed')
             elif reused:
                 result = {**reused, 'name': job['name'], 'family': job['family'], 'job_sha256': digest(job_path),
                     'quality_reused_from': reused['name'], 'complete_request_checks': checks}

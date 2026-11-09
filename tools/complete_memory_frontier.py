@@ -209,6 +209,11 @@ def build_all(args):
     for name, paths in stages:
         stage = root / ('stage-' + name)
         execute_resumable(paths, 'build', args.jobs, stage)
+    freeze_all(args)
+
+
+def freeze_all(args):
+    root = args.output; prepared = load(root / 'prepare.json')
     frozen = {'environment': environment(), 'protocol_sha256': prepared['protocol_sha256'],
         'selection_uses': 'new validation only', 'models': []}
     for model in prepared['models']:
@@ -238,6 +243,26 @@ def build_all(args):
         if any(previous[key] != frozen[key] for key in ('protocol_sha256', 'selection_uses', 'models')):
             raise ValueError('existing frozen selection differs; preserve it and investigate')
     else: write(selection, frozen)
+    # An independently trained source is chosen by absolute validation loss,
+    # before any test/confirmation score is read. Compression qualification
+    # remains relative to that selected source, with every fixed point retained.
+    groups = {}
+    for model in prepared['models']:
+        common = Path(load(model['jobs'][0])['common']); meta = load(common / 'metadata.json')
+        scores = dict(np.load(common / 'validation-source-scores.npz'))
+        key = (meta['convention'], meta['order'], meta['seed'])
+        groups.setdefault(key, []).append({'name': model['name'], 'steps': meta['point']['steps'],
+            'scale': meta['initialization_scale'], 'absolute_validation_loss': float(np.mean(scores['loss'])),
+            'absolute_validation_discrimination': float(np.mean(scores['discrimination'])),
+            'source_scores_sha256': digest(common / 'validation-source-scores.npz')})
+    training_selection = {'protocol_sha256': prepared['protocol_sha256'],
+        'rule': 'Minimum absolute all-pair validation source loss, then higher discrimination, then stable name; test never selects',
+        'groups': [{'convention': key[0], 'order': key[1], 'seed': key[2],
+            'chosen': min(points, key=lambda p: (p['absolute_validation_loss'], -p['absolute_validation_discrimination'], p['name']))['name'],
+            'points': sorted(points, key=lambda p: p['name'])} for key, points in sorted(groups.items())]}
+    target = root / 'training-selection.json'
+    if target.exists() and load(target) != training_selection: raise ValueError('existing training choice changed')
+    write(target, training_selection)
 
 
 def audit_all(args):
@@ -254,7 +279,7 @@ def audit_all(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('phase', choices=('prepare', 'prepare-point', 'build', 'audit'))
+    parser.add_argument('phase', choices=('prepare', 'prepare-point', 'build', 'freeze', 'audit'))
     for name in ('output', 'mechanism', 'training-root', 'corpus-zip', 'native-library', 'structural-library', 'protocol', 'job'):
         parser.add_argument('--' + name, type=Path)
     parser.add_argument('--jobs', type=int, default=24)
@@ -263,6 +288,7 @@ def main():
     if args.phase == 'prepare-point': prepare_point(args.job)
     elif args.phase == 'prepare': prepare_all(args)
     elif args.phase == 'build': build_all(args)
+    elif args.phase == 'freeze': freeze_all(args)
     else: audit_all(args)
 
 

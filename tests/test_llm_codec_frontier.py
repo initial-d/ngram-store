@@ -27,7 +27,7 @@ class LlmCodecTests(unittest.TestCase):
         from tools.faiss_row_codec import fit_codec, pack_codec_native
         from tools.llm_codec_frontier import reopen_codec
         from tools.quantized_memory import pack_quantized
-        from tools.tree_node_quality import Reader, digest, write
+        from tools.tree_node_quality import Reader, array_digest, digest, write
         torch = fixture.torch; faiss.omp_set_num_threads(1)
         run, model, source = self.helper.fixture('exact'); self.addCleanup(source.close)
         r = json.loads((run / 'report.json').read_text())
@@ -63,6 +63,26 @@ class LlmCodecTests(unittest.TestCase):
                     for ids in (torch.tensor([[3, 4, 5]]), torch.tensor([[20, 21, 22]])):
                         self.assertEqual(tensor_digest(source.complete(ids, True, 1)), tensor_digest(actual.complete(ids, True, 1)))
                 finally: staged.close(); actual.close()
+                if backend == 'raw':
+                    # Complete CPU addressing uses the raw tokenizer pad ID,
+                    # then the pinned compressed-token lookup. Include both
+                    # official split labels in this tiny interface fixture.
+                    from types import SimpleNamespace
+                    from tools.benchmark_llm_codec_serving import cpu_worker
+                    payload = json.loads((self.helper.prepared / 'sequences.json').read_text())
+                    payload['cases'].append({**payload['cases'][0], 'split': 'calibration'})
+                    write(self.helper.prepared / 'sequences.json', payload)
+                    write(self.helper.prepared / 'prepare.json', {'payload_sha256': digest(self.helper.prepared / 'sequences.json')})
+                    write(common / 'metadata.json', {'shape': list(rows.shape), 'head_sizes': r['identity']['head_sizes'],
+                        'prepared': str(self.helper.prepared), 'base_bytes': 0})
+                    report = directory / 'build-result.json'
+                    write(report, {'decoded_row_sha256': array_digest(decoded), 'model_bytes': 0})
+                    job['report'] = str(report)
+                    job_path = common / 'cpu-job.json'; write(job_path, job)
+                    output = common / 'cpu-result.json'
+                    cpu_worker(SimpleNamespace(job=job_path, upstream=Path(fixture.SOURCE), cache_bytes=0,
+                        requests=1, warmup=0, repeat=1, output=output))
+                    self.assertEqual(json.loads(output.read_text())['status'], 'passed')
 
 
 if __name__ == '__main__': unittest.main()
