@@ -176,7 +176,7 @@ extern "C" int meft_structural_save_index(void* plan, const char* path, int inde
     char* error, size_t error_size) {
     try {
         Plan* p = static_cast<Plan*>(plan);
-        require(p && path && (index == 0 || index == 1) && (index || p->built), "invalid index output");
+        require(p && path && (index == 0 || index == 1) && (index ? p->index != nullptr : p->keys_loaded), "invalid index output");
         if (index) {
             require(dastrie_store_to_file(p->index, path) > 0, "cannot save DASTrie");
         } else {

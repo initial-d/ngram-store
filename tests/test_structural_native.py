@@ -93,6 +93,18 @@ class RealStructuralTest(unittest.TestCase):
                     self.assertEqual(index.lookup([], index=kind), [])
                 with self.assertRaisesRegex(ValueError, "arguments"):
                     index.lookup(["a"], index="datrie")
+                # The public C API must reject an unavailable trie instead of
+                # passing a null legacy pointer; flat reserialization is exact.
+                import ctypes
+                error = ctypes.create_string_buffer(512)
+                copied = Path(tmp) / "keys-copy.flat"
+                self.assertEqual(index.lib.meft_structural_save_index(index.handle,
+                    os.fsencode(copied), 0, error, len(error)), 0)
+                self.assertEqual(copied.read_bytes(), path.read_bytes())
+                trie = Path(tmp) / "unavailable.das"
+                self.assertEqual(index.lib.meft_structural_save_index(index.handle,
+                    os.fsencode(trie), 1, error, len(error)), -1)
+                self.assertFalse(trie.exists())
             saved = path.read_bytes()
             for length in (8, 16, 23, len(saved) - 1):
                 path.write_bytes(saved[:length])
