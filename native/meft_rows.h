@@ -9,7 +9,8 @@ extern "C" {
 /* Immutable CPU row storage. Each handle is single-threaded; use one per worker.
  * Rows are opaque bytes: caller owns dtype, tensor shape and head offsets.
  * All IDs are original global row IDs. Errors never cross the ABI as exceptions.
- * Reads MEFTNAT1 versions 1 and 2 (optional lossless XOR prediction).
+ * Reads MEFTNAT1 versions 1/2 (explicit forwarding) and 3 (implicit identity).
+ * Versions 2/3 support optional lossless XOR prediction. C ABI is unchanged.
  */
 typedef struct meft_rows meft_rows;
 meft_rows *meft_rows_open(const char *path, char *error, size_t error_capacity);

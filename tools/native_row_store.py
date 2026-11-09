@@ -48,14 +48,17 @@ def _atomic_output(output):
 
 def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
                 predictor="none", row_order=None, *, representatives=None, max_block_bytes=None,
-                compress=True):
+                compress=True, implicit_identity=True):
     """Stream blocks into a spool; exact dedup index still grows with unique rows.
 
     deduplicate=False avoids the unbounded unique-row dictionary for large raw
-    tables, while preserving the identity forwarding map. No numeric changes.
+    tables. With no row_order/representatives it writes version 3, omitting the
+    redundant identity map (8 bytes per row). Original IDs and bytes stay exact.
+    implicit_identity=False exports versions 1/2 for older readers. Deduplicated,
+    reordered and representative exports retain explicit forwarding in v1/v2.
     Incompressible blocks are stored raw, avoiding codec expansion per block.
     predictor="xor" tries previous-row XOR + zlib as a third block candidate
-    and writes format version 2. Version 1 remains the default. Optional
+    and writes format version 2 when an explicit map is needed. Optional
     row_order is a full permutation of original IDs; its validation uses O(n)
     memory and reading becomes nonsequential. Reordered identity exports stage an
     additional 8 * nrows bytes to write the ID map sequentially, avoiding one
@@ -88,6 +91,10 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
         raise ValueError("predictor must be none or xor")
     if type(compress) is not bool:
         raise ValueError("compress must be boolean")
+    if type(implicit_identity) is not bool:
+        raise ValueError("implicit identity must be boolean")
+    omit_map = implicit_identity and not deduplicate and row_order is None and representatives is None
+    row_map_bytes = 0 if omit_map else nrows * ROW.size
     if representatives is not None:
         representatives = list(representatives)
         if (len(representatives) != nrows or
@@ -147,7 +154,7 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
                 else:
                     if reordered_map is not None:
                         ROW.pack_into(reordered_map, original_id * ROW.size, index)
-                    else:
+                    elif not omit_map:
                         map_file.write(ROW.pack(index))
             if os.fstat(stream.fileno()).st_size != nrows * row_bytes:
                 raise ValueError("source size changed while exporting")
@@ -158,9 +165,9 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
         if representatives is not None:
             for representative in representatives:
                 map_file.write(ROW.pack(physical[representative]))
-        payload_start = HEADER.size + nrows * ROW.size + len(blocks) * DESC.size
+        payload_start = HEADER.size + row_map_bytes + len(blocks) * DESC.size
         with _atomic_output(output) as dest:
-            version = 2 if predictor == "xor" else 1
+            version = 3 if omit_map else (2 if predictor == "xor" else 1)
             dest.write(HEADER.pack(b"MEFTNAT1", version, nrows, row_bytes, unique, block_rows, len(blocks)))
             map_file.seek(0)
             for part in iter(lambda: map_file.read(1024 * 1024), b""):
@@ -172,7 +179,8 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
                 dest.write(part)
     return {"format": "MEFTNAT1", "format_version": version, "input_bytes": nrows * row_bytes,
             "artifact_bytes": output.stat().st_size, "unique_rows": unique,
-            "row_map_bytes": nrows * ROW.size, "n_rows": nrows, "row_bytes": row_bytes,
+            "row_map_bytes": row_map_bytes, "n_rows": nrows, "row_bytes": row_bytes,
+            "forwarding": "implicit-identity" if omit_map else "explicit",
             "block_rows": block_rows, "blocks": len(blocks),
             "max_block_bytes": max_block_bytes,
             "raw_blocks": sum(codec == 0 for _, _, _, codec in blocks),

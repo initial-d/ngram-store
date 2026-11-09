@@ -1,0 +1,140 @@
+[
+  {
+    "command": [
+      "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python",
+      "-m",
+      "tools.benchmark_counterfact_storage",
+      "worker",
+      "--fixture",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7",
+      "--native-library",
+      "/llm-align/duyimin/ngram-native-real-20261109/source/build/libmeft_rows.so",
+      "--mode",
+      "v2-b32",
+      "--output",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7/old-v2-b32-c0.json",
+      "--cache-bytes",
+      "0",
+      "--repeat",
+      "20",
+      "--warmup",
+      "3"
+    ],
+    "name": "old-v2-b32-c0"
+  },
+  {
+    "command": [
+      "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python",
+      "-m",
+      "tools.benchmark_counterfact_storage",
+      "worker",
+      "--fixture",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7",
+      "--native-library",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/source/build/libmeft_rows.so",
+      "--mode",
+      "v2-b32",
+      "--output",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7/new-v2-b32-c0.json",
+      "--cache-bytes",
+      "0",
+      "--repeat",
+      "20",
+      "--warmup",
+      "3"
+    ],
+    "name": "new-v2-b32-c0"
+  },
+  {
+    "command": [
+      "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python",
+      "-m",
+      "tools.benchmark_counterfact_storage",
+      "worker",
+      "--fixture",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7",
+      "--native-library",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/source/build/libmeft_rows.so",
+      "--mode",
+      "v3-b32",
+      "--output",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7/new-v3-b32-c0.json",
+      "--cache-bytes",
+      "0",
+      "--repeat",
+      "20",
+      "--warmup",
+      "3"
+    ],
+    "name": "new-v3-b32-c0"
+  },
+  {
+    "command": [
+      "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python",
+      "-m",
+      "tools.benchmark_counterfact_storage",
+      "worker",
+      "--fixture",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7",
+      "--native-library",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/source/build/libmeft_rows.so",
+      "--mode",
+      "v3-b32",
+      "--output",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7/new-v3-b32-c1048576.json",
+      "--cache-bytes",
+      "1048576",
+      "--repeat",
+      "20",
+      "--warmup",
+      "3"
+    ],
+    "name": "new-v3-b32-c1048576"
+  },
+  {
+    "command": [
+      "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python",
+      "-m",
+      "tools.benchmark_counterfact_storage",
+      "worker",
+      "--fixture",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7",
+      "--native-library",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/source/build/libmeft_rows.so",
+      "--mode",
+      "v2-b32",
+      "--output",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7/new-v2-b32-c1048576.json",
+      "--cache-bytes",
+      "1048576",
+      "--repeat",
+      "20",
+      "--warmup",
+      "3"
+    ],
+    "name": "new-v2-b32-c1048576"
+  },
+  {
+    "command": [
+      "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python",
+      "-m",
+      "tools.benchmark_counterfact_storage",
+      "worker",
+      "--fixture",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7",
+      "--native-library",
+      "/llm-align/duyimin/ngram-native-real-20261109/source/build/libmeft_rows.so",
+      "--mode",
+      "v2-b32",
+      "--output",
+      "/llm-align/duyimin/ngram-implicit-format-20261109/results/qwen35-20877-exact-s7/old-v2-b32-c1048576.json",
+      "--cache-bytes",
+      "1048576",
+      "--repeat",
+      "20",
+      "--warmup",
+      "3"
+    ],
+    "name": "old-v2-b32-c1048576"
+  }
+]

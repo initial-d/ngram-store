@@ -24,20 +24,21 @@ def main():
         base = rng.randbytes(256)
         source.write_bytes(b"".join(base[:i] + bytes([base[i] ^ 1]) + base[i + 1:]
                                   for i in range(128)))
-        for predictor in ("none", "xor"):
-            packed = pack_native(source, table, 256, 8, False, predictor)
-            if predictor == "xor" and not packed["xor_blocks"]:
-                raise AssertionError("sanitizer fixture must exercise native XOR decoding")
-            valid = table.read_bytes()
-            subprocess.run([str(driver), str(table)], check=True)
-            for i in range(64):
-                raw = bytearray(valid)
-                for _ in range(1 + i % 3):
-                    raw[rng.randrange(len(raw))] ^= rng.randrange(1, 256)
-                if i % 4 == 0:
-                    raw = raw[:rng.randrange(len(raw))]
-                table.write_bytes(raw)
+        for implicit in (False, True):
+            for predictor in ("none", "xor"):
+                packed = pack_native(source, table, 256, 8, False, predictor, implicit_identity=implicit)
+                if predictor == "xor" and not packed["xor_blocks"]:
+                    raise AssertionError("sanitizer fixture must exercise native XOR decoding")
+                valid = table.read_bytes()
                 subprocess.run([str(driver), str(table)], check=True)
+                for i in range(64):
+                    raw = bytearray(valid)
+                    for _ in range(1 + i % 3):
+                        raw[rng.randrange(len(raw))] ^= rng.randrange(1, 256)
+                    if i % 4 == 0:
+                        raw = raw[:rng.randrange(len(raw))]
+                    table.write_bytes(raw)
+                    subprocess.run([str(driver), str(table)], check=True)
         # Many small compressed blocks exceed the old 64-entry cap and force
         # hash growth, collision chains, LRU eviction and close/reset cleanup.
         source.write_bytes(b"".join(i.to_bytes(2, "little") * 64 for i in range(300)))
@@ -45,7 +46,7 @@ def main():
         if packed["raw_blocks"]:
             raise AssertionError("cache sanitizer fixture must use compressed blocks")
         subprocess.run([str(driver), str(table)], check=True)
-    print("ASan/UBSan: versions 1/2, 128 mutated/truncated files and 300-block cache growth/eviction checked.")
+    print("ASan/UBSan: versions 1/2/3, 256 mutated/truncated files and 300-block cache growth/eviction checked.")
 
 
 if __name__ == "__main__":

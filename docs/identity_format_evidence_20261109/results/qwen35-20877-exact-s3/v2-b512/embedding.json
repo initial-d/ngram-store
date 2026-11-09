@@ -1,0 +1,38 @@
+{
+  "artifact_bytes": 72932764,
+  "artifact_sha256": "4daf635053b4ae303ef48044c90653723c9f6e29045cf603c189a3b9eace0f65",
+  "backend": "native",
+  "block_rows": 512,
+  "byteorder": "little",
+  "contract": "unchanged local-head IDs plus original offsets; byte-exact CPU gather",
+  "dtype": "torch.float32",
+  "format_version": 2,
+  "head_sizes": [
+    67130,
+    67140,
+    100104,
+    100110,
+    119922,
+    119924
+  ],
+  "input_bytes": 73514240,
+  "max_block_bytes": null,
+  "offsets": [
+    0,
+    67130,
+    134270,
+    234374,
+    334484,
+    454406
+  ],
+  "predictor": "xor",
+  "row_map_bytes": 4594640,
+  "schema_version": 1,
+  "shape": [
+    574330,
+    32
+  ],
+  "table_file": "table.men",
+  "unique_rows": 574330,
+  "weight_sha256": "3c50a7ddace70df3a7690c6fc96a634cb10fde2f224c7e2167dc767b0067a6d1"
+}

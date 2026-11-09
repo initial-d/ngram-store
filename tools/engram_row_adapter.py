@@ -42,7 +42,7 @@ def head_offsets(head_sizes):
 
 
 def export_multihead(weight, head_sizes, output_dir, block_rows=256, backend="python", deduplicate=True,
-                     predictor="none", *, max_block_bytes=None):
+                     predictor="none", *, max_block_bytes=None, implicit_identity=True):
     """Preserve every row, including unseen/unused rows, and the source dtype."""
     offsets = head_offsets(head_sizes)
     if weight.layout != torch.strided or weight.ndim != 2 or weight.shape[1] <= 0:
@@ -81,7 +81,7 @@ def export_multihead(weight, head_sizes, output_dir, block_rows=256, backend="py
                 stream.write(raw)
         if backend == "native":
             packed = pack_native(source, table, width, block_rows, deduplicate, predictor,
-                                 max_block_bytes=max_block_bytes)
+                                 max_block_bytes=max_block_bytes, implicit_identity=implicit_identity)
         else:
             packed = pack_rows(source, table, width, block_rows)
     metadata = {
@@ -98,18 +98,20 @@ def export_multihead(weight, head_sizes, output_dir, block_rows=256, backend="py
         "predictor": predictor,
         "contract": "unchanged local-head IDs plus original offsets; byte-exact CPU gather",
     }
+    if backend == "native":
+        metadata["format_version"] = packed["format_version"]
     manifest.write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n")
     return metadata
 
 
 def export_demo_embedding(module, head_sizes, output_dir, block_rows=256, backend="python", deduplicate=True,
-                          predictor="none", *, max_block_bytes=None):
+                          predictor="none", *, max_block_bytes=None, implicit_identity=True):
     """Accept the official demo's .embedding.weight / .offsets interface."""
     expected = torch.tensor(head_offsets(head_sizes), dtype=torch.int64)
     if not torch.equal(module.offsets.detach().cpu(), expected):
         raise ValueError("source offsets differ from declared head sizes")
     return export_multihead(module.embedding.weight, head_sizes, output_dir, block_rows, backend, deduplicate,
-                            predictor, max_block_bytes=max_block_bytes)
+                            predictor, max_block_bytes=max_block_bytes, implicit_identity=implicit_identity)
 
 
 class MappedMultiHeadEmbedding(nn.Module):
@@ -253,12 +255,13 @@ def open_demo_embedding(output_dir, list_of_N, D, cache_blocks=4, native_library
 
 
 def export_embedding(module, output_dir, block_rows=256, backend="native", deduplicate=True,
-                     predictor="none", *, max_block_bytes=None):
+                     predictor="none", *, max_block_bytes=None, implicit_identity=True):
     """Export ordinary nn.Embedding without forward-time max_norm mutation."""
     if not isinstance(module, nn.Embedding) or module.max_norm is not None:
         raise ValueError("requires nn.Embedding without forward-time max_norm mutation")
     return export_multihead(module.weight, [module.num_embeddings], output_dir,
-                            block_rows, backend, deduplicate, predictor, max_block_bytes=max_block_bytes)
+                            block_rows, backend, deduplicate, predictor, max_block_bytes=max_block_bytes,
+                            implicit_identity=implicit_identity)
 
 
 class MappedEmbedding(nn.Module):

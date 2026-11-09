@@ -12,10 +12,12 @@
 #include <zlib.h>
 
 /* MEFTNAT1 + six little-endian uint64 fields:
- * version (1 or 2), nrows, rowbytes, unique_rows, block_rows, nblocks.
- * Followed by nrows uint64 forwarding IDs and nblocks descriptors:
+ * version (1, 2 or 3), nrows, rowbytes, unique_rows, block_rows, nblocks.
+ * Versions 1/2 have nrows uint64 forwarding IDs. Version 3 omits this map
+ * and requires unique_rows == nrows: physical row ID is the original ID.
+ * Followed by nblocks descriptors:
  * absolute offset, stored bytes, raw bytes, codec (0=raw, 1=zlib,
- * 2=zlib over previous-row XOR residuals, version 2 only).
+ * 2=zlib over previous-row XOR residuals, versions 2/3 only).
  */
 #define HEADER 56u
 #define DESC 32u
@@ -33,7 +35,7 @@ struct meft_rows {
     size_t scratch_capacity;
     uint64_t last_blocks, last_decodes, last_hits, last_row_hits;
     uint64_t last_compressed_bytes, last_decoded_bytes;
-    int cache_rows;
+    int cache_rows, implicit_identity;
     size_t cache_budget, cache_used, cache_count;
     size_t cache_buckets;
     uint64_t cache_query;
@@ -76,14 +78,15 @@ meft_rows *meft_rows_open(const char *path, char *err, size_t cap) {
     s->data = mapping;
     const char *reason = "invalid native row header";
     uint64_t version = le64(s->data + 8);
-    if (memcmp(s->data, "MEFTNAT1", 8) || (version != 1 && version != 2)) goto invalid;
+    if (memcmp(s->data, "MEFTNAT1", 8) || (version != 1 && version != 2 && version != 3)) goto invalid;
+    s->implicit_identity = version == 3;
     s->nrows = le64(s->data + 16); s->width = le64(s->data + 24);
     s->unique = le64(s->data + 32); s->block_rows = le64(s->data + 40);
     s->nblocks = le64(s->data + 48);
     if (!s->width || !s->block_rows || s->unique > s->nrows ||
-        s->nrows > (s->size - HEADER) / 8 ||
+        (s->implicit_identity ? s->unique != s->nrows : s->nrows > (s->size - HEADER) / 8) ||
         (s->nrows && !s->unique)) goto invalid;
-    s->desc_start = HEADER + s->nrows * 8;
+    s->desc_start = HEADER + (s->implicit_identity ? 0 : s->nrows * 8);
     if (s->nblocks != s->unique / s->block_rows + (s->unique % s->block_rows != 0) ||
         s->nblocks > (s->size - s->desc_start) / DESC) goto invalid;
     uint64_t previous_end = s->desc_start + s->nblocks * DESC;
@@ -238,7 +241,7 @@ int meft_rows_gather(meft_rows *s, const uint64_t *ids, size_t count,
     const char *reason = NULL;
     for (size_t i = 0; i < count; ++i) {
         if (ids[i] >= s->nrows) { reason = "row ID out of bounds"; goto done; }
-        uint64_t row = le64(s->data + HEADER + ids[i] * 8);
+        uint64_t row = s->implicit_identity ? ids[i] : le64(s->data + HEADER + ids[i] * 8);
         if (row >= s->unique) { reason = "invalid forwarding ID"; goto done; }
         requests[i].block = row / s->block_rows;
         requests[i].within = row % s->block_rows;

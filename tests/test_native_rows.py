@@ -13,7 +13,76 @@ from tools.native_row_store import DESC, HEADER, NativeRows, pack_native, resolv
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def descriptor_start(data):
+    header = HEADER.unpack_from(data)
+    return HEADER.size + (0 if header[1] == 3 else header[2] * 8)
+
+
 class NativeRowsTest(unittest.TestCase):
+    def test_implicit_identity_saves_exact_map_bytes_with_unchanged_codec_payloads(self):
+        rng = random.Random(901)
+        for rows in ([], [b'abc'], [b'abc', b'abd', b'abe'],
+                     [b'\0' * 127] * 8 + [rng.randbytes(127) for _ in range(9)]):
+            width = len(rows[0]) if rows else 3
+            for predictor in ('none', 'xor'):
+                with self.subTest(rows=len(rows), predictor=predictor), tempfile.TemporaryDirectory() as tmp:
+                    source, old, new = (Path(tmp) / n for n in ('raw', 'old', 'new'))
+                    source.write_bytes(b''.join(rows))
+                    old_meta = pack_native(source, old, width, 8, False, predictor, implicit_identity=False)
+                    new_meta = pack_native(source, new, width, 8, False, predictor)
+                    self.assertEqual(old_meta['format_version'], 2 if predictor == 'xor' else 1)
+                    self.assertEqual(new_meta['format_version'], 3)
+                    self.assertEqual(new_meta['row_map_bytes'], 0)
+                    self.assertEqual(old.stat().st_size - new.stat().st_size, 8 * len(rows))
+                    a, b = old.read_bytes(), new.read_bytes()
+                    count = new_meta['blocks']
+                    for i in range(count):
+                        da = DESC.unpack_from(a, descriptor_start(a) + i * DESC.size)
+                        db = DESC.unpack_from(b, descriptor_start(b) + i * DESC.size)
+                        self.assertEqual(da[0] - db[0], 8 * len(rows))
+                        self.assertEqual(da[1:], db[1:])
+                    self.assertEqual(a[descriptor_start(a) + count * DESC.size:],
+                                     b[descriptor_start(b) + count * DESC.size:])
+                    for path in (old, new):
+                        with NativeRows(path, self.library) as table:
+                            self.assertEqual(table.rows(range(len(rows))), source.read_bytes())
+                    for options in ({'deduplicate': True}, {'deduplicate': False, 'row_order': list(range(len(rows)))},
+                                    {'deduplicate': False, 'representatives': list(range(len(rows)))}):
+                        m = pack_native(source, new, width, predictor=predictor, **options)
+                        self.assertEqual(m['format_version'], old_meta['format_version'])
+                        self.assertEqual(m['row_map_bytes'], 8 * len(rows))
+                        with NativeRows(new, self.library) as table:
+                            self.assertEqual(table.rows(range(len(rows))), source.read_bytes())
+
+    def test_implicit_header_rejects_inconsistent_counts_overflows_and_legacy_layout(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source, table = Path(tmp) / 'raw', Path(tmp) / 'table'
+            source.write_bytes(b'abcabdabe')
+            pack_native(source, table, 3, 2, False)
+            valid = table.read_bytes()
+            mutations = [(16, 0), (16, (1 << 64) - 1), (24, 0), (24, (1 << 64) - 1),
+                         (32, 2), (32, 4), (40, 0), (48, 0), (48, (1 << 64) - 1),
+                         (descriptor_start(valid), (1 << 64) - 1),
+                         (descriptor_start(valid) + 24, 3)]
+            for offset, value in mutations:
+                changed = bytearray(valid)
+                struct.pack_into('<Q', changed, offset, value)
+                table.write_bytes(changed)
+                with self.subTest(offset=offset, value=value), self.assertRaises(ValueError):
+                    NativeRows(table, self.library)
+            for cut in (0, 55, 56, len(valid) - 1):
+                table.write_bytes(valid[:cut])
+                with self.assertRaises(ValueError):
+                    NativeRows(table, self.library)
+            pack_native(source, table, 3, 2, False, implicit_identity=False)
+            changed = bytearray(table.read_bytes())
+            struct.pack_into('<Q', changed, 8, 3)
+            table.write_bytes(changed)
+            with self.assertRaises(ValueError):
+                NativeRows(table, self.library)
+            with self.assertRaisesRegex(ValueError, 'boolean'):
+                pack_native(source, table, 3, implicit_identity=1)
+
     def test_byte_cap_keeps_original_ids_with_compaction_permutation_and_tail(self):
         with tempfile.TemporaryDirectory() as tmp:
             source, packed = Path(tmp) / "raw", Path(tmp) / "table"
@@ -25,7 +94,7 @@ class NativeRowsTest(unittest.TestCase):
             self.assertEqual(metadata['blocks'], 3)
             with packed.open('rb') as stream:
                 header = HEADER.unpack(stream.read(HEADER.size))
-                stream.seek(HEADER.size + header[2] * 8)
+                stream.seek(descriptor_start(packed.read_bytes()))
                 sizes = [DESC.unpack(stream.read(DESC.size))[2] for _ in range(header[-1])]
             self.assertEqual(sizes, [130, 130, 65])
             with NativeRows(packed, self.library) as table:
@@ -47,7 +116,7 @@ class NativeRowsTest(unittest.TestCase):
             source.write_bytes(b'A' * (128 * 8))
             pack_native(source, packed, 128, 4, False, 'xor')
             with packed.open('rb') as stream:
-                stream.seek(HEADER.size + 8 * 8)
+                stream.seek(descriptor_start(packed.read_bytes()))
                 descriptors = [DESC.unpack(stream.read(DESC.size)) for _ in range(2)]
             query = (ctypes.c_uint64 * 4)(0, 4, 1, 5)
             out = ctypes.create_string_buffer(4 * 128)
@@ -293,7 +362,7 @@ class NativeRowsTest(unittest.TestCase):
             source, packed = Path(tmp) / "raw", Path(tmp) / "table.men"
             rows = [bytes([i]) * 128 for i in range(16)]
             source.write_bytes(b"".join(rows))
-            pack_native(source, packed, 128, 4, False)
+            pack_native(source, packed, 128, 4, False, implicit_identity=False)
             with NativeRows(packed, self.library) as table:
                 table.rows([0, 4, 0, 4, 1, 5])
                 self.assertEqual(table.last_block_reads, 2)
@@ -311,7 +380,7 @@ class NativeRowsTest(unittest.TestCase):
                 table.row(0)
             # Corrupt a compressed payload while keeping structural offsets.
             changed = bytearray(data)
-            offset = struct.unpack_from("<Q", data, 56 + len(rows) * 8)[0]
+            offset = struct.unpack_from("<Q", data, descriptor_start(data))[0]
             changed[offset] ^= 255
             packed.write_bytes(changed)
             with NativeRows(packed, self.library) as table, self.assertRaisesRegex(ValueError, "decompression"):
@@ -360,7 +429,7 @@ class NativeRowsTest(unittest.TestCase):
             source.write_bytes(b"\0" * 256)
             pack_native(source, packed, 64, 4, False)
             data = bytearray(packed.read_bytes())
-            offset = struct.unpack_from("<Q", data, 56 + 4 * 8)[0]
+            offset = struct.unpack_from("<Q", data, descriptor_start(data))[0]
             data[offset] ^= 255
             packed.write_bytes(data)
             with NativeRows(packed, self.library, 1024) as table:
@@ -498,7 +567,7 @@ class NativeRowsTest(unittest.TestCase):
             source.write_bytes(b"\0" * 512)
             pack_native(source, packed, 128, 4, False)
             data = bytearray(packed.read_bytes())
-            offset = struct.unpack_from("<Q", data, 56 + 4 * 8)[0]
+            offset = struct.unpack_from("<Q", data, descriptor_start(data))[0]
             data[offset] ^= 255
             packed.write_bytes(data)
             with NativeRows(packed, self.library, cache_bytes=128, cache_policy="rows") as table:
@@ -565,13 +634,13 @@ class NativeRowsTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "descriptor"):
                     NativeRows(packed, self.library)
                 changed = bytearray(data)
-                struct.pack_into("<Q", changed, 8, 3)
+                struct.pack_into("<Q", changed, 8, 4)
                 packed.write_bytes(changed)
                 with self.assertRaisesRegex(ValueError, "header"):
                     NativeRows(packed, self.library)
                 # Corrupt the XOR zlib stream, keeping descriptor offsets valid.
                 changed = bytearray(data)
-                offset = struct.unpack_from("<Q", data, 56 + len(rows) * 8)[0]
+                offset = struct.unpack_from("<Q", data, descriptor_start(data))[0]
                 changed[offset] ^= 255
                 packed.write_bytes(changed)
                 with NativeRows(packed, self.library) as table:
@@ -616,7 +685,7 @@ class NativeRowsTest(unittest.TestCase):
                 pack_native(source, packed, width, 8, False, "xor")
                 data = packed.read_bytes()
                 for block in range(2):
-                    offset, stored, raw_size, codec = struct.unpack_from("<4Q", data, 56 + 8 * len(rows) + block * 32)
+                    offset, stored, raw_size, codec = struct.unpack_from("<4Q", data, descriptor_start(data) + block * 32)
                     raw = b"".join(rows[block * 8:(block + 1) * 8])
                     residual = bytearray(raw)
                     for i in range(width, len(raw)):
@@ -648,7 +717,7 @@ class NativeRowsTest(unittest.TestCase):
                 weight = bits.view(dtype)
                 meta = export_multihead(weight, [3, 5], tmp, 8, backend="native", predictor="xor")
                 table = Path(tmp) / "table.men"
-                descriptor = 56 + 8 * len(weight)
+                descriptor = descriptor_start(table.read_bytes())
                 self.assertEqual(struct.unpack_from("<Q", table.read_bytes(), descriptor + 24)[0], 2)
                 with MappedMultiHeadEmbedding(tmp, native_library=self.library, native_cache_bytes=4096) as mapped:
                     ids = torch.tensor([[2, 4], [0, 0], [2, 4]])
@@ -698,6 +767,24 @@ class NativeRowsTest(unittest.TestCase):
                     mapped.train()
             with self.assertRaises(ValueError):
                 export_embedding(torch.nn.Embedding(17, 7, max_norm=1), Path(tmp) / "maxnorm")
+
+    def test_embedding_export_exposes_legacy_identity_format_option(self):
+        try:
+            import torch
+        except ImportError:
+            self.skipTest("optional PyTorch unavailable")
+        from tools.engram_row_adapter import MappedEmbedding, export_embedding
+        with tempfile.TemporaryDirectory() as tmp:
+            original = torch.nn.Embedding(9, 7).eval()
+            for implicit in (False, True):
+                directory = Path(tmp) / str(implicit)
+                meta = export_embedding(original, directory, deduplicate=False,
+                    predictor='xor', implicit_identity=implicit)
+                self.assertEqual(meta['format_version'], 3 if implicit else 2)
+                self.assertEqual(meta['row_map_bytes'], 0 if implicit else 9 * 8)
+                with MappedEmbedding(directory, self.library) as mapped:
+                    ids = torch.tensor([8, 0, 8, 4])
+                    self.assertTrue(torch.equal(mapped(ids).view(torch.uint8), original(ids).view(torch.uint8)))
 
     def test_small_causal_transformer_logits_match_with_untied_embedding(self):
         try:
