@@ -50,6 +50,14 @@ def source(environment, inventory):
     assert '/' + 'llm-align/' not in environment['command']
 
 
+def qwen_source(environment, inventory):
+    assert environment['python'] and environment['torch'] and environment['transformers'] and environment['os']
+    assert environment['tf32'] is False and '/' + 'llm-align/' not in environment['command']
+    files = inventory[environment['code_sha']]['files']
+    for name, expected in environment['source_hashes'].items():
+        assert files['tools/' + name]['original_sha256'] == expected
+
+
 def gate(quality, budget):
     return all(quality[s]['pairs'] > 0 and quality[s]['loss_relative_change'] <= budget
                and quality[s]['discrimination_change'] >= -.005 for s in ('all', 'oov_nonempty'))
@@ -265,6 +273,10 @@ def verify(root):
             assert entry['row_audit']['decoded_row_sha256'] == built['decoded_row_sha256']
             for split, quality in entry['quality'].items():
                 result = quality['report']; cases = case_values(quality['public_case_scores'])
+                qwen_source(result['environment'], inventory)
+                files = inventory[result['environment']['code_sha']]['files']
+                assert files['tools/llm_codec_frontier.py']['original_sha256'] == result['environment']['codec_frontier_source_sha256']
+                assert files['tools/codec_memory_adapter.py']['original_sha256'] == result['environment']['codec_adapter_source_sha256']
                 assert result['status'] == 'complete' and result['job_sha256'] == entry['private_job_sha256']
                 assert result['decoded_row_sha256'] == built['decoded_row_sha256'] and len(result['complete_request_checks']) == 16
                 assert all(c['split'] == split for c in cases)
@@ -276,10 +288,19 @@ def verify(root):
                     assert leader['complete_request_checks'] == result['complete_request_checks']
                     check_metrics(leader['metrics'], result['metrics'])
                 else:
-                    assert result['quality_reused_from'] is None
                     identities[key] = result
             assert 'calibration' in entry['quality']
             values[candidate] = entry
+        for entry in grid:
+            for split, quality in entry['quality'].items():
+                result = quality['report']; reused = result['quality_reused_from']
+                if reused:
+                    leader = values[reused]['quality'][split]['report']
+                    assert leader['quality_reused_from'] is None
+                    for field in ('decoded_row_sha256', 'complete_request_checks', 'batch_schedule_sha256',
+                                  'nonrow_delta_sha256', 'frozen_weight_sha256', 'oov_contract_sha256'):
+                        assert result[field] == leader[field]
+                    check_metrics(leader['metrics'], result['metrics'])
         baseline = metric_values(values['raw-fp32']['quality']['calibration']['report']['metrics'])
         for choice in selected['choices']:
             eligible = [v for v in values.values() if v['build']['family'] == choice['family'] and all(
@@ -292,6 +313,7 @@ def verify(root):
         reference = next(c for c in controls if c['name'] == 'exact')['report']
         for control in controls:
             report = control['report']; cases = case_values(control['public_case_scores'])
+            qwen_source(report['environment'], inventory)
             assert report['status'] == 'complete' and report['seed'] == metadata['seed']
             for split in ('calibration', 'test'):
                 check_metrics(metrics([c for c in cases if c['split'] == split]), report['metrics'][split])

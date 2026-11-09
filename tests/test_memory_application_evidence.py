@@ -48,6 +48,19 @@ class EvidenceArithmeticTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             paired(blocks, quality, {'pairs': 2, 'tokens': 10})
 
+    def test_pairing_cancels_case_and_seed_variation(self):
+        try:
+            import numpy as np
+            from tools.analyze_memory_application import hierarchical_paired
+        except ImportError:
+            self.skipTest('optional NumPy required')
+        rng = np.random.default_rng(123)
+        sources = [rng.uniform(.1, .9, (40, 3)) for _ in range(3)]
+        result = hierarchical_paired(sources, [s.copy() for s in sources], replicates=50)
+        self.assertEqual(result['observed_candidate_minus_source'], [0.] * 4)
+        self.assertEqual(result['paired_95_percent_intervals'], [[0., 0.]] * 4)
+        self.assertTrue(all(v == [0.] * 4 for v in result['samples']))
+
 
 if __name__ == '__main__':
     unittest.main()

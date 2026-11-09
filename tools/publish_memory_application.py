@@ -91,6 +91,8 @@ def long_evidence(args, archive):
         raise ValueError('Complete 108-point row and held-out audits required')
     for file in ('prepare.json', 'selection.json', 'training-selection.json', 'quality-complete.json'):
         archive.take(root / file, 'long/' + file)
+    for source in root.glob('stage-*/*progress.json'):
+        archive.take(source, 'long/stages/' + source.parent.name + '-' + source.name)
     archive.take(args.root / 'long-row-audit' / 'report.json', 'long/row-audit-controller.json')
     timer, timings = check_controller(args.root / 'retime-long', long_requests(root))
     archive.take(args.root / 'retime-long' / 'report.json', 'long/retiming-controller.json')
@@ -159,6 +161,8 @@ def llm_evidence(args, archive):
     cpu_timer, cpu = check_controller(args.root / 'retime-llm-cpu', cpu_requests)
     for file in ('prepare.json', 'selection.json'):
         archive.take(root / file, 'llm/' + file)
+    for source in root.glob('stage-*/*progress.json'):
+        archive.take(source, 'llm/stages/' + source.parent.name + '-' + source.name)
     archive.take(args.root / 'llm-row-audit' / 'report.json', 'llm/row-audit-controller.json')
     archive.take(controls / 'queue.json', 'llm/independent-controls-controller.json')
     for phase in ('cpu', 'gpu'):
@@ -216,6 +220,7 @@ def llm_evidence(args, archive):
             if report['prepared_sha256'] != load(common / 'model-recipe.json')['prepared_sha256']:
                 raise ValueError('Control dataset differs')
             record = {'name': kind, 'report': report, 'private_report_sha256': digest(source / 'report.json'),
+                      'private_report_bytes': (source / 'report.json').stat().st_size,
                       'public_case_scores': archive.cases(cases)}
             if kind == 'hash':
                 native = source / 'case-scores-native-oov.json'
@@ -271,6 +276,8 @@ def main():
     runtimes(args, archive)
     for source in args.root.glob('serving-smoke-*.json'):
         archive.take(source, 'diagnostics/' + source.name)
+    for name in ('quality-dispatch.json', 'cpu-quality-dispatch.json', 'final-serving-dispatch.json'):
+        archive.take(args.root / name, 'diagnostics/' + name)
     for source in (args.root / 'cache-preflight-qwen06/report.json', args.root / 'cache-preflight-qwen35/report.json'):
         archive.take(source, 'diagnostics/' + source.parent.name + '.json')
     archive.put('publication.json', {'status': 'complete', 'long_models': 108, 'long_candidates': 28188,
