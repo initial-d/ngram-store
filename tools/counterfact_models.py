@@ -37,7 +37,10 @@ def load_model(path):
     return model,info
 
 
-def setup(base,upstream,control,vocab_sizes,seed,device='cuda',suffix_layers=8,train_decoder_suffix=True):
+def setup(base,upstream,control,vocab_sizes,seed,device='cuda',suffix_layers=8,train_decoder_suffix=True,
+          *,embedding_factory=None):
+    if embedding_factory is not None and control!='full':
+        raise ValueError('inference embedding factory requires the full memory branch')
     torch.manual_seed(seed)
     tokenizer=AutoTokenizer.from_pretrained(base,local_files_only=True,trust_remote_code=False)
     model,info=load_model(base)
@@ -47,7 +50,14 @@ def setup(base,upstream,control,vocab_sizes,seed,device='cuda',suffix_layers=8,t
     cfg=module.EngramConfig(tokenizer_name_or_path=str(base),engram_vocab_size=vocab_sizes,
         max_ngram_size=4,n_embed_per_ngram=64,n_head_per_ngram=2,layer_ids=[layer],
         pad_id=tokenizer.pad_token_id,kernel_size=3,seed=seed)
-    branch=module.Engram(layer_id=layer,config=cfg,backbone_hidden_size=text.config.hidden_size,backbone_hc_mult=1)
+    original_embedding=module.MultiHeadEmbedding
+    try:
+        # load_engram creates a fresh module namespace for this setup. Restore
+        # its constructor even on failure; existing model instances are untouched.
+        if embedding_factory is not None:module.MultiHeadEmbedding=embedding_factory
+        branch=module.Engram(layer_id=layer,config=cfg,backbone_hidden_size=text.config.hidden_size,backbone_hc_mult=1)
+    finally:
+        module.MultiHeadEmbedding=original_embedding
     # Match the embedding/linear initialization used by the pinned Qwen3
     # integration, while retaining Engram's deliberate zero convolution init.
     for name,child in branch.named_modules():
