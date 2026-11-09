@@ -95,10 +95,11 @@ def export_multihead(weight, head_sizes, output_dir, block_rows=256, backend="py
         "block_rows": block_rows,
         "max_block_bytes": max_block_bytes,
         "backend": backend,
-        "format_version": packed.get("format_version"),
         "predictor": predictor,
         "contract": "unchanged local-head IDs plus original offsets; byte-exact CPU gather",
     }
+    if backend == "native":
+        metadata["format_version"] = packed["format_version"]
     manifest.write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n")
     return metadata
 

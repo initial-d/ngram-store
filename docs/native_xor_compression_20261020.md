@@ -21,6 +21,10 @@ remain the original 2026-10-20 results.
 
 ## What changed
 
+This section describes the original v1/v2 implementation. Current identity
+exports can omit forwarding in [v3](native_ngram_memory.md#native-layout-and-construction);
+the measurements below remain the original v2 results.
+
 `pack_native(..., predictor="xor")` writes `MEFTNAT1` version 2, adding one
 codec to the existing 32-byte block descriptor. Every block compares raw,
 ordinary zlib and previous-row XOR followed by zlib, then stores the smallest

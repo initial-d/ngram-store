@@ -768,6 +768,24 @@ class NativeRowsTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 export_embedding(torch.nn.Embedding(17, 7, max_norm=1), Path(tmp) / "maxnorm")
 
+    def test_embedding_export_exposes_legacy_identity_format_option(self):
+        try:
+            import torch
+        except ImportError:
+            self.skipTest("optional PyTorch unavailable")
+        from tools.engram_row_adapter import MappedEmbedding, export_embedding
+        with tempfile.TemporaryDirectory() as tmp:
+            original = torch.nn.Embedding(9, 7).eval()
+            for implicit in (False, True):
+                directory = Path(tmp) / str(implicit)
+                meta = export_embedding(original, directory, deduplicate=False,
+                    predictor='xor', implicit_identity=implicit)
+                self.assertEqual(meta['format_version'], 3 if implicit else 2)
+                self.assertEqual(meta['row_map_bytes'], 0 if implicit else 9 * 8)
+                with MappedEmbedding(directory, self.library) as mapped:
+                    ids = torch.tensor([8, 0, 8, 4])
+                    self.assertTrue(torch.equal(mapped(ids).view(torch.uint8), original(ids).view(torch.uint8)))
+
     def test_small_causal_transformer_logits_match_with_untied_embedding(self):
         try:
             import torch
