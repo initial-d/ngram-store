@@ -89,6 +89,10 @@ and actual question-prefix outputs, including an independently reopened model.
 The CPU interface fixtures use a tiny real Qwen model and pinned Engram code;
 they establish checkpoint/addressing compatibility, not the compression,
 performance or downstream quality of the 24 trained research checkpoints.
-Dense temporary construction, Python key dictionaries and coexistence of models
-remain explicit costs. DATrie/mark-compact ablations and matched full-model
-capacity/query measurements on those real checkpoints are still required.
+Native bundle reopen installs the reader during branch construction, without
+allocating a dense memory-row tensor or recreating its training initialization.
+Source-run export still loads source vectors, and the validation command keeps
+reference and native models together. Base loading, Python key dictionaries,
+file-backed metadata and allocator RSS remain separate costs; this is not a
+total startup-memory cap. DATrie/mark-compact ablations and matched full-model
+capacity/query measurements on the real checkpoints are still required.

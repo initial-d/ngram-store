@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 try:
     import torch
@@ -132,6 +133,7 @@ class CounterfactNativeTest(unittest.TestCase):
         self.assertEqual(report['execution_device'], 'cpu')
         self.assertTrue(report['all_original_rows_byte_exact'])
         self.assertTrue(report['independent_native_bundle_reopen_byte_exact'])
+        self.assertFalse(report['native_reopen_constructs_dense_rows'])
         self.assertEqual(len(report['requests']), 3)
         return output
 
@@ -196,6 +198,29 @@ class CounterfactNativeTest(unittest.TestCase):
         self.write(recipe_path, recipe)
         with self.assertRaisesRegex(ValueError, 'local-head layout'):
             reopen(bundle, SOURCE, self.library, device='cpu')
+
+    def test_native_startup_never_allocates_a_dense_memory_embedding(self):
+        from tools.counterfact_native import reopen, digest
+        original_init = torch.nn.Embedding.__init__
+        def checked_init(instance, num_embeddings, embedding_dim, *args, **kwargs):
+            # This tiny Qwen's backbone vocabulary is 32. Its memory heads
+            # need more rows; forbid even the old placeholder memory table.
+            if embedding_dim == 32 and num_embeddings > 32:
+                raise AssertionError('native startup allocated dense memory rows')
+            original_init(instance, num_embeddings, embedding_dim, *args, **kwargs)
+        for variant in ('exact', 'hash', 'legacy'):
+            with self.subTest(variant=variant):
+                run, source, replay = self.fixture(variant)
+                self.addCleanup(replay.close)
+                bundle = self.export(run, native_oov=variant == 'hash')
+                if variant == 'hash':
+                    replay.memory.hash_mapping.native_oov = True
+                with patch.object(torch.nn.Embedding, '__init__', checked_init):
+                    model, native, staged = reopen(bundle, SOURCE, self.library, device='cpu')
+                self.addCleanup(native.close); self.addCleanup(staged.close)
+                self.assertFalse(any('multi_head_embedding' in name for name, _ in model.named_parameters()))
+                for ids in (torch.tensor([[3, 4, 5]]), torch.tensor([[20, 21, 22]])):
+                    self.assertEqual(digest(replay.complete(ids, True, 1)), digest(native.complete(ids, True, 1)))
 
 
 if __name__ == '__main__':

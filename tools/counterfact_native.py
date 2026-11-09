@@ -26,12 +26,12 @@ class NativeHashMemory(torch.nn.Module):
         return self.source(hidden_states=hidden_states,input_ids=input_ids.cpu())
 
 
-def configure_identity(replay,module,folder,spec):
+def configure_identity(replay,module,folder,spec,*,initialize_rows=True):
     """Reconstruct trained local-head IDs before loading weights or native rows."""
     if not spec['protocol'].get('identity_control'):
         if spec.get('native_oov',False):raise ValueError('native OOV requires a trained identity hash control')
         return
-    from .ngram_identity import Vocabulary,configure_memory
+    from .ngram_identity import Vocabulary,IdentityMapping,configure_memory
     path=folder/spec['vocabulary']
     if sha(path)!=spec['vocabulary_sha256']:raise ValueError('identity vocabulary checksum changed')
     vocabulary=Vocabulary.load(path)
@@ -39,7 +39,15 @@ def configure_identity(replay,module,folder,spec):
         raise ValueError('identity vocabulary/data mismatch')
     variant=spec['protocol']['variants'][spec['variant']]['identity']
     if variant not in ('exact','hash'):raise ValueError('unsupported identity variant')
-    info=configure_memory(replay,module,vocabulary,variant=='exact',spec['seed'])
+    if initialize_rows:
+        info=configure_memory(replay,module,vocabulary,variant=='exact',spec['seed'])
+    else:
+        mapping=IdentityMapping(replay.memory.hash_mapping,vocabulary,variant=='exact')
+        replay.memory.hash_mapping=mapping
+        heads=[n for order in mapping.vocab_size_across_layers[replay.memory.layer_id] for n in order]
+        info={'addressing':'exact-canonical-key' if variant=='exact' else 'shared-hash-bucket',
+              'head_sizes':heads,'physical_rows':sum(heads),'row_bytes':sum(heads)*32*4,
+              'unique_keys_per_order':{str(n):len(vocabulary.keys[n]) for n in (2,3,4)}}
     for key in ('addressing','head_sizes','physical_rows','row_bytes','unique_keys_per_order'):
         if info[key]!=spec['identity'][key]:raise ValueError('identity layout changed: '+key)
     if spec.get('native_oov',False):
@@ -81,16 +89,21 @@ def restore(run,base,upstream,*,device='cuda',native_oov=False):
 def digest(x):return hashlib.sha256(x.detach().cpu().contiguous().view(torch.uint8).numpy().tobytes()).hexdigest()
 
 
+def check_native_layout(staged,heads,dim,dtype=torch.float32):
+    offsets=[sum(heads[:i]) for i in range(len(heads))]
+    meta=staged.gather.metadata
+    if (meta['shape']!=[sum(heads),dim] or meta['head_sizes']!=heads
+            or meta['offsets']!=offsets or staged.dtype!=dtype):
+        staged.close();raise ValueError('native local-head layout differs from configured branch')
+
+
 def attach_native(model,replay,bundle,native_library,device):
     branch=replay.memory;source=branch.multi_head_embedding
     offsets=source.offsets.detach().cpu().tolist()+[len(source.embedding.weight)]
     heads=[b-a for a,b in zip(offsets,offsets[1:])]
     staged=StagedMultiHeadEmbedding(bundle/'memory',device=device,native_library=native_library,
         native_cache_bytes=1024**2,native_cache_policy='rows',staging_rows=4096,staging_slots=2)
-    meta=staged.gather.metadata
-    if (meta['shape']!=[sum(heads),source.embedding_dim] or meta['head_sizes']!=heads
-            or meta['offsets']!=offsets[:-1] or staged.dtype!=source.embedding.weight.dtype):
-        staged.close();raise ValueError('native local-head layout differs from configured branch')
+    check_native_layout(staged,heads,source.embedding_dim,source.embedding.weight.dtype)
     branch.multi_head_embedding=staged;wrapped=NativeHashMemory(branch).eval()
     model.ngram_memory=wrapped;replay.memory=wrapped
     return staged
@@ -98,28 +111,44 @@ def attach_native(model,replay,bundle,native_library,device):
 
 def reopen(bundle,upstream,native_library,*,device='cuda'):
     recipe=json.loads((bundle/'model-recipe.json').read_text());p=recipe['protocol'];v=p['variants'][recipe['variant']]
-    model,tok,replay,module,cfg,loading=setup(recipe['base_model'],upstream,'full',v['vocab_sizes'],recipe['seed'],
-        device=device,suffix_layers=p['suffix_layers'],train_decoder_suffix=p.get('train_decoder_suffix',True))
-    configure_identity(replay,module,bundle,recipe)
     if 'memory_manifest_sha256' in recipe and sha(bundle/'memory/embedding.json')!=recipe['memory_manifest_sha256']:
         raise ValueError('native memory manifest changed')
     path=bundle/recipe['nonrow_delta']
     if sha(path)!=recipe['nonrow_delta_sha256']:raise ValueError('nonrow delta changed')
-    state=load_file(str(path),device='cpu')
-    expected={n:p for n,p in model.named_parameters() if p.requires_grad and n!='ngram_memory.multi_head_embedding.embedding.weight'}
-    if state.keys()!=expected.keys():raise ValueError('native bundle is missing nonrow parameters')
-    with torch.no_grad():
-        for n,p in expected.items():
-            x=state[n]
-            if p.shape!=x.shape or p.dtype!=x.dtype:raise ValueError('nonrow shape/dtype changed')
-            p.copy_(x)
-    if 'frozen_weight_sha256' in recipe and replay.frozen_hash()!=recipe['frozen_weight_sha256']:
-        raise ValueError('native immutable backbone changed')
-    if 'frozen_decoder_suffix_sha256' in recipe and replay.frozen_suffix_hash()!=recipe['frozen_decoder_suffix_sha256']:
-        raise ValueError('native immutable decoder suffix changed')
-    model.requires_grad_(False).eval();module.set_global_step(recipe['global_step'])
-    staged=attach_native(model,replay,bundle,native_library,device)
-    return model,replay,staged
+    staged=None;replay=None
+    def factory(list_of_N,D):
+        nonlocal staged
+        staged=StagedMultiHeadEmbedding(bundle/'memory',device=device,native_library=native_library,
+            native_cache_bytes=1024**2,native_cache_policy='rows',staging_rows=4096,staging_slots=2)
+        if len(list_of_N)!=staged.num_heads or D!=staged.embedding_dim:
+            raise ValueError('native local-head layout differs from configured branch')
+        return staged
+    try:
+        model,tok,replay,module,cfg,loading=setup(recipe['base_model'],upstream,'full',v['vocab_sizes'],recipe['seed'],
+            device=device,suffix_layers=p['suffix_layers'],train_decoder_suffix=p.get('train_decoder_suffix',True),
+            embedding_factory=factory)
+        configure_identity(replay,module,bundle,recipe,initialize_rows=False)
+        heads=[n for order in replay.memory.hash_mapping.vocab_size_across_layers[replay.memory.layer_id] for n in order]
+        check_native_layout(staged,heads,32)
+        state=load_file(str(path),device='cpu')
+        expected={n:p for n,p in model.named_parameters() if p.requires_grad}
+        if state.keys()!=expected.keys():raise ValueError('native bundle is missing nonrow parameters')
+        with torch.no_grad():
+            for n,p in expected.items():
+                x=state[n]
+                if p.shape!=x.shape or p.dtype!=x.dtype:raise ValueError('nonrow shape/dtype changed')
+                p.copy_(x)
+        if 'frozen_weight_sha256' in recipe and replay.frozen_hash()!=recipe['frozen_weight_sha256']:
+            raise ValueError('native immutable backbone changed')
+        if 'frozen_decoder_suffix_sha256' in recipe and replay.frozen_suffix_hash()!=recipe['frozen_decoder_suffix_sha256']:
+            raise ValueError('native immutable decoder suffix changed')
+        model.requires_grad_(False).eval();module.set_global_step(recipe['global_step'])
+        wrapped=NativeHashMemory(replay.memory).eval();model.ngram_memory=wrapped;replay.memory=wrapped
+        return model,replay,staged
+    except BaseException:
+        if staged is not None:staged.close()
+        if replay is not None:replay.close()
+        raise
 
 
 def main():
@@ -201,7 +230,8 @@ def main():
         report.update(status='passed',bundle_bytes=sum(p.stat().st_size for p in args.output.rglob('*') if p.is_file()),
             source_delta_bytes=r['delta']['bytes'],staging_stats=staged.stats,elapsed_seconds=time.perf_counter()-started,
             execution_device=args.device,identity=r.get('identity'),native_oov=args.native_oov,
-            startup_limitation='Current reopen constructs a dense temporary row module before replacing it; no bounded native-startup claim')
+            native_reopen_constructs_dense_rows=False,
+            startup_limitation='Native reopen creates no dense memory row parameter. Base loading, Python key dictionaries, file-backed metadata and allocator RSS remain separate; no total startup memory cap.')
         write(args.output/'report.json',report);print(json.dumps(report),flush=True)
     finally:staged.close();replay.close()
 
