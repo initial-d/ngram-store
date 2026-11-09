@@ -19,6 +19,22 @@ from .finalize_memory_application import long_requests, llm_requests
 from .counterfact_data import summarize
 
 
+def share_statistics(blocks, arrays):
+    result={}
+    for stratum,fields in blocks.items():
+        result[stratum]={}
+        for field,values in fields.items():
+            checksum=hashlib.sha256(json.dumps(values,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+            if checksum in arrays and arrays[checksum]!=values:raise ValueError('Shared sufficient-statistic hash collision')
+            arrays.setdefault(checksum,values);result[stratum][field]=checksum
+    return result
+
+
+def expand_statistics(references, arrays):
+    return {stratum:{field:arrays[checksum] for field,checksum in fields.items()}
+            for stratum,fields in references.items()}
+
+
 class Archive:
     def __init__(self, output, replacements):
         self.output = output
@@ -102,7 +118,7 @@ def long_evidence(args, archive):
         folder = 'long/models/' + prepared['name']
         common = Path(load(prepared['jobs'][0])['common'])
         archive.take(common / 'metadata.json', folder + '/metadata.json')
-        grid = []; builds = []; all_blocks = []
+        grid = []; builds = []; all_blocks = []; arrays = {}
         for path in prepared['jobs']:
             job = load(path); built = load(job['report'])
             if (built['status'] != 'complete' or built['job_sha256'] != digest(path)
@@ -112,14 +128,19 @@ def long_evidence(args, archive):
             if size != selected['costs'][job['name']]['complete_serving_bytes']:
                 raise ValueError('Incomplete long serving cost')
             builds.append({**built, 'model_bytes': size})
-            audits = {}; blocks = {}
+            audits = {}; blocks = {}; block_hashes={}; block_json_hashes={}
             for cached in (0, 1):
                 audit_path = Path(job['report']).with_name(job['name'] + f'-cache{cached}-datrie-rowcache0-audit.json')
                 audit = load(audit_path)
                 if audit['status'] != 'complete' or audit['job_sha256'] != digest(path):
                     raise ValueError('Incomplete long held-out audit')
                 audits[str(cached)] = {'report': audit, 'private_sha256': digest(audit_path)}
-                blocks[str(cached)] = {split: load(Path(job['report']).with_name(job['name'] + f'-{split}-cache{cached}-blocks.json.gz')) for split in SPLITS}
+                blocks[str(cached)]={};block_hashes[str(cached)]={};block_json_hashes[str(cached)]={}
+                for split in SPLITS:
+                    block_path=Path(job['report']).with_name(job['name']+f'-{split}-cache{cached}-blocks.json.gz')
+                    blocks[str(cached)][split]=share_statistics(load(block_path),arrays)
+                    block_hashes[str(cached)][split]=digest(block_path)
+                    block_json_hashes[str(cached)][split]=hashlib.sha256(gzip.decompress(block_path.read_bytes())).hexdigest()
             row_path = args.root / 'long-row-audit' / prepared['name'] / (job['name'] + '.json')
             row = load(row_path)
             if row['job_sha256'] != digest(path) or row['private_build_report_sha256'] != digest(job['report']):
@@ -127,20 +148,23 @@ def long_evidence(args, archive):
             grid.append({'job': job, 'private_job_sha256': digest(path), 'build': built,
                          'private_build_sha256': digest(job['report']), 'complete_serving_bytes': size,
                          'audits': audits, 'row_audit': row, 'private_row_audit_sha256': digest(row_path)})
-            all_blocks.append({'name': job['name'], 'blocks': blocks})
+            all_blocks.append({'name': job['name'], 'blocks': blocks,'private_block_sha256':block_hashes,
+                               'private_block_json_sha256':block_json_hashes})
         for choice in selected['choices']:
             best = select([b for b in builds if b['family'] == choice['family']], choice['budget'], choice['cached'])
             if choice['name'] != (best['name'] if best else None):
                 raise ValueError('Validation-only long selection changed')
         archive.put(folder + '/grid.json.gz', grid)
         archive.put(folder + '/paired-blocks.json.gz', all_blocks)
+        archive.put(folder + '/paired-arrays.json.gz', arrays)
         chosen = {(c['name'], c['cached']) for c in selected['choices'] if c['name']}
         intervals = []
         by_name = {b['name']: b['blocks'] for b in all_blocks}
         for name, cached in sorted(chosen):
             for split in ('test', 'confirmation'):
                 intervals.append({'name': name, 'cached': cached, 'split': split,
-                    'strata': {s: bootstrap(by_name[name][str(cached)][split][s]) for s in ('all', 'oov_nonempty')}})
+                    'strata': {s: bootstrap({field:arrays[checksum] for field,checksum in by_name[name][str(cached)][split][s].items()})
+                               for s in ('all', 'oov_nonempty')}})
         archive.put(folder + '/selected-intervals.json.gz', intervals)
         archive.put(folder + '/retimings.json.gz', [{'request': item['request'], 'report': timings[json.dumps(item['request'], sort_keys=True)],
                                                    'private_sha256': item['sha256']} for item in timer['complete'] if item['request']['model'] == prepared['name']])
@@ -280,6 +304,11 @@ def main():
         archive.take(source, 'diagnostics/' + source.name)
     for name in ('quality-dispatch.json', 'cpu-quality-dispatch.json', 'final-serving-dispatch.json'):
         archive.take(args.root / name, 'diagnostics/' + name)
+    for model in ('qwen06', 'qwen35'):
+        source=args.root/('real-batch-cache-'+model+'.json')
+        if load(source)['status']!='passed':raise ValueError('Actual distinct-request cache correctness must pass')
+        archive.take(source,'diagnostics/'+source.name)
+    archive.take(args.root/'real-official-batch-preparation.json','diagnostics/real-official-batch-preparation.json')
     for source in (args.root / 'cache-preflight-qwen06/report.json', args.root / 'cache-preflight-qwen35/report.json'):
         archive.take(source, 'diagnostics/' + source.parent.name + '.json')
     archive.put('publication.json', {'status': 'complete', 'long_models': 108, 'long_candidates': 28188,

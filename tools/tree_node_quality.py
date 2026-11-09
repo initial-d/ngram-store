@@ -417,15 +417,6 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
     index = StructuralIndex(index_path, structural_library)
     measured['structural_library_sha256'] = digest(structural_library)
     measured['load_seconds'] = time.perf_counter() - start
-    row_hash = hashlib.sha256()
-    for begin in range(0, metadata['shape'][0], 4096):
-        original_ids = np.arange(begin, min(begin + 4096, metadata['shape'][0]))
-        mapped_ids = reader.mapping[original_ids] if reader.mapping is not None else original_ids
-        row_hash.update(reader.rows(mapped_ids).astype('<f4').tobytes())
-    if row_hash.hexdigest() != load(job['report'])['decoded_row_sha256']:
-        raise AssertionError('fresh inference worker decoded different original-ID row bytes')
-    measured['all_original_rows_verified'] = metadata['shape'][0]
-    measured['decoded_row_sha256'] = row_hash.hexdigest()
     inputs = load(common / 'query-strings.json')
     measured['query'] = {}; plans = {}
     for name, strings in inputs.items():
@@ -435,6 +426,14 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
             'known_cache_hits': sum(w >= 0 for w in ids) if cached else 0,
             'original_ngram_occurrences': sum(map(len, bags)), 'reducer_occurrences': len(plans[name]['ids']),
             'replay_samples_ms': [], 'complete_samples_ms': [], 'batch_complete_samples_ms': []}
+    if selected:
+        for name,strings in inputs.items():
+            started=time.perf_counter();outputs=[]
+            for begin in range(0,len(strings),64):
+                bags,ids=lookup_strings(strings[begin:begin+64],index,word_lookup,metadata['order'],cached,index_kind)
+                outputs.append(evaluate(reader,plan_for(bags,ids,reader),word_rows,batch_bags=64))
+            measured['query'][name]['first_complete_query_ms']=(time.perf_counter()-started)*1000
+            measured['query'][name]['first_output_sha256']=array_digest(np.concatenate(outputs))
     for _ in range(0 if quality_only else 2):
         for name, plan in plans.items():
             evaluate(reader, plan, word_rows, batch_bags=64)
@@ -452,7 +451,7 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
                 measured['query'][name]['batch_complete_samples_ms'].append((time.perf_counter() - batch_start) * 1000)
             measured['query'][name]['complete_samples_ms'].append((time.perf_counter() - start) * 1000)
             np.testing.assert_allclose(np.concatenate(outputs), output, rtol=1e-5, atol=1e-7)
-    measured['memory_after_query'] = memory()
+    measured['memory_after_queries_before_integrity'] = memory()
     for name, plan in plans.items():
         values = evaluate(reader, plan, word_rows, batch_bags=64)
         ref = np.load(common / (name + '-query-reference.npy'))
@@ -470,6 +469,17 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
             quality, blocks = score_candidate(hidden, common, split)
             measured['quality'][split] = quality
             write(Path(job['report']).with_name(job['name'] + f'-{split}-cache{int(cached)}-blocks.json.gz'), blocks)
+    row_hash = hashlib.sha256()
+    for begin in range(0, metadata['shape'][0], 4096):
+        original_ids = np.arange(begin, min(begin + 4096, metadata['shape'][0]))
+        mapped_ids = reader.mapping[original_ids] if reader.mapping is not None else original_ids
+        row_hash.update(reader.rows(mapped_ids).astype('<f4').tobytes())
+    if row_hash.hexdigest() != load(job['report'])['decoded_row_sha256']:
+        raise AssertionError('fresh inference worker decoded different original-ID row bytes')
+    measured['all_original_rows_verified'] = metadata['shape'][0]
+    measured['decoded_row_sha256'] = row_hash.hexdigest()
+    measured['memory_after_query'] = memory()
+    measured['integrity_phase'] = 'Full original-row byte audit follows query/quality measurements; pre-audit query RSS is separate'
     reader.close(); index.close()
     measured['status'] = 'complete'
     suffix = f'-cache{int(cached)}-{index_kind}-rowcache{cache_bytes}'

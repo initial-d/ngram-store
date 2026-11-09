@@ -202,6 +202,16 @@ def verify(root):
             for member in archive.getmembers():
                 value = archive.extractfile(member).read(); expected = entry['files'][member.name]
                 assert len(value) == expected['bytes'] and hashlib.sha256(value).hexdigest() == expected['published_sha256']
+    for model in ('qwen06','qwen35'):
+        check=load(root/'diagnostics'/('real-batch-cache-'+model+'.json'))
+        assert check['status']=='passed' and len(check['checks'])==4
+        assert check['matched_complete_cached_logits']==68 and check['matched_generated_sequences']==18
+        files=inventory[check['source_commit']]['files']
+        assert files['tools/check_llm_memory_batches.py']['original_sha256']==check['checker_source_sha256']
+        for value in check['checks']:
+            assert value['batch'] in (1,8) and value['byte_exact_source_native'] is True
+            for field in ('input_ids_sha256','cached_logits_sha256','generated_ids_sha256'):
+                assert value['source'][field]==value['native'][field]
     prepare = load(root / 'long/prepare.json'); frozen = load(root / 'long/selection.json')
     complete = load(root / 'long/quality-complete.json')
     assert prepare['status'] == complete['status'] == 'complete' and len(prepare['models']) == len(frozen['models']) == 108
@@ -211,12 +221,26 @@ def verify(root):
         name = prepared['name']; folder = root / 'long/models' / name
         assert name == selected['name'] and len(prepared['jobs']) == 261
         metadata = load(folder / 'metadata.json'); grid = load(folder / 'grid.json.gz')
-        blocks = {b['name']: b['blocks'] for b in load(folder / 'paired-blocks.json.gz')}
-        assert len(grid) == len(blocks) == 261 and len({g['build']['name'] for g in grid}) == 261
+        refs = {b['name']: b for b in load(folder / 'paired-blocks.json.gz')}
+        arrays=load(folder/'paired-arrays.json.gz')
+        for checksum,values in arrays.items():
+            assert hashlib.sha256(json.dumps(values,separators=(',',':'),allow_nan=False).encode()).hexdigest()==checksum
+        def candidate_blocks(name):
+            reference=refs[name];result={}
+            for cached,splits in reference['blocks'].items():
+                result[cached]={}
+                for split,strata in splits.items():
+                    block={s:{field:arrays[key] for field,key in fields.items()} for s,fields in strata.items()}
+                    encoded=(json.dumps(block,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
+                    assert hashlib.sha256(encoded).hexdigest()==reference['private_block_json_sha256'][cached][split]
+                    result[cached][split]=block
+            return result
+        assert len(grid) == len(refs) == 261 and len({g['build']['name'] for g in grid}) == 261
         source(metadata['environment'], inventory) if 'environment' in metadata else None
         costs = {}; builds = {}
         for entry in grid:
             built = entry['build']; candidate = built['name']; long_coverage.add((name, candidate))
+            blocks=candidate_blocks(candidate)
             source(built['environment'], inventory)
             assert built['status'] == 'complete' and built['job_sha256'] == entry['private_job_sha256']
             assert sum(v['bytes'] for v in built['serving_files'].values()) == built['row_bundle_bytes']
@@ -228,11 +252,11 @@ def verify(root):
             assert row['decoded_row_sha256'] == built['decoded_row_sha256']
             assert row['private_build_report_sha256'] == entry['private_build_sha256']
             for cached in ('0', '1'):
-                paired(blocks[candidate][cached]['validation'], built['validation'][cached], metadata['evaluations']['validation'])
+                paired(blocks[cached]['validation'], built['validation'][cached], metadata['evaluations']['validation'])
                 audit = entry['audits'][cached]['report']; long_timing(audit, metadata)
                 assert audit['job_sha256'] == entry['private_job_sha256'] and audit['decoded_row_sha256'] == built['decoded_row_sha256']
                 for split in ('test', 'confirmation'):
-                    paired(blocks[candidate][cached][split], audit['quality'][split], metadata['evaluations'][split])
+                    paired(blocks[cached][split], audit['quality'][split], metadata['evaluations'][split])
             costs[candidate] = entry['complete_serving_bytes']; builds[candidate] = built
         assert len(selected['choices']) == 2 * len(BUDGETS) * len({v['family'] for v in builds.values()})
         for choice in selected['choices']:
@@ -259,9 +283,10 @@ def verify(root):
     prepare = load(root / 'llm/prepare.json'); frozen = load(root / 'llm/selection.json')
     assert len(prepare['models']) == len(frozen['models']) == 6
     llm_coverage = set(); control_count = 0; case_cache = {}
-    def case_values(path):
+    def case_summary(path):
         if path not in case_cache:
-            case_cache[path] = load(root / path)
+            cases=load(root/path);splits={c['split'] for c in cases}
+            case_cache[path]={'splits':splits,'metrics':{s:metrics([c for c in cases if c['split']==s]) for s in splits}}
         return case_cache[path]
     timer_keys = {'cpu': set(), 'gpu': set()};model_devices={}
     for prepared, selected in zip(prepare['models'], frozen['models']):
@@ -280,15 +305,15 @@ def verify(root):
             assert entry['complete_serving_bytes'] == built['model_bytes'] + private_bytes['llm/models/' + name + '/metadata.json']
             assert entry['row_audit']['decoded_row_sha256'] == built['decoded_row_sha256']
             for split, quality in entry['quality'].items():
-                result = quality['report']; cases = case_values(quality['public_case_scores'])
+                result = quality['report']; cases = case_summary(quality['public_case_scores'])
                 qwen_source(result['environment'], inventory)
                 files = inventory[result['environment']['code_sha']]['files']
                 assert files['tools/llm_codec_frontier.py']['original_sha256'] == result['environment']['codec_frontier_source_sha256']
                 assert files['tools/codec_memory_adapter.py']['original_sha256'] == result['environment']['codec_adapter_source_sha256']
                 assert result['status'] == 'complete' and result['job_sha256'] == entry['private_job_sha256']
                 assert result['decoded_row_sha256'] == built['decoded_row_sha256'] and len(result['complete_request_checks']) == 16
-                assert all(c['split'] == split for c in cases)
-                check_metrics(metrics(cases), result['metrics'])
+                assert cases['splits']=={split}
+                check_metrics(cases['metrics'][split], result['metrics'])
                 assert result['oov_contract_sha256'] == private['oov-contract.json']
                 key = (split, result['decoded_row_sha256'])
                 if key in identities:
@@ -320,11 +345,11 @@ def verify(root):
         controls = load(folder / 'controls.json.gz'); assert {c['name'] for c in controls} == {'head-constant', 'adapter', 'exact', 'hash'}
         reference = next(c for c in controls if c['name'] == 'exact')['report']
         for control in controls:
-            report = control['report']; cases = case_values(control['public_case_scores'])
+            report = control['report']; cases = case_summary(control['public_case_scores'])
             qwen_source(report['environment'], inventory)
             assert report['status'] == 'complete' and report['seed'] == metadata['seed']
             for split in ('calibration', 'test'):
-                check_metrics(metrics([c for c in cases if c['split'] == split]), report['metrics'][split])
+                check_metrics(cases['metrics'][split], report['metrics'][split])
             if control['name'] in ('head-constant', 'adapter'):
                 control_count += 1
                 assert report['optimizer_steps'] == reference['optimizer_steps'] and len(report['epochs']) == 20

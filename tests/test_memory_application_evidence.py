@@ -5,6 +5,21 @@ from tools.verify_memory_application import gate, metrics, paired
 
 
 class EvidenceArithmeticTests(unittest.TestCase):
+    def test_shared_statistics_preserve_original_json_and_signed_zero(self):
+        try:
+            from tools.publish_memory_application import share_statistics,expand_statistics
+        except ImportError:
+            self.skipTest('optional NumPy required')
+        import json,hashlib
+        blocks={'all':{'candidate_loss':[1.,2.,-0.], 'baseline_loss':[1.,2.,0.], 'count':[1,2,0]},
+                'known':{'candidate_loss':[1.,2.,-0.], 'baseline_loss':[1.,2.,0.], 'count':[1,2,0]}}
+        arrays={};refs=share_statistics(blocks,arrays)
+        self.assertEqual(len(arrays),3)
+        self.assertNotEqual(refs['all']['candidate_loss'],refs['all']['baseline_loss'])
+        first=json.dumps(blocks,indent=2,sort_keys=True).encode()
+        second=json.dumps(expand_statistics(refs,arrays),indent=2,sort_keys=True).encode()
+        self.assertEqual(hashlib.sha256(first).digest(),hashlib.sha256(second).digest())
+
     def test_official_scores_weight_cases_not_prompt_count(self):
         cases = []
         for index, successes in enumerate(([True], [False] * 9)):
