@@ -61,6 +61,77 @@ class EvidenceArithmeticTests(unittest.TestCase):
         self.assertEqual(result['paired_95_percent_intervals'], [[0., 0.]] * 4)
         self.assertTrue(all(v == [0.] * 4 for v in result['samples']))
 
+    def test_real_batches_preserve_length_and_drop_duplicate_prompts(self):
+        try:
+            from tools.benchmark_llm_codec_serving import batches_for
+            from tools.tree_node_quality import write, digest
+        except ImportError:
+            self.skipTest('optional NumPy required')
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);common=root/'common';prepared=root/'prepared'
+            common.mkdir();prepared.mkdir()
+            sequences=[{'ids':[i,100,200],'target_start':2} for i in range(8)]
+            sequences.extend([dict(sequences[0]),{'ids':[1,2,3,200],'target_start':3}])
+            cases=[{'case_id':i,'split':'test','groups':{'rewrite':[{'new':i}], 'paraphrase':[], 'neighborhood':[]}}
+                   for i in (0,8,9,1,2,3,4,5,6,7)]
+            write(prepared/'sequences.json',{'sequences':sequences,'cases':cases})
+            write(prepared/'prepare.json',{'payload_sha256':digest(prepared/'sequences.json')})
+            write(common/'metadata.json',{'prepared':str(prepared)})
+            actual=batches_for(common,'test',1,8)
+            self.assertEqual(len(actual),1)
+            self.assertEqual([r['case_id'] for r in actual[0]],list(range(8)))
+            self.assertEqual({len(r['ids']) for r in actual[0]},{2})
+            self.assertEqual(len({tuple(r['ids']) for r in actual[0]}),8)
+
+    def test_per_device_queue_keeps_every_request_and_resumes_verified_outputs(self):
+        try:
+            from tools.finalize_memory_application import gpu_parallel
+            from tools.tree_node_quality import write, load, digest
+        except ImportError:
+            self.skipTest('optional NumPy required')
+        import tempfile
+        from pathlib import Path
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);frontier=root/'frontier';frontier.mkdir()
+            write(frontier/'selection.json',{'fixture':'frozen'})
+            names=[f'fixture-{i}' for i in range(6)]
+            amendment=root/'addendum.json';affinity=root/'affinity.json';ready=root/'ready.json'
+            write(amendment,{'device_assignment':dict(zip(names,range(6)))})
+            write(affinity,{name:[i] for i,name in enumerate(names)})
+            write(ready,{'status':'quality-complete','fixture':True})
+            requests=[]
+            for name in names:
+                job=root/(name+'.json');write(job,{'fixture':True})
+                requests.extend({'model':name,'name':'raw','job':str(job),'mode':'codec','cache':0,'batch':batch} for batch in (1,8))
+            args=SimpleNamespace(output=root/'timers',frontier=frontier,ready=ready,gpu_addendum=amendment,
+                                 gpu_affinity=affinity,phase='retime-llm-gpu',upstream=root,requests=32)
+            def worker(command,env,stdout,stderr):
+                job=Path(command[command.index('--job')+1]);output=Path(command[command.index('--output')+1])
+                cpus=list(map(int,command[command.index('--cpu-list')+1].split(',')))
+                self.assertEqual(cpus,[int(env['CUDA_VISIBLE_DEVICES'])])
+                write(output,{'status':'passed','job_sha256':digest(job),'cpu_affinity':cpus,'fixture':True})
+                return SimpleNamespace(returncode=0)
+            with patch('os.sched_getaffinity',return_value=set(range(6)),create=True), \
+                 patch('tools.finalize_memory_application.environment',return_value={'fixture':True}), \
+                 patch('tools.finalize_memory_application.subprocess.run',side_effect=worker) as execution:
+                gpu_parallel(args,requests,load(ready))
+                self.assertEqual(execution.call_count,12)
+            first=load(args.output/'report.json')
+            self.assertEqual(first['status'],'complete')
+            self.assertEqual(len(first['complete']),12)
+            with patch('os.sched_getaffinity',return_value=set(range(6)),create=True), \
+                 patch('tools.finalize_memory_application.environment',return_value={'fixture':True}), \
+                 patch('tools.finalize_memory_application.subprocess.run') as execution:
+                gpu_parallel(args,requests,load(ready))
+                execution.assert_not_called()
+            second=load(args.output/'report.json')
+            self.assertEqual(second['execution_schedule_sha256'],first['execution_schedule_sha256'])
+            self.assertEqual(second['requests'],first['requests'])
+
 
 if __name__ == '__main__':
     unittest.main()

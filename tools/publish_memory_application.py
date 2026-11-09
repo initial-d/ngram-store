@@ -271,6 +271,8 @@ def main():
     archive.take(args.root / 'quality-ready.json', 'quality-ready.json')
     archive.take(Path('benchmarks/memory_application_frontier_v1.json'), 'protocol.json')
     archive.take(Path('benchmarks/memory_application_oov_contract_v1.json'), 'oov-contract.json')
+    archive.take(Path('benchmarks/memory_application_serving_addendum_v1.json'), 'serving-addendum.json')
+    archive.take(args.root / 'gpu-worker-affinity.json', 'gpu-worker-affinity.json')
     long_evidence(args, archive)
     llm_evidence(args, archive)
     runtimes(args, archive)

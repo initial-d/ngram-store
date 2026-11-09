@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "registered_before_final_serving_measurements": "2026-11-10",
+  "scope": "Final GPU serving only. Original training, candidate grids, validation/calibration choices, quality budgets and held-out audits stay fixed under memory_application_frontier_v1.json.",
+  "real_batches": "Batch 1 uses original official test prefixes. Batch 8 uses eight distinct official prefixes of exactly equal token length; take the earliest complete groups in official case/group traversal order, without padding or position changes. Record all case IDs, groups, input hash and total unique prompt count.",
+  "request_count": 32,
+  "batch_sizes": [1, 8],
+  "decode_steps": 16,
+  "warmup": 1,
+  "repeat": 3,
+  "device_isolation": "All quality, construction and training stages must finish first. Each GPU executes one fresh worker at a time. Assign one model/seed to a fixed GPU, including its source, independent controls, matched raw/native controls and frozen selected codecs. Different physical GPUs may run concurrently; CPU final query timers run after the GPU queue, serially.",
+  "device_assignment": {"qwen06-exact-s3": 0, "qwen06-exact-s7": 1, "qwen06-exact-s11": 2, "qwen35-exact-s3": 3, "qwen35-exact-s7": 4, "qwen35-exact-s11": 5},
+  "host_affinity": "Preassign disjoint allowed CPU sets near each GPU where topology permits; record actual worker affinity, topology and host load. Parallel device runs share the host memory subsystem, so only selected-GPU isolation is claimed.",
+  "competition": "NVML must show no external compute clients before loading, during every request and after measurement. Preserve unknown training/evaluation processes and fail or wait if they compete. User-confirmed occupancy cleanup is outside benchmark code.",
+  "correctness_preflight": "Both model families must pass source/native cached logit and generation byte comparisons on actual batch 1 and distinct-request batch 8 before the final timing queues.",
+  "reason": "Use all available hardware while retaining per-device matched comparisons, and replace repeated-prompt batching with actual heterogeneous official inputs. This amendment precedes any accepted final timing result and does not use test outcomes to choose a codec."
+}

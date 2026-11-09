@@ -163,6 +163,14 @@ def llm_timing(report, phase):
         assert report['gpu_before']['utilization_percent'] <= 5
         assert report['gpu_samples'] and all(not v['external_compute_pids'] and len(v['compute_pids']) == 1 for v in report['gpu_samples'])
         assert report['batch_size'] in (1, 8) and report['decode_steps'] == 16
+        assert report['batch_contract'].startswith('Each batch uses distinct real official prompts')
+        prompts=[]
+        for request in report['requests']:
+            assert len(request['prompt_hashes']) == len(request['batch_case_ids']) == report['batch_size']
+            if report['batch_size']==8: assert len(set(request['prompt_hashes']))==8
+            prompts.extend(request['prompt_hashes'])
+        assert len(set(prompts))==report['unique_prompt_count']
+        if report['batch_size']==8:assert report['unique_prompt_count']==256
         prefill = [v['prefill_ms'] for v in report['samples']]
         decode = [d for v in report['samples'] for d in v['decode_ms']]
         assert all(len(v['decode_ms']) == 16 for v in report['samples'])
@@ -255,7 +263,7 @@ def verify(root):
         if path not in case_cache:
             case_cache[path] = load(root / path)
         return case_cache[path]
-    timer_keys = {'cpu': set(), 'gpu': set()}
+    timer_keys = {'cpu': set(), 'gpu': set()};model_devices={}
     for prepared, selected in zip(prepare['models'], frozen['models']):
         name = prepared['name']; folder = root / 'llm/models' / name
         assert name == selected['name']; metadata = load(folder / 'metadata.json')
@@ -331,11 +339,41 @@ def verify(root):
                 request = timing['request']; key = tuple(request.get(k) for k in ('model', 'name', 'mode', 'cache', 'batch'))
                 assert key not in timer_keys[phase]; timer_keys[phase].add(key)
                 llm_timing(timing['report'], phase)
+                if phase=='gpu':
+                    report=timing['report'];assignment=load(root/'serving-addendum.json')['device_assignment']
+                    assert report['selected_gpu_selector']==str(assignment[name])
+                    assert report['cpu_affinity']==load(root/'gpu-worker-affinity.json')[name]
+                    uuid=report['gpu_before']['gpu_uuid']
+                    assert name not in model_devices or model_devices[name]==uuid
+                    model_devices[name]=uuid
     assert len(llm_coverage) == 1566 and control_count == 12
     for phase in ('cpu', 'gpu'):
         controller = load(root / ('llm/retiming-' + phase + '-controller.json'))
-        assert controller['status'] == 'complete' and controller['workers'] == 1
+        assert controller['status'] == 'complete'
+        if phase=='cpu':assert controller['workers']==1
+        else:
+            assert controller['workers']==6 and controller['workers_per_gpu']==1
+            assert controller['gpu_addendum_sha256']==private['serving-addendum.json']
+            assert controller['fixed_device_assignment']==load(root/'serving-addendum.json')['device_assignment']
+            assert controller['cpu_affinity']==load(root/'gpu-worker-affinity.json')
+            cores=set()
+            for cpus in controller['cpu_affinity'].values():
+                assert cpus and not cores.intersection(cpus);cores.update(cpus)
         assert len(controller['requests']) == len(controller['complete']) == len(timer_keys[phase])
+    analysis = root / 'analysis/report.json'
+    if analysis.exists():
+        summary = load(analysis)
+        assert summary['status'] == 'complete' and summary['llm_models'] == 6 and summary['long_models'] == 108
+        for result in load(root / 'analysis/llm-paired-comparisons.json'):
+            if result['status'] != 'complete':
+                assert result['status'] == 'some_seeds_have_no_calibration_qualified_candidate'
+                continue
+            samples = load(root / 'analysis' / result['samples_file'])['samples']
+            assert len(samples) == result['replicates'] == 2000 and result['seed_clusters'] == 3
+            assert all(len(row) == 4 and all(math.isfinite(v) for v in row) for row in samples)
+            for metric in range(4):
+                for endpoint, probability in enumerate((.025, .975)):
+                    close(result['paired_95_percent_intervals'][metric][endpoint], quantile([row[metric] for row in samples], probability))
     print(json.dumps({'status': 'passed', 'long_candidates': len(long_coverage), 'long_heldout_workers': 56376,
                       'llm_candidates': len(llm_coverage), 'independent_controls': control_count,
                       'long_final_timings': len(long_retimings), 'llm_final_timings': {k: len(v) for k, v in timer_keys.items()}}))

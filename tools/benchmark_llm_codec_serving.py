@@ -29,6 +29,31 @@ def requests_for(common, split, count):
     raise ValueError('insufficient official request prefixes')
 
 
+def batches_for(common, split, count, batch_size):
+    """Distinct real unpadded prompts, grouped by exact token length."""
+    if batch_size == 1:
+        return [[row] for row in requests_for(common, split, count)]
+    metadata = load(common / 'metadata.json'); prepared = Path(metadata['prepared'])
+    manifest = load(prepared / 'prepare.json')
+    if digest(prepared / 'sequences.json') != manifest['payload_sha256']:
+        raise ValueError('official sequences changed')
+    payload = load(prepared / 'sequences.json'); groups = {}; used = set(); batches = []
+    for case in payload['cases']:
+        if case['split'] != split: continue
+        for group in ('rewrite', 'paraphrase', 'neighborhood'):
+            for pair in case['groups'][group]:
+                sequence = payload['sequences'][pair['new']]
+                ids = sequence['ids'][:sequence['target_start']]; identity = tuple(ids)
+                if identity in used: continue
+                used.add(identity)
+                bucket = groups.setdefault(len(ids), [])
+                bucket.append({'case_id': case['case_id'], 'group': group, 'ids': ids})
+                if len(bucket) == batch_size:
+                    batches.append(list(bucket)); bucket.clear()
+                    if len(batches) == count: return batches
+    raise ValueError('insufficient distinct equally long official prefixes for real batching')
+
+
 def cpu_worker(args):
     import faiss
     import torch
@@ -132,7 +157,9 @@ def gpu_worker(args):
         'codec_adapter_source_sha256':digest(Path(__file__).with_name('codec_memory_adapter.py')),
         'job_sha256': digest(args.job), 'mode': args.mode, 'gpu_before':initial, 'gpu_samples':[],
         'cache_bytes':args.cache_bytes, 'batch_size':args.batch_size, 'decode_steps':args.decode_steps,
-        'batch_contract':'Each real unpadded prompt is repeated within its batch; unique prompt count and batch size are reported separately',
+        'selected_gpu_selector':selector,
+        'batch_contract':'Each batch uses distinct real official prompts with equal token length; no padding, repetition or position remapping',
+        'cpu_affinity':sorted(os.sched_getaffinity(0)),
         'rss_before_open':memory(), 'requests':[], 'samples':[],
         'contract':'Actual complete prefill plus native decoder KV/recurrent cache; causal TinyEngram history, original IDs and unchanged nonrow weights',
         'rounding_contract':'Cache vs full-prefix differences are measured separately. Source and byte-exact codecs execute the same cached schedule.'}
@@ -160,8 +187,9 @@ def gpu_worker(args):
         report.update(open_seconds=time.perf_counter()-started, rss_after_open=memory(),
             cuda_after_open={'allocated':torch.cuda.memory_allocated(), 'reserved':torch.cuda.memory_reserved(),
                 'peak_allocated':torch.cuda.max_memory_allocated()})
-        requests = requests_for(common, 'test', args.requests)
-        prefixes = [torch.tensor([row['ids']] * args.batch_size, dtype=torch.int64) for row in requests]
+        requests = batches_for(common, 'test', args.requests, args.batch_size)
+        prefixes = [torch.tensor([row['ids'] for row in batch], dtype=torch.int64) for batch in requests]
+        report['unique_prompt_count'] = len({tuple(row['ids']) for batch in requests for row in batch})
         continuations = []
         with torch.no_grad():
             for request, prefix in zip(requests, prefixes):
@@ -173,7 +201,9 @@ def gpu_worker(args):
                 # Cache arithmetic can round differently. Pair source/codec
                 # cached hashes, and expose the comparison to ordinary forwards.
                 continuations.append(generated)
-                report['requests'].append({'case_id':request['case_id'], 'group':request['group'],
+                report['requests'].append({'case_id':request[0]['case_id'], 'group':request[0]['group'],
+                    'batch_case_ids':[row['case_id'] for row in request], 'batch_groups':[row['group'] for row in request],
+                    'prompt_hashes':[array_digest(np.asarray(row['ids'],dtype='<i8')) for row in request],
                     'input_ids_sha256':tensor_digest(prefix), 'input_tokens':prefix.shape[1],
                     'cached_logit_hashes':[tensor_digest(x) for x in logits],
                     'generated_ids_sha256':tensor_digest(generated), 'first_complete_ms':first,
