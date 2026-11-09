@@ -144,6 +144,16 @@ def publish(args):
         folder = 'models/' + model['name']
         common = Path(next(iter(jobs.values()))[1]['common'])
         archive(common / 'metadata.json', folder + '/metadata.json')
+        # The original frozen ledger omitted the common reader metadata file.
+        # Add its actual private bytes to every candidate after selection: this
+        # model-wide constant cannot change any minimum-byte chosen name. Keep
+        # the original reports/selection immutable and disclose both ledgers.
+        extra_metadata = {'bytes': (common / 'metadata.json').stat().st_size,
+                          'sha256': digest(common / 'metadata.json')}
+        write(args.output / folder / 'complete-cost.json', {
+            'reader_metadata_file': extra_metadata,
+            'adjusted_common_model_bytes': load(common / 'metadata.json')['common_model_bytes'] + extra_metadata['bytes'],
+            'selection_name_invariant': 'Same positive metadata-byte constant added to every candidate in this model; frozen names and quality unchanged.'})
         grid = []
         blocks_path = args.output / folder / 'paired-blocks.jsonl.gz'
         with gzip.GzipFile(filename=str(blocks_path), mode='wb', mtime=0) as f:
@@ -160,7 +170,8 @@ def publish(args):
                 f.write((json.dumps({'name': name, 'blocks': blocks, 'private_block_sha256': block_hashes},
                     separators=(',', ':'), allow_nan=False) + '\n').encode())
                 grid.append({'build': public(builds[name]), 'audits': audits,
-                    'private_build_sha256': digest(job['report']), 'private_audit_sha256': audit_hashes})
+                    'private_build_sha256': digest(job['report']), 'private_audit_sha256': audit_hashes,
+                    'complete_serving_bytes': builds[name]['model_bytes'] + extra_metadata['bytes']})
         write(args.output / folder / 'grid.json.gz', grid)
         write(args.output / folder / 'retimings.json.gz', retimings[model['name']])
         pairs = sorted({(c['name'], c['cached']) for c in selected['choices'] if c['name']})
