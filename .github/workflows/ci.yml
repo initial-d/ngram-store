@@ -50,6 +50,10 @@ jobs:
         run: python -S docs/identity_format_evidence_20261109/verify.py
       - name: Verify conditional prefix/suffix node similarity provenance and complete counts
         run: python -S docs/conditional_similarity_evidence_20261109/verify.py
+      - name: Verify full node-sharing quality frontier, frozen choices and training mechanism
+        run: |
+          python -S docs/tree_node_quality_evidence_20261109/fetch_raw.py
+          python -S docs/tree_node_quality_evidence_20261109/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter

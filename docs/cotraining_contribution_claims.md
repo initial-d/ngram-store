@@ -32,6 +32,20 @@ hypotheses. Legacy approximate native-table savings are much stronger than
 standard average-derivative savings. This is post-hoc characterization, not a
 new universal law, task-quality guarantee or independent first-discovery claim.
 
+The [complete tree-sharing follow-up](tree_node_quality_evidence_20261109/README.md)
+adds 18 original checkpoints × 204 capacity candidates, both inference modes,
+all/OOV held-out quality, independent indexes and cache controls, and a
+36-trajectory × 3-duration mechanism factorial. Every original scale-1
+2,000-step table first replays exactly. For average derivatives, maximum order
+12 and scale-1 initialization, median `.99/.99` C++ DATrie native n-gram-only
+saving grows from 1.34% at 2,000 steps to 41.49% at 32,000 steps. This supports
+initialization relative to accumulated updates as a conditional mechanism;
+it does not establish convergence, a preferred initialization or LLM utility.
+The full initial-checkpoint FAISS comparison and precomputed-word/constant
+controls remain in the report, including where native tree sharing is not the
+smallest qualified solution. Sharing eligibility and task necessity are
+separate empirical questions.
+
 ## Supporting claims with narrower scope
 
 | ID | Statement supported by this project | Boundary |

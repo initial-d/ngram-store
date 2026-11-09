@@ -1,0 +1,13 @@
+{"retimed": 1, "expected": 1688, "failures": 0}
+{"retimed": 21, "expected": 1688, "failures": 11}
+{"retimed": 41, "expected": 1688, "failures": 22}
+{"retimed": 61, "expected": 1688, "failures": 29}
+{"retimed": 81, "expected": 1688, "failures": 41}
+{"retimed": 101, "expected": 1688, "failures": 54}
+{"retimed": 121, "expected": 1688, "failures": 66}
+{"retimed": 141, "expected": 1688, "failures": 73}
+{"retimed": 161, "expected": 1688, "failures": 82}
+{"retimed": 181, "expected": 1688, "failures": 92}
+{"retimed": 201, "expected": 1688, "failures": 104}
+{"retimed": 221, "expected": 1688, "failures": 112}
+{"retimed": 241, "expected": 1688, "failures": 124}

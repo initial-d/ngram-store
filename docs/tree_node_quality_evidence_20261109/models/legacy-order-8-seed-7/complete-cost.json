@@ -1,0 +1,8 @@
+{
+  "adjusted_common_model_bytes": 1373946,
+  "reader_metadata_file": {
+    "bytes": 2617,
+    "sha256": "4833dd9fb8f800639239ebec1d45f91bcfd9fbe47d25c97ca7a41e230f5c40e1"
+  },
+  "selection_name_invariant": "Same positive metadata-byte constant added to every candidate in this model; frozen names and quality unchanged."
+}

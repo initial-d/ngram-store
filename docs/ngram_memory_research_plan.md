@@ -183,6 +183,17 @@ initialization are more precise hypotheses. Legacy approximate savings are much
 larger than average-derivative savings. This is post-hoc evidence for a conditional
 sharing opportunity, not universal similarity or task-quality preservation.
 
+The [complete quality/mechanism frontier](tree_node_quality_evidence_20261109/README.md)
+connects this hypothesis to all-center and nonempty-OOV held-out SGNS quality,
+the full 19-codec FAISS grid and every encoded-byte dedup alternative,
+full-domain known-word precomputation, constant-row controls, both key indexes
+and matched native caches. The 36-trajectory, 108-point factorial tests both
+n-gram initialization scales and longer fixed-duration training. It supports
+some standard-training structural savings after sufficient shared updates;
+it does not show universal native Pareto dominance or that distinct n-gram
+rows are necessary once stronger frozen-inference controls are admitted.
+Results are conditional on these sources, durations and the finite context task.
+
 The [approximate curves](approximate_ngram_compression_20261018.md) constrain
 representative cosine and norm ratio. At max order 12, joint 0.99 gives
 2.14–2.16× n-gram table compression and 0.98 gives about 2.35× on that reference.

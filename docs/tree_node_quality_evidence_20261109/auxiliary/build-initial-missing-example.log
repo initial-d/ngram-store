@@ -1,0 +1,6 @@
+mkdir -p build
+cc -std=c11 -O2 -Wall -Wextra -Werror -fPIC -shared native/meft_rows.c -lz -o build/libmeft_rows.so
+cc -std=c11 -O2 -Wall -Wextra -Werror -Inative examples/native_gather.c native/meft_rows.c -lz -o build/native_gather
+cc1: fatal error: examples/native_gather.c: 没有那个文件或目录
+compilation terminated.
+make: *** [Makefile:39：native] 错误 1

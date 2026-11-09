@@ -1,0 +1,9 @@
+{
+  "build_omp_threads": 4,
+  "build_training_source_rows_only": true,
+  "frozen_test_confirmation_rounding": 1,
+  "limits": "OPQ reverse-transform bytes differ at approximately 1e-7 relative Frobenius; serialized codec files and the four-thread decode are verified before auditing the one-thread serving values.",
+  "posthoc_one_thread_validation_gates_changed": 0,
+  "query_omp_threads": 1,
+  "validation_build_rounding": 4
+}

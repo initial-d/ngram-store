@@ -1,0 +1,731 @@
+{
+  "environment": {
+    "command": "${ENV_ROOT}/bin/python ${RUN_ROOT}/input-repair-source/tools/audit_tree_node_inputs.py --frontier ${RUN_ROOT}/frontier --training-root ${TRAINING_ROOT} --corpus-zip ${CORPUS_ZIP} --output ${RUN_ROOT}/input-audit",
+    "commit": "4a94b974df3f06f2baef705bece68450f285ea35",
+    "cpu": "x86_64",
+    "device": "cpu",
+    "faiss": "1.15.0",
+    "faiss_compile_options": "OPTIMIZE DD AVX2 ",
+    "gpu": "unused",
+    "loadavg": [
+      9.56640625,
+      9.1318359375,
+      12.9560546875
+    ],
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "ddba2a50c33cf0dc531dcd1f1ab476425961cdc1cfd91f08f0103bbc50a75623",
+    "threads": 1,
+    "torch": "2.11.0"
+  },
+  "models": [
+    {
+      "both_indexes_all_ids_verified": 5755,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "450f5e43421e8e0e92dbcafa1451a39cece565e05a0b1e2a2551c81e81b3f4e5"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "36803805ac8ba66e1cd6751f5810bd270e98d90cfb505c8fcf8d2c67bc722d79",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "fe924e610d2540b323325960a6d1f02fd7b6716a9cd9236884316b0adb52de6f"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "28ce4d39f0208d23d8c1a36412440dd9bdc5ce23e6430d38341a3f7835878407"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "5a4bf6b414191b2e58f6bf7c5713b301a6356be94047772d1a645feda4bbc4a3"
+        }
+      },
+      "fit_original_ids_sha256": "72d13014e2065454127dc9261e7b839b0a9cd1e9a61d0fef8dd6d58d51905978",
+      "known_words_verified": 1200,
+      "metadata_sha256": "a9a71678e625cddb4a5a9a69c166af99c44052095441654c6d03f947dcc82994",
+      "name": "legacy-order-4-seed-3",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 5755,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "b27207a9058f0d9e2d39bb8c5a861e3c1b7c80ce63ab602e4cd33af5f968db8c"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "fa598bb9bd27ecfbece21721e7e025df145b3ec06c8a22110d2790c027f25277",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "c93f09a91b2b236b4d154ad80fb53e66560dc7b9287f5217e2ffacab57e57d39"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "ffafa1a69b05caef8a3f48b345307e98065437888140d44e48fdb73a1a7ee9f6"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "121e8a2d838d1f990ea8d8bca658daf5da532c74c0652c88d64470250bfd589e"
+        }
+      },
+      "fit_original_ids_sha256": "72d13014e2065454127dc9261e7b839b0a9cd1e9a61d0fef8dd6d58d51905978",
+      "known_words_verified": 1200,
+      "metadata_sha256": "2f67c7ec0fd2ac2a3d5d0789777e929b1b96438828a009e1a9ce0f0a9dc51d75",
+      "name": "legacy-order-4-seed-7",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 5755,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "aa6d53c49b860b7a9c305931f6bccf4bbf086c65cb5e8c075e2266dbe5211015"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "eb2dd46dadbf45ac8e67c52a0a7568f0c190a75e7ee9879da374055581578419",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "2ed6649a570671adbd320c81f92b8cec293c13182ca8face0f309d344519ebbd"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "4846e0a302a587ac8ce92fd413f4aee9681bb5788cac6de9de973f248c961dff"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "b0f8f65a2b0d2eb68edd86164607bc37b671a8fa9167d030bd6736b6341def1d"
+        }
+      },
+      "fit_original_ids_sha256": "72d13014e2065454127dc9261e7b839b0a9cd1e9a61d0fef8dd6d58d51905978",
+      "known_words_verified": 1200,
+      "metadata_sha256": "a4ece2cd07912f93ea8fd92f6ebbc012300f27680f8838357ec8a8c98c312014",
+      "name": "legacy-order-4-seed-11",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 15898,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "cc755dee660fac34069a245389c285f36cf3254cf6efe0326db4de7b2272c93e"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "d5291b3e0b7ef6a4888ac917809e1eb75939624610f614cee9b599d954db57bc",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "b766ad6d46d0934ed1eb2183081e25d63b80f693a4bf18dc10fec4d39e947dc8"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "e95d313ccb8f00771cd1aaa7b31bb29be661a6341e5d8231170bb4dd427b29cd"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "cb64c297fff867302ca8c91541a435e5db72922374d0cd2f36f7bcea904bf97c"
+        }
+      },
+      "fit_original_ids_sha256": "bfc0628ddbf3f65dac0f0b02af3037ecd1a82489ff75f89e9b38c454537abcb8",
+      "known_words_verified": 1200,
+      "metadata_sha256": "f6b24253949ca994f0f21ed8b597d8b8333455f953f9f44bf6389e00575043fe",
+      "name": "legacy-order-8-seed-3",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 15898,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "346839ad2855ddd991f508f7e200be84a895784d5863cedcc8a2e7c99509931b"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "b0fa0d777c88721887d4c705c630a22d5cae8f7c4770906a42f1fbef68b20a2f",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "9671045e8e73adb8b3bda6d4bf74a7c8dcc8a8e9f35da205e4515f4739501066"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "344b72d62cfc9e2c17b733ba23822b8f92fc5ec38e243adf346ebd977181185e"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "ca8db2f3e585a16dff6ef9c0346b87984f2ae48eb23180d3137380f175a04a75"
+        }
+      },
+      "fit_original_ids_sha256": "bfc0628ddbf3f65dac0f0b02af3037ecd1a82489ff75f89e9b38c454537abcb8",
+      "known_words_verified": 1200,
+      "metadata_sha256": "4833dd9fb8f800639239ebec1d45f91bcfd9fbe47d25c97ca7a41e230f5c40e1",
+      "name": "legacy-order-8-seed-7",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 15898,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "8d2230cfcc97bea206dd01b6a5c8e4a9d3ec978dc5075b050ea31e1a6e65c9c2"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "4fb04c93d22608d8b402ce40f13efbbc294350959b36578554141d8ed1cf3d3c",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "278eebd0dda40bafd0d70ea78fb755fd99abfaaed8a1cc56ecaffdfad7306766"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "fcdb52df7474e2e5d707a71a6c2f718245af5abe0c59edb887372fb9072d4352"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "4b8134aee2e721c85ae9fe380ec6b89717f4a90099177c6da3c251ffecb0a074"
+        }
+      },
+      "fit_original_ids_sha256": "bfc0628ddbf3f65dac0f0b02af3037ecd1a82489ff75f89e9b38c454537abcb8",
+      "known_words_verified": 1200,
+      "metadata_sha256": "9bdf9764c0ab0a5131f04894b921f3b1c93c0c134a447a6386de6e1e2919e60f",
+      "name": "legacy-order-8-seed-11",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 18137,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "a40de70e7774f734d916bf81d96459da62590de322e7129ea3b7beff538c9361"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "67a410dff9a17d162a8b8c24f842bce993dbcdb2f4339c1aa9f1745204fa4ce4",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "07e16d69ebdc40c1b5056f4f8d87cca6d72b9274bed8c3d4254392161ff4de44"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "da2bcc701cbb1cb525e17a75d04e5fee2ad3825221f8c17743585d57653328a0"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "a82c6cdc2117763d658b161704c92db1b4b2fff37c68d4dda43af9bc5b7f657c"
+        }
+      },
+      "fit_original_ids_sha256": "405e5ed036386ae4c088c057253fbd116229915021505a2f4f1470ecaefc43d0",
+      "known_words_verified": 1200,
+      "metadata_sha256": "da45dd902224073ea90bf7bb126231354893ada9955895d0ec3d1c37ed0c4635",
+      "name": "legacy-order-12-seed-3",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 18137,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "04de028aa34a66737861d9c92f7ffb49d7f6c2adfa0f5303db03837543ad62b8"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "8a32fe8f0919742fd06f439f7754c5f83c9aff7d24c740bc2791b90f0b8013c3",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "63ecb3801d126ccd342dc01f03904ac3f49cc7f2a63ae08ae8ebd65c7ea8dc4e"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "4823e884651e826b60ab28f8ae4f6ee7646a8603f784fc6e68e822f427235690"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "3657949b80001dbabb32d08fcf1cd0242b9ba2977d3a908171c567c241ed66e3"
+        }
+      },
+      "fit_original_ids_sha256": "405e5ed036386ae4c088c057253fbd116229915021505a2f4f1470ecaefc43d0",
+      "known_words_verified": 1200,
+      "metadata_sha256": "2077f82494fa838e6139205bc6145cecb38e0732df443bc8934a25b2bc04ee9c",
+      "name": "legacy-order-12-seed-7",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 18137,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "5f15dcf2c1a78c2761ddfe28e09020a95404bb470a29756d18913e7eb329f9f8"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "ab1b86e6af7407f3359cce2d2c42b23313ac717c82bfd022e13fffa59301409e",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "b07904ba15577fa8d8752b8b95236a811fe25ecec398bf3c9ecf39dfcf992f7a"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "6d86579b18113923cac70093479467f00d5a935bea44618eed6adc32068ff0a2"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "0d5fe57438c9c75db3fd36bd02770f03d358e5631570dc2ec01bfbf7f1aff071"
+        }
+      },
+      "fit_original_ids_sha256": "405e5ed036386ae4c088c057253fbd116229915021505a2f4f1470ecaefc43d0",
+      "known_words_verified": 1200,
+      "metadata_sha256": "a2bbfa65ddceff4a58b5f8fd616bda1b0aad9a2579b3195ef39d85fff4adbb0f",
+      "name": "legacy-order-12-seed-11",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 5755,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "8211d3d2654d35068de2689d69b88efaaaffe4711296a41cdf8312235852ff44"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "a758026318c87336fc2934d409bb5800b247f8d90eba0da1f206f9646059ec17",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "9f40556cca3e48bfb785253ef2bbbf4abd7ef14d28b00604d5d62681e556634a"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "84e819c2e92445ae79e4c0ba72a44928559edb4728107992e40e87bebdd77f2e"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "e981311a0b7c2df7c563e6dc1a8016a1b435172c8cb5072580b68cdfb5d2451e"
+        }
+      },
+      "fit_original_ids_sha256": "72d13014e2065454127dc9261e7b839b0a9cd1e9a61d0fef8dd6d58d51905978",
+      "known_words_verified": 1200,
+      "metadata_sha256": "dadbcde1c7163f7e2d0e0afd792c7f5c3e04231155c10fa5b67f11fbe488acde",
+      "name": "average-order-4-seed-3",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 5755,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "8875fd4f71aef79b64028a8a255ca1bd4a2903d5d3730cc1ee4521c7ca16f34c"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "60aa49eda6ae963727165b652d9f6043d1cf895b66b963e10a92e8f231d1f80c",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "262230770ee92422495a2177395a65897b3bec47c68a7b2c348c1c8e06cc4496"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "cae1058a45479cb088fdfa404a9e36c628093d0d0600c7ccf24704c7ed45f0f5"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "f8f8de90aef725769c18a826cb3c4f6e8c94fb18d1f310a365e70127df1d7454"
+        }
+      },
+      "fit_original_ids_sha256": "72d13014e2065454127dc9261e7b839b0a9cd1e9a61d0fef8dd6d58d51905978",
+      "known_words_verified": 1200,
+      "metadata_sha256": "dfb69e278da6118b516a24653579543f90140cd2dee41396b0b11c6eeff9dff8",
+      "name": "average-order-4-seed-7",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 5755,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "f2b40f36e0e2eb8defaf00036384d9c6febbcfab83880c86a4da8483c2a58f5b"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "73fece5598617d9bee6709f49806cd14708cf1bfbf56b1f5e73f298404cc5e39",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "8fb22058ce3bbf88ce7a64bc4c47ed0ae0b25ea12f2cfc21a8ee74fe9d8fc61c"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "2957cc1e989c3ceaf5c44cd058d325b3168f1dcbf93f3f936e7e617f3d6e63e7"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "cf12869d985ea1e5862651212b9fa46458e8778e0c7dfc4673086b5f1a8a6e17"
+        }
+      },
+      "fit_original_ids_sha256": "72d13014e2065454127dc9261e7b839b0a9cd1e9a61d0fef8dd6d58d51905978",
+      "known_words_verified": 1200,
+      "metadata_sha256": "b22f3d997892559255964395e44fd41fe8355a363a0c04c5aee964b81efb37cb",
+      "name": "average-order-4-seed-11",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 15898,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "90e2de059aa8fa7fb52c97171279e2779da266af606de3ab93d3678585ef7676"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "a031211690b31dac5f6717a62892fbc5bc861bbe17452208ef5b61891aa30bb2",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "8336e26fec6904c0a714ad1b181a6bf5821f008fca9ce915c73c69b04185da56"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "ef45e343fa7952e4e67d3226f7a3dfe49d8e7d27faf3ce572adc4901ef6bb115"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "c7297dc2ce2cfc5bc13a38544420b20b716063ab7581105361d56db69909d212"
+        }
+      },
+      "fit_original_ids_sha256": "bfc0628ddbf3f65dac0f0b02af3037ecd1a82489ff75f89e9b38c454537abcb8",
+      "known_words_verified": 1200,
+      "metadata_sha256": "ed5b43a2ab7eb6a7c17461a3517bf00149a46cc710fc571e5e411a592e664df5",
+      "name": "average-order-8-seed-3",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 15898,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "a42fd538a74fe60bdb41fdd49eae42af27adc38cb0a8545f81dd35a461e55bf4"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "6b9729cab3dc61ff2fbd5eb00af2d4ecef598ea3787d39dd702ff108dfc5d45a",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "8adccec18c5ec8b4044ba1c5dd27b4131f3ee2bc956283e6c2bd4e71d8e7ea57"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "45191f8c54e9ca881dae67f059a6bbd3d5fb918c57c4b28f8a5924322436e628"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "430dd985b3b93f0e418e46024b340064d397c5cc938c0f53a562111a468facd0"
+        }
+      },
+      "fit_original_ids_sha256": "bfc0628ddbf3f65dac0f0b02af3037ecd1a82489ff75f89e9b38c454537abcb8",
+      "known_words_verified": 1200,
+      "metadata_sha256": "4b90c12f718847ff702ddd07e6fcd33d733400f911b40e7850995e45783746be",
+      "name": "average-order-8-seed-7",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 15898,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "332f1933f8025819d0c557ded055eee86448a062b126bced14818bab9702fdf8"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "1db312de8effab6a5f36e807a1cc3eed53e23c629ef67336cf01674148cabc51",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "64eb8b7fb73404aaf1b439427c1515b9f4304f280435b1e59aeab7b628accc03"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "7b465ad2aeee767054623bf0593a971fa50b027e123fb46ccc246195dccca4b4"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "bd466075a9cacde5066bdbbc27bdf4f48cc55d1451b7c6c4775ca3280333ad5e"
+        }
+      },
+      "fit_original_ids_sha256": "bfc0628ddbf3f65dac0f0b02af3037ecd1a82489ff75f89e9b38c454537abcb8",
+      "known_words_verified": 1200,
+      "metadata_sha256": "e5b7c61bb700a539829bbe1b7ee70adfc9a2c147d4df065b72fa20fa13fe5c7c",
+      "name": "average-order-8-seed-11",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 18137,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "de8a8a660a2eaf7f28ce6694b3025707bdf1c477d06008def1644bdd6fb59d7b"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "9a2b9db31e24277c08323ad62a31918ae13b774bb15e1ea52ec4eeee9c7c206a",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "f93dfc8ead285d45c9c5ee8f36ba46e9da966697be82d4476c0b82a65dc9c675"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "1e12ec51c4b4158d893876a4d9567da2c26e2021607fb848e130a1de7910173f"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "7b524f3b21012b7a38dd88c340e147c31ea194ce20f9cc86ed4e5adfe81de59e"
+        }
+      },
+      "fit_original_ids_sha256": "405e5ed036386ae4c088c057253fbd116229915021505a2f4f1470ecaefc43d0",
+      "known_words_verified": 1200,
+      "metadata_sha256": "c300fe7985cd17e33501863908619b80612b04b54075d32a4ab8e9ce331df277",
+      "name": "average-order-12-seed-3",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 18137,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "bd458a51f1f59e596cfeea5685b69b2bc5f2484601499b8814fa3d018ab0af63"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "f3230a098b2e2d9384179f0e72ddb02d17fcb5eec8c4df9b6f28cf23e9491ffd",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "0d49da1021c94aa728cc3ab4d91f7b44ed5092303ad0a0c0cc1b60b44a894b45"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "dff6f3c2c0208fa9447f13baa9a91d85f49b31aae12e9a3347d6fc94dcad2497"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "89667af118463be3e4c5071b60935885a461b2ad511d73d31905042b98f6d2ad"
+        }
+      },
+      "fit_original_ids_sha256": "405e5ed036386ae4c088c057253fbd116229915021505a2f4f1470ecaefc43d0",
+      "known_words_verified": 1200,
+      "metadata_sha256": "720cea470886f0632d6208427609295f3337589af725ddf4dd31bec911b9740f",
+      "name": "average-order-12-seed-7",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    },
+    {
+      "both_indexes_all_ids_verified": 18137,
+      "cached_word_serving_file": {
+        "bytes": 614528,
+        "sha256": "52b0184264b21fa2ffc22704aed3a08dbb15e89da00230f2c8c22786890aa8f3"
+      },
+      "canonical_cached_words_byte_exact": true,
+      "checkpoint_sha256": "1d20a354aef2fa7a67551b03dc2fdf1991c205ffa818e0f410a18acf2814a4fb",
+      "evaluations": {
+        "confirmation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+          "pairs": 247245,
+          "source_scores_sha256": "a7417f61d1ea6aebb4954d34345f7c401078947735ee0f4b54dcc4479a7841b1"
+        },
+        "test": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+          "pairs": 52283,
+          "source_scores_sha256": "7f8dc3d124e757a6ba12bec8e92c300c61b87bf862a0ca0e7ae36901b722abb3"
+        },
+        "validation": {
+          "arrays_and_source_scores_byte_exact": true,
+          "evaluation_sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+          "pairs": 50033,
+          "source_scores_sha256": "569366936877cbcfd82c60002507d6077c3ffd0feff0829903ec488c380ff847"
+        }
+      },
+      "fit_original_ids_sha256": "405e5ed036386ae4c088c057253fbd116229915021505a2f4f1470ecaefc43d0",
+      "known_words_verified": 1200,
+      "metadata_sha256": "531a9c8e669e9da01c08e78ea5400e7b7c958e3275211f0fa0e45f0529b54ebe",
+      "name": "average-order-12-seed-11",
+      "query_type_samples_verified": {
+        "known": 512,
+        "oov": 512
+      },
+      "structural_library_sha256": "3a7c4b8854ddb4563cb46b205023d86b650a7bf5e70d1a05725b88b8591a89cb",
+      "training_occurrence_weights_verified": true
+    }
+  ],
+  "phase_source_sha256": "6ddff0df4f2938dd7806edac29a7a6b9b379ff7c2305899b0f42222c76e35de1",
+  "private_report_sha256": "0b3bc7c6b32bd83c01bae3e7499bfc7fd5edb23e3135f3fa2c54d21c6cc17cb1",
+  "source_prepare_report_sha256": "d2a965c0a32e31fa15657abef688a498c6ce010f64249a4a0f093525a0b6936a",
+  "source_training_report_sha256": "58448edb797500e8e0ae59378556f46749c19a89e805037830435b97bd7517f5",
+  "status": "complete"
+}

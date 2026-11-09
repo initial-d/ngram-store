@@ -21,14 +21,14 @@ int meft_structural_maps(void* plan, uint64_t* representatives, uint64_t* order,
     size_t count, char* error, size_t error_size);
 /* Both lookup implementations return original numeric IDs, including after
  * compaction. index=0 uses sorted keys + binary search, index=1 DASTrie.
- * index=2 adds an owned std::unordered_map baseline on built plans only.
- * Missing keys return UINT64_MAX. Flat/hash lookup is available on built plans.
+ * index=2 adds an owned std::unordered_map baseline on built plans or reopened flat key files.
+ * Missing keys return UINT64_MAX. Flat/hash lookup requires loaded keys; DASTrie requires its own index.
  */
 int meft_structural_lookup(void* plan, const char* const* keys, size_t count,
     uint64_t* ids, int index, char* error, size_t error_size);
 int meft_structural_save_index(void* plan, const char* path, int index,
     char* error, size_t error_size);
-/* Only trusted, self-produced DASTrie files: legacy serialization is not an
+/* Trusted, self-produced DASTrie or MEFTKEY1 flat files: legacy serialization is not an
  * untrusted-file format and depends on the bundled library / architecture.
  */
 void* meft_structural_open_index(const char* path, char* error, size_t error_size);

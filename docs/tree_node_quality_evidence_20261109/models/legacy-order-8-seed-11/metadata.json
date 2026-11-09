@@ -1,0 +1,81 @@
+{
+  "canonical_source_reducer_vs_original_fp32_forward_relative_l2": 8.131307602163255e-08,
+  "common_index_construction": {
+    "all_original_ids_verified": 15898,
+    "memory": {
+      "anonymous_bytes": 497287168,
+      "file_backed_bytes": 214663168,
+      "peak_bytes": 754012160,
+      "rss_bytes": 711950336
+    },
+    "seconds": 0.08663561521098018
+  },
+  "common_model_bytes": 1371329,
+  "common_preparation_seconds": 2.4614438279531896,
+  "common_serving_files": {
+    "keys.datrie": {
+      "bytes": 128048,
+      "sha256": "c7d45f9c64a3ce932a7a46e3c561043c32106338b771402bbb3e92a5b54b04d1"
+    },
+    "output-rows.npy": {
+      "bytes": 614528,
+      "sha256": "92306840f77649039cc67b6cb43767122abbae0cafc0f30df4ceb99e34a77caa"
+    },
+    "word-keys.json": {
+      "bytes": 14225,
+      "sha256": "926cbbe70e9e576aaca7e87624611e42735baf008ca6effc4ae9962ea661c846"
+    },
+    "word-rows.npy": {
+      "bytes": 614528,
+      "sha256": "b343a0a5598a7e4beec410baaee7484edf34001725a26d99f159534468ca00b0"
+    }
+  },
+  "convention": "legacy",
+  "evaluations": {
+    "confirmation": {
+      "all_valid_context_pairs_scored": true,
+      "negative_seed": 44,
+      "negative_target_collision_fraction": 0.0035009808085097777,
+      "pairs": 247245,
+      "registered_target_token_fraction": 0.61812,
+      "sha256": "c9047b8f0d2e627bda9f19b2fa566d3ec1c50ae6f2aa0f87908df07925eeb621",
+      "tokens": 100000
+    },
+    "test": {
+      "all_valid_context_pairs_scored": true,
+      "negative_seed": 43,
+      "negative_target_collision_fraction": 0.0033930723179618613,
+      "pairs": 52283,
+      "registered_target_token_fraction": 0.65355,
+      "sha256": "f6dbfe698b26d03d3a776377d717df4d8c6f27f6265845c4efa9a9e2297944ed",
+      "tokens": 20000
+    },
+    "validation": {
+      "all_valid_context_pairs_scored": true,
+      "negative_seed": 42,
+      "negative_target_collision_fraction": 0.0033577838626506506,
+      "pairs": 50033,
+      "registered_target_token_fraction": 0.62545,
+      "sha256": "6923e63986309f9c038521db83308ee9fa5ed7807683a6890eba86fe3bac7e2e",
+      "tokens": 20000
+    }
+  },
+  "fit_original_ids_sha256": "bfc0628ddbf3f65dac0f0b02af3037ecd1a82489ff75f89e9b38c454537abcb8",
+  "index_bytes": {
+    "datrie": 128048,
+    "hash": 337351
+  },
+  "known_cache_file_bytes": 614528,
+  "order": 8,
+  "query_types": {
+    "known": 512,
+    "oov": 512
+  },
+  "seed": 11,
+  "shape": [
+    15898,
+    128
+  ],
+  "source_checkpoint_sha256": "4fb04c93d22608d8b402ce40f13efbbc294350959b36578554141d8ed1cf3d3c",
+  "source_row_sha256": "1e0376c8fd537b247668a067d68477ca4e3d4265d3a821bbd92be7bb794fe343"
+}

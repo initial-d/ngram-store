@@ -1,0 +1,255 @@
+{
+  "scope": "Only user workspace and model-root paths in historical source snapshots are replaced with explicit placeholders. Algorithm source checked by env(), query, row and input provenance is unchanged. Original archive and changed-file SHA256 values are retained.",
+  "archives": [
+    {
+      "archive": "auxiliary/final-native-test-source.tar.gz",
+      "original_archive_sha256": "ef404fb742e9e1d2e41dc6731afbbe41d6a356b27966c93aabd3abf0f2031c49",
+      "published_archive_sha256": "047a5a8ba3122427f5160a983233594c8a683287bffc1d556121c320b8afb69a",
+      "files": [
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        },
+        {
+          "file": "tools/finalize_tree_node_quality.py",
+          "original_sha256": "e9068673c386a305be5df25a79ae1b9de140d135db6b0282ff30a592e4d49470",
+          "published_sha256": "e019ed9d06027edb5d7a647b0e976b3aeb3cee7e97ae07431ded29eb4357f5eb"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/04b644f002e4dbcfd0791084f9cb1a65505fb688.tar.gz",
+      "original_archive_sha256": "906037d37a0aeadfb27ebbfaf48d1974d6db4ded71fecfae9e1c17fdc68c9dfa",
+      "published_archive_sha256": "cece7eaa42d536beb0fcf6acf54d66a6c17ec1f0280d8108ef2b7296024386da",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        },
+        {
+          "file": "tools/finalize_tree_node_quality.py",
+          "original_sha256": "4bc03f291f2deff03513a89a521feebe1aef2118bdd0ae4fed1a7ae5bd41f889",
+          "published_sha256": "ae6d505f983953e58c9998a8a9383633d3cd5264a276fd3fb10beba077ad498b"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/0a23eee254551772ffc6057ea971daf8e70b7b42.tar.gz",
+      "original_archive_sha256": "fa387fbe2bccee3ca09804eb00303bc7156483494c44e7da5801e5be705c9988",
+      "published_archive_sha256": "b60a6cfd5f5779b3398646c5f43607759d518e8b2a06a6c137fbaaaba60e5634",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/0fd0f447915f111952c42de392830584123e83c5.tar.gz",
+      "original_archive_sha256": "ac3ee0438acc2cf483f6eadff6a0ba1673de01620c194d40d7a9dc360894dc9b",
+      "published_archive_sha256": "633433ce1f8b875fa2234467ce6dfd0bcff4651d4d71ad6a69cc26ee712066ea",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        },
+        {
+          "file": "tools/finalize_tree_node_quality.py",
+          "original_sha256": "4bc03f291f2deff03513a89a521feebe1aef2118bdd0ae4fed1a7ae5bd41f889",
+          "published_sha256": "ae6d505f983953e58c9998a8a9383633d3cd5264a276fd3fb10beba077ad498b"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/28cc3fe6a567abbe7b0d0fa585517bb1a7555081.tar.gz",
+      "original_archive_sha256": "0961016b6c01ebe58ce064bdb5f6eacbe0b010943a9eb8477e216a37426062b4",
+      "published_archive_sha256": "7318bded4321e8f854df92d9261635a834de2a99b3b334b8857018e3826c7eb0",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        },
+        {
+          "file": "tools/finalize_tree_node_quality.py",
+          "original_sha256": "4bc03f291f2deff03513a89a521feebe1aef2118bdd0ae4fed1a7ae5bd41f889",
+          "published_sha256": "ae6d505f983953e58c9998a8a9383633d3cd5264a276fd3fb10beba077ad498b"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/4a94b974df3f06f2baef705bece68450f285ea35.tar.gz",
+      "original_archive_sha256": "27c308e45dcdc904138e92a686c39238a43e083ebe239edfa5d7d753a0122ae6",
+      "published_archive_sha256": "70730d02a2b74c51f87f6a186e02dac86a5d3c2e169f8d166c40b6f4de5d866b",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        },
+        {
+          "file": "tools/finalize_tree_node_quality.py",
+          "original_sha256": "e9068673c386a305be5df25a79ae1b9de140d135db6b0282ff30a592e4d49470",
+          "published_sha256": "e019ed9d06027edb5d7a647b0e976b3aeb3cee7e97ae07431ded29eb4357f5eb"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/76901984cc55dfed36715228529fec89b1270179.tar.gz",
+      "original_archive_sha256": "d615482e1e636797f1acc73a4dc98277f30e433aaebdaced26ae59275859cae3",
+      "published_archive_sha256": "da5ab7713c5c65507b86c8693bac5de105a82b9fa0ac330eb92a7d72411753cb",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        },
+        {
+          "file": "tools/finalize_tree_node_quality.py",
+          "original_sha256": "e9068673c386a305be5df25a79ae1b9de140d135db6b0282ff30a592e4d49470",
+          "published_sha256": "e019ed9d06027edb5d7a647b0e976b3aeb3cee7e97ae07431ded29eb4357f5eb"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/b58c3fa31ce73cb2dff36963a98f4b2a9e9503b4.tar.gz",
+      "original_archive_sha256": "553dd3dcd53fd8543e0b454c36f02c7e4c4dd83945fe2a88097f985f24497864",
+      "published_archive_sha256": "7c76c01ece5d0ad18a707f0a8f6b7dd213cc894185c33c38593ceeedbfa41fe4",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/ef065dc9da1b9bfb583613b8bcd3ab9c59c58d22.tar.gz",
+      "original_archive_sha256": "1a03861a47248923c49a2bc01aac6275a2ba1a496402b5e78ab61cd45b96989d",
+      "published_archive_sha256": "5c66a16e23aeb615c8a4d7004d1bdc95d3d2edbe3290e15bc585d9bedb67ab92",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "6a13e9dfb9026295730d349dc7f77db67341ea9f5dc88cf1ae426c45eaf27a58",
+          "published_sha256": "2d515dafb0601162cb7e732f95c74e03179f7d26f86af2b1502be22e63be9665"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        },
+        {
+          "file": "tools/finalize_tree_node_quality.py",
+          "original_sha256": "4bc03f291f2deff03513a89a521feebe1aef2118bdd0ae4fed1a7ae5bd41f889",
+          "published_sha256": "ae6d505f983953e58c9998a8a9383633d3cd5264a276fd3fb10beba077ad498b"
+        }
+      ]
+    },
+    {
+      "archive": "runtime/fb4e30bb75f66b0b641012a8038932d6711ece87.tar.gz",
+      "original_archive_sha256": "15eeab2d45eed17c4550ae644f6b5f001012c2f89c2d2026ecf8355c1f51bae0",
+      "published_archive_sha256": "e30d23b491e2a374487666c552dcbb43fc4256f6275fe2d228e233209a837a31",
+      "files": [
+        {
+          "file": "docs/tree_node_quality_protocol_20261109.md",
+          "original_sha256": "fd36aaad2992becfafa9927dd596750c37abccef86c0a968b1c5903ee2def863",
+          "published_sha256": "c018f4505904b342d1c1542bfd304194a939101f4e0a5b513d4c3274225b55a2"
+        },
+        {
+          "file": "tools/counterfact_identity_runner.py",
+          "original_sha256": "194e53a6a52b301c87a72f78d6d7d837f84f2ef919b387dbcb9c872b488d3567",
+          "published_sha256": "3724efa5161292b08a56b84fb9ce87c6df3d73223d2c0a7272d11807f9a6eac7"
+        },
+        {
+          "file": "tools/counterfact_runner.py",
+          "original_sha256": "b5ed6f1c0c13a403601c2bd8b0f2c3a15a4836323c262ddd4e50fa90a64a824a",
+          "published_sha256": "c62cf74009d1fbce075deb80e6d1e0518fc46f105f9b34269e77571699bec97f"
+        }
+      ]
+    }
+  ]
+}

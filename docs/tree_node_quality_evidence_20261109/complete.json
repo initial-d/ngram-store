@@ -1,0 +1,7 @@
+{
+  "fresh_audit_workers": 7344,
+  "frozen_selection_sha256": "5fc03f77816c9a3f98c1354c1ca61795ca2a58cb4a4344e2d810575d23c50eef",
+  "models": 18,
+  "requested_candidates": 3672,
+  "status": "complete"
+}
