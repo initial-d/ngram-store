@@ -110,7 +110,8 @@ def run_queue(args, requests, ready, plan_path):
                   or prior['frozen_selection_sha256'] != selection_hash):
         raise ValueError('Existing CPU schedule differs')
     report = {'status': 'running', 'phase': args.phase, 'environment': environment(),
-              'requests': requests, 'complete': [], 'failures': prior.get('failures', []),
+              'requests': requests, 'complete': [], 'failures': [],
+              'previous_failures': prior.get('previous_failures', []) + prior.get('failures', []),
               'workers': plan['workers'], 'workers_per_physical_core': 1,
               'cpu_parallel_plan_sha256': plan_hash, 'cpu_parallel_plan': str(plan_path),
               'model_lanes': plan['model_lanes'][args.phase], 'lanes': plan['lanes'],
@@ -242,7 +243,14 @@ def main():
     parser.add_argument('--index', choices=('datrie', 'hash'), default='datrie')
     parser.add_argument('--requests', type=int, default=32)
     args = parser.parse_args()
-    if args.output.exists() or os.environ.get('CUDA_VISIBLE_DEVICES') != '':
+    if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
+        parser.error('Empty CUDA_VISIBLE_DEVICES required')
+    # A reference coordinator can finish between the dispatcher's existence
+    # check and this CLI starting. Consume its verified output before enforcing
+    # the fresh-output requirement that applies to numerical workers.
+    from .cpu_parallel_references import wait_for_reference
+    if wait_for_reference(args):return
+    if args.output.exists():
         parser.error('Fresh output and empty CUDA_VISIBLE_DEVICES required')
     from .cpu_fork_serving import submit
     if submit(args):return

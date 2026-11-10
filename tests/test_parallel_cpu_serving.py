@@ -2,6 +2,8 @@
 import hashlib
 import importlib.util
 import json
+import os
+import socket
 from pathlib import Path
 import tempfile
 import threading
@@ -14,6 +16,25 @@ from tools.verify_memory_application import cpu_projection, verify_cpu_schedule
 
 
 class CpuParallelTests(unittest.TestCase):
+    def test_cli_consumes_reference_that_finished_before_process_start(self):
+        from tools.parallel_cpu_serving import main
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);job=root/'job.json';job.write_text('{}')
+            plan=root/'cpu-serving-parallel-plan.json';plan.write_text('{}')
+            registered=root/'cpu-parallel-reference-plan.json'
+            registered.write_text(json.dumps({'measurement_host':socket.gethostname()}))
+            output=root/'reference.json'
+            output.write_text(json.dumps({'reference_execution':{'plan_sha256':digest(registered)}}))
+            argv=['worker','--phase','retime-long','--job',str(job),'--output',str(output),
+                  '--plan',str(plan),'--lane','0','--cohort','serial-reference']
+            before=output.read_bytes()
+            with patch('sys.argv',['worker',*argv]),patch.dict(os.environ,{'CUDA_VISIBLE_DEVICES':''}), \
+                 patch('tools.parallel_cpu_serving.worker') as numerical:main();numerical.assert_not_called()
+            self.assertEqual(output.read_bytes(),before)
+            argv[-1]='parallel-shared-host'
+            with patch('sys.argv',['worker',*argv]),patch.dict(os.environ,{'CUDA_VISIBLE_DEVICES':''}), \
+                 self.assertRaises(SystemExit):main()
+
     def test_smt_siblings_are_not_independent_physical_lanes(self):
         plan = {'schema_version': 1, 'workers': 2, 'lanes': {
             '0': {'cpus': [0], 'physical_cores': [[0, 0]]},
