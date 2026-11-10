@@ -1,5 +1,6 @@
 """Reference concurrency preserves full coverage, fixed cores and output hashes."""
 import json
+import importlib.util
 from pathlib import Path
 import socket
 import tempfile
@@ -14,6 +15,7 @@ from tools.verify_memory_application import cpu_projection,verify_cpu_schedule
 
 
 class ParallelReferenceTests(unittest.TestCase):
+    @unittest.skipUnless(importlib.util.find_spec('numpy'), 'optional NumPy required')
     def test_all_reference_requests_run_on_eight_original_core_lanes(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);phase='retime-long';hardware={'lanes':{str(i):{'cpus':[i]} for i in range(8)},

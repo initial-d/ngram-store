@@ -1,5 +1,6 @@
 """Advance complete CPU work without changing hardware or overlapping core users."""
 import json
+import importlib.util
 from pathlib import Path
 import socket
 import tempfile
@@ -31,6 +32,7 @@ class CpuPhaseOverlapTests(unittest.TestCase):
                                                               'requests':[{}],'complete':[{}]}))
         return requests,original
 
+    @unittest.skipUnless(importlib.util.find_spec('numpy'), 'optional NumPy required')
     def test_complete_six_lane_cohort_uses_original_fresh_worker_arguments(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);requests,original=self.fixture(root)
@@ -69,6 +71,7 @@ class CpuPhaseOverlapTests(unittest.TestCase):
             target.write_text(json.dumps({'status':'failed'}))
             with self.assertRaises(RuntimeError):ready(root)
 
+    @unittest.skipUnless(importlib.util.find_spec('numpy'), 'optional NumPy required')
     def test_changed_plan_or_incomplete_requests_are_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);requests,original=self.fixture(root)

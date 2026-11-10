@@ -7,7 +7,6 @@ import unittest
 from unittest.mock import patch
 
 from tools.evidence_parallel import ordered_map
-from tools.tree_node_quality import bootstrap, digest, write
 
 
 @unittest.skipUnless('fork' in multiprocessing.get_all_start_methods(), 'fork required')
@@ -21,6 +20,10 @@ class EvidenceParallelTests(unittest.TestCase):
         self.assertGreaterEqual(len({pid for v,pid in result}),2)
 
     def test_complete_numeric_model_artifacts_are_identical_to_serial_execution(self):
+        try:
+            from tools.tree_node_quality import bootstrap, digest, write
+        except ImportError:
+            self.skipTest('optional NumPy required for numeric artifact comparison')
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)
             def worker(index,folder):

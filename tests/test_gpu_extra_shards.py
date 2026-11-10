@@ -2,6 +2,7 @@
 import copy
 import gzip
 import json
+import importlib.util
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -72,6 +73,7 @@ class ExtraShardTests(unittest.TestCase):
             args[1][0]['report']['shards'][1]['report']['request_slice']=[8,16]
             with self.assertRaises(AssertionError):verify_extra_shards(root,*args)
 
+    @unittest.skipUnless(importlib.util.find_spec('numpy'), 'optional NumPy required')
     def test_routing_is_compatible_with_old_drains_but_has_no_measurement(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);(root/'canonical').mkdir();(root/'gpu-extra-shards/outputs').mkdir(parents=True)
