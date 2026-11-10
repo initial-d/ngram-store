@@ -18,6 +18,7 @@ from .tree_node_quality import BUDGETS, SPLITS, bootstrap, digest, load, select,
 from .finalize_memory_application import long_requests, llm_requests
 from .counterfact_data import summarize
 from .parallel_cpu_serving import reference_requests, compare_outputs
+from .gpu_spare_lanes import cohort_requests, effective_cohort, check_result
 
 
 def share_statistics(blocks, arrays):
@@ -94,6 +95,64 @@ def check_controller(path, requests):
     if set(outputs) != {json.dumps(r, sort_keys=True) for r in requests}:
         raise ValueError('Missing final timing requests')
     return report, outputs
+
+
+def publish_gpu_cohort(root, original, timings, archive):
+    plan_path = root / 'gpu-spare-lane-plan.json'
+    if not plan_path.exists():
+        archive.take(root / 'retime-llm-gpu/report.json', 'llm/retiming-gpu-controller.json')
+        return original, timings
+    plan = load(plan_path); expected = cohort_requests(plan)
+    spare, values = check_controller(root / 'gpu-spare-lanes', [r for _, r in expected])
+    if (spare['plan_sha256'] != digest(plan_path) or original['fixed_device_assignment'] != plan['original_devices']
+            or original['cpu_affinity'] != plan['cpu_affinity']):
+        raise ValueError('GPU amendment provenance changed')
+    archive.take(plan_path, 'gpu-spare-lane-plan.json')
+    archive.take(Path('benchmarks/memory_application_gpu_spare_addendum_v1.json'), 'gpu-spare-addendum.json')
+    archive.take(root / 'retime-llm-gpu/report.json', 'llm/original-gpu-controller.json')
+    archive.take(root / 'gpu-spare-lanes/report.json', 'llm/spare-gpu-controller.json')
+    if {p['model'] for p in spare['preflights']} != set(plan['spares']) or len(spare['preflights']) != len(plan['spares']):
+        raise ValueError('Every spare card requires its source/native preflight')
+    preflights = []
+    for entry in spare['preflights']:
+        model = entry['model']; reports = []
+        if entry['status'] != 'passed' or entry['gpu'] != plan['spares'][model] or len(entry['outputs']) != 2:
+            raise ValueError('Incomplete spare-card preflight')
+        for item in entry['outputs']:
+            if digest(item['output']) != item['sha256']: raise ValueError('Spare preflight bytes changed')
+            reports.append(load(item['output']))
+        source_request = next(r for _, r in expected if r['model'] == model and r['name'] == 'source-gpu')
+        native_request = next(r for _, r in expected if r['model'] == model and r['name'] == 'native-none-fp32' and r['cache'] == 0)
+        for value, request in zip(reports, (source_request, native_request)):
+            check_result(value, request, plan['spares'][model], plan['spare_cpu_affinity'][model])
+            if len(value['requests']) != 2: raise ValueError('Spare preflight request budget changed')
+        for a, b in zip(reports[0]['requests'], reports[1]['requests']):
+            if any(a[f] != b[f] for f in ('input_ids_sha256', 'cached_logit_hashes', 'generated_ids_sha256')):
+                raise ValueError('Spare source/native outputs differ')
+        preflights.append({**entry, 'reports': reports})
+    archive.put('llm/spare-gpu-preflights.json.gz', preflights)
+    for _, request in expected:
+        key = json.dumps(request, sort_keys=True)
+        check_result(values[key], request,
+                     plan['spares'][request['model']], plan['spare_cpu_affinity'][request['model']])
+        prior = timings[key]
+        if prior.get('measurement_purpose') == 'routing-receipt-only':
+            if (prior['request'] != request or prior['gpu_spare_plan_sha256'] != digest(plan_path)
+                    or prior['cpu_affinity'] != plan['cpu_affinity'][request['model']]
+                    or prior['measurement_cpu_affinity'] != plan['spare_cpu_affinity'][request['model']]
+                    or prior['measurement_gpu'] != plan['spares'][request['model']]
+                    or digest(prior['spare_measurement_output']) != prior['spare_measurement_sha256']
+                    or prior['spare_measurement_sha256'] != next(i['sha256'] for i in spare['complete'] if i['request'] == request)):
+                raise ValueError('Original-controller routing receipt differs from the actual spare sample')
+    effective = effective_cohort(plan, original, spare)
+    effective.update(gpu_spare_plan_sha256=digest(plan_path), original_controller_sha256=digest(root / 'retime-llm-gpu/report.json'),
+                     spare_controller_sha256=digest(root / 'gpu-spare-lanes/report.json'))
+    diagnostics = [{'request': item['request'], 'report': timings[json.dumps(item['request'], sort_keys=True)],
+                    'private_sha256': item['sha256']} for item in original['complete']
+                   if item['request']['model'] in plan['spares'] and item['request']['batch'] == 8]
+    archive.put('llm/original-batch8-diagnostics.json.gz', diagnostics)
+    archive.put('llm/retiming-gpu-controller.json', effective)
+    return effective, {**timings, **values}
 
 
 def publish_cpu_references(timer, timings, selected, phase, archive, folder, model):
@@ -209,6 +268,7 @@ def llm_evidence(args, archive):
         raise ValueError('Complete six-model rows and twelve independent controls required')
     requests = llm_requests(root, controls)
     gpu_timer, gpu = check_controller(args.root / 'retime-llm-gpu', requests)
+    gpu_timer, gpu = publish_gpu_cohort(args.root, gpu_timer, gpu, archive)
     cpu_requests = [r for r in requests if r['mode'] == 'codec' and r['batch'] == 1]
     cpu_timer, cpu = check_controller(args.root / 'retime-llm-cpu', cpu_requests)
     for file in ('prepare.json', 'selection.json'):
@@ -217,8 +277,7 @@ def llm_evidence(args, archive):
         archive.take(source, 'llm/stages/' + source.parent.name + '-' + source.name)
     archive.take(args.root / 'llm-row-audit' / 'report.json', 'llm/row-audit-controller.json')
     archive.take(controls / 'queue.json', 'llm/independent-controls-controller.json')
-    for phase in ('cpu', 'gpu'):
-        archive.take(args.root / ('retime-llm-' + phase) / 'report.json', 'llm/retiming-' + phase + '-controller.json')
+    archive.take(args.root / 'retime-llm-cpu/report.json', 'llm/retiming-cpu-controller.json')
     for prepared, selected in zip(prepare['models'], frozen['models']):
         if prepared['name'] != selected['name'] or len(prepared['jobs']) != 261:
             raise ValueError('Six-model candidate grid changed')

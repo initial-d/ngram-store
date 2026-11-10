@@ -274,7 +274,12 @@ def main():
     parser.add_argument('--warmup',type=int,default=1)
     parser.add_argument('--decode-steps',type=int,default=16)
     parser.add_argument('--batch-size',type=int,default=1)
+    parser.add_argument('--skip-spare-routing',action='store_true',
+        help='Internal child for a registered spare-device cohort; keeps the actual GPU measurement unchanged')
     args=parser.parse_args()
+    if args.phase == 'gpu' and not args.skip_spare_routing:
+        from .gpu_spare_lanes import route_pending
+        if route_pending(args): return
     if args.output.exists() or args.requests<1 or args.repeat<1 or args.warmup<0 or args.cache_bytes<0:
         parser.error('fresh output and valid positive budgets required')
     if args.mode == 'independent' and args.control_run is None: parser.error('independent mode requires a trained control run')
