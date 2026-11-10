@@ -15,6 +15,7 @@ import subprocess
 import sys
 import threading
 import time
+import socket
 
 
 def load(path):
@@ -86,8 +87,20 @@ def run_queue(args, requests, ready, plan_path):
     from .tree_node_quality import environment, write
     plan = load(plan_path); plan_hash = digest(plan_path)
     models = sorted({r['model'] for r in requests})
+    if plan.get('measurement_host') and socket.gethostname()!=plan['measurement_host']:
+        controller=args.output/'report.json';deadline=time.monotonic()+24*3600
+        while time.monotonic()<deadline:
+            if controller.exists():
+                value=load(controller)
+                if value['status']=='failed':raise RuntimeError('Remote CPU evidence failed; diagnostics retained')
+                if value['status']=='complete':
+                    if value['requests']!=requests or value['cpu_parallel_plan_sha256']!=plan_hash:
+                        raise ValueError('Remote CPU schedule or plan changed')
+                    return
+            time.sleep(10)
+        raise TimeoutError('Remote CPU evidence wait expired; workers retained')
     validate_plan(plan, args.phase, models, os.sched_getaffinity(0))
-    if not (args.ready.parent / 'all-compute-finished').exists():
+    if not plan.get('parallel_with_gpu_shards') and not (args.ready.parent / 'all-compute-finished').exists():
         raise ValueError('CPU parallel timing starts only after all GPU timing finished')
     selection = args.frontier / 'selection.json'; selection_hash = digest(selection)
     refs = reference_requests(requests, load(selection), args.phase)
@@ -106,6 +119,8 @@ def run_queue(args, requests, ready, plan_path):
               'reference_requests': refs, 'serial_references': [],
               'execution_schedule_sha256': hashlib.sha256(json.dumps(requests, sort_keys=True).encode()).hexdigest(),
               'measurement_contract': 'Pinned per-model lanes on a shared host; primary-budget serial references follow the full grid'}
+    if plan.get('measurement_host'):
+        report.update(measurement_host=socket.gethostname(),parallel_with_gpu_shards=plan.get('parallel_with_gpu_shards',False))
     retained = {e['output']: e['sha256'] for e in prior.get('complete', []) + prior.get('serial_references', [])}
     lock = threading.Lock(); failures = []
     def measure(index, request, cohort):
@@ -157,6 +172,13 @@ def run_queue(args, requests, ready, plan_path):
         report['status'] = 'failed'; write(controller, report)
         raise RuntimeError('Full CPU parallel grid incomplete')
     report['status'] = 'running-serial-references'; write(controller, report)
+    if plan.get('local_gpu_finished_marker'):
+        marker=args.ready.parent/plan['local_gpu_finished_marker'];deadline=time.monotonic()+24*3600
+        while not marker.exists():
+            gpu=args.ready.parent/'gpu-prompt-shards/report.json'
+            if gpu.exists() and load(gpu)['status']=='failed':raise RuntimeError('GPU shards failed before CPU serial references')
+            if time.monotonic()>deadline:raise TimeoutError('Local GPU completion wait expired')
+            time.sleep(10)
     originals = {json.dumps(v['request'], sort_keys=True): v for v in report['complete']}
     try:
         for index, request in enumerate(refs):
@@ -179,10 +201,15 @@ def run_queue(args, requests, ready, plan_path):
 
 def worker(args):
     from .tree_node_quality import query_job, write
-    expected = load(args.plan)['lanes'][args.lane]['cpus']
+    plan=load(args.plan);expected = plan['lanes'][args.lane]['cpus']
     if sorted(os.sched_getaffinity(0)) != expected:
         raise ValueError('CPU affinity differs from fixed lane')
     before = list(os.getloadavg())
+    started=time.time();gate={}
+    if args.cohort=='serial-reference' and plan.get('local_gpu_finished_marker'):
+        marker=args.plan.parent/plan['local_gpu_finished_marker'];value=load(marker)
+        if value['status']!='complete' or value['measurement_host']!=socket.gethostname():raise ValueError('Wrong local GPU gate')
+        gate={'local_gpu_gate_sha256':digest(marker)}
     if args.phase == 'retime-long':
         query_job(args.job, args.cached, index_kind=args.index, cache_bytes=args.cache, selected=True)
         job = load(args.job)
@@ -196,6 +223,8 @@ def worker(args):
                  cpu_affinity=sorted(os.sched_getaffinity(0)), measurement_cohort=args.cohort,
                  worker_source_sha256=digest(__file__), host_load_before=before,
                  host_load_after=list(os.getloadavg()))
+    if load(args.plan).get('measurement_host'):
+        value.update(measurement_host=socket.gethostname(),sample_started=started,sample_finished=time.time(),**gate)
     write(args.output, value)
 
 

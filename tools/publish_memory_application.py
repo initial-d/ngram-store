@@ -269,6 +269,8 @@ def llm_evidence(args, archive):
     requests = llm_requests(root, controls)
     gpu_timer, gpu = check_controller(args.root / 'retime-llm-gpu', requests)
     gpu_timer, gpu = publish_gpu_cohort(args.root, gpu_timer, gpu, archive)
+    from .gpu_prompt_shards import publish_cohort
+    gpu_timer, gpu = publish_cohort(args.root,gpu_timer,gpu,archive)
     cpu_requests = [r for r in requests if r['mode'] == 'codec' and r['batch'] == 1]
     cpu_timer, cpu = check_controller(args.root / 'retime-llm-cpu', cpu_requests)
     for file in ('prepare.json', 'selection.json'):
@@ -399,6 +401,9 @@ def main():
     if (args.root / 'cpu-serving-parallel-plan.json').exists():
         archive.take(args.root / 'cpu-serving-parallel-plan.json', 'cpu-serving-parallel-plan.json')
         archive.take(Path('benchmarks/memory_application_cpu_parallel_addendum_v1.json'), 'cpu-serving-addendum.json')
+        if load(args.root/'cpu-serving-parallel-plan.json').get('measurement_host'):
+            archive.take(Path('benchmarks/memory_application_multi_host_addendum_v1.json'),'multi-host-addendum.json')
+            archive.take(args.root/load(args.root/'cpu-serving-parallel-plan.json')['local_gpu_finished_marker'],'local-gpu-finished.json')
     long_evidence(args, archive)
     llm_evidence(args, archive)
     runtimes(args, archive)

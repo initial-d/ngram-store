@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import time
+import socket
 
 import numpy as np
 
@@ -163,6 +164,8 @@ def gpu_worker(args):
         'rss_before_open':memory(), 'requests':[], 'samples':[],
         'contract':'Actual complete prefill plus native decoder KV/recurrent cache; causal TinyEngram history, original IDs and unchanged nonrow weights',
         'rounding_contract':'Cache vs full-prefix differences are measured separately. Source and byte-exact codecs execute the same cached schedule.'}
+    report['measurement_host'] = socket.gethostname()
+    report['request_slice'] = [args.request_offset, args.request_count or args.requests]
     model = replay = staged = None
     def snapshot():
         value = gpu_snapshot(uuid, own_pid=monitor_pid); report['gpu_samples'].append(value)
@@ -188,6 +191,7 @@ def gpu_worker(args):
             cuda_after_open={'allocated':torch.cuda.memory_allocated(), 'reserved':torch.cuda.memory_reserved(),
                 'peak_allocated':torch.cuda.max_memory_allocated()})
         requests = batches_for(common, 'test', args.requests, args.batch_size)
+        requests = requests[args.request_offset:args.request_offset + (args.request_count or args.requests)]
         prefixes = [torch.tensor([row['ids'] for row in batch], dtype=torch.int64) for batch in requests]
         report['unique_prompt_count'] = len({tuple(row['ids']) for batch in requests for row in batch})
         continuations = []
@@ -274,15 +278,21 @@ def main():
     parser.add_argument('--warmup',type=int,default=1)
     parser.add_argument('--decode-steps',type=int,default=16)
     parser.add_argument('--batch-size',type=int,default=1)
+    parser.add_argument('--request-offset',type=int,default=0)
+    parser.add_argument('--request-count',type=int)
     parser.add_argument('--skip-spare-routing',action='store_true',
         help='Internal child for a registered spare-device cohort; keeps the actual GPU measurement unchanged')
     args=parser.parse_args()
     if args.phase == 'gpu' and not args.skip_spare_routing:
+        from .gpu_prompt_shards import route_pending_shard
+        if route_pending_shard(args): return
         from .gpu_spare_lanes import route_pending
         if route_pending(args): return
     if args.output.exists() or args.requests<1 or args.repeat<1 or args.warmup<0 or args.cache_bytes<0:
         parser.error('fresh output and valid positive budgets required')
     if args.mode == 'independent' and args.control_run is None: parser.error('independent mode requires a trained control run')
+    if args.request_offset < 0 or (args.request_count is not None and (args.request_count < 1 or args.request_offset + args.request_count > args.requests)):
+        parser.error('A request slice must fit the unchanged full request schedule')
     args.output.parent.mkdir(parents=True,exist_ok=True)
     if args.phase=='cpu':cpu_worker(args)
     else:gpu_worker(args)
