@@ -21,7 +21,8 @@ def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def socket_path(plan,phase):
-    return Path(plan).parent/('cpu-fork-'+phase+'-'+socket.gethostname()+'.sock')
+    host=hashlib.sha256(socket.gethostname().encode()).hexdigest()[:8]
+    return Path(plan).parent/('cf-'+phase+'-'+host+'.sock')
 
 
 def encode_args(args):
