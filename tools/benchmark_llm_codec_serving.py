@@ -285,6 +285,10 @@ def main():
         help='Internal child for a registered spare-device cohort; keeps the actual GPU measurement unchanged')
     args=parser.parse_args()
     if args.phase=='gpu':os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG',':4096:8')
+    if args.phase=='gpu':
+        # Also catch future children of already-running batch-1 drain workers.
+        from .gpu_extra_shards import route_pending_shard as route_extra_shard
+        if route_extra_shard(args):return
     if args.phase == 'gpu' and not args.skip_spare_routing:
         from .gpu_prompt_shards import route_pending_shard
         if route_pending_shard(args): return

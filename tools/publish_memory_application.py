@@ -271,6 +271,8 @@ def llm_evidence(args, archive):
     gpu_timer, gpu = publish_gpu_cohort(args.root, gpu_timer, gpu, archive)
     from .gpu_prompt_shards import publish_cohort
     gpu_timer, gpu = publish_cohort(args.root,gpu_timer,gpu,archive)
+    from .gpu_extra_shards import publish_cohort as publish_extra
+    gpu_timer, gpu = publish_extra(args.root,gpu_timer,gpu,archive)
     cpu_requests = [r for r in requests if r['mode'] == 'codec' and r['batch'] == 1]
     cpu_timer, cpu = check_controller(args.root / 'retime-llm-cpu', cpu_requests)
     for file in ('prepare.json', 'selection.json'):

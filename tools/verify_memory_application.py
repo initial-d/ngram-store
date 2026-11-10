@@ -326,7 +326,7 @@ def verify_spare_cohort(root, controller, records, inventory, private):
         gpu = plan['spares'][model] if routed else plan['original_devices'][model]
         cpus = plan['spare_cpu_affinity'][model] if routed else plan['cpu_affinity'][model]
         report = published[k]['report']
-        if report.get('measurement_purpose')=='prompt-shard-routing-receipt-only':
+        if report.get('measurement_purpose') in ('prompt-shard-routing-receipt-only','extra-shard-routing-receipt-only'):
             assert not routed and report['cpu_affinity']==cpus and report['request']==request
             continue
         assert effective[k]['gpu'] == gpu and report['selected_gpu_selector'] == str(gpu)
@@ -420,6 +420,72 @@ def verify_prompt_shards(root,controller,records,inventory,private):
             assert value['shard_measurement_sha256']==replacements[k]['sha256']
             assert value['prompt_shard_plan_sha256']==sharded['plan_sha256'] and value['request']==record['request']
     return parent,[r for r in records if r['request']['model'] not in plan['groups']]+prior_records
+
+
+def verify_extra_shards(root,controller,records,inventory,private):
+    plan=load(root/'gpu-extra-shard-plan.json');sharded=load(root/'llm/extra-shard-controller.json')
+    parent=load(root/'llm/pre-extra-sharded-gpu-controller.json')
+    assert plan['schema_version']==1 and sharded['status']=='complete' and sharded['workers']==4
+    assert controller['extra_shard_plan_sha256']==sharded['plan_sha256']==private['gpu-extra-shard-plan.json']
+    assert controller['requests']==parent['requests']==plan['requests']
+    assert controller['extra_shard_groups']==plan['groups'] and controller['extra_shard_host']==plan['measurement_host']
+    key=lambda r:json.dumps(r,sort_keys=True)
+    expected=[r for r in plan['requests'] if r['model'] in plan['groups'] and r['batch']==1]
+    assert sharded['requests']==expected
+    index=lambda rows:{key(v['request']):v for v in rows}
+    replacements=index(sharded['complete']);current=index(controller['complete']);published=index(records)
+    assert len(replacements)==len(expected)==len(sharded['complete'])
+    assert set(replacements)=={key(r) for r in expected}
+    assert len(current)==len(published)==len(plan['requests'])
+    devices={};inputs={};cores=set();gpus=set()
+    for model,group in plan['groups'].items():
+        assert len(group)==2
+        for i,lane in enumerate(group):
+            assert lane['slice']==[16*i,16] and lane['gpu'] not in gpus and not cores.intersection(lane['cpus'])
+            gpus.add(lane['gpu']);cores.update(lane['cpus'])
+    for request in expected:
+        k=key(request);record=published[k];report=record['report'];group=plan['groups'][request['model']]
+        assert record['private_sha256']==current[k]['sha256']==replacements[k]['sha256']
+        assert report['measurement_mode']=='matched-prompt-shards' and report['extra_shard_plan_sha256']==sharded['plan_sha256']
+        files=inventory[report['environment']['commit']]['files']
+        assert report['aggregation_source_sha256']==files['tools/gpu_extra_shards.py']['original_sha256']
+        assert len(report['shards'])==2
+        for shard,lane in zip(report['shards'],group):
+            child=shard['report'];source(child['environment'],inventory)
+            assert child['measurement_host']==plan['measurement_host'] and child['request_slice']==lane['slice']
+            assert child['selected_gpu_selector']==str(lane['gpu']) and child['cpu_affinity']==lane['cpus']
+            assert child['job_sha256']==report['job_sha256'] and child['batch_size']==request['batch']
+            assert child['mode']==request['mode'] and child['cache_bytes']==request['cache']
+            uuid=child['gpu_before']['gpu_uuid'];device=(request['model'],lane['gpu'])
+            assert device not in devices or devices[device]==uuid;devices[device]=uuid
+            cohort=(request['model'],request['batch'],lane['gpu']);hashes=[v['input_ids_sha256'] for v in child['requests']]
+            assert cohort not in inputs or inputs[cohort]==hashes;inputs[cohort]=hashes
+            for field,filename in (('phase_source_sha256','benchmark_llm_codec_serving.py'),
+                ('cached_decode_source_sha256','cached_memory_decode.py'),('codec_adapter_source_sha256','codec_memory_adapter.py')):
+                assert child[field]==inventory[child['environment']['commit']]['files']['tools/'+filename]['original_sha256']
+        assert report['unique_prompt_count']==len({p for s in report['shards'] for r in s['report']['requests'] for p in r['prompt_hashes']})
+    assert len(set(devices.values()))==4
+    assert len(sharded['preflights'])==4
+    for preflight in sharded['preflights']:
+        lane=next(v for v in plan['groups'][preflight['model']] if v['gpu']==preflight['gpu'])
+        a,b=[v['report'] for v in preflight['records']]
+        assert a['mode']=='source' and b['mode']=='codec'
+        for report in (a,b):
+            llm_timing(report,'gpu',request_count=2,repeat=1)
+            assert report['selected_gpu_selector']==str(lane['gpu']) and report['cpu_affinity']==lane['cpus']
+            assert report['measurement_host']==plan['measurement_host']
+            assert report['gpu_before']['gpu_uuid']==devices[(preflight['model'],lane['gpu'])]
+        for x,y in zip(a['requests'],b['requests']):
+            for field in ('input_ids_sha256','cached_logit_hashes','generated_ids_sha256'):assert x[field]==y[field]
+    prior_records=load(root/'llm/pre-extra-sharded-gpu-records.json.gz');prior=index(parent['complete'])
+    assert {key(v['request']) for v in prior_records}==set(replacements)
+    for record in prior_records:
+        k=key(record['request']);assert record['private_sha256']==prior[k]['sha256']
+        value=record['report']
+        if value.get('measurement_purpose')=='extra-shard-routing-receipt-only':
+            assert value['shard_measurement_sha256']==replacements[k]['sha256']
+            assert value['extra_shard_plan_sha256']==sharded['plan_sha256'] and value['request']==record['request']
+    return parent,[r for r in records if not (r['request']['model'] in plan['groups'] and r['request']['batch']==1)]+prior_records
 
 
 def verify(root):
@@ -532,6 +598,7 @@ def verify(root):
     timer_keys = {'cpu': set(), 'gpu': set()};model_devices={};llm_gpu_records=[]
     spare_plan = load(root / 'gpu-spare-lane-plan.json') if (root / 'gpu-spare-lane-plan.json').exists() else None
     shard_plan=load(root/'gpu-prompt-shard-plan.json') if (root/'gpu-prompt-shard-plan.json').exists() else None
+    extra_plan=load(root/'gpu-extra-shard-plan.json') if (root/'gpu-extra-shard-plan.json').exists() else None
     for prepared, selected in zip(prepare['models'], frozen['models']):
         name = prepared['name']; folder = root / 'llm/models' / name
         assert name == selected['name']; metadata = load(folder / 'metadata.json')
@@ -612,7 +679,7 @@ def verify(root):
                 if phase=='gpu':
                     llm_gpu_records.append(timing)
                     report=timing['report'];assignment=load(root/'serving-addendum.json')['device_assignment']
-                    if shard_plan and name in shard_plan['groups']:
+                    if (shard_plan and name in shard_plan['groups']) or (extra_plan and name in extra_plan['groups'] and request['batch']==1):
                         assert report['measurement_mode']=='matched-prompt-shards'
                         continue
                     routed = spare_plan and name in spare_plan['spares'] and request['batch'] == 8
@@ -636,7 +703,8 @@ def verify(root):
             cores=set()
             for cpus in controller['cpu_affinity'].values():
                 assert cpus and not cores.intersection(cpus);cores.update(cpus)
-            parent,records=verify_prompt_shards(root,controller,llm_gpu_records,inventory,private) if shard_plan else (controller,llm_gpu_records)
+            parent,records=verify_extra_shards(root,controller,llm_gpu_records,inventory,private) if extra_plan else (controller,llm_gpu_records)
+            parent,records=verify_prompt_shards(root,parent,records,inventory,private) if shard_plan else (parent,records)
             if spare_plan: verify_spare_cohort(root, parent, records, inventory, private)
         assert len(controller['requests']) == len(controller['complete']) == len(timer_keys[phase])
     analysis = root / 'analysis/report.json'

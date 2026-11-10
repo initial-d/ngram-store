@@ -91,7 +91,7 @@ def source_commits(root, sources):
     # Canonical GPU files can be routing receipts without an environment.
     # Inventory the actual measurements, including every child source version,
     # rather than relying on the same commit appearing in unrelated CPU runs.
-    for folder in ('gpu-spare-lanes', 'gpu-prompt-shards'):
+    for folder in ('gpu-spare-lanes', 'gpu-prompt-shards', 'gpu-extra-shards'):
         controller = root / folder / 'report.json'
         if controller.exists(): files.add(controller)
         files.update((root / folder / 'outputs').glob('*.json'))
