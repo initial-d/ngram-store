@@ -138,7 +138,13 @@ def main():
     parser.add_argument('--cache',type=int,default=0);parser.add_argument('--requests',type=int,default=32)
     parser.add_argument('--cached',type=int,default=0);parser.add_argument('--index',default='datrie')
     args=parser.parse_args()
-    if args.mode=='run':run(args.root,args.phase)
+    if args.mode=='run':
+        try:run(args.root,args.phase)
+        except BaseException as error:
+            path=args.root/'cpu-parallel-references'/args.phase/'report.json'
+            if path.exists():
+                report=load(path);report.update(status='failed',error=repr(error));path.write_text(json.dumps(report,indent=2)+'\n')
+            raise
     else:worker(args)
 
 

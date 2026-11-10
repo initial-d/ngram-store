@@ -420,6 +420,9 @@ def main():
         archive.take(source, 'diagnostics/' + source.name)
     for name in ('quality-dispatch.json', 'cpu-quality-dispatch.json', 'final-serving-dispatch.json'):
         archive.take(args.root / name, 'diagnostics/' + name)
+    for name in ('cpu-fork-preflight.json','llm-cpu-fork-preflight.json'):
+        path=args.root/name
+        if path.exists():archive.take(path,'diagnostics/'+name)
     if (args.root / 'gpu-recovery.json').exists():
         archive.take(args.root / 'gpu-recovery.json', 'diagnostics/gpu-recovery.json')
         for source in sorted((args.root / 'recovery-20261110').glob('*.json')):
