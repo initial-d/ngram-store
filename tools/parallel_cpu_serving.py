@@ -124,6 +124,18 @@ def run_queue(args, requests, ready, plan_path):
         report.update(measurement_host=socket.gethostname(),parallel_with_gpu_shards=plan.get('parallel_with_gpu_shards',False))
     retained = {e['output']: e['sha256'] for e in prior.get('complete', []) + prior.get('serial_references', [])}
     lock = threading.Lock(); failures = []
+    last_checkpoint = time.monotonic()
+    def checkpoint():
+        # Samples are separately persisted and checked before a receipt is
+        # added. Rewriting the complete growing receipt list on every retained
+        # sample makes recovery quadratic in shared-filesystem traffic. Keep
+        # progress at one-second intervals; failures and phase boundaries
+        # always save immediately.
+        nonlocal last_checkpoint
+        now = time.monotonic()
+        if now - last_checkpoint >= 1.:
+            write(controller, report)
+            last_checkpoint = now
     def measure(index, request, cohort):
         lane = report['model_lanes'][request['model']]; cpus = plan['lanes'][lane]['cpus']
         folder = args.output if cohort == 'parallel-shared-host' else args.output / 'serial-reference'
@@ -160,7 +172,7 @@ def run_queue(args, requests, ready, plan_path):
             try:
                 result = measure(index, request, 'parallel-shared-host')
                 with lock:
-                    report['complete'].append(result); write(controller, report)
+                    report['complete'].append(result); checkpoint()
                     if len(report['complete']) % 20 == 0:
                         print({'phase': args.phase, 'complete': len(report['complete']), 'expected': len(requests)}, flush=True)
             except Exception as error:
@@ -187,7 +199,7 @@ def run_queue(args, requests, ready, plan_path):
             original = originals[json.dumps(request, sort_keys=True)]
             result['parallel_output_sha256'] = original['sha256']
             result['parallel_to_serial_p50_ratios'] = compare_outputs(load(original['output']), load(result['output']))
-            report['serial_references'].append(result); write(controller, report)
+            report['serial_references'].append(result); checkpoint()
             if index % 20 == 0:
                 print({'phase': args.phase, 'serial_references': index + 1, 'expected': len(refs)}, flush=True)
         if digest(selection) != selection_hash or digest(plan_path) != plan_hash:

@@ -147,7 +147,16 @@ class CpuParallelTests(unittest.TestCase):
                 self.assertEqual(seen[24:], ['serial-reference'] * 16)
                 self.assertEqual(json.loads((args.output / 'report.json').read_text())['status'], 'complete')
                 execution.reset_mock()
-                run_queue(args, requests, {'status': 'quality-complete'}, plan_path)
+                from tools.tree_node_quality import write as persist
+                with patch('tools.parallel_cpu_serving.time.monotonic', return_value=1000.), \
+                     patch('tools.tree_node_quality.write', wraps=persist) as checkpoints:
+                    run_queue(args, requests, {'status': 'quality-complete'}, plan_path)
+                    # Initial state, reference boundary and final state remain
+                    # durable while retained receipts avoid per-item rewrites.
+                    self.assertEqual(checkpoints.call_count, 3)
+                saved=json.loads((args.output / 'report.json').read_text())
+                self.assertEqual(len(saved['complete']), 24)
+                self.assertEqual(len(saved['serial_references']), 16)
                 execution.assert_not_called()
                 output = args.output / '00000.json'; value = json.loads(output.read_text()); value['decoded_row_sha256'] = 'corrupt'; write(output, value)
                 with self.assertRaisesRegex(RuntimeError, 'grid incomplete'):
