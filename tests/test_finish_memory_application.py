@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from tools.finish_memory_application import commits_in, sha, wait_for_serving
+from tools.finish_memory_application import commits_in, sha, source_commits, wait_for_serving
 
 
 class PreparationGatesTests(unittest.TestCase):
@@ -51,6 +51,31 @@ class PreparationGatesTests(unittest.TestCase):
         value = {'environment': {'commit': first}, 'rows': [{'environment': {'code_sha': second}}],
                  'source_commit': 'unknown', 'checkpoint_sha256': 'c' * 64, 'commit': 'd' * 64}
         self.assertEqual(commits_in(value), {first, second})
+
+    def test_inventory_includes_actual_gpu_children_and_serial_cpu_sources(self):
+        def write(name,value):
+            path=self.root/name;path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_text(json.dumps(value))
+        write('quality-ready.json',{})
+        for name in ('long-row-audit/report.json','llm-row-audit/report.json'):
+            write(name,{})
+        for family in ('long-frontier','llm-frontier'):
+            write(family+'/prepare.json',{'models':[]})
+        for phase in ('retime-long','retime-llm-cpu','retime-llm-gpu'):
+            write(phase+'/report.json',{})
+        commits=['a'*40,'b'*40,'c'*40,'d'*40,'e'*40]
+        write('retime-llm-gpu/00000.json',{'measurement_purpose':'routing-receipt-only'})
+        write('gpu-prompt-shards/outputs/00000.json',
+              {'shards':[{'report':{'environment':{'commit':commits[0]}}}]})
+        write('gpu-spare-lanes/outputs/00000.json',{'environment':{'commit':commits[1]}})
+        write('gpu-prompt-shards/report.json',
+              {'preflights':[{'records':[{'report':{'environment':{'commit':commits[2]}}}]}]})
+        write('retime-long/serial-reference/00000.json',{'environment':{'commit':commits[3]}})
+        with patch('tools.finish_memory_application.subprocess.check_output',return_value=commits[4]), \
+             patch('tools.finish_memory_application.subprocess.run') as validate:
+            self.assertEqual(source_commits(self.root,self.root/'sources'),commits)
+            self.assertEqual([call.args[0] for call in validate.call_args_list],
+                             [['git','cat-file','-e',commit+'^{commit}'] for commit in commits])
 
 
 if __name__ == '__main__':

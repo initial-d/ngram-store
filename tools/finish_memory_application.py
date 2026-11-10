@@ -87,6 +87,14 @@ def source_commits(root, sources):
     for phase in ('retime-long', 'retime-llm-cpu', 'retime-llm-gpu'):
         files.add(root / phase / 'report.json')
         files.update((root / phase).glob('[0-9][0-9][0-9][0-9][0-9].json'))
+        files.update((root / phase / 'serial-reference').glob('*.json'))
+    # Canonical GPU files can be routing receipts without an environment.
+    # Inventory the actual measurements, including every child source version,
+    # rather than relying on the same commit appearing in unrelated CPU runs.
+    for folder in ('gpu-spare-lanes', 'gpu-prompt-shards'):
+        controller = root / folder / 'report.json'
+        if controller.exists(): files.add(controller)
+        files.update((root / folder / 'outputs').glob('*.json'))
     commits = set()
     for path in sorted(files):
         commits.update(commits_in(load(path)))
