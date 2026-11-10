@@ -204,6 +204,10 @@ def verify_cpu_schedule(root, controller, frozen, records, phase, base, inventor
         if plan.get('measurement_host'):assert report['measurement_host']==plan['measurement_host']
         files = inventory[report['environment']['commit']]['files']
         assert report['worker_source_sha256'] == files['tools/parallel_cpu_serving.py']['original_sha256']
+        if report.get('process_launch'):
+            launch=report['process_launch'];assert launch['kind']=='fresh-fork'
+            assert launch['parent_commit']==report['environment']['commit']
+            assert launch['source_sha256']==files['tools/cpu_fork_serving.py']['original_sha256']
     for item, request in zip(controller['serial_references'], expected):
         assert item['request'] == request
         key = json.dumps(request, sort_keys=True); reference = refs[key]; original = originals[key]

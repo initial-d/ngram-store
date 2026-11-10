@@ -42,6 +42,13 @@ def wait_for_serving(root, timeout, poll, notify):
             for phase in ('retime-llm-gpu', 'retime-llm-cpu', 'retime-long'):
                 if phases.count(phase) != 1:
                     raise ValueError('Missing or repeated final serving phase: ' + phase)
+            extra=root/'gpu-extra-shards/report.json'
+            if (root/'gpu-extra-shard-plan.json').exists():
+                replacement=load(extra) if extra.exists() else {'status':'not-started'}
+                if replacement['status']=='failed':raise RuntimeError('Complete replacement GPU cohort failed')
+                if replacement['status']!='complete':
+                    if time.monotonic()>=deadline:raise TimeoutError('Replacement GPU cohort wait expired; evaluations retained')
+                    time.sleep(poll);continue
             return sha(controller)
         if state != previous:
             notify(state)

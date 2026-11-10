@@ -244,6 +244,8 @@ def main():
     args = parser.parse_args()
     if args.output.exists() or os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         parser.error('Fresh output and empty CUDA_VISIBLE_DEVICES required')
+    from .cpu_fork_serving import submit
+    if submit(args):return
     worker(args)
 
 
