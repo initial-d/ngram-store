@@ -200,64 +200,77 @@ def long_evidence(args, archive):
     from .cpu_parallel_references import qualify
     timer=qualify(args.root,timer,'retime-long',archive)
     archive.put('long/retiming-controller.json',timer)
-    for prepared, selected in zip(prepare['models'], frozen['models']):
-        if prepared['name'] != selected['name'] or len(prepared['jobs']) != 261:
-            raise ValueError('Long grid changed')
-        folder = 'long/models/' + prepared['name']
-        common = Path(load(prepared['jobs'][0])['common'])
-        archive.take(common / 'metadata.json', folder + '/metadata.json')
-        grid = []; builds = []; all_blocks = []; arrays = {}
-        for path in prepared['jobs']:
-            job = load(path); built = load(job['report'])
-            if (built['status'] != 'complete' or built['job_sha256'] != digest(path)
-                    or selected['costs'][job['name']]['raw_build_report_sha256'] != digest(job['report'])):
-                raise ValueError('Frozen long build changed')
-            size = built['model_bytes'] + (common / 'metadata.json').stat().st_size
-            if size != selected['costs'][job['name']]['complete_serving_bytes']:
-                raise ValueError('Incomplete long serving cost')
-            builds.append({**built, 'model_bytes': size})
-            audits = {}; blocks = {}; block_hashes={}; block_json_hashes={}
-            for cached in (0, 1):
-                audit_path = Path(job['report']).with_name(job['name'] + f'-cache{cached}-datrie-rowcache0-audit.json')
-                audit = load(audit_path)
-                if audit['status'] != 'complete' or audit['job_sha256'] != digest(path):
-                    raise ValueError('Incomplete long held-out audit')
-                audits[str(cached)] = {'report': audit, 'private_sha256': digest(audit_path)}
-                blocks[str(cached)]={};block_hashes[str(cached)]={};block_json_hashes[str(cached)]={}
-                for split in SPLITS:
-                    block_path=Path(job['report']).with_name(job['name']+f'-{split}-cache{cached}-blocks.json.gz')
-                    blocks[str(cached)][split]=share_statistics(load(block_path),arrays)
-                    block_hashes[str(cached)][split]=digest(block_path)
-                    block_json_hashes[str(cached)][split]=hashlib.sha256(gzip.decompress(block_path.read_bytes())).hexdigest()
-            row_path = args.root / 'long-row-audit' / prepared['name'] / (job['name'] + '.json')
-            row = load(row_path)
-            if row['job_sha256'] != digest(path) or row['private_build_report_sha256'] != digest(job['report']):
-                raise ValueError('Long row audit changed')
-            grid.append({'job': job, 'private_job_sha256': digest(path), 'build': built,
-                         'private_build_sha256': digest(job['report']), 'complete_serving_bytes': size,
-                         'audits': audits, 'row_audit': row, 'private_row_audit_sha256': digest(row_path)})
-            all_blocks.append({'name': job['name'], 'blocks': blocks,'private_block_sha256':block_hashes,
-                               'private_block_json_sha256':block_json_hashes})
-        for choice in selected['choices']:
-            best = select([b for b in builds if b['family'] == choice['family']], choice['budget'], choice['cached'])
-            if choice['name'] != (best['name'] if best else None):
-                raise ValueError('Validation-only long selection changed')
-        archive.put(folder + '/grid.json.gz', grid)
-        archive.put(folder + '/paired-blocks.json.gz', all_blocks)
-        archive.put(folder + '/paired-arrays.json.gz', arrays)
-        chosen = {(c['name'], c['cached']) for c in selected['choices'] if c['name']}
-        intervals = []
-        by_name = {b['name']: b['blocks'] for b in all_blocks}
-        for name, cached in sorted(chosen):
-            for split in ('test', 'confirmation'):
-                intervals.append({'name': name, 'cached': cached, 'split': split,
-                    'strata': {s: bootstrap({field:arrays[checksum] for field,checksum in by_name[name][str(cached)][split][s].items()})
-                               for s in ('all', 'oov_nonempty')}})
-        archive.put(folder + '/selected-intervals.json.gz', intervals)
-        archive.put(folder + '/retimings.json.gz', [{'request': item['request'], 'report': timings[json.dumps(item['request'], sort_keys=True)],
-                                                   'private_sha256': item['sha256']} for item in timer['complete'] if item['request']['model'] == prepared['name']])
-        publish_cpu_references(timer, timings, frozen, 'retime-long', archive, folder, prepared['name'])
-        print({'published_long_models': prepared['name']}, flush=True)
+    from .evidence_parallel import ordered_map
+    def publish_pair(pair):
+        prepared,selected=pair
+        publish_long_model(args,archive,frozen,timer,timings,prepared,selected)
+        prefix='long/models/'+prepared['name']+'/'
+        return ({k:v for k,v in archive.inputs.items() if k.startswith(prefix)},
+                {k:v for k,v in archive.input_bytes.items() if k.startswith(prefix)})
+    for inputs,sizes in ordered_map(publish_pair,list(zip(prepare['models'],frozen['models'])),getattr(args,'jobs',1)):
+        for key,value in inputs.items():
+            if key in archive.inputs and archive.inputs[key]!=value:raise ValueError('Parallel publication input collision')
+            archive.inputs[key]=value;archive.input_bytes[key]=sizes[key]
+
+
+def publish_long_model(args,archive,frozen,timer,timings,prepared,selected):
+    if prepared['name'] != selected['name'] or len(prepared['jobs']) != 261:
+        raise ValueError('Long grid changed')
+    folder = 'long/models/' + prepared['name']
+    common = Path(load(prepared['jobs'][0])['common'])
+    archive.take(common / 'metadata.json', folder + '/metadata.json')
+    grid = []; builds = []; all_blocks = []; arrays = {}
+    for path in prepared['jobs']:
+        job = load(path); built = load(job['report'])
+        if (built['status'] != 'complete' or built['job_sha256'] != digest(path)
+                or selected['costs'][job['name']]['raw_build_report_sha256'] != digest(job['report'])):
+            raise ValueError('Frozen long build changed')
+        size = built['model_bytes'] + (common / 'metadata.json').stat().st_size
+        if size != selected['costs'][job['name']]['complete_serving_bytes']:
+            raise ValueError('Incomplete long serving cost')
+        builds.append({**built, 'model_bytes': size})
+        audits = {}; blocks = {}; block_hashes={}; block_json_hashes={}
+        for cached in (0, 1):
+            audit_path = Path(job['report']).with_name(job['name'] + f'-cache{cached}-datrie-rowcache0-audit.json')
+            audit = load(audit_path)
+            if audit['status'] != 'complete' or audit['job_sha256'] != digest(path):
+                raise ValueError('Incomplete long held-out audit')
+            audits[str(cached)] = {'report': audit, 'private_sha256': digest(audit_path)}
+            blocks[str(cached)]={};block_hashes[str(cached)]={};block_json_hashes[str(cached)]={}
+            for split in SPLITS:
+                block_path=Path(job['report']).with_name(job['name']+f'-{split}-cache{cached}-blocks.json.gz')
+                blocks[str(cached)][split]=share_statistics(load(block_path),arrays)
+                block_hashes[str(cached)][split]=digest(block_path)
+                block_json_hashes[str(cached)][split]=hashlib.sha256(gzip.decompress(block_path.read_bytes())).hexdigest()
+        row_path = args.root / 'long-row-audit' / prepared['name'] / (job['name'] + '.json')
+        row = load(row_path)
+        if row['job_sha256'] != digest(path) or row['private_build_report_sha256'] != digest(job['report']):
+            raise ValueError('Long row audit changed')
+        grid.append({'job': job, 'private_job_sha256': digest(path), 'build': built,
+                     'private_build_sha256': digest(job['report']), 'complete_serving_bytes': size,
+                     'audits': audits, 'row_audit': row, 'private_row_audit_sha256': digest(row_path)})
+        all_blocks.append({'name': job['name'], 'blocks': blocks,'private_block_sha256':block_hashes,
+                           'private_block_json_sha256':block_json_hashes})
+    for choice in selected['choices']:
+        best = select([b for b in builds if b['family'] == choice['family']], choice['budget'], choice['cached'])
+        if choice['name'] != (best['name'] if best else None):
+            raise ValueError('Validation-only long selection changed')
+    archive.put(folder + '/grid.json.gz', grid)
+    archive.put(folder + '/paired-blocks.json.gz', all_blocks)
+    archive.put(folder + '/paired-arrays.json.gz', arrays)
+    chosen = {(c['name'], c['cached']) for c in selected['choices'] if c['name']}
+    intervals = []
+    by_name = {b['name']: b['blocks'] for b in all_blocks}
+    for name, cached in sorted(chosen):
+        for split in ('test', 'confirmation'):
+            intervals.append({'name': name, 'cached': cached, 'split': split,
+                'strata': {s: bootstrap({field:arrays[checksum] for field,checksum in by_name[name][str(cached)][split][s].items()})
+                           for s in ('all', 'oov_nonempty')}})
+    archive.put(folder + '/selected-intervals.json.gz', intervals)
+    archive.put(folder + '/retimings.json.gz', [{'request': item['request'], 'report': timings[json.dumps(item['request'], sort_keys=True)],
+                                               'private_sha256': item['sha256']} for item in timer['complete'] if item['request']['model'] == prepared['name']])
+    publish_cpu_references(timer, timings, frozen, 'retime-long', archive, folder, prepared['name'])
+    print({'published_long_models': prepared['name']}, flush=True)
 
 
 def llm_evidence(args, archive):
@@ -394,7 +407,9 @@ def main():
     for name in ('root', 'sources', 'output', 'path-map'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--commits', nargs='+', required=True)
+    parser.add_argument('--jobs',type=int,default=1)
     args = parser.parse_args()
+    if not 1<=args.jobs<=64:parser.error('Preparation workers must be within 1–64')
     ready = load(args.root / 'quality-ready.json')
     if ready['status'] != 'quality-complete':
         raise ValueError('All-quality readiness required')

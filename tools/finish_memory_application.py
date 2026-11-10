@@ -149,13 +149,13 @@ def main():
         evidence = args.output / 'evidence'
         run('publish', 'tools.publish_memory_application', [
             '--root', args.root, '--sources', args.sources, '--output', evidence,
-            '--path-map', args.path_map, '--commits', *commits])
-        run('verify-before-analysis', 'tools.verify_memory_application', ['--root', evidence])
+            '--path-map', args.path_map, '--commits', *commits,'--jobs','32'])
+        run('verify-before-analysis', 'tools.verify_memory_application', ['--root', evidence,'--jobs','32'])
         run('analyze', 'tools.analyze_memory_application', ['--evidence', evidence, '--output', evidence / 'analysis'])
         run('plot', 'tools.plot_memory_application', ['--evidence', evidence, '--output', evidence / 'figures'])
         run('package', 'tools.package_memory_application', [
             '--evidence', evidence, '--output', args.output / 'capsules', '--release-url', args.release_url,'--jobs','16'])
-        run('verify-final', 'tools.verify_memory_application', ['--root', evidence])
+        run('verify-final', 'tools.verify_memory_application', ['--root', evidence,'--jobs','32'])
         if sha(args.root / 'final-serving-dispatch.json') != report['final_serving_controller_sha256']:
             raise ValueError('Completed serving controller changed during preparation')
         report.update(status='complete', finished=time.time(),

@@ -522,7 +522,66 @@ def verify_extra_shards(root,controller,records,inventory,private):
     return parent,[r for r in records if not (r['request']['model'] in plan['groups'] and r['request']['batch']==1)]+prior_records
 
 
-def verify(root):
+def verify_long_model(root,prepared,selected,inventory,private_bytes):
+    long_coverage=set();long_retimings=set();long_cpu_records=[]
+    name = prepared['name']; folder = root / 'long/models' / name
+    assert name == selected['name'] and len(prepared['jobs']) == 261
+    metadata = load(folder / 'metadata.json'); grid = load(folder / 'grid.json.gz')
+    refs = {b['name']: b for b in load(folder / 'paired-blocks.json.gz')}
+    arrays=load(folder/'paired-arrays.json.gz')
+    for checksum,values in arrays.items():
+        assert hashlib.sha256(json.dumps(values,separators=(',',':'),allow_nan=False).encode()).hexdigest()==checksum
+    def candidate_blocks(name):
+        reference=refs[name];result={}
+        for cached,splits in reference['blocks'].items():
+            result[cached]={}
+            for split,strata in splits.items():
+                block={s:{field:arrays[key] for field,key in fields.items()} for s,fields in strata.items()}
+                encoded=(json.dumps(block,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
+                assert hashlib.sha256(encoded).hexdigest()==reference['private_block_json_sha256'][cached][split]
+                result[cached][split]=block
+        return result
+    assert len(grid) == len(refs) == 261 and len({g['build']['name'] for g in grid}) == 261
+    source(metadata['environment'], inventory) if 'environment' in metadata else None
+    costs = {}; builds = {}
+    for entry in grid:
+        built = entry['build']; candidate = built['name']; long_coverage.add((name, candidate))
+        blocks=candidate_blocks(candidate)
+        source(built['environment'], inventory)
+        assert built['status'] == 'complete' and built['job_sha256'] == entry['private_job_sha256']
+        assert sum(v['bytes'] for v in built['serving_files'].values()) == built['row_bundle_bytes']
+        assert built['model_bytes'] == built['row_bundle_bytes'] + built['common_model_bytes']
+        assert entry['complete_serving_bytes'] == built['model_bytes'] + private_bytes['long/models/' + name + '/metadata.json']
+        assert selected['costs'][candidate]['complete_serving_bytes'] == entry['complete_serving_bytes']
+        assert selected['costs'][candidate]['raw_build_report_sha256'] == entry['private_build_sha256']
+        row = entry['row_audit']; assert row['status'] == 'complete' and row['rows'] == metadata['shape'][0]
+        assert row['decoded_row_sha256'] == built['decoded_row_sha256']
+        assert row['private_build_report_sha256'] == entry['private_build_sha256']
+        for cached in ('0', '1'):
+            paired(blocks[cached]['validation'], built['validation'][cached], metadata['evaluations']['validation'])
+            audit = entry['audits'][cached]['report']; long_timing(audit, metadata)
+            assert audit['job_sha256'] == entry['private_job_sha256'] and audit['decoded_row_sha256'] == built['decoded_row_sha256']
+            for split in ('test', 'confirmation'):
+                paired(blocks[cached][split], audit['quality'][split], metadata['evaluations'][split])
+        costs[candidate] = entry['complete_serving_bytes']; builds[candidate] = built
+    assert len(selected['choices']) == 2 * len(BUDGETS) * len({v['family'] for v in builds.values()})
+    for choice in selected['choices']:
+        eligible = [b for b in builds.values() if b['family'] == choice['family'] and gate(b['validation'][str(choice['cached'])], choice['budget'])]
+        best = min(eligible, key=lambda b: (costs[b['name']], b['name'])) if eligible else None
+        assert choice['name'] == (best['name'] if best else None)
+    for interval in load(folder / 'selected-intervals.json.gz'):
+        assert (interval['name'], interval['cached']) in {(c['name'], c['cached']) for c in selected['choices']}
+        for value in interval['strata'].values():
+            intervals(value)
+    for timing in load(folder / 'retimings.json.gz'):
+        request = timing['request']; key = tuple(request[k] for k in ('model', 'name', 'cached', 'index', 'cache'))
+        assert key not in long_retimings; long_retimings.add(key)
+        long_timing(timing['report'], metadata)
+        long_cpu_records.append({**timing, 'report': cpu_projection(timing['report'])})
+    return long_coverage,long_retimings,long_cpu_records
+
+
+def verify(root,jobs=1):
     manifest = load(root / 'manifest.json')
     names = {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file() and p.name != 'manifest.json'}
     assert names == set(manifest['files'])
@@ -557,61 +616,11 @@ def verify(root):
     assert prepare['status'] == complete['status'] == 'complete' and len(prepare['models']) == len(frozen['models']) == 108
     assert complete['frozen_selection_sha256'] == private['long/selection.json']
     long_coverage = set(); long_retimings = set(); long_cpu_records = []
-    for prepared, selected in zip(prepare['models'], frozen['models']):
-        name = prepared['name']; folder = root / 'long/models' / name
-        assert name == selected['name'] and len(prepared['jobs']) == 261
-        metadata = load(folder / 'metadata.json'); grid = load(folder / 'grid.json.gz')
-        refs = {b['name']: b for b in load(folder / 'paired-blocks.json.gz')}
-        arrays=load(folder/'paired-arrays.json.gz')
-        for checksum,values in arrays.items():
-            assert hashlib.sha256(json.dumps(values,separators=(',',':'),allow_nan=False).encode()).hexdigest()==checksum
-        def candidate_blocks(name):
-            reference=refs[name];result={}
-            for cached,splits in reference['blocks'].items():
-                result[cached]={}
-                for split,strata in splits.items():
-                    block={s:{field:arrays[key] for field,key in fields.items()} for s,fields in strata.items()}
-                    encoded=(json.dumps(block,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
-                    assert hashlib.sha256(encoded).hexdigest()==reference['private_block_json_sha256'][cached][split]
-                    result[cached][split]=block
-            return result
-        assert len(grid) == len(refs) == 261 and len({g['build']['name'] for g in grid}) == 261
-        source(metadata['environment'], inventory) if 'environment' in metadata else None
-        costs = {}; builds = {}
-        for entry in grid:
-            built = entry['build']; candidate = built['name']; long_coverage.add((name, candidate))
-            blocks=candidate_blocks(candidate)
-            source(built['environment'], inventory)
-            assert built['status'] == 'complete' and built['job_sha256'] == entry['private_job_sha256']
-            assert sum(v['bytes'] for v in built['serving_files'].values()) == built['row_bundle_bytes']
-            assert built['model_bytes'] == built['row_bundle_bytes'] + built['common_model_bytes']
-            assert entry['complete_serving_bytes'] == built['model_bytes'] + private_bytes['long/models/' + name + '/metadata.json']
-            assert selected['costs'][candidate]['complete_serving_bytes'] == entry['complete_serving_bytes']
-            assert selected['costs'][candidate]['raw_build_report_sha256'] == entry['private_build_sha256']
-            row = entry['row_audit']; assert row['status'] == 'complete' and row['rows'] == metadata['shape'][0]
-            assert row['decoded_row_sha256'] == built['decoded_row_sha256']
-            assert row['private_build_report_sha256'] == entry['private_build_sha256']
-            for cached in ('0', '1'):
-                paired(blocks[cached]['validation'], built['validation'][cached], metadata['evaluations']['validation'])
-                audit = entry['audits'][cached]['report']; long_timing(audit, metadata)
-                assert audit['job_sha256'] == entry['private_job_sha256'] and audit['decoded_row_sha256'] == built['decoded_row_sha256']
-                for split in ('test', 'confirmation'):
-                    paired(blocks[cached][split], audit['quality'][split], metadata['evaluations'][split])
-            costs[candidate] = entry['complete_serving_bytes']; builds[candidate] = built
-        assert len(selected['choices']) == 2 * len(BUDGETS) * len({v['family'] for v in builds.values()})
-        for choice in selected['choices']:
-            eligible = [b for b in builds.values() if b['family'] == choice['family'] and gate(b['validation'][str(choice['cached'])], choice['budget'])]
-            best = min(eligible, key=lambda b: (costs[b['name']], b['name'])) if eligible else None
-            assert choice['name'] == (best['name'] if best else None)
-        for interval in load(folder / 'selected-intervals.json.gz'):
-            assert (interval['name'], interval['cached']) in {(c['name'], c['cached']) for c in selected['choices']}
-            for value in interval['strata'].values():
-                intervals(value)
-        for timing in load(folder / 'retimings.json.gz'):
-            request = timing['request']; key = tuple(request[k] for k in ('model', 'name', 'cached', 'index', 'cache'))
-            assert key not in long_retimings; long_retimings.add(key)
-            long_timing(timing['report'], metadata)
-            long_cpu_records.append({**timing, 'report': cpu_projection(timing['report'])})
+    from .evidence_parallel import ordered_map
+    def verify_pair(pair):return verify_long_model(root,*pair,inventory,private_bytes)
+    for coverage,retimings,cpu_records in ordered_map(verify_pair,list(zip(prepare['models'],frozen['models'])),jobs):
+        assert not long_coverage.intersection(coverage) and not long_retimings.intersection(retimings)
+        long_coverage.update(coverage);long_retimings.update(retimings);long_cpu_records.extend(cpu_records)
     assert len(long_coverage) == 28188
     training = load(root / 'long/training-selection.json'); assert len(training['groups']) == 18
     for group in training['groups']:
@@ -763,7 +772,10 @@ def verify(root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True)
-    args = parser.parse_args(); verify(args.root)
+    parser.add_argument('--jobs',type=int,default=1)
+    args = parser.parse_args()
+    if not 1<=args.jobs<=64:parser.error('Verification workers must be within 1–64')
+    verify(args.root,args.jobs)
 
 
 if __name__ == '__main__':
