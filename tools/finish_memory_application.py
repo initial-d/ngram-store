@@ -153,7 +153,7 @@ def main():
         run('analyze', 'tools.analyze_memory_application', ['--evidence', evidence, '--output', evidence / 'analysis'])
         run('plot', 'tools.plot_memory_application', ['--evidence', evidence, '--output', evidence / 'figures'])
         run('package', 'tools.package_memory_application', [
-            '--evidence', evidence, '--output', args.output / 'capsules', '--release-url', args.release_url])
+            '--evidence', evidence, '--output', args.output / 'capsules', '--release-url', args.release_url,'--jobs','16'])
         run('verify-final', 'tools.verify_memory_application', ['--root', evidence])
         if sha(args.root / 'final-serving-dispatch.json') != report['final_serving_controller_sha256']:
             raise ValueError('Completed serving controller changed during preparation')

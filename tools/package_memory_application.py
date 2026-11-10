@@ -35,8 +35,8 @@ def main():
     parser.add_argument('--maximum-member-bytes', type=int, default=400 << 20)
     parser.add_argument('--jobs', type=int, default=4)
     args = parser.parse_args()
-    if not 1 <= args.jobs <= 8:
-        parser.error('Capsule workers must be within 1–8')
+    if not 1 <= args.jobs <= 32:
+        parser.error('Capsule workers must be within 1–32')
     args.output.mkdir(parents=True, exist_ok=False)
     files = {str(p.relative_to(args.evidence)): {'bytes': p.stat().st_size, 'sha256': digest(p)}
              for p in sorted(args.evidence.rglob('*')) if p.is_file() and p.name != 'manifest.json'}
