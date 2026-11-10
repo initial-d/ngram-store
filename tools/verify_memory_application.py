@@ -134,6 +134,90 @@ def metric_values(value):
     return [value['harmonic_score']] + [value[name]['success'] for name in GROUPS]
 
 
+def cpu_projection(report):
+    keys = ('decoded_row_sha256', 'cpu_affinity', 'cpu_lane', 'cpu_parallel_plan_sha256',
+            'measurement_cohort', 'worker_source_sha256', 'environment')
+    result = {key: report[key] for key in keys if key in report}
+    fields = ('output_sha256', 'input_hashes', 'output_hashes', 'complete_p50_ms', 'p50_ms')
+    result['query'] = {kind: {k: v for k, v in value.items() if k in fields}
+                       for kind, value in report['query'].items()}
+    return result
+
+
+def verify_cpu_schedule(root, controller, frozen, records, phase, base, inventory, private):
+    assert controller['status'] == 'complete'
+    if controller['workers'] == 1:
+        return
+    plan = load(root / 'cpu-serving-parallel-plan.json')
+    assert controller['cpu_parallel_plan_sha256'] == private['cpu-serving-parallel-plan.json']
+    assert controller['workers'] == plan['workers'] == 8 and controller['serial_reference_workers'] == 1
+    assert controller['model_lanes'] == plan['model_lanes'][phase] and controller['lanes'] == plan['lanes']
+    assert set(controller['model_lanes']) == {m['name'] for m in frozen['models']}
+    logical = set(); physical = set()
+    for lane in plan['lanes'].values():
+        cpus = set(lane['cpus']); cores = {tuple(v) for v in lane['physical_cores']}
+        assert cpus and cores and not logical.intersection(cpus) and not physical.intersection(cores)
+        logical.update(cpus); physical.update(cores)
+    originals = {json.dumps(r['request'], sort_keys=True): r for r in records}
+    assert len(originals) == len(controller['requests']) == len(controller['complete'])
+    names = {}
+    for model in frozen['models']:
+        selected = set()
+        for choice in model['choices']:
+            primary = choice.get('budget_pp') == .5 if phase == 'retime-llm-cpu' else choice.get('budget') == .001 and choice['cached'] == 0
+            if primary and choice['name']:
+                selected.add(choice['name'])
+        names[model['name']] = selected | {'raw-fp32', 'raw-fp16', 'raw-int8', 'dense-fp32',
+                                         'native-none-fp32', 'native-none-fp16', 'native-none-int8'}
+    expected = [r for r in controller['requests'] if r['cache'] == 0 and r['name'] in names[r['model']] and (
+        phase == 'retime-llm-cpu' or r['cached'] == 0 and (
+            r['index'] == 'datrie' or r['name'] == 'raw-fp32' or r['name'].startswith('tree-datrie-')))]
+    assert controller['reference_requests'] == expected
+    assert len(controller['serial_references']) == len(expected)
+    refs = {}
+    for model in frozen['models']:
+        folder = root / base / model['name']
+        for item in load(folder / 'serial-references.json.gz'):
+            key = json.dumps(item['request'], sort_keys=True)
+            assert key not in refs
+            refs[key] = item
+            report = item['report']
+            source(report['environment'], inventory)
+            if phase == 'retime-long':
+                long_timing(report, load(folder / 'metadata.json'))
+            else:
+                llm_timing(report, 'cpu')
+    assert set(refs) == {json.dumps(r, sort_keys=True) for r in expected}
+    for key, item in originals.items():
+        report = item['report']; request = item['request']; lane = controller['model_lanes'][request['model']]
+        assert report['measurement_cohort'] == 'parallel-shared-host'
+        assert report['cpu_lane'] == lane and report['cpu_affinity'] == plan['lanes'][lane]['cpus']
+        assert report['cpu_parallel_plan_sha256'] == controller['cpu_parallel_plan_sha256']
+        files = inventory[report['environment']['commit']]['files']
+        assert report['worker_source_sha256'] == files['tools/parallel_cpu_serving.py']['original_sha256']
+    for item, request in zip(controller['serial_references'], expected):
+        assert item['request'] == request
+        key = json.dumps(request, sort_keys=True); reference = refs[key]; original = originals[key]
+        a, b = original['report'], reference['report']
+        assert item['sha256'] == reference['private_sha256']
+        assert item['parallel_output_sha256'] == original['private_sha256']
+        assert b['measurement_cohort'] == 'serial-reference' and b['cpu_affinity'] == a['cpu_affinity']
+        assert b['cpu_lane'] == a['cpu_lane'] and b['decoded_row_sha256'] == a['decoded_row_sha256']
+        assert b['cpu_parallel_plan_sha256'] == a['cpu_parallel_plan_sha256']
+        files = inventory[b['environment']['commit']]['files']
+        assert b['worker_source_sha256'] == files['tools/parallel_cpu_serving.py']['original_sha256']
+        for kind, value in a['query'].items():
+            actual = b['query'][kind]
+            if 'output_sha256' in value:
+                assert value['output_sha256'] == actual['output_sha256']
+                ratio = value['complete_p50_ms'] / actual['complete_p50_ms']
+            else:
+                assert value['input_hashes'] == actual['input_hashes'] and value['output_hashes'] == actual['output_hashes']
+                ratio = value['p50_ms'] / actual['p50_ms']
+            close(reference['parallel_to_serial_p50_ratios'][kind], ratio)
+            close(item['parallel_to_serial_p50_ratios'][kind], ratio)
+
+
 def long_timing(report, metadata):
     assert report['status'] == 'complete' and report['all_original_rows_verified'] == metadata['shape'][0]
     assert report['load_seconds'] >= 0 and report['memory_after_query']['peak_bytes'] > 0
@@ -216,7 +300,7 @@ def verify(root):
     complete = load(root / 'long/quality-complete.json')
     assert prepare['status'] == complete['status'] == 'complete' and len(prepare['models']) == len(frozen['models']) == 108
     assert complete['frozen_selection_sha256'] == private['long/selection.json']
-    long_coverage = set(); long_retimings = set()
+    long_coverage = set(); long_retimings = set(); long_cpu_records = []
     for prepared, selected in zip(prepare['models'], frozen['models']):
         name = prepared['name']; folder = root / 'long/models' / name
         assert name == selected['name'] and len(prepared['jobs']) == 261
@@ -271,6 +355,7 @@ def verify(root):
             request = timing['request']; key = tuple(request[k] for k in ('model', 'name', 'cached', 'index', 'cache'))
             assert key not in long_retimings; long_retimings.add(key)
             long_timing(timing['report'], metadata)
+            long_cpu_records.append({**timing, 'report': cpu_projection(timing['report'])})
     assert len(long_coverage) == 28188
     training = load(root / 'long/training-selection.json'); assert len(training['groups']) == 18
     for group in training['groups']:
@@ -278,11 +363,11 @@ def verify(root):
         best = min(group['points'], key=lambda p: (p['absolute_validation_loss'], -p['absolute_validation_discrimination'], p['name']))
         assert best['name'] == group['chosen'] and best['name'] in {m['name'] for m in prepare['models']}
     controller = load(root / 'long/retiming-controller.json')
-    assert controller['status'] == 'complete' and controller['workers'] == 1
+    verify_cpu_schedule(root, controller, frozen, long_cpu_records, 'retime-long', 'long/models', inventory, private)
     assert len(controller['requests']) == len(controller['complete']) == len(long_retimings)
     prepare = load(root / 'llm/prepare.json'); frozen = load(root / 'llm/selection.json')
     assert len(prepare['models']) == len(frozen['models']) == 6
-    llm_coverage = set(); control_count = 0; case_cache = {}
+    llm_coverage = set(); control_count = 0; case_cache = {}; llm_cpu_records = []
     def case_summary(path):
         if path not in case_cache:
             cases=load(root/path);splits={c['split'] for c in cases}
@@ -364,6 +449,8 @@ def verify(root):
                 request = timing['request']; key = tuple(request.get(k) for k in ('model', 'name', 'mode', 'cache', 'batch'))
                 assert key not in timer_keys[phase]; timer_keys[phase].add(key)
                 llm_timing(timing['report'], phase)
+                if phase == 'cpu':
+                    llm_cpu_records.append({**timing, 'report': cpu_projection(timing['report'])})
                 if phase=='gpu':
                     report=timing['report'];assignment=load(root/'serving-addendum.json')['device_assignment']
                     assert report['selected_gpu_selector']==str(assignment[name])
@@ -375,7 +462,8 @@ def verify(root):
     for phase in ('cpu', 'gpu'):
         controller = load(root / ('llm/retiming-' + phase + '-controller.json'))
         assert controller['status'] == 'complete'
-        if phase=='cpu':assert controller['workers']==1
+        if phase=='cpu':
+            verify_cpu_schedule(root, controller, frozen, llm_cpu_records, 'retime-llm-cpu', 'llm/models', inventory, private)
         else:
             assert controller['workers']==6 and controller['workers_per_gpu']==1
             assert controller['gpu_addendum_sha256']==private['serving-addendum.json']

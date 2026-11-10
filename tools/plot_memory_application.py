@@ -76,7 +76,7 @@ def independent_controls(root, output):
 def cpu_serving(root, output):
     fig, axes = plt.subplots(1, 2, figsize=(12, 4.5), constrained_layout=True)
     for ax, model in zip(axes, ('qwen06', 'qwen35')):
-        groups = defaultdict(list)
+        groups = defaultdict(list); references = defaultdict(list)
         for folder in sorted((root / 'llm/models').glob(model + '*')):
             grid = {e['build']['name']: e for e in load(folder / 'grid.json.gz')}
             for item in load(folder / 'retimings-cpu.json.gz'):
@@ -85,15 +85,26 @@ def cpu_serving(root, output):
                     continue
                 report = item['report']
                 groups[e['build']['family']].append((e['complete_serving_bytes'] / (1 << 20), report['query']['test']['p50_ms']))
+            reference_path = folder / 'serial-references.json.gz'
+            if reference_path.exists():
+                for item in load(reference_path):
+                    entry = grid[item['request']['name']]
+                    references[entry['build']['family']].append((entry['complete_serving_bytes'] / (1 << 20), item['report']['query']['test']['p50_ms']))
         for family, points in sorted(groups.items()):
             x, y = np.array(points).T
             ax.scatter(x, y, s=22, alpha=.7, label=family, color=COLORS[family])
+        for family, points in sorted(references.items()):
+            x, y = np.array(points).T
+            ax.scatter(x, y, s=42, marker='x', linewidths=1.3, color=COLORS[family])
         ax.set(xscale='log', yscale='log', xlabel='Complete memory serving bytes (MiB)',
                ylabel='Original tokens → final vectors, test request p50 (ms)',
                title='Qwen3-0.6B' if model == 'qwen06' else 'Qwen3.5-4B')
         ax.grid(alpha=.18)
     axes[1].legend(fontsize=7, loc='center left', bbox_to_anchor=(1.02, .5))
-    fig.suptitle('Fresh serial CPU workers; every required lookup and codec decode included', fontsize=11)
+    caption = ('Fixed-core shared-host CPU queries; crosses show independent serial references'
+               if (root / 'cpu-serving-parallel-plan.json').exists()
+               else 'Fresh serial CPU workers; every required lookup and codec decode included')
+    fig.suptitle(caption, fontsize=11)
     save(fig, output, 'cpu-capacity-query')
 
 

@@ -86,6 +86,13 @@ def serial(args):
         # CPU row/addressing has no independent hidden-state adapter queries.
         # Record each frozen codec/cache once, independent of GPU batch choice.
         requests=[r for r in requests if r['mode']=='codec' and r['batch']==1]
+    if args.phase in ('retime-long', 'retime-llm-cpu'):
+        # An explicit run-local amendment can be installed before CPU timing
+        # while the already loaded GPU controller continues unchanged.
+        plan = getattr(args, 'cpu_parallel_plan', None) or args.ready.parent / 'cpu-serving-parallel-plan.json'
+        if plan.exists():
+            from .parallel_cpu_serving import run_queue
+            return run_queue(args, requests, ready, plan)
     args.output.mkdir(parents=True,exist_ok=True); controller=args.output/'report.json'
     selection_hash=digest(args.frontier/'selection.json')
     previous=load(controller) if controller.exists() else {}
@@ -212,6 +219,8 @@ def main():
     for name in ('frontier','output','controls','ready','upstream','job'):parser.add_argument('--'+name,type=Path)
     parser.add_argument('--gpu-addendum',type=Path)
     parser.add_argument('--gpu-affinity',type=Path)
+    parser.add_argument('--cpu-parallel-plan',type=Path,
+        help='Explicit CPU amendment; otherwise use a present run-local cpu-serving-parallel-plan.json')
     parser.add_argument('--requests',type=int,default=32)
     parser.add_argument('--cached',type=int,choices=(0,1),default=0)
     parser.add_argument('--cache',type=int,default=0)

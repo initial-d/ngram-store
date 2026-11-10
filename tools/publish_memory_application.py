@@ -17,6 +17,7 @@ import io
 from .tree_node_quality import BUDGETS, SPLITS, bootstrap, digest, load, select, write
 from .finalize_memory_application import long_requests, llm_requests
 from .counterfact_data import summarize
+from .parallel_cpu_serving import reference_requests, compare_outputs
 
 
 def share_statistics(blocks, arrays):
@@ -95,6 +96,32 @@ def check_controller(path, requests):
     return report, outputs
 
 
+def publish_cpu_references(timer, timings, selected, phase, archive, folder, model):
+    if timer['workers'] == 1:
+        return
+    expected = reference_requests(timer['requests'], selected, phase)
+    references = timer['serial_references']
+    if timer['reference_requests'] != expected or len(references) != len(expected):
+        raise ValueError('Complete frozen-choice serial CPU references required')
+    actual = []
+    for item, request in zip(references, expected):
+        if item['request'] != request:
+            raise ValueError('Serial CPU reference provenance changed')
+        if request['model'] != model:
+            continue
+        if digest(item['output']) != item['sha256']:
+            raise ValueError('Serial CPU reference bytes changed')
+        value = load(item['output']); original = timings[json.dumps(request, sort_keys=True)]
+        if (value['measurement_cohort'] != 'serial-reference'
+                or value['cpu_affinity'] != original['cpu_affinity']
+                or value['cpu_parallel_plan_sha256'] != timer['cpu_parallel_plan_sha256']
+                or compare_outputs(original, value) != item['parallel_to_serial_p50_ratios']):
+            raise ValueError('Serial CPU reference does not match original requests')
+        actual.append({'request': request, 'report': value, 'private_sha256': item['sha256'],
+                       'parallel_to_serial_p50_ratios': item['parallel_to_serial_p50_ratios']})
+    archive.put(folder + '/serial-references.json.gz', actual)
+
+
 def long_evidence(args, archive):
     root = args.root / 'long-frontier'
     prepare = load(root / 'prepare.json'); frozen = load(root / 'selection.json')
@@ -168,6 +195,7 @@ def long_evidence(args, archive):
         archive.put(folder + '/selected-intervals.json.gz', intervals)
         archive.put(folder + '/retimings.json.gz', [{'request': item['request'], 'report': timings[json.dumps(item['request'], sort_keys=True)],
                                                    'private_sha256': item['sha256']} for item in timer['complete'] if item['request']['model'] == prepared['name']])
+        publish_cpu_references(timer, timings, frozen, 'retime-long', archive, folder, prepared['name'])
         print({'published_long_models': prepared['name']}, flush=True)
 
 
@@ -257,6 +285,8 @@ def llm_evidence(args, archive):
             archive.put(folder + '/retimings-' + phase + '.json.gz', [{'request': item['request'],
                 'report': values[json.dumps(item['request'], sort_keys=True)], 'private_sha256': item['sha256']}
                 for item in timer['complete'] if item['request']['model'] == prepared['name']])
+            if phase == 'cpu':
+                publish_cpu_references(timer, values, frozen, 'retime-llm-cpu', archive, folder, prepared['name'])
         print({'published_llm_model': prepared['name']}, flush=True)
 
 
@@ -265,11 +295,19 @@ def runtimes(args, archive):
     for commit in args.commits:
         command = ['git', 'ls-tree', '-r', '--name-only', commit, 'tools', 'tests', 'native', 'ngram_store', 'meft_memory', 'src', 'mylib', 'Makefile', 'pyproject.toml', 'setup.py', 'benchmarks']
         names = subprocess.check_output(command, text=True).splitlines()
+        requests = ''.join(commit + ':' + name + '\n' for name in sorted(names)).encode()
+        blobs = io.BytesIO(subprocess.run(['git', 'cat-file', '--batch'], input=requests,
+                                         stdout=subprocess.PIPE, check=True).stdout)
         inventory = {}
         target = archive.output / 'runtime' / (commit + '.tar.gz'); target.parent.mkdir(exist_ok=True)
         with target.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as compressed, tarfile.open(fileobj=compressed, mode='w') as tar:
             for name in sorted(names):
-                original = subprocess.check_output(['git', 'show', commit + ':' + name])
+                header = blobs.readline().split()
+                if len(header) != 3 or header[1] != b'blob':
+                    raise ValueError('Missing committed runtime blob: ' + name)
+                original = blobs.read(int(header[2]))
+                if blobs.read(1) != b'\n':
+                    raise ValueError('Truncated committed runtime blob: ' + name)
                 try:
                     public = archive.public(original.decode()).encode()
                 except UnicodeDecodeError:
@@ -278,6 +316,8 @@ def runtimes(args, archive):
                 tar.addfile(info, io.BytesIO(public))
                 inventory[name] = {'original_sha256': hashlib.sha256(original).hexdigest(),
                                    'published_sha256': hashlib.sha256(public).hexdigest(), 'bytes': len(public)}
+        if blobs.read():
+            raise ValueError('Unexpected extra runtime Git objects')
         inventories[commit] = {'files': inventory, 'archive_sha256': digest(target)}
     archive.put('runtime/inventory.json', inventories)
 
@@ -297,6 +337,9 @@ def main():
     archive.take(Path('benchmarks/memory_application_oov_contract_v1.json'), 'oov-contract.json')
     archive.take(Path('benchmarks/memory_application_serving_addendum_v1.json'), 'serving-addendum.json')
     archive.take(args.root / 'gpu-worker-affinity.json', 'gpu-worker-affinity.json')
+    if (args.root / 'cpu-serving-parallel-plan.json').exists():
+        archive.take(args.root / 'cpu-serving-parallel-plan.json', 'cpu-serving-parallel-plan.json')
+        archive.take(Path('benchmarks/memory_application_cpu_parallel_addendum_v1.json'), 'cpu-serving-addendum.json')
     long_evidence(args, archive)
     llm_evidence(args, archive)
     runtimes(args, archive)
