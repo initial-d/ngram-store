@@ -10,6 +10,7 @@ import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 import threading
+from .gpu_job_retry import run_gpu_job
 
 from .tree_node_quality import BUDGETS, digest, environment, load, query_job, select, write
 
@@ -169,7 +170,8 @@ def gpu_parallel(args, requests, ready):
             'frozen_selection_sha256':selection_hash,'all_quality_ready_sha256':digest(args.ready),
             'gpu_addendum_sha256':digest(args.gpu_addendum),'workers':len(models),'workers_per_gpu':1,
             'fixed_device_assignment':assignments,'cpu_affinity':affinity,'requests':requests,'complete':[],
-            'failures':previous.get('failures',[]),'execution_schedule_sha256':hashlib.sha256(json.dumps(requests,sort_keys=True).encode()).hexdigest()}
+            'failures':[], 'previous_failures':previous.get('previous_failures', []) + previous.get('failures', []),
+            'execution_schedule_sha256':hashlib.sha256(json.dumps(requests,sort_keys=True).encode()).hexdigest()}
     write(controller,report);retained={Path(e['output']).name:e['sha256'] for e in previous.get('complete',[])}
     current_failures=[]
     def lane(model):
@@ -193,8 +195,7 @@ def gpu_parallel(args, requests, ready):
             if request['mode']=='independent':command+=['--control-run',request['control_run']]
             log=args.output/(f'{index:05d}.'+str(time.time_ns())+'.log')
             env=dict(os.environ,CUDA_VISIBLE_DEVICES=str(gpu),OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1')
-            with log.open('w') as stream:
-                result=subprocess.run(command,env=env,stdout=stream,stderr=subprocess.STDOUT)
+            result=run_gpu_job(command,env=env,output=output,log=log)
             with lock:
                 if result.returncode:
                     failed={'request':request,'returncode':result.returncode,'log':str(log),'gpu':gpu,'time':time.time()}

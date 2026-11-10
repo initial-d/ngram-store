@@ -15,6 +15,7 @@ import subprocess
 import sys
 import threading
 import time
+from .gpu_job_retry import run_gpu_job
 
 
 def load(path): return json.loads(Path(path).read_text())
@@ -125,11 +126,10 @@ def route_pending(args):
         for i, other in enumerate(plan['requests']):
             if other['model'] != request['model'] or other['batch'] != 1: continue
             output = Path(plan['canonical_directory']) / f'{i:05d}.json'
-            if not output.exists():
+            if not output.exists() or load(output).get('status') != 'passed':
                 log = folder / f'{request["model"]}-batch1-{i:05d}.{time.time_ns()}.log'
                 env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(plan['original_devices'][request['model']]))
-                with log.open('w') as stream:
-                    result = subprocess.run(command(other, output, plan['upstream']), env=env, stdout=stream, stderr=subprocess.STDOUT)
+                result = run_gpu_job(command(other, output, plan['upstream']), env=env, output=output, log=log)
                 if result.returncode: raise RuntimeError('Original-device batch-1 drain failed: ' + str(log))
             check_result(load(output), other, plan['original_devices'][request['model']], expected_cpus)
             report['complete'].append({'request': other, 'output': str(output), 'sha256': digest(output)})
@@ -167,16 +167,17 @@ def run(plan_path):
     report = {'status': 'running', 'environment': environment(), 'started': time.time(),
               'plan_sha256': digest(plan_path), 'phase_source_sha256': digest(__file__),
               'requests': [r for _, r in expected], 'complete': [], 'preflights': [], 'failures': [],
-              'workers': len(plan['spares']), 'workers_per_gpu': 1}
+              'workers': len(plan['spares']), 'workers_per_gpu': 1,
+              'previous_failures': (load(output / 'report.json').get('previous_failures', []) +
+                  load(output / 'report.json').get('failures', [])) if (output / 'report.json').exists() else []}
     controller = output / 'report.json'; lock = threading.Lock(); write(controller, report)
     def measure(request, path, gpu, cpus, *, preflight=False):
-        if not path.exists():
+        if not path.exists() or load(path).get('status') != 'passed':
             log = path.with_suffix('.' + str(time.time_ns()) + '.log')
             env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu), OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1')
             cmd = ['taskset', '--cpu-list', ','.join(map(str, cpus)), *command(request, path, plan['upstream'],
                 requests=2 if preflight else 32, repeat=1 if preflight else 3, warmup=0 if preflight else 1)]
-            with log.open('w') as stream:
-                result = subprocess.run(cmd, env=env, stdout=stream, stderr=subprocess.STDOUT)
+            result = run_gpu_job(cmd, env=env, output=path, log=log)
             if result.returncode: raise RuntimeError('Spare GPU failed: ' + str(log))
         value = load(path); check_result(value, request, gpu, cpus)
         return value

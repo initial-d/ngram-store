@@ -406,6 +406,14 @@ def main():
         archive.take(source, 'diagnostics/' + source.name)
     for name in ('quality-dispatch.json', 'cpu-quality-dispatch.json', 'final-serving-dispatch.json'):
         archive.take(args.root / name, 'diagnostics/' + name)
+    if (args.root / 'gpu-recovery.json').exists():
+        archive.take(args.root / 'gpu-recovery.json', 'diagnostics/gpu-recovery.json')
+        for source in sorted((args.root / 'recovery-20261110').glob('*.json')):
+            archive.take(source, 'diagnostics/recovery/' + source.name)
+        for phase in ('retime-llm-gpu', 'gpu-spare-lanes/outputs'):
+            for source in sorted((args.root / phase).glob('*.interruptions.jsonl')):
+                entries = [json.loads(line) for line in source.read_text().splitlines() if line]
+                archive.put('diagnostics/interruptions/' + phase.replace('/', '-') + '-' + source.stem + '.json', entries)
     for model in ('qwen06', 'qwen35'):
         source=args.root/('real-batch-cache-'+model+'.json')
         if load(source)['status']!='passed':raise ValueError('Actual distinct-request cache correctness must pass')
