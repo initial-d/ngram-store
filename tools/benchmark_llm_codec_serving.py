@@ -165,6 +165,7 @@ def gpu_worker(args):
         'contract':'Actual complete prefill plus native decoder KV/recurrent cache; causal TinyEngram history, original IDs and unchanged nonrow weights',
         'rounding_contract':'Cache vs full-prefix differences are measured separately. Source and byte-exact codecs execute the same cached schedule.'}
     report['measurement_host'] = socket.gethostname()
+    report['cublas_workspace_config'] = os.environ.get('CUBLAS_WORKSPACE_CONFIG')
     report['request_slice'] = [args.request_offset, args.request_count or args.requests]
     model = replay = staged = None
     def snapshot():
@@ -283,6 +284,7 @@ def main():
     parser.add_argument('--skip-spare-routing',action='store_true',
         help='Internal child for a registered spare-device cohort; keeps the actual GPU measurement unchanged')
     args=parser.parse_args()
+    if args.phase=='gpu':os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG',':4096:8')
     if args.phase == 'gpu' and not args.skip_spare_routing:
         from .gpu_prompt_shards import route_pending_shard
         if route_pending_shard(args): return
