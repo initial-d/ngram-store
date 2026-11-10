@@ -104,6 +104,8 @@ def cpu_serving(root, output):
     caption = ('Fixed-core shared-host CPU queries; crosses show independent serial references'
                if (root / 'cpu-serving-parallel-plan.json').exists()
                else 'Fresh serial CPU workers; every required lookup and codec decode included')
+    if (root/'cpu-parallel-reference-plan.json').exists():
+        caption='Shared-host CPU queries; crosses show the full concurrent fixed-core reference cohort'
     fig.suptitle(caption, fontsize=11)
     save(fig, output, 'cpu-capacity-query')
 

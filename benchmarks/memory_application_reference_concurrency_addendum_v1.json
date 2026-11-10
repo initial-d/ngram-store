@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "registered_before_any_reference_measurement": "2026-11-10",
+  "authorization": "Maintainer explicitly requested using both machines at full available concurrency.",
+  "scope": "All 1728 SGNS and 84 LLM primary-budget reference requests. Preserve every family, selected winner, raw/native baseline, original query trace and repetition count.",
+  "execution": "Eight concurrent fixed-core lanes on the original CPU measurement host. Each lane executes one fresh single-thread process at a time, on the same assigned physical core as that model's main measurements. Start only after that phase's complete main grid and all local GPU work finish.",
+  "provenance": "Record reference execution mode, worker count, source hash, plan hash, core affinity, local GPU gate and all original output hashes. Legacy serial-reference paths identify the request group, not exclusive execution. Preserve legacy dispatch controllers separately.",
+  "claim": "Independent complete reference queries under concurrent fixed-core load. Memory bandwidth remains shared. These references do not support a host-exclusive CPU latency claim; report their actual execution mode in figures and summaries."
+}

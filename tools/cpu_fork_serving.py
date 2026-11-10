@@ -48,6 +48,8 @@ def validate(request,plan_path,phase):
 
 
 def submit(args):
+    from .cpu_parallel_references import wait_for_reference
+    if wait_for_reference(args):return True
     path=socket_path(args.plan,args.phase)
     if not path.exists():return False
     with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as client:

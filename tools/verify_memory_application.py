@@ -150,7 +150,15 @@ def verify_cpu_schedule(root, controller, frozen, records, phase, base, inventor
         return
     plan = load(root / 'cpu-serving-parallel-plan.json')
     assert controller['cpu_parallel_plan_sha256'] == private['cpu-serving-parallel-plan.json']
-    assert controller['workers'] == plan['workers'] == 8 and controller['serial_reference_workers'] == 1
+    assert controller['workers'] == plan['workers'] == 8
+    concurrent=root/'cpu-parallel-reference-plan.json'
+    if concurrent.exists():
+        reference_plan=load(concurrent)
+        assert controller['serial_reference_workers']==reference_plan['workers']==8
+        assert controller['reference_execution']=='parallel-fixed-core'
+        assert controller['parallel_reference_plan_sha256']==private['cpu-parallel-reference-plan.json']
+        assert reference_plan['original_cpu_plan_sha256']==private['cpu-serving-parallel-plan.json']
+    else:assert controller['serial_reference_workers']==1
     assert controller['model_lanes'] == plan['model_lanes'][phase] and controller['lanes'] == plan['lanes']
     if plan.get('measurement_host'):
         assert controller['measurement_host']==plan['measurement_host']
@@ -219,6 +227,10 @@ def verify_cpu_schedule(root, controller, frozen, records, phase, base, inventor
         assert b['cpu_parallel_plan_sha256'] == a['cpu_parallel_plan_sha256']
         files = inventory[b['environment']['commit']]['files']
         assert b['worker_source_sha256'] == files['tools/parallel_cpu_serving.py']['original_sha256']
+        if concurrent.exists():
+            launch=b['reference_execution'];assert launch['kind']=='parallel-fixed-core' and launch['workers']==8
+            assert launch['plan_sha256']==private['cpu-parallel-reference-plan.json']
+            assert launch['source_sha256']==files['tools/cpu_parallel_references.py']['original_sha256']
         for kind, value in a['query'].items():
             actual = b['query'][kind]
             if 'output_sha256' in value:

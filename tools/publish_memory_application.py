@@ -197,7 +197,9 @@ def long_evidence(args, archive):
         archive.take(source, 'long/stages/' + source.parent.name + '-' + source.name)
     archive.take(args.root / 'long-row-audit' / 'report.json', 'long/row-audit-controller.json')
     timer, timings = check_controller(args.root / 'retime-long', long_requests(root))
-    archive.take(args.root / 'retime-long' / 'report.json', 'long/retiming-controller.json')
+    from .cpu_parallel_references import qualify
+    timer=qualify(args.root,timer,'retime-long',archive)
+    archive.put('long/retiming-controller.json',timer)
     for prepared, selected in zip(prepare['models'], frozen['models']):
         if prepared['name'] != selected['name'] or len(prepared['jobs']) != 261:
             raise ValueError('Long grid changed')
@@ -275,13 +277,15 @@ def llm_evidence(args, archive):
     gpu_timer, gpu = publish_extra(args.root,gpu_timer,gpu,archive)
     cpu_requests = [r for r in requests if r['mode'] == 'codec' and r['batch'] == 1]
     cpu_timer, cpu = check_controller(args.root / 'retime-llm-cpu', cpu_requests)
+    from .cpu_parallel_references import qualify
+    cpu_timer=qualify(args.root,cpu_timer,'retime-llm-cpu',archive)
     for file in ('prepare.json', 'selection.json'):
         archive.take(root / file, 'llm/' + file)
     for source in root.glob('stage-*/*progress.json'):
         archive.take(source, 'llm/stages/' + source.parent.name + '-' + source.name)
     archive.take(args.root / 'llm-row-audit' / 'report.json', 'llm/row-audit-controller.json')
     archive.take(controls / 'queue.json', 'llm/independent-controls-controller.json')
-    archive.take(args.root / 'retime-llm-cpu/report.json', 'llm/retiming-cpu-controller.json')
+    archive.put('llm/retiming-cpu-controller.json',cpu_timer)
     for prepared, selected in zip(prepare['models'], frozen['models']):
         if prepared['name'] != selected['name'] or len(prepared['jobs']) != 261:
             raise ValueError('Six-model candidate grid changed')
@@ -406,6 +410,9 @@ def main():
         if load(args.root/'cpu-serving-parallel-plan.json').get('measurement_host'):
             archive.take(Path('benchmarks/memory_application_multi_host_addendum_v1.json'),'multi-host-addendum.json')
             archive.take(args.root/load(args.root/'cpu-serving-parallel-plan.json')['local_gpu_finished_marker'],'local-gpu-finished.json')
+    if (args.root/'cpu-parallel-reference-plan.json').exists():
+        archive.take(args.root/'cpu-parallel-reference-plan.json','cpu-parallel-reference-plan.json')
+        archive.take(Path('benchmarks/memory_application_reference_concurrency_addendum_v1.json'),'reference-concurrency-addendum.json')
     long_evidence(args, archive)
     llm_evidence(args, archive)
     runtimes(args, archive)
