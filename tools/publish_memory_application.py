@@ -413,6 +413,14 @@ def main():
     if (args.root/'cpu-parallel-reference-plan.json').exists():
         archive.take(args.root/'cpu-parallel-reference-plan.json','cpu-parallel-reference-plan.json')
         archive.take(Path('benchmarks/memory_application_reference_concurrency_addendum_v1.json'),'reference-concurrency-addendum.json')
+    if (args.root/'cpu-phase-overlap-plan.json').exists():
+        plan=load(args.root/'cpu-phase-overlap-plan.json')
+        timer=load(args.root/'cpu-phase-overlap/report.json')
+        if timer['status']!='complete' or timer['requests']!=plan['requests'] or timer['failures']:
+            raise ValueError('Complete unchanged LLM CPU overlap required')
+        archive.take(args.root/'cpu-phase-overlap-plan.json','cpu-phase-overlap-plan.json')
+        archive.take(args.root/'cpu-phase-overlap/report.json','diagnostics/cpu-phase-overlap-controller.json')
+        archive.take(Path('benchmarks/memory_application_cpu_overlap_addendum_v1.json'),'cpu-phase-overlap-addendum.json')
     long_evidence(args, archive)
     llm_evidence(args, archive)
     runtimes(args, archive)

@@ -75,6 +75,7 @@ def source_commits(root, sources):
     """Inventory actual source versions, including prior exact/hash controls."""
     files = {root / 'quality-ready.json'}
     files.update(root.glob('*.json'))
+    if (root/'cpu-phase-overlap/report.json').exists():files.add(root/'cpu-phase-overlap/report.json')
     files.update(root.glob('cache-preflight-*/report.json'))
     files.update(root / family / 'report.json' for family in ('long-row-audit', 'llm-row-audit'))
     for family in ('long-frontier', 'llm-frontier'):

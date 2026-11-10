@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "registered_before_llm_cpu_main_measurements": "2026-11-10",
+  "execution": "The complete 220-request LLM CPU main grid runs after all 12818 SGNS main requests finish, while GPU serving may continue on disjoint CPU cores. Use the original per-model CPU affinity, query inputs, cache budgets, three repeats and fresh worker implementation. The original LLM dispatcher later consumes these outputs without rerunning them.",
+  "reference_gate": "Both CPU reference coordinators additionally wait for the complete LLM CPU overlap grid. The original dispatcher still orders SGNS references before LLM references, so reference phases cannot overlap on their original physical cores.",
+  "claim": "Shared-host CPU measurements with unchanged numerical work and explicit source/output hashes. Earlier execution reduces scheduling wait; it does not create an exclusive-host latency claim."
+}

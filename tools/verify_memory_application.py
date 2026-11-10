@@ -171,6 +171,23 @@ def verify_cpu_schedule(root, controller, frozen, records, phase, base, inventor
         logical.update(cpus); physical.update(cores)
     originals = {json.dumps(r['request'], sort_keys=True): r for r in records}
     assert len(originals) == len(controller['requests']) == len(controller['complete'])
+    overlap=root/'cpu-phase-overlap-plan.json'
+    overlap_finished=None
+    if overlap.exists():
+        execution=load(root/'diagnostics/cpu-phase-overlap-controller.json');overlap_plan=load(overlap)
+        assert execution['status']=='complete' and execution['failures']==[] and execution['workers']==6
+        assert execution['plan_sha256']==private['cpu-phase-overlap-plan.json']
+        assert overlap_plan['original_cpu_plan_sha256']==private['cpu-serving-parallel-plan.json']
+        files=inventory[execution['environment']['commit']]['files']
+        assert execution['phase_source_sha256']==files['tools/cpu_phase_overlap.py']['original_sha256']
+        assert execution['started']<=execution['finished']
+        overlap_finished=execution['finished']
+        if phase=='retime-llm-cpu':
+            assert overlap_plan['requests']==execution['requests']==controller['requests']
+            precalculated={json.dumps(v['request'],sort_keys=True):v for v in execution['complete']}
+            assert len(precalculated)==len(execution['complete'])==len(originals)
+            assert set(precalculated)==set(originals)
+            for key,item in precalculated.items():assert item['sha256']==originals[key]['private_sha256']
     names = {}
     for model in frozen['models']:
         selected = set()
@@ -199,6 +216,7 @@ def verify_cpu_schedule(root, controller, frozen, records, phase, base, inventor
                 assert report['measurement_host']==plan['measurement_host']==marker['measurement_host']
                 assert report['local_gpu_gate_sha256']==private['local-gpu-finished.json']
                 assert report['sample_started']>=marker['finished']
+            if overlap_finished is not None:assert report['sample_started']>=overlap_finished
             if phase == 'retime-long':
                 long_timing(report, load(folder / 'metadata.json'))
             else:

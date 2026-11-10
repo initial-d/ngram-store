@@ -61,10 +61,16 @@ def run(root,phase):
     out=folder/'report.json';write(out,report);deadline=time.monotonic()+24*3600
     primary=root/phase/'report.json';marker=root/hardware['local_gpu_finished_marker']
     while True:
+        overlap_ready=True
+        if (root/'cpu-phase-overlap-plan.json').exists():
+            overlap=root/'cpu-phase-overlap/report.json'
+            execution=load(overlap) if overlap.exists() else {'status':'not-started'}
+            if execution['status']=='failed':raise RuntimeError('LLM CPU overlap failed; reference cores remain reserved')
+            overlap_ready=execution['status']=='complete'
         if primary.exists():
             timer=load(primary)
             if timer['status']=='failed':raise RuntimeError('Main CPU grid failed; references remain blocked')
-            if len(timer['complete'])==len(timer['requests']) and marker.exists():
+            if len(timer['complete'])==len(timer['requests']) and marker.exists() and overlap_ready:
                 gate=load(marker)
                 if gate['status']!='complete' or gate['measurement_host']!=socket.gethostname():raise ValueError('Wrong reference GPU gate')
                 break
