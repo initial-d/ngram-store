@@ -141,6 +141,10 @@ def run_queue(args, requests, ready, plan_path):
         folder = args.output if cohort == 'parallel-shared-host' else args.output / 'serial-reference'
         folder.mkdir(exist_ok=True); output = folder / f'{index:05d}.json'
         if output.exists():
+            if cohort == 'serial-reference':
+                from .cpu_parallel_references import wait_for_reference
+                wait_for_reference(argparse.Namespace(plan=plan_path, phase=args.phase,
+                                                     cohort=cohort, output=output))
             if str(output) in retained and digest(output) != retained[str(output)]:
                 raise ValueError('Retained CPU evidence changed')
             value = load(output)

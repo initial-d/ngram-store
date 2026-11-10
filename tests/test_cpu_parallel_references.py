@@ -64,6 +64,25 @@ class ParallelReferenceTests(unittest.TestCase):
             with self.assertRaises(ValueError):wait_for_reference(args)
             args.cohort='parallel-shared-host';self.assertFalse(wait_for_reference(args))
 
+    def test_pending_numerical_output_waits_for_reference_audit_or_failure(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);plan=root/'cpu-parallel-reference-plan.json'
+            plan.write_text(json.dumps({'measurement_host':socket.gethostname()}))
+            output=root/'reference.json';output.write_text(json.dumps({'status':'complete','rows':'unchanged'}))
+            args=SimpleNamespace(plan=root/'cpu-serving-parallel-plan.json',phase='retime-llm-cpu',
+                                 cohort='serial-reference',output=output)
+            def complete(_):
+                value=json.loads(output.read_text())
+                value['reference_execution']={'plan_sha256':digest(plan)}
+                output.write_text(json.dumps(value))
+            with patch('tools.cpu_parallel_references.time.sleep',side_effect=complete) as pause:
+                self.assertTrue(wait_for_reference(args));pause.assert_called_once()
+            self.assertEqual(json.loads(output.read_text())['rows'],'unchanged')
+            output.write_text(json.dumps({'status':'complete','rows':'unchanged'}))
+            controller=root/'cpu-parallel-references/retime-llm-cpu/report.json'
+            controller.parent.mkdir(parents=True);controller.write_text(json.dumps({'status':'failed'}))
+            with self.assertRaisesRegex(RuntimeError,'Parallel reference failed'):wait_for_reference(args)
+
     def test_public_verifier_checks_actual_reference_execution_and_source(self):
         import gzip
         with tempfile.TemporaryDirectory() as temp:

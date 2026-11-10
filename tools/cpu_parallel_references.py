@@ -24,13 +24,18 @@ def wait_for_reference(args):
     value=load(plan)
     if value['measurement_host']!=socket.gethostname():raise ValueError('Wrong parallel reference host')
     controller=plan.parent/'cpu-parallel-references'/args.phase/'report.json';deadline=time.monotonic()+24*3600
-    while not args.output.exists():
+    while True:
         if controller.exists() and load(controller)['status']=='failed':raise RuntimeError('Parallel reference failed; diagnostics retained')
+        if args.output.exists():
+            report=load(args.output)
+            # The unchanged numerical worker first persists its sample; the
+            # reference wrapper then attaches the registered execution audit.
+            # Existence alone is therefore not the reference completion gate.
+            if 'reference_execution' in report:
+                if report['reference_execution']['plan_sha256']!=digest(plan):raise ValueError('Reference execution plan changed')
+                return True
         if time.monotonic()>deadline:raise TimeoutError('Parallel reference wait expired')
         time.sleep(.2)
-    report=load(args.output)
-    if report['reference_execution']['plan_sha256']!=digest(plan):raise ValueError('Reference execution plan changed')
-    return True
 
 
 def worker(args):
