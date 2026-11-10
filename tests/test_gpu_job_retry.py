@@ -10,6 +10,22 @@ from tools.gpu_job_retry import run_gpu_job
 
 
 class GpuJobRetryTests(unittest.TestCase):
+    def test_resume_requires_the_original_quality_gate_bytes(self):
+        try:
+            from tools.resume_memory_application import validate_ready
+        except ImportError:
+            self.skipTest('Optional NumPy for recovery orchestration')
+        import hashlib
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);gate=root/'gate.json';gate.write_text('{"status":"complete"}')
+            family=root/'llm-frontier';family.mkdir();choice=family/'selection.json';choice.write_text('{}')
+            checksum=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+            (root/'quality-ready.json').write_text(json.dumps({'status':'quality-complete','gates':{'gate.json':checksum(gate)},
+                'frozen_selections':{'llm-frontier':checksum(choice)}}))
+            validate_ready(root);choice.write_text('{"changed":true}')
+            with self.assertRaisesRegex(ValueError,'Frozen choice'):validate_ready(root)
+            choice.write_text('{}');gate.write_text('{"status":"failed"}')
+            with self.assertRaisesRegex(ValueError,'quality gate changed'):validate_ready(root)
     def test_competing_job_is_discarded_hashed_and_repeated_with_same_command(self):
         with tempfile.TemporaryDirectory() as temp:
             output=Path(temp)/'job.json'; log=Path(temp)/'job.log'; command=['worker','--requests','32']
