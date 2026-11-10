@@ -5,6 +5,24 @@ from tools.verify_memory_application import gate, metrics, paired
 
 
 class EvidenceArithmeticTests(unittest.TestCase):
+    def test_cpu_load_field_and_complete_request_repetitions_are_verified(self):
+        import copy
+        from tools.verify_memory_application import llm_timing
+        values=[1.,2.,3.]*32
+        report={'status':'passed','load_seconds':1.,'query':{},'row_only':{}}
+        for split in ('calibration','test'):
+            report['query'][split]={'requests':32,'first_ms':[1.]*32,
+                'input_hashes':list(map(str,range(32))),'output_hashes':['output']*32,
+                'warm_samples_ms':values,'p50_ms':2.,'p95_ms':3.}
+            report['row_only'][split]={'samples_ms':values,'p50_ms':2.,'p95_ms':3.}
+        llm_timing(report,'cpu')
+        for change in ('negative-load','missing-repeat','missing-input'):
+            actual=copy.deepcopy(report)
+            if change=='negative-load':actual['load_seconds']=-1.
+            elif change=='missing-repeat':actual['row_only']['test']['samples_ms'].pop()
+            else:actual['query']['test']['input_hashes'].pop()
+            with self.subTest(change=change),self.assertRaises(AssertionError):llm_timing(actual,'cpu')
+
     def test_shared_statistics_preserve_original_json_and_signed_zero(self):
         try:
             from tools.publish_memory_application import share_statistics,expand_statistics

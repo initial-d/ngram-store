@@ -282,16 +282,21 @@ def long_timing(report, metadata):
 
 
 def llm_timing(report, phase, *, request_count=32, repeat=3):
-    assert report['status'] == 'passed' and report['open_seconds'] >= 0
+    assert report['status'] == 'passed'
     if phase == 'cpu':
+        assert report['load_seconds']>=0
         for category in ('query', 'row_only'):
             for split in ('calibration', 'test'):
                 result = report[category][split]
                 values = result.get('warm_samples_ms', result.get('samples_ms'))
-                assert values and all(v > 0 for v in values)
+                assert len(values)==request_count*repeat and all(v > 0 for v in values)
                 close(result['p50_ms'], statistics.median(values))
                 close(result['p95_ms'], quantile(values, .95))
+                if category=='query':
+                    assert result['requests']==len(result['first_ms'])==len(result['input_hashes'])==len(result['output_hashes'])==request_count
+                    assert all(v>0 for v in result['first_ms'])
     else:
+        assert report['open_seconds']>=0
         if report.get('measurement_mode')=='matched-prompt-shards':
             shards=report['shards'];cursor=0
             for record in shards:
