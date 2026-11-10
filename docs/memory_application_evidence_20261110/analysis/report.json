@@ -1,0 +1,7 @@
+{
+  "llm_models": 6,
+  "long_models": 108,
+  "replicates": 2000,
+  "selection_rule": "Frozen calibration/validation choices only; test and confirmation never reselect",
+  "status": "complete"
+}

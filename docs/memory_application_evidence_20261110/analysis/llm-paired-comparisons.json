@@ -1,0 +1,4646 @@
+[
+  {
+    "candidate_bytes_by_seed": [
+      75977139,
+      75977129,
+      75977148
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      "independent",
+      "adapter"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.07017912606597687,
+      -0.001330565756559765,
+      0.15808008231766812,
+      -0.20438554473360138
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.07421863992636712,
+        -0.06636643152391658
+      ],
+      [
+        -0.0017918285521670851,
+        -0.000887043837706436
+      ],
+      [
+        0.15179049798641042,
+        0.1653212429258254
+      ],
+      [
+        -0.21252426064893942,
+        -0.19801102595488634
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-independent-adapter.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      77537722,
+      77537716,
+      77537724
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      "independent",
+      "adapter"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.05391513167114792,
+      -0.0014015292635761734,
+      0.24146220306207522,
+      -0.17877126687599249
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.05921322681433397,
+        -0.04898491872366319
+      ],
+      [
+        -0.0020047190732165377,
+        -0.000869302960952445
+      ],
+      [
+        0.2319262600457715,
+        0.25357212553444386
+      ],
+      [
+        -0.18943938829455195,
+        -0.16647431121044654
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-independent-adapter.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      77414512,
+      77414512,
+      77414513
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      "independent",
+      "hash"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.022899684931947384,
+      0.0,
+      -0.021874501037841387,
+      -0.030239324427408287
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.02742885908269581,
+        -0.01922478786254549
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.02497117107527446,
+        -0.01828130821225189
+      ],
+      [
+        -0.04232010750970828,
+        -0.021557959444348088
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-independent-hash.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      78986747,
+      78986746,
+      78986747
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      "independent",
+      "hash"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.04045109069532815,
+      -1.7740876754213097e-05,
+      -0.08144836517820708,
+      -0.017221069065230354
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.04355188693095515,
+        -0.03646407253106267
+      ],
+      [
+        -7.096350701651932e-05,
+        0.0
+      ],
+      [
+        -0.09313095428176071,
+        -0.06371547181861727
+      ],
+      [
+        -0.03378958433125235,
+        -0.0025732698209974475
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-independent-hash.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      1628230,
+      1628218,
+      1628226
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      "independent",
+      "head-constant"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.229440888050723,
+      -0.5336278318874519,
+      -0.17351464509376047,
+      -0.0758085404580554
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.23286449093818118,
+        -0.2256782094063446
+      ],
+      [
+        -0.5405112920680539,
+        -0.5272402292121277
+      ],
+      [
+        -0.18021226959036313,
+        -0.16715387549452687
+      ],
+      [
+        -0.08345330601236504,
+        -0.06861767523550229
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-independent-head-constant.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      4036699,
+      4036697,
+      4036702
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      "independent",
+      "head-constant"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.2663450008301308,
+      -0.5474302340021644,
+      -0.28694981105966255,
+      -0.03864495183351002
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.27008012686525307,
+        -0.26268431644173545
+      ],
+      [
+        -0.5520078237266487,
+        -0.5425337520180247
+      ],
+      [
+        -0.2998299093441198,
+        -0.2680196302801283
+      ],
+      [
+        -0.047848209058477496,
+        -0.031589360796200526
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-independent-head-constant.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      12356205,
+      40239633,
+      40239636
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -2.1978337797379233e-05,
+      0.0,
+      -0.0008072098923128657,
+      0.000752213174374794
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.00030323177661718825,
+        0.0002627318081827644
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0024393705536928127,
+        1.7740876754102075e-05
+      ],
+      [
+        -3.5481753507565774e-06,
+        0.0021520570546571883
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23855191,
+      14665910,
+      14698430
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0005610563516974532,
+      0.0,
+      -0.002182127840757886,
+      0.000507389075169451
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0011492595514787708,
+        -1.2466391918899995e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0036723614881046833,
+        -0.0004701332339845904
+      ],
+      [
+        -9.229691131261708e-05,
+        0.0011922312700677143
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14668517,
+      42563081,
+      42563084
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -2.1978337797379233e-05,
+      0.0,
+      -0.0008072098923128657,
+      0.000752213174374794
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.00030323177661718825,
+        0.0002627318081827644
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0024393705536928127,
+        1.7740876754102075e-05
+      ],
+      [
+        -3.5481753507565774e-06,
+        0.0021520570546571883
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      26152479,
+      16959406,
+      16995798
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0005610563516974532,
+      0.0,
+      -0.002182127840757886,
+      0.000507389075169451
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0011492595514787708,
+        -1.2466391918899995e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0036723614881046833,
+        -0.0004701332339845904
+      ],
+      [
+        -9.229691131261708e-05,
+        0.0011922312700677143
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      11667891,
+      39822728,
+      39822485
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -2.1978337797379233e-05,
+      0.0,
+      -0.0008072098923128657,
+      0.000752213174374794
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.00030323177661718825,
+        0.0002627318081827644
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0024393705536928127,
+        1.7740876754102075e-05
+      ],
+      [
+        -3.5481753507565774e-06,
+        0.0021520570546571883
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23519622,
+      14017722,
+      16776600
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0005610563516974532,
+      0.0,
+      -0.002182127840757886,
+      0.000507389075169451
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0011492595514787708,
+        -1.2466391918899995e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0036723614881046833,
+        -0.0004701332339845904
+      ],
+      [
+        -9.229691131261708e-05,
+        0.0011922312700677143
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      9980723,
+      37631171,
+      37633377
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -2.1978337797379233e-05,
+      0.0,
+      -0.0008072098923128657,
+      0.000752213174374794
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.00030323177661718825,
+        0.0002627318081827644
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0024393705536928127,
+        1.7740876754102075e-05
+      ],
+      [
+        -3.5481753507565774e-06,
+        0.0021520570546571883
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      21417388,
+      12249115,
+      14769201
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0005610563516974532,
+      0.0,
+      -0.002182127840757886,
+      0.000507389075169451
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0011492595514787708,
+        -1.2466391918899995e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0036723614881046833,
+        -0.0004701332339845904
+      ],
+      [
+        -9.229691131261708e-05,
+        0.0011922312700677143
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14627961,
+      42278302,
+      42280667
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -2.1978337797379233e-05,
+      0.0,
+      -0.0008072098923128657,
+      0.000752213174374794
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.00030323177661718825,
+        0.0002627318081827644
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0024393705536928127,
+        1.7740876754102075e-05
+      ],
+      [
+        -3.5481753507565774e-06,
+        0.0021520570546571883
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      26011918,
+      16843549,
+      19363768
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0005610563516974532,
+      0.0,
+      -0.002182127840757886,
+      0.000507389075169451
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0011492595514787708,
+        -1.2466391918899995e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0036723614881046833,
+        -0.0004701332339845904
+      ],
+      [
+        -9.229691131261708e-05,
+        0.0011922312700677143
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23805838,
+      23804514,
+      23805049
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      25995875,
+      25992282,
+      25999951
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23974553,
+      23974553,
+      23974556
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      26152658,
+      26152657,
+      26152660
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453002,
+      28451583,
+      28452144
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590196,
+      30586658,
+      30594338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453120,
+      28451746,
+      28452338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.1-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590567,
+      30587034,
+      30594579
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.1,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.1-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      12356205,
+      17003485,
+      12356209
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.00018808793115310252,
+      0.0,
+      -0.0016055493462486803,
+      0.0011673496904212044
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0007517543921717968,
+        0.0003430700427195612
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.002874243795128184,
+        -0.000221760959426609
+      ],
+      [
+        0.0003707843241620906,
+        0.0021858977770654363
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14665910,
+      10103785,
+      14698430
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0008335806715428218,
+      0.0,
+      -0.005446449163517553,
+      0.002451789167420726
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001587340591342204,
+        -0.00016426665324180138
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0021111643337412556
+      ],
+      [
+        0.0008692142565676741,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14668517,
+      19327133,
+      14656761
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.00018808793115310252,
+      0.0,
+      -0.0016055493462486803,
+      0.0011673496904212044
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0007517543921717968,
+        0.0003430700427195612
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.002874243795128184,
+        -0.000221760959426609
+      ],
+      [
+        0.0003707843241620906,
+        0.0021858977770654363
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      16959982,
+      12390177,
+      16995798
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0008335806715428218,
+      0.0,
+      -0.005446449163517553,
+      0.002451789167420726
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001587340591342204,
+        -0.00016426665324180138
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0021111643337412556
+      ],
+      [
+        0.0008692142565676741,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      11667891,
+      18149593,
+      11477632
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.00018808793115310252,
+      0.0,
+      -0.0016055493462486803,
+      0.0011673496904212044
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0007517543921717968,
+        0.0003430700427195612
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.002874243795128184,
+        -0.000221760959426609
+      ],
+      [
+        0.0003707843241620906,
+        0.0021858977770654363
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14030476,
+      11992787,
+      16776600
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0008335806715428218,
+      0.0,
+      -0.005446449163517553,
+      0.002451789167420726
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001587340591342204,
+        -0.00016426665324180138
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0021111643337412556
+      ],
+      [
+        0.0008692142565676741,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      9980723,
+      16397067,
+      9747611
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.00018808793115310252,
+      0.0,
+      -0.0016055493462486803,
+      0.0011673496904212044
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0007517543921717968,
+        0.0003430700427195612
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.002874243795128184,
+        -0.000221760959426609
+      ],
+      [
+        0.0003707843241620906,
+        0.0021858977770654363
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      12184808,
+      10161145,
+      14769201
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0008335806715428218,
+      0.0,
+      -0.005446449163517553,
+      0.002451789167420726
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001587340591342204,
+        -0.00016426665324180138
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0021111643337412556
+      ],
+      [
+        0.0008692142565676741,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14627961,
+      21044155,
+      14394818
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.00018808793115310252,
+      0.0,
+      -0.0016055493462486803,
+      0.0011673496904212044
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0007517543921717968,
+        0.0003430700427195612
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.002874243795128184,
+        -0.000221760959426609
+      ],
+      [
+        0.0003707843241620906,
+        0.0021858977770654363
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      16779298,
+      14755706,
+      19363768
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0008335806715428218,
+      0.0,
+      -0.005446449163517553,
+      0.002451789167420726
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001587340591342204,
+        -0.00016426665324180138
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0021111643337412556
+      ],
+      [
+        0.0008692142565676741,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23805838,
+      23804514,
+      23805049
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      25995875,
+      25992282,
+      25999951
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23974553,
+      23974553,
+      23974556
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      26152658,
+      26152657,
+      26152660
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453002,
+      28451583,
+      28452144
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590196,
+      30586658,
+      30594338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453120,
+      28451746,
+      28452338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-0.5-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590567,
+      30587034,
+      30594579
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      0.5,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-0.5-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      7741441,
+      12356205,
+      12356209
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0005694662178563625,
+      0.0,
+      -0.007105221140028761,
+      0.00587577838096609
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0013456538458079981,
+        3.5325799776758585e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.016899959195983506,
+        -0.0014724927705928037
+      ],
+      [
+        0.0006173825110414727,
+        0.015207878723367423
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14665910,
+      10103785,
+      14665912
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0003276345085715393,
+      0.0,
+      -0.004603757517696483,
+      0.002843862543686071
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001448391153279771,
+        0.0008040503343670446
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0005493018964996663
+      ],
+      [
+        0.0011566608121758638,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      10032945,
+      14666885,
+      14656761
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0005694662178563625,
+      0.0,
+      -0.007105221140028761,
+      0.00587577838096609
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0013456538458079981,
+        3.5325799776758585e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.016899959195983506,
+        -0.0014724927705928037
+      ],
+      [
+        0.0006173825110414727,
+        0.015207878723367423
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      16959982,
+      12390177,
+      16961312
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0003276345085715393,
+      0.0,
+      -0.004603757517696483,
+      0.002843862543686071
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001448391153279771,
+        0.0008040503343670446
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0005493018964996663
+      ],
+      [
+        0.0011566608121758638,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      9593854,
+      11785053,
+      11477632
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0005694662178563625,
+      0.0,
+      -0.007105221140028761,
+      0.00587577838096609
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0013456538458079981,
+        3.5325799776758585e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.016899959195983506,
+        -0.0014724927705928037
+      ],
+      [
+        0.0006173825110414727,
+        0.015207878723367423
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14030476,
+      11992787,
+      13961569
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0003276345085715393,
+      0.0,
+      -0.004603757517696483,
+      0.002843862543686071
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001448391153279771,
+        0.0008040503343670446
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0005493018964996663
+      ],
+      [
+        0.0011566608121758638,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      7795975,
+      10109995,
+      9747611
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0005694662178563625,
+      0.0,
+      -0.007105221140028761,
+      0.00587577838096609
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0013456538458079981,
+        3.5325799776758585e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.016899959195983506,
+        -0.0014724927705928037
+      ],
+      [
+        0.0006173825110414727,
+        0.015207878723367423
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      12184808,
+      10161145,
+      12201906
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0003276345085715393,
+      0.0,
+      -0.004603757517696483,
+      0.002843862543686071
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001448391153279771,
+        0.0008040503343670446
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0005493018964996663
+      ],
+      [
+        0.0011566608121758638,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      12443285,
+      14757250,
+      14394818
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0005694662178563625,
+      0.0,
+      -0.007105221140028761,
+      0.00587577838096609
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0013456538458079981,
+        3.5325799776758585e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.016899959195983506,
+        -0.0014724927705928037
+      ],
+      [
+        0.0006173825110414727,
+        0.015207878723367423
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      16779298,
+      14755706,
+      16796358
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.0003276345085715393,
+      0.0,
+      -0.004603757517696483,
+      0.002843862543686071
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.001448391153279771,
+        0.0008040503343670446
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.010582654744797632,
+        -0.0005493018964996663
+      ],
+      [
+        0.0011566608121758638,
+        0.005020801177995185
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23805838,
+      23804514,
+      23805049
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      25995875,
+      25992282,
+      25999951
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23974553,
+      23974553,
+      23974556
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      26152658,
+      26152657,
+      26152660
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453002,
+      28451583,
+      28452144
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590196,
+      30586658,
+      30594338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453120,
+      28451746,
+      28452338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-1.0-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590567,
+      30587034,
+      30594579
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      1.0,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-1.0-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "dense"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "paired_95_percent_intervals": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-dense.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      7741441,
+      7741442,
+      7741443
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0023183040573324654,
+      0.0,
+      -0.01885855198963937,
+      0.014267213085668473
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0036044748988029785,
+        -0.0009148656527405985
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0214937374705057,
+        -0.016330477052175937
+      ],
+      [
+        0.011444329128744293,
+        0.016568470913830173
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      10103786,
+      10103785,
+      10103787
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.002446080379529425,
+      0.0,
+      -0.012649245125694097,
+      0.004756329057780895
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.003829548621033929,
+        -0.001218878753158542
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.015506191565987143,
+        -0.010093893590221238
+      ],
+      [
+        0.003963311866872229,
+        0.0055689499175065075
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-faiss.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      10032945,
+      10040250,
+      10033755
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0023183040573324654,
+      0.0,
+      -0.01885855198963937,
+      0.014267213085668473
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0036044748988029785,
+        -0.0009148656527405985
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0214937374705057,
+        -0.016330477052175937
+      ],
+      [
+        0.011444329128744293,
+        0.016568470913830173
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      12393946,
+      12390177,
+      12392315
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-dedup"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.002446080379529425,
+      0.0,
+      -0.012649245125694097,
+      0.004756329057780895
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.003829548621033929,
+        -0.001218878753158542
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.015506191565987143,
+        -0.010093893590221238
+      ],
+      [
+        0.003963311866872229,
+        0.0055689499175065075
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-faiss-dedup.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      9593854,
+      9601827,
+      9590833
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0023183040573324654,
+      0.0,
+      -0.01885855198963937,
+      0.014267213085668473
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0036044748988029785,
+        -0.0009148656527405985
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0214937374705057,
+        -0.016330477052175937
+      ],
+      [
+        0.011444329128744293,
+        0.016568470913830173
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      11995141,
+      11992787,
+      11992867
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-dedup-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.002446080379529425,
+      0.0,
+      -0.012649245125694097,
+      0.004756329057780895
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.003829548621033929,
+        -0.001218878753158542
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.015506191565987143,
+        -0.010093893590221238
+      ],
+      [
+        0.003963311866872229,
+        0.0055689499175065075
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-faiss-dedup-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      7795975,
+      7788481,
+      7792590
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0023183040573324654,
+      0.0,
+      -0.01885855198963937,
+      0.014267213085668473
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0036044748988029785,
+        -0.0009148656527405985
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0214937374705057,
+        -0.016330477052175937
+      ],
+      [
+        0.011444329128744293,
+        0.016568470913830173
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      10164827,
+      10161145,
+      10162965
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-native"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.002446080379529425,
+      0.0,
+      -0.012649245125694097,
+      0.004756329057780895
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.003829548621033929,
+        -0.001218878753158542
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.015506191565987143,
+        -0.010093893590221238
+      ],
+      [
+        0.003963311866872229,
+        0.0055689499175065075
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-faiss-native.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      12443285,
+      12435709,
+      12439873
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      -0.0023183040573324654,
+      0.0,
+      -0.01885855198963937,
+      0.014267213085668473
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0036044748988029785,
+        -0.0009148656527405985
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.0214937374705057,
+        -0.016330477052175937
+      ],
+      [
+        0.011444329128744293,
+        0.016568470913830173
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      14759254,
+      14755706,
+      14757446
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "faiss-native-layout"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -0.002446080379529425,
+      0.0,
+      -0.012649245125694097,
+      0.004756329057780895
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.003829548621033929,
+        -0.001218878753158542
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.015506191565987143,
+        -0.010093893590221238
+      ],
+      [
+        0.003963311866872229,
+        0.0055689499175065075
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-faiss-native-layout.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23805838,
+      23804514,
+      23805049
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      25995875,
+      25992282,
+      25999951
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "native-identity"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-native-identity.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      23974553,
+      23974553,
+      23974556
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      26152658,
+      26152657,
+      26152660
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "raw"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-raw.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453002,
+      28451583,
+      28452144
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590196,
+      30586658,
+      30594338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "tree-datrie"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-tree-datrie.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      28453120,
+      28451746,
+      28452338
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen06",
+    "observed_candidate_minus_source": [
+      4.9837093336502214e-05,
+      0.0,
+      0.00012418613727893657,
+      -8.870438376828993e-06
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -0.0001066469157786909,
+        0.00020395866909823072
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00011531569890177451,
+        0.0003372984192879168
+      ],
+      [
+        -0.0001738605921907138,
+        0.00019514964429534487
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen06-2.0-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      77418229,
+      77418229,
+      77418232
+    ],
+    "status": "complete"
+  },
+  {
+    "candidate_bytes_by_seed": [
+      30590567,
+      30587034,
+      30594579
+    ],
+    "cases_per_seed": 18789,
+    "choice": [
+      2.0,
+      "tree-reference"
+    ],
+    "metrics": [
+      "harmonic_score",
+      "rewrite",
+      "paraphrase",
+      "neighborhood"
+    ],
+    "model": "qwen35",
+    "observed_candidate_minus_source": [
+      -2.5036024963176473e-06,
+      0.0,
+      -4.435219188525519e-05,
+      2.8385402806696547e-05
+    ],
+    "paired_95_percent_intervals": [
+      [
+        -9.419864370846798e-05,
+        9.263964489851769e-05
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.00020402008267239867,
+        0.00011531569890199656
+      ],
+      [
+        -0.0001348750155236278,
+        0.00019874217183820072
+      ]
+    ],
+    "replicates": 2000,
+    "samples_file": "llm-intervals/qwen35-2.0-tree-reference.json.gz",
+    "scope": "Pointwise three-seed and official case resampling; fixed checkpoints and calibration-selected candidates. No independent-task or universal guarantee.",
+    "seed": 42,
+    "seed_clusters": 3,
+    "source_bytes_by_seed": [
+      78990974,
+      78990973,
+      78990976
+    ],
+    "status": "complete"
+  }
+]
