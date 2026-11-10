@@ -98,6 +98,23 @@ class ParallelReferenceTests(unittest.TestCase):
                     with self.subTest(field=field),self.assertRaises(AssertionError):
                         verify_cpu_schedule(root,controller,{'models':[{'name':'m0','choices':[]}]},records,phase,'llm/models',inventory,private)
                     b['reference_execution'][field]=original
+                overlap=root/'cpu-phase-overlap-plan.json'
+                overlap.write_text(json.dumps({'original_cpu_plan_sha256':cpu_hash,'requests':[request]}))
+                private['cpu-phase-overlap-plan.json']=digest(overlap)
+                (root/'diagnostics').mkdir()
+                a.update(sample_started=1.,sample_finished=1.5);b['sample_started']=3.
+                records[0]['report']=cpu_projection(a)
+                inventory['fixture']['files']['tools/cpu_phase_overlap.py']={'original_sha256':'overlap-source'}
+                execution={'status':'complete','failures':[],'workers':6,'plan_sha256':digest(overlap),
+                    'phase_source_sha256':'overlap-source','environment':{'commit':'fixture'},
+                    'started':.5,'finished':2.,'requests':[request],
+                    'complete':[{'request':request,'sha256':'primary'}]}
+                execution_path=root/'diagnostics/cpu-phase-overlap-controller.json'
+                execution_path.write_text(json.dumps(execution));save()
+                verify_cpu_schedule(root,controller,{'models':[{'name':'m0','choices':[]}]},records,phase,'llm/models',inventory,private)
+                execution['complete'][0]['sha256']='changed';execution_path.write_text(json.dumps(execution))
+                with self.assertRaises(AssertionError):
+                    verify_cpu_schedule(root,controller,{'models':[{'name':'m0','choices':[]}]},records,phase,'llm/models',inventory,private)
 
 
 if __name__=='__main__':unittest.main()

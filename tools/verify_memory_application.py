@@ -136,7 +136,8 @@ def metric_values(value):
 
 def cpu_projection(report):
     keys = ('decoded_row_sha256', 'cpu_affinity', 'cpu_lane', 'cpu_parallel_plan_sha256',
-            'measurement_cohort', 'worker_source_sha256', 'environment', 'measurement_host')
+            'measurement_cohort', 'worker_source_sha256', 'environment', 'measurement_host',
+            'sample_started','sample_finished')
     result = {key: report[key] for key in keys if key in report}
     fields = ('output_sha256', 'input_hashes', 'output_hashes', 'complete_p50_ms', 'p50_ms')
     result['query'] = {kind: {k: v for k, v in value.items() if k in fields}
@@ -187,7 +188,12 @@ def verify_cpu_schedule(root, controller, frozen, records, phase, base, inventor
             precalculated={json.dumps(v['request'],sort_keys=True):v for v in execution['complete']}
             assert len(precalculated)==len(execution['complete'])==len(originals)
             assert set(precalculated)==set(originals)
-            for key,item in precalculated.items():assert item['sha256']==originals[key]['private_sha256']
+            for key,item in precalculated.items():
+                assert item['sha256']==originals[key]['private_sha256']
+                value=originals[key]['report']
+                assert execution['started']<=value['sample_started']<=value['sample_finished']<=execution['finished']
+        else:
+            assert max(v['report']['sample_finished'] for v in originals.values())<=execution['started']
     names = {}
     for model in frozen['models']:
         selected = set()
