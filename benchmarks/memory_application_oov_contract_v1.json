@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "registered_before_llm_codec_quality": "2026-11-10",
+  "primary_protocol": "benchmarks/memory_application_frontier_v1.json",
+  "scope": "Clarify the existing exact-key source OOV rule for the declared codec grid; no candidates, codebooks, fitting rows or quality gates change",
+  "source_rule": "Local head ID zero is the fixed all-zero feature for unseen canonical n-grams",
+  "deployment_rule": "The actual model adapter forces local ID zero outputs to FP32 positive zero after any codec lookup. Apply this identically to raw, native, FAISS, code dedup and native-code compositions",
+  "stored_row_rule": "All original stored-row bytes are independently decoded and hashed before model masking. Approximate encodings may change physical row values, including never-addressed padding; original IDs and physical domains remain fixed. FP32 lossless packing preserves every source row byte",
+  "quality_reuse": "Require identical complete stored decoded-row hashes, the same zero-sentinel deployment rule, unchanged nonrow/base weights, batch schedule and actual full-model request hashes",
+  "independent_controls": "Separately trained head constants have no key registry or OOV distinction; the parameter-matched hidden adapter has no n-gram addressing. These are different trained-model controls, not source-preserving codecs"
+}

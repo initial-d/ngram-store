@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "registered_before_spare_measurements": "2026-11-10",
+  "scope": "Accelerate the unchanged 476-request final GPU serving schedule using all eight physical GPUs.",
+  "cohorts": "Selected model/seed batch-1 stays on its original GPU. Its entire batch-8 cohort, including source, independent controls and every selected method, is repeated on a registered spare GPU. Publish only that entire new batch-8 cohort; retain original-card results as diagnostics.",
+  "selection": "Choose two longest remaining 4B model lanes by frozen request counts, without using latency or quality outcomes.",
+  "budgets": {"requests": 32, "decode_steps": 16, "repeat": 3, "warmup": 1},
+  "preflight": "Two real batch-8 requests on each new card; source/native cached logits and generated IDs must match byte for byte before timings.",
+  "isolation": "One timing worker per physical GPU, disjoint CPU sets including SMT siblings. Preserve all active workers; routing begins before CUDA initialization. Host memory bandwidth remains shared.",
+  "retention": "Never overwrite a completed original sample. Archive original, spare and effective controllers with hashes and full request coverage. No candidate, prompt or repetition is removed."
+}

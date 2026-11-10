@@ -25,6 +25,17 @@ class DisabledMemory(torch.nn.Module):
         raise RuntimeError('off control must explicitly disable memory')
 
 
+class ConstantAddressMapping:
+    """Six head constants need shape alone, without a key registry or hashing."""
+    def __init__(self, layer, heads):
+        self.layer = layer
+        self.heads = heads
+
+    def hash(self, input_ids):
+        import numpy as np
+        return {self.layer: np.zeros((*input_ids.shape, self.heads), dtype=np.int64)}
+
+
 def load_model(path):
     config=json.loads((Path(path)/'config.json').read_text())
     cls=Qwen3_5ForConditionalGeneration if config['model_type']=='qwen3_5' else Qwen3ForCausalLM

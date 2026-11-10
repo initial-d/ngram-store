@@ -4,7 +4,7 @@ from .quantized_memory import QuantizedRows
 
 
 def close_reader(reader):
-    if isinstance(reader, QuantizedRows):
+    if hasattr(reader, 'close'):
         reader.close()
     else:
         reader.codes._mmap.close()

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "registered_before_replacement_measurements": "2026-11-10",
+  "authorization": "Maintainer explicitly requested using both machines at full available concurrency.",
+  "scope": "Original-host complete 4B batch-1 cohorts use two fixed 16-request replicas each. Reuse original cards 3/5 after their current evaluation finishes and add idle cards 1/4. No running evaluation is killed.",
+  "immutable": "All canonical methods, prompts, batches, 16 decode steps, one warmup and three repeats remain unchanged. Replacement covers every batch-1 method including sources and independent controls. Every method uses identical prompt/device/core assignments.",
+  "cache_and_capacity": "Each replica warms and repeats its assigned 16 prompts. Cache budgets and GPU allocations are per replica. Compare methods within this same two-replica deployment; retain child capacity reports and never sum per-request throughput.",
+  "diagnostics": "Keep prior actual measurements and explicit routing-only receipts. Receipt configuration fields support already-loaded drain controllers and are not NVML, latency or memory measurements. Only complete replacement child reports enter headline curves.",
+  "preflight": "All four cards pass paired source/native checks on two real batch-8 prompts from their assigned slice before new timing. Wait for in-flight evaluations to finish before using their device."
+}

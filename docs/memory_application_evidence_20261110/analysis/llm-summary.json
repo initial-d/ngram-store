@@ -1,0 +1,3566 @@
+[
+  {
+    "choices": [
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 12356205,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8403966977854789,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 14668517,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.8105289001121428,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 11667891,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8492875495769866,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 9980723,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8710804531578732,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 14627961,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.8110527560634331,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23805838,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925034541929396,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 28453002,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324767129457327,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 28453120,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324751887569011,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 12356205,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8403966977854789,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14668517,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.8105289001121428,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 11667891,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8492875495769866,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 9980723,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8710804531578732,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14627961,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.8110527560634331,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.368320573935105e-05,
+          0.0,
+          0.002395018361807444,
+          -0.0022300282079932288
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 23805838,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925034541929396,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 28453002,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324767129457327,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 28453120,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324751887569011,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 7741441,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.9000049329467353,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 10032945,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8704059091819318,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 9593854,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8760775837432293,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 7795975,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8993005252031792,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 12443285,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8392718980952147,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 23805838,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925034541929396,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 28453002,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324767129457327,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 28453120,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324751887569011,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 7741441,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.9000049329467353,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10032945,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8704059091819318,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 9593854,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8760775837432293,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 7795975,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8993005252031792,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 12443285,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8392718980952147,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.001053212737613607,
+          0.0,
+          0.017190909574751223,
+          -0.01536537335674859
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 23805838,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925034541929396,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 28453002,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324767129457327,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 28453120,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324751887569011,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -5.683838928527418e-05,
+          0.0,
+          -0.00021289052104955797,
+          7.983394539334832e-05
+        ]
+      }
+    ],
+    "model": "qwen06-exact-s3",
+    "source_complete_serving_bytes": 77418229
+  },
+  {
+    "choices": [
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 40239633,
+        "family": "faiss",
+        "name": "faiss-sq-fp16",
+        "saving_vs_source_fraction": 0.4802305152188382,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          9.249359744556429e-06,
+          0.0,
+          2.6611315131153113e-05,
+          -5.322263026297236e-06
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 42563081,
+        "family": "faiss-dedup",
+        "name": "dedup-sq-fp16",
+        "saving_vs_source_fraction": 0.4502188754537384,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          9.249359744556429e-06,
+          0.0,
+          2.6611315131153113e-05,
+          -5.322263026297236e-06
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 39822728,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq-fp16",
+        "saving_vs_source_fraction": 0.48561561644609563,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          9.249359744556429e-06,
+          0.0,
+          2.6611315131153113e-05,
+          -5.322263026297236e-06
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 37631171,
+        "family": "faiss-native",
+        "name": "native-code-sq-fp16",
+        "saving_vs_source_fraction": 0.5139236393537238,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          9.249359744556429e-06,
+          0.0,
+          2.6611315131153113e-05,
+          -5.322263026297236e-06
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 42278302,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq-fp16",
+        "saving_vs_source_fraction": 0.4538973243627157,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          9.249359744556429e-06,
+          0.0,
+          2.6611315131153113e-05,
+          -5.322263026297236e-06
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23804514,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925205561083037,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 28451583,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324950419622748,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 28451746,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324929365149905,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 17003485,
+        "family": "faiss",
+        "name": "faiss-sq6",
+        "saving_vs_source_fraction": 0.7803684581831496,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.00016509782731721767,
+          0.0,
+          0.00029272446644312833,
+          -0.0006759274043338648
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 19327133,
+        "family": "faiss-dedup",
+        "name": "dedup-sq6",
+        "saving_vs_source_fraction": 0.7503542350471489,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.00016509782731721767,
+          0.0,
+          0.00029272446644312833,
+          -0.0006759274043338648
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 18149593,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq6",
+        "saving_vs_source_fraction": 0.7655643479005442,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.00016509782731721767,
+          0.0,
+          0.00029272446644312833,
+          -0.0006759274043338648
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 16397067,
+        "family": "faiss-native",
+        "name": "native-code-sq6",
+        "saving_vs_source_fraction": 0.7882014712581451,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.00016509782731721767,
+          0.0,
+          0.00029272446644312833,
+          -0.0006759274043338648
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 21044155,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq6",
+        "saving_vs_source_fraction": 0.7281757116918808,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.00016509782731721767,
+          0.0,
+          0.00029272446644312833,
+          -0.0006759274043338648
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 23804514,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925205561083037,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 28451583,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324950419622748,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 28451746,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324929365149905,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 12356205,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8403966977854789,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00015013025641863464,
+          0.0,
+          0.001995848634839481,
+          -0.0016658683272132713
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14666885,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.8105499804186944,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00015013025641863464,
+          0.0,
+          0.001995848634839481,
+          -0.0016658683272132713
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 11785053,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8477741850695137,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00015013025641863464,
+          0.0,
+          0.001995848634839481,
+          -0.0016658683272132713
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 10109995,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8694106655423492,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00015013025641863464,
+          0.0,
+          0.001995848634839481,
+          -0.0016658683272132713
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14757250,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.8093827488613825,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00015013025641863464,
+          0.0,
+          0.001995848634839481,
+          -0.0016658683272132713
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 23804514,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925205561083037,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 28451583,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324950419622748,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 28451746,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324929365149905,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 77418229,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 7741442,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.9000049200298809,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00326784570367733,
+          0.0,
+          0.01801586034381819,
+          -0.011214008196283598
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10040250,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8703115515597755,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00326784570367733,
+          0.0,
+          0.01801586034381819,
+          -0.011214008196283598
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 9601827,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8759745976622637,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00326784570367733,
+          0.0,
+          0.01801586034381819,
+          -0.011214008196283598
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 7788481,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.899397324110837,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00326784570367733,
+          0.0,
+          0.01801586034381819,
+          -0.011214008196283598
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 12435709,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8393697561849419,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00326784570367733,
+          0.0,
+          0.01801586034381819,
+          -0.011214008196283598
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 23804514,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925205561083037,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 23974553,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.690324187085189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 28451583,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324950419622748,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 28451746,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324929365149905,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.000193777219893998,
+          0.0,
+          -0.00023950183618071108,
+          -0.00020756825802326073
+        ]
+      }
+    ],
+    "model": "qwen06-exact-s7",
+    "source_complete_serving_bytes": 77418229
+  },
+  {
+    "choices": [
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 77418232,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 40239636,
+        "family": "faiss",
+        "name": "faiss-sq-fp16",
+        "saving_vs_source_fraction": 0.4802304966096358,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -9.309054983197562e-06,
+          0.0,
+          0.0,
+          -2.1289052104855877e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 42563084,
+        "family": "faiss-dedup",
+        "name": "dedup-sq-fp16",
+        "saving_vs_source_fraction": 0.45021885800750394,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -9.309054983197562e-06,
+          0.0,
+          0.0,
+          -2.1289052104855877e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 39822485,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq-fp16",
+        "saving_vs_source_fraction": 0.48561877517430263,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -9.309054983197562e-06,
+          0.0,
+          0.0,
+          -2.1289052104855877e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 37633377,
+        "family": "faiss-native",
+        "name": "native-code-sq-fp16",
+        "saving_vs_source_fraction": 0.5138951636095228,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -9.309054983197562e-06,
+          0.0,
+          0.0,
+          -2.1289052104855877e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 42280667,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq-fp16",
+        "saving_vs_source_fraction": 0.4538667971647815,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -9.309054983197562e-06,
+          0.0,
+          0.0,
+          -2.1289052104855877e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23805049,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925136575064127,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23974556,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6903241603347388,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 28452144,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324878098482022,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 28452338,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324853039785254,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 77418232,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 12356209,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8403966523027806,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14656761,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.8106807579899267,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 11477632,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8517451031431459,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 9747611,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8740915318241832,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14394818,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.8140642374783242,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 23805049,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925136575064127,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 23974556,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6903241603347388,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 28452144,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324878098482022,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 28452338,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324853039785254,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 77418232,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 12356209,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8403966523027806,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14656761,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.8106807579899267,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 11477632,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8517451031431459,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 9747611,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8740915318241832,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14394818,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.8140642374783242,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006617817490115474,
+          0.0,
+          0.0021289052104955797,
+          -0.0005960934589364086
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 23805049,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925136575064127,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 23974556,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6903241603347388,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 28452144,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324878098482022,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 28452338,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324853039785254,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 77418232,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 7741443,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.9000049109878924,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0026318853820975763,
+          0.0,
+          0.02136888605034859,
+          -0.01622225770397301
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10033755,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8703954515520324,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0026318853820975763,
+          0.0,
+          0.02136888605034859,
+          -0.01622225770397301
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 9590833,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.876116610361239,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0026318853820975763,
+          0.0,
+          0.02136888605034859,
+          -0.01622225770397301
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 7792590,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8993442526561444,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0026318853820975763,
+          0.0,
+          0.02136888605034859,
+          -0.01622225770397301
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 12439873,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8393159766293811,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0026318853820975763,
+          0.0,
+          0.02136888605034859,
+          -0.01622225770397301
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 23805049,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6925136575064127,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 23974556,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6903241603347388,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 28452144,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324878098482022,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 28452338,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6324853039785254,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00010198665861815837,
+          0.0,
+          7.983394539357036e-05,
+          0.00015434562776062144
+        ]
+      }
+    ],
+    "model": "qwen06-exact-s11",
+    "source_complete_serving_bytes": 77418232
+  },
+  {
+    "choices": [
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 78990974,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23855191,
+        "family": "faiss",
+        "name": "faiss-sq8",
+        "saving_vs_source_fraction": 0.698001052626595,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          2.247650129072465e-05,
+          0.0,
+          0.00042578104209911594,
+          -0.00026611315131175317
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 26152479,
+        "family": "faiss-dedup",
+        "name": "dedup-sq8",
+        "saving_vs_source_fraction": 0.6689181348744985,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          2.247650129072465e-05,
+          0.0,
+          0.00042578104209911594,
+          -0.00026611315131175317
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 23519622,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq8",
+        "saving_vs_source_fraction": 0.702249246856989,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          2.247650129072465e-05,
+          0.0,
+          0.00042578104209911594,
+          -0.00026611315131175317
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 21417388,
+        "family": "faiss-native",
+        "name": "native-code-sq8",
+        "saving_vs_source_fraction": 0.728862844506766,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          2.247650129072465e-05,
+          0.0,
+          0.00042578104209911594,
+          -0.00026611315131175317
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 26011918,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq8",
+        "saving_vs_source_fraction": 0.6706975913475887,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          2.247650129072465e-05,
+          0.0,
+          0.00042578104209911594,
+          -0.00026611315131175317
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 25995875,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709006905016768,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 26152658,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158687928066,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 30590196,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127380832144189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 30590567,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.61273338647527,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 78990974,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14665910,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8143343567329604,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 16959982,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.785292152493271,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14030476,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8223787441841139,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 12184808,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8457442998487397,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 16779298,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.7875795530765325,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 25995875,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709006905016768,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 26152658,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158687928066,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 30590196,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127380832144189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 30590567,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.61273338647527,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 78990974,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14665910,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8143343567329604,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 16959982,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.785292152493271,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14030476,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8223787441841139,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 12184808,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8457442998487397,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 16779298,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.7875795530765325,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0003039386568438607,
+          0.0,
+          0.002421629676938597,
+          -0.0011655756027437736
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 25995875,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709006905016768,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 26152658,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158687928066,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 30590196,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127380832144189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 30590567,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.61273338647527,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 78990974,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10103786,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.8720893604881996,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0021545564760638847,
+          0.0,
+          0.01160253339720052,
+          -0.0043003885251975404
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 12393946,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8430966808941993,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0021545564760638847,
+          0.0,
+          0.01160253339720052,
+          -0.0043003885251975404
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 11995141,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8481454222858424,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0021545564760638847,
+          0.0,
+          0.01160253339720052,
+          -0.0043003885251975404
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10164827,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8713166013119423,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0021545564760638847,
+          0.0,
+          0.01160253339720052,
+          -0.0043003885251975404
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 14759254,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8131526520992133,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0021545564760638847,
+          0.0,
+          0.01160253339720052,
+          -0.0043003885251975404
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 25995875,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709006905016768,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 26152658,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158687928066,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 30590196,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127380832144189,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 30590567,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.61273338647527,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          6.349549762041384e-05,
+          0.0,
+          0.0,
+          0.00012773431262957935
+        ]
+      }
+    ],
+    "model": "qwen35-exact-s3",
+    "source_complete_serving_bytes": 78990974
+  },
+  {
+    "choices": [
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 78990973,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 14665910,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8143343543824938,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001031411782269842,
+          0.0,
+          0.0029804672946937005,
+          -7.983394539556876e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 16959406,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.7852994417476032,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001031411782269842,
+          0.0,
+          0.0029804672946937005,
+          -7.983394539556876e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 14017722,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8225402034229912,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001031411782269842,
+          0.0,
+          0.0029804672946937005,
+          -7.983394539556876e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 12249115,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8449301922132293,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001031411782269842,
+          0.0,
+          0.0029804672946937005,
+          -7.983394539556876e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 16843549,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.7867661536464426,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.001031411782269842,
+          0.0,
+          0.0029804672946937005,
+          -7.983394539556876e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 25992282,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709461725455641,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 26152657,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158772610637,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 30586658,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127828682398937,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 30587034,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127781082023132,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 78990973,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 10103785,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.8720893715285669,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 12390177,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8431443932207292,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 11992787,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8481752212369886,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 10161145,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8713632126040529,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14755706,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8131975662586154,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 25992282,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709461725455641,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 26152657,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158772610637,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 30586658,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127828682398937,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 30587034,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127781082023132,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 78990973,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 10103785,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.8720893715285669,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 12390177,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8431443932207292,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 11992787,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8481752212369886,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 10161145,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8713632126040529,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14755706,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8131975662586154,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 25992282,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709461725455641,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 26152657,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158772610637,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 30586658,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127828682398937,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 30587034,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127781082023132,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 78990973,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10103785,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.8720893715285669,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 12390177,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8431443932207292,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 11992787,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8481752212369886,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10161145,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8713632126040529,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 14755706,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8131975662586154,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0014143597950510012,
+          0.0,
+          0.010777582628133442,
+          -0.005013571770717262
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 25992282,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.6709461725455641,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 26152657,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.6689158772610637,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 30586658,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127828682398937,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 30587034,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6127781082023132,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -6.795755405186732e-05,
+          0.0,
+          7.983394539357036e-05,
+          -0.00019160146894459107
+        ]
+      }
+    ],
+    "model": "qwen35-exact-s7",
+    "source_complete_serving_bytes": 78990973
+  },
+  {
+    "choices": [
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 78990976,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 14698430,
+        "family": "faiss",
+        "name": "faiss-pq-16x8",
+        "saving_vs_source_fraction": 0.8139226688375139,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 16995798,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-16x8",
+        "saving_vs_source_fraction": 0.7848387390478628,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 16776600,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-16x8",
+        "saving_vs_source_fraction": 0.7876137142551575,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 14769201,
+        "family": "faiss-native",
+        "name": "native-code-pq-16x8",
+        "saving_vs_source_fraction": 0.8130267310534307,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 19363768,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-16x8",
+        "saving_vs_source_fraction": 0.7548610109590239,
+        "test_all_four_metrics_within_original_budget": false,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 25999951,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.670849098003296,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 26152660,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.668915851856293,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 30594338,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126856566501976,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 0.1,
+        "complete_serving_bytes": 30594579,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126826056687792,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 78990976,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14698430,
+        "family": "faiss",
+        "name": "faiss-pq-16x8",
+        "saving_vs_source_fraction": 0.8139226688375139,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 16995798,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-16x8",
+        "saving_vs_source_fraction": 0.7848387390478628,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 16776600,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-16x8",
+        "saving_vs_source_fraction": 0.7876137142551575,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 14769201,
+        "family": "faiss-native",
+        "name": "native-code-pq-16x8",
+        "saving_vs_source_fraction": 0.8130267310534307,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 19363768,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-16x8",
+        "saving_vs_source_fraction": 0.7548610109590239,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0006756810809602776,
+          0.0,
+          0.0031401351854808413,
+          -0.001176220128800809
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 25999951,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.670849098003296,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 26152660,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.668915851856293,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 30594338,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126856566501976,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 0.5,
+        "complete_serving_bytes": 30594579,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126826056687792,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 78990976,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 14665912,
+        "family": "faiss",
+        "name": "faiss-sq4",
+        "saving_vs_source_fraction": 0.8143343361145455,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.0008619661986488669,
+          0.0,
+          0.0006120602480174098,
+          -0.002352440257596844
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 16961312,
+        "family": "faiss-dedup",
+        "name": "dedup-sq4",
+        "saving_vs_source_fraction": 0.7852753205631995,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.0008619661986488669,
+          0.0,
+          0.0006120602480174098,
+          -0.002352440257596844
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 13961569,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-sq4",
+        "saving_vs_source_fraction": 0.8232510888332358,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.0008619661986488669,
+          0.0,
+          0.0006120602480174098,
+          -0.002352440257596844
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 12201906,
+        "family": "faiss-native",
+        "name": "native-code-sq4",
+        "saving_vs_source_fraction": 0.8455278486494457,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.0008619661986488669,
+          0.0,
+          0.0006120602480174098,
+          -0.002352440257596844
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 16796358,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-sq4",
+        "saving_vs_source_fraction": 0.7873635844175415,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          -0.0008619661986488669,
+          0.0,
+          0.0006120602480174098,
+          -0.002352440257596844
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 25999951,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.670849098003296,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 26152660,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.668915851856293,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 30594338,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126856566501976,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 1.0,
+        "complete_serving_bytes": 30594579,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126826056687792,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": null,
+        "family": "constant",
+        "name": null,
+        "test_status": "no_calibration_qualified_candidate"
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 78990976,
+        "family": "dense",
+        "name": "dense-fp32",
+        "saving_vs_source_fraction": 0.0,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10103787,
+        "family": "faiss",
+        "name": "faiss-pq-8x8",
+        "saving_vs_source_fraction": 0.8720893510671396,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00387052483373318,
+          0.0,
+          0.01556761935174833,
+          -0.00495502687742766
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 12392315,
+        "family": "faiss-dedup",
+        "name": "dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8431173327950777,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00387052483373318,
+          0.0,
+          0.01556761935174833,
+          -0.00495502687742766
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 11992867,
+        "family": "faiss-dedup-native",
+        "name": "native-code-dedup-pq-8x8",
+        "saving_vs_source_fraction": 0.8481742142292304,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00387052483373318,
+          0.0,
+          0.01556761935174833,
+          -0.00495502687742766
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 10162965,
+        "family": "faiss-native",
+        "name": "native-code-pq-8x8",
+        "saving_vs_source_fraction": 0.8713401768829898,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00387052483373318,
+          0.0,
+          0.01556761935174833,
+          -0.00495502687742766
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 14757446,
+        "family": "faiss-native-layout",
+        "name": "native-code-layout-pq-8x8",
+        "saving_vs_source_fraction": 0.8131755455205415,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          0.00387052483373318,
+          0.0,
+          0.01556761935174833,
+          -0.00495502687742766
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 25999951,
+        "family": "native-identity",
+        "name": "native-none-int8",
+        "saving_vs_source_fraction": 0.670849098003296,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 26152660,
+        "family": "raw",
+        "name": "raw-int8",
+        "saving_vs_source_fraction": 0.668915851856293,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 30594338,
+        "family": "tree-datrie",
+        "name": "tree-datrie-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126856566501976,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      },
+      {
+        "budget_pp": 2.0,
+        "complete_serving_bytes": 30594579,
+        "family": "tree-reference",
+        "name": "tree-reference-c0.9-n0.9-int8",
+        "saving_vs_source_fraction": 0.6126826056687792,
+        "test_all_four_metrics_within_original_budget": true,
+        "test_source_minus_candidate": [
+          1.0716014167688748e-05,
+          0.0,
+          5.322263026241725e-05,
+          -2.1289052104744854e-05
+        ]
+      }
+    ],
+    "model": "qwen35-exact-s11",
+    "source_complete_serving_bytes": 78990976
+  }
+]

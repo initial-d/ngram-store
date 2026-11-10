@@ -1,0 +1,84 @@
+{
+  "status": "complete",
+  "source_commit": "e04d51cbc28106b09ac86956b5566f207de78370",
+  "runtime_commits": [
+    "05910a99f2317f267cbe27c2404635146fd39d14",
+    "0cfd27c243edef155ae028a19abb75f52ce6146f",
+    "0dd5793310d1ae784be8d27e7c3f80109c76ad04",
+    "200cccc2a2febe6c737b4007466380ccca13c31f",
+    "2459b529013c955138299ad24f57f639b6d5e3ed",
+    "2eb6c61c188bca1cd63d4a623fbfa4103cf47c42",
+    "35da9bcff04be6ed67b9b19148e7a531952f0bcb",
+    "422f4e7f837c60ee145aa10129d2f6349b82b1f8",
+    "425c1876614b9533ecf3b5e092e1dbed0bfd7651",
+    "569bb6e2b354a6b682af666731830bb4fe0851a1",
+    "6ee4ca9113656310ba5680196ffb0e64f4a93c1c",
+    "7ce304f079b7d47d330b05cf0db0dc01884c3b4f",
+    "7e57ee5145c72c9f319059d97ab774dd360662db",
+    "848ade68974ce75e47a1301e37ab5ae243bdb288",
+    "a09afd3eb4ef124d4860c3bfa9f6b68adbd4235d",
+    "ab5cf56f3c31dc7b0710edf008929a158f3166c5",
+    "c262655bc311c47f7328aa90f2d75e35a74cb893",
+    "c3bf59fa94b2cd1f853746f3a4a0d69a39915b02",
+    "c817985680c87c7f0bf1b37c5cfb3ac277710f3a",
+    "cabfe13ede6cc0c44b296a116debac65da579481",
+    "e04d51cbc28106b09ac86956b5566f207de78370"
+  ],
+  "final_serving_controller_sha256": "504e64f5ab8a22c73f56a4260bad3c8c8c76b13a79d7cf13da7fbaafc57a3820",
+  "raw_manifest_sha256": "7be4357c883bbb0b383a7efc4e13064ee3e131d2ad3cc6a59056fe195b606558",
+  "verification": {
+    "status": "passed",
+    "long_candidates": 28188,
+    "long_heldout_workers": 56376,
+    "llm_candidates": 1566,
+    "independent_controls": 12,
+    "long_final_timings": 12818,
+    "llm_final_timings": {
+      "cpu": 220,
+      "gpu": 476
+    }
+  },
+  "preparation_stages": [
+    {
+      "name": "publish",
+      "returncode": 0,
+      "seconds": 1687.7756478786469
+    },
+    {
+      "name": "verify-before-analysis",
+      "returncode": 0,
+      "seconds": 182.4687900543213
+    },
+    {
+      "name": "analyze",
+      "returncode": 0,
+      "seconds": 1207.5754384994507
+    },
+    {
+      "name": "plot",
+      "returncode": 0,
+      "seconds": 10.98914623260498
+    },
+    {
+      "name": "package",
+      "returncode": 0,
+      "seconds": 21.12702512741089
+    },
+    {
+      "name": "verify-final",
+      "returncode": 0,
+      "seconds": 181.43659687042236
+    }
+  ],
+  "serving_coverage": {
+    "sgns_cpu": 12818,
+    "llm_cpu": 220,
+    "canonical_gpu": 476,
+    "sgns_reference": 1728,
+    "llm_reference": 84,
+    "spare_gpu": 82,
+    "second_host_gpu": 164,
+    "extra_original_host_gpu": 82
+  },
+  "claims_scope": "Finite enwik8 SGNS and frozen Qwen3-0.6B/Qwen3.5-4B MultiCounterFact memory branches; shared-host timing with fixed device/core and prompt assignments."
+}

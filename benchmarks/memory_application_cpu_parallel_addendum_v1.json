@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "registered_before_cpu_final_timings": "2026-11-10",
+  "authorization": "Maintainer requested acceleration and parallel execution on 2026-11-10",
+  "scope": "CPU final serving and subsequent evidence preparation only. Existing six-device GPU lanes and all completed GPU samples continue unchanged.",
+  "workers": 8,
+  "lanes": "One fresh single-thread process per lane; bind each lane to one distinct physical core and its available SMT siblings. Derive and record CPU/core/socket/NUMA relationships from the actual host. Each model always uses its assigned lane for all methods and serial references.",
+  "start_gate": "All GPU training, quality and final GPU timing must finish before CPU measurement begins. CPU main grid is parallel; the serial reference cohort follows after all main workers finish.",
+  "immutable": "Retain every previously frozen candidate, request, index, cache setting, quality budget and repetition count. No performance measurement selects or drops candidates.",
+  "serial_reference_selection": "At the primary registered budget (.001 SGNS loss or .5 percentage-point LLM quality), measure every family winner plus raw-fp32/fp16/int8, dense-fp32 and native-none-fp32/fp16/int8. Long-table references use ordinary inference, cache 0 and DATrie; additionally retain the hash-index controls for raw FP32 and tree-DATrie candidates. LLM references use the same original-key CPU queries and cache 0.",
+  "serial_reference_checks": "One fresh worker at a time on the same assigned physical core. Require identical complete decoded-row hashes and actual query output hashes; publish paired parallel/serial latency ratios including large discrepancies.",
+  "timing_claim": "Full-grid measurements describe fixed-core queries on a shared host, not host-exclusive latency. Independent serial references support primary-budget comparisons. Report core affinity, host load and cohort explicitly; do not present a parallel speedup as an engine optimization.",
+  "evidence_preparation": "Batch Git object reads and compress independent deterministic release capsules with up to four workers after measurements. Content, member order, hashes and verification rules stay fixed."
+}

@@ -166,7 +166,8 @@ class Reader:
         from .faiss_row_codec import FaissRows
         from .quantized_memory import QuantizedRows
         self.mapping = None
-        self.reader = (FaissRows(job['directory']) if job['backend'] in ('faiss', 'dedup') else
+        self.reader = (FaissRows(job['directory'], native_library=job['native_library'], cache_bytes=cache_bytes)
+                       if job['backend'] in ('faiss', 'dedup') else
                        QuantizedRows(job['directory'], job['native_library'], cache_bytes=cache_bytes))
         if job['backend'] == 'dedup':
             self.mapping = np.load(Path(job['directory']) / 'original-to-code.npy', mmap_mode='r')
@@ -187,6 +188,8 @@ class Reader:
     def close(self):
         from .row_codec_utils import close_reader
         close_reader(self.reader)
+        if self.mapping is not None:
+            self.mapping._mmap.close()
 
 
 def lookup_strings(strings, index, word_lookup, order, cached=False, index_kind='datrie'):
@@ -235,6 +238,50 @@ def serving_files(directory):
             for p in sorted(Path(directory).iterdir()) if p.is_file()}
 
 
+def structural_mapping(source, common, job):
+    """Plan each actual embedding head separately, preserving unregistered rows."""
+    from .structural_native import StructuralPlan
+    groups_path = common / 'gram-key-groups.json'
+    groups = load(groups_path) if groups_path.exists() else [
+        {'start': 0, 'size': len(source), 'keys': dict(enumerate(load(common / 'gram-keys.json')))}]
+    mapping = np.arange(len(source), dtype=np.int64)
+    order = []; covered = 0
+    for group in groups:
+        start, size = group['start'], group['size']
+        if start != covered or size < 1 or start + size > len(source):
+            raise ValueError('key groups must partition the physical row domain')
+        covered += size
+        keys = {int(i): key for i, key in group['keys'].items()}
+        if any(i < 0 or i >= size for i in keys) or len(set(keys.values())) != len(keys):
+            raise ValueError('invalid registered local-head keys')
+        rows = source[start:start + size]
+        if job['planner'] == 'reference':
+            from .benchmark_cosine_merge import structural_merge
+            registered = sorted(keys)
+            names = [keys[i] for i in registered]
+            local_map = np.arange(size, dtype=np.int64)
+            if registered:
+                chosen = structural_merge(rows[registered], names, job['cosine'], job['norm_ratio'])
+                local_map[registered] = np.asarray(registered)[chosen]
+            local_order = [i for i in sorted(registered, key=lambda i: keys[i]) if local_map[i] == i]
+            local_order += [i for i in range(size) if i not in keys or local_map[i] != i]
+        else:
+            with StructuralPlan(rows.tobytes(), rows.shape[1], keys, job['structural_library'],
+                mode='layout' if job['planner'] == 'layout' else 'joint',
+                cosine=job.get('cosine') or .99, norm_ratio=job.get('norm_ratio') or .99) as plan:
+                local_map = np.asarray(plan.representatives, dtype=np.int64)
+                local_order = plan.row_order
+        mapping[start:start + size] = local_map + start
+        order.extend(i + start for i in local_order)
+        for i, r in enumerate(local_map):
+            if i != r and not (i in keys and int(r) in keys and len(keys[int(r)]) < len(keys[i])
+                    and (keys[i].startswith(keys[int(r)]) or keys[i].endswith(keys[int(r)]))):
+                raise AssertionError('representative crosses a head or is not a proper prefix/suffix node')
+    if covered != len(source) or sorted(order) != list(range(len(source))):
+        raise ValueError('structural groups do not cover all original rows')
+    return mapping, order
+
+
 def build_job(job_path):
     import faiss
     faiss.omp_set_num_threads(4)
@@ -250,18 +297,8 @@ def build_job(job_path):
     mapping = np.arange(len(source), dtype=np.int64); order = None
     planning = None
     if job['planner'] in ('datrie', 'reference', 'layout'):
-        keys = load(common / 'gram-keys.json')
         start = time.perf_counter()
-        if job['planner'] == 'reference':
-            from .benchmark_cosine_merge import structural_merge
-            mapping = structural_merge(source, keys, job['cosine'], job['norm_ratio'])
-            order = [i for i in sorted(range(len(keys)), key=lambda i: keys[i]) if mapping[i] == i] + [i for i in range(len(keys)) if mapping[i] != i]
-        else:
-            with StructuralPlan(source.tobytes(), source.shape[1], dict(enumerate(keys)), job['structural_library'],
-                mode='layout' if job['planner'] == 'layout' else 'joint',
-                cosine=job.get('cosine') or .99, norm_ratio=job.get('norm_ratio') or .99) as plan:
-                mapping = np.asarray(plan.representatives, dtype=np.int64)
-                order = plan.row_order
+        mapping, order = structural_mapping(source, common, job)
         if not np.array_equal(mapping[mapping], mapping):
             raise AssertionError('non-idempotent final representative map')
         if job['planner'] != 'layout':
@@ -270,15 +307,18 @@ def build_job(job_path):
             if (fidelity_before_quantization['minimum_cosine'] < job['cosine'] - 1e-7 or
                 fidelity_before_quantization['max_relative_norm_change'] > 1 / job['norm_ratio'] - 1 + 1e-7):
                 raise AssertionError('final representative bypasses a joint gate')
-            for i, r in enumerate(mapping):
-                if i != r and not (len(keys[r]) < len(keys[i]) and (keys[i].startswith(keys[r]) or keys[i].endswith(keys[r]))):
-                    raise AssertionError('representative is not a proper prefix/suffix node')
         else:
             fidelity_before_quantization = None
         planning = {'seconds': time.perf_counter() - start, 'mapping_sha256': array_digest(mapping.astype('<u8')),
             'retained_rows': int(np.sum(mapping == np.arange(len(mapping)))), 'fidelity': fidelity_before_quantization}
     expected = None
-    if job['backend'] == 'constant':
+    if job.get('native_codes_source'):
+        from .faiss_row_codec import pack_codec_native
+        pack_codec_native(job['native_codes_source'], directory, native_library=job['native_library'],
+            max_block_bytes=8192, row_order=order)
+        if job['backend'] == 'dedup':
+            original_encoded_hash = load(job['native_codes_source_report'])['original_encoded_code_sha256']
+    elif job['backend'] == 'constant':
         if job['encoding'] == 'zero':
             vector = np.zeros(source.shape[1], dtype=np.float32)
         elif job['encoding'] == 'mean':
@@ -311,6 +351,9 @@ def build_job(job_path):
         del reader
     construction_seconds = time.perf_counter() - started
     construction_memory = memory()
+    # Fit at the registered four-thread budget, but freeze decoded row identity
+    # under the same one-thread schedule used by actual inference workers.
+    faiss.omp_set_num_threads(1)
     with_reader = Reader(job)
     row_digest = hashlib.sha256(); squared = norm = 0.; maximum_decode_difference = 0.
     direct_reader = FaissRows(job['direct_directory']) if job['backend'] == 'dedup' else None
@@ -341,24 +384,30 @@ def build_job(job_path):
         'maximum_dedup_decode_difference': maximum_decode_difference if job['backend'] == 'dedup' else None,
         'cosine': job.get('cosine'), 'norm_ratio': job.get('norm_ratio')}
     result['model_bytes'] = result['row_bundle_bytes'] + result['common_model_bytes']
-    for cached in (False, True):
-        hidden = evaluate_hidden(with_reader, common, cached)
-        quality, blocks = score_candidate(hidden, common, 'validation')
-        result['validation'][str(int(cached))] = quality
-        write(Path(job['report']).with_name(job['name'] + f'-validation-cache{int(cached)}-blocks.json.gz'), blocks)
+    if job.get('quality_contract') == 'deferred-llm':
+        result['quality_contract'] = 'Codec construction only; actual Qwen evaluation is required before qualification'
+    else:
+        for cached in (False, True):
+            hidden = evaluate_hidden(with_reader, common, cached)
+            quality, blocks = score_candidate(hidden, common, 'validation')
+            result['validation'][str(int(cached))] = quality
+            write(Path(job['report']).with_name(job['name'] + f'-validation-cache{int(cached)}-blocks.json.gz'), blocks)
     with_reader.close()
     result['status'] = 'complete'
     write(job['report'], result)
 
 
-def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=False):
+def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=False, quality_only=False):
     import faiss
     faiss.omp_set_num_threads(1)
     from .benchmark_faiss_cotraining import evaluate, fidelity
     from .structural_native import StructuralIndex
     job = load(job_path); common = Path(job['common']); metadata = load(common / 'metadata.json')
+    if selected and quality_only:
+        raise ValueError('Final serving measurement cannot use a quality-only audit')
     measured = {'environment': environment(), 'job_sha256': digest(job_path), 'cached_known_words': cached,
                 'index_kind': index_kind, 'native_cache_bytes': cache_bytes, 'memory_before_open': memory()}
+    measured['measurement_purpose'] = 'quality-and-reopening-only' if quality_only else 'query-and-quality'
     start = time.perf_counter()
     reader = Reader(job, cache_bytes=cache_bytes)
     word_rows = np.load(common / ('cached-word-rows.npy' if cached else 'word-rows.npy'), mmap_mode='r')
@@ -377,11 +426,19 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
             'known_cache_hits': sum(w >= 0 for w in ids) if cached else 0,
             'original_ngram_occurrences': sum(map(len, bags)), 'reducer_occurrences': len(plans[name]['ids']),
             'replay_samples_ms': [], 'complete_samples_ms': [], 'batch_complete_samples_ms': []}
-    for _ in range(2):
+    if selected:
+        for name,strings in inputs.items():
+            started=time.perf_counter();outputs=[]
+            for begin in range(0,len(strings),64):
+                bags,ids=lookup_strings(strings[begin:begin+64],index,word_lookup,metadata['order'],cached,index_kind)
+                outputs.append(evaluate(reader,plan_for(bags,ids,reader),word_rows,batch_bags=64))
+            measured['query'][name]['first_complete_query_ms']=(time.perf_counter()-started)*1000
+            measured['query'][name]['first_output_sha256']=array_digest(np.concatenate(outputs))
+    for _ in range(0 if quality_only else 2):
         for name, plan in plans.items():
             evaluate(reader, plan, word_rows, batch_bags=64)
     rng = np.random.default_rng(42)
-    for _ in range(15):
+    for _ in range(1 if quality_only else 15):
         for name in rng.permutation(list(plans)):
             start = time.perf_counter()
             output = evaluate(reader, plans[name], word_rows, batch_bags=64)
@@ -394,7 +451,7 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
                 measured['query'][name]['batch_complete_samples_ms'].append((time.perf_counter() - batch_start) * 1000)
             measured['query'][name]['complete_samples_ms'].append((time.perf_counter() - start) * 1000)
             np.testing.assert_allclose(np.concatenate(outputs), output, rtol=1e-5, atol=1e-7)
-    measured['memory_after_query'] = memory()
+    measured['memory_after_queries_before_integrity'] = memory()
     for name, plan in plans.items():
         values = evaluate(reader, plan, word_rows, batch_bags=64)
         ref = np.load(common / (name + '-query-reference.npy'))
@@ -412,6 +469,17 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
             quality, blocks = score_candidate(hidden, common, split)
             measured['quality'][split] = quality
             write(Path(job['report']).with_name(job['name'] + f'-{split}-cache{int(cached)}-blocks.json.gz'), blocks)
+    row_hash = hashlib.sha256()
+    for begin in range(0, metadata['shape'][0], 4096):
+        original_ids = np.arange(begin, min(begin + 4096, metadata['shape'][0]))
+        mapped_ids = reader.mapping[original_ids] if reader.mapping is not None else original_ids
+        row_hash.update(reader.rows(mapped_ids).astype('<f4').tobytes())
+    if row_hash.hexdigest() != load(job['report'])['decoded_row_sha256']:
+        raise AssertionError('fresh inference worker decoded different original-ID row bytes')
+    measured['all_original_rows_verified'] = metadata['shape'][0]
+    measured['decoded_row_sha256'] = row_hash.hexdigest()
+    measured['memory_after_query'] = memory()
+    measured['integrity_phase'] = 'Full original-row byte audit follows query/quality measurements; pre-audit query RSS is separate'
     reader.close(); index.close()
     measured['status'] = 'complete'
     suffix = f'-cache{int(cached)}-{index_kind}-rowcache{cache_bytes}'
@@ -419,7 +487,7 @@ def query_job(job_path, cached, *, index_kind='datrie', cache_bytes=0, selected=
     write(path, measured)
 
 
-def prepare_model(checkpoint_path, training, split, out, native_library, structural_library):
+def prepare_model(checkpoint_path, training, split, out, native_library, structural_library, *, expected=None):
     import torch
     from .benchmark_faiss_cotraining import objective, evaluate
     from .structural_native import StructuralPlan
@@ -427,7 +495,7 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
     from .train_ngram_similarity import ngrams
     preparation_started = time.perf_counter()
     checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=True)
-    expected = next(r for r in training['runs'] if (r['convention'], r['order'], r['seed']) ==
+    expected = expected or next(r for r in training['runs'] if (r['convention'], r['order'], r['seed']) ==
         (checkpoint_path.parent.parent.name, checkpoint['order'], checkpoint['seed']))
     assert digest(checkpoint_path) == expected['checkpoint_sha256']
     common = out / 'common'; common.mkdir(parents=True)
@@ -497,6 +565,14 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
     metadata['common_model_bytes'] = sum(v['bytes'] for v in metadata['common_serving_files'].values())
     assert metadata['known_cache_file_bytes'] == metadata['common_serving_files']['word-rows.npy']['bytes']
     write(common / 'metadata.json', metadata)
+    jobs = candidate_jobs(out, native_library, structural_library)
+    return {'name': out.name, 'metadata_sha256': digest(common / 'metadata.json'), 'jobs': jobs}
+
+
+def candidate_jobs(out, native_library, structural_library, *, codecs=None, quality_contract=None):
+    """The frozen 204 base candidates shared by lexical and LLM experiments."""
+    from .faiss_row_codec import DEFAULT_CODECS
+    common = out / 'common'
     jobs = []
     def add(name, family, backend, encoding, planner='none', **options):
         directory = out / 'bundles' / name; directory.parent.mkdir(exist_ok=True)
@@ -504,6 +580,7 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
         job = {'name': name, 'family': family, 'backend': backend, 'encoding': encoding, 'planner': planner,
             'common': str(common), 'directory': str(directory), 'native_library': str(native_library),
             'structural_library': str(structural_library), 'report': str(report), **options}
+        if quality_contract: job['quality_contract'] = quality_contract
         job_path = out / 'jobs' / (name + '.json'); write(job_path, job)
         jobs.append(str(job_path))
     for encoding in ('fp32', 'fp16', 'int8'):
@@ -519,13 +596,13 @@ def prepare_model(checkpoint_path, training, split, out, native_library, structu
                 for encoding in ('fp32', 'fp16', 'int8'):
                     add(f'tree-{planner}-c{cosine}-n{norm}-{encoding}', 'tree-' + planner, 'native', encoding,
                         planner, cosine=cosine, norm_ratio=norm)
-    for encoding in DEFAULT_CODECS:
+    for encoding in (DEFAULT_CODECS if codecs is None else codecs):
         add('faiss-' + encoding, 'faiss', 'faiss', encoding)
         add('dedup-' + encoding, 'faiss-dedup', 'dedup', encoding,
             direct_directory=str(out / 'bundles' / ('faiss-' + encoding)))
     assert len(jobs) == 204
     write(out / 'jobs.json', jobs)
-    return {'name': out.name, 'metadata_sha256': digest(common / 'metadata.json'), 'jobs': jobs}
+    return jobs
 
 
 def execute_jobs(jobs, phase, workers, root):
@@ -585,6 +662,7 @@ def main():
     parser.add_argument('--structural-library', type=Path)
     parser.add_argument('--job', type=Path)
     parser.add_argument('--cached', type=int, choices=(0, 1), default=0)
+    parser.add_argument('--quality-only', action='store_true', help='One full query/fidelity pass per trace; final performance is measured separately')
     parser.add_argument('--jobs', type=int, default=9)
     args = parser.parse_args()
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
@@ -592,7 +670,7 @@ def main():
     if args.phase == 'build':
         build_job(args.job); return
     if args.phase == 'audit':
-        query_job(args.job, args.cached); return
+        query_job(args.job, args.cached, quality_only=args.quality_only); return
     root = args.output.resolve()
     if args.phase == 'prepare':
         import torch

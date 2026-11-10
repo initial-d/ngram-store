@@ -103,6 +103,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--job', type=Path)
     parser.add_argument('--jobs', type=int, default=24)
+    parser.add_argument('--expected-candidates', type=int, default=3672)
     args = parser.parse_args()
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
         parser.error('CPU only; empty CUDA_VISIBLE_DEVICES required')
@@ -111,15 +112,22 @@ def main():
         faiss.omp_set_num_threads(1)
         audit(args.job, args.output); return
     selection_hash = digest(args.frontier / 'selection.json')
-    args.output.mkdir(parents=True, exist_ok=False)
+    args.output.mkdir(parents=True, exist_ok=True)
+    prior = load(args.output / 'report.json') if (args.output / 'report.json').exists() else {}
     report = {'environment': environment(), 'frozen_selection_sha256': selection_hash,
-        'complete': [], 'failures': [], 'requested': 3672}
+        'complete': [], 'failures': [], 'requested': args.expected_candidates,
+        'previous_failures': prior.get('previous_failures', []) + prior.get('failures', [])}
     jobs = [Path(p) for m in load(args.frontier / 'prepare.json')['models'] for p in m['jobs']]
-    assert len(jobs) == 3672
+    assert len(jobs) == args.expected_candidates
     def execute(path):
         job = load(path); model = Path(job['common']).parent.name
         output = args.output / model / (job['name'] + '.json')
         output.parent.mkdir(exist_ok=True)
+        if output.exists():
+            value = load(output)
+            assert value['status'] == 'complete' and value['job_sha256'] == digest(path)
+            assert value['private_build_report_sha256'] == digest(job['report'])
+            return {'model': model, 'name': job['name'], 'report_sha256': digest(output)}
         with output.with_suffix('.log').open('w') as log:
             process = subprocess.run([sys.executable, '-m', 'tools.audit_tree_node_rows',
                 '--job', str(path), '--output', str(output)], stdout=log, stderr=subprocess.STDOUT)
@@ -136,7 +144,7 @@ def main():
             if len(report['complete']) % 50 == 0:
                 print(json.dumps({'reopened': len(report['complete']), 'failures': len(report['failures'])}), flush=True)
     assert digest(args.frontier / 'selection.json') == selection_hash
-    report['status'] = 'complete' if len(report['complete']) == 3672 and not report['failures'] else 'failed'
+    report['status'] = 'complete' if len(report['complete']) == args.expected_candidates and not report['failures'] else 'failed'
     write(args.output / 'report.json', report)
     assert report['status'] == 'complete'
 
