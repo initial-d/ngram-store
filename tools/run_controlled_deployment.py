@@ -42,7 +42,9 @@ def main():
             final['exit_code'] = code
             (completed if code == 0 else failed)[name] = final
             del running[name]
-        for i, path in enumerate(sorted((root / 'native-layouts').glob('*/prepared.json'))):
+        native_approved = (root / 'native-approved.json').exists()
+        native_models = sorted((root / 'native-layouts').glob('*/prepared.json')) if native_approved else []
+        for i, path in enumerate(native_models):
             name = 'cpu-' + path.parent.name
             if name not in started:
                 launch(name, [sys.executable, '-m', 'tools.controlled_native_deployment', 'lane',
@@ -87,7 +89,7 @@ def main():
             'source_sha256': digest(__file__), 'running': {k: {a: b for a, b in v.items() if a not in ('process', 'log')} for k, v in running.items()},
             'completed': completed, 'failed': failed, 'pending_count': len(pending),
             'external_gpu_clients': raw.splitlines(), 'rule': 'Preserve all external clients; never terminate unknown/training/evaluation processes.'}
-        ready = len(list((root / 'data').glob('*/prepared.json'))) == 2 and len(list((root / 'native-layouts').glob('*/prepared.json'))) == 6
+        ready = native_approved and len(list((root / 'data').glob('*/prepared.json'))) == 2 and len(native_models) == 6
         if ready and not running and not pending:
             state['status'] = 'failed' if failed else 'complete'
             write(state_path, state)
