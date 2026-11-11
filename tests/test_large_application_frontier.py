@@ -13,7 +13,7 @@ except ImportError:
 if np is not None:
     from tools.large_application_frontier import (bag_logits, bernoulli_upper, publish_job,
         select_sources, stratified_harm_upper)
-    from tools.benchmark_large_application import StagedClassifier, document_batches
+    from tools.benchmark_large_application import StagedClassifier, document_batches, resolve_worker_client
     from tools.tree_node_quality import digest, load, write
 
 
@@ -24,6 +24,61 @@ class ArrayRows:
 
 @unittest.skipUnless(np is not None, 'optional NumPy research dependency required')
 class FrontierTest(unittest.TestCase):
+    def test_recovery_accepts_complete_pairs_and_rejects_mixed_resources(self):
+        from tools.run_application_gpu_recovery import valid_block
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);job=root/'job.json';write(job,{'name':'source'})
+            cells=[]
+            for index in range(2):
+                output=root/(str(index)+'.json');output.with_suffix('.npz').write_bytes(b'payload')
+                cells.append({'output':str(output),'job':str(job),'job_sha256':digest(job),'mode':'host','batch_size':32,'budget_gib':8.})
+                write(output,{'status':'passed','job_sha256':digest(job),'mode':'host','batch_size':32,
+                    'allocator_budget_bytes':8*(1<<30),'gpu_before':{'gpu_uuid':'gpu0','external_compute_pids':[20]},
+                    'gpu_samples':[{'external_compute_pids':[20]}],'cpu_affinity':[18],'source_sha256':'worker',
+                    'resource_policy':'shared','payload_sha256':digest(output.with_suffix('.npz'))})
+            self.assertTrue(valid_block({'cells':cells}))
+            path=Path(cells[1]['output']);value=load(path);value['resource_policy']='exclusive';write(path,value)
+            self.assertFalse(valid_block({'cells':cells}))
+            value['resource_policy']='shared';value['cpu_affinity']=[19];write(path,value)
+            self.assertFalse(valid_block({'cells':cells}))
+            path.unlink();self.assertFalse(valid_block({'cells':cells}))
+
+    def test_shared_client_identity_preserves_existing_processes(self):
+        before = {'compute_pids': [100, 200]}
+        self.assertEqual(resolve_worker_client(before, {'compute_pids': [100, 200, 300]}, 300), 300)
+        self.assertEqual(resolve_worker_client(before, {'compute_pids': [100, 200, 999]}, 300), 999)
+        for clients in ([100, 200], [100, 200, 999, 998]):
+            with self.assertRaises(ValueError):
+                resolve_worker_client(before, {'compute_pids': clients}, 300)
+
+    @unittest.skipUnless(os.environ.get('MEFT_ROWS_LIBRARY') and os.environ.get('MEFT_STRUCTURAL_LIBRARY'), 'compiled row and structural libraries required')
+    def test_parallel_gate_publishes_quality_and_preserves_original_rows(self):
+        from tools.parallel_application_structure import gate
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);source=root/'source';data=root/'data';model=root/'model'
+            for path in (source,data,model/'jobs',model/'bundles'):path.mkdir(parents=True)
+            rows=np.array([[0.,0.],[1.,2.],[1.,2.]],dtype=np.float32)
+            np.save(source/'rows.npy',rows);(model/'source.raw').write_bytes(rows.tobytes())
+            np.savez(source/'classifier.npz',weight=np.array([[1.,0.],[0.,1.]],dtype=np.float32),bias=np.zeros(2,dtype=np.float32))
+            write(source/'training.json',{'rows_sha256':digest(source/'rows.npy')})
+            np.save(data/'registry.npy',np.array([[1,0],[1,2]],dtype='<u4').view('V8').reshape(-1))
+            write(data/'prepared.json',{'ngram_order':2})
+            for split in ('calibration','test'):
+                np.save(data/(split+'-ids.npy'),np.array([1,2,0]))
+                np.save(data/(split+'-offsets.npy'),np.array([0,1,2,3]))
+                np.save(data/(split+'-labels.npy'),np.array([1,1,0]))
+            import hashlib
+            write(model/'jobs/direct-fp32.json',{'source':str(source),'data':str(data),'common_files':{},'decoded_sha256':hashlib.sha256(rows.tobytes()).hexdigest()})
+            original=digest(source/'rows.npy')
+            gate(argparse.Namespace(model=model,mode='joint',cosine=.99,library=Path(os.environ['MEFT_ROWS_LIBRARY']),structural_library=Path(os.environ['MEFT_STRUCTURAL_LIBRARY'])))
+            job=model/'jobs/datrie-joint-0.99.json'
+            self.assertEqual(digest(source/'rows.npy'),original)
+            for split in ('calibration','test'):
+                result=load(model/'quality'/('datrie-joint-0.99-'+split+'.json'))
+                self.assertEqual(result['job_sha256'],digest(job));self.assertEqual(result['documents'],3)
+                self.assertEqual(result['accuracy'],1.)
+            self.assertEqual(load(model/'parallel-structure/datrie-joint-0.99/complete.json')['status'],'complete')
+
     @unittest.skipUnless(os.environ.get('MEFT_ROWS_LIBRARY'), 'compiled native row library required')
     def test_native_application_accepts_numpy_original_ids_and_retains_strict_validation(self):
         from tools.large_application_frontier import ApplicationRows

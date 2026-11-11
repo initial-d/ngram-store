@@ -83,10 +83,21 @@ class StagedClassifier:
         return (hidden @ self.weight.T + self.bias).to(torch.float32)
 
 
+def resolve_worker_client(before, after, process_pid):
+    """Identify our client without hiding existing host/container processes."""
+    clients = set(after['compute_pids'])
+    if process_pid in clients:
+        return process_pid
+    added = clients - set(before['compute_pids'])
+    if len(added) != 1:
+        raise ValueError('cannot uniquely identify worker CUDA client')
+    return added.pop()
+
+
 def worker(args):
     import torch
     import faiss
-    from .benchmark_device_gather import gpu_snapshot, monitor_client_pid
+    from .benchmark_device_gather import gpu_snapshot
     torch.set_num_threads(1); torch.set_num_interop_threads(1); faiss.omp_set_num_threads(1)
     torch.use_deterministic_algorithms(True)
     torch.backends.cuda.matmul.allow_tf32 = False
@@ -99,6 +110,7 @@ def worker(args):
     report = {'status': 'running', 'environment': {**environment(), 'device': 'cuda', 'gpu': uuid},
         'source_sha256': digest(__file__), 'job_sha256': digest(args.job), 'mode': args.mode,
         'allocator_budget_bytes': int(args.budget_gib * (1 << 30)), 'batch_size': args.batch_size,
+        'resource_policy': 'shared' if args.allow_shared_gpu else 'exclusive',
         'cuda_selector': selector, 'gpu_samples': [], 'cpu_affinity': sorted(os.sched_getaffinity(0)),
         'host_before': memory_details(), 'samples_ms': [], 'complete_model_bytes': job['complete_model_bytes'],
         'timing_scope': 'First 256 official test documents in original order; repeated complete classification requests, fixed request order, no document/token truncation.',
@@ -109,17 +121,18 @@ def worker(args):
     reader = resident = engine = classifier = None
     try:
         before = gpu_snapshot(uuid, own_pid=0); report['gpu_before'] = before
-        if before['external_compute_pids'] or before['utilization_percent'] > 5:
+        if not args.allow_shared_gpu and (before['external_compute_pids'] or before['utilization_percent'] > 5):
             raise ValueError('external GPU competition before opening')
         total = torch.cuda.get_device_properties(0).total_memory
         if report['allocator_budget_bytes'] > total: raise ValueError('allocator cap exceeds physical GPU memory')
         torch.cuda.set_per_process_memory_fraction(report['allocator_budget_bytes'] / total)
         probe = torch.empty(1, device='cuda'); torch.cuda.synchronize()
-        monitor_pid = monitor_client_pid(gpu_snapshot(uuid, own_pid=0)); del probe
+        monitor_pid = resolve_worker_client(before, gpu_snapshot(uuid, own_pid=0), os.getpid()); del probe
+        report['monitor_client_pid'] = monitor_pid
         report['environment']['gpu'] = torch.cuda.get_device_name()
         def snapshot():
             value = gpu_snapshot(uuid, own_pid=monitor_pid); report['gpu_samples'].append(value)
-            if value['external_compute_pids'] or monitor_pid not in value['compute_pids']:
+            if monitor_pid not in value['compute_pids'] or (not args.allow_shared_gpu and value['external_compute_pids']):
                 raise ValueError('external GPU competition during measurement')
         if digest(source / 'training.json') != job['source_report_sha256']:
             raise ValueError('frozen source changed')
@@ -194,6 +207,7 @@ def main():
     p.add_argument('--chunk-rows', type=int, default=4096)
     p.add_argument('--repeat', type=int, default=3); p.add_argument('--warmup', type=int, default=2)
     p.add_argument('--timing-only', action='store_true')
+    p.add_argument('--allow-shared-gpu', action='store_true', help='Record external GPU clients; shared timings are not exclusive performance evidence.')
     args = p.parse_args()
     if min(args.budget_gib, args.chunk_rows, args.repeat) <= 0 or args.warmup < 0:
         p.error('positive allocator/staging/repeat settings required')

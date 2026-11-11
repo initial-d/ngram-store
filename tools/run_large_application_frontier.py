@@ -20,7 +20,8 @@ from .tree_node_quality import digest, load, serving_files, write
 def peer_reserved_gpus(root):
     """A paired Qwen lane owns its device even between child CUDA contexts."""
     reserved = set()
-    for path in (root / 'dispatch.json', root / 'native-parallel' / 'dispatch.json'):
+    for path in (root / 'dispatch.json', root / 'native-parallel' / 'dispatch.json',
+                 root / 'application-frontier' / 'gpu-recovery' / 'dispatch.json'):
         if not path.exists(): continue
         state = load(path)
         if state.get('status') == 'running' and state.get('controller_pid'):
@@ -33,6 +34,16 @@ def peer_reserved_gpus(root):
             except FileNotFoundError: continue
             if str(root).encode() in command: reserved.add(int(item['gpu']))
     return reserved
+
+
+def acquire_gpu_lease(root, gpu):
+    """Cooperating task controllers hold a lease across child CUDA gaps."""
+    import fcntl
+    path = root / 'inventory/gpu-scheduler-locks' / f'gpu{gpu}.lock'
+    path.parent.mkdir(parents=True, exist_ok=True); handle = path.open('a')
+    try: fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError: handle.close(); return None
+    return handle
 
 
 class AdoptedChild:
@@ -100,6 +111,9 @@ def run(args):
         previous_failures = {**previous.get('previous_attempt_failures', {}), **previous.get('failed', {})}
         for name, item in previous.get('running', {}).items():
             adopted = dict(item); adopted.update(child=AdoptedChild(adopted), log=open(os.devnull, 'w'))
+            if adopted.get('gpu') is not None:
+                adopted['gpu_lock'] = acquire_gpu_lease(root, int(adopted['gpu']))
+                if adopted['gpu_lock'] is None: raise RuntimeError('cannot adopt a GPU already leased by a peer')
             running[name] = adopted
         started.update(completed); started.update(running)
     env = {**os.environ, 'OMP_NUM_THREADS': '4', 'MKL_NUM_THREADS': '4', 'OPENBLAS_NUM_THREADS': '1',
@@ -114,19 +128,23 @@ def run(args):
             verified_sources[identity] = source_job(entry, output)
         return verified_sources[identity]
     def launch(name, command, cores, gpu=None):
+        lease = acquire_gpu_lease(root, gpu) if gpu is not None else None
+        if gpu is not None and lease is None: return False
         log_path = output / 'logs' / (name + '.log'); log_path.parent.mkdir(parents=True, exist_ok=True)
         log = log_path.open('a')
         argv = ['taskset', '-c', cores, sys.executable, '-m', *command]
         child = subprocess.Popen(argv, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
             env={**env, 'CUDA_VISIBLE_DEVICES': '' if gpu is None else str(gpu)})
         running[name] = {'child': child, 'log': log, 'command': argv, 'pid': child.pid,
-            'gpu': gpu, 'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat()}
+            'gpu': gpu, 'gpu_lock': lease, 'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat()}
         started.add(name)
     while True:
         for name, item in list(running.items()):
             code = item['child'].poll()
             if code is None: continue
-            item['log'].close(); final = {k: v for k, v in item.items() if k not in ('child', 'log')}
+            item['log'].close()
+            if item.get('gpu_lock') is not None: item['gpu_lock'].close()
+            final = {k: v for k, v in item.items() if k not in ('child', 'log', 'gpu_lock')}
             final['exit_code'] = code
             (completed if code == 0 else failed)[name] = final
             del running[name]
@@ -202,7 +220,7 @@ def run(args):
                         launch(freeze_name, ['tools.large_application_frontier', 'freeze', '--built', str(built),
                             '--results', str(quality), '--output', str(frozen)], str(216 + i))
                 lane_name = 'gpu-' + source.name
-                if frozen.exists() and lane_name not in started and not (model / 'gpu-complete.json').exists():
+                if not args.skip_gpu_lanes and frozen.exists() and lane_name not in started and not (model / 'gpu-complete.json').exists():
                     controls = [verified_source_job(e) for e in selected
                         if e['family'][:2] == entry['family'][:2] and e['seed'] == entry['seed']]
                     ready_gpu.append((lane_name, model, controls))
@@ -218,11 +236,11 @@ def run(args):
                 '--controls', *map(str, controls)], f'{232+gpu*2}-{233+gpu*2}', gpu)
         state = {'status': 'running', 'updated_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
             'source_sha256': digest(__file__), 'selection_ready': selection_path.exists(),
-            'running': {n: {k: v for k, v in r.items() if k not in ('child', 'log')} for n, r in running.items()},
+            'running': {n: {k: v for k, v in r.items() if k not in ('child', 'log', 'gpu_lock')} for n, r in running.items()},
             'completed': completed, 'failed': failed, 'external_gpu_clients': raw.splitlines(),
             'peer_dispatch_reserved_gpus': sorted(peer_reserved),
             'previous_attempt_failures': previous_failures,
-            'rule': 'No training/evaluation/unknown processes are killed; free-device gates only.'}
+            'rule': 'No processes are killed; GPU recovery is separate.' if args.skip_gpu_lanes else 'No processes are killed; free-device gates only.'}
         if selection_path.exists() and not running:
             exact = [e for e in load(selection_path)['selected'] if e['family'][2] == 'exact']
             done = all((output / 'models' / Path(e['training']).name / 'gpu-complete.json').exists()
@@ -293,6 +311,7 @@ def main():
     c = sub.add_parser('run')
     for name in ('root', 'library', 'structural-library', 'upstream'): c.add_argument('--' + name, type=Path, required=True)
     c.add_argument('--resume-dispatch', type=Path)
+    c.add_argument('--skip-gpu-lanes', action='store_true', help='Continue CPU builds/audits while a separate GPU recovery controller completes pairs.')
     c = sub.add_parser('gpu-lane'); c.add_argument('--model', type=Path, required=True)
     c.add_argument('--controls', nargs='+', type=Path, required=True)
     args = p.parse_args()
