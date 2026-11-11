@@ -1,0 +1,2042 @@
+{
+  "audit_environment": {
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python /llm-align/duyimin/ngram-controlled-deployment-20261111/runtime-shared-recovery/tools/audit_large_application_results.py --root /llm-align/duyimin/ngram-controlled-deployment-20261111 --output /llm-align/duyimin/ngram-controlled-deployment-20261111/cpu-audit/ag-news-results.json --compact-output /llm-align/duyimin/ngram-controlled-deployment-20261111/cpu-audit/ag-news-summary.json --datasets ag_news",
+    "commit": "2e02a7e",
+    "cpu": "x86_64",
+    "device": "cpu",
+    "faiss": "1.15.0",
+    "faiss_compile_options": "OPTIMIZE DD AVX2 ",
+    "gpu": "unused",
+    "loadavg": [
+      39.0869140625,
+      39.4951171875,
+      29.34423828125
+    ],
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "15959554669f497f43133ed44ece4bd5f1670386cb45da8b2571a9f7a8b67d07",
+    "threads": 1,
+    "torch": "2.11.0"
+  },
+  "datasets": [
+    "ag_news"
+  ],
+  "full_audit_artifact": "/llm-align/duyimin/ngram-controlled-deployment-20261111/cpu-audit/ag-news-results.json",
+  "full_audit_sha256": "e658119dce36b81f9f008a0b3d0ecef5b7561bddb19ea9c752f84f9f33a696ef",
+  "models": [
+    {
+      "built_sha256": "14b707d774c25f59fbbdb31aff24b992ab1eed1558cad60ced8d732839fd7a9e",
+      "candidate_count": 88,
+      "choices": [
+        {
+          "budget": 0.0,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 3385744334,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32838690093831174,
+            "name": "generic-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "c1ce431cc0b931a509a11b2d4d0a2efe5892e2e05919ad1d1f908c7f2931ba1f",
+            "exact_source_rows": true,
+            "model_bytes": 3385744334,
+            "name": "generic-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.001,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 3385744334,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32838690093831174,
+            "name": "generic-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "c1ce431cc0b931a509a11b2d4d0a2efe5892e2e05919ad1d1f908c7f2931ba1f",
+            "exact_source_rows": true,
+            "model_bytes": 3385744334,
+            "name": "generic-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.005,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745620572,
+            "maximum_absolute_logit_error": 0.00044345855712890625,
+            "mean_nll": 0.32838745520010165,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "a7d7c65640edddfa8bb0e64802fb619d844dfb90c3d47f34e3db1eac9e60598b",
+            "exact_source_rows": false,
+            "model_bytes": 1745620572,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        },
+        {
+          "budget": 0.01,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745620572,
+            "maximum_absolute_logit_error": 0.00044345855712890625,
+            "mean_nll": 0.32838745520010165,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "a7d7c65640edddfa8bb0e64802fb619d844dfb90c3d47f34e3db1eac9e60598b",
+            "exact_source_rows": false,
+            "model_bytes": 1745620572,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        },
+        {
+          "budget": 0.02,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745620572,
+            "maximum_absolute_logit_error": 0.00044345855712890625,
+            "mean_nll": 0.32838745520010165,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "a7d7c65640edddfa8bb0e64802fb619d844dfb90c3d47f34e3db1eac9e60598b",
+            "exact_source_rows": false,
+            "model_bytes": 1745620572,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        }
+      ],
+      "family": [
+        "ag_news",
+        "uniform",
+        "exact",
+        0
+      ],
+      "full_gpu_checks": [
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8969736842105264,
+          "cpu_accuracy": 0.8969736842105264,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8967105263157895,
+          "cpu_accuracy": 0.8967105263157895,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-fp32",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-sq-fp16",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "generic-zstd",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "native-zstd-sq-fp16",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8969736842105264,
+          "cpu_accuracy": 0.8969736842105264,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8967105263157895,
+          "cpu_accuracy": 0.8967105263157895,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-uniform-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        }
+      ],
+      "gpu_cells": {
+        "allocator-oom": 60,
+        "passed": 300
+      },
+      "model": "ag_news-exact-uniform-s11-lr10",
+      "official_test_documents": 7600,
+      "paired_blocks": 30,
+      "rows": 6989612,
+      "seed": 11,
+      "selection_sha256": "a2071bc6a9ba0f340e351fe436168a4cf65ebaeefb09f0d8ea61bbfb2c2acaec"
+    },
+    {
+      "built_sha256": "c6e2d536b8dd190f065a67ba420bb922fc994c3b335a00b325dd9c64eae33aa1",
+      "candidate_count": 88,
+      "choices": [
+        {
+          "budget": 0.0,
+          "heldout": {
+            "accuracy": 0.8963157894736842,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 3385475378,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32831280395408685,
+            "name": "generic-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "b9058e190003f16af73201e4bb9f3d955a59d6e97c0d14bdad9af68216f680b3",
+            "exact_source_rows": true,
+            "model_bytes": 3385475378,
+            "name": "generic-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.001,
+          "heldout": {
+            "accuracy": 0.8963157894736842,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 3385475378,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32831280395408685,
+            "name": "generic-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "b9058e190003f16af73201e4bb9f3d955a59d6e97c0d14bdad9af68216f680b3",
+            "exact_source_rows": true,
+            "model_bytes": 3385475378,
+            "name": "generic-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.005,
+          "heldout": {
+            "accuracy": 0.8963157894736842,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745528804,
+            "maximum_absolute_logit_error": 0.0004889965057373047,
+            "mean_nll": 0.3283140890470129,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "94cb76ad2a8499bc07c4305fe788a5280d33e53672a9c28642f9ca2444e18d54",
+            "exact_source_rows": false,
+            "model_bytes": 1745528804,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        },
+        {
+          "budget": 0.01,
+          "heldout": {
+            "accuracy": 0.8963157894736842,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745528804,
+            "maximum_absolute_logit_error": 0.0004889965057373047,
+            "mean_nll": 0.3283140890470129,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "94cb76ad2a8499bc07c4305fe788a5280d33e53672a9c28642f9ca2444e18d54",
+            "exact_source_rows": false,
+            "model_bytes": 1745528804,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        },
+        {
+          "budget": 0.02,
+          "heldout": {
+            "accuracy": 0.8963157894736842,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745528804,
+            "maximum_absolute_logit_error": 0.0004889965057373047,
+            "mean_nll": 0.3283140890470129,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "94cb76ad2a8499bc07c4305fe788a5280d33e53672a9c28642f9ca2444e18d54",
+            "exact_source_rows": false,
+            "model_bytes": 1745528804,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        }
+      ],
+      "family": [
+        "ag_news",
+        "uniform",
+        "exact",
+        0
+      ],
+      "full_gpu_checks": [
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8961842105263158,
+          "cpu_accuracy": 0.8961842105263158,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8967105263157895,
+          "cpu_accuracy": 0.8967105263157895,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8964473684210527,
+          "cpu_accuracy": 0.8964473684210527,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-fp32",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-sq-fp16",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "generic-zstd",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "native-zstd-sq-fp16",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8961842105263158,
+          "cpu_accuracy": 0.8961842105263158,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8967105263157895,
+          "cpu_accuracy": 0.8967105263157895,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8964473684210527,
+          "cpu_accuracy": 0.8964473684210527,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-uniform-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        }
+      ],
+      "gpu_cells": {
+        "allocator-oom": 60,
+        "passed": 300
+      },
+      "model": "ag_news-exact-uniform-s3-lr10",
+      "official_test_documents": 7600,
+      "paired_blocks": 30,
+      "rows": 6989612,
+      "seed": 3,
+      "selection_sha256": "edd8d35fcc898f26aa0f9b05efb40cab0295ea3b0c2f8d0194448d2f90e4b913"
+    },
+    {
+      "built_sha256": "3b5b87dba31a0b4dbbda52d3e829db007f03cbb98d6fab48e9a95ba8d60f1cb9",
+      "candidate_count": 88,
+      "choices": [
+        {
+          "budget": 0.0,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 3385734344,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32778947273119746,
+            "name": "generic-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "6dc7676916476345888611203cec133ad73de8bedcd2f7f7951c887df4102541",
+            "exact_source_rows": true,
+            "model_bytes": 3385734344,
+            "name": "generic-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.001,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 3385734344,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32778947273119746,
+            "name": "generic-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "6dc7676916476345888611203cec133ad73de8bedcd2f7f7951c887df4102541",
+            "exact_source_rows": true,
+            "model_bytes": 3385734344,
+            "name": "generic-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.005,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745615266,
+            "maximum_absolute_logit_error": 0.000423431396484375,
+            "mean_nll": 0.32779047857376836,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "a443d19a301f87ad626f1091ecf25548df4fe9f4cc3f5534c6eb7b949d2ed9ee",
+            "exact_source_rows": false,
+            "model_bytes": 1745615266,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        },
+        {
+          "budget": 0.01,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745615266,
+            "maximum_absolute_logit_error": 0.000423431396484375,
+            "mean_nll": 0.32779047857376836,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "a443d19a301f87ad626f1091ecf25548df4fe9f4cc3f5534c6eb7b949d2ed9ee",
+            "exact_source_rows": false,
+            "model_bytes": 1745615266,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        },
+        {
+          "budget": 0.02,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": false,
+            "complete_model_bytes": 1745615266,
+            "maximum_absolute_logit_error": 0.000423431396484375,
+            "mean_nll": 0.32779047857376836,
+            "name": "native-zstd-sq-fp16",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "a443d19a301f87ad626f1091ecf25548df4fe9f4cc3f5534c6eb7b949d2ed9ee",
+            "exact_source_rows": false,
+            "model_bytes": 1745615266,
+            "name": "native-zstd-sq-fp16",
+            "simultaneous_upper_accuracy_loss": 0.004139037935241927,
+            "stratified_harmful_bounds": [
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 0,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 1,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 2,
+                "upper": 0.004139037935241927
+              },
+              {
+                "documents": 3000,
+                "harmful": 0,
+                "label": 3,
+                "upper": 0.004139037935241927
+              }
+            ]
+          }
+        }
+      ],
+      "family": [
+        "ag_news",
+        "uniform",
+        "exact",
+        0
+      ],
+      "full_gpu_checks": [
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8960526315789473,
+          "cpu_accuracy": 0.8960526315789473,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8978947368421053,
+          "cpu_accuracy": 0.8978947368421053,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-fp32",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-sq-fp16",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "generic-zstd",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "native-zstd-sq-fp16",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8960526315789473,
+          "cpu_accuracy": 0.8960526315789473,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8978947368421053,
+          "cpu_accuracy": 0.8978947368421053,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-uniform-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        }
+      ],
+      "gpu_cells": {
+        "allocator-oom": 60,
+        "passed": 300
+      },
+      "model": "ag_news-exact-uniform-s7-lr10",
+      "official_test_documents": 7600,
+      "paired_blocks": 30,
+      "rows": 6989612,
+      "seed": 7,
+      "selection_sha256": "98cbc9a529d20ecd29b9794573fdf0b70eb80dd19dee736b2e5065ff067ddd9d"
+    },
+    {
+      "built_sha256": "75472a83ee33d7a6c3074b07fa7df68364eda433d632aeb52f1eaa099d773532",
+      "candidate_count": 88,
+      "choices": [
+        {
+          "budget": 0.0,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592402398,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32835843765637385,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "55c87c32258d308c4b47a954f5e7cc2bba4094a9b689334f4d4ffd0575d973ae",
+            "exact_source_rows": true,
+            "model_bytes": 592402398,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.001,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592402398,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32835843765637385,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "55c87c32258d308c4b47a954f5e7cc2bba4094a9b689334f4d4ffd0575d973ae",
+            "exact_source_rows": true,
+            "model_bytes": 592402398,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.005,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592402398,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32835843765637385,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "55c87c32258d308c4b47a954f5e7cc2bba4094a9b689334f4d4ffd0575d973ae",
+            "exact_source_rows": true,
+            "model_bytes": 592402398,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.01,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592402398,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32835843765637385,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "55c87c32258d308c4b47a954f5e7cc2bba4094a9b689334f4d4ffd0575d973ae",
+            "exact_source_rows": true,
+            "model_bytes": 592402398,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.02,
+          "heldout": {
+            "accuracy": 0.8973684210526316,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592402398,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.32835843765637385,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "55c87c32258d308c4b47a954f5e7cc2bba4094a9b689334f4d4ffd0575d973ae",
+            "exact_source_rows": true,
+            "model_bytes": 592402398,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        }
+      ],
+      "family": [
+        "ag_news",
+        "zero",
+        "exact",
+        0
+      ],
+      "full_gpu_checks": [
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8967105263157895,
+          "cpu_accuracy": 0.8967105263157895,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "byte-dedup-zstd",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-fp32",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8967105263157895,
+          "cpu_accuracy": 0.8967105263157895,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8973684210526316,
+          "cpu_accuracy": 0.8973684210526316,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-zero-s11-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        }
+      ],
+      "gpu_cells": {
+        "allocator-oom": 60,
+        "passed": 240
+      },
+      "model": "ag_news-exact-zero-s11-lr10",
+      "official_test_documents": 7600,
+      "paired_blocks": 30,
+      "rows": 6989612,
+      "seed": 11,
+      "selection_sha256": "4d05dc79e62179882f45b5d030a28d0f4a9d83afcd03217c0a504caf0e747eee"
+    },
+    {
+      "built_sha256": "e69f6b695ae603ccc00dcbde957abff935433b57f3d51ffbc491f7f553c2f16f",
+      "candidate_count": 88,
+      "choices": [
+        {
+          "budget": 0.0,
+          "heldout": {
+            "accuracy": 0.896578947368421,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 593056864,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3282885026859301,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "c40fd8bdc13d8e8e795926a1ba13d9c2e7a40aa5bd758c65e8e85f1d2bf8b8ad",
+            "exact_source_rows": true,
+            "model_bytes": 593056864,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.001,
+          "heldout": {
+            "accuracy": 0.896578947368421,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 593056864,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3282885026859301,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "c40fd8bdc13d8e8e795926a1ba13d9c2e7a40aa5bd758c65e8e85f1d2bf8b8ad",
+            "exact_source_rows": true,
+            "model_bytes": 593056864,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.005,
+          "heldout": {
+            "accuracy": 0.896578947368421,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 593056864,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3282885026859301,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "c40fd8bdc13d8e8e795926a1ba13d9c2e7a40aa5bd758c65e8e85f1d2bf8b8ad",
+            "exact_source_rows": true,
+            "model_bytes": 593056864,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.01,
+          "heldout": {
+            "accuracy": 0.896578947368421,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 593056864,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3282885026859301,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "c40fd8bdc13d8e8e795926a1ba13d9c2e7a40aa5bd758c65e8e85f1d2bf8b8ad",
+            "exact_source_rows": true,
+            "model_bytes": 593056864,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.02,
+          "heldout": {
+            "accuracy": 0.896578947368421,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 593056864,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3282885026859301,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "c40fd8bdc13d8e8e795926a1ba13d9c2e7a40aa5bd758c65e8e85f1d2bf8b8ad",
+            "exact_source_rows": true,
+            "model_bytes": 593056864,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        }
+      ],
+      "family": [
+        "ag_news",
+        "zero",
+        "exact",
+        0
+      ],
+      "full_gpu_checks": [
+        {
+          "accuracy": 0.896578947368421,
+          "cpu_accuracy": 0.896578947368421,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8971052631578947,
+          "cpu_accuracy": 0.8971052631578947,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8960526315789473,
+          "cpu_accuracy": 0.8960526315789473,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.896578947368421,
+          "cpu_accuracy": 0.896578947368421,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "byte-dedup-zstd",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.896578947368421,
+          "cpu_accuracy": 0.896578947368421,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-fp32",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8963157894736842,
+          "cpu_accuracy": 0.8963157894736842,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.896578947368421,
+          "cpu_accuracy": 0.896578947368421,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8971052631578947,
+          "cpu_accuracy": 0.8971052631578947,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8960526315789473,
+          "cpu_accuracy": 0.8960526315789473,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-zero-s3-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        }
+      ],
+      "gpu_cells": {
+        "allocator-oom": 60,
+        "passed": 240
+      },
+      "model": "ag_news-exact-zero-s3-lr10",
+      "official_test_documents": 7600,
+      "paired_blocks": 30,
+      "rows": 6989612,
+      "seed": 3,
+      "selection_sha256": "b490c51df391c637e9747f950849f6b45fd72755ec12c5ad74558f390908441f"
+    },
+    {
+      "built_sha256": "4d2e89ad1a1acc4af201ef6ae8e96d32f81ecb6d8a6e29c4b876ddf705666557",
+      "candidate_count": 88,
+      "choices": [
+        {
+          "budget": 0.0,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592720497,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3278182548574573,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "0b5f288ef2ac6980b985e7334c1c6e5517570daf446e028a0b299692a541e711",
+            "exact_source_rows": true,
+            "model_bytes": 592720497,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.001,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592720497,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3278182548574573,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "0b5f288ef2ac6980b985e7334c1c6e5517570daf446e028a0b299692a541e711",
+            "exact_source_rows": true,
+            "model_bytes": 592720497,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.005,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592720497,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3278182548574573,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "0b5f288ef2ac6980b985e7334c1c6e5517570daf446e028a0b299692a541e711",
+            "exact_source_rows": true,
+            "model_bytes": 592720497,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.01,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592720497,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3278182548574573,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "0b5f288ef2ac6980b985e7334c1c6e5517570daf446e028a0b299692a541e711",
+            "exact_source_rows": true,
+            "model_bytes": 592720497,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        },
+        {
+          "budget": 0.02,
+          "heldout": {
+            "accuracy": 0.8976315789473684,
+            "accuracy_loss": 0.0,
+            "byte_exact_source_rows": true,
+            "complete_model_bytes": 592720497,
+            "maximum_absolute_logit_error": 0.0,
+            "mean_nll": 0.3278182548574573,
+            "name": "byte-dedup-zstd",
+            "prediction_disagreement_fraction": 0.0
+          },
+          "selected": {
+            "accuracy_loss": 0.0,
+            "calibration_report_sha256": "0b5f288ef2ac6980b985e7334c1c6e5517570daf446e028a0b299692a541e711",
+            "exact_source_rows": true,
+            "model_bytes": 592720497,
+            "name": "byte-dedup-zstd",
+            "simultaneous_upper_accuracy_loss": 0.0,
+            "stratified_harmful_bounds": []
+          }
+        }
+      ],
+      "family": [
+        "ag_news",
+        "zero",
+        "exact",
+        0
+      ],
+      "full_gpu_checks": [
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8961842105263158,
+          "cpu_accuracy": 0.8961842105263158,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8977631578947368,
+          "cpu_accuracy": 0.8977631578947368,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "byte-dedup-zstd",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "direct-fp32",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "host"
+        },
+        {
+          "accuracy": 0.8961842105263158,
+          "cpu_accuracy": 0.8961842105263158,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-20-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-exact-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8977631578947368,
+          "cpu_accuracy": 0.8977631578947368,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-budget-22-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        },
+        {
+          "accuracy": 0.8976315789473684,
+          "cpu_accuracy": 0.8976315789473684,
+          "cpu_prediction_disagreement": 0,
+          "documents": 7600,
+          "job": "ag_news-hash-matched-zero-s7-lr10",
+          "maximum_absolute_logit_error_vs_cpu": 0.0,
+          "mode": "resident"
+        }
+      ],
+      "gpu_cells": {
+        "allocator-oom": 60,
+        "passed": 240
+      },
+      "model": "ag_news-exact-zero-s7-lr10",
+      "official_test_documents": 7600,
+      "paired_blocks": 30,
+      "rows": 6989612,
+      "seed": 7,
+      "selection_sha256": "c86472114c51b4065e4c48f59e7b4505dffd177b37dc1d39c56025972914727c"
+    }
+  ],
+  "scope": "Official AG News and DBpedia public classification. Allocator caps cover PyTorch CUDA allocations; host staging and host memory are outside them. Same-codec direct/native pairs and source/hash addressing controls remain distinct.",
+  "source_selection_sha256": "7bd7d0b76b75dee502a9cdbf195c1bb7362cc3893c9b1512bd0b201f0431713b",
+  "source_sha256": "32004df2851e7cb3496bfb61c9fafafec9fcee7f56e749b58a92be16677b0172",
+  "sources": [
+    {
+      "accuracy": 0.8976315789473684,
+      "complete_model_bytes": 3691353686,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "exact",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32838690093831174,
+      "report_sha256": "2fc8da020ad5c2b004dd532f1860fdec97ea9b9e0564a7bf5b1de5011d36afc3",
+      "rows": 6989612,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.8963157894736842,
+      "complete_model_bytes": 3691353674,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "exact",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32831280395408685,
+      "report_sha256": "7f926af16d507304f20d06a8bfb78f438b2a00644efc3af1342eb58bff64dece",
+      "rows": 6989612,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8973684210526316,
+      "complete_model_bytes": 3691353690,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "exact",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32778947273119746,
+      "report_sha256": "b89c7af2f7e859b8cab5d27fbfab35b836feacbe4b306b5c55ed9bb213ae090d",
+      "rows": 6989612,
+      "seed": 7
+    },
+    {
+      "accuracy": 0.8969736842105264,
+      "complete_model_bytes": 705461208,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-budget",
+        1048576
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3283899746223077,
+      "report_sha256": "b199db8af636ee403503eca2c33430440352cba3b3a57aaeb94e61a7072d9732",
+      "rows": 1048577,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.8961842105263158,
+      "complete_model_bytes": 705461199,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-budget",
+        1048576
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3284115165839669,
+      "report_sha256": "2fab4919b38a13fbcbb6c3199ac63159fabc5d82e092e31f835389d693f3847b",
+      "rows": 1048577,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8960526315789473,
+      "complete_model_bytes": 705461197,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-budget",
+        1048576
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3277878906498683,
+      "report_sha256": "930197a0d6102f8d6b2e8c7cc770ecb9a89274ed887a1e9e98ab19aa3c4f111b",
+      "rows": 1048577,
+      "seed": 7
+    },
+    {
+      "accuracy": 0.8973684210526316,
+      "complete_model_bytes": 2316073946,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-budget",
+        4194304
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32787158268907013,
+      "report_sha256": "ada5e07e0102f9e45e833408bb91ccecd61ccdca04bebb6b29e659f86ef65aa2",
+      "rows": 4194305,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.8967105263157895,
+      "complete_model_bytes": 2316073937,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-budget",
+        4194304
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32774932962433445,
+      "report_sha256": "fc8d0e4e0099984d18323b54f95cf10c7a66bf3bc1fbfd2fb56d61467a1eab32",
+      "rows": 4194305,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8978947368421053,
+      "complete_model_bytes": 2316073932,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-budget",
+        4194304
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3273871119378645,
+      "report_sha256": "afee17f67463e904717b458ebf9804657a61291e9cd9ab239dc5c969240760f6",
+      "rows": 4194305,
+      "seed": 7
+    },
+    {
+      "accuracy": 0.8967105263157895,
+      "complete_model_bytes": 3747271108,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-matched",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32831172943115844,
+      "report_sha256": "dd1e0a93e7405d0cae275e879a550c442c9de1e1a8ae59f3318f283a790ddbf2",
+      "rows": 6989612,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.8964473684210527,
+      "complete_model_bytes": 3747271108,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-matched",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32835873988130815,
+      "report_sha256": "a5491d0f9e5986649af1bd139d9b26a601ee36262468a92fd9a816f755499517",
+      "rows": 6989612,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8973684210526316,
+      "complete_model_bytes": 3747271110,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "uniform",
+        "hash-matched",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32794204356284934,
+      "report_sha256": "f13df0e903ecaf57e870adee02689a0fcc79393bb5ac8b0f6da0ecd6d3a907a8",
+      "rows": 6989612,
+      "seed": 7
+    },
+    {
+      "accuracy": 0.8973684210526316,
+      "complete_model_bytes": 3691353668,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "exact",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32835843765637385,
+      "report_sha256": "d0669dff9ef81c9ab69d12c0c70c76771d702d956480b6601ff4311ce0b8bb18",
+      "rows": 6989612,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.896578947368421,
+      "complete_model_bytes": 3691353658,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "exact",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3282885026859301,
+      "report_sha256": "5e9791496646d5cb4143fb2ea6177954b213f93fd708300281e90bb323d2577e",
+      "rows": 6989612,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8976315789473684,
+      "complete_model_bytes": 3691353643,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "exact",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3278182548574573,
+      "report_sha256": "8a3613a938d7bcd03b32617a85c65ac60c96c57b71f26eef19e4201d64faf8fd",
+      "rows": 6989612,
+      "seed": 7
+    },
+    {
+      "accuracy": 0.8967105263157895,
+      "complete_model_bytes": 705461161,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-budget",
+        1048576
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3283329488391551,
+      "report_sha256": "0bbf0108e98220faed16b0969005fbf433950b8783234d2f3270299aa75f5ace",
+      "rows": 1048577,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.8963157894736842,
+      "complete_model_bytes": 705461153,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-budget",
+        1048576
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3283266997664607,
+      "report_sha256": "a20b988f3aa1d41795551960e17207bd491c0cf244ee420cd8bfb94e956183e5",
+      "rows": 1048577,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8961842105263158,
+      "complete_model_bytes": 705461164,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-budget",
+        1048576
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3278207594803689,
+      "report_sha256": "623b05c891a3a6ed446606a697a4324f903ed417e2da7a6a395bb1c288d99886",
+      "rows": 1048577,
+      "seed": 7
+    },
+    {
+      "accuracy": 0.8976315789473684,
+      "complete_model_bytes": 2316073917,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-budget",
+        4194304
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32789147362526627,
+      "report_sha256": "4de5ad4ee59e55edb7d2550d1624151a26731c5be28994b71b04fcba34958f39",
+      "rows": 4194305,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.8971052631578947,
+      "complete_model_bytes": 2316073908,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-budget",
+        4194304
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32783811502393057,
+      "report_sha256": "cab07aeb18ffdb8aa3c2f61476d552d18d71aeb1f62dc9e435aec219abe8e97a",
+      "rows": 4194305,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8977631578947368,
+      "complete_model_bytes": 2316073893,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-budget",
+        4194304
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.3273557998109809,
+      "report_sha256": "54debab5d7203c4c8092d9fd2fc4bb6e9d56e92428e3b0066489dfbeece7a956",
+      "rows": 4194305,
+      "seed": 7
+    },
+    {
+      "accuracy": 0.8973684210526316,
+      "complete_model_bytes": 3747271096,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-matched",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32838405681281135,
+      "report_sha256": "743031118879657cb88a0bc1e6adb2005c0c83121f2d19d8364a2a5b71d45cf7",
+      "rows": 6989612,
+      "seed": 11
+    },
+    {
+      "accuracy": 0.8960526315789473,
+      "complete_model_bytes": 3747271081,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-matched",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32830500013040675,
+      "report_sha256": "82bbfbbff5829403c5fb3b08751afcbc544cd4b3d98064c27ef931b92052cb65",
+      "rows": 6989612,
+      "seed": 3
+    },
+    {
+      "accuracy": 0.8976315789473684,
+      "complete_model_bytes": 3747271078,
+      "documents": 7600,
+      "family": [
+        "ag_news",
+        "zero",
+        "hash-matched",
+        0
+      ],
+      "learning_rate": 10.0,
+      "mean_nll": 0.32785115499325435,
+      "report_sha256": "cdf4017ecfe61846b00c0dbfee9f4c185f6512e4a64eb5f30a111e83e04837dd",
+      "rows": 6989612,
+      "seed": 7
+    }
+  ],
+  "status": "audited-complete-public-application-grid"
+}
