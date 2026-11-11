@@ -19,18 +19,46 @@ from .tree_node_quality import digest, load, serving_files, write
 
 def peer_reserved_gpus(root):
     """A paired Qwen lane owns its device even between child CUDA contexts."""
-    path = root / 'dispatch.json'
-    if not path.exists(): return set()
     reserved = set()
-    for item in load(path).get('running', {}).values():
-        if item.get('gpu') is None: continue
-        try:
-            command = Path(f"/proc/{item['pid']}/cmdline").read_bytes()
-        except FileNotFoundError:
-            continue
-        if str(root).encode() in command:
-            reserved.add(int(item['gpu']))
+    for path in (root / 'dispatch.json', root / 'native-parallel' / 'dispatch.json'):
+        if not path.exists(): continue
+        state = load(path)
+        if state.get('status') == 'running' and state.get('controller_pid'):
+            try: command = Path(f"/proc/{state['controller_pid']}/cmdline").read_bytes()
+            except FileNotFoundError: command = b''
+            if str(root).encode() in command: reserved.update(state.get('reserved_gpus', []))
+        for item in state.get('running', {}).values():
+            if item.get('gpu') is None: continue
+            try: command = Path(f"/proc/{item['pid']}/cmdline").read_bytes()
+            except FileNotFoundError: continue
+            if str(root).encode() in command: reserved.add(int(item['gpu']))
     return reserved
+
+
+class AdoptedChild:
+    """Observe an existing worker without terminating or duplicating it.
+
+An orphan may be reaped before its exit code can be read. In that case the
+immutable final artifact, rather than a fabricated process exit code, decides
+whether follow-through may continue. This distinction is recorded in state.
+"""
+    def __init__(self, item): self.item = item
+
+    def poll(self):
+        path = Path(f"/proc/{self.item['pid']}/cmdline")
+        try: command = path.read_bytes()
+        except FileNotFoundError: command = b''
+        expected = b'\0'.join(v.encode() for v in self.item['command'][3:]) + b'\0'
+        if command == expected:
+            return None
+        argv = self.item['command']
+        artifact = Path(argv[argv.index('--output') + 1]) if '--output' in argv else None
+        if 'build' in argv and artifact: artifact = artifact / 'built.json'
+        valid = artifact and artifact.exists() and load(artifact).get('status') in ('complete', 'frozen')
+        self.item['adoption_terminal_evidence'] = {'artifact': str(artifact),
+            'artifact_sha256': digest(artifact) if artifact and artifact.exists() else None,
+            'original_exit_code_observed': False, 'valid': bool(valid)}
+        return 0 if valid else 1
 
 
 def source_job(entry, root):
@@ -59,6 +87,14 @@ def run(args):
     output.mkdir(parents=True, exist_ok=True)
     state_path = output / 'dispatch.json'
     running = {}; completed = {}; failed = {}; started = set()
+    previous_failures = {}
+    if getattr(args, 'resume_dispatch', None):
+        previous = load(args.resume_dispatch)
+        completed.update(previous.get('completed', {})); previous_failures = previous.get('failed', {})
+        for name, item in previous.get('running', {}).items():
+            adopted = dict(item); adopted.update(child=AdoptedChild(adopted), log=open(os.devnull, 'w'))
+            running[name] = adopted
+        started.update(completed); started.update(running)
     env = {**os.environ, 'OMP_NUM_THREADS': '4', 'MKL_NUM_THREADS': '4', 'OPENBLAS_NUM_THREADS': '1',
         'CUBLAS_WORKSPACE_CONFIG': ':4096:8', 'CUDA_VISIBLE_DEVICES': ''}
     def launch(name, command, cores, gpu=None):
@@ -128,7 +164,10 @@ def run(args):
                 for path in jobs:
                     job = load(path); reference = job['quality_reference']
                     if path.stem == reference: candidates[reference] = path
-                if not any(n.startswith(eval_prefix) for n in running):
+                repair = output / 'native-id-recovery' / 'dispatch.json'
+                repair_busy = repair.exists() and any(v.get('model') == source.name
+                    for v in load(repair).get('running', {}).values())
+                if not repair_busy and not any(n.startswith(eval_prefix) for n in running):
                     for split in ('calibration', 'test'):
                         available = sorted(candidates, key=lambda n: (n != 'direct-fp32', n))
                         next_job = next((name for name in available if not (quality / (name + '-' + split + '.json')).exists()
@@ -166,6 +205,7 @@ def run(args):
             'running': {n: {k: v for k, v in r.items() if k not in ('child', 'log')} for n, r in running.items()},
             'completed': completed, 'failed': failed, 'external_gpu_clients': raw.splitlines(),
             'peer_dispatch_reserved_gpus': sorted(peer_reserved),
+            'previous_attempt_failures': previous_failures,
             'rule': 'No training/evaluation/unknown processes are killed; free-device gates only.'}
         if selection_path.exists() and not running:
             exact = [e for e in load(selection_path)['selected'] if e['family'][2] == 'exact']
@@ -236,6 +276,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__); sub = p.add_subparsers(dest='phase', required=True)
     c = sub.add_parser('run')
     for name in ('root', 'library', 'structural-library', 'upstream'): c.add_argument('--' + name, type=Path, required=True)
+    c.add_argument('--resume-dispatch', type=Path)
     c = sub.add_parser('gpu-lane'); c.add_argument('--model', type=Path, required=True)
     c.add_argument('--controls', nargs='+', type=Path, required=True)
     args = p.parse_args()
