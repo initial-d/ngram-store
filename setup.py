@@ -24,6 +24,14 @@ class BuildNative(build_py):
         command = [*compiler, "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fPIC",
                    "-dynamiclib" if darwin else "-shared", str(Path(__file__).parent / "native" / "meft_rows.c"),
                    "-lz", "-o", str(directory / filename)]
+        # Explicit opt-in keeps portable wheels independent of libdeflate.
+        # The linked library must be available on the deployment machine.
+        if os.environ.get("MEFT_USE_LIBDEFLATE") == "1":
+            command.extend(["-DMEFT_USE_LIBDEFLATE", "-ldeflate"])
+        for codec, library in (("LZ4", "lz4"), ("ZSTD", "zstd")):
+            if os.environ.get("MEFT_USE_" + codec) == "1":
+                command.extend(["-DMEFT_USE_" + codec, "-l" + library])
+        command.extend(shlex.split(os.environ.get("MEFT_NATIVE_FLAGS", "")))
         if darwin:
             command.extend(["-arch", platform.machine()])
         subprocess.run(command, check=True)

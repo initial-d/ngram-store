@@ -2,6 +2,7 @@
 import os
 from pathlib import Path
 import random
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -18,7 +19,7 @@ def main():
         subprocess.run([os.environ.get("CC", "cc"), "-std=c11", "-g", "-O1",
                         "-fsanitize=address,undefined", "-fno-omit-frame-pointer",
                         str(ROOT / "native/check_native.c"), str(ROOT / "native/meft_rows.c"),
-                        "-lz", "-o", str(driver)], check=True)
+                        "-lz", *shlex.split(os.environ.get('MEFT_NATIVE_TEST_FLAGS', '')), "-o", str(driver)], check=True)
         source, table = tmp / "raw", tmp / "table.men"
         rng = random.Random(7)
         base = rng.randbytes(256)
@@ -46,6 +47,23 @@ def main():
         if packed["raw_blocks"]:
             raise AssertionError("cache sanitizer fixture must use compressed blocks")
         subprocess.run([str(driver), str(table)], check=True)
+        flags = os.environ.get('MEFT_NATIVE_TEST_FLAGS', '')
+        for codec, capability in (('lz4', 'MEFT_USE_LZ4'), ('zstd', 'MEFT_USE_ZSTD')):
+            if capability not in flags:
+                continue
+            for implicit in (False, True):
+                for predictor in ('none', 'xor'):
+                    pack_native(source, table, 128, 8, False, predictor, implicit_identity=implicit, codec=codec)
+                    valid = table.read_bytes()
+                    subprocess.run([str(driver), str(table)], check=True)
+                    for i in range(32):
+                        changed = bytearray(valid)
+                        for _ in range(1 + i % 3):
+                            changed[rng.randrange(len(changed))] ^= rng.randrange(1, 256)
+                        if i % 4 == 0:
+                            changed = changed[:rng.randrange(len(changed))]
+                        table.write_bytes(changed)
+                        subprocess.run([str(driver), str(table)], check=True)
     print("ASan/UBSan: versions 1/2/3, 256 mutated/truncated files and 300-block cache growth/eviction checked.")
 
 

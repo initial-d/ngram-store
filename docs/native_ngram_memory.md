@@ -149,7 +149,20 @@ Rows are opaque source bytes; dtype/endian reconstruction belongs to the caller.
 Version 1 uses raw/zlib blocks. Optional version 2 adds previous-row bitwise XOR
 followed by zlib. Version 3 supports these same codecs but omits forwarding:
 it requires `unique_rows == nrows` and physical row IDs equal original IDs.
-The current reader accepts all three; older readers reject unsupported versions.
+The current reader retains all three. Explicit `codec="lz4"` or `codec="zstd"`
+exports version 4 (explicit forwarding) or 5 (implicit identity). These require
+the corresponding optional reader build; missing capabilities fail at open.
+The default export remains zlib/v1-v3, and older readers reject v4-v5.
+
+For an installation with development headers/libraries, use
+`make native NATIVE_CODEC_FLAGS='-DMEFT_USE_LIBDEFLATE -ldeflate'` to accelerate
+existing zlib payloads without rewriting them. Add `-DMEFT_USE_LZ4 -llz4` and
+`-DMEFT_USE_ZSTD -lzstd` for explicit new-codec exports. Wheel builds accept the
+matching `MEFT_USE_LIBDEFLATE=1`, `MEFT_USE_LZ4=1` and `MEFT_USE_ZSTD=1` environment
+variables; the linked libraries must exist on the deployment machine.
+`NativeRows.decoder_name` identifies the zlib implementation. Each handle reuses
+query-location scratch and skips sorting already grouped IDs; chunk from the
+first request if the retained scratch must have a fixed bound.
 The C ABI and descriptor widths are unchanged.
 
 The exporter shares only byte-identical rows when `deduplicate=True`. With
