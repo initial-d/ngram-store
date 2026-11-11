@@ -1,6 +1,7 @@
 import argparse
 import importlib.util
 import math
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -23,6 +24,24 @@ class ArrayRows:
 
 @unittest.skipUnless(np is not None, 'optional NumPy research dependency required')
 class FrontierTest(unittest.TestCase):
+    @unittest.skipUnless(os.environ.get('MEFT_ROWS_LIBRARY'), 'compiled native row library required')
+    def test_native_application_accepts_numpy_original_ids_and_retains_strict_validation(self):
+        from tools.large_application_frontier import ApplicationRows
+        from tools.native_row_store import pack_native
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'source.raw'
+            rows = np.array([[0., 0.], [1., -2.], [3., 4.]], dtype='<f4')
+            source.write_bytes(rows.tobytes())
+            pack_native(source, root / 'rows.meft', 8, 2, False)
+            reader = ApplicationRows({'kind': 'native', 'directory': str(root),
+                'library': os.environ['MEFT_ROWS_LIBRARY'], 'dim': 2})
+            try:
+                for ids in (np.array([2, 0, 1, 2], dtype=np.int64), np.array([], dtype=np.int64), [2, 1]):
+                    np.testing.assert_array_equal(reader.rows(ids), rows[ids])
+                for ids in (np.array([-1]), np.array([3]), np.array([1.5]), np.array([True])):
+                    with self.assertRaises(IndexError): reader.rows(ids)
+            finally: reader.close()
+
     def test_empty_oov_duplicate_and_mapped_bags_match_independent_means(self):
         rows = np.array([[99., 99.], [1., 2.], [-3., 4.]], dtype=np.float32)
         ids = np.array([1, 0, 1, 2, 0]); ptr = np.array([0, 3, 3, 4, 5])

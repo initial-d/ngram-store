@@ -229,7 +229,10 @@ class ApplicationRows:
     def rows(self, ids):
         if self.job['kind'] == 'source': return np.ascontiguousarray(self.reader[ids])
         if self.job['kind'] == 'faiss': return self.reader.rows(ids)
-        data = self.reader.rows(ids)
+        # The strict dependency-free native binding accepts Python integer IDs.
+        # Preserve values/types (including rejection of floats/bools) rather
+        # than silently casting the caller's NumPy scalars to integers.
+        data = self.reader.rows(ids.tolist() if isinstance(ids, np.ndarray) else ids)
         return np.frombuffer(data, dtype='<f4').reshape(len(ids), self.job['dim'])
 
     def close(self):
