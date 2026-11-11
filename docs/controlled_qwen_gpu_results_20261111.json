@@ -1,0 +1,1260 @@
+{
+  "audit_environment": {
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python /llm-align/duyimin/ngram-controlled-deployment-20261111/cpu-audit/tools/audit_native_gpu_results.py --root /llm-align/duyimin/ngram-controlled-deployment-20261111 --output /llm-align/duyimin/ngram-controlled-deployment-20261111/cpu-audit/qwen-results.json --compact-output /llm-align/duyimin/ngram-controlled-deployment-20261111/cpu-audit/qwen-summary.json",
+    "commit": "3036755",
+    "cpu": "x86_64",
+    "device": "cpu",
+    "faiss": "1.15.0",
+    "faiss_compile_options": "OPTIMIZE DD AVX2 ",
+    "gpu": "unused",
+    "loadavg": [
+      15.453125,
+      15.55712890625,
+      15.7509765625
+    ],
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "15959554669f497f43133ed44ece4bd5f1670386cb45da8b2571a9f7a8b67d07",
+    "threads": 1,
+    "torch": "2.11.0"
+  },
+  "capacity_scope": "Complete serving branch including row-store/common model metadata, separate from base Qwen weights and whole-process RAM. Compression is relative to the same decoded codec; quantization error relative to FP32 is a separate result.",
+  "full_audit_artifact": "/llm-align/duyimin/ngram-controlled-deployment-20261111/cpu-audit/qwen-results.json",
+  "full_audit_sha256": "ba5b3f7b6440d634a7bd7af6790a52c91ed5d59b6c607066f6027c805b2e11a0",
+  "gpu_reports": 864,
+  "interpretation": "Ratio above one means faster than direct FAISS under the same codec bytes. Bounds are observed pair ranges, not confidence intervals. Source seeds and repeat requests are clustered; no independent-sample, simultaneous or universal dominance claim.",
+  "paired_blocks": 108,
+  "paired_contrasts": 648,
+  "prompt_cached_logit_and_generation_hashes_match": true,
+  "scientific_scope": "Frozen trained full-key Qwen3-0.6B and Qwen3.5-4B branches. Generic native byte access, separate from DATrie/mark-compact and the independent AG News/DBpedia application grid.",
+  "source_sha256": "cd6e78a91d6f5a4836cf40d52b7dcbfea19d954fbf57ae7163df166eacb90a38",
+  "status": "audited-complete-qwen-native-grid",
+  "summary": [
+    {
+      "batch_size": 1,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.031639573713505675,
+        "median": 0.03162178833028184,
+        "minimum": 0.031535038244632996
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9985793032383776,
+        "maximum": 1.0080178685506904,
+        "minimum": 0.986148164856357
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.031639573713505675,
+        "median": 0.03162178833028184,
+        "minimum": 0.031535038244632996
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9978278632191177,
+        "maximum": 1.0081489412786862,
+        "minimum": 0.9868609533290826
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.031639573713505675,
+        "median": 0.03162178833028184,
+        "minimum": 0.031535038244632996
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9983600657606431,
+        "maximum": 1.0037827983470031,
+        "minimum": 0.9893937260637224
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.031639573713505675,
+        "median": 0.03162178833028184,
+        "minimum": 0.031535038244632996
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9981800691493453,
+        "maximum": 1.0218107381529093,
+        "minimum": 0.9835023669744442
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.031639573713505675,
+        "median": 0.03162178833028184,
+        "minimum": 0.031535038244632996
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0015040179232018,
+        "maximum": 1.0244071029098103,
+        "minimum": 0.9859317685875023
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.031639573713505675,
+        "median": 0.03162178833028184,
+        "minimum": 0.031535038244632996
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.001185185738256,
+        "maximum": 1.0228378306957293,
+        "minimum": 0.9748556826204405
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.023425580136514412,
+        "median": -0.09382717703615007,
+        "minimum": -0.09383129368286847
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9969152391993324,
+        "maximum": 1.0095270677166592,
+        "minimum": 0.9739606100185403
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.023425580136514412,
+        "median": -0.09382717703615007,
+        "minimum": -0.09383129368286847
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9969556789861662,
+        "maximum": 1.009829555400112,
+        "minimum": 0.9782184782914594
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.023425580136514412,
+        "median": -0.09382717703615007,
+        "minimum": -0.09383129368286847
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9944279338844543,
+        "maximum": 1.0079262910624178,
+        "minimum": 0.9734459686812161
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.023425580136514412,
+        "median": -0.09382717703615007,
+        "minimum": -0.09383129368286847
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.999541390611344,
+        "maximum": 1.0122836208860195,
+        "minimum": 0.9792894155504649
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.023425580136514412,
+        "median": -0.09382717703615007,
+        "minimum": -0.09383129368286847
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0004344484802812,
+        "maximum": 1.0150987452115052,
+        "minimum": 0.9915377349818806
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.023425580136514412,
+        "median": -0.09382717703615007,
+        "minimum": -0.09383129368286847
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9893973193524986,
+        "maximum": 1.0144190954361718,
+        "minimum": 0.9044460158461302
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.03690746981085313,
+        "median": -0.03698316153502157,
+        "minimum": -0.1500367567131864
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0026118700719955,
+        "maximum": 1.0086892591348695,
+        "minimum": 0.9919978125253698
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.03690746981085313,
+        "median": -0.03698316153502157,
+        "minimum": -0.1500367567131864
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9986378067999595,
+        "maximum": 1.0243455368047536,
+        "minimum": 0.9806442564371982
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.03690746981085313,
+        "median": -0.03698316153502157,
+        "minimum": -0.1500367567131864
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9947092216768249,
+        "maximum": 1.0227813823514627,
+        "minimum": 0.9715392554419356
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.03690746981085313,
+        "median": -0.03698316153502157,
+        "minimum": -0.1500367567131864
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9878182868342527,
+        "maximum": 1.013862646804163,
+        "minimum": 0.9281346672864227
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.03690746981085313,
+        "median": -0.03698316153502157,
+        "minimum": -0.1500367567131864
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0007478329415584,
+        "maximum": 1.0257042828306497,
+        "minimum": 0.9750983684031618
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.03690746981085313,
+        "median": -0.03698316153502157,
+        "minimum": -0.1500367567131864
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9964429978290533,
+        "maximum": 1.014277546962949,
+        "minimum": 0.9753790853218438
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.028665102702616907,
+        "median": -0.0016458127718017579,
+        "minimum": -0.017439011411675365
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9794559556094377,
+        "maximum": 1.0288800383814607,
+        "minimum": 0.9126340691679644
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.028665102702616907,
+        "median": -0.0016458127718017579,
+        "minimum": -0.017439011411675365
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9915252489143802,
+        "maximum": 1.0110598646594122,
+        "minimum": 0.9679068276742839
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.028665102702616907,
+        "median": -0.0016458127718017579,
+        "minimum": -0.017439011411675365
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0017101277862732,
+        "maximum": 1.0293655927644665,
+        "minimum": 0.9774053820874865
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.028665102702616907,
+        "median": -0.0016458127718017579,
+        "minimum": -0.017439011411675365
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9925998781149982,
+        "maximum": 1.0105052424976488,
+        "minimum": 0.978858862645538
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.028665102702616907,
+        "median": -0.0016458127718017579,
+        "minimum": -0.017439011411675365
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9955136547073792,
+        "maximum": 1.01328129034455,
+        "minimum": 0.9806073238286779
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.028665102702616907,
+        "median": -0.0016458127718017579,
+        "minimum": -0.017439011411675365
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9919540397832064,
+        "maximum": 1.0246660897399913,
+        "minimum": 0.9520042356658285
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.06833015271159937,
+        "median": -0.06833052165482556,
+        "minimum": -0.06833523059156588
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9924795229716988,
+        "maximum": 1.00889076343658,
+        "minimum": 0.9779821831800264
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.06833015271159937,
+        "median": -0.06833052165482556,
+        "minimum": -0.06833523059156588
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9920459999937514,
+        "maximum": 1.0209338069892935,
+        "minimum": 0.956600013825179
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.06833015271159937,
+        "median": -0.06833052165482556,
+        "minimum": -0.06833523059156588
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9924004758118435,
+        "maximum": 1.0189933057267828,
+        "minimum": 0.9664637524169756
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.06833015271159937,
+        "median": -0.06833052165482556,
+        "minimum": -0.06833523059156588
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9941739430772937,
+        "maximum": 1.0041977240671733,
+        "minimum": 0.9845227987613022
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.06833015271159937,
+        "median": -0.06833052165482556,
+        "minimum": -0.06833523059156588
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9866440796072645,
+        "maximum": 1.010575612147071,
+        "minimum": 0.9401090236389805
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.06833015271159937,
+        "median": -0.06833052165482556,
+        "minimum": -0.06833523059156588
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9902887561724111,
+        "maximum": 1.011714942673937,
+        "minimum": 0.9616682719935257
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.008750913997642717,
+        "median": -0.026799098008818634,
+        "minimum": -0.03738172589367039
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9891527142424493,
+        "maximum": 1.006605636116274,
+        "minimum": 0.9740109465176681
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.008750913997642717,
+        "median": -0.026799098008818634,
+        "minimum": -0.03738172589367039
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9929231625482386,
+        "maximum": 1.0066643959828885,
+        "minimum": 0.9789801201899588
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.008750913997642717,
+        "median": -0.026799098008818634,
+        "minimum": -0.03738172589367039
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9931703085882069,
+        "maximum": 1.0093535990943727,
+        "minimum": 0.9855209293101113
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.008750913997642717,
+        "median": -0.026799098008818634,
+        "minimum": -0.03738172589367039
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0051864277368303,
+        "maximum": 1.0470936989874795,
+        "minimum": 0.9823131051001005
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.008750913997642717,
+        "median": -0.026799098008818634,
+        "minimum": -0.03738172589367039
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.007828437029582,
+        "maximum": 1.0441427088304094,
+        "minimum": 0.9946936918113928
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.008750913997642717,
+        "median": -0.026799098008818634,
+        "minimum": -0.03738172589367039
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.002431666651657,
+        "maximum": 1.0480235217311737,
+        "minimum": 0.9744667796558362
+      },
+      "model": "qwen06",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.029734258291398308,
+        "median": 0.029623929368549407,
+        "minimum": 0.0295755549860921
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0031086188877398,
+        "maximum": 1.0750204245650936,
+        "minimum": 0.9789980804690707
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.029734258291398308,
+        "median": 0.029623929368549407,
+        "minimum": 0.0295755549860921
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.006640593488495,
+        "maximum": 1.069850692164523,
+        "minimum": 0.9770340956497717
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.029734258291398308,
+        "median": 0.029623929368549407,
+        "minimum": 0.0295755549860921
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0068782027363214,
+        "maximum": 1.0582625752510275,
+        "minimum": 0.9858533707399125
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.029734258291398308,
+        "median": 0.029623929368549407,
+        "minimum": 0.0295755549860921
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9967056357217154,
+        "maximum": 1.0145195485646163,
+        "minimum": 0.9711475550903362
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.029734258291398308,
+        "median": 0.029623929368549407,
+        "minimum": 0.0295755549860921
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9920451127741599,
+        "maximum": 1.0095088086128887,
+        "minimum": 0.9756215423495523
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "fp32",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.029734258291398308,
+        "median": 0.029623929368549407,
+        "minimum": 0.0295755549860921
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9912526364934603,
+        "maximum": 1.0058251272732697,
+        "minimum": 0.9696461165426156
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.07819161638351857,
+        "median": -0.07819504470717109,
+        "minimum": -0.07819523285075114
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0131108091761512,
+        "maximum": 1.1334396633237598,
+        "minimum": 0.9770433446841125
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.07819161638351857,
+        "median": -0.07819504470717109,
+        "minimum": -0.07819523285075114
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0060606617740877,
+        "maximum": 1.0573543502552236,
+        "minimum": 0.9752701869375171
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.07819161638351857,
+        "median": -0.07819504470717109,
+        "minimum": -0.07819523285075114
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9936550757504988,
+        "maximum": 1.0112724583504549,
+        "minimum": 0.9678312819882039
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.07819161638351857,
+        "median": -0.07819504470717109,
+        "minimum": -0.07819523285075114
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0214548433625124,
+        "maximum": 1.1897830964605902,
+        "minimum": 0.9811469817808467
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.07819161638351857,
+        "median": -0.07819504470717109,
+        "minimum": -0.07819523285075114
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0140418192312726,
+        "maximum": 1.1291703037056722,
+        "minimum": 0.980443869858605
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-16x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.07819161638351857,
+        "median": -0.07819504470717109,
+        "minimum": -0.07819523285075114
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0161105413017024,
+        "maximum": 1.1183644185961326,
+        "minimum": 0.9902158475773963
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.02752423967849671,
+        "median": -0.027644288225791014,
+        "minimum": -0.11370262592655855
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9800654770730138,
+        "maximum": 1.0878900505623164,
+        "minimum": 0.8387105462397294
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.02752423967849671,
+        "median": -0.027644288225791014,
+        "minimum": -0.11370262592655855
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.015113813662419,
+        "maximum": 1.1701773656181154,
+        "minimum": 0.9185245623121026
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.02752423967849671,
+        "median": -0.027644288225791014,
+        "minimum": -0.11370262592655855
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.998888829912218,
+        "maximum": 1.0899867863698776,
+        "minimum": 0.9345197786066373
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.02752423967849671,
+        "median": -0.027644288225791014,
+        "minimum": -0.11370262592655855
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.003155237530557,
+        "maximum": 1.0359312128825984,
+        "minimum": 0.9684911751343039
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.02752423967849671,
+        "median": -0.027644288225791014,
+        "minimum": -0.11370262592655855
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9930181296701412,
+        "maximum": 1.0782296894592076,
+        "minimum": 0.8504457157827326
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "pq-8x8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.02752423967849671,
+        "median": -0.027644288225791014,
+        "minimum": -0.11370262592655855
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9861693883400411,
+        "maximum": 1.0344430054215707,
+        "minimum": 0.916212559586369
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.016188016972693786,
+        "median": 0.014131818055365342,
+        "minimum": 0.00835890851641663
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9843865990144448,
+        "maximum": 1.0013996362122464,
+        "minimum": 0.9446671872428286
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.016188016972693786,
+        "median": 0.014131818055365342,
+        "minimum": 0.00835890851641663
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9912626105540203,
+        "maximum": 1.0133582813873667,
+        "minimum": 0.9511302194371557
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.016188016972693786,
+        "median": 0.014131818055365342,
+        "minimum": 0.00835890851641663
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9690688263275681,
+        "maximum": 1.0172362205076846,
+        "minimum": 0.9150308435345612
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.016188016972693786,
+        "median": 0.014131818055365342,
+        "minimum": 0.00835890851641663
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0008999115303285,
+        "maximum": 1.1298775466064133,
+        "minimum": 0.9099437046133206
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.016188016972693786,
+        "median": 0.014131818055365342,
+        "minimum": 0.00835890851641663
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.000647306060311,
+        "maximum": 1.1251544406521186,
+        "minimum": 0.9063764771257373
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq4",
+      "complete_branch_saving_fraction": {
+        "maximum": 0.016188016972693786,
+        "median": 0.014131818055365342,
+        "minimum": 0.00835890851641663
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9879828349535602,
+        "maximum": 1.127795886708862,
+        "minimum": 0.8883824718267616
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.05949201865990328,
+        "median": -0.05957249403573628,
+        "minimum": -0.05964688552815689
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.011007836034685,
+        "maximum": 1.1081752338916602,
+        "minimum": 0.9914129349954772
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.05949201865990328,
+        "median": -0.05957249403573628,
+        "minimum": -0.05964688552815689
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9985432913362269,
+        "maximum": 1.010831193806358,
+        "minimum": 0.9775422857792309
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.05949201865990328,
+        "median": -0.05957249403573628,
+        "minimum": -0.05964688552815689
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0093619815372261,
+        "maximum": 1.0668159018306211,
+        "minimum": 0.9737507346927459
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.05949201865990328,
+        "median": -0.05957249403573628,
+        "minimum": -0.05964688552815689
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0047513194835178,
+        "maximum": 1.0144331523120056,
+        "minimum": 0.9933241739841177
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.05949201865990328,
+        "median": -0.05957249403573628,
+        "minimum": -0.05964688552815689
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 0.9866314161928282,
+        "maximum": 1.0072692362896085,
+        "minimum": 0.9234660854761203
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq6",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.05949201865990328,
+        "median": -0.05957249403573628,
+        "minimum": -0.05964688552815689
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0026814290552242,
+        "maximum": 1.0167282204585268,
+        "minimum": 0.9939522498975258
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.01114080369341841,
+        "median": -0.013237286038192408,
+        "minimum": -0.016097168628594893
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.00006620940286,
+        "maximum": 1.078851822068564,
+        "minimum": 0.9372838971832453
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.01114080369341841,
+        "median": -0.013237286038192408,
+        "minimum": -0.016097168628594893
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0015346021428027,
+        "maximum": 1.0823559900983808,
+        "minimum": 0.9522365329573484
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 1,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.01114080369341841,
+        "median": -0.013237286038192408,
+        "minimum": -0.016097168628594893
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0004083382748599,
+        "maximum": 1.0839726406679446,
+        "minimum": 0.9344196995987963
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.01114080369341841,
+        "median": -0.013237286038192408,
+        "minimum": -0.016097168628594893
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0017688261105928,
+        "maximum": 1.0142999641372508,
+        "minimum": 0.9825842874747976
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "libdeflate"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.01114080369341841,
+        "median": -0.013237286038192408,
+        "minimum": -0.016097168628594893
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0010864612600492,
+        "maximum": 1.0221107094048918,
+        "minimum": 0.9941338626431842
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "prior"
+    },
+    {
+      "batch_size": 4,
+      "codec": "sq8",
+      "complete_branch_saving_fraction": {
+        "maximum": -0.01114080369341841,
+        "median": -0.013237286038192408,
+        "minimum": -0.016097168628594893
+      },
+      "complete_request_speed_ratio_direct_over_native": {
+        "geometric_mean": 1.0002760740243986,
+        "maximum": 1.020243835087144,
+        "minimum": 0.9781694280878346
+      },
+      "model": "qwen35",
+      "seed_cohort_pairs": 9,
+      "variant": "zlib"
+    }
+  ],
+  "timing_definition": "Paired direct/native ratio of complete prefill plus all 16 cached continuation steps. Geometric mean per eight-request/three-repeat cell, then balanced geometric mean of three seed times three cohort cells. Each contrast uses the same physical GPU and CPU core."
+}
