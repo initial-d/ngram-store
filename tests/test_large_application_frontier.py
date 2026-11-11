@@ -24,6 +24,19 @@ class ArrayRows:
 
 @unittest.skipUnless(np is not None, 'optional NumPy research dependency required')
 class FrontierTest(unittest.TestCase):
+    def test_application_payload_audit_rejects_changed_quality(self):
+        from tools.audit_large_application_results import checked_payload
+        from tools.tree_node_quality import array_digest
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'result.json';logits=np.array([[1.,0.],[0.,1.]],dtype=np.float32);labels=np.array([0,1])
+            nll=np.full(2,np.log(np.exp(0.)+np.exp(-1.)))
+            np.savez(path.with_suffix('.npz'),logits=logits,labels=labels,nll=nll)
+            value={'payload_sha256':digest(path.with_suffix('.npz')),'logits_sha256':array_digest(logits),
+                'documents':2,'accuracy':1.,'mean_nll':float(nll.mean())}
+            write(path,value);self.assertEqual(checked_payload(path)[0]['accuracy'],1.)
+            value['accuracy']=.5;write(path,value)
+            with self.assertRaises(ValueError):checked_payload(path)
+
     def test_recovery_accepts_complete_pairs_and_rejects_mixed_resources(self):
         from tools.run_application_gpu_recovery import valid_block
         with tempfile.TemporaryDirectory() as tmp:
