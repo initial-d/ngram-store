@@ -171,7 +171,7 @@ class FaissRows:
 
 
 def pack_codec_native(source, output, *, native_library, max_block_bytes=8192,
-                      row_order=None, chunk_rows=4096, block_rows=256, predictor='xor'):
+                      row_order=None, chunk_rows=4096, block_rows=256, predictor='xor', block_codec='zlib'):
     """Losslessly pack existing FAISS code bytes without refitting its codec.
 
     Original IDs and standalone codebooks stay fixed. This preserves the already
@@ -204,7 +204,7 @@ def pack_codec_native(source, output, *, native_library, max_block_bytes=8192,
                 digest.update(data); stream.write(data)
         storage = pack_native(staging, output / 'codes.meft', metadata['code_size'],
             block_rows=block_rows, deduplicate=False, predictor=predictor,
-            max_block_bytes=max_block_bytes, row_order=row_order)
+            max_block_bytes=max_block_bytes, row_order=row_order, codec=block_codec)
         with NativeRows(output / 'codes.meft', native_library) as reader:
             for begin in range(0, len(codes), chunk_rows):
                 end = min(begin + chunk_rows, len(codes))

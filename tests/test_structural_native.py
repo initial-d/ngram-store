@@ -28,6 +28,27 @@ class CompactionTest(unittest.TestCase):
 @unittest.skipUnless(platform.system() == "Linux" and platform.machine() in ("x86_64", "AMD64"),
                      "actual bundled DATrie archives target Linux x86-64")
 class RealStructuralTest(unittest.TestCase):
+    def test_borrowed_readonly_array_matches_copy_plan_and_rejects_unsafe_buffers(self):
+        import numpy as np
+        rows = np.array([[0., -0.], [1., 0.], [1., 0.], [.995, .01], [0., 1.]], dtype=np.float32)
+        keys = {1: 'a', 2: 'ab', 3: 'xab', 4: 'z'}
+        with self.assertRaisesRegex(ValueError, 'read-only'):
+            StructuralPlan.from_array(rows, keys, self.library)
+        rows.flags.writeable = False
+        for mode in ('layout', 'exact', 'joint'):
+            with StructuralPlan(rows.tobytes(), 2, keys, self.library, mode=mode) as copied:
+                with StructuralPlan.from_array(rows, keys, self.library, mode=mode) as borrowed:
+                    self.assertEqual(copied.representatives, borrowed.representatives)
+                    self.assertEqual(copied.row_order, borrowed.row_order)
+                    self.assertEqual(copied.source_sha256, borrowed.source_sha256)
+                    self.assertEqual(copied.reconstructed_sha256, borrowed.reconstructed_sha256)
+                    self.assertEqual(copied.original_bytes_preserved, borrowed.original_bytes_preserved)
+                    self.assertEqual(borrowed.lookup(['a', 'ab', 'missing']), [1, 2, None])
+        for bad in (rows[:, ::-1], rows.astype(np.float64), rows.reshape(-1), rows[:0]):
+            bad.flags.writeable = False
+            with self.assertRaisesRegex(ValueError, 'FP32'):
+                StructuralPlan.from_array(bad, keys, self.library)
+
     @classmethod
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
