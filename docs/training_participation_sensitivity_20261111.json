@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "status": "post-primary-sensitivity-registered-before-recovered-endpoint-calibration-and-test",
+  "parent_protocol": "controlled_memory_deployment_protocol_20261111.json",
+  "primary_results_known": "The 141 byte-change-qualified endpoints and three row-byte coverage failures are known. The primary selected DBpedia uniform exact family used LR3 and has lower official accuracy than the hash controls. These observations motivated this explicitly secondary audit; it is not a preregistered primary success.",
+  "question": "Does requiring every row to change its FP32 representation unfairly reject a fully processed training endpoint and alter learning-rate selection?",
+  "audit": "Count the actual stored training-ID stream and verify equality with training counts and strictly positive support for every nonpadding canonical row. Verify ten complete 504000-document epochs, preserved training implementation hash, and actual endpoint/classifier hashes. This proves recorded full-corpus participation, not a nonzero gradient or an FP32 change for every row.",
+  "family": "All nine existing DBpedia exact/uniform endpoints: seeds 3/7/11 and LR1/3/10. No retraining, source edits, status rewrites or padded rows.",
+  "calibration": "Rescore all nine on all 56000 calibration documents with identical FP64 mean reductions. Choose the lowest mean calibration NLL across three seeds. Freeze the selection before reading any recovered endpoint's official test.",
+  "confirmation": "Full 70000 official test documents for the three frozen selected endpoints. Keep the original primary strict-coverage selection and its test outcomes alongside this sensitivity.",
+  "boundary": "No test reselection and no replacement of original failures. An unchanged FP32 row is distinct from an unobserved training row. Classification or participation results alone do not prove large-table necessity. CPU audit/calculation duration is not serving latency evidence."
+}
