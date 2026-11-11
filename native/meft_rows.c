@@ -46,6 +46,8 @@ struct meft_rows {
     size_t scratch_capacity;
     struct request *requests;
     size_t request_capacity;
+    struct request *request_temporary;
+    size_t temporary_capacity;
 #ifdef MEFT_USE_LIBDEFLATE
     struct libdeflate_decompressor *decoder;
 #endif
@@ -78,6 +80,7 @@ void meft_rows_close(meft_rows *s) {
     if (s->data) munmap(s->data, s->size);
     free(s->scratch);
     free(s->requests);
+    free(s->request_temporary);
 #ifdef MEFT_USE_LIBDEFLATE
     libdeflate_free_decompressor(s->decoder);
 #endif
@@ -287,6 +290,40 @@ static int order(const void *a, const void *b) {
     const struct request *x = a, *y = b;
     return x->block < y->block ? -1 : x->block > y->block;
 }
+/* Stable integer radix grouping removes comparison callbacks for irregular
+ * batches. Original output positions stay attached to each request. Scratch
+ * grows only with this handle's maximum query, never with the row-table size.
+ * The comparison implementation remains available as an experiment control. */
+static int group_requests(meft_rows *s, size_t count) {
+#ifndef MEFT_DISABLE_RADIX_QUERY
+    if (count >= 64) {
+        if (s->temporary_capacity < count) {
+            void *next = realloc(s->request_temporary, count * sizeof(*s->request_temporary));
+            if (!next) return -1;
+            s->request_temporary = next; s->temporary_capacity = count;
+        }
+        uint64_t maximum = 0;
+        for (size_t i = 0; i < count; ++i)
+            if (s->requests[i].block > maximum) maximum = s->requests[i].block;
+        struct request *source = s->requests, *target = s->request_temporary;
+        for (unsigned shift = 0; shift < 64; shift += 8) {
+            size_t offsets[256] = {0}, sum = 0;
+            for (size_t i = 0; i < count; ++i) ++offsets[(source[i].block >> shift) & 255u];
+            for (size_t i = 0; i < 256; ++i) {
+                size_t n = offsets[i]; offsets[i] = sum; sum += n;
+            }
+            for (size_t i = 0; i < count; ++i)
+                target[offsets[(source[i].block >> shift) & 255u]++] = source[i];
+            struct request *swap = source; source = target; target = swap;
+            if ((maximum >> shift) <= 255u) break;
+        }
+        if (source != s->requests) memcpy(s->requests, source, count * sizeof(*source));
+        return 0;
+    }
+#endif
+    qsort(s->requests, count, sizeof(*s->requests), order);
+    return 0;
+}
 int meft_rows_gather(meft_rows *s, const uint64_t *ids, size_t count,
                      void *out, size_t outbytes, char *err, size_t cap) {
     if (!s) return fail(err, cap, "null store");
@@ -334,7 +371,9 @@ int meft_rows_gather(meft_rows *s, const uint64_t *ids, size_t count,
      * hit removal. Avoid O(n log n) sorting without changing query order. */
     size_t ordered = 1;
     while (ordered < count && requests[ordered - 1].block <= requests[ordered].block) ++ordered;
-    if (ordered < count) qsort(requests, count, sizeof(*requests), order);
+    if (ordered < count && group_requests(s, count)) {
+        reason = "allocation failed"; goto done;
+    }
     for (size_t i = 0; i < count;) {
         uint64_t block = requests[i].block;
         const unsigned char *d = s->data + s->desc_start + block * DESC;

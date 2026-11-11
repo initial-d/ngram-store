@@ -20,6 +20,30 @@ def descriptor_start(data):
 
 
 class NativeRowsTest(unittest.TestCase):
+    def test_integer_grouping_matches_comparison_control_across_byte_boundaries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp); control = directory / 'comparison.so'
+            subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared' if os.name != 'nt' else '-shared',
+                '-DMEFT_DISABLE_RADIX_QUERY', str(ROOT / 'native/meft_rows.c'), '-lz', '-o', str(control)], check=True)
+            source = directory / 'raw'; table = directory / 'rows.meft'
+            rows = [struct.pack('<I', i) + bytes([i % 251]) for i in range(70001)]
+            source.write_bytes(b''.join(rows))
+            rng = random.Random(714)
+            for block_rows in (1, 16, 256):
+                pack_native(source, table, 5, block_rows, False, 'xor')
+                for policy, budget in (('blocks', 0), ('blocks', 1 << 16), ('rows', 1 << 16)):
+                    with NativeRows(table, self.library, cache_bytes=budget, cache_policy=policy) as radix:
+                        with NativeRows(table, control, cache_bytes=budget, cache_policy=policy) as comparison:
+                            for size in (0, 1, 63, 64, 65, 511, 4097, 65):
+                                ids = [rng.randrange(len(rows)) for _ in range(size)]
+                                if size > 3: ids[:3] = [70000, 65536, 255]
+                                expected = b''.join(rows[i] for i in ids)
+                                self.assertEqual(radix.rows(ids), expected)
+                                self.assertEqual(comparison.rows(ids), expected)
+                                self.assertLessEqual(radix.cache_bytes, budget)
+                                # Same ordering contract also preserves repeated/cache-hit queries.
+                                self.assertEqual(radix.rows(ids), comparison.rows(ids))
+
     def test_optional_fast_codecs_original_ids_odd_width_forwarding_cache_and_capabilities(self):
         from tools.block_compression import compressor
         lib = ctypes.CDLL(str(self.library))
