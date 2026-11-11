@@ -295,7 +295,7 @@ static int order(const void *a, const void *b) {
  * grows only with this handle's maximum query, never with the row-table size.
  * The comparison implementation remains available as an experiment control. */
 static int group_requests(meft_rows *s, size_t count) {
-#ifndef MEFT_DISABLE_RADIX_QUERY
+#if defined(MEFT_USE_RADIX_QUERY) && !defined(MEFT_DISABLE_RADIX_QUERY)
     if (count >= 64) {
         if (s->temporary_capacity < count) {
             void *next = realloc(s->request_temporary, count * sizeof(*s->request_temporary));

@@ -95,7 +95,10 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
         raise ValueError("predictor must be none or xor")
     if codec not in ('zlib', 'lz4', 'zstd'):
         raise ValueError('codec must be zlib, lz4 or zstd')
-    from .block_compression import compressor
+    if __package__:
+        from .block_compression import compressor
+    else:
+        from block_compression import compressor
     encode_block = compressor(codec) if compress else None
     codec_id = {'zlib': 1, 'lz4': 3, 'zstd': 5}[codec]
     if type(compress) is not bool:

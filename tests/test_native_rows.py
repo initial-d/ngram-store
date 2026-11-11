@@ -5,6 +5,7 @@ import random
 import shlex
 import struct
 import subprocess
+import sys
 import tempfile
 import unittest
 import zlib
@@ -20,11 +21,26 @@ def descriptor_start(data):
 
 
 class NativeRowsTest(unittest.TestCase):
+    def test_direct_script_import_remains_compatible_with_legacy_demo_entrypoints(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            code = '''import pathlib, sys
+from native_row_store import NativeRows, pack_native
+root = pathlib.Path(sys.argv[1])
+source, output = root / 'raw', root / 'rows'
+source.write_bytes(b'abcabcxyz')
+pack_native(source, output, 3, 2)
+with NativeRows(output, sys.argv[2]) as reader:
+    assert reader.rows([2, 0, 1]) == b'xyzabcabc'
+'''
+            subprocess.run([sys.executable, '-c', code, tmp, str(self.library)],
+                env={**os.environ, 'PYTHONPATH': str(ROOT / 'tools')}, check=True)
+
     def test_integer_grouping_matches_comparison_control_across_byte_boundaries(self):
         with tempfile.TemporaryDirectory() as tmp:
-            directory = Path(tmp); control = directory / 'comparison.so'
-            subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared' if os.name != 'nt' else '-shared',
-                '-DMEFT_DISABLE_RADIX_QUERY', str(ROOT / 'native/meft_rows.c'), '-lz', '-o', str(control)], check=True)
+            directory = Path(tmp); control = directory / 'comparison.so'; experimental = directory / 'radix.so'
+            for library, flag in ((control, '-DMEFT_DISABLE_RADIX_QUERY'), (experimental, '-DMEFT_USE_RADIX_QUERY')):
+                subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared', flag,
+                    str(ROOT / 'native/meft_rows.c'), '-lz', '-o', str(library)], check=True)
             source = directory / 'raw'; table = directory / 'rows.meft'
             rows = [struct.pack('<I', i) + bytes([i % 251]) for i in range(70001)]
             source.write_bytes(b''.join(rows))
@@ -32,7 +48,7 @@ class NativeRowsTest(unittest.TestCase):
             for block_rows in (1, 16, 256):
                 pack_native(source, table, 5, block_rows, False, 'xor')
                 for policy, budget in (('blocks', 0), ('blocks', 1 << 16), ('rows', 1 << 16)):
-                    with NativeRows(table, self.library, cache_bytes=budget, cache_policy=policy) as radix:
+                    with NativeRows(table, experimental, cache_bytes=budget, cache_policy=policy) as radix:
                         with NativeRows(table, control, cache_bytes=budget, cache_policy=policy) as comparison:
                             for size in (0, 1, 63, 64, 65, 511, 4097, 65):
                                 ids = [rng.randrange(len(rows)) for _ in range(size)]

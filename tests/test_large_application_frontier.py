@@ -1,15 +1,19 @@
 import argparse
+import importlib.util
 import math
 from pathlib import Path
 import tempfile
 import unittest
 
-import numpy as np
-
-from tools.large_application_frontier import (bag_logits, bernoulli_upper, publish_job,
-    select_sources, stratified_harm_upper)
-from tools.benchmark_large_application import StagedClassifier, document_batches
-from tools.tree_node_quality import digest, load, write
+try:
+    import numpy as np
+except ImportError:
+    np = None
+if np is not None:
+    from tools.large_application_frontier import (bag_logits, bernoulli_upper, publish_job,
+        select_sources, stratified_harm_upper)
+    from tools.benchmark_large_application import StagedClassifier, document_batches
+    from tools.tree_node_quality import digest, load, write
 
 
 class ArrayRows:
@@ -17,6 +21,7 @@ class ArrayRows:
     def rows(self, ids): self.calls.append(ids.copy()); return self.values[ids]
 
 
+@unittest.skipUnless(np is not None, 'optional NumPy research dependency required')
 class FrontierTest(unittest.TestCase):
     def test_empty_oov_duplicate_and_mapped_bags_match_independent_means(self):
         rows = np.array([[99., 99.], [1., 2.], [-3., 4.]], dtype=np.float32)
@@ -29,6 +34,7 @@ class FrontierTest(unittest.TestCase):
         mapped = bag_logits(ArrayRows(rows), classifier, ids, ptr, [0, 1, 2, 3], np.array([0, 2, 1]))
         np.testing.assert_array_equal(mapped, mean[[2, 1, 0, 3]] @ classifier['weight'].T + classifier['bias'])
 
+    @unittest.skipUnless(importlib.util.find_spec('torch'), 'optional PyTorch dependency required')
     def test_staged_chunk_bound_and_gpu_schedule_match_cpu_semantics(self):
         rows = np.array([[100., 100.], [1., -2.], [3., 4.]], dtype=np.float32)
         reader = ArrayRows(rows)

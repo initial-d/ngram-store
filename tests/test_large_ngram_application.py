@@ -1,8 +1,13 @@
 import unittest
-import numpy as np
-from tools.large_ngram_application import document_keys, key_view, exact_ids, hash_ids, batch_csr
+try:
+    import numpy as np
+except ImportError:
+    np = None
+if np is not None:
+    from tools.large_ngram_application import document_keys, key_view, exact_ids, hash_ids, batch_csr
 
 
+@unittest.skipUnless(np is not None, 'optional NumPy research dependency required')
 class CanonicalNgramTest(unittest.TestCase):
     def test_exact_order_boundary_duplicates_and_oov_do_not_alias(self):
         keys = document_keys([1, 2, 1], 4)

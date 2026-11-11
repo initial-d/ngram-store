@@ -1,5 +1,6 @@
 """Real bundled DATrie tests; synthetic rows are correctness fixtures only."""
 import math
+import importlib.util
 import os
 from pathlib import Path
 import platform
@@ -28,6 +29,7 @@ class CompactionTest(unittest.TestCase):
 @unittest.skipUnless(platform.system() == "Linux" and platform.machine() in ("x86_64", "AMD64"),
                      "actual bundled DATrie archives target Linux x86-64")
 class RealStructuralTest(unittest.TestCase):
+    @unittest.skipUnless(importlib.util.find_spec('numpy'), 'optional NumPy research dependency required')
     def test_borrowed_readonly_array_matches_copy_plan_and_rejects_unsafe_buffers(self):
         import numpy as np
         rows = np.array([[0., -0.], [1., 0.], [1., 0.], [.995, .01], [0., 1.]], dtype=np.float32)
