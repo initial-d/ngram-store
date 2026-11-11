@@ -48,6 +48,16 @@ def main():
             raise AssertionError("cache sanitizer fixture must use compressed blocks")
         subprocess.run([str(driver), str(table)], check=True)
         flags = os.environ.get('MEFT_NATIVE_TEST_FLAGS', '')
+        for implicit in (False, True):
+            packed = pack_native(source, table, 128, 64, False, predictor='none', implicit_identity=implicit, codec='row-xor')
+            if not packed['row_packet_blocks']:
+                raise AssertionError('sanitizer fixture must exercise independently decoded row packets')
+            valid = table.read_bytes(); subprocess.run([str(driver), str(table)], check=True)
+            for i in range(64):
+                changed = bytearray(valid)
+                for _ in range(1 + i % 3): changed[rng.randrange(len(changed))] ^= rng.randrange(1, 256)
+                if i % 4 == 0: changed = changed[:rng.randrange(len(changed))]
+                table.write_bytes(changed); subprocess.run([str(driver), str(table)], check=True)
         for codec, capability in (('lz4', 'MEFT_USE_LZ4'), ('zstd', 'MEFT_USE_ZSTD')):
             if capability not in flags:
                 continue
@@ -64,7 +74,7 @@ def main():
                             changed = changed[:rng.randrange(len(changed))]
                         table.write_bytes(changed)
                         subprocess.run([str(driver), str(table)], check=True)
-    print("ASan/UBSan: versions 1/2/3, 256 mutated/truncated files and 300-block cache growth/eviction checked.")
+    print("ASan/UBSan: versions 1/2/3/6/7, 384 mutated/truncated files and 300-block cache growth/eviction checked; optional LZ4/Zstd cases run when enabled.")
 
 
 if __name__ == "__main__":

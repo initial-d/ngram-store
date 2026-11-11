@@ -17,10 +17,69 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def descriptor_start(data):
     header = HEADER.unpack_from(data)
-    return HEADER.size + (0 if header[1] in (3, 5) else header[2] * 8)
+    return HEADER.size + (0 if header[1] in (3, 5, 7) else header[2] * 8)
 
 
 class NativeRowsTest(unittest.TestCase):
+    def test_row_packets_preserve_original_ids_aliases_and_bounded_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            rows = [(b'x' * 16 + bytes([i % 2])) for i in range(129)]
+            source.write_bytes(b''.join(rows))
+            for options in ({}, {'implicit_identity': False}, {'deduplicate': True},
+                            {'row_order': list(reversed(range(len(rows))))},
+                            {'representatives': [i % 2 for i in range(len(rows))]}):
+                meta = pack_native(source, table, 17, 64, predictor='none', codec='row-xor',
+                                   **{'deduplicate': False, **options})
+                self.assertGreater(meta['row_packet_blocks'], 0)
+                self.assertEqual(meta['format_version'], 7 if not options else 6)
+                for policy in ('rows', 'blocks'):
+                    for budget in (0, 1024, 1 << 18):
+                        with NativeRows(table, self.library, cache_bytes=budget, cache_policy=policy) as reader:
+                            for ids in ([128, 1, 64, 0, 1, 127], list(range(len(rows))), []):
+                                self.assertEqual(reader.rows(ids), b''.join(rows[i] for i in ids))
+                                self.assertEqual(reader.rows(ids), b''.join(rows[i] for i in ids))
+                                self.assertLessEqual(reader.cache_bytes, budget)
+            with self.assertRaisesRegex(ValueError, 'predictor=none'):
+                pack_native(source, table, 17, 64, predictor='xor', codec='row-xor')
+
+    def test_row_packets_sparse_decode_work_and_uint32_offsets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            width = 512; rows = []
+            for i in range(4096):
+                row = bytearray(b'x'*width); row[i % width] ^= 1; rows.append(bytes(row))
+            source.write_bytes(b''.join(rows))
+            meta = pack_native(source, table, width, 4096, False, predictor='none', codec='row-xor')
+            self.assertEqual(meta['row_packet_blocks'], 1)
+            encoded = table.read_bytes(); offset = DESC.unpack_from(encoded, descriptor_start(encoded))[0]
+            self.assertEqual(encoded[offset], 4)
+            with NativeRows(table, self.library) as reader:
+                ids = [4095, 0, 17, 17]
+                self.assertEqual(reader.rows(ids), b''.join(rows[i] for i in ids))
+                self.assertEqual(reader.last_decoded_bytes, len(ids)*width)
+                self.assertLess(reader.last_decoded_bytes, len(rows)*width)
+
+    def test_row_packet_headers_and_queried_payloads_reject_malformed_offsets_and_masks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            width = 17; count = 64
+            source.write_bytes(b''.join(b'x'*16+bytes([i%2]) for i in range(count)))
+            pack_native(source, table, width, count, False, predictor='none', codec='row-xor')
+            valid = table.read_bytes(); payload = DESC.unpack_from(valid, descriptor_start(valid))[0]
+            for position, value in ((payload, 3), (payload+1, 1), (payload+4+width, 1)):
+                bad = bytearray(valid); bad[position] = value; table.write_bytes(bad)
+                with self.assertRaisesRegex(ValueError, 'packet header'): NativeRows(table, self.library)
+            area = payload+4+width+(count+1)*2
+            for position in (area+2, payload+4+width+2*2):
+                bad = bytearray(valid); bad[position] |= 128; table.write_bytes(bad)
+                with NativeRows(table, self.library) as reader:
+                    self.assertEqual(reader.rows([0]), source.read_bytes()[:width])
+                    with self.assertRaisesRegex(ValueError, 'row packet'): reader.rows([1])
+            # Earlier versions cannot reinterpret the new codec as a stream.
+            bad = bytearray(valid); struct.pack_into('<Q', bad, 8, 5); table.write_bytes(bad)
+            with self.assertRaises(ValueError): NativeRows(table, self.library)
+
     def test_direct_script_import_remains_compatible_with_legacy_demo_entrypoints(self):
         with tempfile.TemporaryDirectory() as tmp:
             code = '''import pathlib, sys
@@ -710,7 +769,7 @@ with NativeRows(output, sys.argv[2]) as reader:
                 with self.assertRaisesRegex(ValueError, "descriptor"):
                     NativeRows(packed, self.library)
                 changed = bytearray(data)
-                struct.pack_into("<Q", changed, 8, 6)
+                struct.pack_into("<Q", changed, 8, 8)
                 packed.write_bytes(changed)
                 with self.assertRaisesRegex(ValueError, "header"):
                     NativeRows(packed, self.library)

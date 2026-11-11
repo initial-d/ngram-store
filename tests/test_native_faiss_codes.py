@@ -1,5 +1,6 @@
 """Codec-byte identity and query lifetime fixtures; no performance evidence."""
 import importlib.util
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -28,17 +29,26 @@ class NativeFaissCodeTests(unittest.TestCase):
             for codec in ('fp32', 'sq-fp16', 'sq4', 'pq-2x4', 'opq-2x4', 'rq-2x4'):
                 source = root / codec
                 fit_codec(source, rows, codec, rows, iterations=2, opq_iterations=2)
-                for reordered in (False, True):
-                    out = root / (codec + '-native-' + str(reordered))
+                original_codes = np.load(source / 'codes.npy')
+                original_hash = hashlib.sha256(original_codes.tobytes()).hexdigest()
+                for reordered, block_codec in ((r, c) for r in (False, True) for c in ('zlib', 'row-xor')):
+                    out = root / (codec + '-native-' + str(reordered) + '-' + block_codec)
                     permutation = list(reversed(range(len(rows)))) if reordered else None
                     meta = pack_codec_native(source, out, native_library=LIBRARY,
-                        row_order=permutation, max_block_bytes=256, chunk_rows=73)
+                        row_order=permutation, max_block_bytes=256, chunk_rows=73,
+                        predictor='none' if block_codec == 'row-xor' else 'xor', block_codec=block_codec)
                     self.assertTrue(meta['codes_storage']['original_ids_byte_exact'])
+                    self.assertEqual(meta['codes_storage']['original_code_bytes_sha256'], original_hash)
                     with FaissRows(source) as direct, FaissRows(out, native_library=LIBRARY, cache_bytes=512) as native:
                         self.assertIsNone(native.codes)
                         for ids in ([42, 0, 42, 511], list(range(512)), []):
                             self.assertEqual(native.rows(ids).tobytes(), direct.rows(ids).tobytes())
-                        self.assertEqual(np.concatenate([x for _, x in native.decoded(73)]).shape, rows.shape)
+                        decoded = np.concatenate([x for _, x in native.decoded(73)])
+                        self.assertEqual(decoded.shape, rows.shape)
+                        # OPQ inverse transforms can round differently with a
+                        # different BLAS batch shape; compare identical schedules.
+                        reference = np.concatenate([x for _, x in direct.decoded(73)])
+                        self.assertEqual(decoded.tobytes(), reference.tobytes())
                         for bad in ([-1], [512], [1.5], [[1]]):
                             with self.assertRaises(ValueError): native.rows(bad)
                         close_reader(native)

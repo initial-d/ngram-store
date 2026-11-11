@@ -69,6 +69,23 @@ def prepare(args):
     write(args.output / 'prepared.json', {'status': 'complete', 'models': completed})
 
 
+def select_layouts(completed, variant='libdeflate', minimum_saving=0.):
+    """Select on calibration latency subject to COMPLETE branch byte savings."""
+    if not 0 <= minimum_saving < 1:
+        raise ValueError('minimum saving must be in [0, 1)')
+    selected = []
+    for codec in sorted({e['codec'] for e in completed}):
+        direct = next(e for e in completed if e['codec'] == codec and e['variant'] == 'direct')
+        direct_bytes = load(direct['report'])['complete_branch_bytes']
+        candidates = [e for e in completed if e['codec'] == codec and e['variant'] == variant
+                      and (minimum_saving == 0 or load(e['report'])['complete_branch_bytes']
+                           <= direct_bytes * (1 - minimum_saving))]
+        chosen = min(candidates, key=lambda e: (load(e['report'])['query']['calibration']['p50_ms'],
+                                               Path(e['job']).stem)) if candidates else direct
+        selected.append(chosen)
+    return selected
+
+
 def lane(args):
     """Fixed GPU/core assignment; sequential methods with rotating order.
 
@@ -153,13 +170,11 @@ def lane(args):
                 for split in inputs: reference_hashes[(entry['codec'], split)] = previous['query'][split]['output_hashes']
         completed.append({**entry, 'report': str(out)})
         write(root / 'cpu-progress.json', {'status': 'running', 'completed': completed, 'expected': len(entries)})
-    selected = []
-    for codec in sorted({e['codec'] for e in entries}):
-        candidates = [e for e in completed if e['codec'] == codec and e['variant'] == 'libdeflate']
-        # Official calibration prefixes determine the layout, never test times.
-        chosen = min(candidates, key=lambda e: (load(e['report'])['query']['calibration']['p50_ms'], Path(e['job']).stem))
-        selected.append(chosen)
-    selection = {'rule': 'Lowest complete-token CPU calibration p50 within each unchanged decoded codec; test never reselects.',
+    variant = getattr(args, 'selection_variant', 'libdeflate')
+    minimum_saving = getattr(args, 'minimum_saving', 0.)
+    selected = select_layouts(completed, variant, minimum_saving)
+    selection = {'rule': 'Lowest complete-token CPU calibration p50 within each unchanged decoded codec, subject to the declared complete-branch byte gate; direct fallback if no candidate qualifies. Test never reselects.',
+                 'variant': variant, 'minimum_complete_branch_saving': minimum_saving,
                  'selected': selected, 'cpu_reports_sha256': {e['report']: digest(e['report']) for e in completed}}
     write(root / 'selection.json', selection)
     write(root / 'cpu-progress.json', {'status': 'complete', 'completed': completed, 'expected': len(entries)})
@@ -203,6 +218,8 @@ def main():
         p.add_argument('--' + name, type=Path, required=True)
     p.add_argument('--requests', type=int, default=32)
     p.add_argument('--cpu-only', action='store_true')
+    p.add_argument('--selection-variant', default='libdeflate')
+    p.add_argument('--minimum-saving', type=float, default=0.)
     args = parser.parse_args()
     if args.phase == 'prepare': prepare(args)
     else: lane(args)

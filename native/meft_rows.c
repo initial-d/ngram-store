@@ -21,13 +21,14 @@
 #endif
 
 /* MEFTNAT1 + six little-endian uint64 fields:
- * version (1 through 5), nrows, rowbytes, unique_rows, block_rows, nblocks.
- * Versions 1/2/4 have nrows uint64 forwarding IDs. Versions 3/5 omit this map
- * and requires unique_rows == nrows: physical row ID is the original ID.
+ * version (1 through 7), nrows, rowbytes, unique_rows, block_rows, nblocks.
+ * Versions 1/2/4/6 have nrows uint64 forwarding IDs. Versions 3/5/7 omit this map
+ * and require unique_rows == nrows: physical row ID is the original ID.
  * Followed by nblocks descriptors:
  * absolute offset, stored bytes, raw bytes, codec (0=raw, 1=zlib,
  * 2=zlib over previous-row XOR residuals, versions >=2;
- * 3/4=LZ4 raw/XOR, 5/6=Zstd raw/XOR, versions 4/5 only).
+ * 3/4=LZ4 raw/XOR, 5/6=Zstd raw/XOR, versions >=4).
+ * Codec 7=independently decoded fixed-anchor row packets, versions 6/7 only.
  */
 #define HEADER 56u
 #define DESC 32u
@@ -75,6 +76,62 @@ static int fail(char *out, size_t cap, const char *msg) {
 static int span(uint64_t start, uint64_t count, uint64_t total) {
     return start <= total && count <= total - start;
 }
+struct row_packets {
+    const unsigned char *anchor, *offsets, *payload;
+    uint64_t rows, payload_bytes, width;
+    unsigned offset_width;
+};
+static uint64_t packet_offset(const unsigned char *p, unsigned width) {
+    uint64_t value = 0;
+    for (unsigned i = 0; i < width; ++i) value |= (uint64_t)p[i] << (8 * i);
+    return value;
+}
+static int packet_view(const unsigned char *bytes, uint64_t stored, uint64_t raw,
+                       uint64_t width, struct row_packets *view) {
+    if (stored < 4 || (bytes[0] != 2 && bytes[0] != 4) || bytes[1] || bytes[2] || bytes[3] ||
+        !width || !raw || raw % width || width > stored - 4) return -1;
+    uint64_t rows = raw / width, base = 4 + width;
+    unsigned offset_width = bytes[0];
+    if (rows > UINT64_MAX / offset_width - 1 ||
+        !span(base, (rows + 1) * offset_width, stored)) return -1;
+    uint64_t begin = base + (rows + 1) * offset_width;
+    const unsigned char *offsets = bytes + base;
+    if (packet_offset(offsets, offset_width) || packet_offset(offsets + offset_width, offset_width) ||
+        packet_offset(offsets + rows * offset_width, offset_width) != stored - begin) return -1;
+    *view = (struct row_packets){bytes + 4, offsets, bytes + begin, rows, stored - begin, width, offset_width};
+    return 0;
+}
+static int packet_row(const struct row_packets *view, uint64_t row, unsigned char *out,
+                      uint64_t *encoded_bytes) {
+    if (row >= view->rows) return -1;
+    uint64_t start = packet_offset(view->offsets + row * view->offset_width, view->offset_width);
+    uint64_t end = packet_offset(view->offsets + (row + 1) * view->offset_width, view->offset_width);
+    if (end < start || !span(start, end - start, view->payload_bytes)) return -1;
+    if (!row) {
+        if (start || end) return -1;
+        memcpy(out, view->anchor, (size_t)view->width);
+        *encoded_bytes += view->width + 2 * view->offset_width; return 0;
+    }
+    uint64_t masks = view->width / 8 + (view->width % 8 != 0);
+    if (end - start < masks) return -1;
+    const unsigned char *mask = view->payload + start;
+    if (view->width % 8 && (mask[masks - 1] >> (view->width % 8))) return -1;
+    uint64_t literals = 0;
+    for (uint64_t i = 0; i < masks; ++i) {
+        unsigned bits = mask[i];
+        while (bits) { bits &= bits - 1; ++literals; }
+    }
+    if (literals != end - start - masks) return -1;
+    const unsigned char *delta = mask + masks;
+    memcpy(out, view->anchor, (size_t)view->width);
+    for (uint64_t i = 0; i < masks; ++i) {
+        unsigned bits = mask[i];
+        for (unsigned bit = 0; bits; ++bit, bits >>= 1)
+            if (bits & 1) out[i * 8 + bit] ^= *delta++;
+    }
+    *encoded_bytes += end - start + view->width + 2 * view->offset_width;
+    return 0;
+}
 void meft_rows_close(meft_rows *s) {
     if (!s) return;
     if (s->data) munmap(s->data, s->size);
@@ -106,8 +163,8 @@ meft_rows *meft_rows_open(const char *path, char *err, size_t cap) {
     s->data = mapping;
     const char *reason = "invalid native row header";
     uint64_t version = le64(s->data + 8);
-    if (memcmp(s->data, "MEFTNAT1", 8) || version < 1 || version > 5) goto invalid;
-    s->implicit_identity = version == 3 || version == 5;
+    if (memcmp(s->data, "MEFTNAT1", 8) || version < 1 || version > 7) goto invalid;
+    s->implicit_identity = version == 3 || version == 5 || version == 7;
     s->nrows = le64(s->data + 16); s->width = le64(s->data + 24);
     s->unique = le64(s->data + 32); s->block_rows = le64(s->data + 40);
     s->nblocks = le64(s->data + 48);
@@ -127,7 +184,7 @@ meft_rows *meft_rows_open(const char *path, char *err, size_t cap) {
         if (rows > UINT64_MAX / s->width || raw != rows * s->width ||
             raw > SIZE_MAX || raw > ULONG_MAX || stored > ULONG_MAX ||
             off != previous_end || !span(off, stored, s->size) || !stored ||
-            codec > (version == 1 ? 1u : version <= 3 ? 2u : 6u) ||
+            codec > (version == 1 ? 1u : version <= 3 ? 2u : version <= 5 ? 6u : 7u) ||
             (!codec && stored != raw)) goto invalid;
 #ifndef MEFT_USE_LZ4
         if (codec == 3 || codec == 4) { reason = "LZ4 codec requires MEFT_USE_LZ4 build"; goto invalid; }
@@ -137,6 +194,12 @@ meft_rows *meft_rows_open(const char *path, char *err, size_t cap) {
 #ifndef MEFT_USE_ZSTD
         if (codec == 5 || codec == 6) { reason = "Zstd codec requires MEFT_USE_ZSTD build"; goto invalid; }
 #endif
+        if (codec == 7) {
+            struct row_packets view;
+            if (packet_view(s->data + off, stored, raw, s->width, &view)) {
+                reason = "invalid row packet header"; goto invalid;
+            }
+        }
         previous_end = off + stored;
     }
     reason = "unexpected trailing or missing bytes";
@@ -159,7 +222,7 @@ invalid:
 uint64_t meft_rows_count(const meft_rows *s) { return s ? s->nrows : 0; }
 uint64_t meft_rows_width(const meft_rows *s) { return s ? s->width : 0; }
 uint32_t meft_rows_codec_capabilities(void) {
-    uint32_t mask = 1;
+    uint32_t mask = 1 | 8; /* zlib/raw and independently decoded row packets. */
 #ifdef MEFT_USE_LZ4
     mask |= 2;
 #endif
@@ -380,6 +443,42 @@ int meft_rows_gather(meft_rows *s, const uint64_t *ids, size_t count,
         uint64_t off = le64(d), stored = le64(d + 8), raw = le64(d + 16), codec = le64(d + 24);
         const unsigned char *bytes = s->data + off;
         ++s->last_blocks;
+        if (codec == 7) {
+            struct row_packets view;
+            if (packet_view(bytes, stored, raw, s->width, &view)) { reason = "invalid row packet header"; goto done; }
+            ++s->last_decodes;
+            /* Unlike a stream codec, each original row can be reconstructed
+             * without decoding its neighbours. A block-cache request builds a
+             * block only when it fits; zero-cache/row-cache requests stay sparse. */
+            if (!s->cache_rows && s->cache_budget >= raw) {
+                if (s->scratch_capacity < raw) {
+                    void *next = realloc(s->scratch, (size_t)raw);
+                    if (!next) { reason = "allocation failed"; goto done; }
+                    s->scratch = next; s->scratch_capacity = (size_t)raw;
+                }
+                for (uint64_t row = 0; row < view.rows; ++row)
+                    if (packet_row(&view, row, s->scratch + row * s->width, &s->last_compressed_bytes)) {
+                        reason = "invalid row packet"; goto done;
+                    }
+                s->last_decoded_bytes += raw;
+                cache_insert(s, block, (size_t)raw, s->scratch);
+                do {
+                    memcpy((unsigned char *)out + requests[i].position * s->width,
+                           s->scratch + requests[i].within * s->width, (size_t)s->width); ++i;
+                } while (i < count && requests[i].block == block);
+            } else {
+                do {
+                    unsigned char *row = (unsigned char *)out + requests[i].position * s->width;
+                    if (packet_row(&view, requests[i].within, row, &s->last_compressed_bytes)) {
+                        reason = "invalid row packet"; goto done;
+                    }
+                    s->last_decoded_bytes += s->width;
+                    if (s->cache_rows) cache_insert(s, block * s->block_rows + requests[i].within, (size_t)s->width, row);
+                    ++i;
+                } while (i < count && requests[i].block == block);
+            }
+            continue;
+        }
         if (codec) {
             if (s->scratch_capacity < raw) {
                 void *next = realloc(s->scratch, (size_t)raw);

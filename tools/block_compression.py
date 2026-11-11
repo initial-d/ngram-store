@@ -7,6 +7,31 @@ import ctypes
 import ctypes.util
 from functools import lru_cache
 import zlib
+import struct
+
+
+def encode_row_packets(raw, width):
+    """Fixed-anchor XOR byte masks with independent row access, no rounding.
+
+    Header: offset width (2/4), three reserved zeros, first original row,
+    rows+1 little-endian offsets, then per-row masks and nonzero XOR bytes.
+    The anchor row has an empty packet. Raw fallback is chosen by the exporter.
+    """
+    if width <= 0 or not raw or len(raw) % width:
+        raise ValueError('complete nonempty fixed-width rows required')
+    anchor = raw[:width]; masks = (width + 7) // 8
+    packets = []; offsets = [0, 0]; total = 0
+    for start in range(width, len(raw), width):
+        row = raw[start:start + width]; mask = bytearray(masks); values = bytearray()
+        for i, (a, b) in enumerate(zip(anchor, row)):
+            delta = a ^ b
+            if delta: mask[i // 8] |= 1 << (i % 8); values.append(delta)
+        packet = bytes(mask) + values; packets.append(packet)
+        total += len(packet); offsets.append(total)
+    if total > (1 << 32) - 1: raise ValueError('row packet block exceeds uint32 offsets')
+    offset_width = 2 if total <= 65535 else 4
+    layout = '<' + ('H' if offset_width == 2 else 'I') * len(offsets)
+    return bytes([offset_width, 0, 0, 0]) + anchor + struct.pack(layout, *offsets) + b''.join(packets)
 
 
 @lru_cache(maxsize=None)

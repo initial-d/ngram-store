@@ -83,6 +83,10 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
     uses an optional system compressor and format 4 (forwarding) or 5 (identity).
     The reader must be built with the corresponding optional codec capability;
     older readers reject these versions. Compression is exact over row bytes.
+    codec='row-xor' with predictor='none' uses fixed-anchor byte-mask packets
+    in versions 6/7. Zero-cache and row-cache queries decode only requested rows,
+    with raw fallback for incompressible blocks. It introduces no floating-point
+    operation or quantization; older readers reject the new versions.
     """
     source, output = Path(source), Path(output)
     block_rows = resolve_block_rows(row_bytes, block_rows, max_block_bytes)
@@ -93,14 +97,17 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
         raise ValueError("partial input row")
     if predictor not in ("none", "xor"):
         raise ValueError("predictor must be none or xor")
-    if codec not in ('zlib', 'lz4', 'zstd'):
-        raise ValueError('codec must be zlib, lz4 or zstd')
+    if codec not in ('zlib', 'lz4', 'zstd', 'row-xor'):
+        raise ValueError('codec must be zlib, lz4, zstd or row-xor')
+    if codec == 'row-xor' and predictor != 'none':
+        raise ValueError('row-xor supplies its own fixed-anchor predictor; use predictor=none')
     if __package__:
-        from .block_compression import compressor
+        from .block_compression import compressor, encode_row_packets
     else:
-        from block_compression import compressor
-    encode_block = compressor(codec) if compress else None
-    codec_id = {'zlib': 1, 'lz4': 3, 'zstd': 5}[codec]
+        from block_compression import compressor, encode_row_packets
+    encode_block = ((lambda raw: encode_row_packets(raw, row_bytes)) if codec == 'row-xor'
+                    else compressor(codec)) if compress else None
+    codec_id = {'zlib': 1, 'lz4': 3, 'zstd': 5, 'row-xor': 7}[codec]
     if type(compress) is not bool:
         raise ValueError("compress must be boolean")
     if type(implicit_identity) is not bool:
@@ -182,6 +189,7 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
             version = 3 if omit_map else (2 if predictor == "xor" else 1)
             if codec != 'zlib':
                 version = 5 if omit_map else 4
+            if codec == 'row-xor': version = 7 if omit_map else 6
             dest.write(HEADER.pack(b"MEFTNAT1", version, nrows, row_bytes, unique, block_rows, len(blocks)))
             map_file.seek(0)
             for part in iter(lambda: map_file.read(1024 * 1024), b""):
@@ -202,6 +210,7 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
             "zlib_blocks": sum(codec == 1 for _, _, _, codec in blocks),
             "lz4_blocks": sum(c in (3, 4) for _, _, _, c in blocks),
             "zstd_blocks": sum(c in (5, 6) for _, _, _, c in blocks),
+            "row_packet_blocks": sum(c == 7 for _, _, _, c in blocks),
             "xor_blocks": sum(codec in (2, 4, 6) for _, _, _, codec in blocks),
             "deduplicate": deduplicate, "predictor": predictor,
             "compression": compress, "block_codec": codec,
