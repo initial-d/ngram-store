@@ -54,6 +54,8 @@ whether follow-through may continue. This distinction is recorded in state.
         argv = self.item['command']
         artifact = Path(argv[argv.index('--output') + 1]) if '--output' in argv else None
         if 'build' in argv and artifact: artifact = artifact / 'built.json'
+        if 'gpu-lane' in argv and '--model' in argv:
+            artifact = Path(argv[argv.index('--model') + 1]) / 'gpu-complete.json'
         valid = artifact and artifact.exists() and load(artifact).get('status') in ('complete', 'frozen')
         self.item['adoption_terminal_evidence'] = {'artifact': str(artifact),
             'artifact_sha256': digest(artifact) if artifact and artifact.exists() else None,
@@ -79,6 +81,10 @@ def source_job(entry, root):
         'source_sha256': digest(__file__)}
     path = root / 'source-jobs' / (source.name + '.json')
     if not path.exists(): publish_job(path, job)
+    else:
+        frozen = load(path)
+        for key in ('source', 'data', 'files', 'source_report_sha256'):
+            if frozen[key] != job[key]: raise ValueError('immutable source job changed: ' + key)
     return path
 
 
@@ -90,13 +96,23 @@ def run(args):
     previous_failures = {}
     if getattr(args, 'resume_dispatch', None):
         previous = load(args.resume_dispatch)
-        completed.update(previous.get('completed', {})); previous_failures = previous.get('failed', {})
+        completed.update(previous.get('completed', {}))
+        previous_failures = {**previous.get('previous_attempt_failures', {}), **previous.get('failed', {})}
         for name, item in previous.get('running', {}).items():
             adopted = dict(item); adopted.update(child=AdoptedChild(adopted), log=open(os.devnull, 'w'))
             running[name] = adopted
         started.update(completed); started.update(running)
     env = {**os.environ, 'OMP_NUM_THREADS': '4', 'MKL_NUM_THREADS': '4', 'OPENBLAS_NUM_THREADS': '1',
         'CUBLAS_WORKSPACE_CONFIG': ':4096:8', 'CUDA_VISIBLE_DEVICES': ''}
+    verified_sources = {}
+    def verified_source_job(entry):
+        # Hash each immutable registered source once per controller, rather
+        # than re-reading tens of GiB every ten-second scheduling tick.
+        source = Path(entry['training']); report = source / 'training.json'
+        identity = (str(source), digest(report))
+        if identity not in verified_sources:
+            verified_sources[identity] = source_job(entry, output)
+        return verified_sources[identity]
     def launch(name, command, cores, gpu=None):
         log_path = output / 'logs' / (name + '.log'); log_path.parent.mkdir(parents=True, exist_ok=True)
         log = log_path.open('a')
@@ -128,7 +144,7 @@ def run(args):
             if len(exact) != 12: raise ValueError('complete two-dataset/two-initialization/three-seed exact sources required')
             # Frozen hash controls get full official CPU test audits as well.
             for i, entry in enumerate(selected):
-                path = source_job(entry, output); name = 'source-test-' + path.stem
+                path = verified_source_job(entry); name = 'source-test-' + path.stem
                 result = output / 'source-quality' / (path.stem + '-test.json')
                 if not result.exists() and name not in started:
                     launch(name, ['tools.large_application_frontier', 'evaluate', '--job', str(path),
@@ -187,7 +203,7 @@ def run(args):
                             '--results', str(quality), '--output', str(frozen)], str(216 + i))
                 lane_name = 'gpu-' + source.name
                 if frozen.exists() and lane_name not in started and not (model / 'gpu-complete.json').exists():
-                    controls = [source_job(e, output) for e in selected
+                    controls = [verified_source_job(e) for e in selected
                         if e['family'][:2] == entry['family'][:2] and e['seed'] == entry['seed']]
                     ready_gpu.append((lane_name, model, controls))
         raw = subprocess.check_output(['nvidia-smi', '--query-compute-apps=gpu_uuid,pid', '--format=csv,noheader,nounits'], text=True)
