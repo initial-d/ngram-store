@@ -17,6 +17,22 @@ from .large_application_frontier import CODECS, publish_job, select_sources
 from .tree_node_quality import digest, load, serving_files, write
 
 
+def peer_reserved_gpus(root):
+    """A paired Qwen lane owns its device even between child CUDA contexts."""
+    path = root / 'dispatch.json'
+    if not path.exists(): return set()
+    reserved = set()
+    for item in load(path).get('running', {}).values():
+        if item.get('gpu') is None: continue
+        try:
+            command = Path(f"/proc/{item['pid']}/cmdline").read_bytes()
+        except FileNotFoundError:
+            continue
+        if str(root).encode() in command:
+            reserved.add(int(item['gpu']))
+    return reserved
+
+
 def source_job(entry, root):
     source = Path(entry['training']); report = load(source / 'training.json')
     data = Path(report['settings']['data'])
@@ -138,7 +154,8 @@ def run(args):
         raw = subprocess.check_output(['nvidia-smi', '--query-compute-apps=gpu_uuid,pid', '--format=csv,noheader,nounits'], text=True)
         devices = subprocess.check_output(['nvidia-smi', '--query-gpu=index,uuid', '--format=csv,noheader,nounits'], text=True)
         occupied = {line.split(',')[0].strip() for line in raw.splitlines() if ',' in line}
-        reserved = {r['gpu'] for r in running.values() if r['gpu'] is not None}
+        peer_reserved = peer_reserved_gpus(root)
+        reserved = {r['gpu'] for r in running.values() if r['gpu'] is not None} | peer_reserved
         free = [int(index) for line in devices.splitlines() for index, uuid in [line.split(',')]
             if int(index) not in reserved and uuid.strip() not in occupied]
         for gpu, (name, model, controls) in zip(free, ready_gpu):
@@ -148,6 +165,7 @@ def run(args):
             'source_sha256': digest(__file__), 'selection_ready': selection_path.exists(),
             'running': {n: {k: v for k, v in r.items() if k not in ('child', 'log')} for n, r in running.items()},
             'completed': completed, 'failed': failed, 'external_gpu_clients': raw.splitlines(),
+            'peer_dispatch_reserved_gpus': sorted(peer_reserved),
             'rule': 'No training/evaluation/unknown processes are killed; free-device gates only.'}
         if selection_path.exists() and not running:
             exact = [e for e in load(selection_path)['selected'] if e['family'][2] == 'exact']
