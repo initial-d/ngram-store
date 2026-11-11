@@ -210,6 +210,8 @@ def gpu_lane(args):
         'frozen_selection_sha256': digest(model / 'selection.json'), 'source_sha256': digest(__file__),
         'cuda_selector': env.get('CUDA_VISIBLE_DEVICES'), 'cpu_affinity': sorted(os.sched_getaffinity(0)),
         'pairing': 'All methods in this model lane use this same physical GPU and cores; three rotated cohorts.'})
+    if len(completed) != expected:
+        raise RuntimeError('GPU lane has missing cells after retained retries; inspect gpu-progress.json')
 
 
 def main():
