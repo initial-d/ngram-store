@@ -1649,6 +1649,81 @@
       "selection_sha256": "c86472114c51b4065e4c48f59e7b4505dffd177b37dc1d39c56025972914727c"
     }
   ],
+  "query_interpretation": "Selected compressed host backends reduce branch-file capacity but are slower than direct FP32 host staging on these measured requests. Retained capacity savings do not imply throughput superiority.",
+  "query_summary": [
+    {
+      "batch_size": 1,
+      "candidate": "generic-zstd-host",
+      "initialization": "uniform",
+      "interpretation": "Ratio above one means faster. Descriptive complete-request pair ranges; no confidence interval or universal dominance claim.",
+      "paired_p50_ratio_direct_over_candidate": {
+        "geometric_mean": 0.0272189853653633,
+        "maximum": 0.03416748963270762,
+        "minimum": 0.024592883670930203
+      },
+      "pairs": 45
+    },
+    {
+      "batch_size": 1,
+      "candidate": "native-zstd-sq-fp16-host",
+      "initialization": "uniform",
+      "interpretation": "Ratio above one means faster. Descriptive complete-request pair ranges; no confidence interval or universal dominance claim.",
+      "paired_p50_ratio_direct_over_candidate": {
+        "geometric_mean": 0.22240706725612142,
+        "maximum": 0.2618353327732057,
+        "minimum": 0.20581635013797125
+      },
+      "pairs": 45
+    },
+    {
+      "batch_size": 32,
+      "candidate": "generic-zstd-host",
+      "initialization": "uniform",
+      "interpretation": "Ratio above one means faster. Descriptive complete-request pair ranges; no confidence interval or universal dominance claim.",
+      "paired_p50_ratio_direct_over_candidate": {
+        "geometric_mean": 0.01590841631909985,
+        "maximum": 0.023497280215161006,
+        "minimum": 0.012697038078917896
+      },
+      "pairs": 45
+    },
+    {
+      "batch_size": 32,
+      "candidate": "native-zstd-sq-fp16-host",
+      "initialization": "uniform",
+      "interpretation": "Ratio above one means faster. Descriptive complete-request pair ranges; no confidence interval or universal dominance claim.",
+      "paired_p50_ratio_direct_over_candidate": {
+        "geometric_mean": 0.14466021381393918,
+        "maximum": 0.20422409571317285,
+        "minimum": 0.09666518341623866
+      },
+      "pairs": 45
+    },
+    {
+      "batch_size": 1,
+      "candidate": "byte-dedup-zstd-host",
+      "initialization": "zero",
+      "interpretation": "Ratio above one means faster. Descriptive complete-request pair ranges; no confidence interval or universal dominance claim.",
+      "paired_p50_ratio_direct_over_candidate": {
+        "geometric_mean": 0.029332734813898313,
+        "maximum": 0.02984116721785517,
+        "minimum": 0.028267453566655217
+      },
+      "pairs": 45
+    },
+    {
+      "batch_size": 32,
+      "candidate": "byte-dedup-zstd-host",
+      "initialization": "zero",
+      "interpretation": "Ratio above one means faster. Descriptive complete-request pair ranges; no confidence interval or universal dominance claim.",
+      "paired_p50_ratio_direct_over_candidate": {
+        "geometric_mean": 0.019148821116262503,
+        "maximum": 0.027077921670027184,
+        "minimum": 0.015041003805123734
+      },
+      "pairs": 45
+    }
+  ],
   "scope": "Official AG News and DBpedia public classification. Allocator caps cover PyTorch CUDA allocations; host staging and host memory are outside them. Same-codec direct/native pairs and source/hash addressing controls remain distinct.",
   "source_selection_sha256": "7bd7d0b76b75dee502a9cdbf195c1bb7362cc3893c9b1512bd0b201f0431713b",
   "source_sha256": "32004df2851e7cb3496bfb61c9fafafec9fcee7f56e749b58a92be16677b0172",
