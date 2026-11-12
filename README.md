@@ -36,11 +36,9 @@ Needs a C compiler and zlib headers, on Linux or macOS. PyTorch is optional.
 
 ```bash
 python -m pip install .
-ngram-store demo-bags --output demo
-ngram-store query-bags --store demo/memory --bags demo/queries.json --mode mean
 ```
 
-Pack an existing table (row-major little-endian float32):
+Pack an existing table (row-major little-endian float32) and query it:
 
 ```bash
 ngram-store pack    --input vectors.f32 --dim 256 --output memory.native
@@ -55,8 +53,10 @@ with NativeRows("memory.native/table.men", cache_bytes=4 * 1024**2) as memory:
     original_bytes = memory.rows([0, 42, 0])
 ```
 
-See the [engine guide](docs/guides/evaluator_quickstart.md) and the
-[trained-table walkthrough](docs/guides/try_certified_memory.md).
+`ngram-store demo-bags --output demo` trains a small model on bundled text and
+builds a [certified bag table](docs/guides/try_certified_memory.md) end to end.
+The [engine guide](docs/guides/evaluator_quickstart.md) walks through a complete
+example, and [concepts](docs/concepts.md) explains the terms.
 
 ## Results
 
@@ -93,7 +93,7 @@ All ~45 reports, grouped by question, are listed in the [evidence index](evidenc
 | --- | --- |
 | `native/` | C engine (`meft_rows.c`) and structural bridge |
 | `ngram_store/`, `meft_memory/` | Python package and CLI |
-| `tools/` | Python runtime modules, plus benchmark, training and analysis scripts |
+| [`tools/`](tools/README.md) | 22 runtime modules and the experiment scripts behind `evidence/` |
 | `src/`, `mylib/` | FastText-derived C++ trainer/exporter and DATrie libraries (Linux x86-64) |
 | `tests/`, `examples/`, `benchmarks/` | Tests, runnable examples, benchmark configs |
 | [`docs/`](docs/index.md) | Guides, roadmap, history |
