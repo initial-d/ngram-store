@@ -1,0 +1,380 @@
+[
+ {
+  "point": "order-12-seed-3-average-init-1-step-2000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 17582,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8732203,
+   "joint xor+zlib (original)": 8614871,
+   "joint dedup uncompressed": 9149344,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 22.979,
+   "identity xor+zlib (original)": 2486.4285,
+   "joint xor+zlib (original)": 2489.293,
+   "joint dedup uncompressed": 43.026
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     -4.533213384824708e-06,
+     1.0434374556284033e-05
+    ],
+    "oov_nonempty": [
+     7.260654565410807e-07,
+     1.3349573687126965e-05
+    ]
+   },
+   "confirmation": {
+    "all": [
+     6.882861940449292e-07,
+     6.746616913894107e-06
+    ],
+    "oov_nonempty": [
+     -3.133301770330554e-06,
+     1.1771915060243527e-06
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-3-average-init-1-step-8000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 15586,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8671107,
+   "joint xor+zlib (original)": 7627908,
+   "joint dedup uncompressed": 8127136,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 19.627,
+   "identity xor+zlib (original)": 2521.248,
+   "joint xor+zlib (original)": 2492.855,
+   "joint dedup uncompressed": 42.258
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     -2.470660086848764e-05,
+     -1.2467728670861885e-07
+    ],
+    "oov_nonempty": [
+     -1.664015112455841e-05,
+     1.6192832323508313e-05
+    ]
+   },
+   "confirmation": {
+    "all": [
+     -1.1141059871011549e-05,
+     -5.658888988791512e-08
+    ],
+    "oov_nonempty": [
+     -9.400079154034403e-06,
+     1.4649386252563155e-06
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-3-average-init-1-step-32000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 10145,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8558944,
+   "joint xor+zlib (original)": 5007279,
+   "joint dedup uncompressed": 5340672,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 20.116,
+   "identity xor+zlib (original)": 2536.475,
+   "joint xor+zlib (original)": 2453.985,
+   "joint dedup uncompressed": 41.908
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     -9.617731715791388e-06,
+     2.4829138144333286e-05
+    ],
+    "oov_nonempty": [
+     -9.673950182273461e-06,
+     4.256859459450534e-05
+    ]
+   },
+   "confirmation": {
+    "all": [
+     -1.5016752329841122e-05,
+     -1.9488721869742677e-06
+    ],
+    "oov_nonempty": [
+     -2.3125322615172305e-05,
+     -7.034454221019338e-06
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-7-average-init-1-step-2000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 17594,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8725246,
+   "joint xor+zlib (original)": 8613600,
+   "joint dedup uncompressed": 9155488,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 19.907,
+   "identity xor+zlib (original)": 2489.4325,
+   "joint xor+zlib (original)": 2487.058,
+   "joint dedup uncompressed": 42.677
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     1.6372707439871183e-06,
+     1.809275341237426e-05
+    ],
+    "oov_nonempty": [
+     -7.386238243173303e-07,
+     1.093409219783958e-05
+    ]
+   },
+   "confirmation": {
+    "all": [
+     -7.457990637560472e-08,
+     6.075477744288405e-06
+    ],
+    "oov_nonempty": [
+     -7.358768737419918e-08,
+     4.571308803874574e-06
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-7-average-init-1-step-8000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 15532,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8669552,
+   "joint xor+zlib (original)": 7599502,
+   "joint dedup uncompressed": 8099488,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 20.047,
+   "identity xor+zlib (original)": 2525.6485,
+   "joint xor+zlib (original)": 2479.933,
+   "joint dedup uncompressed": 42.886
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     1.3667013103330073e-05,
+     5.839535640407842e-05
+    ],
+    "oov_nonempty": [
+     -1.7285323066237866e-05,
+     6.572193269027667e-06
+    ]
+   },
+   "confirmation": {
+    "all": [
+     7.37954314312117e-06,
+     1.9646637439590937e-05
+    ],
+    "oov_nonempty": [
+     -3.4864080524527054e-06,
+     8.035838926201406e-06
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-7-average-init-1-step-32000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 10173,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8561916,
+   "joint xor+zlib (original)": 5020711,
+   "joint dedup uncompressed": 5355008,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 20.116,
+   "identity xor+zlib (original)": 2545.729,
+   "joint xor+zlib (original)": 2450.039,
+   "joint dedup uncompressed": 42.328
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     -3.711587694403829e-05,
+     -2.3719526026783155e-06
+    ],
+    "oov_nonempty": [
+     -1.4538887224058162e-05,
+     2.3303852206202345e-05
+    ]
+   },
+   "confirmation": {
+    "all": [
+     6.135687427788472e-06,
+     1.8904756422993812e-05
+    ],
+    "oov_nonempty": [
+     3.703161276780165e-06,
+     1.932262044311849e-05
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-11-average-init-1-step-2000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 17582,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8734930,
+   "joint xor+zlib (original)": 8617292,
+   "joint dedup uncompressed": 9149344,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 19.906,
+   "identity xor+zlib (original)": 2492.576,
+   "joint xor+zlib (original)": 2488.5945,
+   "joint dedup uncompressed": 42.956
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     5.560330716736228e-06,
+     1.9580546866060362e-05
+    ],
+    "oov_nonempty": [
+     -5.426611158135252e-06,
+     7.232137722001928e-06
+    ]
+   },
+   "confirmation": {
+    "all": [
+     1.5126546732302514e-06,
+     5.687769307172184e-06
+    ],
+    "oov_nonempty": [
+     1.985498156803489e-06,
+     6.897886384699124e-06
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-11-average-init-1-step-8000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 15579,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8673046,
+   "joint xor+zlib (original)": 7625578,
+   "joint dedup uncompressed": 8123552,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 19.697,
+   "identity xor+zlib (original)": 2518.7335,
+   "joint xor+zlib (original)": 2483.705,
+   "joint dedup uncompressed": 42.328
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     -2.0503305263500082e-05,
+     -1.3460480809746118e-06
+    ],
+    "oov_nonempty": [
+     -3.270612533276818e-05,
+     -7.787377734777564e-06
+    ]
+   },
+   "confirmation": {
+    "all": [
+     -2.180028795767397e-06,
+     7.85493434217743e-06
+    ],
+    "oov_nonempty": [
+     -1.0148740234355857e-05,
+     -7.494500415233836e-07
+    ]
+   }
+  }
+ },
+ {
+  "point": "order-12-seed-11-average-init-1-step-32000",
+  "rows": 18137,
+  "dim": 128,
+  "raw_bytes": 9286144,
+  "unique_rows_joint": 10146,
+  "unique_rows_source": 18137,
+  "bytes": {
+   "identity xor+zlib (original)": 8561668,
+   "joint xor+zlib (original)": 5008892,
+   "joint dedup uncompressed": 5341184,
+   "source dedup uncompressed": 9433568
+  },
+  "lookup_p50_us": {
+   "raw (in-memory array)": 19.906,
+   "identity xor+zlib (original)": 2546.7075,
+   "joint xor+zlib (original)": 2460.83,
+   "joint dedup uncompressed": 42.118
+  },
+  "joint_loss_relative_change_95ci": {
+   "test": {
+    "all": [
+     3.23291248170432e-06,
+     3.6695053765473105e-05
+    ],
+    "oov_nonempty": [
+     -4.184965782202954e-06,
+     3.7946471312810786e-05
+    ]
+   },
+   "confirmation": {
+    "all": [
+     6.5894266800758935e-06,
+     2.11051443185839e-05
+    ],
+    "oov_nonempty": [
+     -5.45591664552203e-06,
+     1.221946307526367e-05
+    ]
+   }
+  }
+ }
+]
