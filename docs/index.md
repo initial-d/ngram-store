@@ -28,11 +28,6 @@
 - [me_fasttext compatibility](guides/legacy_fasttext.md) · [legacy export contract](guides/legacy_merge_contract.md)
 - [Citation guide](guides/citation_guide.md)
 
-## Technical report
-
-[Technical report](report/ngramstore-report.pdf)
-([source and build](report/README.md))
-
 ## Roadmap
 
 - [Engine roadmap, priorities and acceptance gates](roadmap.md)
