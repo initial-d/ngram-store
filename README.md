@@ -53,6 +53,10 @@ with NativeRows("memory.native/table.men", cache_bytes=4 * 1024**2) as memory:
     original_bytes = memory.rows([0, 42, 0])
 ```
 
+`ngram-store plan --input vectors.f32 --dim 256` counts duplicate rows and
+prints the `pack` command for the smallest layout that still serves lookups at
+near raw speed.
+
 `ngram-store demo-bags --output demo` trains a small model on bundled text and
 builds a [certified bag table](docs/guides/try_certified_memory.md) end to end.
 The [engine guide](docs/guides/evaluator_quickstart.md) walks through a complete

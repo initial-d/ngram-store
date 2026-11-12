@@ -1,0 +1,43 @@
+{
+  "rows": 34050161,
+  "row_bytes": 512,
+  "source_bytes": 17433682432,
+  "unique_rows": 34050161,
+  "duplicate_fraction": 0.0,
+  "prefer": "size",
+  "candidates": [
+    {
+      "layout": "raw",
+      "lookup": "copy",
+      "bytes": 17437938776,
+      "command": "ngram-store pack --input /llm-align/duyimin/ngram-controlled-deployment-20261111/application-frontier/models/dbpedia_14-exact-uniform-s7-lr3/source.raw --dim 128 --output OUTPUT --no-compress --max-block-bytes 131072",
+      "saving_vs_source": -0.000244
+    },
+    {
+      "layout": "dedup",
+      "lookup": "copy",
+      "bytes": 17710340064,
+      "command": "ngram-store pack --input /llm-align/duyimin/ngram-controlled-deployment-20261111/application-frontier/models/dbpedia_14-exact-uniform-s7-lr3/source.raw --dim 128 --output OUTPUT --no-compress --max-block-bytes 131072 --deduplicate",
+      "saving_vs_source": -0.015869
+    },
+    {
+      "layout": "zstd",
+      "lookup": "decode",
+      "estimated": true,
+      "bytes": 15885258500,
+      "note": "Python API only: pack_native(..., deduplicate=False, codec='zstd')",
+      "saving_vs_source": 0.088818
+    },
+    {
+      "layout": "dedup+zstd",
+      "lookup": "decode",
+      "estimated": true,
+      "bytes": 16157902944,
+      "note": "Python API only: pack_native(..., deduplicate=True, codec='zstd')",
+      "saving_vs_source": 0.073179
+    }
+  ],
+  "recommended": "zstd",
+  "reason": "Smallest estimated size. Lookups decode whole blocks and can be much slower than raw on scattered IDs; measure on your trace.",
+  "note": "Unique rows are counted with a 64-bit row hash; pack verifies every row."
+}
