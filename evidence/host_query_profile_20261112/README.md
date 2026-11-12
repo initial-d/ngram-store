@@ -88,6 +88,20 @@ A long-running `gpu_use.py` process from another user held 756 MiB on each GPU a
 about 2.5 CPU cores throughout; GPU utilization stayed at 0–3%, and our processes
 were pinned to other cores. Results: [`original-tables/`](original-tables/).
 
+## Layout planner
+
+`ngram-store plan` (added after this profile) counts duplicate rows with a 64-bit
+row hash and computes layout sizes. Run with `--prefer size` on all twelve
+original tables ([outputs](original-tables/plan/)):
+
+- Uncompressed raw and dedup sizes equal the packed files byte for byte.
+- The compressed estimate (64 sampled 256-row blocks) is within 0.15% of the
+  grid's packed Zstd files.
+- With `--prefer size` it picks dedup + Zstd for the six zero-init tables and Zstd
+  for the six uniform-init tables, the same families the grid's calibration chose.
+- With the default `--prefer speed` it picks dedup for zero init and raw for
+  uniform init, the two layouts measured above at 1.09–1.23× raw on the GPU path.
+
 ## Setup (local reproduction)
 
 - Data: official AG News, prepared with `tools.large_ngram_application prepare`
@@ -119,6 +133,5 @@ registry and classifier. Scripts record the paths they ran with.
 
 ## Follow-up
 
-- Let the layout advisor ([roadmap](../../docs/roadmap.md) item 2) choose between
-  raw, dedup-uncompressed and compressed layouts from the duplicate ratio and a
-  latency budget.
+- The layout planner above covers choosing between these layouts. Trace-based
+  latency estimates for compressed layouts are not implemented.

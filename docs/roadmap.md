@@ -42,16 +42,13 @@ find out why.
 
 ### 2. Pick the layout automatically
 
-The grids show the best layout depends on the table: dedup wins on
-zero-initialized tables, plain Zstd barely helps on uniform ones, INT8 native
-expands, raw is fastest. Users should not have to run a grid to find this out.
-
-- `ngram-store plan --input vectors.f32 --dim D [--trace ids.u64] [--max-slowdown X]`
-  estimates dedup ratio and block compressibility from samples, optionally replays
-  a trace, and recommends raw, dedup, or a codec and block size.
-- **Done when** on the six controlled source models its choice matches the
-  calibration-selected layout's capacity within 5% and never violates the
-  declared slowdown on held-out traces.
+Done (2026-11-12). `ngram-store plan` counts duplicate rows, gives exact sizes
+for raw and deduplicated uncompressed layouts, and optionally estimates compressed
+ones. On the twelve controlled tables its uncompressed sizes are exact, its
+compressed estimates are within 0.15%, and `--prefer size` reproduces the grid's
+calibration choice of codec family on all twelve
+([validation](../evidence/host_query_profile_20261112/README.md#layout-planner)).
+Not done: replaying a query trace to predict latency for compressed layouts.
 
 ### 3. Packaging
 

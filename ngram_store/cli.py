@@ -148,6 +148,12 @@ def main(argv=None):
     bounds.add_argument('--output',type=Path,required=True)
     bounds.add_argument('--native-library',type=Path)
     bounds.add_argument('--chunk-rows',type=int,default=1024)
+    plan=commands.add_parser('plan',help='Count duplicate rows and recommend a native layout with a pack command.')
+    plan.add_argument('--input',type=Path,required=True); plan.add_argument('--dim',type=int,required=True)
+    plan.add_argument('--prefer',choices=('speed','size'),default='speed',
+        help='speed (default): only layouts whose lookups copy rows; size: also estimate compressed layouts.')
+    plan.add_argument('--codec',choices=('zstd','zlib'),default='zstd')
+    plan.add_argument('--sample-blocks',type=int,default=64)
     demo_bags=commands.add_parser('demo-bags',help='Train an offline NumPy example and verify native certified queries.')
     demo_bags.add_argument('--output',type=Path,required=True)
     demo_bags.add_argument('--native-library',type=Path)
@@ -206,6 +212,9 @@ def main(argv=None):
             except BaseException:
                 shutil.rmtree(output)
                 raise
+        elif args.command=='plan':
+            from .plan import plan_layout
+            result=plan_layout(args.input,args.dim,prefer=args.prefer,codec=args.codec,sample_blocks=args.sample_blocks)
         elif args.command=='demo-bags':
             module=import_module('meft_memory._runtime.demo_certified_store')
             result=module.demo(args.output,native_library=args.native_library)

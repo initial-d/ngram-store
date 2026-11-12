@@ -24,6 +24,25 @@ python -m ngram_store --help
 The pip distribution is still called `meft-memory`; import `ngram_store`. Old
 `meft_memory` imports and `meft-*` commands point to the same code.
 
+## Choose a layout
+
+```bash
+ngram-store plan --input vectors.f32 --dim 256
+```
+
+`plan` hashes every row, counts duplicates, and prints the exact size of two
+layouts whose lookups only copy rows: raw, and deduplicated. It recommends the
+smaller one and prints the `pack` command for it. Add `--prefer size` to also
+estimate block-compressed layouts from a sample; those are smaller when rows
+compress, but every lookup decodes whole blocks and can be hundreds of times
+slower on scattered IDs.
+
+On the twelve AG News/DBpedia classifier tables of the controlled grid, the
+predicted uncompressed sizes matched the packed files to the byte, `--prefer size`
+picked the same codec family as the grid's calibration and estimated its size
+within 0.15%, and the default picked deduplication for zero-initialized tables
+and raw for uniform ones ([validation](../../evidence/host_query_profile_20261112/README.md#layout-planner)).
+
 ## Pack a table
 
 Input is a headerless, row-major, little-endian float32 file. For a quick test,

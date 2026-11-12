@@ -89,6 +89,35 @@ class EngineTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 pack_store(source,root/'keyed',2,native_library=self.library,keys={0:'a'},compress=False)
 
+    def test_plan_predicts_exact_uncompressed_sizes_and_picks_fast_layout(self):
+        try:import numpy as np
+        except ImportError:self.skipTest('optional numpy dependency')
+        from ngram_store.plan import plan_layout
+        rng=np.random.default_rng(1)
+        with tempfile.TemporaryDirectory(dir=self.root) as tmp:
+            root=Path(tmp)
+            for name,dup in (('dup',True),('distinct',False)):
+                x=rng.standard_normal((700,6)).astype('<f4')
+                if dup:x[::2]=x[1]          # half the rows identical
+                source=root/(name+'.f32'); x.tofile(source)
+                report=plan_layout(source,6)
+                self.assertEqual(report['unique_rows'],len(np.unique(x.view('V24'))))
+                self.assertEqual(report['recommended'],'dedup' if dup else 'raw')
+                self.assertEqual({c['layout'] for c in report['candidates']},{'raw','dedup'})
+                for c in report['candidates']:
+                    out=root/(name+'-'+c['layout'])
+                    pack_store(source,out,6,native_library=self.library,deduplicate=c['layout']=='dedup',
+                               compress=False,max_block_bytes=256*24)
+                    self.assertEqual((out/'table.men').stat().st_size,c['bytes'])
+                    self.assertIn('--no-compress',c['command'])
+            sized=plan_layout(root/'dup.f32',6,prefer='size',codec='zlib',sample_blocks=4)
+            self.assertEqual({c['layout'] for c in sized['candidates']},{'raw','dedup','zlib','dedup+zlib'})
+            self.assertTrue(all(c['estimated'] for c in sized['candidates'] if c['lookup']=='decode'))
+            captured=io.StringIO()
+            with contextlib.redirect_stdout(captured):main(['plan','--input',str(root/'dup.f32'),'--dim','6'])
+            self.assertEqual(json.loads(captured.getvalue())['recommended'],'dedup')
+            with self.assertRaises(ValueError):plan_layout(root/'dup.f32',11)
+
     def test_packed_engine_store_opens_existing_torch_adapter(self):
         try:import torch
         except ImportError:self.skipTest('optional torch dependency')
