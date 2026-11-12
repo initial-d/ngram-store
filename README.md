@@ -93,7 +93,7 @@ All ~45 reports, grouped by question, are listed in the [evidence index](evidenc
 | --- | --- |
 | `native/` | C engine (`meft_rows.c`) and structural bridge |
 | `ngram_store/`, `meft_memory/` | Python package and CLI |
-| `tools/` | Python runtime modules, plus benchmark, training and analysis scripts |
+| [`tools/`](tools/README.md) | 22 runtime modules and the experiment scripts behind `evidence/` |
 | `src/`, `mylib/` | FastText-derived C++ trainer/exporter and DATrie libraries (Linux x86-64) |
 | `tests/`, `examples/`, `benchmarks/` | Tests, runnable examples, benchmark configs |
 | [`docs/`](docs/index.md) | Guides, roadmap, history |

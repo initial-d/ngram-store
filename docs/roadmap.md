@@ -47,9 +47,12 @@ expands, raw is fastest. Users should not have to run a grid to find this out.
 
 ### 3. Packaging
 
-- Move runtime modules out of `tools/` into the `ngram_store` package; move
-  experiment scripts to `experiments/`. Keep `tools.*` and `meft_memory.*` import
-  paths working, since archived evidence records their hashes.
+- The wheel currently packages all of `tools/` (185 modules) as
+  `meft_memory._runtime`; only the 22 runtime modules listed in
+  [`tools/README.md`](../tools/README.md) are needed. Move those into
+  `ngram_store/_runtime/` and leave `tools/<name>.py` re-exports, after checking
+  that no verifier hashes the current `tools/` files. Experiment scripts stay
+  where the evidence expects them.
 - One distribution name (`ngram-store`) with `meft-memory` as an alias; publish to
   PyPI.
 - **Done when** `pip install ngram-store` works on Linux and macOS and the
