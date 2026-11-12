@@ -76,5 +76,4 @@ uses validation quality and speed; official test results only audit those choice
 See the frozen [initial](../../evidence/news_classifier_protocol_20261105.md) and
 [nonlinear](../../evidence/news_relu_protocol_20261105.md) protocols for the full run settings.
 
-The `classify` entry is included when installing this source checkout. The
-previously published v0.4.0 release does not contain this new application.
+The `classify` command is included from v0.5.0.
