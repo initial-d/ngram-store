@@ -9,8 +9,8 @@ and the weight-independent certificate.
 
 ## Source checkout API and CLI
 
-This addition is in source after v0.4.0; the v0.4.0 release wheels do not contain it.
-Install a checkout with `python -m pip install '.[incidence]'`.
+Included from v0.5.0 (`ngram-store[incidence]`), or install a checkout with
+`python -m pip install '.[incidence]'`.
 
 First build the existing native compact table, then a separate residual sidecar:
 

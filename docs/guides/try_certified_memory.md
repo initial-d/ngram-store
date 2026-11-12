@@ -17,16 +17,16 @@ Python 3.10+, NumPy, Linux x86-64 or macOS ARM64. Release wheels:
 
 ```bash
 # Linux x86-64
-python -m pip install 'meft-memory[incidence] @ https://github.com/initial-d/ngram-store/releases/download/v0.4.0/meft_memory-0.4.0-py3-none-linux_x86_64.whl'
+python -m pip install 'ngram-store[incidence] @ https://github.com/initial-d/ngram-store/releases/download/v0.5.0/ngram_store-0.5.0-py3-none-linux_x86_64.whl'
 
 # macOS ARM64 (macOS 26+)
-python -m pip install 'meft-memory[incidence] @ https://github.com/initial-d/ngram-store/releases/download/v0.4.0/meft_memory-0.4.0-py3-none-macosx_26_0_arm64.whl'
+python -m pip install 'ngram-store[incidence] @ https://github.com/initial-d/ngram-store/releases/download/v0.5.0/ngram_store-0.5.0-py3-none-macosx_26_0_arm64.whl'
 ```
 
 Or from a checkout: `python -m pip install '.[incidence]'` (needs a C compiler and
-zlib). Wheels are on GitHub releases, not PyPI. From 0.5.0 the distribution is
-named `ngram-store`; the 0.4.0 wheels above still install as `meft-memory`, with
-the same imports and commands.
+zlib). Wheels are on GitHub releases, not PyPI. Up to 0.4.0 the distribution was
+named `meft-memory`; uninstall it before installing `ngram-store`, since both
+provide the same import packages.
 
 ## Run the included example
 

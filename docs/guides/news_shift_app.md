@@ -26,7 +26,7 @@ predictions remain a separate fidelity tradeoff.
 
 ## Serve an exported hybrid
 
-Install this checkout; public v0.4.0 predates these additions:
+Requires v0.5.0 or a source checkout:
 
 ```bash
 python -m pip install '.[incidence]'
