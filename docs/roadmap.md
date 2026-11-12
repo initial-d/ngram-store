@@ -36,8 +36,9 @@ find out why.
   On the zero-init AG News table, dedup without compression saves 85.8% (86.6%
   with Zstd) at 1.2× raw mmap (was 356×); on the uniform-init table, raw is the
   right layout. `NativeRows.gather_array` removes the Python overhead that then
-  dominates, and `pack --no-compress` exposes the layout. Remaining: confirm on the
-  original tables, including DBpedia, through the full GPU host path.
+  dominates, and `pack --no-compress` exposes the layout. On the twelve original
+  AG News/DBpedia tables the full GPU host path runs 1.09–1.23× raw with identical
+  logits, so the exit criterion is met. Item 2 (choosing the layout) is next.
 
 ### 2. Pick the layout automatically
 

@@ -50,7 +50,45 @@ Timings above call the C gather with NumPy buffers. Two other findings:
 The grid's ratios (29–79×) are smaller than the 356–427× here because each grid
 sample also includes PyTorch staging and GPU transfer, which both arms pay.
 
-## Setup
+## Confirmation on the original tables
+
+The same check on the twelve trained tables of the controlled grid (AG News and
+DBpedia × zero/uniform initialization × seeds 3/7/11), on the grid machine
+(AMD EPYC 7713, 8× A800). The grid's own numbers for the compressed layouts are
+taken as published and not re-measured, except one model as a cross-check.
+
+CPU lookup, same per-document operation as above, 5,000 test documents per model
+(seeded sample), one pinned core per model:
+
+| Tables | Dedup, uncompressed: saving | Selected grid layout: saving | Lookup vs raw mmap |
+| --- | ---: | ---: | ---: |
+| AG News, zero init (3 seeds) | 85.80% | 86.58–86.59% (dedup + Zstd) | 1.74–1.76× |
+| DBpedia, zero init (3 seeds) | 84.95% | 85.68–85.69% (dedup + Zstd) | 1.44–1.77× |
+| AG News, uniform init | −1.59% | 8.54–8.55% (Zstd) | 1.81–1.87× |
+| DBpedia, uniform init | −1.59% | 8.87–8.88% (Zstd) | 1.85–1.88× |
+
+On AG News zero seed 3, the grid's layout and library measured 361× raw here;
+the old binding on the uncompressed layout 3.8×, `gather_array` 1.8×.
+
+Full GPU host path, using the grid's own `StagedClassifier`, request set (first 256
+test documents), 2 warmup and 3 timed passes, one A800 per model:
+
+| Model (seed 3) | Batch 1 vs raw | Batch 32 vs raw | Logits identical |
+| --- | ---: | ---: | --- |
+| AG News, zero | 1.18× | 1.14× | yes |
+| AG News, uniform | 1.16× | 1.14× | yes |
+| DBpedia, zero | 1.19× | 1.23× | yes |
+| DBpedia, uniform | 1.18× | 1.09× | yes |
+
+The grid reported 29–79× for the selected compressed layouts on this path. Every
+table's uncompressed dedup layout returned bytes identical to the source on the
+checked documents.
+
+A long-running `gpu_use.py` process from another user held 756 MiB on each GPU and
+about 2.5 CPU cores throughout; GPU utilization stayed at 0–3%, and our processes
+were pinned to other cores. Results: [`original-tables/`](original-tables/).
+
+## Setup (local reproduction)
 
 - Data: official AG News, prepared with `tools.large_ngram_application prepare`
   (word 1–4-grams, seed-42 90/10 split): 6,989,612 rows, 108,000 training and
@@ -74,16 +112,13 @@ Raw results with p95 and totals: [`results/zero-init.json`](results/zero-init.js
 
 ## Limits
 
-This is an exploratory profile, not a pre-registered experiment. It uses one seed,
-one learning rate and one machine, and runs the CPU part of the host path only.
-The original trained tables were not available, so absolute sizes differ slightly
-from the grid (86.6% here vs 83.9% complete-model saving there, which also counts
-the registry and classifier). The scripts read `/tmp` paths as run.
+This profile was not pre-registered. The GPU confirmation covers seed 3 of each
+dataset × initialization; the CPU confirmation covers all twelve tables. Savings
+here are table-file savings; the grid's complete-model figures also count the
+registry and classifier. Scripts record the paths they ran with.
 
 ## Follow-up
 
-- Re-run the controlled CPU and GPU host cells with `dedup + uncompressed` and
-  `gather_array` on the original tables.
 - Let the layout advisor ([roadmap](../../docs/roadmap.md) item 2) choose between
   raw, dedup-uncompressed and compressed layouts from the duplicate ratio and a
   latency budget.

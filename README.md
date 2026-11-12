@@ -72,9 +72,11 @@ example, and [concepts](docs/concepts.md) explains the terms.
    classifier tables, byte dedup + Zstd saves about 84% but made host lookups
    29–79× slower in the deployment grids
    ([report](evidence/controlled_deployment_results_20261112.md)). Profiling
-   showed the cost is block decompression; dedup alone saves 85.8% (86.6% with Zstd)
-   at 1.2× raw mmap ([profile](evidence/host_query_profile_20261112/README.md)).
-   Without duplicates (uniform initialization) compression saves only 8%.
+   showed the cost is block decompression. Dedup without compression saves
+   85.0–85.8% (vs 85.7–86.6% with Zstd), and the same GPU host path runs
+   1.09–1.23× raw with identical logits
+   ([profile](evidence/host_query_profile_20261112/README.md)). Without
+   duplicates (uniform initialization) compression saves only 8–9%; raw is better.
 4. Construction fits in small memory. Disk-backed building cuts peak RSS from
    3.1 GiB to 95 MiB for the same output bytes, at 5× the build time
    ([report](evidence/external_incidence_evidence_20261102/README.md)).

@@ -1,0 +1,38 @@
+{
+ "model": "dbpedia_14-exact-zero-s3-lr10",
+ "gpu": "NVIDIA A800-SXM4-80GB",
+ "cuda_visible_devices": "2",
+ "affinity": [
+  102
+ ],
+ "results": {
+  "raw-mmap (SourceRows) b1": {
+   "p50_ms": 0.6058565,
+   "p95_ms": 1.52041515,
+   "logits_equal_raw": true,
+   "samples": 768,
+   "x_raw_p50": 1.0
+  },
+  "dedup-raw gather_array b1": {
+   "p50_ms": 0.7222925,
+   "p95_ms": 1.6551429,
+   "logits_equal_raw": true,
+   "samples": 768,
+   "x_raw_p50": 1.1921841228079586
+  },
+  "raw-mmap (SourceRows) b32": {
+   "p50_ms": 13.214997499999999,
+   "p95_ms": 14.73937305,
+   "logits_equal_raw": true,
+   "samples": 24,
+   "x_raw_p50": 1.0
+  },
+  "dedup-raw gather_array b32": {
+   "p50_ms": 16.270858500000003,
+   "p95_ms": 18.1733981,
+   "logits_equal_raw": true,
+   "samples": 24,
+   "x_raw_p50": 1.231241890132783
+  }
+ }
+}

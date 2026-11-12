@@ -1,0 +1,38 @@
+{
+ "model": "ag_news-exact-zero-s3-lr10",
+ "gpu": "NVIDIA A800-SXM4-80GB",
+ "cuda_visible_devices": "0",
+ "affinity": [
+  100
+ ],
+ "results": {
+  "raw-mmap (SourceRows) b1": {
+   "p50_ms": 0.590665,
+   "p95_ms": 1.53898435,
+   "logits_equal_raw": true,
+   "samples": 768,
+   "x_raw_p50": 1.0
+  },
+  "dedup-raw gather_array b1": {
+   "p50_ms": 0.6944585,
+   "p95_ms": 1.6011343499999997,
+   "logits_equal_raw": true,
+   "samples": 768,
+   "x_raw_p50": 1.175723125629587
+  },
+  "raw-mmap (SourceRows) b32": {
+   "p50_ms": 13.7407045,
+   "p95_ms": 15.6232364,
+   "logits_equal_raw": true,
+   "samples": 24,
+   "x_raw_p50": 1.0
+  },
+  "dedup-raw gather_array b32": {
+   "p50_ms": 15.6853625,
+   "p95_ms": 17.684175699999997,
+   "logits_equal_raw": true,
+   "samples": 24,
+   "x_raw_p50": 1.1415253490095796
+  }
+ }
+}
