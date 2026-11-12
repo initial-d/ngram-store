@@ -82,5 +82,5 @@ To regenerate the checked-in application summary from the downloaded audit:
 ```bash
 python -m tools.summarize_controlled_application \
   --audit artifacts/controlled-evidence/cpu-audit/application-results.json \
-  --output docs/controlled_application_results_20261111.json
+  --output evidence/controlled_application_results_20261111.json
 ```

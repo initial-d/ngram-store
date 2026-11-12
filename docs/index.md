@@ -2,15 +2,16 @@
 
 ## Start here
 
-- [Try a trained table in minutes](guides/try_certified_memory.md): install, offline demo, your own table
-- [Engine guide: pack, inspect, query](guides/evaluator_quickstart.md)
-- [C ABI, native format and runtime boundaries](guides/native_ngram_memory.md)
+- [Concepts](concepts.md): the terms used across guides and reports
+- [Engine guide](guides/evaluator_quickstart.md): pack, inspect and query a table
+- [C ABI and runtime reference](guides/native_ngram_memory.md): format, cache, PyTorch and bag adapters
 
 ## Guides
 
 **Engine features**
 
-- [Certified co-training groups](guides/cotraining_groups.md): shared parameters for rows with identical bag incidence
+- [Certified bag tables](guides/try_certified_memory.md): shared group means for sum/mean models, with a runnable demo
+- [Certified co-training groups](guides/cotraining_groups.md): the math behind them
 - [Partial-group queries with L2 error budgets](guides/budgeted_bag_queries.md)
 - [Disk-backed incidence construction](guides/external_incidence_build.md)
 - [Host memory → device gather and prefetch](guides/device_memory_prefetch.md)

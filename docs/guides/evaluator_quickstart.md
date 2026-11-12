@@ -1,39 +1,100 @@
-# NGramStore engine quickstart
+# Engine guide: pack, inspect, query
 
-Start with the storage engine, then choose FastText or Engram as the application.
-Use an existing learned table; deterministic fixtures establish correctness only.
+This guide packs a float32 table into a native store and queries it from the CLI,
+Python and C. Terms are explained in [concepts](../concepts.md).
 
-## Install and pack numeric rows
+## Install
 
-From a Linux/macOS source checkout with a C compiler and zlib headers:
+You need a C compiler and zlib headers, on Linux or macOS.
 
 ```bash
 python -m pip install .
-ngram-store pack --input vectors.f32 --dim 256 --output memory.native
-ngram-store inspect --store memory.native
-ngram-store query --store memory.native --ids 0 42 0
+ngram-store --help
 ```
 
-`vectors.f32` must be a nonempty, contiguous little-endian float32 table.
-`--dim` is its row width in floats. Output must be a fresh directory. No dtype
-conversion or rounding occurs. All reconstructed row bytes are verified before
-publication. `--deduplicate` optionally shares identical row bytes with an
-index that grows with the number of unique rows. Default packing omits it.
+To run from a checkout without installing, build the library and point to it:
 
-Use `query --hex` for signed-zero/nonfinite payload inspection. Numeric JSON
-output requires finite values. The query keeps original IDs, order and duplicates.
-`--max-block-bytes` controls decoded block width; one indivisible row can exceed
-it. `--cache-bytes` controls query cache payload, not total process memory.
+```bash
+make native                                            # Linux
+make native NATIVE_SHARED=-dynamiclib NATIVE_EXT=dylib  # macOS
+export MEFT_ROWS_LIBRARY=$PWD/build/libmeft_rows.so     # .dylib on macOS
+python -m ngram_store --help
+```
 
-The wheel distribution remains `meft-memory`; new code imports `ngram_store`.
-Existing imports are aliases of the same API, not independent implementations.
-`python -m ngram_store` also runs directly from a checkout; pass
-`--native-library build/libmeft_rows.so` after `make native` if not installed.
-On macOS use `make native NATIVE_SHARED=-dynamiclib NATIVE_EXT=dylib`.
+The pip distribution is still called `meft-memory`; import `ngram_store`. Old
+`meft_memory` imports and `meft-*` commands point to the same code.
 
-## Registered string n-grams
+## Pack a table
 
-On Linux x86-64, the optional original DATrie bridge is built with:
+Input is a headerless, row-major, little-endian float32 file. For a quick test,
+make one with 1,000 rows of width 8, a third of them zero:
+
+```python
+import numpy as np
+rng = np.random.default_rng(0)
+x = rng.uniform(-1, 1, (1000, 8)).astype("<f4")
+x[::3] = 0
+x.tofile("vectors.f32")
+```
+
+```bash
+ngram-store pack --input vectors.f32 --dim 8 --output memory.native
+```
+
+`pack` reads the table back from the new store and compares every row with the
+source before publishing the directory. The JSON it prints includes:
+
+```text
+"original_bytes_preserved": true,
+"input_bytes": 32000,
+"artifact_bytes": 20670,
+"forwarding": "implicit-identity",
+"blocks": 4,
+```
+
+The output directory must not exist yet. Useful options:
+
+| Option | Effect |
+| --- | --- |
+| `--max-block-bytes N` | Cap decoded block size (default 8192). Smaller blocks speed up sparse lookups and compress less |
+| `--deduplicate` | Store identical rows once, at 8 bytes per row for the row map |
+
+Deduplication does not always pay. On the table above, `--deduplicate` keeps
+667 unique rows but the file grows from 20,670 to 27,931 bytes, because the
+8,000-byte row map costs more than the duplicate rows saved.
+
+## Inspect and query
+
+```bash
+ngram-store inspect --store memory.native
+ngram-store query --store memory.native --ids 1 0 1
+ngram-store query --store memory.native --ids 0 --hex
+```
+
+`query` returns rows in request order, repeats included. `--hex` prints the raw
+bytes, which also works for NaN and infinity (the JSON output needs finite
+values). `--cache-bytes` sets the decoded-block cache for that call.
+
+From Python:
+
+```python
+from ngram_store import NativeRows
+
+with NativeRows("memory.native/table.men", cache_bytes=4 * 1024**2) as table:
+    raw = table.rows([1, 0, 1])          # bytes, 3 × 32
+```
+
+From C, see `examples/native_gather.c` and the
+[C ABI reference](native_ngram_memory.md):
+
+```bash
+build/native_gather memory.native/table.men 1 0 1
+```
+
+## String keys (Linux x86-64)
+
+If each row has a unique string key, such as a character n-gram, the structural
+layer can index the keys with a DATrie and share prefix/suffix rows:
 
 ```bash
 make structural-native
@@ -43,34 +104,31 @@ ngram-store query --store keyed.native --keys '<memory>' '<vector>' \
   --structural-library build/libmeft_structural.so
 ```
 
-`keys.json` maps canonical original row IDs to unique registered strings, for
-example `{"0":"<memory>","42":"<vector>"}`. Unkeyed rows retain their identities.
-`layout` keeps all rows; `exact` shares only byte-identical structural pairs;
-`joint` changes rows under cosine/norm-ratio guards. Generic byte dedup and
-structural representative selection are separate options.
+`keys.json` maps row IDs to strings, e.g. `{"0": "<memory>", "42": "<vector>"}`;
+rows without a key keep their IDs. Modes:
 
-A many-to-one hash bucket registry does not provide this key-to-row contract.
-Engram's numeric/hash path works through the same row engine without assuming
-prefix/suffix relationships. Open only trusted self-produced DATrie files.
+- `layout`: reorder rows only.
+- `exact`: also share byte-identical prefix/suffix rows.
+- `joint`: also merge rows whose cosine and norm ratio pass `--cosine` and
+  `--norm-ratio` (default .99). This changes vectors.
 
-## Choose an application
+Hash-addressed tables (Engram, FastText buckets) should use plain `pack`: a bucket
+can hold unrelated n-grams, so its string relations mean nothing. Only open DATrie
+files you produced yourself.
 
-- [FastText prepare/train/export/query](fasttext_native_bundle.md): includes a
-  real tiny text-training smoke path; the current trainer requires positional/source
-  pairs rather than ordinary upstream FastText training input.
-- [Engram demonstration](engram_quickstart.md): preserve existing hashes and
-  head offsets, source-pin the demo and verify full module output.
-- [TinyEngram/Qwen checkpoint](../../evidence/tinyengram_qwen_evidence_20261030/README.md):
-  convert and verify actual trained memory weights with the existing backbone.
+## Next
 
-## Report a useful result
+- Plug the store into a model: [FastText](fasttext_native_bundle.md),
+  [Engram](engram_quickstart.md),
+  [TinyEngram/Qwen](../../evidence/tinyengram_qwen_evidence_20261030/README.md),
+  [PyTorch adapters](native_ngram_memory.md#pytorch).
+- Compress bag-reduced tables further: [certified bag tables](try_certified_memory.md).
 
-Record the exact commit, command, data and split, source/artifact hashes, dtype,
-row count, compiler/Python/PyTorch versions, CPU/GPU and storage environment.
-Compare with raw mmap/dense lookup using the same rows and trace. Report whole
-artifact bytes, p50/p95 latency, load time, anonymous/file-backed RSS, cache and
-block settings, output fidelity and task quality separately. Name approximate
-thresholds and denominators. Include slow, failed and no-benefit cases.
+## Reporting a benchmark
 
-[Current results](../index.md) include strong negative controls. Legacy lexical
-retrieval protocols remain in [the compatibility guide](legacy_fasttext.md).
+Results are comparable when they include the commit, data and split, source and
+artifact hashes, hardware and software versions, and the same trace run against
+raw mmap or dense lookup. Report total artifact bytes, p50/p95 latency, load time,
+RSS, cache and block settings, output fidelity and task quality as separate
+numbers, and keep slow or failed runs. The reports in
+[`evidence/`](../../evidence/README.md) follow this shape.
