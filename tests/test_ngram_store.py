@@ -75,6 +75,20 @@ class EngineTest(unittest.TestCase):
             with self.assertRaises(ValueError):pack_store(bad,root/'failed',2,native_library=self.library)
             self.assertFalse((root/'failed').exists())
 
+    def test_cli_no_compress_keeps_bytes_and_rejects_structural_mode(self):
+        with tempfile.TemporaryDirectory(dir=self.root) as tmp:
+            root=Path(tmp); source=root/'input.f32'
+            raw=struct.pack('<8f',1,2,0,0,1,2,3,4); source.write_bytes(raw)
+            result=pack_store(source,root/'plain',2,native_library=self.library,deduplicate=True,compress=False)
+            self.assertTrue(result['original_bytes_preserved'])
+            self.assertFalse(result['storage']['compression'])
+            self.assertEqual(result['storage']['compressed_blocks'],0)
+            self.assertEqual(result['storage']['unique_rows'],3)
+            with ngram_store.NativeRows(root/'plain'/'table.men',self.library) as table:
+                self.assertEqual(table.rows([3,0,2,1]),raw[24:32]+raw[:8]+raw[16:24]+raw[8:16])
+            with self.assertRaises(ValueError):
+                pack_store(source,root/'keyed',2,native_library=self.library,keys={0:'a'},compress=False)
+
     def test_packed_engine_store_opens_existing_torch_adapter(self):
         try:import torch
         except ImportError:self.skipTest('optional torch dependency')

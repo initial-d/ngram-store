@@ -68,10 +68,13 @@ example, and [concepts](docs/concepts.md) explains the terms.
 2. Prefix/suffix structure is learned. Merging order-12 prefix/suffix neighbours
    at .99 cosine saves 1.34% of n-gram storage after 2k training steps and 41.49%
    after 32k ([report](evidence/tree_node_quality_evidence_20261109/README.md)).
-3. Lossless storage trades space for query time. Byte dedup + Zstd shrinks
-   zero-initialized classifier tables by about 84% (8% with uniform
-   initialization), while host lookups run 29–79× slower than raw FP32
-   ([report](evidence/controlled_deployment_results_20261112.md)).
+3. Duplicate rows, not compression, carry the lossless saving. On zero-initialized
+   classifier tables, byte dedup + Zstd saves about 84% but made host lookups
+   29–79× slower in the deployment grids
+   ([report](evidence/controlled_deployment_results_20261112.md)). Profiling
+   showed the cost is block decompression; dedup alone saves 85.8% (86.6% with Zstd)
+   at 1.2× raw mmap ([profile](evidence/host_query_profile_20261112/README.md)).
+   Without duplicates (uniform initialization) compression saves only 8%.
 4. Construction fits in small memory. Disk-backed building cuts peak RSS from
    3.1 GiB to 95 MiB for the same output bytes, at 5× the build time
    ([report](evidence/external_incidence_evidence_20261102/README.md)).

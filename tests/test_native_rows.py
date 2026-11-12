@@ -462,6 +462,37 @@ with NativeRows(output, sys.argv[2]) as reader:
     def tearDownClass(cls):
         cls.tmp.cleanup()
 
+    def test_gather_array_matches_rows_and_rejects_bad_ids(self):
+        try:
+            import numpy as np
+        except ImportError:
+            self.skipTest("optional NumPy unavailable")
+        rng = random.Random(5)
+        for dedup, compress in ((False, True), (True, True), (True, False)):
+            with self.subTest(dedup=dedup, compress=compress), tempfile.TemporaryDirectory() as tmp:
+                rows = [rng.getrandbits(96).to_bytes(12, "little") for _ in range(20)] + [b"\0" * 12] * 5
+                source, packed = Path(tmp) / "raw", Path(tmp) / "table.men"
+                source.write_bytes(b"".join(rows))
+                pack_native(source, packed, 12, 4, dedup, compress=compress)
+                with NativeRows(packed, self.library) as table:
+                    ids = [rng.randrange(len(rows)) for _ in range(60)]
+                    for dtype in ("<i8", "<u8", "<i4", "<u2"):
+                        got = table.gather_array(np.array(ids, dtype=dtype))
+                        self.assertEqual(got.shape, (60, 12))
+                        self.assertEqual(got.tobytes(), table.rows(ids))
+                    out = np.empty((3, 12), dtype=np.uint8)
+                    self.assertIs(table.gather_array(np.array([2, 0, 2]), out=out), out)
+                    self.assertEqual(out.tobytes(), rows[2] + rows[0] + rows[2])
+                    self.assertEqual(table.gather_array(np.array([], dtype=np.int64)).shape, (0, 12))
+                    for bad in (np.array([len(rows)]), np.array([-1])):
+                        with self.assertRaises(IndexError):
+                            table.gather_array(bad)
+                    for bad in (np.array([1.0]), np.array([True]), np.array([[1]])):
+                        with self.assertRaises(TypeError):
+                            table.gather_array(bad)
+                    with self.assertRaises(ValueError):
+                        table.gather_array(np.array([1, 2]), out=np.empty((1, 12), dtype=np.uint8))
+
     def test_native_preserves_arbitrary_bytes_ids_and_batches(self):
         rng = random.Random(3)
         for width in (1, 3, 64, 256):
