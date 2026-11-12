@@ -58,10 +58,19 @@ The output directory must not exist yet. Useful options:
 | --- | --- |
 | `--max-block-bytes N` | Cap decoded block size (default 8192). Smaller blocks speed up sparse lookups and compress less |
 | `--deduplicate` | Store identical rows once, at 8 bytes per row for the row map |
+| `--no-compress` | Store blocks uncompressed. With `--deduplicate`, lookups copy rows without decoding |
 
 Deduplication does not always pay. On the table above, `--deduplicate` keeps
 667 unique rows but the file grows from 20,670 to 27,931 bytes, because the
 8,000-byte row map costs more than the duplicate rows saved.
+
+Compression costs query time. Every lookup decodes a whole block, and the IDs of
+one query are often spread over many blocks. On a trained 7M-row AG News table,
+`--deduplicate --no-compress` saved 85.8% against 86.6% for dedup + Zstd, while
+lookups ran 1.2× raw mmap instead of 356×
+([profile](../../evidence/host_query_profile_20261112/README.md)). If the table has
+many duplicate rows, start with `--deduplicate --no-compress`; if it has few, keep
+it raw.
 
 ## Inspect and query
 
@@ -78,11 +87,16 @@ values). `--cache-bytes` sets the decoded-block cache for that call.
 From Python:
 
 ```python
+import numpy as np
 from ngram_store import NativeRows
 
 with NativeRows("memory.native/table.men", cache_bytes=4 * 1024**2) as table:
     raw = table.rows([1, 0, 1])          # bytes, 3 × 32
+    vectors = table.gather_array(np.array([1, 0, 1])).view("<f4")   # (3, 8)
 ```
+
+`rows` takes Python integers; `gather_array` takes a NumPy integer array and skips
+the per-ID Python work, which matters when rows need no decoding.
 
 From C, see `examples/native_gather.c` and the
 [C ABI reference](native_ngram_memory.md):

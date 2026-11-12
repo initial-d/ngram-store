@@ -28,7 +28,7 @@ def sha256(path):
 
 
 def pack_store(source, output, dim, *, native_library=None, keys=None, structural_library=None,
-               mode='exact', cosine=.99, norm_ratio=.99, max_block_bytes=8192, deduplicate=False):
+               mode='exact', cosine=.99, norm_ratio=.99, max_block_bytes=8192, deduplicate=False, compress=True):
     if sys.byteorder!='little':raise ValueError('CLI raw input requires little-endian IEEE float32 host')
     source,output=Path(source).resolve(),Path(output).resolve()
     if type(dim) is not int or dim<=0:raise ValueError('dim must be positive')
@@ -38,6 +38,7 @@ def pack_store(source, output, dim, *, native_library=None, keys=None, structura
     if mode not in ('layout','exact','joint'):raise ValueError('invalid structural mode')
     if keys is None and mode=='joint':raise ValueError('joint sharing requires registered string keys')
     if keys is not None and deduplicate:raise ValueError('structural representatives and generic deduplication are separate modes')
+    if keys is not None and not compress:raise ValueError('--no-compress applies to numeric packing only')
     source_hash=sha256(source); output.parent.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.ngram-store-',dir=output.parent) as tmp:
         candidate=Path(tmp)/'bundle'
@@ -49,8 +50,8 @@ def pack_store(source, output, dim, *, native_library=None, keys=None, structura
                 expected=plan.reconstructed_sha256; preserved=plan.original_bytes_preserved
         else:
             candidate.mkdir()
-            storage=pack_native(source,candidate/'table.men',dim*4,256,deduplicate,predictor='xor',
-                                max_block_bytes=max_block_bytes)
+            storage=pack_native(source,candidate/'table.men',dim*4,256,deduplicate,predictor='xor' if compress else 'none',
+                                max_block_bytes=max_block_bytes,compress=compress)
             expected=source_hash; preserved=True
         reconstructed=hashlib.sha256()
         with NativeRows(candidate/'table.men',native_library) as table:
@@ -121,6 +122,7 @@ def main(argv=None):
     pack.add_argument('--mode',choices=('layout','exact','joint'),default='exact')
     pack.add_argument('--cosine',type=float,default=.99); pack.add_argument('--norm-ratio',type=float,default=.99)
     pack.add_argument('--max-block-bytes',type=int,default=8192); pack.add_argument('--deduplicate',action='store_true')
+    pack.add_argument('--no-compress',action='store_true',help='Store blocks uncompressed; with --deduplicate, lookups need no decoding.')
     compact=commands.add_parser('compact-bags',help='Build exact incidence groups and FP32 group means with disk-backed buffers.')
     compact.add_argument('--input',type=Path,required=True); compact.add_argument('--dim',type=int,required=True)
     compact.add_argument('--bag-ids',type=Path,required=True); compact.add_argument('--bag-offsets',type=Path,required=True)
@@ -238,7 +240,7 @@ def main(argv=None):
             result=pack_store(args.input,args.output,args.dim,native_library=args.native_library,
                 keys=read_keys(args.keys) if args.keys else None,structural_library=args.structural_library,
                 mode=args.mode,cosine=args.cosine,norm_ratio=args.norm_ratio,
-                max_block_bytes=args.max_block_bytes,deduplicate=args.deduplicate)
+                max_block_bytes=args.max_block_bytes,deduplicate=args.deduplicate,compress=not args.no_compress)
         else:
             metadata=open_metadata(args.store); rows,dim=metadata['shape']
             if args.command=='query' and metadata.get('name')=='certified-groups':

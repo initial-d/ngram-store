@@ -1,0 +1,127 @@
+{
+ "model": "model-uniform-lr10",
+ "documents": 7600,
+ "ids_per_doc_mean": 130.21263157894737,
+ "source_fp32_bytes": 3578681344,
+ "artifact_bytes": {
+  "generic-zstd-256": 3272923154,
+  "dedup-zstd-256": 3328840050,
+  "dedup-raw": 3635472024,
+  "plain-raw": 3579555128
+ },
+ "timings": {
+  "raw-mmap per-doc": {
+   "p50_us": 14.1,
+   "p95_us": 24.1,
+   "total_s": 0.114,
+   "x_raw_p50": 1.0
+  },
+  "raw-mmap batch32": {
+   "p50_us": 446.9,
+   "p95_us": 511.3,
+   "total_s": 0.107,
+   "x_raw_p50": 1.0
+  },
+  "generic-zstd-256 binding per-doc": {
+   "p50_us": 6039.8,
+   "p95_us": 9195.5,
+   "total_s": 46.848,
+   "x_raw_p50": 428.4
+  },
+  "generic-zstd-256 direct per-doc": {
+   "p50_us": 6014.2,
+   "p95_us": 9174.7,
+   "total_s": 46.654,
+   "x_raw_p50": 426.5
+  },
+  "generic-zstd-256 direct batch32": {
+   "p50_us": 142477.0,
+   "p95_us": 155382.3,
+   "total_s": 33.985,
+   "x_raw_p50": 318.8
+  },
+  "generic-zstd-256 gather_array per-doc": {
+   "p50_us": 6022.9,
+   "p95_us": 9209.2,
+   "total_s": 46.75,
+   "x_raw_p50": 427.2
+  },
+  "dedup-zstd-256 binding per-doc": {
+   "p50_us": 6045.8,
+   "p95_us": 9237.7,
+   "total_s": 46.899,
+   "x_raw_p50": 428.8
+  },
+  "dedup-zstd-256 direct per-doc": {
+   "p50_us": 6037.3,
+   "p95_us": 9186.4,
+   "total_s": 46.75,
+   "x_raw_p50": 428.2
+  },
+  "dedup-zstd-256 direct batch32": {
+   "p50_us": 142720.2,
+   "p95_us": 155630.0,
+   "total_s": 34.05,
+   "x_raw_p50": 319.4
+  },
+  "dedup-zstd-256 gather_array per-doc": {
+   "p50_us": 6009.1,
+   "p95_us": 9171.8,
+   "total_s": 46.619,
+   "x_raw_p50": 426.2
+  },
+  "dedup-raw binding per-doc": {
+   "p50_us": 39.0,
+   "p95_us": 70.8,
+   "total_s": 0.322,
+   "x_raw_p50": 2.8
+  },
+  "dedup-raw direct per-doc": {
+   "p50_us": 18.2,
+   "p95_us": 30.4,
+   "total_s": 0.146,
+   "x_raw_p50": 1.3
+  },
+  "dedup-raw direct batch32": {
+   "p50_us": 612.8,
+   "p95_us": 706.4,
+   "total_s": 0.147,
+   "x_raw_p50": 1.4
+  },
+  "dedup-raw gather_array per-doc": {
+   "p50_us": 19.9,
+   "p95_us": 32.2,
+   "total_s": 0.16,
+   "x_raw_p50": 1.4
+  },
+  "plain-raw binding per-doc": {
+   "p50_us": 37.5,
+   "p95_us": 68.3,
+   "total_s": 0.312,
+   "x_raw_p50": 2.7
+  },
+  "plain-raw direct per-doc": {
+   "p50_us": 17.9,
+   "p95_us": 29.9,
+   "total_s": 0.144,
+   "x_raw_p50": 1.3
+  },
+  "plain-raw direct batch32": {
+   "p50_us": 598.4,
+   "p95_us": 686.0,
+   "total_s": 0.142,
+   "x_raw_p50": 1.3
+  },
+  "plain-raw gather_array per-doc": {
+   "p50_us": 19.5,
+   "p95_us": 32.0,
+   "total_s": 0.157,
+   "x_raw_p50": 1.4
+  }
+ },
+ "environment": {
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.9.6",
+  "numpy": "2.0.2"
+ }
+}

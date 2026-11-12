@@ -79,6 +79,13 @@ The C reader bounds-checks the header, descriptors and every queried ID, but doe
 not hash the whole file on open (the PyTorch adapter does). Only open artifacts
 you trust, and keep external checksums for archival.
 
+From Python, `NativeRows.rows(ids)` takes a list of Python integers and returns
+bytes. `NativeRows.gather_array(ids, out=None)` takes a 1-D NumPy integer array and
+returns an `(n, row_bytes)` uint8 array (or fills `out`); it passes both buffers
+straight to `meft_rows_gather`. On uncompressed tables it halves lookup time
+compared with `rows`
+([profile](../../evidence/host_query_profile_20261112/README.md)).
+
 ## Native layout and construction
 
 `MEFTNAT1` is a little-endian binary file: a versioned header, an optional

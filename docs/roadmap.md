@@ -31,6 +31,13 @@ find out why.
 - **Done when** the selected lossless layout on the controlled AG News/DBpedia CPU
   traces is within 2× of direct FP32 p50 at batch 32, or the profile shows why it
   cannot be and the advisor (item 2) falls back to raw.
+- **Progress (2026-11-12).** The [local profile](../evidence/host_query_profile_20261112/README.md)
+  found the time is block decompression: 256-row Zstd blocks and scattered IDs.
+  On the zero-init AG News table, dedup without compression saves 85.8% (86.6%
+  with Zstd) at 1.2× raw mmap (was 356×); on the uniform-init table, raw is the
+  right layout. `NativeRows.gather_array` removes the Python overhead that then
+  dominates, and `pack --no-compress` exposes the layout. Remaining: confirm on the
+  original tables, including DBpedia, through the full GPU host path.
 
 ### 2. Pick the layout automatically
 

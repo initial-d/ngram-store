@@ -431,6 +431,32 @@ class NativeRows:
         self.gather_into(ctypes.addressof(query), len(ids), ctypes.addressof(output), len(output))
         return output.raw
 
+    def gather_array(self, ids, out=None):
+        """NumPy fast path for `rows`: 1-D integer IDs in, (n, row_bytes) uint8 out.
+
+        Skips the per-ID Python checks and ctypes array of `rows`, which dominate
+        once rows need no decoding (e.g. deduplicated, uncompressed tables).
+        View the result with the stored dtype, e.g. `.view('<f4')`.
+        """
+        import numpy as np
+        if not self.handle:
+            raise ValueError("row store is closed")
+        ids = np.asarray(ids)
+        if ids.ndim != 1 or ids.dtype.kind not in "iu":
+            raise TypeError("ids must be a 1-D integer array")
+        count, width = len(ids), self.header["row_bytes"]
+        if count and (int(ids.min()) < 0 or int(ids.max()) >= self.header["n_rows"]):
+            raise IndexError("row ID out of bounds")
+        query = np.ascontiguousarray(ids, dtype="<u8")
+        if out is None:
+            out = np.empty((count, width), dtype=np.uint8)
+        elif (not isinstance(out, np.ndarray) or not out.flags.c_contiguous
+              or not out.flags.writeable or out.nbytes != count * width):
+            raise ValueError("out must be a writable C-contiguous array of count * row_bytes bytes")
+        if count:
+            self.gather_into(query.ctypes.data, count, out.ctypes.data, out.nbytes)
+        return out
+
     def row(self, row_id):
         return self.rows([row_id])
 
