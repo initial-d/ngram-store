@@ -48,7 +48,7 @@ def _atomic_output(output):
 
 def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
                 predictor="none", row_order=None, *, representatives=None, max_block_bytes=None,
-                compress=True, implicit_identity=True):
+                compress=True, implicit_identity=True, codec='zlib'):
     """Stream blocks into a spool; exact dedup index still grows with unique rows.
 
     deduplicate=False avoids the unbounded unique-row dictionary for large raw
@@ -79,6 +79,14 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
     max_block_bytes optionally caps decoded bytes per block, retaining at least
     one full row. Reduces sparse-miss amplification at a compression/metadata
     tradeoff; it does not bound RSS. None preserves the existing block_rows layout.
+    codec='zlib' preserves the v1-v3 defaults. Explicit codec='lz4' or 'zstd'
+    uses an optional system compressor and format 4 (forwarding) or 5 (identity).
+    The reader must be built with the corresponding optional codec capability;
+    older readers reject these versions. Compression is exact over row bytes.
+    codec='row-xor' with predictor='none' uses fixed-anchor byte-mask packets
+    in versions 6/7. Zero-cache and row-cache queries decode only requested rows,
+    with raw fallback for incompressible blocks. It introduces no floating-point
+    operation or quantization; older readers reject the new versions.
     """
     source, output = Path(source), Path(output)
     block_rows = resolve_block_rows(row_bytes, block_rows, max_block_bytes)
@@ -89,6 +97,17 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
         raise ValueError("partial input row")
     if predictor not in ("none", "xor"):
         raise ValueError("predictor must be none or xor")
+    if codec not in ('zlib', 'lz4', 'zstd', 'row-xor'):
+        raise ValueError('codec must be zlib, lz4, zstd or row-xor')
+    if codec == 'row-xor' and predictor != 'none':
+        raise ValueError('row-xor supplies its own fixed-anchor predictor; use predictor=none')
+    if __package__:
+        from .block_compression import compressor, encode_row_packets
+    else:
+        from block_compression import compressor, encode_row_packets
+    encode_block = ((lambda raw: encode_row_packets(raw, row_bytes)) if codec == 'row-xor'
+                    else compressor(codec)) if compress else None
+    codec_id = {'zlib': 1, 'lz4': 3, 'zstd': 5, 'row-xor': 7}[codec]
     if type(compress) is not bool:
         raise ValueError("compress must be boolean")
     if type(implicit_identity) is not bool:
@@ -113,9 +132,9 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
     with tempfile.TemporaryFile(dir=output.parent) as map_file, tempfile.TemporaryFile(dir=output.parent) as spool:
         def flush():
             raw = b"".join(pending)
-            compressed = zlib.compress(raw) if compress else raw
-            codec = int(len(compressed) < len(raw))
-            encoded = compressed if codec else raw
+            compressed = encode_block(raw) if compress else raw
+            selected_codec = codec_id if len(compressed) < len(raw) else 0
+            encoded = compressed if selected_codec else raw
             if compress and predictor == "xor" and len(pending) > 1:
                 # Python integers perform the same bytewise operation in C.
                 # A little-endian shift places the previous row at the current
@@ -124,10 +143,10 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
                 residual = (int.from_bytes(raw, "little") ^
                             (int.from_bytes(raw[:-row_bytes], "little") << (8 * row_bytes)))
                 residual = residual.to_bytes(len(raw), "little")
-                candidate = zlib.compress(residual)
+                candidate = encode_block(residual)
                 if len(candidate) < len(encoded):
-                    encoded, codec = candidate, 2
-            blocks.append((spool.tell(), len(encoded), len(raw), codec))
+                    encoded, selected_codec = candidate, codec_id + 1
+            blocks.append((spool.tell(), len(encoded), len(raw), selected_codec))
             spool.write(encoded)
             pending.clear()
 
@@ -168,12 +187,15 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
         payload_start = HEADER.size + row_map_bytes + len(blocks) * DESC.size
         with _atomic_output(output) as dest:
             version = 3 if omit_map else (2 if predictor == "xor" else 1)
+            if codec != 'zlib':
+                version = 5 if omit_map else 4
+            if codec == 'row-xor': version = 7 if omit_map else 6
             dest.write(HEADER.pack(b"MEFTNAT1", version, nrows, row_bytes, unique, block_rows, len(blocks)))
             map_file.seek(0)
             for part in iter(lambda: map_file.read(1024 * 1024), b""):
                 dest.write(part)
-            for offset, stored, raw_size, codec in blocks:
-                dest.write(DESC.pack(payload_start + offset, stored, raw_size, codec))
+            for offset, stored, raw_size, selected_codec in blocks:
+                dest.write(DESC.pack(payload_start + offset, stored, raw_size, selected_codec))
             spool.seek(0)
             for part in iter(lambda: spool.read(1024 * 1024), b""):
                 dest.write(part)
@@ -186,9 +208,12 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
             "raw_blocks": sum(codec == 0 for _, _, _, codec in blocks),
             "compressed_blocks": sum(codec != 0 for _, _, _, codec in blocks),
             "zlib_blocks": sum(codec == 1 for _, _, _, codec in blocks),
-            "xor_blocks": sum(codec == 2 for _, _, _, codec in blocks),
+            "lz4_blocks": sum(c in (3, 4) for _, _, _, c in blocks),
+            "zstd_blocks": sum(c in (5, 6) for _, _, _, c in blocks),
+            "row_packet_blocks": sum(c == 7 for _, _, _, c in blocks),
+            "xor_blocks": sum(codec in (2, 4, 6) for _, _, _, codec in blocks),
             "deduplicate": deduplicate, "predictor": predictor,
-            "compression": compress,
+            "compression": compress, "block_codec": codec,
             "reordered": row_order is not None,
             "external_representatives": representatives is not None,
             "marked_rows": nrows if representatives is None else len(physical)}
@@ -256,6 +281,17 @@ class NativeRows:
         setter.restype = ctypes.c_int
         if setter(self.handle, budget):
             raise ValueError("cannot configure native cache")
+
+    @property
+    def decoder_name(self):
+        if not self.handle:
+            raise ValueError("row store is closed")
+        if not hasattr(self.lib, "meft_rows_decoder_name"):
+            return "zlib"
+        function = self.lib.meft_rows_decoder_name
+        function.argtypes = [ctypes.c_void_p]
+        function.restype = ctypes.c_char_p
+        return function(self.handle).decode("ascii")
 
     @property
     def supports_bounded_bag_compiler(self):

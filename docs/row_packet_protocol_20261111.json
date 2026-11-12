@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "registered-before-real-query-outcomes",
+  "parent_protocol": "controlled_memory_deployment_protocol_20261111.json",
+  "prior_evidence_commit": "59eff58",
+  "question": "Does independently reconstructing requested rows remove stream block-decode amplification while retaining useful COMPLETE-branch savings?",
+  "sources": "All six existing fully trained Qwen3-0.6B and Qwen3.5-4B full-key sources, seeds 3/7/11. No new fitting, padding, replicated keys or random vector benchmarks.",
+  "codecs": ["fp32", "sq4", "sq6", "sq8", "pq-8x8", "pq-16x8"],
+  "block_rows": [16, 64, 256, 1024],
+  "byte_compressors": {"row-xor": ["fixed original first-row anchor with independent masks"], "zlib": ["none", "previous-row XOR"], "lz4": ["none", "previous-row XOR"], "zstd": ["none", "previous-row XOR"]},
+  "controls": "Direct original standalone FAISS codes and all declared byte codecs with identical blocks/compiler/library/request adapter. Original code bytes, codebooks and original-ID decoded vectors must hash identically.",
+  "requests": "32 real calibration and 32 official test token prefixes per source, identical to the previous CPU lane; preserve original token addressing and original trained row IDs.",
+  "timing": "Six concurrent lanes on disjoint fixed physical cores, one thread each. New handles with first-request timings; two warmups and five request sweeps, warm OS with zero application cache. Full token-addressing/adapter and row-only timings reported separately. No GPU timing claim in this addendum.",
+  "selection": "Independently within each unchanged decoded FAISS codec and byte-compressor family, lowest calibration complete-token p50 among candidates saving at least 1% or 10% of COMPLETE branch bytes versus direct. If none qualify, use direct fallback. Test timings never choose or change layout. All 1044 cells retained (6 sources x 6 codecs x (1 direct + 4 layouts x 7 compressors/predictors)).",
+  "metrics": ["complete branch bytes including maps/codebooks/common model", "code-byte hash", "actual query-output hashes", "p50/p95/p99", "paired calibration/test latency samples", "first request", "RSS", "library/source/protocol hashes"],
+  "claim_boundary": "This is a generic lossless byte-access layout composed over unchanged FAISS codes. It is distinct from the DATrie prefix/suffix mark-compact contribution and cannot be called universally faster or smaller. Fixed anchors may fail to compress high-entropy rows; raw fallback and losing layouts remain evidence. These six trained branches do not establish billion-row capacity or full Engram pretraining.",
+  "publication": "Large bundles, requests, trained rows and corpora remain task artifacts; only compact evidence and code enter Git."
+}

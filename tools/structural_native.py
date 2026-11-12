@@ -94,6 +94,58 @@ class StructuralPlan(StructuralIndex):
     omitted and remain identity-mapped. Hash bucket aliases need a separate
     provenance/structural certificate; this API rejects duplicate key-bound IDs.
     """
+    @classmethod
+    def from_array(cls, rows, keys, library=None, *, mode='exact', cosine=.99, norm_ratio=.99):
+        """Borrow a read-only contiguous native FP32 array for synchronous build.
+
+        Unlike the byte constructor this avoids two complete row-table copies.
+        The caller must keep the backing data unchanged throughout construction.
+        The C plan retains its own indices/maps and never retains the row pointer.
+        NumPy is optional for this path; map/keys memory still scales with rows.
+        """
+        import numpy as np
+        array = np.asarray(rows)
+        if (array.ndim != 2 or not all(array.shape) or array.dtype != np.dtype(np.float32)
+                or not array.flags.c_contiguous or array.flags.writeable
+                or array.shape[1] > (1 << 31) - 1):
+            raise ValueError('read-only contiguous native FP32 matrix required')
+        if mode not in ('layout', 'exact', 'joint') or not 0 < cosine <= 1 or not 0 < norm_ratio <= 1:
+            raise ValueError('invalid sharing mode or thresholds')
+        nrows, dim = array.shape
+        original_ids = list(keys)
+        if any(type(i) is not int or not 0 <= i < nrows for i in original_ids):
+            raise ValueError('key-bound original ID out of range')
+        query = _keys(keys.values()); ids = (ctypes.c_uint64 * len(original_ids))(*original_ids)
+        obj = cls.__new__(cls); obj.handle = None; obj.lib = _library(library)
+        error = ctypes.create_string_buffer(512)
+        sha = hashlib.sha256()
+        for start in range(0, nrows, 8192): sha.update(array[start:start + 8192].tobytes())
+        obj.source_sha256 = sha.hexdigest()
+        obj.handle = obj.lib.meft_structural_build(query, ids, len(query), ctypes.c_void_p(array.ctypes.data),
+            nrows, dim, ('layout', 'exact', 'joint').index(mode), cosine, norm_ratio, error, len(error))
+        if not obj.handle:
+            raise ValueError(error.value.decode())
+        try:
+            representatives, order = (ctypes.c_uint64 * nrows)(), (ctypes.c_uint64 * nrows)()
+            if obj.lib.meft_structural_maps(obj.handle, representatives, order, nrows, error, len(error)):
+                raise ValueError(error.value.decode())
+            obj.representatives, obj.row_order = list(representatives), list(order)
+            obj.dim, obj.nrows = dim, nrows
+            obj.mode, obj.cosine, obj.norm_ratio = mode, cosine, norm_ratio
+            source_sha = hashlib.sha256(); reconstructed_sha = hashlib.sha256()
+            obj.original_bytes_preserved = True
+            for start in range(0, nrows, 8192):
+                original = array[start:start + 8192].tobytes()
+                decoded = array[obj.representatives[start:start + 8192]].tobytes()
+                source_sha.update(original); reconstructed_sha.update(decoded)
+                obj.original_bytes_preserved &= original == decoded
+            if source_sha.hexdigest() != obj.source_sha256:
+                raise ValueError('borrowed row source changed during structural build')
+            obj.reconstructed_sha256 = reconstructed_sha.hexdigest()
+            return obj
+        except BaseException:
+            obj.close(); raise
+
     def __init__(self, rows, dim, keys, library=None, *, mode="exact",
                  cosine=.99, norm_ratio=.99):
         if type(dim) is not int or not 0 < dim <= (1 << 31) - 1:

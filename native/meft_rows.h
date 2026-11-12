@@ -10,13 +10,24 @@ extern "C" {
  * Rows are opaque bytes: caller owns dtype, tensor shape and head offsets.
  * All IDs are original global row IDs. Errors never cross the ABI as exceptions.
  * Reads MEFTNAT1 versions 1/2 (explicit forwarding) and 3 (implicit identity).
- * Versions 2/3 support optional lossless XOR prediction. C ABI is unchanged.
+ * Versions 2/3 support optional lossless XOR prediction. Versions 4 (explicit)
+ * and 5 (implicit) add optional LZ4/Zstd blocks; unsupported codecs fail at open.
+ * Versions 6 (explicit) and 7 (implicit) add fixed-anchor XOR byte-mask packets with independent
+ * per-row decoding. No whole payload or forwarding-table scan at open.
+ * Default writers still use versions 1-3. Existing C ABI is unchanged.
  */
 typedef struct meft_rows meft_rows;
 meft_rows *meft_rows_open(const char *path, char *error, size_t error_capacity);
 void meft_rows_close(meft_rows *store);
 uint64_t meft_rows_count(const meft_rows *store);
 uint64_t meft_rows_width(const meft_rows *store);
+/* Actual decoder: "zlib", or "libdeflate" when built with
+ * -DMEFT_USE_LIBDEFLATE -ldeflate. Both read the same v1-v3 zlib payloads.
+ * Optional acceleration changes neither row bytes nor the file/C ABI. */
+const char *meft_rows_decoder_name(const meft_rows *store);
+/* Bit mask: 1=zlib (always), 2=LZ4, 4=Zstd, 8=row packets (always). Explicit optional build flags
+ * MEFT_USE_LZ4/-llz4 and MEFT_USE_ZSTD/-lzstd enable corresponding readers. */
+uint32_t meft_rows_codec_capabilities(void);
 /* Optional decoded-block LRU cache, disabled at open. Setting a budget clears
  * all entries; payload bytes never exceed budget. Hash/LRU metadata grows lazily
  * with cached blocks; there is no fixed entry cap or full-table allocation.
@@ -25,7 +36,8 @@ int meft_rows_set_cache_bytes(meft_rows *store, size_t budget);
 /* Cache policy: 0=decoded blocks (default), 1=queried rows from compressed
  * blocks. Changing policy clears entries and retains the byte budget. Rows
  * use forwarded IDs, so aliases share one byte-exact cache entry. Row mode
- * favors sparse repeated queries; it does not avoid first-miss block decoding.
+ * favors sparse repeated queries. Stream codecs still decode first-miss blocks;
+ * row-packet codecs reconstruct only requested rows in row-cache/zero-cache mode.
  * Returns -1 for null store or invalid policy. No new artifact format. */
 int meft_rows_set_cache_policy(meft_rows *store, int rows);
 uint64_t meft_rows_cache_bytes(const meft_rows *store);
@@ -39,6 +51,8 @@ int meft_rows_gather(meft_rows *store, const uint64_t *ids, size_t count,
  * caller's complete output. Bounds query-location/sort scratch, not output,
  * decoded blocks, cache or total RSS. Each chunk groups its own block reads;
  * crossing chunks can repeat decoding. Last-query counters aggregate all chunks.
+ * Each handle retains request scratch up to its largest earlier gather;
+ * use chunking from the first call when a fixed scratch bound is required.
  * Same original-ID order, no-overlapping-inputs and partial-error-output contract.
  */
 int meft_rows_gather_chunked(meft_rows *store, const uint64_t *ids, size_t count,
@@ -92,9 +106,11 @@ int meft_rows_compile_bounded_bags(const uint64_t *rows, const uint64_t *counts,
     size_t bag_capacity, size_t *plan_count, char *error, size_t error_capacity);
 uint64_t meft_rows_last_block_reads(const meft_rows *store);
 uint64_t meft_rows_last_decompressions(const meft_rows *store);
-/* Successfully decoded compressed blocks in the last call, including repeated
- * decoding across chunks. Input bytes are codec payload, decoded bytes are full
- * block output. Excludes raw-row copies and cache hits. These are logical codec
+/* Codec work in the last call, including repeated decoding across chunks.
+ * Stream input bytes are codec payload; decoded bytes are full block output.
+ * Row packets count accessed anchor/offset/packet bytes and reconstructed row
+ * output (including repeated IDs), or full output when populating a block cache.
+ * Excludes raw-row copies and cache hits. These are logical codec
  * work counters, not disk I/O, page faults or bytes resident in the OS cache. */
 uint64_t meft_rows_last_compressed_bytes(const meft_rows *store);
 uint64_t meft_rows_last_decoded_bytes(const meft_rows *store);

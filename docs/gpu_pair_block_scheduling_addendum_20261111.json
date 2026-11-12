@@ -1,0 +1,12 @@
+{
+  "status": "resource-scheduling-addendum-after-partial-results",
+  "parent": "controlled_memory_deployment_protocol_20261111.json",
+  "reason": "External occupancy interrupted six serial Qwen lanes; idle eight-device capacity is used to finish complete paired blocks concurrently.",
+  "pairing_unit": "source / codec / rotated cohort; four methods times two batch sizes, eight cells, same physical GPU and fixed physical CPU core within the whole block",
+  "unchanged": ["frozen CPU calibration selection and its digest", "source weights", "codec bytes", "canonical addressing", "official requests", "method rotation", "requests=8", "repeat=3", "warmup=2", "decode_steps=16", "batch_sizes=1,4", "benchmark worker and contamination checks"],
+  "resume": "Reuse only complete blocks with consistent device, single physical CPU core, benchmark source, original job hashes and no observed external GPU clients. Preserve incomplete, mixed-affinity and prior multi-core blocks in history before whole-block replay.",
+  "cpu_allocation": {"native_gpu": [0, 1, 2, 3, 4, 5, 26, 27], "application_quality": "6-17", "application_gpu": "18-25", "build": "80-127"},
+  "gpu_coordination": "Native block controller reserves eight devices even between child CUDA contexts. Application controller retains active CPU children through adoption, then launches its GPU lanes after reservation clears.",
+  "interpretation": "Compare methods within each complete block. Do not infer speedups by comparing absolute latency across GPUs, CPU assignments or shared-host history. Scheduling change provides no new calibration or test selection opportunity.",
+  "publication": "Keep failed/interrupted attempts and hashes. Raw tables, models, prompts and large evidence payloads remain outside Git."
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "registered-before-outcomes",
+  "previous_evidence_commit": "70322caad95534c569e8c4f3ff0d09c8ceb76304",
+  "compute": {"host": "10.178.155.22", "gpus": 8, "gpu_model": "A800-SXM4-80GB", "work_root": "/llm-align/duyimin/ngram-controlled-deployment-20261111"},
+  "native_query": {
+    "sources": "All six existing trained full-key Qwen branches, seeds 3/7/11, Qwen3-0.6B and Qwen3.5-4B",
+    "controls": ["direct standalone FAISS", "prior native reader", "request-scratch/sorted-query optimization with zlib", "same optimization with libdeflate"],
+    "layouts": {"block_rows": [16, 64, 256, 1024], "predictors": ["none", "xor"]},
+    "codecs": ["fp32", "sq4", "sq6", "sq8", "pq-8x8", "pq-16x8"],
+    "requests": "Distinct real official token prefixes and their original trained canonical row IDs; no random request or key replication",
+    "cache_regimes": ["new handle, OS state recorded", "warm OS with zero application cache", "row cache", "block cache"],
+    "cache_bytes": [0, 1048576, 8388608],
+    "concurrent_workers": [1, 2, 4, 8],
+    "metrics": ["output/code-byte hashes", "complete branch bytes", "p50/p95/p99", "paired latency ratios", "completed requests / elapsed wall time", "RSS/PSS", "page faults", "decoded/compressed work", "CPU affinity", "GPU allocated/reserved memory", "NVML competition"],
+    "timing_rule": "Same physical GPU and fixed cores within each paired lane; rotate method order. No cross-GPU speedup arithmetic. Contaminated cohorts are retained and excluded from primary exclusive-device claims.",
+    "io_rule": "No machine-wide cache drop. New-handle or PTE-cold is not disk-cold. File-specific eviction may only affect new task-owned copies and must be verified."
+  },
+  "independent_large_application": {
+    "datasets": {"ag_news": {"official_train": 120000, "official_test": 7600, "classes": 4}, "dbpedia_14": {"official_train": 560000, "official_test": 70000, "classes": 14}},
+    "split": "Seed-42 stratified 90/10 split of official training for training/calibration; full official test untouched",
+    "representation": "Word unigrams through order 4 over complete documents, Unicode word/punctuation tokenization, no document truncation; training-only exact canonical vocabulary",
+    "model": "128-dimensional mean n-gram embedding bag plus linear classifier; zero-initialization primary and standard uniform(-1/dim,1/dim) sensitivity grid, independently seeded identical nonzero classifier for all table sizes",
+    "training": {"seeds": [3, 7, 11], "epochs": 10, "batch_size": 512, "learning_rates": [1.0, 3.0, 10.0], "optimizer": "Sparse SGD, linear learning-rate decay", "controls": ["exact", "hash with matched row count", "hash with 2^20 buckets", "hash with 2^22 buckets"]},
+    "domain_rule": "Primary full/hash comparison shares zero embeddings for unseen canonical training keys. Native hash open-vocabulary behavior requires a separately labelled cohort.",
+    "coverage": "Every exact row except the reserved zero row must differ from its declared initialization and be finite. Publish actual observed size; never pad or replicate to reach a scale target. Both initialization conventions run the complete seed/rate/addressing grid (144 cells).",
+    "selection": "Lowest mean calibration cross-entropy selects learning rate within each addressing family, averaged across all three seeds. Test never changes selection. All losing training cells are retained.",
+    "compression_baselines": ["source FP32", "FP16", "FAISS SQ8/SQ6/SQ4", "FAISS PQ-16x8/PQ-32x8", "generic zlib/LZ4/Zstd blocks", "byte deduplication", "conditional prefix/suffix representative sharing", "NGramStore composition over the same FAISS code bytes"],
+    "quality_budgets_pp": [0.0, 0.1, 0.5, 1.0, 2.0],
+    "inference": {"batch_sizes": [1, 32], "cuda_allocator_budgets_gib": [0.5, 1.0, 2.0, 4.0, 8.0], "host_backends": ["raw with the same staging/cache schedule", "direct FAISS with the same staging/cache schedule", "native with the same staging/cache schedule"], "resident_control": "Full resident table and matched hash controls; record genuine allocator OOMs and completed requests"},
+    "capacity_accounting": "Include exact registry, word vocabulary, classifier, codebooks, forwarding metadata, cache metadata, staging and measured process/device memory. Branch-file savings and whole-process memory are separate.",
+    "task_boundary": "Standalone public n-gram classification is an independent task; it is not frozen-Qwen language-model performance or Engram pretraining."
+  },
+  "calibration": {
+    "separation": "Construction/codec fit uses training rows. Calibration freezes all choices. Official test is confirmation only.",
+    "uncertainty": "Paired document/case resampling, seed clusters, and simultaneous familywise confidence correction across all calibration choices; retain pointwise and simultaneous results distinctly.",
+    "fallback": "If no candidate qualifies at a budget, retain the exact source. Calibration failure and held-out budget violation remain visible; neither is repaired by test reselection."
+  },
+  "limits": {
+    "ram_isolation": "Container cgroups are read-only. RLIMIT_AS and software cache limits must not be presented as total-RAM caps. True total-RAM experiments require writable delegation; GPU allocator budgets have their own narrower declared scope.",
+    "pressure": "Task-owned bounded pressure workers only; no other user process termination, global limits or cache drops.",
+    "publication": "Raw corpora, keys, requests and trained weights remain untracked task artifacts. Numeric evidence capsules go to Release; checked-in content remains compact.",
+    "claims": "Full-key advantage, conditional containment similarity and codec efficiency are measured, never assumed universal. Negative cells remain in the full grid. Energy and monetary costs are unmeasured."
+  }
+}

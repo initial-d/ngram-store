@@ -11,6 +11,12 @@ This is finite evidence from enwik8 SGNS and MultiCounterFact memory branches
 on frozen Qwen3-0.6B and Qwen3.5-4B backbones. It is not an Engram pretraining
 result or a claim that every workload requires full-key memory.
 
+The subsequent [controlled deployment experiments](../controlled_deployment_results_20261112.md)
+are also complete: 864 Qwen GPU reports, full AG News/DBpedia tests, 360 public
+application GPU pairs and 6,084 CPU reports. Capacity savings and measured query
+slowdowns are reported together; the larger classifier grids do not establish
+universal full-key superiority over hashing.
+
 ## Complete coverage
 
 | Stage | Completed coverage |

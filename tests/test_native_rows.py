@@ -2,8 +2,10 @@ import ctypes
 import os
 from pathlib import Path
 import random
+import shlex
 import struct
 import subprocess
+import sys
 import tempfile
 import unittest
 import zlib
@@ -15,10 +17,143 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def descriptor_start(data):
     header = HEADER.unpack_from(data)
-    return HEADER.size + (0 if header[1] == 3 else header[2] * 8)
+    return HEADER.size + (0 if header[1] in (3, 5, 7) else header[2] * 8)
 
 
 class NativeRowsTest(unittest.TestCase):
+    def test_row_packets_preserve_original_ids_aliases_and_bounded_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            rows = [(b'x' * 16 + bytes([i % 2])) for i in range(129)]
+            source.write_bytes(b''.join(rows))
+            for options in ({}, {'implicit_identity': False}, {'deduplicate': True},
+                            {'row_order': list(reversed(range(len(rows))))},
+                            {'representatives': [i % 2 for i in range(len(rows))]}):
+                meta = pack_native(source, table, 17, 64, predictor='none', codec='row-xor',
+                                   **{'deduplicate': False, **options})
+                self.assertGreater(meta['row_packet_blocks'], 0)
+                self.assertEqual(meta['format_version'], 7 if not options else 6)
+                for policy in ('rows', 'blocks'):
+                    for budget in (0, 1024, 1 << 18):
+                        with NativeRows(table, self.library, cache_bytes=budget, cache_policy=policy) as reader:
+                            for ids in ([128, 1, 64, 0, 1, 127], list(range(len(rows))), []):
+                                self.assertEqual(reader.rows(ids), b''.join(rows[i] for i in ids))
+                                self.assertEqual(reader.rows(ids), b''.join(rows[i] for i in ids))
+                                self.assertLessEqual(reader.cache_bytes, budget)
+            with self.assertRaisesRegex(ValueError, 'predictor=none'):
+                pack_native(source, table, 17, 64, predictor='xor', codec='row-xor')
+
+    def test_row_packets_sparse_decode_work_and_uint32_offsets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            width = 512; rows = []
+            for i in range(4096):
+                row = bytearray(b'x'*width); row[i % width] ^= 1; rows.append(bytes(row))
+            source.write_bytes(b''.join(rows))
+            meta = pack_native(source, table, width, 4096, False, predictor='none', codec='row-xor')
+            self.assertEqual(meta['row_packet_blocks'], 1)
+            encoded = table.read_bytes(); offset = DESC.unpack_from(encoded, descriptor_start(encoded))[0]
+            self.assertEqual(encoded[offset], 4)
+            with NativeRows(table, self.library) as reader:
+                ids = [4095, 0, 17, 17]
+                self.assertEqual(reader.rows(ids), b''.join(rows[i] for i in ids))
+                self.assertEqual(reader.last_decoded_bytes, len(ids)*width)
+                self.assertLess(reader.last_decoded_bytes, len(rows)*width)
+
+    def test_row_packet_headers_and_queried_payloads_reject_malformed_offsets_and_masks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            width = 17; count = 64
+            source.write_bytes(b''.join(b'x'*16+bytes([i%2]) for i in range(count)))
+            pack_native(source, table, width, count, False, predictor='none', codec='row-xor')
+            valid = table.read_bytes(); payload = DESC.unpack_from(valid, descriptor_start(valid))[0]
+            for position, value in ((payload, 3), (payload+1, 1), (payload+4+width, 1)):
+                bad = bytearray(valid); bad[position] = value; table.write_bytes(bad)
+                with self.assertRaisesRegex(ValueError, 'packet header'): NativeRows(table, self.library)
+            area = payload+4+width+(count+1)*2
+            for position in (area+2, payload+4+width+2*2):
+                bad = bytearray(valid); bad[position] |= 128; table.write_bytes(bad)
+                with NativeRows(table, self.library) as reader:
+                    self.assertEqual(reader.rows([0]), source.read_bytes()[:width])
+                    with self.assertRaisesRegex(ValueError, 'row packet'): reader.rows([1])
+            # Earlier versions cannot reinterpret the new codec as a stream.
+            bad = bytearray(valid); struct.pack_into('<Q', bad, 8, 5); table.write_bytes(bad)
+            with self.assertRaises(ValueError): NativeRows(table, self.library)
+
+    def test_direct_script_import_remains_compatible_with_legacy_demo_entrypoints(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            code = '''import pathlib, sys
+from native_row_store import NativeRows, pack_native
+root = pathlib.Path(sys.argv[1])
+source, output = root / 'raw', root / 'rows'
+source.write_bytes(b'abcabcxyz')
+pack_native(source, output, 3, 2)
+with NativeRows(output, sys.argv[2]) as reader:
+    assert reader.rows([2, 0, 1]) == b'xyzabcabc'
+'''
+            subprocess.run([sys.executable, '-c', code, tmp, str(self.library)],
+                env={**os.environ, 'PYTHONPATH': str(ROOT / 'tools')}, check=True)
+
+    def test_integer_grouping_matches_comparison_control_across_byte_boundaries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp); control = directory / 'comparison.so'; experimental = directory / 'radix.so'
+            for library, flag in ((control, '-DMEFT_DISABLE_RADIX_QUERY'), (experimental, '-DMEFT_USE_RADIX_QUERY')):
+                subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared', flag,
+                    str(ROOT / 'native/meft_rows.c'), '-lz', '-o', str(library)], check=True)
+            source = directory / 'raw'; table = directory / 'rows.meft'
+            rows = [struct.pack('<I', i) + bytes([i % 251]) for i in range(70001)]
+            source.write_bytes(b''.join(rows))
+            rng = random.Random(714)
+            for block_rows in (1, 16, 256):
+                pack_native(source, table, 5, block_rows, False, 'xor')
+                for policy, budget in (('blocks', 0), ('blocks', 1 << 16), ('rows', 1 << 16)):
+                    with NativeRows(table, experimental, cache_bytes=budget, cache_policy=policy) as radix:
+                        with NativeRows(table, control, cache_bytes=budget, cache_policy=policy) as comparison:
+                            for size in (0, 1, 63, 64, 65, 511, 4097, 65):
+                                ids = [rng.randrange(len(rows)) for _ in range(size)]
+                                if size > 3: ids[:3] = [70000, 65536, 255]
+                                expected = b''.join(rows[i] for i in ids)
+                                self.assertEqual(radix.rows(ids), expected)
+                                self.assertEqual(comparison.rows(ids), expected)
+                                self.assertLessEqual(radix.cache_bytes, budget)
+                                # Same ordering contract also preserves repeated/cache-hit queries.
+                                self.assertEqual(radix.rows(ids), comparison.rows(ids))
+
+    def test_optional_fast_codecs_original_ids_odd_width_forwarding_cache_and_capabilities(self):
+        from tools.block_compression import compressor
+        lib = ctypes.CDLL(str(self.library))
+        lib.meft_rows_codec_capabilities.restype = ctypes.c_uint32
+        mask = lib.meft_rows_codec_capabilities()
+        self.assertTrue(mask & 1)
+        for codec, flag in (('lz4', 2), ('zstd', 4)):
+            try:
+                compressor(codec)
+            except ValueError:
+                continue
+            for predictor in ('none', 'xor'):
+                for implicit in (False, True):
+                    with self.subTest(codec=codec, predictor=predictor, implicit=implicit), tempfile.TemporaryDirectory() as tmp:
+                        source, packed = Path(tmp) / 'raw', Path(tmp) / 'packed'
+                        rows = [bytes([i % 3]) * 127 for i in range(33)]
+                        source.write_bytes(b''.join(rows))
+                        meta = pack_native(source, packed, 127, 8, False, predictor,
+                            implicit_identity=implicit, codec=codec)
+                        self.assertEqual(meta['format_version'], 5 if implicit else 4)
+                        self.assertEqual(meta['block_codec'], codec)
+                        if not mask & flag:
+                            with self.assertRaisesRegex(ValueError, 'requires'):
+                                NativeRows(packed, self.library)
+                            continue
+                        for cache_policy in ('blocks', 'rows'):
+                            with NativeRows(packed, self.library, cache_bytes=127*16, cache_policy=cache_policy) as table:
+                                for ids in ([32, 2, 0, 32, 15, 2], list(range(len(rows))), []):
+                                    self.assertEqual(table.rows(ids), b''.join(rows[i] for i in ids))
+                                    self.assertEqual(table.rows(ids), b''.join(rows[i] for i in ids))
+                        pack_native(source, packed, 127, 8, False, predictor, codec=codec,
+                            representatives=[i % 3 for i in range(33)])
+                        with NativeRows(packed, self.library) as table:
+                            self.assertEqual(table.rows(range(33)), b''.join(rows))
+
     def test_implicit_identity_saves_exact_map_bytes_with_unchanged_codec_payloads(self):
         rng = random.Random(901)
         for rows in ([], [b'abc'], [b'abc', b'abd', b'abe'],
@@ -317,11 +452,11 @@ class NativeRowsTest(unittest.TestCase):
         cls.library = Path(cls.tmp.name) / "librows.so"
         subprocess.run([os.environ.get("CC", "cc"), "-std=c11", "-O2", "-Wall", "-Wextra",
                         "-Werror", "-fPIC", "-shared", str(ROOT / "native/meft_rows.c"),
-                        "-lz", "-o", str(cls.library)], check=True)
+                        "-lz", *shlex.split(os.environ.get("MEFT_NATIVE_TEST_FLAGS", "")), "-o", str(cls.library)], check=True)
         cls.example = Path(cls.tmp.name) / "gather"
         subprocess.run([os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
                         "-I" + str(ROOT / "native"), str(ROOT / "examples/native_gather.c"),
-                        str(ROOT / "native/meft_rows.c"), "-lz", "-o", str(cls.example)], check=True)
+                        str(ROOT / "native/meft_rows.c"), "-lz", *shlex.split(os.environ.get("MEFT_NATIVE_TEST_FLAGS", "")), "-o", str(cls.example)], check=True)
 
     @classmethod
     def tearDownClass(cls):
@@ -634,7 +769,7 @@ class NativeRowsTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "descriptor"):
                     NativeRows(packed, self.library)
                 changed = bytearray(data)
-                struct.pack_into("<Q", changed, 8, 4)
+                struct.pack_into("<Q", changed, 8, 8)
                 packed.write_bytes(changed)
                 with self.assertRaisesRegex(ValueError, "header"):
                     NativeRows(packed, self.library)

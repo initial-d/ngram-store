@@ -33,10 +33,11 @@ structural-native:
 CC ?= cc
 NATIVE_SHARED ?= -shared
 NATIVE_EXT ?= so
+NATIVE_CODEC_FLAGS ?=
 native:
 	mkdir -p build
-	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -fPIC $(NATIVE_SHARED) native/meft_rows.c -lz -o build/libmeft_rows.$(NATIVE_EXT)
-	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -Inative examples/native_gather.c native/meft_rows.c -lz -o build/native_gather
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -fPIC $(NATIVE_SHARED) native/meft_rows.c -lz $(NATIVE_CODEC_FLAGS) -o build/libmeft_rows.$(NATIVE_EXT)
+	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -Inative examples/native_gather.c native/meft_rows.c -lz $(NATIVE_CODEC_FLAGS) -o build/native_gather
 
 opt: CXXFLAGS += -O1 -funroll-loops
 opt: fasttext $(LIBNAME).a index cut_ngram print_ngrams bench_ftindex
