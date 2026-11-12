@@ -1,0 +1,38 @@
+{
+ "model": "dbpedia_14-exact-zero-s3-lr10",
+ "selected_layout": "byte-dedup-zstd",
+ "documents": 5000,
+ "doc_sample_seed": 20261112,
+ "ids_per_doc_mean": 161.9016,
+ "rows": 34050161,
+ "source_fp32_bytes": 17433682432,
+ "artifact_bytes": {
+  "byte-dedup-zstd": 2495453184,
+  "dedup-raw": 2624608384
+ },
+ "dedup_raw_build_seconds": 199.46939358115196,
+ "dedup_raw_bytes_match_source_on_500_docs": true,
+ "timings": {
+  "raw-mmap": {
+   "p50_us": 54.341,
+   "p95_us": 85.354,
+   "total_s": 0.27516161400000005,
+   "x_raw_p50": 1.0
+  },
+  "dedup-raw new-lib gather_array": {
+   "p50_us": 96.18,
+   "p95_us": 148.2195,
+   "total_s": 0.486915661,
+   "x_raw_p50": 1.7699343037485509
+  }
+ },
+ "affinity": [
+  74
+ ],
+ "environment": {
+  "platform": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "python": "3.12.13",
+  "numpy": "1.26.4",
+  "cpu": "\t: AMD EPYC 7713 64-Core Processor"
+ }
+}

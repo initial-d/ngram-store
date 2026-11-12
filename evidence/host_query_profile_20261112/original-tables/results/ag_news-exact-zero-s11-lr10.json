@@ -1,0 +1,38 @@
+{
+ "model": "ag_news-exact-zero-s11-lr10",
+ "selected_layout": "byte-dedup-zstd",
+ "documents": 5000,
+ "doc_sample_seed": 20261112,
+ "ids_per_doc_mean": 129.3258,
+ "rows": 6989612,
+ "source_fp32_bytes": 3578681344,
+ "artifact_bytes": {
+  "byte-dedup-zstd": 479734231,
+  "dedup-raw": 508187864
+ },
+ "dedup_raw_build_seconds": 32.71356036514044,
+ "dedup_raw_bytes_match_source_on_500_docs": true,
+ "timings": {
+  "raw-mmap": {
+   "p50_us": 43.445,
+   "p95_us": 66.775,
+   "total_s": 0.22835075500000002,
+   "x_raw_p50": 1.0
+  },
+  "dedup-raw new-lib gather_array": {
+   "p50_us": 75.715,
+   "p95_us": 108.264,
+   "total_s": 0.392541066,
+   "x_raw_p50": 1.742778225342387
+  }
+ },
+ "affinity": [
+  66
+ ],
+ "environment": {
+  "platform": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+  "python": "3.12.13",
+  "numpy": "1.26.4",
+  "cpu": "\t: AMD EPYC 7713 64-Core Processor"
+ }
+}
