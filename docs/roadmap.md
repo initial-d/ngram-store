@@ -74,8 +74,7 @@ budget) rather than add new tasks. Write the protocol first, as before.
 
 ### 6. Technical report
 
-After items 1–2, write up the engine and the three research questions
-(identity, structure, storage cost) from the current evidence.
+Done (2026-11-13): [Technical report](report/ngramstore-report.pdf).
 
 ## How changes are measured
 

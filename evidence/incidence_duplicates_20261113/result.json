@@ -1,0 +1,8 @@
+{
+ "rows_excluding_padding": 6989611,
+ "incidence_groups": 883125,
+ "byte_groups": 883125,
+ "joint_groups": 883125,
+ "partitions_identical": true,
+ "keys_occurring_once_fraction": 0.7855289800820103
+}
