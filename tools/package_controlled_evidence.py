@@ -151,16 +151,26 @@ def verify(directory):
         path = directory / capsule['name']
         if path.stat().st_size != capsule['bytes'] or digest_file(path) != capsule['sha256']:
             raise ValueError('capsule changed: ' + path.name)
-        names = []
+        names = []; verified_in_capsule = set()
         with tarfile.open(path, 'r|gz') as archive:
             for member in archive:
                 name = member.name
-                if not member.isfile() or name in seen or name not in manifest['members']:
+                if name in seen or name not in manifest['members']:
                     raise ValueError('unexpected or duplicate archive member: ' + name)
                 record = manifest['members'][name]
-                if member.size != record['bytes'] or digest_stream(archive.extractfile(member)) != record['sha256']:
+                if member.islnk():
+                    # Frozen runtime snapshots share inodes. TAR may reference an
+                    # earlier file instead of storing its identical bytes again.
+                    # Never follow filesystem links or an unverified TAR target.
+                    if member.linkname not in verified_in_capsule:
+                        raise ValueError('unverified hard-link target: ' + name)
+                    if manifest['members'][member.linkname] != record or member.size != 0:
+                        raise ValueError('hard-link content differs: ' + name)
+                elif not member.isfile():
+                    raise ValueError('unexpected archive member type: ' + name)
+                elif member.size != record['bytes'] or digest_stream(archive.extractfile(member)) != record['sha256']:
                     raise ValueError('member changed: ' + name)
-                seen.add(name); names.append(name)
+                seen.add(name); verified_in_capsule.add(name); names.append(name)
         if names != capsule['members']:
             raise ValueError('capsule member schedule changed')
     if seen != set(manifest['members']):

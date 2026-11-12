@@ -11,6 +11,37 @@ from tools.summarize_controlled_application import summarize
 
 
 class EvidenceIntegrityTest(unittest.TestCase):
+    def test_runtime_hard_links_require_verified_identical_content(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); data = b'# frozen source\n'; first = 'runtime-a/tools/a.py'; second = 'runtime-b/tools/a.py'
+            archive_path = root / 'raw.tar.gz'
+            with tarfile.open(archive_path, 'w:gz') as archive:
+                entry = tarfile.TarInfo(first); entry.size = len(data)
+                archive.addfile(entry, io.BytesIO(data))
+                link = tarfile.TarInfo(second); link.type = tarfile.LNKTYPE; link.linkname = first
+                archive.addfile(link)
+            record = {'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)}
+            manifest = {'members': {first: record.copy(), second: record.copy()}, 'audit_links': {},
+                        'capsules': [{'name': archive_path.name, 'bytes': archive_path.stat().st_size,
+                                      'sha256': digest_file(archive_path), 'members': [first, second]}]}
+            path = root / 'manifest.json'; path.write_text(json.dumps(manifest))
+            self.assertEqual(verify(root)['members'], 2)
+            manifest['members'][second]['sha256'] = '0' * 64; path.write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(ValueError, 'hard-link content differs'):
+                verify(root)
+            manifest['members'][second] = record.copy()
+            # The first file's bytes were checked, but cannot authorize a target
+            # that appears later in the stream or lies outside this capsule.
+            with tarfile.open(archive_path, 'w:gz') as archive:
+                link = tarfile.TarInfo(second); link.type = tarfile.LNKTYPE; link.linkname = first
+                archive.addfile(link)
+                entry = tarfile.TarInfo(first); entry.size = len(data); archive.addfile(entry, io.BytesIO(data))
+            manifest['capsules'][0].update(bytes=archive_path.stat().st_size,
+                sha256=digest_file(archive_path), members=[second, first])
+            path.write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(ValueError, 'unverified hard-link target'):
+                verify(root)
+
     def test_capsule_verification_rejects_changed_audit_links_and_missing_members(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); payload = b'{"status":"complete"}\n'; name = 'cpu-audit/result.json'
