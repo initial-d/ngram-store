@@ -21,8 +21,10 @@ export MEFT_ROWS_LIBRARY=$PWD/build/libmeft_rows.so     # .dylib on macOS
 python -m ngram_store --help
 ```
 
-The pip distribution is still called `meft-memory`; import `ngram_store`. Old
-`meft_memory` imports and `meft-*` commands point to the same code.
+The distribution is `ngram-store` (it was `meft-memory` up to 0.4.0). Import
+`ngram_store`; old `meft_memory` imports and `meft-*` commands point to the same
+code. The wheel contains only the runtime modules, not the experiment scripts in
+`tools/`.
 
 ## Choose a layout
 

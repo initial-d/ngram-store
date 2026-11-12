@@ -52,16 +52,11 @@ Not done: replaying a query trace to predict latency for compressed layouts.
 
 ### 3. Packaging
 
-- The wheel currently packages all of `tools/` (185 modules) as
-  `meft_memory._runtime`; only the 22 runtime modules listed in
-  [`tools/README.md`](../tools/README.md) are needed. Move those into
-  `ngram_store/_runtime/` and leave `tools/<name>.py` re-exports, after checking
-  that no verifier hashes the current `tools/` files. Experiment scripts stay
-  where the evidence expects them.
-- One distribution name (`ngram-store`) with `meft-memory` as an alias; publish to
-  PyPI.
-- **Done when** `pip install ngram-store` works on Linux and macOS and the
-  existing CI, including all evidence verifiers, passes unchanged.
+Done in source (0.5.0): the distribution is `ngram-store`, and wheels ship only
+the 22 runtime modules, computed at build time as the import closure of the
+public entry points (`setup.py`). `tools/` is unchanged on disk, so evidence
+verifiers and `tools.*` imports keep working. Not done: a PyPI upload and a
+`meft-memory` alias package, which need a release decision.
 
 ### 4. Structure on a long-trained real table
 

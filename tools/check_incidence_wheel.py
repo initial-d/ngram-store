@@ -15,7 +15,7 @@ import ngram_store
 def main():
     assert 'torch' not in sys.modules
     assert ngram_store.ExternalBagPartition is meft_memory.ExternalBagPartition
-    assert 'numpy; extra == "incidence"' in distribution('meft-memory').requires
+    assert 'numpy; extra == "incidence"' in distribution('ngram-store').requires
     checkout = Path(__file__).resolve().parents[1]
     assert checkout not in Path(ngram_store.__file__).resolve().parents
     with tempfile.TemporaryDirectory() as tmp:
@@ -23,7 +23,7 @@ def main():
         np.asarray([[1., 2.], [3., 4.], [9., 10.]], dtype='<f4').tofile(root / 'rows')
         np.asarray([0, 1, 2], dtype='<u8').tofile(root / 'ids')
         np.asarray([0, 2, 3], dtype='<u8').tofile(root / 'offsets')
-        entry = next(e for e in distribution('meft-memory').entry_points if e.name == 'ngram-store')
+        entry = next(e for e in distribution('ngram-store').entry_points if e.name == 'ngram-store')
         sys.argv = ['ngram-store', 'compact-bags', '--native', '--input', str(root / 'rows'), '--dim', '2',
                     '--bag-ids', str(root / 'ids'), '--bag-offsets', str(root / 'offsets'),
                     '--output', str(root / 'out'), '--memory-mib', '8']

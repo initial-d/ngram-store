@@ -3,7 +3,7 @@ from importlib import import_module
 
 from ._runtime.native_row_store import NativeRows, pack_native
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 _ADAPTERS = {
     "TextClassifier": "text_classifier",

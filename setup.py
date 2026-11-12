@@ -1,4 +1,9 @@
-"""Build the standalone C reader; wheels have no Python C-API dependency."""
+"""Build the standalone C reader; wheels have no Python C-API dependency.
+
+`tools/` holds the runtime modules and the experiment scripts behind `evidence/`.
+Wheels ship only the runtime: the import closure of the entry points below.
+"""
+import ast
 import os
 from pathlib import Path
 import platform
@@ -11,7 +16,55 @@ from setuptools.command.build_py import build_py
 from wheel.bdist_wheel import bdist_wheel
 
 
+ROOT = Path(__file__).resolve().parent
+# Modules reachable from the public API, CLI and console scripts.
+RUNTIME_ENTRY_POINTS = {
+    "native_row_store", "block_compression", "text_classifier", "budgeted_bags",
+    "certified_torch", "certified_store", "external_cotraining", "cotraining_groups",
+    "structural_native", "engram_row_adapter", "device_row_adapter", "mapped_embedding_bag",
+    "tinyengram_checkpoint", "fasttext_native_bundle", "prepare_fasttext_corpus",
+    "verify_tinyengram_checkpoint", "verify_tinyengram_device", "train_tinyengram_reference",
+    "demo_certified_store", "quantized_memory",
+}
+
+
+def runtime_modules():
+    """Import closure of RUNTIME_ENTRY_POINTS within tools/."""
+    available = {p.stem for p in (ROOT / "tools").glob("*.py")}
+    def imports(name):
+        found = set()
+        for node in ast.walk(ast.parse((ROOT / "tools" / (name + ".py")).read_text())):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    parts = alias.name.split(".")
+                    found.add(parts[1] if parts[0] in ("tools", "meft_memory") and len(parts) > 1 else parts[0])
+                    if alias.name.startswith("meft_memory._runtime.") and len(parts) > 2:
+                        found.add(parts[2])
+            elif isinstance(node, ast.ImportFrom):
+                parts = (node.module or "").split(".")
+                found.add(parts[-1])
+                if node.module in (None, "tools", "meft_memory._runtime"):
+                    found.update(alias.name for alias in node.names)
+            elif isinstance(node, ast.Constant) and isinstance(node.value, str):
+                found.add(node.value.rsplit(".", 1)[-1])   # import_module("...name")
+        return found & available
+    closure, pending = set(), set(RUNTIME_ENTRY_POINTS)
+    while pending:
+        name = pending.pop()
+        if name not in closure:
+            closure.add(name)
+            pending |= imports(name) - closure
+    return closure
+
+
 class BuildNative(build_py):
+    def find_package_modules(self, package, package_dir):
+        modules = super().find_package_modules(package, package_dir)
+        if package != "meft_memory._runtime":
+            return modules
+        keep = runtime_modules() | {"__init__"}
+        return [m for m in modules if m[1] in keep]
+
     def run(self):
         if sys.platform not in ("darwin", "linux"):
             raise RuntimeError("native row-store wheels currently support Linux and macOS")

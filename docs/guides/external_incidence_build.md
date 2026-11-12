@@ -7,8 +7,8 @@ interface (Python 3.10+):
 python -m pip install '.[incidence]'
 ```
 
-The distribution name remains `meft-memory`; both `ngram_store` and historical
-`meft_memory` imports work. Torch is not required for this construction path.
+Install with `pip install '.[incidence]'` (distribution `ngram-store`); both
+`ngram_store` and historical `meft_memory` imports work. Torch is not required for this construction path.
 
 Start with a frozen, row-contiguous little-endian FP32 table. Record every
 registered aggregate query as a CSR bag: `ids.u64` contains original row IDs,

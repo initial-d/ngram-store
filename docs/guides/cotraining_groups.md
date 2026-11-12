@@ -73,7 +73,7 @@ research opportunities.
 
 ## API and scope
 
-With `meft-memory[torch]`, import through either `ngram_store` or the historical
+With `ngram-store[torch]`, import through either `ngram_store` or the historical
 `meft_memory` namespace:
 
 ```python
