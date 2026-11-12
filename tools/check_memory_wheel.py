@@ -17,17 +17,17 @@ from meft_memory import NativeRows, pack_native
 
 def main():
     os.environ.pop("MEFT_ROWS_LIBRARY", None)
-    tags = [line for line in distribution("meft-memory").read_text("WHEEL").splitlines() if line.startswith("Tag:")]
+    tags = [line for line in distribution("ngram-store").read_text("WHEEL").splitlines() if line.startswith("Tag:")]
     assert tags and all(tag.endswith("_" + platform.machine()) for tag in tags), tags
     assert callable(meft_memory.export_fasttext_model)
     assert ngram_store.NativeRows is meft_memory.NativeRows
     assert ngram_store.StructuralPlan is meft_memory.StructuralPlan
     assert 'torch' not in sys.modules
     assert any(entry.name == "ngram-store" and entry.value == "ngram_store.cli:main"
-               for entry in distribution("meft-memory").entry_points)
+               for entry in distribution("ngram-store").entry_points)
     assert any(entry.name == "meft-fasttext-export" and
                entry.value == "meft_memory._runtime.fasttext_native_bundle:main"
-               for entry in distribution("meft-memory").entry_points)
+               for entry in distribution("ngram-store").entry_points)
     with tempfile.TemporaryDirectory() as tmp:
         source, packed = Path(tmp) / "raw", Path(tmp) / "table"
         source.write_bytes(b"ABCDEFGHabcdefgh")
@@ -47,6 +47,11 @@ def main():
         assert json.loads(queried.stdout)['vectors']==[[1,2],[1,2],[3,4]]
         subprocess.run(['ngram-store','fasttext-export','--help'],check=True,capture_output=True)
         print('NGramStore installed CLI/import and historical imports: passed')
+    runtime = Path(meft_memory.__file__).resolve().parent / "_runtime"
+    shipped = {p.stem for p in runtime.glob("*.py")}
+    assert {"native_row_store", "cotraining_groups", "fasttext_native_bundle"} <= shipped, shipped
+    assert not any(n.startswith(("benchmark_", "analyze_", "plot_", "audit_")) for n in shipped), shipped
+    print(f"Wheel ships {len(shipped - {'__init__'})} runtime modules and no experiment scripts: passed")
 
 
 if __name__ == "__main__":

@@ -11,7 +11,8 @@ git remote set-url origin https://github.com/initial-d/ngram-store.git
 
 ## Retained interfaces
 
-- `meft-memory` installation and `meft_memory` imports continue; new callers
+- The distribution is `ngram-store` from 0.5.0 (`meft-memory` up to 0.4.0;
+  existing installs keep working). `meft_memory` imports continue; new callers
   use `ngram_store`. Both names expose the same runtime objects.
 - Existing `meft-*` commands remain; `ngram-store` adds a common dispatcher.
 - C symbols and MEFTNAT1 row bytes are unchanged. Rebuild C++ consumers after

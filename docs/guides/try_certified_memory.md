@@ -24,7 +24,9 @@ python -m pip install 'meft-memory[incidence] @ https://github.com/initial-d/ngr
 ```
 
 Or from a checkout: `python -m pip install '.[incidence]'` (needs a C compiler and
-zlib). Wheels are on GitHub releases, not PyPI.
+zlib). Wheels are on GitHub releases, not PyPI. From 0.5.0 the distribution is
+named `ngram-store`; the 0.4.0 wheels above still install as `meft-memory`, with
+the same imports and commands.
 
 ## Run the included example
 

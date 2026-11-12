@@ -1,6 +1,6 @@
 """Fixed-domain training/export recipe; correctness fixture, not research data.
 
-Requires pip install 'meft-memory[torch]'. Original row packing stays separate.
+Requires pip install 'ngram-store[torch]'. Original row packing stays separate.
 """
 import tempfile
 from pathlib import Path

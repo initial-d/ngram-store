@@ -223,11 +223,11 @@ jobs:
           python "$GITHUB_WORKSPACE/tools/check_memory_wheel.py"
       - name: Verify installed NumPy-only incidence extra
         run: |
-          python -m pip install 'meft-memory[incidence]' --find-links /tmp/meft-wheels
+          python -m pip install 'ngram-store[incidence]' --find-links /tmp/meft-wheels
           cd /tmp
           python "$GITHUB_WORKSPACE/tools/check_incidence_wheel.py"
           python "$GITHUB_WORKSPACE/examples/reproduce_certified_demo.py" --output /tmp/ngram-store-reproduction
       - uses: actions/upload-artifact@v4
         with:
-          name: meft-memory-${{ matrix.os }}
+          name: ngram-store-${{ matrix.os }}
           path: /tmp/meft-wheels/*.whl
