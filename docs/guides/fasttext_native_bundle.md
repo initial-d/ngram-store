@@ -1,17 +1,20 @@
-# FastText application: NGramStore native storage and query
+# FastText: native storage for me_fasttext models
 
-Dense historical **me_fasttext** `.bin` models can be converted into immutable native
-serving bundles. `loadModel(path)` and existing query commands then use the
-original dictionary and row IDs, with input vectors stored in compressed native
-blocks. The production DATrie prefix/suffix planner and mark-compact forwarding
-are part of this conversion. [Actual trained-model results and limits](../../evidence/fasttext_native_evidence_20261031/README.md)
-include a historical-main comparison and a matched identity-layout control.
+A dense me_fasttext `.bin` model can be converted into a native bundle. The
+converted model loads with the same `loadModel(path)` call and answers the same
+queries, using the original dictionary and row IDs; the input matrix is stored in
+compressed native blocks behind a DATrie key index. On a real 90,380-row model,
+word and sentence vectors stay byte-identical, the bundle is 0.46% smaller, and
+hot queries are slower than the dense model
+([report](../../evidence/fasttext_native_evidence_20261031/README.md)).
 
-## Complete text-training smoke path
+Linux x86-64 only: the trainer and the bundled DATrie libraries are built for it.
 
-On Linux x86-64, this included real-text sample needs no external dataset or GPU.
-It verifies preparation, actual training, conversion and querying, not representative
-compression or task quality:
+## Train, convert and query a sample
+
+This uses the small text in `examples/` and needs no downloads or GPU. It checks
+that the pipeline works; the sample is too small to say anything about
+compression.
 
 ```bash
 python -m pip install .
@@ -21,8 +24,8 @@ ngram-store prepare-fasttext --input examples/fasttext_sample.txt \
   --output artifacts/fasttext-sample/pairs.txt
 ```
 
-The trainer uses single-dash flags. Run the training command from the owned output
-directory because it also writes legacy trie dumps:
+The trainer writes legacy trie dumps into the working directory, so run it from
+the output directory. Flags use a single dash:
 
 ```bash
 cd artifacts/fasttext-sample
@@ -37,42 +40,35 @@ printf 'memory\nvectors\nlookup\n' | build/fasttext-native print-word-vectors \
   artifacts/fasttext-sample/model.native
 ```
 
-Preparation preserves within-line word order and emits `p#0 query\x01source`
-pairs. This is the current custom positional/source SGNS protocol. Ordinary
-upstream FastText whitespace training input is not silently interchangeable.
-Use fresh paths when repeating; retained dense `.bin` remains the source model.
+`prepare-fasttext` turns each line into `p#0 query\x01source` pairs, keeping word
+order. This custom trainer does not read plain whitespace text like upstream
+fastText does.
 
-## Export and query
-
-The optional facade and bundled DATrie archives require Linux x86-64. Build from
-this repository; the standalone memory wheel does not bundle the legacy trainer.
+## Convert your own model
 
 ```bash
-make fasttext-native native structural-native
-
-# Use a NEW output directory. Keep the original .bin for training/quantization.
 ngram-store fasttext-export \
   --model model.bin --output-dir model.native \
   --fasttext-binary build/fasttext-native \
   --structural-library build/libmeft_structural.so \
   --mode exact
 
-# The same command and arguments accept either a .bin or a bundle directory.
 printf 'example\nexamples\n' | build/fasttext-native print-word-vectors model.native
 printf 'an example sentence\n' | build/fasttext-native print-sentence-vectors model.native
 ```
 
-For a supervised model, `predict`, `predict-prob` and `test` also use the native
-input backend. `nn`/`analogies` still precompute resident word vectors and are not
-a bounded-memory nearest-neighbor service. The original `make` targets remain
-available. The original `.z`/FTIndex path retains its own format and reader.
+Every command accepts either the `.bin` or the bundle directory. For supervised
+models, `predict`, `predict-prob` and `test` work on bundles too. `nn` and
+`analogies` still build all word vectors in memory. Keep the original `.bin`: it is
+needed for further training, `quantize`, `saveModel` and `getInputMatrix`, which
+refuse native input.
 
-After installing `meft-memory` from this checkout, the same converter is exposed
-as `meft-fasttext-export` and `meft_memory.export_fasttext_model`. The binary and
-structural-library paths remain explicit. No Torch dependency is required for
-FastText export/query.
+The converter is also available as `meft-fasttext-export` and
+`ngram_store.export_fasttext_model`, without a PyTorch dependency.
 
-In an optional C++ source build, query calls keep their signatures:
+From C++, query calls are unchanged; build with `-DMEFT_NATIVE_FASTTEXT` and link
+`native/fasttext_bundle.cc` and the C reader, as the Make target does, then
+recompile your callers:
 
 ```cpp
 fasttext::FastText model;
@@ -81,47 +77,28 @@ fasttext::Vector word(model.getDimension());
 model.getWordVector(word, "example");
 ```
 
-Link `native/fasttext_bundle.cc` and the C row reader with
-`-DMEFT_NATIVE_FASTTEXT`, as the Make target does. Recompile C++ callers: retained
-source signatures are not an old binary ABI guarantee.
+## Modes and behaviour
 
-## Fidelity, compatibility and memory
+- `layout` keeps every row; `exact` also shares byte-identical prefix/suffix rows.
+  Both check the SHA-256 of the full reconstructed input matrix, untrained rows
+  included. `joint` merges similar rows (cosine and norm ratio) and changes
+  vectors; its manifest records both source and reconstructed hashes.
+- Queries look up original IDs in `keys.das`, map them to physical rows, and add
+  rows in the original order in float32, so results match the dense model.
+- Defaults: 8,192-byte decoded blocks, 4 MiB block cache, at most 256 rows per
+  gather. Change with `--max-block-bytes`, `--cache-bytes`, `--query-chunk-rows`.
+- Unknown subwords are skipped instead of reading past the matrix, missing keys
+  return `-1` or a zero vector, and empty sentences return zero rather than NaN.
+  These were undefined in the old code; equivalence holds for valid queries.
+- The dictionary, key index and dense output matrix stay in memory, as does an
+  unused 200 MB word hash inherited from the old loader. Touched mmap pages count
+  as file-backed memory.
 
-- `layout` retains every row; `exact` additionally shares byte-identical
-  structurally related rows when present. Both verify the full reconstructed
-  input SHA-256, including untrained rows. The source `.bin` is never rewritten.
-- `joint` is opt-in approximate sharing with cosine and norm-ratio guards.
-  Its manifest separates source bytes from reconstructed representative bytes.
-  It does not inherit lossless output guarantees.
-- The dictionary looks up the **original registered IDs** in `keys.das`;
-  `table.men` resolves their physical rows through forwarding. Aggregation
-  preserves the original request order/multiplicity and float32 adds, across
-  gather chunks. The FP64 native bag reducer is deliberately not used here.
-- Loaded dictionaries now skip unknown subwords instead of registering rows
-  beyond the trained input matrix. Direct subword helpers use real DATrie IDs;
-  missing keys return `-1`/zero. Empty or zero-vector string sentence queries
-  return zero instead of NaN. These fix prior undefined/invalid behavior;
-  equivalence is claimed for valid historical queries, not those bugs.
-- The default export caps decoded blocks at 8,192 bytes, uses a 4 MiB decoded
-  block cache and gathers at most 256 rows before ordered accumulation. These
-  are configurable via `--max-block-bytes`, `--cache-bytes` and
-  `--query-chunk-rows`. A block's row count also depends on vector dimension.
-- Input is frozen and each handle is single-worker. `saveModel`, legacy
-  `saveIndex`, `quantize` and `getInputMatrix` reject native input; reload a dense
-  model for those operations. Starting a new `train(args)` clears the backend.
-- The dictionary, its legacy 200 MB unused word hash allocation, exact key
-  index and dense output matrix remain resident. Neither loader builds an
-  inference negative-sampling table. Cache budget is not a total RSS limit;
-  touched mmap pages remain file-backed memory.
+The bundle holds `table.men`, `keys.das`, `model.meta` (args, dictionary, output
+matrix), reader settings and audit manifests. Only load bundles you produced: the
+legacy metadata loader is not hardened against malicious input, and the C++ facade
+does not checksum the whole bundle when opening it.
 
-The bundle contains `table.men`, `keys.das`, original args/dictionary/output in
-`model.meta`, reader settings and audit manifests. Open only trusted,
-self-produced bundles on little-endian IEEE float32 Linux x86-64: the legacy
-metadata/index loader is not an untrusted-input parser. The exporter records
-checksums, but the C++ facade does not authenticate the entire bundle at open.
-Conversion holds full source rows and planning maps offline.
-
-This converter supports this repository's dense, unquantized, unpruned models.
-Official fastText `.bin`, quantized `.ftz`, and old `.z` files are separate
-formats. Engram hash collisions do not provide this unique string-key registry;
-the numeric-row adapter retains its separate integration boundary.
+Supported input: this repository's dense, unquantized, unpruned models. Official
+fastText `.bin`, quantized `.ftz` and old `.z` files are different formats; `.z`
+keeps its own FTIndex reader ([compatibility](legacy_fasttext.md)).
