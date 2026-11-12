@@ -58,17 +58,13 @@ public entry points (`setup.py`). `tools/` is unchanged on disk, so evidence
 verifiers and `tools.*` imports keep working. Not done: a PyPI upload and a
 `meft-memory` alias package, which need a release decision.
 
-### 4. Structure on a long-trained real table
+### 4. Structure on a long-trained table
 
-Structural savings grow with training length, but every test so far used
-short SGNS runs or a table where they stay below 1%. Before more planner work,
-measure one real, fully trained character n-gram model.
-
-- Train or obtain a FastText-scale model trained to convergence on a public corpus
-  (e.g. full Wikipedia in one language), with registered keys.
-- **Done when** `exact` and `joint` savings and held-out quality are measured on it.
-  If `joint` at .99 gives under 10% extra saving at unchanged quality, structural
-  compression stays an optional mode and stops being a priority.
+Cheap version done (2026-11-13): on the existing 32k-step checkpoints, joint
+sharing stored as dedup + uncompressed keeps 42.4% of the 46.0% n-gram saving with
+lookups at ~2× raw instead of ~125×, and no measurable loss change
+([report](../evidence/structure_dedup_20261113/README.md)). A converged
+FastText-scale table and a FAISS comparison at these points remain open.
 
 ### 5. When does identity pay off?
 
