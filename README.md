@@ -13,10 +13,11 @@ model ends up owning a large frozen table that has to be indexed, stored and
 queried. NGramStore takes care of that table; training, addressing and
 aggregation stay in the model.
 
-The project also asks a research question: when is it worth giving every n-gram
-its own row instead of hashing into buckets, and once rows are distinct, how
-much of the learned structure can be compressed? The experiments are in
-[`evidence/`](evidence/README.md).
+The project also asks research questions: when is it worth giving every n-gram
+its own row instead of hashing into buckets, what redundancy does training leave
+in the table, and how should it be served? The
+[technical report](docs/report/ngramstore-report.pdf) answers them; the
+experiments behind it are in [`evidence/`](evidence/README.md).
 
 ## Components
 

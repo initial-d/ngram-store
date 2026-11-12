@@ -34,6 +34,7 @@ here: links in locked READMEs still point to them, and they forward to
 | Report | Result and boundary |
 | --- | --- |
 | [Tree-sharing quality and training mechanism](tree_node_quality_evidence_20261109/README.md) · [protocol](tree_node_quality_protocol_20261109.md) | 18 checkpoints × 204 candidates; 36 trajectories. Order-12 .99/.99 native n-gram-only saving rises from 1.34% at 2k steps to 41.49% at 32k steps. FAISS and precomputed controls keep their limits |
+| [Duplicates are exactly identical incidence](incidence_duplicates_20261113/README.md) | On the zero-init AG News table, grouping rows by bag incidence and by bytes gives the same 883,125 groups |
 | [Sharing stored without compression](structure_dedup_20261113/README.md) | Joint `.99/.99` rows are byte duplicates, so dedup + uncompressed keeps 42.4% of the 46.0% saving at 32k steps with lookups at ~2× raw instead of ~125× |
 | [Conditional prefix/suffix similarity](conditional_similarity_evidence_20261109/README.md) · [protocol](conditional_similarity_protocol_20261109.md) | 27 character models: some parent–child pairs exceed .99 cosine beyond matched unrelated controls; frequency, coverage and initialization matter |
 | [Original DATrie / mark-compact ablations](structural_native_evidence_20261030/README.md) | Measures DATrie and approximate joint sharing separately; exact mode finds no identical rows to merge |
