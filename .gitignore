@@ -6,3 +6,13 @@ artifacts/
 build/
 dist/
 *.egg-info/
+
+# Legacy `make opt` outputs (build locally; not tracked)
+/fasttext
+/fasttext_ori
+/index
+/cut_ngram
+/print_ngrams
+/bench_ftindex
+/libfasttext.a
+*.o

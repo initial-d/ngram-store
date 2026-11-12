@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "source_commit": "56df5865dd58ae5a396ffa2910b8c953e9511782",
+  "measured_source_sha256": {
+    "native/meft_rows.c": "997a391f38ae2403a59702482c316ffa24fe9fdf48076237b5442b8d2d26358d",
+    "native/meft_rows.h": "a8739365227697851b31297caaee69d196bd773250f1b819fc38a1a172f5834b",
+    "tools/budgeted_bags.py": "aa3d3430b629708083e17d87e7af9cf90ee44184b9dc379a7fffafe14bc54cf3",
+    "tools/native_row_store.py": "232ad4b8f93e3cda66044d0e61b69e9b4545f2d4fdbb966a56480027dadf5554"
+  },
+  "files_sha256": {
+    "README.md": "968e9d8c3a5e37c9eb1f867bb1811d00524b17a9f9cb5c546edc5db8db52fb61",
+    "benchmark.log": "6f569a4ce3fa8bfcc74dbe18e96e398f942361e0a265958d92473d21dc4dd4a8",
+    "environment.json": "b4d522b341494491c0f1c3f2e2f57dd338f8e56c4a3c36e747df15aa386f5a4b",
+    "report.json": "f1296ea5ed36f11ad55decde850b5d6812e2c167a8ffb170eb8df5deacb78463",
+    "reproduction/run.sh": "1438a64c2e525edb1ebe48d4ca3c9f8e25512b882f6a8f818cc5a77c94417d82",
+    "summary.json": "e0b42dbaeb5d093562b45f740e01fd8f93f3c65a8be90f5050621e33e05880e6",
+    "tests/local-full.txt": "1ac74884e34ccafa8499a3ea76866bdccfd33cc159297723bc129003881d364d",
+    "tests/local-installed.txt": "60b42f109976da26999e97778168acbead66cc443c46034f3602c69fc62a234a",
+    "tests/local-sanitizers.txt": "9548fb8d469405652e5ba4b89646323bc5b5eb970dcfeafcbb81a8cb010f6a8d",
+    "tests/local-wheel.txt": "40213b2c22d705b25641d518d8d9b6090b182f70e8bc392eee4bdabf279956d6",
+    "tests/remote-native-build.txt": "c31243e75037fbfbe02e8cb13117d0c4cc5864f51f7780700e94e24c7780c748",
+    "tests/remote-sanitizers.txt": "9548fb8d469405652e5ba4b89646323bc5b5eb970dcfeafcbb81a8cb010f6a8d",
+    "tests/remote-targeted.txt": "e2c14457e69b8596335fc949bd21bb0f6c749fc3323d6af2bcdf35a9142bdc4c",
+    "verify.py": "af1a3c1b279b2913abdba01fa7330f5af7069a8b2e37aa83b2e60f09d587aabf"
+  },
+  "scope": "Author-run frozen-checkpoint C/NumPy CPU implementation evidence; no new coverage, compression, semantic/LLM quality, adoption or release claim."
+}

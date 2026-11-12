@@ -6,7 +6,7 @@ import shutil
 import tempfile
 import unittest
 
-EVIDENCE = Path(__file__).resolve().parents[1] / 'docs/ngram_identity_evidence_20261107'
+EVIDENCE = Path(__file__).resolve().parents[1] / 'evidence/ngram_identity_evidence_20261107'
 SPEC = importlib.util.spec_from_file_location('identity_evidence_verifier', EVIDENCE / 'verify.py')
 VERIFIER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(VERIFIER)

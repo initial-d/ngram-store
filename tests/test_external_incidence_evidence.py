@@ -10,7 +10,7 @@ import unittest
 class ExternalEvidenceTests(unittest.TestCase):
     def test_complete_grid_and_native_checks_reject_missing_or_mixed_evidence(self):
         from tools.finalize_external_incidence import validate_grid
-        root = Path(__file__).resolve().parents[1] / 'docs/external_incidence_evidence_20261102'
+        root = Path(__file__).resolve().parents[1] / 'evidence/external_incidence_evidence_20261102'
         data = {k: json.loads((root / name).read_text()) for k, name in
             (('report', 'report.json'), ('preparation', 'preparation.json'), ('verifier', 'native-verifier.json'))}
         self.assertEqual(len(validate_grid(**data)), 8)

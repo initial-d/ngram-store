@@ -1,11 +1,8 @@
 blank_issues_enabled: true
 contact_links:
-  - name: Evaluator quickstart
-    url: https://github.com/initial-d/ngram-store/blob/main/docs/evaluator_quickstart.md
-    about: Start here if you want to run a first public-corpus benchmark.
-  - name: Benchmark protocol
-    url: https://github.com/initial-d/ngram-store/blob/main/docs/benchmark_protocol.md
-    about: Use this for the fuller memory, latency, OOV, and quality report shape.
-  - name: Outreach notes
-    url: https://github.com/initial-d/ngram-store/blob/main/docs/outreach.md
-    about: Use this when adding the project to lists or sharing it with maintainers.
+  - name: Engine guide
+    url: https://github.com/initial-d/ngram-store/blob/main/docs/guides/evaluator_quickstart.md
+    about: Pack, inspect and query a trained table before opening an issue.
+  - name: Evidence archive
+    url: https://github.com/initial-d/ngram-store/blob/main/evidence/README.md
+    about: Existing measurements, protocols and verifiers, grouped by question.

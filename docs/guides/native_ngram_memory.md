@@ -1,0 +1,387 @@
+# NGramStore engine: C ABI and model integration
+
+NGramStore's native backend is a CPU storage/gather component for immutable embedding
+tables. It accepts original numeric row IDs and writes identical bytes into
+caller-owned memory. It is a place to optimize storage and query behavior;
+it does not replace a model's tokenizer, n-gram hasher, contextual gates,
+attention, language-model head or training.
+
+The older `src/ftindex.h` interface uses `std::string` and `std::vector`, so it
+is a **C++ interface**, despite its procedural style. The new
+[`native/meft_rows.h`](../../native/meft_rows.h) is a true C ABI, usable from C,
+C++ and language FFI. It depends on POSIX mmap and zlib; Linux and macOS are
+targets. Windows, CUDA and distributed serving are not implemented.
+
+## Build and call from C
+
+For existing me_fasttext models, the optional
+[native FastText facade](fasttext_native_bundle.md) connects this C reader and
+the original DATrie/mark-compact planner to `loadModel`, word/sentence vectors
+and classification. [Actual trained .bin results](../../evidence/fasttext_native_evidence_20261031/README.md)
+include full-row fidelity, historical compatibility and dense/identity controls.
+
+```bash
+# Linux: zlib development headers and a C compiler are required.
+make native
+# macOS:
+make native NATIVE_SHARED=-dynamiclib NATIVE_EXT=dylib
+```
+
+This builds a standalone shared library and C example independently of the
+bundled legacy FastText/trie binaries. From a raw fixed-width byte table:
+
+```python
+from ngram_store import pack_native
+
+# Example: 128 float32 values per row. No numeric/dtype conversion.
+pack_native("table.raw", "table.men", row_bytes=512, block_rows=256,
+            deduplicate=False)
+```
+
+```bash
+build/native_gather table.men 0 42 0
+```
+
+The header exports opaque handles, row count/width, `meft_rows_gather`, close,
+and last-query block/decompression counters. IDs, pointers and capacities use
+fixed-width integers or `size_t`; output must have `count * row_bytes` capacity.
+Return zero on success and a readable error on failure. Failed output must be
+discarded. One handle is single-threaded because it owns a scratch buffer; use
+one per serving worker and close it explicitly. The C example is an ABI check,
+not an ANN/nearest-neighbor engine.
+
+`meft_rows_gather_chunked` limits the number of query-location records sorted
+at once and writes each chunk directly into the caller's complete output. The
+native PyTorch adapters use `query_chunk_rows=65536` by default; set a smaller
+positive value to lower this temporary allocation or `None` for the previous
+single-query gather. It counts global row requests, including each head's ID,
+not tokens. Ordinary embeddings, the Engram factory and unique embedding bags
+accept this setting. Outputs retain all original IDs, order, dtype and row bits;
+last-query block/decode/cache-hit counters aggregate the entire call. Small calls
+still use the original ABI, while larger chunked calls require the rebuilt
+library. Chunk boundaries can repeat block decoding, so throughput can decrease.
+This bounds C query-location/sort scratch only: the full output, Python/Torch ID
+and staged-row tensors, decoded-block scratch, cache and mmap remain separate.
+The Python reference backend is unchanged; this is not a total-RSS bound.
+
+The PyTorch mapped modules support `copy.deepcopy` and serialization into
+`multiprocessing` spawn workers. Only configuration, metadata and small buffers
+are copied; the mmap, C pointer and decoded cache are excluded. Each restored
+module verifies the expected table checksum and opens its own handle with a cold
+cache. Checksum verification scans the full artifact during restore, adding startup
+I/O without materializing its rows. `MappedEmbedding` and `MappedEmbeddingBag` inherit this through their
+gather module. Close every copy explicitly. The artifact directory and native
+library must remain available at the captured absolute paths; this is a local
+worker handoff, not a portable self-contained checkpoint. A replaced/changed
+table fails checksum verification rather than silently changing the snapshot.
+Closed modules cannot be copied/serialized. Constructor cache settings are
+restored; later direct cache changes through the low-level handle are not copied.
+Use spawn or open modules independently inside fork workers; this does not make
+one live handle safe to share across threads or coordinate distributed serving.
+
+## Sum/mean bags without a full gathered tensor
+
+For immutable CPU `nn.EmbeddingBag` inference, export the learned rows and
+reduction configuration, then reopen them:
+
+```python
+from tools.mapped_embedding_bag import export_embedding_bag, open_embedding_bag
+
+export_embedding_bag(model.memory, "memory-bag", predictor="xor")
+with open_embedding_bag("memory-bag") as memory:
+    output = memory(ids)  # 2-D fixed bags, or memory(flat_ids, offsets)
+```
+
+This requires an actual sum/mean `nn.EmbeddingBag`, not an arbitrary model memory
+module. To use an existing single-head native embedding artifact, construct
+`MappedEmbeddingBag(path, mode="mean", padding_idx=0)` explicitly. A model must
+expect the reduced `[bags, dim]` output; the adapter does not preserve an ordinary
+embedding's unreduced shape. The included character-GRU supports both paths.
+
+The default `strategy="unique"` gathers each distinct original ID once and uses
+PyTorch's bag reduction; staging grows with query diversity, with at most one
+unused row to retain the configured padding-aware kernel. `strategy="chunked"`
+calls the C reducer with `chunk_rows=1024` (configurable), capping staged rows but
+potentially decoding blocks repeatedly. C accepts complete nondecreasing offsets
+of length `bags+1`, LE FP32/FP16/BF16 rows, sum/mean mode, padding ID or UINT64_MAX,
+and caller-owned FP32 output. C accumulates in FP64; Python casts to source dtype.
+Stored row bytes stay exact, while reduction precision can change model logits.
+
+Both adapters preserve original IDs, exclude padding from sums/counts and return
+zeros for empty/all-padding bags. Ragged offsets must start at zero and cover
+all IDs; `include_last_offset` selects whether the caller supplies the terminal
+count. No training, max mode, `.weight`/tied heads or CUDA.
+Build the current library for the new C ABI. See the
+[trained-query timings, RSS, exact-byte checks and model deltas](../../evidence/embedding_bag_evidence_20261025/README.md)
+before choosing a strategy; dense resident lookup is faster in these tests.
+
+Sum mode also accepts `memory(ids, offsets, per_sample_weights=weights)` for
+inference-time weighted memory aggregation. Omit `offsets` for fixed 2-D bags.
+Weights must be CPU tensors with the same shape as IDs and the stored row dtype;
+detach learned gates before using this inference-only adapter. Repeated IDs keep
+distinct weights for each occurrence; padding ignores both row and weight.
+Negative, zero and nonfinite weights follow arithmetic semantics. There is no
+implicit normalization or weighted-mean mode. The default unique path delegates
+weighted reduction to PyTorch without materializing all gathered query rows.
+The optional chunked path uses the additive C ABI
+`meft_rows_embedding_bag_weighted`, with a byte capacity for scalar weights and
+the same row staging bound. It multiplies and accumulates in FP64 before FP32
+output/source-dtype casting, so reduction rounding can differ from PyTorch.
+Rebuild the library for weighted C calls; the unweighted ABI stays unchanged.
+This adds an aggregation primitive; it does not replace a model's gating network
+or establish trained Engram quality/performance evidence.
+
+Large repeated batches now use `unique_method="auto"` to compact IDs with a
+histogram and lookup table when the addressable table has at most four rows per
+queried ID and those two index buffers fit `unique_index_bytes` (default 8 MiB).
+Otherwise the adapter falls back to sorted unique IDs. Set `unique_method="sort"`
+to retain the previous method, or `unique_index_bytes=0` to disable dense
+compaction. Both paths preserve sorted original IDs, inverse bag membership and
+the same reduction kernel; this index budget does not cap staged embedding rows
+or total RSS. The retained table still supports arbitrary future queries.
+
+## Native layout and construction
+
+`MEFTNAT1` is a binary little-endian format: versioned fixed-size header,
+optional 8-byte-per-original-row forwarding map, 32-byte block descriptors and block
+payloads. The schema lives beside the reader in `native/meft_rows.c`.
+Rows are opaque source bytes; dtype/endian reconstruction belongs to the caller.
+Version 1 uses raw/zlib blocks. Optional version 2 adds previous-row bitwise XOR
+followed by zlib. Version 3 supports these same codecs but omits forwarding:
+it requires `unique_rows == nrows` and physical row IDs equal original IDs.
+The current reader retains all three. Explicit `codec="lz4"` or `codec="zstd"`
+exports version 4 (explicit forwarding) or 5 (implicit identity). These require
+the corresponding optional reader build; missing capabilities fail at open.
+The default export remains zlib/v1-v3, and older readers reject v4-v5.
+
+For an installation with development headers/libraries, use
+`make native NATIVE_CODEC_FLAGS='-DMEFT_USE_LIBDEFLATE -ldeflate'` to accelerate
+existing zlib payloads without rewriting them. Add `-DMEFT_USE_LZ4 -llz4` and
+`-DMEFT_USE_ZSTD -lzstd` for explicit new-codec exports. Wheel builds accept the
+matching `MEFT_USE_LIBDEFLATE=1`, `MEFT_USE_LZ4=1` and `MEFT_USE_ZSTD=1` environment
+variables; the linked libraries must exist on the deployment machine.
+`NativeRows.decoder_name` identifies the zlib implementation. Each handle reuses
+query-location scratch and skips sorting already grouped IDs; chunk from the
+first request if the retained scratch must have a fixed bound.
+The C ABI and descriptor widths are unchanged.
+
+The exporter shares only byte-identical rows when `deduplicate=True`. With
+`deduplicate=False`, it streams the source using a block buffer and temporary
+payload file, avoiding a dictionary of every unique row. Without a permutation
+or representatives, these exports use v3 and save exactly `8 * nrows` bytes.
+Use `implicit_identity=False` in `pack_native` or the embedding exporters to
+write v1/v2 for older compiled readers. Deduplication, explicit permutations
+(including identity permutations) and mark/compact exports keep their v1/v2 map.
+The [real Qwen format audit](../../evidence/identity_format_evidence_20261109/README.md) checks
+six trained tables, unchanged codec payloads, actual old-reader compatibility
+and 76 fresh CPU workers; 32-row v3 artifacts save 5.4–5.5% against raw FP32
+here, with no demonstrated query speed advantage.
+Descriptor memory
+still grows with the number of blocks. It retains all rows for arbitrary future
+queries; it does not prune according to a sample query trace.
+
+`pack_native` writes and flushes/fsyncs the complete table into a sibling
+temporary file, closes it, then atomically replaces the destination path. A
+failed write, sync or replacement preserves the previous destination and cleans
+up the temporary file. Existing C mmap handles retain the old inode and its
+bytes; new handles open the published table. Replacing a regular file preserves
+its access permissions; new tables use owner-only tempfile permissions. This
+publishes one table file: adapter metadata/checksums require a consistent bundle,
+and concurrent writers are not coordinated. The binary format/codec is unchanged.
+
+Each block chooses zlib only when smaller than the raw block. With
+`predictor="xor"`, the exporter also tries zlib-compressed XOR residuals and
+keeps the smallest of all three candidates. The first row resets prediction
+inside each block; C reconstructs the full block before copying queried rows.
+This preserves all bits and adds decoding work. Raw fallback
+avoids codec expansion, but maps/descriptors/metadata can still make the whole
+artifact larger. This is a distinct format, not a reinterpretation of legacy
+`.z` or Python `MEFTROW1` files.
+
+The reader bounds-checks file structure, descriptors and queried row IDs. It
+maps bytes lazily and groups a batch's requests by block, decodes once per block
+and restores original order. An optional [byte-budgeted cache](../../evidence/native_query_evidence_20261030/README.md)
+reuses compressed blocks between calls and is disabled by default. Cached payload
+bytes are bounded by the chosen budget. A lazily allocated hash index and linked
+LRU reuse decoded blocks without a fixed entry cap; index/LRU metadata is
+additional to the payload budget. Existing cache hits are read before misses
+can evict them, and fully cached queries skip sorting.
+For sparse repeated requests, `native_cache_policy="rows"` retains only queried
+rows from compressed blocks within the same payload budget. It uses forwarded
+IDs, preserves bytes and still decodes whole blocks on misses; block caching
+remains the default. Choose the policy from measured locality and include its
+metadata/RSS costs when comparing memory.
+For sparse misses, export with `max_block_bytes=8192` to cap decoded blocks:
+`pack_native(..., row_bytes=1024, predictor="xor", max_block_bytes=8192)` uses
+eight rows per block. The effective row count is
+`min(block_rows, max(1, max_block_bytes // row_bytes))`; an indivisible row may
+exceed the limit. This option is available in ordinary/multi-head/EmbeddingBag
+exports, `StructuralPlan.export` and `meft-tiny-export --max-block-bytes 8192`.
+It keeps original addressing and vector bytes, uses the existing native format
+and leaves the default layout unchanged. Smaller blocks add descriptors and
+can reduce compression; they do not bound RSS or guarantee a workload speedup.
+See the [same-table sparse-block measurements](../../evidence/sparse_blocks_evidence_20261030/README.md).
+`last_compressed_bytes` and `last_decoded_bytes` count codec input and full
+decoded block output, excluding raw-row copies and cache hits. They aggregate
+across chunk/bag calls, require the updated library and measure logical codec
+work, not physical I/O.
+Scratch retains up to one maximum decoded block plus per-batch request
+locations. Direct C opening does not verify a full-file cryptographic checksum;
+the PyTorch adapter does. Use trusted, immutable artifacts and external checksums
+for archival provenance. Structural checks and sanitizers are not a production
+artifact-security guarantee.
+
+### Frozen quantized row files
+
+`tools.quantized_memory.pack_quantized_file` reads a headerless little-endian
+FP32 table in chunks, encodes FP32/FP16/per-row INT8, then packs the encoded
+rows with the same native format. The original source and decoded-original-ID
+hashes are computed incrementally. Use this file path for large exports to
+avoid accumulating resident source mmap pages:
+
+```python
+import numpy as np
+from tools.quantized_memory import pack_quantized_file, QuantizedRows
+
+pack_quantized_file("trained.f32", "int8-bundle", 256, "int8",
+                    native="auto", chunk_rows=4096, max_block_bytes=8192)
+ids = np.array([2, 0, 2], dtype="<u8")
+with QuantizedRows("int8-bundle", "build/libmeft_rows.so") as rows:
+    output = np.empty((len(ids), rows.dim), dtype="<f4")
+    scratch = np.empty((len(ids), rows.width), dtype="u1")
+    rows.gather_into(ids, output, encoded_scratch=scratch)
+```
+
+This is a frozen CPU research codec. INT8 includes a FP32 scale inside every
+encoded row; FP16/INT8 change source weights. Native preserves the encoded
+representative bytes and original IDs. Dequantization writes into reusable
+NumPy FP32 output; it is not a trainable `.weight` or fused GPU kernel.
+The existing `pack_quantized(matrix, ...)` interface also encodes/audits in
+chunks, but its caller-owned matrix/mmap residency remains outside that bound.
+`native="auto"` is an optional identity-row size policy: compare actual table
+and codec JSON bytes, including the native map/descriptors, and keep raw if it
+is smaller. The common key registry cancels in that comparison. The candidate
+native file is still constructed, and this policy does not select for latency.
+It rejects structural forwarding/reordering/dedup; the default `native=True`
+and explicit raw/native paths remain unchanged.
+
+Chunking limits codec/hash buffers, not total RSS: native descriptors grow
+with block count, optional dedup/order/representative indexes grow with rows,
+and structural planning still holds full vectors/maps. Encoded staging and
+native spool/publication files also consume temporary disk space. Smaller
+blocks reduce sparse decode work at a metadata/compression cost. See the
+[same-trained-table scale and performance controls](../../evidence/quantized_capacity_evidence_20261031/README.md).
+
+### Native layout and structural export
+
+To enable the optional codec, pass `predictor="xor"` to `pack_native`,
+`export_demo_embedding`, `export_multihead` or `export_embedding` with the native
+backend. Existing calls still write version 1. `pack_native(..., row_order=...)`
+accepts a full permutation of original IDs for locality experiments; the stored
+forwarding map restores original lookup IDs even across reordered/deduplicated
+rows. Permutation validation uses O(n) memory and export reads become
+nonsequential. Default sequential no-dedup export remains block-streamed.
+See [actual files and query measurements](../../evidence/native_xor_compression_20261020.md).
+The [streaming export follow-up](../../evidence/streaming_export_20261021.md) accelerates XOR
+packing and stages embedding bytes in bounded row slices. The caller must freeze
+source weights throughout export; deduplication and Python-builder memory limits
+still apply. Artifact formats and native queries are unchanged.
+
+## PyTorch: two integration boundaries
+
+```python
+from tools.engram_row_adapter import (
+    export_demo_embedding, MappedMultiHeadEmbedding,
+    export_embedding, MappedEmbedding,
+)
+
+# Engram-like multi-head memory: retain existing hash IDs and head offsets.
+export_demo_embedding(original, head_sizes, "/tmp/memory-native",
+                      backend="native", deduplicate=False)
+memory = MappedMultiHeadEmbedding("/tmp/memory-native",
+                                 native_library="build/libmeft_rows.so")
+vectors = memory(head_local_ids_cpu)
+
+# Ordinary nn.Embedding: retain global vocabulary IDs.
+export_embedding(original_embedding, "/tmp/token-native", backend="native")
+embedding = MappedEmbedding("/tmp/token-native",
+                            native_library="build/libmeft_rows.so")
+vectors = embedding(token_ids_cpu)
+# Close memory/embedding when no longer used.
+```
+
+The native adapter passes contiguous ID tensor addresses and the destination
+tensor's storage directly to C. It avoids `.tolist()`, Python per-row decoding
+and intermediate Python byte-output reconstruction. Returned float32/float16/
+bfloat16 tensors preserve shape and source bit patterns. This removes one
+FFI/copying bottleneck; CPU decompression, sorting and I/O still have costs.
+
+IDs and output are CPU tensors. A GPU caller would need explicit host ID
+transfer, pinned output buffers and asynchronous transfer/scheduling work;
+this backend has not implemented or measured that path. No `.weight` parameter,
+embedding gradient, tied output projection or full-model serialization is
+provided. `nn.Embedding(max_norm=...)` mutates weights during forward and is
+rejected. Full artifact checksums scan the file during PyTorch opening, so that
+path does not have lazy startup even though the C reader does.
+
+## Where it fits across model families
+
+| Model or runtime | Candidate integration point | Current evidence | Additional work |
+| --- | --- | --- | --- |
+| Engram-style conditional memory | Multi-head embedding gather after the existing token/ngram hash | Official full CPU module output matches in 6 random-weight cases, including gates/ShortConv | Trained checkpoint, backbone/LM logits, model quality, GPU transfer |
+| PyTorch decoder with ordinary embeddings | Global-ID input embedding lookup | Byte-exact gather; small synthetic untied causal Transformer logits match | Model-specific wrappers, tied heads, device/distributed placement |
+| Llama/Qwen/Mistral/Gemma-style HF models | A compatible `nn.Embedding` call or a separately trained n-gram branch | [Pretrained Qwen3-0.6B + trained TinyEngram branch](../../evidence/tinyengram_qwen_evidence_20261030/README.md): native CPU checkpoint/full-logit and stateful greedy decode checks | Other architectures, GPU placement and full HF generation remain open |
+| C++ inference / llama.cpp-style runtime | CPU row gather behind a runtime-specific tensor operator | C ABI and example compile/test | Loader, tensor layout and runtime scheduling integration; no plugin yet |
+| vLLM / TensorRT-LLM / GPU serving | Host-memory gather and prefetch/transfer operator | No integration or GPU result | Custom operators, pinned memory, async queues, batching and quality checks |
+| Plain Transformer without n-gram memory | Add a trained n-gram memory branch | No architectural/training result | Learn/gate the branch and evaluate against strong baselines |
+
+A storage adapter can preserve an existing table. Adding high-order n-gram
+memory to a model is a separate architecture/training change. Models that do
+not query such a table cannot gain Engram capability from linking a C library.
+
+## N-gram order: the testable claim
+
+More n-gram orders can increase key length, vocabulary diversity, table size,
+lookup count and the opportunity for shared-prefix indexing. They do not imply
+that trained vectors have identical bytes or directions. In fixed-size hashed
+tables, order/key count can grow while each table's capacity stays capped;
+collisions and lookup fan-out must be measured separately.
+
+The [order sweep](../../evidence/ngram_order_native_20261018.md) tests maxima 2/3/4/6/8/12,
+two controlled key workloads and unchanged official hash/gather code. It
+separates key prefix encoding, weight compression and native query latency.
+Its narrow result: shared-prefix key encoding benefits at higher orders;
+random unique weight tables still grow after packing and gather work increases.
+It is not evidence that higher order universally improves compression or model
+quality. Front-coded key sizes are not an implemented trie/query result.
+
+Random rows are only interface/low-redundancy controls. The primary
+[learned-structure experiment](../../evidence/trained_ngram_similarity_20261018.md) trains
+real-text SGNS across maxima 4/8/12 and three seeds. Identical-update structural
+pairs have median cosine about 0.996; their share increases at higher orders.
+Native ordinary block storage preserves all bytes and saves about 5%. A separate
+offline XOR/layout experiment estimated 6.9–9.1% savings. The
+[native follow-up](../../evidence/native_xor_compression_20261020.md) now writes and reads actual
+adaptive XOR files with comparable savings and disclosed query costs. Similarity and exact-byte equality are measured
+separately, with shuffled controls and all runs disclosed.
+
+## Verification and next milestones
+
+The [full official Engram module verification](../../evidence/engram_full_adapter_verification_20261018.md)
+runs unchanged hash initialization, addressing, gates/projections and ShortConv
+with a local normalized-token fixture. Python/native × three dtypes preserve
+every row and full module output. It does not validate real tokenizer/weights,
+backbone logits or GPU use.
+
+Native tests compile pure C, check byte equality and repeated batch order, raw
+fallback/compressed blocks, output capacity, corrupt forwarding/descriptors,
+invalid IDs and malformed/truncated files. ASan/UBSan exercise valid and 64
+deterministically mutated files. PyTorch tests cover all supported dtypes and
+a small causal decoder with an untied head. See the linked raw report for exact
+commands, compiler, environment and negative results.
+
+The practical sequence is: trained immutable table and row/gather equality;
+larger footprint/cold/warm/RSS/batch tests; real model gates/logits and generation;
+then native streaming/async/GPU integration. Claims should name the tested
+boundary and distinguish storage savings, latency, indexed key compression,
+and task quality.
