@@ -15,9 +15,8 @@ aggregation stay in the model.
 
 The project also asks research questions: when is it worth giving every n-gram
 its own row instead of hashing into buckets, what redundancy does training leave
-in the table, and how should it be served? The
-[technical report](docs/report/ngramstore-report.pdf) answers them; the
-experiments behind it are in [`evidence/`](evidence/README.md).
+in the table, and how should it be served? The experiments are in
+[`evidence/`](evidence/README.md).
 
 ## Components
 

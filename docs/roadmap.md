@@ -74,7 +74,7 @@ budget) rather than add new tasks. Write the protocol first, as before.
 
 ### 6. Technical report
 
-Done (2026-11-13): [Deduplicate, Don't Compress](report/ngramstore-report.pdf).
+In progress.
 
 ## How changes are measured
 
