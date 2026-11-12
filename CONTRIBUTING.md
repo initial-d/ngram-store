@@ -10,7 +10,7 @@ discussion respectful, evidence-oriented, and careful with private data.
 
 ## Best first contributions
 
-The [engine roadmap](docs/ngram_memory_research_plan.md) prioritizes sparse
+The [engine roadmap](docs/roadmap.md) prioritizes sparse
 query costs, independent DATrie/mark-compact gains and large-table construction
 resources. Stable original-ID/byte contracts and historical compatibility are
 gates for every change. FastText and Engram are applications of the same engine.
@@ -18,7 +18,7 @@ gates for every change. FastText and Engram are applications of the same engine.
 Useful contributions include:
 
 - a public-corpus benchmark report using the
-  [evaluator quickstart](docs/evaluator_quickstart.md);
+  [evaluator quickstart](docs/guides/evaluator_quickstart.md);
 - a frozen n-gram table exporter or integration through the common engine API,
   preserving the model's existing IDs, dtypes and aggregation;
 - a same-trace query optimization with dense/raw-mmap controls and full
@@ -61,12 +61,11 @@ when possible. A useful report should include:
 - one quality metric, or an explicit serving-only caveat;
 - failures, omitted baselines, and anything unfavorable to the method.
 
-Start with [`docs/evaluator_quickstart.md`](docs/evaluator_quickstart.md) for
-the shortest path. Use
-[`docs/first_public_corpus_benchmark.md`](docs/first_public_corpus_benchmark.md)
-for the fuller report shape.
+Start with the [engine guide](docs/guides/evaluator_quickstart.md) for the
+shortest path. Reports in [`evidence/`](evidence/README.md) show the expected
+shape: a frozen protocol, source commit, raw results and, ideally, a `verify.py`.
 
-## Showcase and visibility notes
+## Showcase notes
 
 Use the
 [showcase issue template](https://github.com/initial-d/ngram-store/issues/new?template=showcase.yml)
@@ -109,6 +108,5 @@ Engram/TinyEngram are applications with different training and addressing
 contracts. Numeric/hash queries use the native row engine; structural sharing
 requires registered unique string keys. Lossless bytes, approximate distortion,
 query cost and task quality need separate evidence.
-See [`docs/artifact_card.md`](docs/artifact_card.md) and
-[`docs/citation_guide.md`](docs/citation_guide.md) for wording that is easier
-to cite without overclaiming.
+See the [citation guide](docs/guides/citation_guide.md) for wording that states
+these boundaries.

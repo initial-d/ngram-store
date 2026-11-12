@@ -241,7 +241,7 @@ def main():
         'os': platform.platform(), 'cpu': cpu, 'gpu': 'unused', 'threads': 1, 'interop_threads': 1,
         'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         'source_sha256': digest(__file__), 'analysis_source_sha256': digest(ROOT / 'tools/conditional_similarity.py')},
-        'protocol_sha256': digest(ROOT / 'docs/conditional_similarity_protocol_20261109.md'),
+        'protocol_sha256': digest(ROOT / 'evidence/conditional_similarity_protocol_20261109.md'),
         'cost_assumptions': 'Existing CPU and existing trained vectors; no training, GPU work, downloads or paid services',
         'limitations': ['Post-hoc existing-checkpoint analysis; known aggregate results before fixed new strata.',
             'Finite small SGNS and frozen-backbone editing, not production/pretraining or universal similarity.',

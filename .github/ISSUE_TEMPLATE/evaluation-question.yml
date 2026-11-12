@@ -47,4 +47,4 @@ body:
     id: related_docs
     attributes:
       label: Docs already checked
-      description: Link any docs you already used, such as evaluator_quickstart.md or retrieval_oov_benchmark.md.
+      description: Link any docs you already used, such as docs/guides/evaluator_quickstart.md or an evidence/ report.

@@ -23,37 +23,37 @@ jobs:
       - name: Check full legacy exporter translation unit
         run: c++ -std=c++11 -I. -Imylib/include -fsyntax-only src/fasttext.cc
       - name: Verify complete serving evidence provenance
-        run: python docs/certified_serving_evidence_20261103/verify.py
+        run: python evidence/certified_serving_evidence_20261103/verify.py
       - name: Verify partial-query bounds and coverage evidence
-        run: python docs/budgeted_bag_evidence_20261104/verify.py
+        run: python evidence/budgeted_bag_evidence_20261104/verify.py
       - name: Verify native bounded-plan timings and frozen contracts
-        run: python docs/native_bounded_query_evidence_20261105/verify.py
+        run: python evidence/native_bounded_query_evidence_20261105/verify.py
       - name: Verify complete public news application and validation-only choices
-        run: python -S docs/news_classifier_evidence_20261105/verify.py
+        run: python -S evidence/news_classifier_evidence_20261105/verify.py
       - name: Verify independent news, hybrid fairness and paired bootstrap evidence
-        run: python -S docs/news_shift_evidence_20261105/verify.py
+        run: python -S evidence/news_shift_evidence_20261105/verify.py
       - name: Verify held-out Qwen memory identity qualification
-        run: python -S docs/qwen_quality_evidence_20261106/verify.py
+        run: python -S evidence/qwen_quality_evidence_20261106/verify.py
       - name: Verify actual GPU training, codec pairing and isolated Qwen serving
-        run: python -S docs/qwen_gpu_grid_evidence_20261106/verify.py
+        run: python -S evidence/qwen_gpu_grid_evidence_20261106/verify.py
       - name: Verify jointly trained Qwen against independent cheaper controls
-        run: python -S docs/qwen_joint_evidence_20261106/verify.py
+        run: python -S evidence/qwen_joint_evidence_20261106/verify.py
       - name: Verify real Qwen3.5 interfaces and official MultiCounterFact score formulas
-        run: python -S docs/counterfact_capacity_evidence_20261106/verify.py
+        run: python -S evidence/counterfact_capacity_evidence_20261106/verify.py
       - name: Verify completed MultiCounterFact small-grid evidence
-        run: python -S docs/counterfact_small_evidence_20261107/verify.py
+        run: python -S evidence/counterfact_small_evidence_20261107/verify.py
       - name: Verify complete independent n-gram key evidence
-        run: python -S docs/ngram_identity_evidence_20261107/verify.py
+        run: python -S evidence/ngram_identity_evidence_20261107/verify.py
       - name: Verify real Qwen native storage, complete request pairs and memory costs
-        run: python -S docs/qwen_native_identity_evidence_20261109/verify.py
+        run: python -S evidence/qwen_native_identity_evidence_20261109/verify.py
       - name: Verify matched identity-format bytes and fresh CPU reader controls
-        run: python -S docs/identity_format_evidence_20261109/verify.py
+        run: python -S evidence/identity_format_evidence_20261109/verify.py
       - name: Verify conditional prefix/suffix node similarity provenance and complete counts
-        run: python -S docs/conditional_similarity_evidence_20261109/verify.py
+        run: python -S evidence/conditional_similarity_evidence_20261109/verify.py
       - name: Verify full node-sharing quality frontier, frozen choices and training mechanism
         run: |
-          python -S docs/tree_node_quality_evidence_20261109/fetch_raw.py
-          python -S docs/tree_node_quality_evidence_20261109/verify.py
+          python -S evidence/tree_node_quality_evidence_20261109/fetch_raw.py
+          python -S evidence/tree_node_quality_evidence_20261109/verify.py
 
   torch-adapter:
     name: PyTorch gather adapter
@@ -101,7 +101,7 @@ jobs:
           OMP_NUM_THREADS: "1"
         run: python -m unittest tests.test_counterfact_native tests.test_counterfact_storage tests.test_llm_codec_frontier tests.test_cached_memory_decode tests.test_independent_control_reopen -v
       - name: Reproduce all independent-key paired bootstrap intervals on CPU
-        run: python docs/ngram_identity_evidence_20261107/verify.py --bootstrap
+        run: python evidence/ngram_identity_evidence_20261107/verify.py --bootstrap
 
   native-sanitizers:
     name: Native C sanitizers

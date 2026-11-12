@@ -1,12 +1,12 @@
 {
-  "title": "NGramStore: Compression, Storage and Exact Lookup for Learned N-Gram Vectors",
+  "title": "NGramStore: Compression, Storage and Exact Lookup for Learned N-Gram Embeddings",
   "creators": [
     {
       "name": "Du, Yimin",
       "affiliation": "Independent Researcher"
     }
   ],
-  "description": "Formerly me_fasttext. A native compression, storage and exact-query engine for frozen learned n-gram vectors, with registered DATrie/mark-compact planning and FastText/Engram application integrations. Lossless and approximate modes are reported separately; the original FastText paper retains its title and attribution.",
+  "description": "A compression, storage and exact-lookup backend for frozen learned n-gram embedding tables, with optional DATrie/mark-compact structure and FastText/Engram integrations. Lossless and approximate modes are reported separately. Originated from the 2017 me_fasttext prototype (arXiv:2506.01254).",
   "license": "MIT",
   "keywords": [
     "n-gram memory",
@@ -27,7 +27,7 @@
   "related_identifiers": [
     {
       "identifier": "https://arxiv.org/abs/2506.01254",
-      "relation": "isSupplementTo",
+      "relation": "isDerivedFrom",
       "scheme": "url",
       "resource_type": "publication-preprint"
     },
