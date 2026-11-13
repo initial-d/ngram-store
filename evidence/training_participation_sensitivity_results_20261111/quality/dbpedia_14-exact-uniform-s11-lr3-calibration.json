@@ -1,0 +1,45 @@
+{
+  "accuracy": 0.9479107142857143,
+  "documents": 56000,
+  "environment": {
+    "command": "/llm-align/duyimin/ngram-counterfact-capacity-20261106/env/bin/python /llm-align/duyimin/ngram-controlled-deployment-20261111/runtime-ed09b5d/tools/large_application_frontier.py evaluate --job /llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/jobs/dbpedia_14-exact-uniform-s11-lr3.json --split calibration --output /llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s11-lr3-calibration.json",
+    "commit": "ed09b5d",
+    "cpu": "x86_64",
+    "device": "cpu",
+    "faiss": "1.15.0",
+    "faiss_compile_options": "OPTIMIZE DD AVX2 ",
+    "gpu": "unused",
+    "loadavg": [
+      34.84521484375,
+      32.70166015625,
+      31.357421875
+    ],
+    "numpy": "2.2.6",
+    "os": "Linux-5.4.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15 (main, Mar 11 2026, 17:20:07) [GCC 14.3.0]",
+    "source_sha256": "15959554669f497f43133ed44ece4bd5f1670386cb45da8b2571a9f7a8b67d07",
+    "threads": 1,
+    "torch": "2.11.0"
+  },
+  "job_sha256": "648c30d598bc9ca0de26fd1847bf1a261f943ed8ef46367de8bc3513895005b8",
+  "logits_sha256": "117196bc41fc1ee55fc37fac454d98a3c8d5146ff2005221595f89998017056f",
+  "mean_nll": 0.184193916914253,
+  "payload_sha256": "8039cdf8c81057b1f8892f5f00298bea86c85dd0e3e3ceda099efdfbe5a67b60",
+  "reduction": "FP64 mean of original addressed rows excluding zero OOV; same schedule for every representation",
+  "rss_after": {
+    "anonymous_bytes": 69136384,
+    "file_backed_bytes": 5821566976,
+    "peak_bytes": 5940695040,
+    "rss_bytes": 5890703360
+  },
+  "rss_before": {
+    "anonymous_bytes": 35913728,
+    "file_backed_bytes": 16228352,
+    "peak_bytes": 52142080,
+    "rss_bytes": 52142080
+  },
+  "seconds": 19.77326261997223,
+  "source_sha256": "09f23f38303effefab261310c3c8c530d8ecba054228ef68aa458bd0cf104854",
+  "split": "calibration",
+  "status": "complete"
+}

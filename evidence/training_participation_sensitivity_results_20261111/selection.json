@@ -1,0 +1,29 @@
+{
+  "boundary": "Post-primary participation sensitivity, not a replacement of registered byte-change-qualified results. All row-byte failures remain failures under the original rule.",
+  "calibration_sha256": {
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s11-lr1-calibration.json": "0ca6e8d12c0207c0b794ed4a735ba6716964bbc79588081fced607669440409e",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s11-lr10-calibration.json": "733dc8d4b1ebb693ae8396ff7511ad56a6d92489725c7ba13611c518cd71bf0a",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s11-lr3-calibration.json": "fe73cb4a81cb9441ae7885adb06e6ca0e83ad1e9343d374c232f8b2db775a66c",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s3-lr1-calibration.json": "51f33593ea5d470ba33921a817f6cac4b3f76fb577f25900b7cecac35f203f12",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s3-lr10-calibration.json": "2f5695213e11b6ee054550aa5edde875e9aa905acdbbc76a0ea6ecee96573365",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s3-lr3-calibration.json": "c8a5d22e29569fa2bbc174bc7d9e5861e0bc35bd85644781d3a3be4725ced4b9",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s7-lr1-calibration.json": "727a4d2b2586c21d61561a3eba73482f0c262ae05049723c380bdba2a28bd8ac",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s7-lr10-calibration.json": "e95c9e0f3d8df933951284b5c86360540e160ccc96084f3f318a1681a9749c88",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s7-lr3-calibration.json": "1a389435bfe3b47fde5026a72f02cc432c3d914681b0db1cfaac7e19a31b126c"
+  },
+  "learning_rate": 10.0,
+  "mean_calibration_nll": {
+    "1.0": 0.6460680946854153,
+    "10.0": 0.09035977700370361,
+    "3.0": 0.1830366401914353
+  },
+  "protocol_sha256": "f4c5f3a9f66f96c2c829c3ac669e8e2fba289deced564986d1ed9c39250e2186",
+  "selected": [
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/jobs/dbpedia_14-exact-uniform-s11-lr10.json",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/jobs/dbpedia_14-exact-uniform-s3-lr10.json",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/jobs/dbpedia_14-exact-uniform-s7-lr10.json"
+  ],
+  "source_sha256": "6bfbad6161ed6c3a0eaacaff2a24e9bacddc4c917e9d0fe7438fa4c4c07a26a6",
+  "status": "frozen",
+  "test_used": false
+}

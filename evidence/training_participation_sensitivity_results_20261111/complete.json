@@ -1,0 +1,12 @@
+{
+  "selection_sha256": "f136c3b9f8880048ab26e0adca9b64d826844d7828d7f78ab7eb890daf0dcd5c",
+  "source_sha256": "6bfbad6161ed6c3a0eaacaff2a24e9bacddc4c917e9d0fe7438fa4c4c07a26a6",
+  "status": "complete",
+  "test_accuracy_mean": 0.9767,
+  "test_nll_mean": 0.09025679085011921,
+  "test_sha256": {
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s11-lr10-test.json": "1fcd0704bf471cf8163e39128fda0f1a19f7088481f17cb3daf38c6ddd61d499",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s3-lr10-test.json": "2d01b00d414834aad845c275bbc8785c1e396dd76fd1e20bcc1577b5fd61d7bb",
+    "/llm-align/duyimin/ngram-controlled-deployment-20261111/participation-sensitivity/quality/dbpedia_14-exact-uniform-s7-lr10-test.json": "d8bea0f87372a2accbd7806091549cb15bdb1e27d9d2eba93faaa68382993a4b"
+  }
+}
