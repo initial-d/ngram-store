@@ -1,0 +1,12 @@
+{
+  "actual_train_ids_sha256": "1bb91bed2dafd9d71ee3cdd43f84157505a11292aac65a38b4a82a85271680ff",
+  "boundary": "All registered nonpadding IDs occur in the complete training stream. Participation does not establish a nonzero gradient, an FP32 change, or downstream necessity for every row.",
+  "counts_sha256": "aec2f7af9e85dae31a5cb0b41467d5633d8ce42d67b64f228d4cf94378594cb7",
+  "minimum_occurrences_per_epoch": 1,
+  "nonpadding_rows_observed": 34050160,
+  "occurrences_per_epoch": 111620096,
+  "prepared_sha256": "e7bfc1e066dc7ca993bdd1fa4296b5d7b6cd41d5e1b5127b8b22a42242bd6278",
+  "rows": 34050161,
+  "source_sha256": "6bfbad6161ed6c3a0eaacaff2a24e9bacddc4c917e9d0fe7438fa4c4c07a26a6",
+  "status": "verified"
+}
