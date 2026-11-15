@@ -476,6 +476,13 @@ class NativeRows:
     def last_decoded_bytes(self):
         return self._counter("last_decoded_bytes")
 
+    @property
+    def last_xor_bytes(self):
+        """Previous-row XOR reconstruction work, separate from stream output."""
+        if not hasattr(self.lib, "meft_rows_last_xor_bytes"):
+            raise ValueError("XOR work counters require rebuilding the row library")
+        return self._counter("last_xor_bytes")
+
     def close(self):
         if self.handle:
             self.lib.meft_rows_close(self.handle)

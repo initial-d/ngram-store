@@ -86,6 +86,14 @@ straight to `meft_rows_gather`. On uncompressed tables it halves lookup time
 compared with `rows`
 ([profile](../../evidence/host_query_profile_20261112/README.md)).
 
+All-raw native tables now skip block sorting and copy directly after validating
+original IDs and forwarding. On existing AG News/DBpedia seed-3 tables, paired
+CPU gathers were 1.57–1.65× faster with unchanged bytes
+([results](../../evidence/native_direct_gather_20261115/README.md)). Compressed
+tables retain grouped reads. `NativeRows.last_xor_bytes` reports previous-row
+XOR reconstruction separately from complete stream decompression; full-block
+cache fills always reconstruct every row.
+
 ## Native layout and construction
 
 `MEFTNAT1` is a little-endian binary file: a versioned header, an optional
