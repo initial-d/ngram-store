@@ -104,6 +104,19 @@ class EngineTest(unittest.TestCase):
                 self.assertEqual(report['unique_rows'],len(np.unique(x.view('V24'))))
                 self.assertEqual(report['recommended'],'dedup' if dup else 'raw')
                 self.assertEqual({c['layout'] for c in report['candidates']},{'raw','dedup'})
+                # the duplicate distribution says where the saving comes from:
+                # one group of 351 rows here (350 copies plus the original)
+                groups=report['duplicates']
+                self.assertEqual(groups['groups'],report['unique_rows'])
+                self.assertEqual(groups['largest_group'],351 if dup else 1)
+                if dup:
+                    self.assertEqual(groups['saved_by_group_size'],
+                                     {'2':0.0,'3-4':0.0,'5-16':0.0,'17-256':0.0,'257+':1.0})
+                    self.assertEqual(groups['rows_in_largest_group'],round(351/700,6))
+                    self.assertEqual(groups['top_10_groups_share_of_saving'],1.0)
+                else:
+                    self.assertEqual(sum(groups['saved_by_group_size'].values()),0.0)
+                    self.assertEqual(groups['top_10_groups_share_of_saving'],0.0)
                 for c in report['candidates']:
                     out=root/(name+'-'+c['layout'])
                     pack_store(source,out,6,native_library=self.library,deduplicate=c['layout']=='dedup',

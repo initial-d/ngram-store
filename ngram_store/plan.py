@@ -43,6 +43,34 @@ def _row_hashes(source, row_bytes, chunk_rows):
     return table, hashes
 
 
+def _duplicate_groups(hashes):
+    """How the duplicate rows are distributed across groups.
+
+    A table can save the same bytes in two very different ways: many small
+    groups (duplicates spread over the table) or a few huge ones (one group
+    swallowing a large part of it). The distinction matters because a single
+    dominant group usually means the duplicated rows carry no per-key
+    information, which is a property of training, not of the layout.
+    """
+    import numpy as np
+    _, counts = np.unique(hashes, return_counts=True)
+    sizes = np.sort(counts)[::-1]
+    rows = int(len(hashes))
+    within = sizes - 1                       # rows saved per group
+    total = int(within.sum())
+    buckets = [(2, 2), (3, 4), (5, 16), (17, 256), (257, 1 << 62)]
+    labels = ["2", "3-4", "5-16", "17-256", "257+"]
+    grouped = [(within[(sizes >= lo) & (sizes <= hi)].sum()) for lo, hi in buckets]
+    top = int(sizes[0]) if len(sizes) else 0
+    return {
+        "groups": int(len(sizes)),
+        "largest_group": top,
+        "rows_in_largest_group": round(top / rows, 6) if rows else 0.0,
+        "saved_by_group_size": dict(zip(labels, [round(g / total, 4) if total else 0.0 for g in grouped])),
+        "top_10_groups_share_of_saving": round(float(within[:10].sum() / total), 4) if total else 0.0,
+    }
+
+
 def _uncompressed_bytes(rows, unique, row_bytes, deduplicate):
     blocks = math.ceil(unique / UNCOMPRESSED_BLOCK_ROWS)
     return (HEADER_BYTES + (MAP_BYTES_PER_ROW * rows if deduplicate else 0)
@@ -126,5 +154,6 @@ def plan_layout(source, dim, *, dtype_bytes=4, prefer="speed", codec="zstd",
                   "slower than raw on scattered IDs; measure on your trace.")
     return {"rows": rows, "row_bytes": row_bytes, "source_bytes": raw_bytes, "unique_rows": unique,
             "duplicate_fraction": round(1 - unique / rows, 6), "prefer": prefer,
+            "duplicates": _duplicate_groups(hashes),
             "candidates": candidates, "recommended": best["layout"], "reason": reason,
             "note": "Unique rows are counted with a 64-bit row hash; pack verifies every row."}

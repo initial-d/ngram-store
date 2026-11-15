@@ -1,0 +1,98 @@
+[
+ {
+  "order": 1,
+  "window": 512,
+  "stride": 512,
+  "epochs": 1,
+  "windows": 242666,
+  "grams": 62775,
+  "distinct_keys": 62775,
+  "distinct_rows": 61094,
+  "duplicate_fraction": 0.0268,
+  "keys_in_one_window": 6100,
+  "rows_for_one_window_keys": 4495,
+  "dedup_among_one_window_keys": 0.2631,
+  "keys_in_several_windows": 56675,
+  "rows_for_multi_window_keys": 56599,
+  "dedup_among_multi_window_keys": 0.0013,
+  "rows_per_window": 0.3,
+  "keys_per_window": 0.3,
+  "hash_keys_vs_exact": [
+   42095,
+   42095
+  ],
+  "seconds": 50.9
+ },
+ {
+  "order": 2,
+  "window": 512,
+  "stride": 512,
+  "epochs": 1,
+  "windows": 242666,
+  "grams": 8859857,
+  "distinct_keys": 8859857,
+  "distinct_rows": 3997891,
+  "duplicate_fraction": 0.5488,
+  "keys_in_one_window": 4969709,
+  "rows_for_one_window_keys": 301775,
+  "dedup_among_one_window_keys": 0.9393,
+  "keys_in_several_windows": 3890148,
+  "rows_for_multi_window_keys": 3696116,
+  "dedup_among_multi_window_keys": 0.0499,
+  "rows_per_window": 16.5,
+  "keys_per_window": 36.5,
+  "hash_keys_vs_exact": [
+   953012,
+   953012
+  ],
+  "seconds": 65.9
+ },
+ {
+  "order": 3,
+  "window": 512,
+  "stride": 512,
+  "epochs": 1,
+  "windows": 242666,
+  "grams": 38246489,
+  "distinct_keys": 38246489,
+  "distinct_rows": 8810239,
+  "duplicate_fraction": 0.7696,
+  "keys_in_one_window": 28352437,
+  "rows_for_one_window_keys": 361681,
+  "dedup_among_one_window_keys": 0.9872,
+  "keys_in_several_windows": 9894052,
+  "rows_for_multi_window_keys": 8448558,
+  "dedup_among_multi_window_keys": 0.1461,
+  "rows_per_window": 36.3,
+  "keys_per_window": 157.6,
+  "hash_keys_vs_exact": [
+   2258005,
+   2258005
+  ],
+  "seconds": 73.7
+ },
+ {
+  "order": 4,
+  "window": 512,
+  "stride": 512,
+  "epochs": 1,
+  "windows": 242666,
+  "grams": 69411465,
+  "distinct_keys": 69411465,
+  "distinct_rows": 8088490,
+  "duplicate_fraction": 0.8835,
+  "keys_in_one_window": 58808660,
+  "rows_for_one_window_keys": 364219,
+  "dedup_among_one_window_keys": 0.9938,
+  "keys_in_several_windows": 10602805,
+  "rows_for_multi_window_keys": 7724271,
+  "dedup_among_multi_window_keys": 0.2715,
+  "rows_per_window": 33.3,
+  "keys_per_window": 286.0,
+  "hash_keys_vs_exact": [
+   3057229,
+   3057229
+  ],
+  "seconds": 76.1
+ }
+]

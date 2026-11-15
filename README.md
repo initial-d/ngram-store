@@ -81,6 +81,10 @@ example, and [concepts](docs/concepts.md) explains the terms.
    1.09–1.23× raw with identical logits
    ([profile](evidence/host_query_profile_20261112/README.md)). Without
    duplicates (uniform initialization) compression saves only 8–9%; raw is better.
+   This is a property of word tables over documents, not of n-gram memories in
+   general: on token n-grams over a text stream the repeat fraction is higher but
+   most of it is keys seen in a single window, which a count threshold removes
+   anyway ([token-level check](evidence/token_ngram_duplicates_20261115/README.md)).
 4. Construction fits in small memory. Disk-backed building cuts peak RSS from
    3.1 GiB to 95 MiB for the same output bytes, at 5× the build time
    ([report](evidence/external_incidence_evidence_20261102/README.md)).
