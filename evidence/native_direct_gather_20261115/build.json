@@ -1,0 +1,67 @@
+{
+  "source_commit": "4a89d3c55b77ce36830872271cdf726324ab2e49",
+  "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "headers": {
+    "lz4.h": "https://raw.githubusercontent.com/lz4/lz4/v1.9.3/lib/lz4.h",
+    "zstd.h": "https://raw.githubusercontent.com/facebook/zstd/v1.4.8/lib/zstd.h",
+    "libdeflate.h": "https://raw.githubusercontent.com/ebiggers/libdeflate/v1.10/libdeflate.h"
+  },
+  "files": {
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/include/libdeflate.h": {
+      "sha256": "5ead6b5be40c415a11429e711480c6dbde1dee6508391f23b31f95bb1c5d87d8",
+      "bytes": 15154
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/include/._libdeflate.h": {
+      "sha256": "08201127903639e30c8a3f1e75fcd92a11151e04683c2f884fd7098392413817",
+      "bytes": 163
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/include/zstd.h": {
+      "sha256": "e5dd7935c6c7655dcafd868c265ecb97008a338c51286562ef093f43969c7b46",
+      "bytes": 138334
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/include/lz4.h": {
+      "sha256": "c9b52a14c2c93fe5c435a09054cc8f1bf5d94a3ce1a38dc51296a92ce409f8e4",
+      "bytes": 40861
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/include/._zstd.h": {
+      "sha256": "08201127903639e30c8a3f1e75fcd92a11151e04683c2f884fd7098392413817",
+      "bytes": 163
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/include/._lz4.h": {
+      "sha256": "08201127903639e30c8a3f1e75fcd92a11151e04683c2f884fd7098392413817",
+      "bytes": 163
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/lib/candidate-codecs.so": {
+      "sha256": "0fa6bc8604c6c20031a252ebf1a2d9c9cea148a6cdd38f9c860ad603a9504ec0",
+      "bytes": 34472
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/lib/baseline-codecs.so": {
+      "sha256": "edb6e93484e90994c76288e31295d0ac59cfa791ff23e084218382f84367f036",
+      "bytes": 34472
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/lib/candidate.so": {
+      "sha256": "4e41e56e80ab3244a1d6b3d4999a1f522ff9406952a938f478e5b0f0f323804b",
+      "bytes": 34048
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/lib/baseline.so": {
+      "sha256": "ede1b2d6657cbaed7949f8d44b0956702c1fd956262b9fb1e1eb30f2335dcd76",
+      "bytes": 34048
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/runtime/native/meft_rows.c": {
+      "sha256": "6a2908eb2e998fa0b2579739f80051b953c2093edc2eb70451bbd3c27cfc763c",
+      "bytes": 44978
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/runtime/native/meft_rows.h": {
+      "sha256": "48198f4bc84777d35091e1ee86886324d7bffa011c5ef71a870c501100da2da5",
+      "bytes": 8675
+    },
+    "/llm-align/duyimin/ngram-sparse-xor-20261115/runtime/tools/benchmark_native_gather.py": {
+      "sha256": "c2d756f46d5a39c2e0512d869e6a8485e86e5a10fda0dbf11755b0016d2111f0",
+      "bytes": 8045
+    }
+  },
+  "codecs_flags": "-I/llm-align/duyimin/ngram-sparse-xor-20261115/include -DMEFT_USE_LZ4 -DMEFT_USE_ZSTD -DMEFT_USE_LIBDEFLATE -l:liblz4.so.1 -l:libzstd.so.1 -l:libdeflate.so.0",
+  "compile": "cc -std=c11 -O3 -fPIC -shared native/meft_rows.c -lz FLAGS -o LIBRARY",
+  "baseline_extra_flags": "-DMEFT_DISABLE_XOR_PREFIX -DMEFT_DISABLE_RAW_GATHER",
+  "first_xor_run": "1e82e5e, cc -std=c11 -O3 -fPIC -shared native/meft_rows.c -lz, baseline extra -DMEFT_DISABLE_XOR_PREFIX; baseline.so and candidate.so refer to this first run."
+}

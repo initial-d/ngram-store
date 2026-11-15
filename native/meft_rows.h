@@ -43,12 +43,14 @@ int meft_rows_set_cache_policy(meft_rows *store, int rows);
 uint64_t meft_rows_cache_bytes(const meft_rows *store);
 /* output must contain count * width bytes and must not overlap ids.
  * Failure may leave partial output; ignore it unless return value is zero.
- * Reads are grouped by block and returned in original query order.
+ * Compressed reads are grouped by block; all-raw tables copy directly from
+ * the contiguous physical payload. Both return original query order and count
+ * distinct touched blocks. Raw counter scratch grows with query size.
  */
 int meft_rows_gather(meft_rows *store, const uint64_t *ids, size_t count,
                      void *output, size_t output_bytes, char *error, size_t error_capacity);
 /* Gather in chunks of at most max_query_rows>0 requests, directly into the
- * caller's complete output. Bounds query-location/sort scratch, not output,
+ * caller's complete output. Bounds query-location/grouping scratch, not output,
  * decoded blocks, cache or total RSS. Each chunk groups its own block reads;
  * crossing chunks can repeat decoding. Last-query counters aggregate all chunks.
  * Each handle retains request scratch up to its largest earlier gather;

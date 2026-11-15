@@ -1,0 +1,362 @@
+[
+  {
+    "name": "ag_news-exact-uniform-s3-lr10-raw",
+    "commit": "4a89d3c55b77ce36830872271cdf726324ab2e49",
+    "raw": "raw/ag_news-exact-uniform-s3-lr10-raw.json.gz",
+    "raw_sha256": "65f0ae4ae84ec33b7064a693c18f9789c25bbdb7fc562bd06c6e7d538530fd05",
+    "rows": 6989612,
+    "row_bytes": 512,
+    "speed_ratio": 1.5877039933141825,
+    "p50_us": {
+      "baseline": 35.342,
+      "candidate": 22.282
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 191580,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 191580,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "ag_news-exact-zero-s3-lr10-raw",
+    "commit": "4a89d3c55b77ce36830872271cdf726324ab2e49",
+    "raw": "raw/ag_news-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "e0e18a9639c6ad83cbc224cb83886aca8e553daa95fcc703a63cd9595ca2144a",
+    "rows": 6989612,
+    "row_bytes": 512,
+    "speed_ratio": 1.568304045708378,
+    "p50_us": {
+      "baseline": 32.898,
+      "candidate": 21.024
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 162560,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 162560,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "dbpedia_14-exact-uniform-s3-lr3-raw",
+    "commit": "4a89d3c55b77ce36830872271cdf726324ab2e49",
+    "raw": "raw/dbpedia_14-exact-uniform-s3-lr3-raw.json.gz",
+    "raw_sha256": "143e4734ae58f2e559b6557927792e6bf605ad1ddf2404d1943b16d70c6f0ae9",
+    "rows": 34050161,
+    "row_bytes": 512,
+    "speed_ratio": 1.64902184211652,
+    "p50_us": {
+      "baseline": 45.68,
+      "candidate": 27.171
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 250440,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 250440,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "dbpedia_14-exact-zero-s3-lr10-raw",
+    "commit": "4a89d3c55b77ce36830872271cdf726324ab2e49",
+    "raw": "raw/dbpedia_14-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "abac1465eb5ce2adb87e1225d89fc9ebb4fbec06a1d0ee9f05c5278cda4a846d",
+    "rows": 34050161,
+    "row_bytes": 512,
+    "speed_ratio": 1.63274935459376,
+    "p50_us": {
+      "baseline": 43.305,
+      "candidate": 26.0535
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 219960,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 219960,
+        "decodes": 0,
+        "compressed_bytes": 0,
+        "decoded_bytes": 0,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen06-exact-s3-rows1024-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen06-exact-s3-rows1024-zero.json.gz",
+    "raw_sha256": "a886dde5933cebfbbf5401d89638b86886fda74d637a5d5f9c993c42da657f1e",
+    "rows": 580910,
+    "row_bytes": 128,
+    "speed_ratio": 0.9999579320257473,
+    "p50_us": {
+      "baseline": 26714.0615,
+      "candidate": 26706.553
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 9510,
+        "decodes": 9510,
+        "compressed_bytes": 1156154610,
+        "decoded_bytes": 1244646400,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 9510,
+        "decodes": 9510,
+        "compressed_bytes": 1156154610,
+        "decoded_bytes": 1244646400,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen06-exact-s3-rows16-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen06-exact-s3-rows16-zero.json.gz",
+    "raw_sha256": "c2acc8b70c2fc231901834c005e55fa5af339bf030a4b4cdf059990092513f87",
+    "rows": 580910,
+    "row_bytes": 128,
+    "speed_ratio": 0.9995153623552974,
+    "p50_us": {
+      "baseline": 708.672,
+      "candidate": 708.637
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 10080,
+        "decodes": 10080,
+        "compressed_bytes": 19515180,
+        "decoded_bytes": 20643840,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 10080,
+        "decodes": 10080,
+        "compressed_bytes": 19515180,
+        "decoded_bytes": 20643840,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen06-exact-s3-rows256-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen06-exact-s3-rows256-zero.json.gz",
+    "raw_sha256": "72cc2d85ef9022f089d7e3acf69de0e472f55d99e0220db7da35be4c3830f1ba",
+    "rows": 580910,
+    "row_bytes": 128,
+    "speed_ratio": 0.9995861522256088,
+    "p50_us": {
+      "baseline": 7242.9695,
+      "candidate": 7251.002
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 10010,
+        "decodes": 10010,
+        "compressed_bytes": 304682580,
+        "decoded_bytes": 328007680,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 10010,
+        "decodes": 10010,
+        "compressed_bytes": 304682580,
+        "decoded_bytes": 328007680,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen06-exact-s3-rows64-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen06-exact-s3-rows64-zero.json.gz",
+    "raw_sha256": "762ef6a3b278dd78cfd98fc88060750ca8c74d2eceb9838d90ccd5eef0d1aacd",
+    "rows": 580910,
+    "row_bytes": 128,
+    "speed_ratio": 0.9995368865137088,
+    "p50_us": {
+      "baseline": 1955.624,
+      "candidate": 1960.2685000000001
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 10080,
+        "decodes": 10080,
+        "compressed_bytes": 76827870,
+        "decoded_bytes": 82575360,
+        "xor_bytes": 161280
+      },
+      "candidate": {
+        "blocks": 10080,
+        "decodes": 10080,
+        "compressed_bytes": 76827870,
+        "decoded_bytes": 82575360,
+        "xor_bytes": 140800
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen35-exact-s3-rows1024-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen35-exact-s3-rows1024-zero.json.gz",
+    "raw_sha256": "716524518fc7b65883672b4b6b30d6bc93da3741fe239dd1d74af10ce8eeda58",
+    "rows": 574330,
+    "row_bytes": 128,
+    "speed_ratio": 0.9999566243592297,
+    "p50_us": {
+      "baseline": 26461.214,
+      "candidate": 26484.8925
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 9500,
+        "decodes": 9500,
+        "compressed_bytes": 1155632070,
+        "decoded_bytes": 1243983360,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 9500,
+        "decodes": 9500,
+        "compressed_bytes": 1155632070,
+        "decoded_bytes": 1243983360,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen35-exact-s3-rows16-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen35-exact-s3-rows16-zero.json.gz",
+    "raw_sha256": "d191e86f4b138fad017043a8369d3e7190e7fc6f1e8fb58ebf7ea3268effd26b",
+    "rows": 574330,
+    "row_bytes": 128,
+    "speed_ratio": 1.0023224456905866,
+    "p50_us": {
+      "baseline": 709.1265000000001,
+      "candidate": 709.545
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 10010,
+        "decodes": 10010,
+        "compressed_bytes": 19378700,
+        "decoded_bytes": 20500480,
+        "xor_bytes": 38400
+      },
+      "candidate": {
+        "blocks": 10010,
+        "decodes": 10010,
+        "compressed_bytes": 19378700,
+        "decoded_bytes": 20500480,
+        "xor_bytes": 25600
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen35-exact-s3-rows256-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen35-exact-s3-rows256-zero.json.gz",
+    "raw_sha256": "c80d13fc87a3a92309dafafce8b15a2693b471f7102f5263f6028ea8ecb92178",
+    "rows": 574330,
+    "row_bytes": 128,
+    "speed_ratio": 1.0003355354892143,
+    "p50_us": {
+      "baseline": 7203.017,
+      "candidate": 7196.4515
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 9970,
+        "decodes": 9970,
+        "compressed_bytes": 303458740,
+        "decoded_bytes": 326696960,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 9970,
+        "decodes": 9970,
+        "compressed_bytes": 303458740,
+        "decoded_bytes": 326696960,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  },
+  {
+    "name": "qwen35-exact-s3-rows64-zero",
+    "commit": "1e82e5ee1a8295d15d1d43259bfc16979ddd325f",
+    "raw": "raw/qwen35-exact-s3-rows64-zero.json.gz",
+    "raw_sha256": "cfa52096946add5226a3c3e850561f5742a377a9900550b44cf9484b62c865cb",
+    "rows": 574330,
+    "row_bytes": 128,
+    "speed_ratio": 0.9995899154138466,
+    "p50_us": {
+      "baseline": 1947.556,
+      "candidate": 1949.3375
+    },
+    "xor_bytes_per_round": {
+      "baseline": {
+        "blocks": 10000,
+        "decodes": 10000,
+        "compressed_bytes": 76235460,
+        "decoded_bytes": 81920000,
+        "xor_bytes": 0
+      },
+      "candidate": {
+        "blocks": 10000,
+        "decodes": 10000,
+        "compressed_bytes": 76235460,
+        "decoded_bytes": 81920000,
+        "xor_bytes": 0
+      }
+    },
+    "original_code_bytes_match": true
+  }
+]
