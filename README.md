@@ -13,10 +13,16 @@ model ends up owning a large frozen table that has to be indexed, stored and
 queried. NGramStore takes care of that table; training, addressing and
 aggregation stay in the model.
 
-The project also asks research questions: when is it worth giving every n-gram
-its own row instead of hashing into buckets, what redundancy does training leave
-in the table, and how should it be served? The experiments are in
-[`evidence/`](evidence/README.md).
+The project continues the idea of the paper
+[Memory-Efficient FastText](https://arxiv.org/abs/2506.01254): give every n-gram
+an exact identity, then compact the table after training. The paper describes the
+idea; this repository has the rebuilt engine and everything measured since
+([from the paper to now](#from-the-paper-to-now)).
+
+The research questions are the paper's, asked again with full experiments: when
+is it worth giving every n-gram its own row instead of hashing into buckets, what
+redundancy does training leave in the table, and how should it be served? The
+experiments are in [`evidence/`](evidence/README.md).
 
 ## Components
 
@@ -117,14 +123,24 @@ facade need Linux x86-64. Tables are read-only at serving time. Runtime details
 are in the [C ABI guide](docs/guides/native_ngram_memory.md); what comes next is
 in the [roadmap](docs/roadmap.md).
 
-## History
+## From the paper to now
 
-NGramStore started as me_fasttext, a 2017 FastText prototype that gave every
-n-gram an exact DATrie ID and compacted rows after training, in the spirit of a
-mark-compact collector ([arXiv:2506.01254](https://arxiv.org/abs/2506.01254)).
-The engine has since been rebuilt. Old `meft_memory` imports, `meft-*` commands
-and file formats still work ([compatibility](docs/guides/legacy_fasttext.md),
-[history](docs/history/README.md)).
+NGramStore started as me_fasttext, a 2017 FastText prototype written up in
+[arXiv:2506.01254](https://arxiv.org/abs/2506.01254). It gave every subword
+n-gram an exact DATrie ID instead of a hash bucket, trained one row per n-gram,
+and after training merged similar rows and compacted the table, in the spirit of
+a mark-compact collector. Each part has since been tested on its own:
+
+| Idea in the paper | What the experiments show |
+| --- | --- |
+| Exact IDs instead of hash buckets | Pays off when the task stores many per-key facts: +0.41–4.05 pp at 20,877 knowledge edits on frozen Qwen, mixed at 1,024 ([result 1](#results)) |
+| Prefix/suffix neighbours can share rows | They become similar with training: 1.34% saving after 2k steps, 41.49% after 32k ([result 2](#results)) |
+| Compact the table after training | With pooled reads and zero initialization, training itself leaves rows byte-identical; storing each distinct row once, uncompressed, saves 85% and serves near raw speed ([result 3](#results)) |
+| Extend to LLM n-gram memory | Engine and adapters work for Engram, TinyEngram and Qwen. The size savings do not carry over to token n-grams ([token-level check](evidence/token_ngram_duplicates_20261115/README.md)) |
+
+The engine itself was rebuilt. Old `meft_memory` imports, `meft-*` commands and
+file formats still work ([compatibility](docs/guides/legacy_fasttext.md),
+[documents from the paper's period](docs/history/README.md)).
 
 ## Citing and contributing
 

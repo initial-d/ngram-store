@@ -24,4 +24,4 @@ references:
         given-names: Yimin
     year: 2025
     url: "https://arxiv.org/abs/2506.01254"
-    notes: "Origin of the exact-identity-then-compact idea (me_fasttext, 2017 prototype)."
+    notes: "The paper describing the exact-identity-then-compact idea (me_fasttext, 2017 prototype). NGramStore continues it; later results are in the repository's evidence archive."
