@@ -59,11 +59,12 @@ def benchmark(args):
         'rows': len(source), 'row_bytes': width, 'repeat': args.repeat, 'rounds': args.rounds,
         'warmup': args.warmup, 'cache_bytes': args.cache_bytes, 'cache_policy': args.cache_policy,
         'trace_sha256': digest(args.traces), 'trace_metadata_sha256': digest(args.traces.with_suffix('.json')),
+        'trace_domain': trace_metadata['domain'],
         'table_sha256': digest(args.table), 'codes_sha256': digest(args.codes),
         'libraries_sha256': {name: digest(path) for name, path in
                                (('baseline', args.baseline_library), ('candidate', args.library))},
         'source_sha256': digest(__file__), 'round_results': [],
-        'scope': 'Saved original canonical row queries on trained Qwen memory codes. Warm OS cache, single CPU core; paired rounds are descriptive, not confidence bounds or complete inference speedups. Original vectors, source codes and query IDs are not exported.',
+        'scope': 'Saved original canonical row queries on existing trained memory codes. Warm OS cache, single CPU core; paired rounds are descriptive, not confidence bounds or complete inference speedups. Original vectors, source codes and query IDs are not exported.',
         'cost': 'Existing CPU resources; no GPU, training or paid API. Energy/monetary costs unmeasured.'}
     try:
         result['torch'] = importlib.metadata.version('torch')
@@ -78,6 +79,9 @@ def benchmark(args):
                         args.table, args.library, cache_bytes=args.cache_bytes,
                         cache_policy=args.cache_policy) as candidate:
             stores = {'baseline': baseline, 'candidate': candidate}
+            result['decoders'] = {name: store.decoder_name for name, store in stores.items()}
+            result['request_count'] = len(queries)
+            result['rows_per_request'] = [len(ids) for ids, _ in queries]
             if any(s.header != {'n_rows': len(source), 'row_bytes': width} for s in stores.values()):
                 raise ValueError('table/source dimensions differ')
             output = {name: [np.empty((len(ids), width), dtype=np.uint8) for ids, _ in queries]
@@ -106,6 +110,7 @@ def benchmark(args):
                         raise ValueError('stream decode/cache work differs')
             result['round_results'].append({'round': round_id, 'samples_us': samples, 'work': counts,
                 'p50_us': {name: statistics.median(values) for name, values in samples.items()},
+                'p95_us': {name: sorted(values)[math.ceil(.95 * len(values)) - 1] for name, values in samples.items()},
                 'paired_geometric_speed_ratio': math.exp(statistics.mean(math.log(a / b) for a, b in
                     zip(samples['baseline'], samples['candidate']))), 'original_code_bytes_match': True})
     result['status'] = 'passed'

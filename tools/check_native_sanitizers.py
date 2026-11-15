@@ -47,6 +47,10 @@ def main():
         if packed["raw_blocks"]:
             raise AssertionError("cache sanitizer fixture must use compressed blocks")
         subprocess.run([str(driver), str(table)], check=True)
+        # Exercise direct raw gathers, forwarding, query hashes and invalid IDs.
+        for implicit in (False, True):
+            pack_native(source, table, 128, 1, False, compress=False, implicit_identity=implicit)
+            subprocess.run([str(driver), str(table)], check=True)
         flags = os.environ.get('MEFT_NATIVE_TEST_FLAGS', '')
         for implicit in (False, True):
             packed = pack_native(source, table, 128, 64, False, predictor='none', implicit_identity=implicit, codec='row-xor')
@@ -74,7 +78,7 @@ def main():
                             changed = changed[:rng.randrange(len(changed))]
                         table.write_bytes(changed)
                         subprocess.run([str(driver), str(table)], check=True)
-    print("ASan/UBSan: versions 1/2/3/6/7, 384 mutated/truncated files and 300-block cache growth/eviction checked; optional LZ4/Zstd cases run when enabled.")
+    print("ASan/UBSan: versions 1/2/3/6/7, 384 mutated/truncated files, direct raw gathers and 300-block cache growth/eviction checked; optional LZ4/Zstd cases run when enabled.")
 
 
 if __name__ == "__main__":

@@ -21,6 +21,42 @@ def descriptor_start(data):
 
 
 class NativeRowsTest(unittest.TestCase):
+    def test_raw_direct_gather_preserves_forwarding_counters_and_error_output(self):
+        rng = random.Random(152)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'table'
+            width = 17; rows = [rng.randbytes(width) for _ in range(257)]
+            source.write_bytes(b''.join(rows + rows))
+            control = root / 'grouped.so'
+            subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared', '-DMEFT_DISABLE_RAW_GATHER',
+                str(ROOT / 'native/meft_rows.c'), '-lz', '-o', str(control)], check=True)
+            for options in ({'deduplicate': False}, {'deduplicate': True},
+                            {'deduplicate': False, 'row_order': list(reversed(range(514)))},
+                            {'deduplicate': False, 'representatives': [i % 257 for i in range(514)]}):
+                pack_native(source, table, width, 1, compress=False, **options)
+                for policy in ('rows', 'blocks'):
+                    with self.subTest(options=tuple(options), policy=policy), NativeRows(
+                            table, self.library, cache_bytes=4096, cache_policy=policy) as fast, NativeRows(
+                            table, control, cache_bytes=4096, cache_policy=policy) as grouped:
+                        for ids in ([513], list(range(514)), list(reversed(range(514))),
+                                    [rng.randrange(514) for _ in range(4096)], [256, 0, 256], []):
+                            self.assertEqual(fast.rows(ids), grouped.rows(ids))
+                            self.assertEqual(fast.last_block_reads, grouped.last_block_reads)
+                            self.assertEqual(fast.last_decompressions, 0)
+                            self.assertEqual(fast.last_xor_bytes, 0)
+                            self.assertEqual(fast.cache_bytes, 0)
+                        ids = (ctypes.c_uint64 * 4)(513, 0, 514, 1)
+                        out = ctypes.create_string_buffer(b'?' * (4 * width), 4 * width)
+                        with self.assertRaisesRegex(ValueError, 'row ID out of bounds'):
+                            fast.gather_into(ctypes.addressof(ids), 4, ctypes.addressof(out), len(out))
+                        self.assertEqual(out.raw, b'?' * (4 * width))
+                        self.assertEqual(fast.last_block_reads, 0)
+                        ids[2] = 0
+                        fast.gather_into(ctypes.addressof(ids), 4, ctypes.addressof(out), len(out), max_query_rows=2)
+                        self.assertEqual(out.raw, b''.join(rows[i % 257] for i in ids))
+                        grouped.gather_into(ctypes.addressof(ids), 4, ctypes.addressof(out), len(out), max_query_rows=2)
+                        self.assertEqual(fast.last_block_reads, grouped.last_block_reads)
+
     def test_sparse_xor_prefix_keeps_full_stream_checks_and_cache_contents(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); source = root / 'raw'; table = root / 'rows'

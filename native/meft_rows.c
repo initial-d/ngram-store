@@ -49,6 +49,8 @@ struct meft_rows {
     size_t request_capacity;
     struct request *request_temporary;
     size_t temporary_capacity;
+    uint64_t *raw_seen;
+    size_t raw_seen_capacity;
 #ifdef MEFT_USE_LIBDEFLATE
     struct libdeflate_decompressor *decoder;
 #endif
@@ -57,7 +59,7 @@ struct meft_rows {
 #endif
     uint64_t last_blocks, last_decodes, last_hits, last_row_hits;
     uint64_t last_compressed_bytes, last_decoded_bytes, last_xor_bytes;
-    int cache_rows, implicit_identity;
+    int cache_rows, implicit_identity, all_raw;
     size_t cache_budget, cache_used, cache_count;
     size_t cache_buckets;
     uint64_t cache_query;
@@ -138,6 +140,7 @@ void meft_rows_close(meft_rows *s) {
     free(s->scratch);
     free(s->requests);
     free(s->request_temporary);
+    free(s->raw_seen);
 #ifdef MEFT_USE_LIBDEFLATE
     libdeflate_free_decompressor(s->decoder);
 #endif
@@ -175,9 +178,11 @@ meft_rows *meft_rows_open(const char *path, char *err, size_t cap) {
     if (s->nblocks != s->unique / s->block_rows + (s->unique % s->block_rows != 0) ||
         s->nblocks > (s->size - s->desc_start) / DESC) goto invalid;
     uint64_t previous_end = s->desc_start + s->nblocks * DESC;
+    s->all_raw = 1;
     for (uint64_t b = 0; b < s->nblocks; ++b) {
         const unsigned char *d = s->data + s->desc_start + b * DESC;
         uint64_t off = le64(d), stored = le64(d + 8), raw = le64(d + 16), codec = le64(d + 24);
+        if (codec) s->all_raw = 0;
         uint64_t rows = s->unique - b * s->block_rows;
         if (rows > s->block_rows) rows = s->block_rows;
         reason = "invalid block descriptor";
@@ -274,6 +279,49 @@ static size_t cache_bucket(uint64_t block, size_t buckets) {
     block ^= block >> 31;
     return (size_t)block & (buckets - 1);
 }
+#ifndef MEFT_DISABLE_RAW_GATHER
+static int gather_raw(meft_rows *s, size_t count, void *out) {
+    /* Validated raw blocks form one contiguous physical-row payload, including
+     * reordered/deduplicated tables. No decode/cache grouping is necessary.
+     * Preserve distinct-block counters with query-sized scratch, not a bitmap
+     * proportional to the table. Optional allocation failure uses the grouped
+     * path. All IDs/forwarding entries were validated before touching output. */
+    size_t buckets = 0;
+    size_t ordered = 1;
+    while (ordered < count && s->requests[ordered - 1].block <= s->requests[ordered].block) ++ordered;
+    if (ordered < count) {
+        if (count > SIZE_MAX / 2) return 1;
+        buckets = 8;
+        while (buckets < count * 2) {
+            if (buckets > SIZE_MAX / 2) return 1;
+            buckets *= 2;
+        }
+        if (buckets > SIZE_MAX / sizeof(*s->raw_seen)) return 1;
+        if (buckets > s->raw_seen_capacity) {
+            void *next = realloc(s->raw_seen, buckets * sizeof(*s->raw_seen));
+            if (!next) return 1;
+            s->raw_seen = next; s->raw_seen_capacity = buckets;
+        }
+        memset(s->raw_seen, 0xff, buckets * sizeof(*s->raw_seen));
+    }
+    const unsigned char *payload = s->data + s->desc_start + s->nblocks * DESC;
+    for (size_t i = 0; i < count; ++i) {
+        struct request *r = s->requests + i;
+        if (buckets) {
+            size_t bucket = cache_bucket(r->block, buckets);
+            while (s->raw_seen[bucket] != UINT64_MAX && s->raw_seen[bucket] != r->block)
+                bucket = (bucket + 1) & (buckets - 1);
+            if (s->raw_seen[bucket] == UINT64_MAX) {
+                s->raw_seen[bucket] = r->block; ++s->last_blocks;
+            }
+        } else if (!i || r->block != s->requests[i - 1].block) ++s->last_blocks;
+        uint64_t row = r->block * s->block_rows + r->within;
+        memcpy((unsigned char *)out + r->position * s->width,
+               payload + row * s->width, (size_t)s->width);
+    }
+    return 0;
+}
+#endif
 static void cache_unlink(meft_rows *s, struct cached_block *entry) {
     if (entry->previous) entry->previous->next = entry->next;
     else s->newest = entry->next;
@@ -412,6 +460,9 @@ int meft_rows_gather(meft_rows *s, const uint64_t *ids, size_t count,
         requests[i].within = row % s->block_rows;
         requests[i].position = i;
     }
+#ifndef MEFT_DISABLE_RAW_GATHER
+    if (s->all_raw && !gather_raw(s, count, out)) return 0;
+#endif
     if (s->cache_count) {
         if (!++s->cache_query) {
             for (struct cached_block *entry = s->newest; entry; entry = entry->next) entry->query = 0;
