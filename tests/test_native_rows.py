@@ -21,6 +21,72 @@ def descriptor_start(data):
 
 
 class NativeRowsTest(unittest.TestCase):
+    def test_sparse_xor_prefix_keeps_full_stream_checks_and_cache_contents(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            width = 17
+            rows = [b'x' * 16 + bytes([i]) for i in range(37)]
+            source.write_bytes(b''.join(rows))
+            meta = pack_native(source, table, width, 16, False, 'xor')
+            self.assertEqual(meta['xor_blocks'], 3)
+            ids = [17, 1, 3, 1, 32]
+            expected = b''.join(rows[i] for i in ids)
+            for policy, budget, xor_rows in (('blocks', 0, 4), ('blocks', 1, 4),
+                                            ('blocks', 4096, 34), ('rows', 4096, 4)):
+                with self.subTest(policy=policy, budget=budget), NativeRows(
+                        table, self.library, cache_bytes=budget, cache_policy=policy) as reader:
+                    self.assertEqual(reader.rows(ids), expected)
+                    self.assertEqual(reader.last_xor_bytes, xor_rows * width)
+                    self.assertEqual(reader.last_decoded_bytes, 37 * width)
+                    if budget == 4096:
+                        self.assertEqual(reader.rows([15, 16, 36]), b''.join(rows[i] for i in (15, 16, 36)))
+                        # Full block-cache hits must return reconstructed tail
+                        # rows even though the first query only needed prefixes.
+                        if policy == 'blocks':
+                            self.assertEqual(reader.last_decompressions, 0)
+                            self.assertEqual(reader.last_xor_bytes, 0)
+                    reader.rows([]); self.assertEqual(reader.last_xor_bytes, 0)
+            # The unused residual tail is still decompressed and CRC-checked.
+            valid = table.read_bytes(); off, stored, *_ = DESC.unpack_from(valid, descriptor_start(valid))
+            corrupt = bytearray(valid); corrupt[off + stored - 1] ^= 1; table.write_bytes(corrupt)
+            with NativeRows(table, self.library) as reader:
+                with self.assertRaisesRegex(ValueError, 'decompression failed'):
+                    reader.rows([0])
+
+    def test_sparse_xor_prefix_uses_forwarded_rows_and_aggregates_chunk_work(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            width = 17; rows = [b'x' * 16 + bytes([i]) for i in range(37)]
+            source.write_bytes(b''.join(rows))
+            pack_native(source, table, width, 16, False, 'xor', row_order=list(reversed(range(37))))
+            with NativeRows(table, self.library) as reader:
+                self.assertEqual(reader.rows([36, 33, 35, 36]), b''.join(rows[i] for i in (36, 33, 35, 36)))
+                self.assertEqual(reader.last_xor_bytes, 3 * width)
+            source.write_bytes(b''.join(rows + rows))
+            pack_native(source, table, width, 16, True, 'xor')
+            with NativeRows(table, self.library) as reader:
+                self.assertEqual(reader.rows([40, 3, 38]), b''.join(rows[i] for i in (3, 3, 1)))
+                self.assertEqual(reader.last_xor_bytes, 3 * width)
+                ids = (ctypes.c_uint64 * 3)(0, 17, 3); out = ctypes.create_string_buffer(3 * width)
+                reader.gather_into(ctypes.addressof(ids), 3, ctypes.addressof(out), len(out), max_query_rows=1)
+                self.assertEqual(out.raw, b''.join(rows[i] for i in (0, 17, 3)))
+                self.assertEqual(reader.last_xor_bytes, 4 * width)
+                with self.assertRaises(IndexError): reader.rows([74])
+                reader.gather_into(0, 0, 0, 0); self.assertEqual(reader.last_xor_bytes, 0)
+
+    def test_sparse_xor_work_accumulates_across_bags_without_changing_reductions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); source = root / 'raw'; table = root / 'rows'
+            rows = [struct.pack('<4f', i + .5, -i, i / 8., 1.) for i in range(37)]
+            source.write_bytes(b''.join(rows)); pack_native(source, table, 16, 16, False, 'xor')
+            with NativeRows(table, self.library) as reader:
+                ids = (ctypes.c_uint64 * 3)(0, 17, 3); offsets = (ctypes.c_uint64 * 3)(0, 2, 3)
+                out = (ctypes.c_float * 8)()
+                reader.embedding_bag_into(ctypes.addressof(ids), 3, ctypes.addressof(offsets), 2,
+                    1, False, ctypes.c_uint64(-1).value, 1, ctypes.addressof(out), 8)
+                self.assertEqual(list(out), [18., -17., 17 / 8., 2., 3.5, -3., 3 / 8., 1.])
+                self.assertEqual(reader.last_xor_bytes, 4 * 16)
+
     def test_row_packets_preserve_original_ids_aliases_and_bounded_cache(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); source = root / 'raw'; table = root / 'rows'

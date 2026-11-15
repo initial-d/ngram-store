@@ -114,6 +114,13 @@ uint64_t meft_rows_last_decompressions(const meft_rows *store);
  * work counters, not disk I/O, page faults or bytes resident in the OS cache. */
 uint64_t meft_rows_last_compressed_bytes(const meft_rows *store);
 uint64_t meft_rows_last_decoded_bytes(const meft_rows *store);
+/* Bytes reconstructed by previous-row XOR after stream decompression. Sparse
+ * zero/row-cache reads stop at the highest requested physical row per block.
+ * Populating a decoded-block cache reconstructs every row. The anchor row,
+ * raw/plain-stream/row-packet copies and cache hits contribute zero. Counters
+ * aggregate across chunk/bag calls; last_decoded_bytes still reports the full
+ * stream output and does not claim reduced compressed I/O or decompression. */
+uint64_t meft_rows_last_xor_bytes(const meft_rows *store);
 uint64_t meft_rows_last_cache_hits(const meft_rows *store);
 /* Distinct cached forwarded rows hit per gather, summed across chunk/bag calls.
  * Block hits remain separate and are zero in row mode (and vice versa). */
