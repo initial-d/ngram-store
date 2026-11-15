@@ -11,8 +11,10 @@ idea was written up in
 > arXiv:2506.01254.
 
 NGramStore keeps the idea (exact identity first, compaction later) and rebuilt
-everything else: the storage format, codecs, query paths and LLM adapters. Its
-measurements are in the [evidence archive](../../evidence/README.md).
+everything else: the storage format, codecs, query paths and LLM adapters. How
+each idea in the paper held up under later experiments is summarized in
+[From the paper to now](../../README.md#from-the-paper-to-now); the measurements
+are in the [evidence archive](../../evidence/README.md).
 
 The originally released exporter merged rows on a norm-ratio test alone; the
 current one also checks cosine similarity and prefix/suffix structure
