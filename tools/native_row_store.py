@@ -431,6 +431,55 @@ class NativeRows:
         self.gather_into(ctypes.addressof(query), len(ids), ctypes.addressof(output), len(output))
         return output.raw
 
+    def embedding_bag_array(self, ids, offsets, *, dtype="float32", mode="sum",
+                            padding_id=None, chunk_rows=4096, out=None):
+        """NumPy-only ragged sum/mean. Offsets include the terminal ID count.
+
+        Rows are decoded as the explicitly supplied stored dtype. Accumulation
+        uses FP64 in original ID order and returns FP32, like the C bag ABI.
+        Raw tables accumulate directly; compressed tables stage bounded chunks.
+        """
+        import numpy as np
+        if not self.handle:
+            raise ValueError("row store is closed")
+        if dtype not in ("float32", "float16", "bfloat16") or mode not in ("sum", "mean"):
+            raise ValueError("supported stored dtype and sum/mean mode required")
+        if type(chunk_rows) is not int or not 0 < chunk_rows <= ctypes.c_size_t(-1).value:
+            raise ValueError("chunk rows must be a positive size_t")
+        query = np.asarray(ids, dtype=np.uint64) if isinstance(ids, (list, tuple)) and not ids else np.asarray(ids)
+        boundaries = np.asarray(offsets)
+        if boundaries.ndim == 1 and not len(boundaries):
+            raise ValueError("offsets must include an initial and terminal boundary")
+        if any(a.ndim != 1 or a.dtype.kind not in "iu" for a in (query, boundaries)):
+            raise TypeError("ids and offsets must be 1-D integer arrays")
+        if len(query) and (int(query.min()) < 0 or int(query.max()) >= self.header["n_rows"]):
+            raise IndexError("row ID out of bounds")
+        if (not len(boundaries) or int(boundaries[0]) != 0 or int(boundaries[-1]) != len(query)
+                or np.any(boundaries[1:] < boundaries[:-1])):
+            raise ValueError("offsets must be nondecreasing and span all IDs")
+        if padding_id is None:
+            padding_id = ctypes.c_uint64(-1).value
+        elif type(padding_id) is not int or not 0 <= padding_id < self.header["n_rows"]:
+            raise ValueError("padding ID must name an original row")
+        element = 4 if dtype == "float32" else 2
+        width = self.header["row_bytes"]
+        if width % element:
+            raise ValueError("row width does not match stored dtype")
+        query = np.ascontiguousarray(query, dtype="<u8")
+        boundaries = np.ascontiguousarray(boundaries, dtype="<u8")
+        shape = (len(boundaries) - 1, width // element)
+        if out is None:
+            out = np.empty(shape, dtype=np.float32)
+        elif (not isinstance(out, np.ndarray) or out.dtype != np.dtype(np.float32)
+              or out.shape != shape or not out.flags.c_contiguous or not out.flags.writeable):
+            raise ValueError("out must be a writable C-contiguous float32 array with bag shape")
+        if any(np.shares_memory(out, a) for a in (query, boundaries)):
+            raise ValueError("out must not overlap IDs or offsets")
+        self.embedding_bag_into(query.ctypes.data, len(query), boundaries.ctypes.data, shape[0],
+            {"float32": 1, "float16": 2, "bfloat16": 3}[dtype], mode == "mean", padding_id,
+            chunk_rows, out.ctypes.data, out.size)
+        return out
+
     def gather_array(self, ids, out=None):
         """NumPy fast path for `rows`: 1-D integer IDs in, (n, row_bytes) uint8 out.
 
@@ -482,6 +531,13 @@ class NativeRows:
         if not hasattr(self.lib, "meft_rows_last_xor_bytes"):
             raise ValueError("XOR work counters require rebuilding the row library")
         return self._counter("last_xor_bytes")
+
+    @property
+    def last_bag_staging_bytes(self):
+        """Allocated row-matrix capacity, excluding indexes/output and total RSS."""
+        if not hasattr(self.lib, "meft_rows_last_bag_staging_bytes"):
+            raise ValueError("bag staging counters require rebuilding the row library")
+        return self._counter("last_bag_staging_bytes")
 
     def close(self):
         if self.handle:
