@@ -1,0 +1,1 @@
+Python 3.12.14 / setuptools 84.2.1 / NumPy 2.3.5: fresh build_py package outside checkout loaded the O3 native library. NumPy original-ID bag outputs and staged/fused allocation counters passed; Torch was not imported. This is a package correctness smoke test, not a trained-table performance measurement.

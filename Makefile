@@ -20,7 +20,7 @@ PYTHON ?= python3
 # Optional Linux FastText facade; retain the original binary/library targets.
 fasttext-native:
 	mkdir -p build
-	$(CC) -std=c11 -O2 -fPIC -c native/meft_rows.c -o build/meft_rows_fasttext.o
+	$(CC) -std=c11 -O3 -fPIC -c native/meft_rows.c -o build/meft_rows_fasttext.o
 	$(CXX) $(CXXFLAGS) -O2 -DMEFT_NATIVE_FASTTEXT -Isrc -Inative $(INCLUDES) $(addprefix src/,$(OBJS:.o=.cc)) native/fasttext_bundle.cc src/main.cc build/meft_rows_fasttext.o $(LIBS) -lz -o build/fasttext-native
 
 # Optional original-algorithm bridge; bundled archives require Linux x86-64.
@@ -36,8 +36,8 @@ NATIVE_EXT ?= so
 NATIVE_CODEC_FLAGS ?=
 native:
 	mkdir -p build
-	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -fPIC $(NATIVE_SHARED) native/meft_rows.c -lz $(NATIVE_CODEC_FLAGS) -o build/libmeft_rows.$(NATIVE_EXT)
-	$(CC) -std=c11 -O2 -Wall -Wextra -Werror -Inative examples/native_gather.c native/meft_rows.c -lz $(NATIVE_CODEC_FLAGS) -o build/native_gather
+	$(CC) -std=c11 -O3 -Wall -Wextra -Werror -fPIC $(NATIVE_SHARED) native/meft_rows.c -lz $(NATIVE_CODEC_FLAGS) -o build/libmeft_rows.$(NATIVE_EXT)
+	$(CC) -std=c11 -O3 -Wall -Wextra -Werror -Inative examples/native_gather.c native/meft_rows.c -lz $(NATIVE_CODEC_FLAGS) -o build/native_gather
 
 opt: CXXFLAGS += -O1 -funroll-loops
 opt: fasttext $(LIBNAME).a index cut_ngram print_ngrams bench_ftindex

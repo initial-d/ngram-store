@@ -43,6 +43,7 @@ table; its inclusion tests the kernel and does not recommend dedup over raw.
   accuracy/latency claims.
 - AMD EPYC 7713, Linux 5.4, Python 3.11.15, NumPy 2.2.6, PyTorch 2.11.0, GCC
   11.4.0, `-O3` without unsafe floating-point or architecture-specific flags.
+  Wheel and Makefile native builds use the same optimization level.
   [Compiler diagnostics](tests/vectorization.log) confirm 16-byte vectorization.
 - Source commit `4f6fa5a7a7c9e2eb42d5043784d39738150de23b`.
   Existing CPU resources; no GPU, training or paid API. Energy/monetary costs
@@ -101,6 +102,9 @@ Opt-in fusion requires rebuilding the C library. The C setter is
 [Tests](tests/): 381 local tests passed (149 optional skips), 45 local native
 passed (5 optional skips), and 56 remote native/PyTorch bag tests passed without
 skips. Local/remote ASan+UBSan passed, including raw fusion on mutated artifacts.
+An additional 45-test local native run with `-O3` passed (5 optional skips),
+and a fresh Python 3.12 package loaded outside the checkout passed NumPy bag
+and mode-switch checks without importing Torch.
 Coverage includes all three dtypes, weights, padding, empty bags, forwarding,
 odd dimensions, chunk boundaries, compressed caches, output reuse and errors.
 
