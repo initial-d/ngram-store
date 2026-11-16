@@ -1,0 +1,515 @@
+[
+  {
+    "phase": "fusion-only",
+    "model": "ag_news-exact-uniform-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 6989612,
+    "speed_ratio": 0.9903202426954255,
+    "p50_us": {
+      "baseline": 113.432,
+      "candidate": 114.899
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 226816,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/ag_news-exact-uniform-s3-lr10-raw.json.gz",
+    "raw_sha256": "2c117993e156bd3365032af1cac2d735cc589447e832225898470f356b1c95b0",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "ag_news-exact-uniform-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 6989612,
+    "speed_ratio": 0.9972212312042107,
+    "p50_us": {
+      "baseline": 2319.9120000000003,
+      "candidate": 2343.1369999999997
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/ag_news-exact-uniform-s3-lr10-raw.json.gz",
+    "raw_sha256": "2c117993e156bd3365032af1cac2d735cc589447e832225898470f356b1c95b0",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "ag_news-exact-zero-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 6989612,
+    "speed_ratio": 0.9924390498572474,
+    "p50_us": {
+      "baseline": 115.388,
+      "candidate": 116.331
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 226816,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/ag_news-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "77cd5784fd65c2e66886961277282c8887782d7dc3e74018cdeae625888a9102",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "ag_news-exact-zero-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 6989612,
+    "speed_ratio": 0.996147534473024,
+    "p50_us": {
+      "baseline": 2320.7855,
+      "candidate": 2342.2285
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/ag_news-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "77cd5784fd65c2e66886961277282c8887782d7dc3e74018cdeae625888a9102",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "dbpedia_14-exact-uniform-s3-lr3-raw",
+    "batch_size": 1,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 34050161,
+    "speed_ratio": 0.9714987223197205,
+    "p50_us": {
+      "baseline": 134.03750000000002,
+      "candidate": 138.717
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 218112,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/dbpedia_14-exact-uniform-s3-lr3-raw.json.gz",
+    "raw_sha256": "8d4de9e6bfbf6689a3b0312f216acd9b01ca38a6c65a1d0fd7d2a2e7ecaa2f52",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "dbpedia_14-exact-uniform-s3-lr3-raw",
+    "batch_size": 32,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 34050161,
+    "speed_ratio": 0.9529420121338094,
+    "p50_us": {
+      "baseline": 2858.2619999999997,
+      "candidate": 3026.4545
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/dbpedia_14-exact-uniform-s3-lr3-raw.json.gz",
+    "raw_sha256": "8d4de9e6bfbf6689a3b0312f216acd9b01ca38a6c65a1d0fd7d2a2e7ecaa2f52",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "dbpedia_14-exact-zero-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 34050161,
+    "speed_ratio": 0.9844186491428103,
+    "p50_us": {
+      "baseline": 132.221,
+      "candidate": 133.89749999999998
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 218112,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/dbpedia_14-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "a8f276a53e5ede629d93ed8233f8c7d62be293615bc73d7fd0a572bb2d93dac0",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "dbpedia_14-exact-zero-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 34050161,
+    "speed_ratio": 0.9810070570937723,
+    "p50_us": {
+      "baseline": 2843.2439999999997,
+      "candidate": 2912.5330000000004
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fusion-only/dbpedia_14-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "a8f276a53e5ede629d93ed8233f8c7d62be293615bc73d7fd0a572bb2d93dac0",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fusion-only",
+    "model": "ag_news-exact-zero-s3-lr10-zstd",
+    "batch_size": 32,
+    "commit": "f51f48657d409712f281577ce1f2e27586b26514",
+    "rows": 6989612,
+    "speed_ratio": 0.997402876310672,
+    "p50_us": {
+      "baseline": 317931.4015,
+      "candidate": 319711.376
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 2097152
+    },
+    "raw": "raw/fusion-only/ag_news-exact-zero-s3-lr10-zstd.json.gz",
+    "raw_sha256": "6e7c413331df58dc73b42c24168ced157fc75719b46d904d8ade4ba635ed0309",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "ag_news-exact-uniform-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 6989612,
+    "speed_ratio": 1.5476794280081598,
+    "p50_us": {
+      "baseline": 116.5405,
+      "candidate": 74.91149999999999
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 226816,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/ag_news-exact-uniform-s3-lr10-raw.json.gz",
+    "raw_sha256": "157526d990ce5e119adf418f09b3f9f7a48ad54abc35fa0f81d00197b10c4303",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "ag_news-exact-uniform-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 6989612,
+    "speed_ratio": 2.403033650946185,
+    "p50_us": {
+      "baseline": 2407.2915000000003,
+      "candidate": 1021.6935000000001
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/ag_news-exact-uniform-s3-lr10-raw.json.gz",
+    "raw_sha256": "157526d990ce5e119adf418f09b3f9f7a48ad54abc35fa0f81d00197b10c4303",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "ag_news-exact-zero-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 6989612,
+    "speed_ratio": 1.6229735998001338,
+    "p50_us": {
+      "baseline": 113.991,
+      "candidate": 69.498
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 226816,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/ag_news-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "75cce89e87de50b6224e3a0cd915e7a3463559c240a67850d9f042f9dd5af852",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "ag_news-exact-zero-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 6989612,
+    "speed_ratio": 2.595588108952457,
+    "p50_us": {
+      "baseline": 2371.6695,
+      "candidate": 936.2
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/ag_news-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "75cce89e87de50b6224e3a0cd915e7a3463559c240a67850d9f042f9dd5af852",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "dbpedia_14-exact-uniform-s3-lr3-raw",
+    "batch_size": 1,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 34050161,
+    "speed_ratio": 1.667957588842427,
+    "p50_us": {
+      "baseline": 132.71,
+      "candidate": 78.40350000000001
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 218112,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/dbpedia_14-exact-uniform-s3-lr3-raw.json.gz",
+    "raw_sha256": "10bdd0fec88ac6336823477329ae47071403ea3cd8fbbb1ac55f0a323d020ee3",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "dbpedia_14-exact-uniform-s3-lr3-raw",
+    "batch_size": 32,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 34050161,
+    "speed_ratio": 2.4626794646209866,
+    "p50_us": {
+      "baseline": 2864.443,
+      "candidate": 1197.8490000000002
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/dbpedia_14-exact-uniform-s3-lr3-raw.json.gz",
+    "raw_sha256": "10bdd0fec88ac6336823477329ae47071403ea3cd8fbbb1ac55f0a323d020ee3",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "dbpedia_14-exact-zero-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 34050161,
+    "speed_ratio": 1.6391283233512022,
+    "p50_us": {
+      "baseline": 135.644,
+      "candidate": 81.757
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 218112,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/dbpedia_14-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "bd2e0ca8a722b46d58779947f62c0284fc937724a63c77a8e7a854d0d126d76c",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "dbpedia_14-exact-zero-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 34050161,
+    "speed_ratio": 2.513256209162751,
+    "p50_us": {
+      "baseline": 2885.083,
+      "candidate": 1164.4965
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 0
+    },
+    "raw": "raw/fused-vector/dbpedia_14-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "bd2e0ca8a722b46d58779947f62c0284fc937724a63c77a8e7a854d0d126d76c",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "fused-vector",
+    "model": "ag_news-exact-zero-s3-lr10-zstd",
+    "batch_size": 32,
+    "commit": "854fd04a83405957dcc8e6eed576d796f9263195",
+    "rows": 6989612,
+    "speed_ratio": 1.0044342621885527,
+    "p50_us": {
+      "baseline": 318477.81799999997,
+      "candidate": 317373.757
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 2097152
+    },
+    "raw": "raw/fused-vector/ag_news-exact-zero-s3-lr10-zstd.json.gz",
+    "raw_sha256": "c95936729bf9bb1828533e4378cb0ccffa58aec69fcca87a5b6694ef7c96832a",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "ag_news-exact-uniform-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 6989612,
+    "speed_ratio": 1.7092759138114229,
+    "p50_us": {
+      "baseline": 116.1565,
+      "candidate": 67.682
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 226816,
+      "candidate": 226816
+    },
+    "raw": "raw/default/ag_news-exact-uniform-s3-lr10-raw.json.gz",
+    "raw_sha256": "ec5267263b87e66a12536209772b53a001f0af83a2fdc528b68eb3ca34461467",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "ag_news-exact-uniform-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 6989612,
+    "speed_ratio": 2.9769160174750913,
+    "p50_us": {
+      "baseline": 2428.9094999999998,
+      "candidate": 826.225
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 2097152
+    },
+    "raw": "raw/default/ag_news-exact-uniform-s3-lr10-raw.json.gz",
+    "raw_sha256": "ec5267263b87e66a12536209772b53a001f0af83a2fdc528b68eb3ca34461467",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "ag_news-exact-zero-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 6989612,
+    "speed_ratio": 1.7345798809867021,
+    "p50_us": {
+      "baseline": 114.27099999999999,
+      "candidate": 65.866
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 226816,
+      "candidate": 226816
+    },
+    "raw": "raw/default/ag_news-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "ce5284d68b8862d515d1be23b495fb070ec670720f5e03c7f01eebbd3804fad2",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "ag_news-exact-zero-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 6989612,
+    "speed_ratio": 3.115652866493872,
+    "p50_us": {
+      "baseline": 2370.307,
+      "candidate": 769.2295
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 2097152
+    },
+    "raw": "raw/default/ag_news-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "ce5284d68b8862d515d1be23b495fb070ec670720f5e03c7f01eebbd3804fad2",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "dbpedia_14-exact-uniform-s3-lr3-raw",
+    "batch_size": 1,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 34050161,
+    "speed_ratio": 1.797514922528617,
+    "p50_us": {
+      "baseline": 134.107,
+      "candidate": 73.48
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 218112,
+      "candidate": 218112
+    },
+    "raw": "raw/default/dbpedia_14-exact-uniform-s3-lr3-raw.json.gz",
+    "raw_sha256": "ae9a7f83905a22e186fa0c53346998549f99908fdb5d6867ed96f9b37b65126e",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "dbpedia_14-exact-uniform-s3-lr3-raw",
+    "batch_size": 32,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 34050161,
+    "speed_ratio": 3.053077614236444,
+    "p50_us": {
+      "baseline": 2956.9215,
+      "candidate": 972.765
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 2097152
+    },
+    "raw": "raw/default/dbpedia_14-exact-uniform-s3-lr3-raw.json.gz",
+    "raw_sha256": "ae9a7f83905a22e186fa0c53346998549f99908fdb5d6867ed96f9b37b65126e",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "dbpedia_14-exact-zero-s3-lr10-raw",
+    "batch_size": 1,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 34050161,
+    "speed_ratio": 1.7738524555444326,
+    "p50_us": {
+      "baseline": 136.098,
+      "candidate": 75.365
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 218112,
+      "candidate": 218112
+    },
+    "raw": "raw/default/dbpedia_14-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "341002cfc3863325f83aa2ca75b96ec1bfac253d08caf2bf0b0986b0d981a41b",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "dbpedia_14-exact-zero-s3-lr10-raw",
+    "batch_size": 32,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 34050161,
+    "speed_ratio": 3.070762229593011,
+    "p50_us": {
+      "baseline": 2922.8005,
+      "candidate": 954.6395
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 2097152
+    },
+    "raw": "raw/default/dbpedia_14-exact-zero-s3-lr10-raw.json.gz",
+    "raw_sha256": "341002cfc3863325f83aa2ca75b96ec1bfac253d08caf2bf0b0986b0d981a41b",
+    "source_features_byte_match": true
+  },
+  {
+    "phase": "default",
+    "model": "ag_news-exact-zero-s3-lr10-zstd",
+    "batch_size": 32,
+    "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+    "rows": 6989612,
+    "speed_ratio": 1.0063139974371131,
+    "p50_us": {
+      "baseline": 319505.1655,
+      "candidate": 318301.31
+    },
+    "maximum_row_staging_bytes": {
+      "baseline": 2097152,
+      "candidate": 2097152
+    },
+    "raw": "raw/default/ag_news-exact-zero-s3-lr10-zstd.json.gz",
+    "raw_sha256": "e6bf1b6a40b95176f773e4b405dfb22e16fcbf6670ef39440bb78483fa44ba1e",
+    "source_features_byte_match": true
+  }
+]
