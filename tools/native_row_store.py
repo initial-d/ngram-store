@@ -221,7 +221,7 @@ def pack_native(source, output, row_bytes, block_rows=256, deduplicate=True,
 
 class NativeRows:
     """Single-worker C handle. Library path is explicit or MEFT_ROWS_LIBRARY."""
-    def __init__(self, path, library=None, cache_bytes=0, *, cache_policy="blocks"):
+    def __init__(self, path, library=None, cache_bytes=0, *, cache_policy="blocks", raw_bag_fusion=False):
         if cache_policy not in ("blocks", "rows"):
             raise ValueError("cache policy must be blocks or rows")
         library = library or os.environ.get("MEFT_ROWS_LIBRARY")
@@ -238,6 +238,8 @@ class NativeRows:
             raise ValueError("set MEFT_ROWS_LIBRARY or pass a compiled library path")
         if type(cache_bytes) is not int or not 0 <= cache_bytes <= ctypes.c_size_t(-1).value:
             raise ValueError("cache bytes must fit a nonnegative size_t")
+        if type(raw_bag_fusion) is not bool:
+            raise ValueError("raw bag fusion must be boolean")
         self.lib = ctypes.CDLL(str(Path(library).resolve()))
         self.lib.meft_rows_open.argtypes = [ctypes.c_char_p, ctypes.c_void_p, ctypes.c_size_t]
         self.lib.meft_rows_open.restype = ctypes.c_void_p
@@ -258,15 +260,34 @@ class NativeRows:
                        "row_bytes": self.lib.meft_rows_width(self.handle)}
         # Keep zero-budget loading compatible with older compiled libraries.
         self.cache_policy = "blocks"
-        if cache_bytes or cache_policy != "blocks":
+        self.raw_bag_fusion = False
+        if cache_bytes or cache_policy != "blocks" or raw_bag_fusion:
             try:
                 if cache_bytes:
                     self.set_cache_bytes(cache_bytes)
                 if cache_policy != "blocks":
                     self.set_cache_policy(cache_policy)
+                if raw_bag_fusion:
+                    self.set_raw_bag_fusion(True)
             except Exception:
                 self.close()
                 raise
+
+    def set_raw_bag_fusion(self, enabled):
+        """Trade raw row staging for direct mmap accumulation; default is staged."""
+        if not self.handle:
+            raise ValueError("row store is closed")
+        if type(enabled) is not bool:
+            raise ValueError("raw bag fusion must be boolean")
+        try:
+            setter = self.lib.meft_rows_set_raw_bag_fusion
+        except AttributeError as error:
+            raise ValueError("raw bag fusion requires rebuilding the row library") from error
+        setter.argtypes = [ctypes.c_void_p, ctypes.c_int]
+        setter.restype = ctypes.c_int
+        if setter(self.handle, int(enabled)):
+            raise ValueError("cannot configure raw bag fusion")
+        self.raw_bag_fusion = enabled
 
     def set_cache_bytes(self, budget):
         if not self.handle:
@@ -437,12 +458,12 @@ class NativeRows:
 
         Rows are decoded as the explicitly supplied stored dtype. Accumulation
         uses FP64 in original ID order and returns FP32, like the C bag ABI.
-        Raw tables accumulate directly; compressed tables stage bounded chunks.
+        Raw fusion is opt-in; default/compressed tables stage bounded chunks.
         """
         import numpy as np
         if not self.handle:
             raise ValueError("row store is closed")
-        if dtype not in ("float32", "float16", "bfloat16") or mode not in ("sum", "mean"):
+        if not isinstance(dtype, str) or dtype not in ("float32", "float16", "bfloat16") or mode not in ("sum", "mean"):
             raise ValueError("supported stored dtype and sum/mean mode required")
         if type(chunk_rows) is not int or not 0 < chunk_rows <= ctypes.c_size_t(-1).value:
             raise ValueError("chunk rows must be a positive size_t")

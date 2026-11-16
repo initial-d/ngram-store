@@ -23,6 +23,8 @@ def main():
     for name in ('table', 'codes', 'traces', 'baseline-library', 'library', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--commit', required=True)
+    parser.add_argument('--hashes-from', type=Path, help='Reuse full immutable-input hashes from a prior report; recheck traces and every feature output.')
+    parser.add_argument('--raw-bag-fusion', action='store_true')
     parser.add_argument('--core', type=int)
     parser.add_argument('--batch-sizes', type=int, nargs='+', default=[1, 32])
     parser.add_argument('--mode', choices=('sum', 'mean'), default='mean')
@@ -57,6 +59,22 @@ def main():
         features.append(values.astype(np.float32))
     if not docs:
         raise ValueError('nonempty trace required')
+    inputs = [('table', args.table), ('codes', args.codes), ('traces', args.traces),
+              ('trace_metadata', args.traces.with_suffix('.json'))]
+    hashes = {}
+    if args.hashes_from:
+        parent = json.loads(args.hashes_from.read_text())
+        parent_cmd = shlex.split(parent['command'])
+        for name, path in inputs:
+            if name != 'trace_metadata' and path.resolve() != Path(parent_cmd[parent_cmd.index('--' + name) + 1]).resolve():
+                raise ValueError('inherited hashes must name the same frozen inputs')
+            hashes[name] = parent['hashes'][name]
+        if hashes['traces'] != digest(args.traces) or hashes['trace_metadata'] != digest(args.traces.with_suffix('.json')):
+            raise ValueError('inherited trace provenance changed')
+    else:
+        hashes = {name: digest(path) for name, path in inputs}
+    hashes.update({name: digest(path) for name, path in [('baseline_library', args.baseline_library),
+        ('candidate_library', args.library), ('benchmark_source', Path(__file__))]})
     report = {'commit': args.commit, 'command': shlex.join([sys.executable, *sys.argv]),
         'python': sys.version, 'numpy': np.__version__, 'os': platform.platform(),
         'cpu_affinity': sorted(os.sched_getaffinity(0)), 'loadavg': list(os.getloadavg()),
@@ -68,10 +86,11 @@ def main():
         'row_bytes': codes.shape[1] * 4, 'chunk_rows': args.chunk_rows, 'mode': args.mode,
         'repeat': args.repeat, 'rounds': args.rounds, 'warmup': args.warmup,
         'requests': len(docs), 'rows_per_document': [len(ids) for ids in docs],
-        'hashes': {name: digest(path) for name, path in
-            [('table', args.table), ('codes', args.codes), ('traces', args.traces),
-             ('trace_metadata', args.traces.with_suffix('.json')), ('baseline_library', args.baseline_library),
-             ('candidate_library', args.library), ('benchmark_source', Path(__file__))]}, 'results': []}
+        'raw_bag_fusion': args.raw_bag_fusion, 'hashes': hashes, 'results': []}
+    if args.hashes_from:
+        report['input_hash_provenance'] = {'parent_report': str(args.hashes_from), 'parent_sha256': digest(args.hashes_from),
+            'scope': 'Full table/code hashes inherited from frozen parent, not recomputed; trace hashes and every source feature output verified again.',
+            'current_file_stats': {name: {'bytes': p.stat().st_size, 'mtime_ns': p.stat().st_mtime_ns, 'inode': p.stat().st_ino} for name, p in inputs}}
     try:
         report['torch'] = importlib.metadata.version('torch')
     except importlib.metadata.PackageNotFoundError:
@@ -86,7 +105,7 @@ def main():
             requests.append((ids, offsets, expected))
         case = {'batch_size': batch, 'round_results': []}
         for round_id in range(args.rounds):
-            with NativeRows(args.table, args.baseline_library) as baseline, NativeRows(args.table, args.library) as candidate:
+            with NativeRows(args.table, args.baseline_library, raw_bag_fusion=args.raw_bag_fusion) as baseline, NativeRows(args.table, args.library, raw_bag_fusion=args.raw_bag_fusion) as candidate:
                 stores = {'baseline': baseline, 'candidate': candidate}
                 if any(s.header != {'n_rows': len(codes), 'row_bytes': codes.shape[1] * 4} for s in stores.values()):
                     raise ValueError('table/source shape mismatch')

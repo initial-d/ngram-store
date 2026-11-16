@@ -42,7 +42,7 @@ class NativeRowsTest(unittest.TestCase):
                         row_order=list(reversed(range(37))), compress=compressed)
                     for chunk in (1, 3, 64):
                         with self.subTest(dtype=dtype, compressed=compressed, chunk=chunk), NativeRows(
-                                table, self.library, cache_bytes=64, cache_policy='rows') as fast, NativeRows(
+                                table, self.library, cache_bytes=64, cache_policy='rows', raw_bag_fusion=True) as fast, NativeRows(
                                 table, control, cache_bytes=64, cache_policy='rows') as staged:
                             for mean, weighted in ((False, False), (True, False), (False, True)):
                                 outputs=[]
@@ -68,12 +68,17 @@ class NativeRowsTest(unittest.TestCase):
             root=Path(tmp); source=root/'raw'; table=root/'table'
             values=np.arange(28,dtype='<f4').reshape(7,4); values[5]=values[1]
             source.write_bytes(values.tobytes());pack_native(source,table,16,2,True,compress=False)
-            with NativeRows(table,self.library) as reader:
+            with NativeRows(table,self.library,raw_bag_fusion=True) as reader:
                 ids=np.array([5,0,3,1],dtype=np.int32); offsets=np.array([0,0,3,4],dtype=np.int64)
                 out=np.empty((3,4),dtype=np.float32)
                 self.assertIs(reader.embedding_bag_array(ids,offsets,padding_id=0,mode='mean',chunk_rows=2,out=out),out)
                 np.testing.assert_array_equal(out,np.stack([np.zeros(4),(values[5]+values[3])/2,values[1]]))
                 self.assertEqual(reader.last_bag_staging_bytes,0)
+                reader.set_raw_bag_fusion(False)
+                staged_out=reader.embedding_bag_array(ids,offsets,padding_id=0,mode='mean',chunk_rows=2)
+                np.testing.assert_array_equal(staged_out,out)
+                self.assertEqual(reader.last_bag_staging_bytes,32)
+                reader.set_raw_bag_fusion(True)
                 np.testing.assert_array_equal(reader.embedding_bag_array(ids[::-1],[0,4]), values[ids[::-1]].astype(np.float64).sum(0)[None].astype(np.float32))
                 self.assertEqual(reader.embedding_bag_array(np.array([],dtype=int),[0]).shape,(0,4))
                 for bad in ([1,4],[0,4,3],[0,-1,4],[]):
@@ -82,6 +87,7 @@ class NativeRowsTest(unittest.TestCase):
                 with self.assertRaises(TypeError): reader.embedding_bag_array([1.5],[0,1])
                 with self.assertRaises(ValueError): reader.embedding_bag_array(ids,offsets,out=out.astype(np.float64))
                 with self.assertRaises(ValueError): reader.embedding_bag_array(ids,offsets,chunk_rows=0)
+                with self.assertRaises(ValueError): reader.embedding_bag_array(ids,offsets,dtype=np.dtype('float32'))
                 overlapping=np.arange(16,dtype=np.uint64)
                 with self.assertRaises(ValueError): reader.embedding_bag_array(overlapping[:4],[0,4],out=overlapping[:2].view(np.float32).reshape(1,4))
 

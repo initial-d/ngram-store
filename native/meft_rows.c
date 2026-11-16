@@ -59,7 +59,7 @@ struct meft_rows {
 #endif
     uint64_t last_blocks, last_decodes, last_hits, last_row_hits;
     uint64_t last_compressed_bytes, last_decoded_bytes, last_xor_bytes, last_bag_staging_bytes;
-    int cache_rows, implicit_identity, all_raw;
+    int cache_rows, implicit_identity, all_raw, raw_bag_fusion;
     size_t cache_budget, cache_used, cache_count;
     size_t cache_buckets;
     uint64_t cache_query;
@@ -250,6 +250,11 @@ uint64_t meft_rows_last_compressed_bytes(const meft_rows *s) { return s ? s->las
 uint64_t meft_rows_last_decoded_bytes(const meft_rows *s) { return s ? s->last_decoded_bytes : 0; }
 uint64_t meft_rows_last_xor_bytes(const meft_rows *s) { return s ? s->last_xor_bytes : 0; }
 uint64_t meft_rows_last_bag_staging_bytes(const meft_rows *s) { return s ? s->last_bag_staging_bytes : 0; }
+int meft_rows_set_raw_bag_fusion(meft_rows *s, int enabled) {
+    if (!s || (enabled != 0 && enabled != 1)) return -1;
+    s->raw_bag_fusion = enabled;
+    return 0;
+}
 uint64_t meft_rows_last_cache_hits(const meft_rows *s) { return s ? s->last_hits : 0; }
 uint64_t meft_rows_last_row_cache_hits(const meft_rows *s) { return s ? s->last_row_hits : 0; }
 uint64_t meft_rows_cache_bytes(const meft_rows *s) { return s ? s->cache_used : 0; }
@@ -722,7 +727,7 @@ static int embedding_bag(meft_rows *s, const uint64_t *ids, size_t count,
         return fail(err, cap, "bag staging capacity overflow");
     int direct = 0;
 #if !defined(MEFT_DISABLE_RAW_GATHER) && !defined(MEFT_DISABLE_RAW_BAG)
-    direct = s->all_raw;
+    direct = s->all_raw && s->raw_bag_fusion;
 #endif
     size_t staging_bytes = direct ? 0 : staged * (size_t)s->width;
     unsigned char *rows = staging_bytes ? malloc(staging_bytes) : NULL;

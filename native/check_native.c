@@ -71,6 +71,7 @@ int main(int argc, char **argv) {
     uint64_t offsets[3] = {0, 2, 3}, bad_offsets[3] = {0, 3, 2};
     (void)meft_rows_set_cache_bytes(s, 65536);
     unsigned char weights[12] = {0}; /* Enough LE FP32/FP16/BF16 scalar bytes. */
+    (void)meft_rows_set_raw_bag_fusion(s, 1);
     for (int dtype = 1; dtype <= 3; ++dtype) {
         (void)meft_rows_embedding_bag(s, ids, 3, offsets, 2, dtype, 1, UINT64_MAX, 2,
                                      (float *)out, (size_t)width, error, sizeof(error));
