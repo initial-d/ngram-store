@@ -74,7 +74,7 @@ class BuildNative(build_py):
         darwin = sys.platform == "darwin"
         filename = "libmeft_rows.dylib" if darwin else "libmeft_rows.so"
         compiler = shlex.split(os.environ.get("CC", "cc"))
-        command = [*compiler, "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fPIC",
+        command = [*compiler, "-std=c11", "-O3", "-Wall", "-Wextra", "-Werror", "-fPIC",
                    "-dynamiclib" if darwin else "-shared", str(Path(__file__).parent / "native" / "meft_rows.c"),
                    "-lz", "-o", str(directory / filename)]
         # Explicit opt-in keeps portable wheels independent of libdeflate.

@@ -94,6 +94,15 @@ tables retain grouped reads. `NativeRows.last_xor_bytes` reports previous-row
 XOR reconstruction separately from complete stream decompression; full-block
 cache fills always reconstruct every row.
 
+`NativeRows.embedding_bag_array(ids, offsets, dtype="float32", mode="mean")`
+provides NumPy-only ragged pooling. Offsets include the terminal ID count;
+FP64 accumulation returns FP32 features. Default FP32 vectorized pooling is
+1.71–1.80× faster per document and 2.98–3.12× at batch 32 on the measured raw
+tables ([results and ablations](../../evidence/native_bag_vectorization_20261116/README.md)).
+For lower temporary memory, open with `raw_bag_fusion=True`; on all-raw tables
+this avoids the row matrix, with a throughput tradeoff. Compressed reads retain
+bounded staging. `last_bag_staging_bytes` reports row-matrix capacity, not RSS.
+
 ## Native layout and construction
 
 `MEFTNAT1` is a little-endian binary file: a versioned header, an optional

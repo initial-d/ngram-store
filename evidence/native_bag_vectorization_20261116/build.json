@@ -1,0 +1,54 @@
+{
+  "commit": "4f6fa5a7a7c9e2eb42d5043784d39738150de23b",
+  "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "compile": "cc -std=c11 -O3 -fPIC -shared native/meft_rows.c -lz FLAGS -o LIBRARY",
+  "flags": "-I/llm-align/duyimin/ngram-sparse-xor-20261115/include -DMEFT_USE_LZ4 -DMEFT_USE_ZSTD -DMEFT_USE_LIBDEFLATE -l:liblz4.so.1 -l:libzstd.so.1 -l:libdeflate.so.0",
+  "baseline_extra": "-DMEFT_DISABLE_RAW_BAG -DMEFT_DISABLE_FP32_BAG_VECTOR",
+  "headers_manifest": "/llm-align/duyimin/ngram-sparse-xor-20261115/results/build.json",
+  "files": {
+    "/llm-align/duyimin/ngram-direct-bags-20261116/runtime/native/meft_rows.c": {
+      "bytes": 46680,
+      "sha256": "254ff1e0452a670cd68b5fff4ec2e460376e252595b79de2af9fc766e8ae23e0"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/runtime/native/meft_rows.h": {
+      "bytes": 9336,
+      "sha256": "42a4e76dc37b7afc16eee5cbef579203576e20e09e1e920e693887b1ef621d60"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/runtime/tools/native_row_store.py": {
+      "bytes": 29450,
+      "sha256": "bd4db7acedadfdf7301246e036b5463350ef1bf1fa0462b8c545f5d91de52e49"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/runtime/tools/benchmark_native_bags.py": {
+      "bytes": 8358,
+      "sha256": "7331bca667d43b6234f83a28ee65963f9775d1bc6dd4cc262054803910ea121a"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/lib/candidate-vector.so": {
+      "bytes": 38712,
+      "sha256": "b12cf651f8d1f10511890b1153da378ae61663be9ae85313557ada8b3d2d2fc7"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/lib/staged-vector.so": {
+      "bytes": 38624,
+      "sha256": "d1089329d120a0aaf8fb5d4a93dbe77555c3f061372dbaf13c3fc1bdb1ac848a"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/lib/candidate.so": {
+      "bytes": 38712,
+      "sha256": "b71226b8354c790a66ab174a6facb3d65a1402c28c4c85bcfeb110fb6c8eaca3"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/lib/baseline-final.so": {
+      "bytes": 38680,
+      "sha256": "608950f28393173a759cb26db59e8ffd039aa8d0c97f2fea0bd1648be09f0e59"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/lib/baseline.so": {
+      "bytes": 38624,
+      "sha256": "6f714590455aa49910d49f9f32930c70c4324c7dbb76576c0ea91e6b36985195"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/lib/candidate-final.so": {
+      "bytes": 38768,
+      "sha256": "7fabbd7281029cbdb41b3c161005e4b2c982a0cd94e21e532ccef105471465e7"
+    },
+    "/llm-align/duyimin/ngram-direct-bags-20261116/lib/baseline-vector.so": {
+      "bytes": 38624,
+      "sha256": "6f714590455aa49910d49f9f32930c70c4324c7dbb76576c0ea91e6b36985195"
+    }
+  }
+}

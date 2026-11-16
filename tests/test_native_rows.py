@@ -21,6 +21,76 @@ def descriptor_start(data):
 
 
 class NativeRowsTest(unittest.TestCase):
+    def test_direct_raw_bags_match_staged_bytes_dtypes_weights_and_chunk_counters(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); control = root / 'staged.so'
+            subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared', '-DMEFT_DISABLE_RAW_BAG', '-DMEFT_DISABLE_FP32_BAG_VECTOR',
+                str(ROOT / 'native/meft_rows.c'), '-lz', '-o', str(control)], check=True)
+            ids = (ctypes.c_uint64 * 8)(36, 0, 36, 3, 0, 14, 1, 3)
+            offsets = (ctypes.c_uint64 * 6)(0, 0, 3, 3, 6, 8)
+            for dtype, element in ((1, 4), (2, 2), (3, 2)):
+                def encode(value):
+                    if dtype == 1: return struct.pack('<f', value)
+                    if dtype == 2: return struct.pack('<e', value)
+                    return struct.pack('<f', value)[2:]
+                rowbytes = 7 * element
+                source = root / 'raw'; table = root / 'table'
+                source.write_bytes(b''.join(encode((i - 18) / 8 + j / 16) for i in range(37) for j in range(7)))
+                weights = ctypes.create_string_buffer(b''.join(encode(v) for v in (.5, float('nan'), 2., -1., 4., 0., .25, 1.)))
+                for compressed in (False, True):
+                    pack_native(source, table, rowbytes, 8, False, 'xor',
+                        row_order=list(reversed(range(37))), compress=compressed)
+                    for chunk in (1, 3, 64):
+                        with self.subTest(dtype=dtype, compressed=compressed, chunk=chunk), NativeRows(
+                                table, self.library, cache_bytes=64, cache_policy='rows', raw_bag_fusion=True) as fast, NativeRows(
+                                table, control, cache_bytes=64, cache_policy='rows') as staged:
+                            for mean, weighted in ((False, False), (True, False), (False, True)):
+                                outputs=[]
+                                for store in (fast, staged):
+                                    out=(ctypes.c_float * 35)()
+                                    kwargs={'weights_address':ctypes.addressof(weights), 'weights_bytes':8 * element} if weighted else {}
+                                    store.embedding_bag_into(ctypes.addressof(ids), 8, ctypes.addressof(offsets), 5,
+                                        dtype, mean, 0, chunk, ctypes.addressof(out), 35, **kwargs)
+                                    outputs.append(bytes(out))
+                                self.assertEqual(outputs[0], outputs[1])
+                                for key in ('last_block_reads', 'last_decompressions', 'last_row_cache_hits', 'last_xor_bytes'):
+                                    self.assertEqual(getattr(fast, key), getattr(staged, key))
+                                self.assertEqual(fast.last_bag_staging_bytes, min(8,chunk)*rowbytes if compressed else 0)
+                                self.assertEqual(staged.last_bag_staging_bytes, min(8,chunk)*rowbytes)
+                            fast.rows([1]); self.assertEqual(fast.last_bag_staging_bytes, 0)
+
+    def test_numpy_bag_interface_original_ids_empty_bags_output_and_validation(self):
+        try:
+            import numpy as np
+        except ImportError:
+            self.skipTest('optional NumPy unavailable')
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); source=root/'raw'; table=root/'table'
+            values=np.arange(28,dtype='<f4').reshape(7,4); values[5]=values[1]
+            source.write_bytes(values.tobytes());pack_native(source,table,16,2,True,compress=False)
+            with NativeRows(table,self.library,raw_bag_fusion=True) as reader:
+                ids=np.array([5,0,3,1],dtype=np.int32); offsets=np.array([0,0,3,4],dtype=np.int64)
+                out=np.empty((3,4),dtype=np.float32)
+                self.assertIs(reader.embedding_bag_array(ids,offsets,padding_id=0,mode='mean',chunk_rows=2,out=out),out)
+                np.testing.assert_array_equal(out,np.stack([np.zeros(4),(values[5]+values[3])/2,values[1]]))
+                self.assertEqual(reader.last_bag_staging_bytes,0)
+                reader.set_raw_bag_fusion(False)
+                staged_out=reader.embedding_bag_array(ids,offsets,padding_id=0,mode='mean',chunk_rows=2)
+                np.testing.assert_array_equal(staged_out,out)
+                self.assertEqual(reader.last_bag_staging_bytes,32)
+                reader.set_raw_bag_fusion(True)
+                np.testing.assert_array_equal(reader.embedding_bag_array(ids[::-1],[0,4]), values[ids[::-1]].astype(np.float64).sum(0)[None].astype(np.float32))
+                self.assertEqual(reader.embedding_bag_array(np.array([],dtype=int),[0]).shape,(0,4))
+                for bad in ([1,4],[0,4,3],[0,-1,4],[]):
+                    with self.assertRaises(ValueError): reader.embedding_bag_array(ids,bad)
+                with self.assertRaises(IndexError): reader.embedding_bag_array([7],[0,1])
+                with self.assertRaises(TypeError): reader.embedding_bag_array([1.5],[0,1])
+                with self.assertRaises(ValueError): reader.embedding_bag_array(ids,offsets,out=out.astype(np.float64))
+                with self.assertRaises(ValueError): reader.embedding_bag_array(ids,offsets,chunk_rows=0)
+                with self.assertRaises(ValueError): reader.embedding_bag_array(ids,offsets,dtype=np.dtype('float32'))
+                overlapping=np.arange(16,dtype=np.uint64)
+                with self.assertRaises(ValueError): reader.embedding_bag_array(overlapping[:4],[0,4],out=overlapping[:2].view(np.float32).reshape(1,4))
+
     def test_raw_direct_gather_preserves_forwarding_counters_and_error_output(self):
         rng = random.Random(152)
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,0 +1,22 @@
+native/meft_rows.c:103:11: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:392:23: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:407:19: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:459:27: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:617:30: optimized: loop vectorized using 16 byte vectors
+native/meft_rows.c:617:30: optimized:  loop versioned for vectorization because of possible aliasing
+native/meft_rows.c:617:30: optimized: loop vectorized using 8 byte vectors
+native/meft_rows.c:610:38: optimized: loop vectorized using 16 byte vectors
+native/meft_rows.c:610:38: optimized:  loop versioned for vectorization because of possible aliasing
+native/meft_rows.c:468:20: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:583:38: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:807:30: optimized: loop vectorized using 16 byte vectors
+native/meft_rows.c:790:38: optimized: loop vectorized using 16 byte vectors
+native/meft_rows.c:790:38: optimized: loop vectorized using 16 byte vectors
+native/meft_rows.c:771:38: optimized: loop vectorized using 16 byte vectors
+native/meft_rows.c:699:20: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:812:20: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:640:20: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:660:20: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:660:70: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:931:24: optimized: basic block part vectorized using 16 byte vectors
+native/meft_rows.c:968:25: optimized: basic block part vectorized using 16 byte vectors

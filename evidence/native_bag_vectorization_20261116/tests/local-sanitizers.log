@@ -1,0 +1,1 @@
+ASan/UBSan: versions 1/2/3/6/7, 384 mutated/truncated files, direct raw gathers and 300-block cache growth/eviction checked; optional LZ4/Zstd cases run when enabled.

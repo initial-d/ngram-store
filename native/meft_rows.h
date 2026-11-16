@@ -65,7 +65,9 @@ int meft_rows_gather_chunked(meft_rows *store, const uint64_t *ids, size_t count
  * 3=LE bfloat16. Output is bags * (width / element_bytes) native float32.
  * padding_id=UINT64_MAX disables padding; otherwise that row is excluded from
  * both sum and mean denominator. Empty bags return zero. max_chunk_rows>0
- * bounds staged rows. Reductions accumulate in float64 in original ID order;
+ * bounds query scratch and staged rows. Opt-in all-raw fusion accumulates
+ * directly from mmap without a row matrix; default/compressed reads stage.
+ * Reductions accumulate in float64 in original ID order;
  * stored bytes stay exact, but sums are not bit-identical to float32 reduction.
  * Same single-worker/no-overlapping-inputs/partial-error-output contract as gather.
  */
@@ -123,6 +125,16 @@ uint64_t meft_rows_last_decoded_bytes(const meft_rows *store);
  * aggregate across chunk/bag calls; last_decoded_bytes still reports the full
  * stream output and does not claim reduced compressed I/O or decompression. */
 uint64_t meft_rows_last_xor_bytes(const meft_rows *store);
+/* Temporary row-matrix allocation capacity in the last embedding-bag call.
+ * All-raw fused bags use zero; compressed bags retain chunk-bounded staging.
+ * Excludes query indexes, FP64 accumulator, output, caches and total RSS.
+ * Ordinary gathers and rejected calls reset this counter to zero. */
+uint64_t meft_rows_last_bag_staging_bytes(const meft_rows *store);
+/* Prefer zero row-matrix allocation for all-raw bags (1), or chunk-staged
+ * vectorized reduction (0, default). Compressed tables always stage chunks.
+ * Single-worker preference; changes neither bytes nor accumulation order.
+ * Returns -1 for null store/invalid boolean. */
+int meft_rows_set_raw_bag_fusion(meft_rows *store, int enabled);
 uint64_t meft_rows_last_cache_hits(const meft_rows *store);
 /* Distinct cached forwarded rows hit per gather, summed across chunk/bag calls.
  * Block hits remain separate and are zero in row mode (and vice versa). */
