@@ -24,7 +24,7 @@ class NativeRowsTest(unittest.TestCase):
     def test_direct_raw_bags_match_staged_bytes_dtypes_weights_and_chunk_counters(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); control = root / 'staged.so'
-            subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared', '-DMEFT_DISABLE_RAW_BAG',
+            subprocess.run(['cc', '-std=c11', '-O2', '-fPIC', '-shared', '-DMEFT_DISABLE_RAW_BAG', '-DMEFT_DISABLE_FP32_BAG_VECTOR',
                 str(ROOT / 'native/meft_rows.c'), '-lz', '-o', str(control)], check=True)
             ids = (ctypes.c_uint64 * 8)(36, 0, 36, 3, 0, 14, 1, 3)
             offsets = (ctypes.c_uint64 * 6)(0, 0, 3, 3, 6, 8)

@@ -775,6 +775,23 @@ static int embedding_bag(meft_rows *s, const uint64_t *ids, size_t count,
                 row = payload + (r->block * s->block_rows + r->within) * s->width;
             } else row = rows + i * (size_t)s->width;
             double scale = weighted ? row_float(weights + (start + i) * element, dtype) : 1.0;
+#ifndef MEFT_DISABLE_FP32_BAG_VECTOR
+            if (dtype == 1) {
+                /* Expose independent dimensions to the compiler; the generic
+                 * half/BF16 decoder otherwise remains a call per scalar.
+                 * Byte assembly + memcpy preserve LE bits and unaligned rows.
+                 * Vectorizing dimensions never changes the row accumulation
+                 * order, FP64 products/sums or final FP32 conversion. */
+                for (size_t j = 0; j < dim; ++j) {
+                    const unsigned char *p = row + j * 4;
+                    uint32_t bits = (uint32_t)p[0] | (uint32_t)p[1] << 8 |
+                                    (uint32_t)p[2] << 16 | (uint32_t)p[3] << 24;
+                    float value;
+                    memcpy(&value, &bits, sizeof(value));
+                    sum[j] += (double)value * scale;
+                }
+            } else
+#endif
             for (size_t j = 0; j < dim; ++j)
                 sum[j] += (double)row_float(row + j * element, dtype) * scale;
         }
