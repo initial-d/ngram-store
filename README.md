@@ -1,8 +1,11 @@
 # NGramStore
 
-Compression, storage and exact lookup for learned n-gram embedding tables.
+The continuation of me_fasttext,
+[Memory-Efficient FastText](https://arxiv.org/abs/2506.01254): exact n-gram
+identities, compact tables, fast lookup.
 
-面向 learned n-gram embedding 表的压缩、存储与精确查询。
+me_fasttext（[Memory-Efficient FastText](https://arxiv.org/abs/2506.01254)）的后续项目：
+n-gram 精确身份、紧凑存储、快速查询。
 
 [![CI](https://github.com/initial-d/ngram-store/actions/workflows/ci.yml/badge.svg)](https://github.com/initial-d/ngram-store/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/initial-d/ngram-store?label=release)](https://github.com/initial-d/ngram-store/releases/latest)
@@ -13,10 +16,9 @@ model ends up owning a large frozen table that has to be indexed, stored and
 queried. NGramStore takes care of that table; training, addressing and
 aggregation stay in the model.
 
-The project continues the idea of the paper
-[Memory-Efficient FastText](https://arxiv.org/abs/2506.01254): give every n-gram
-an exact identity, then compact the table after training. The paper describes the
-idea; this repository has the rebuilt engine and everything measured since
+The paper's idea is to give every n-gram an exact identity, then compact the
+table after training. The paper describes the idea; this repository has the
+rebuilt engine and everything measured since
 ([from the paper to now](#from-the-paper-to-now)).
 
 The research questions are the paper's, asked again with full experiments: when
