@@ -698,13 +698,17 @@ static float row_float(const unsigned char *p, int dtype) {
 static float row_half(const unsigned char *p) {
     uint32_t half = (uint32_t)p[0] | (uint32_t)p[1] << 8;
     uint32_t magnitude = half & 0x7fffu;
-    uint32_t bits;
-    if (magnitude < 0x400u) {
-        float subnormal = (float)magnitude * 0x1p-24f;
-        memcpy(&bits, &subnormal, sizeof(bits));
-    } else if (magnitude >= 0x7c00u) {
-        bits = 0x7f800000u | (magnitude & 0x3ffu) << 13;
-    } else bits = (magnitude << 13) + 0x38000000u;
+    float subnormal = (float)(magnitude & 0x3ffu) * 0x1p-24f;
+    uint32_t subnormal_bits;
+    memcpy(&subnormal_bits, &subnormal, sizeof(subnormal_bits));
+    uint32_t tiny = 0u - (uint32_t)(magnitude < 0x400u);
+    uint32_t special = 0u - (uint32_t)(magnitude >= 0x7c00u);
+    uint32_t normal_bits = (magnitude << 13) + 0x38000000u;
+    uint32_t special_bits = 0x7f800000u | (magnitude & 0x3ffu) << 13;
+    /* Integer masks keep the dimension loop free of lane-dependent branches.
+     * The speculative mantissa scaling is exact and finite for every input. */
+    uint32_t bits = (tiny & subnormal_bits) |
+        (~tiny & ((special & special_bits) | (~special & normal_bits)));
     bits |= (half & 0x8000u) << 16;
     float value;
     memcpy(&value, &bits, sizeof(value));
