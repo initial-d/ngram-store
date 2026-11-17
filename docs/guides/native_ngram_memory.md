@@ -103,6 +103,14 @@ For lower temporary memory, open with `raw_bag_fusion=True`; on all-raw tables
 this avoids the row matrix, with a throughput tradeoff. Compressed reads retain
 bounded staging. `last_bag_staging_bytes` reports row-matrix capacity, not RSS.
 
+FP16/BF16 now also use dedicated vectorized loops. On full AG News/DBpedia
+tables, FP16 batch-32 calls improve 2.37–2.55× and BF16 3.63–3.90× with identical
+low-precision source features ([results](../../evidence/half_native_bags_20261117/README.md)).
+For weighted pooling, pass `per_sample_weights` with `mode="sum"`: FP32/FP16
+weight arrays use the stored dtype, BF16 uses uint16 bit patterns, and every
+ID occurrence keeps its own weight. Padding ignores its weight. These kernels
+decode existing low-precision tables; they do not quantize FP32 inputs.
+
 ## Native layout and construction
 
 `MEFTNAT1` is a little-endian binary file: a versioned header, an optional

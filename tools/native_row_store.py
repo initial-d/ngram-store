@@ -453,12 +453,15 @@ class NativeRows:
         return output.raw
 
     def embedding_bag_array(self, ids, offsets, *, dtype="float32", mode="sum",
-                            padding_id=None, chunk_rows=4096, out=None):
+                            padding_id=None, chunk_rows=4096, out=None, per_sample_weights=None):
         """NumPy-only ragged sum/mean. Offsets include the terminal ID count.
 
         Rows are decoded as the explicitly supplied stored dtype. Accumulation
         uses FP64 in original ID order and returns FP32, like the C bag ABI.
         Raw fusion is opt-in; default/compressed tables stage bounded chunks.
+        Optional per_sample_weights requires sum mode and one scalar per ID.
+        FP32/FP16 weights must have the stored dtype (sequences are cast to it);
+        BF16 weights are uint16 bit patterns. Padding ignores its weight.
         """
         import numpy as np
         if not self.handle:
@@ -486,6 +489,19 @@ class NativeRows:
         width = self.header["row_bytes"]
         if width % element:
             raise ValueError("row width does not match stored dtype")
+        weights = None
+        if per_sample_weights is not None:
+            if mode != "sum":
+                raise ValueError("per-sample weights require sum mode")
+            weight_dtype = np.dtype({"float32": "<f4", "float16": "<f2", "bfloat16": "<u2"}[dtype])
+            weights = np.asarray(per_sample_weights)
+            if (dtype != "bfloat16" and isinstance(per_sample_weights, (list, tuple))
+                    and weights.dtype.kind in "fiu"):
+                weights = np.asarray(per_sample_weights, dtype=weight_dtype)
+            if (weights.ndim != 1 or len(weights) != len(query) or
+                    weights.dtype.kind != weight_dtype.kind or weights.dtype.itemsize != element):
+                raise ValueError("weights must be a 1-D array matching ID count and stored dtype; BF16 uses uint16 bits")
+            weights = np.ascontiguousarray(weights, dtype=weight_dtype)
         query = np.ascontiguousarray(query, dtype="<u8")
         boundaries = np.ascontiguousarray(boundaries, dtype="<u8")
         shape = (len(boundaries) - 1, width // element)
@@ -494,11 +510,13 @@ class NativeRows:
         elif (not isinstance(out, np.ndarray) or out.dtype != np.dtype(np.float32)
               or out.shape != shape or not out.flags.c_contiguous or not out.flags.writeable):
             raise ValueError("out must be a writable C-contiguous float32 array with bag shape")
-        if any(np.shares_memory(out, a) for a in (query, boundaries)):
-            raise ValueError("out must not overlap IDs or offsets")
+        if any(np.shares_memory(out, a) for a in (query, boundaries, weights) if a is not None):
+            raise ValueError("out must not overlap IDs, offsets or weights")
+        weighted_args = {} if weights is None else {
+            "weights_address": weights.ctypes.data, "weights_bytes": weights.nbytes}
         self.embedding_bag_into(query.ctypes.data, len(query), boundaries.ctypes.data, shape[0],
             {"float32": 1, "float16": 2, "bfloat16": 3}[dtype], mode == "mean", padding_id,
-            chunk_rows, out.ctypes.data, out.size)
+            chunk_rows, out.ctypes.data, out.size, **weighted_args)
         return out
 
     def gather_array(self, ids, out=None):

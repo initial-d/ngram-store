@@ -1,0 +1,251 @@
+{
+  "initial_commit": "5f22b912cbab97081099ac08a2de15b1456122db",
+  "final_commit": "d80f44c6b597a78d29215f12bb284175c1c94c45",
+  "baseline_commit": "633cde3f386663928e2b1ed29be95d2f0b77b41d",
+  "cases": [
+    {
+      "phase": "initial",
+      "report": "raw/initial/ag_news-exact-zero-s3-lr10-bfloat16.json.gz",
+      "report_sha256": "66cd9ff89890263204f7175f73f703a08c5245a665f96e4332666e50eefd1855",
+      "rows": 6989612,
+      "dtype": "bfloat16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.7337400446841362,
+          "p50_us": {
+            "baseline": 113.9565,
+            "candidate": 65.377
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 3.5860477536770894,
+          "p50_us": {
+            "baseline": 2205.1535,
+            "candidate": 621.7819999999999
+          }
+        }
+      ]
+    },
+    {
+      "phase": "initial",
+      "report": "raw/initial/ag_news-exact-zero-s3-lr10-float16-zstd.json.gz",
+      "report_sha256": "7826f8030866667ef8517be3004d94503867b1de6ea3111c697db6ca00de59ff",
+      "rows": 6989612,
+      "dtype": "float16",
+      "compressed": true,
+      "results": [
+        {
+          "batch_size": 32,
+          "speed_ratio": 1.0256978111033572,
+          "p50_us": {
+            "baseline": 34202.62675,
+            "candidate": 33103.52525
+          }
+        }
+      ]
+    },
+    {
+      "phase": "initial",
+      "report": "raw/initial/ag_news-exact-zero-s3-lr10-float16.json.gz",
+      "report_sha256": "a38c86c133903d4ff0e30db8eef1445974d96ca8f48ce3b82630c2e93224b540",
+      "rows": 6989612,
+      "dtype": "float16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.3334206419930303,
+          "p50_us": {
+            "baseline": 133.199,
+            "candidate": 99.603
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 1.652303044478651,
+          "p50_us": {
+            "baseline": 2836.2245,
+            "candidate": 1714.0555
+          }
+        }
+      ]
+    },
+    {
+      "phase": "initial",
+      "report": "raw/initial/dbpedia_14-exact-uniform-s3-lr3-bfloat16.json.gz",
+      "report_sha256": "195adeac69a9edf1d79b8ec33ee08dd5a2361968d78e97095e47810df8fcf9b7",
+      "rows": 34050161,
+      "dtype": "bfloat16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.857924342100191,
+          "p50_us": {
+            "baseline": 127.646,
+            "candidate": 67.193
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 3.8589950218415345,
+          "p50_us": {
+            "baseline": 2668.2765,
+            "candidate": 721.0699999999999
+          }
+        }
+      ]
+    },
+    {
+      "phase": "initial",
+      "report": "raw/initial/dbpedia_14-exact-uniform-s3-lr3-float16.json.gz",
+      "report_sha256": "b47901e1c6480f521e3e10ecde49dadfa105034dfd691594f17c87d14d8c6ca5",
+      "rows": 34050161,
+      "dtype": "float16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.3345727786730162,
+          "p50_us": {
+            "baseline": 141.301,
+            "candidate": 104.841
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 1.6622227494498518,
+          "p50_us": {
+            "baseline": 3013.2525,
+            "candidate": 1792.914
+          }
+        }
+      ]
+    },
+    {
+      "phase": "final",
+      "report": "raw/final/ag_news-exact-zero-s3-lr10-bfloat16.json.gz",
+      "report_sha256": "daca9ad3edc2443b4771904a72cd555b09da0973871bf8d58cb653f2203d0c6e",
+      "rows": 6989612,
+      "dtype": "bfloat16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.7808589710458382,
+          "p50_us": {
+            "baseline": 111.477,
+            "candidate": 62.443
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 3.8967685460945107,
+          "p50_us": {
+            "baseline": 2210.0425,
+            "candidate": 578.2675
+          }
+        }
+      ]
+    },
+    {
+      "phase": "final",
+      "report": "raw/final/ag_news-exact-zero-s3-lr10-float16-zstd.json.gz",
+      "report_sha256": "3b7fd1d58d2637601baa58290fdfee687bf4f0577dea30e29bedfe8fb18f989c",
+      "rows": 6989612,
+      "dtype": "float16",
+      "compressed": true,
+      "results": [
+        {
+          "batch_size": 32,
+          "speed_ratio": 1.0508882560736186,
+          "p50_us": {
+            "baseline": 34049.329249999995,
+            "candidate": 32409.626
+          }
+        }
+      ]
+    },
+    {
+      "phase": "final",
+      "report": "raw/final/ag_news-exact-zero-s3-lr10-float16.json.gz",
+      "report_sha256": "e7ff4ea8c6e8cbedff8fdbbba0e3ee73fdedd040a8f52331baef2f197b849214",
+      "rows": 6989612,
+      "dtype": "float16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.653072731435626,
+          "p50_us": {
+            "baseline": 131.593,
+            "candidate": 79.207
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 2.550898542691375,
+          "p50_us": {
+            "baseline": 2907.3295,
+            "candidate": 1140.993
+          }
+        }
+      ]
+    },
+    {
+      "phase": "final",
+      "report": "raw/final/dbpedia_14-exact-uniform-s3-lr3-bfloat16.json.gz",
+      "report_sha256": "b01642bbec47f0ef9bc58c2503ade79fa4660ec2c6bc5935bd33ade5513ee234",
+      "rows": 34050161,
+      "dtype": "bfloat16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.8338625719452448,
+          "p50_us": {
+            "baseline": 131.733,
+            "candidate": 69.638
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 3.630619733594416,
+          "p50_us": {
+            "baseline": 2766.6565,
+            "candidate": 791.79
+          }
+        }
+      ]
+    },
+    {
+      "phase": "final",
+      "report": "raw/final/dbpedia_14-exact-uniform-s3-lr3-float16.json.gz",
+      "report_sha256": "169a29305b6a7aace1bb80a304694eb9c6e4535c8eaaa653e9f6f1c2bce843a0",
+      "rows": 34050161,
+      "dtype": "float16",
+      "compressed": false,
+      "results": [
+        {
+          "batch_size": 1,
+          "speed_ratio": 1.595598461970782,
+          "p50_us": {
+            "baseline": 142.558,
+            "candidate": 87.34450000000001
+          }
+        },
+        {
+          "batch_size": 32,
+          "speed_ratio": 2.3691242177207443,
+          "p50_us": {
+            "baseline": 3132.0985,
+            "candidate": 1384.376
+          }
+        }
+      ]
+    }
+  ]
+}

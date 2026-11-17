@@ -1,4 +1,4 @@
-"""Paired NumPy/C bag calls on saved original-ID traces and frozen FP32 codes."""
+"""Paired NumPy/C bag calls on saved original-ID traces and frozen float codes."""
 import argparse
 import hashlib
 import importlib.metadata
@@ -25,6 +25,7 @@ def main():
     parser.add_argument('--commit', required=True)
     parser.add_argument('--hashes-from', type=Path, help='Reuse full immutable-input hashes from a prior report; recheck traces and every feature output.')
     parser.add_argument('--raw-bag-fusion', action='store_true')
+    parser.add_argument('--stored-dtype', choices=('float32', 'float16', 'bfloat16'), default='float32')
     parser.add_argument('--core', type=int)
     parser.add_argument('--batch-sizes', type=int, nargs='+', default=[1, 32])
     parser.add_argument('--mode', choices=('sum', 'mean'), default='mean')
@@ -41,8 +42,14 @@ def main():
     if digest(args.traces) != metadata['trace_sha256']:
         raise ValueError('original trace changed')
     codes = np.load(args.codes, mmap_mode='r', allow_pickle=False)
-    if codes.ndim != 2 or codes.dtype != np.dtype('<f4'):
-        raise ValueError('frozen little-endian FP32 codes required')
+    element = 4 if args.stored_dtype == 'float32' else 2
+    typed = np.dtype({'float32': '<f4', 'float16': '<f2', 'bfloat16': '<u2'}[args.stored_dtype])
+    if codes.ndim != 2 or (codes.dtype != typed and codes.dtype != np.dtype('uint8')):
+        raise ValueError('frozen little-endian typed or packed uint8 codes required')
+    width = codes.shape[1] * codes.dtype.itemsize
+    if not width or width % element:
+        raise ValueError('stored row width does not match dtype')
+    dim = width // element
     traces = np.load(args.traces, allow_pickle=False)
     docs, features = [], []
     for i, record in enumerate(metadata['requests']):
@@ -53,7 +60,12 @@ def main():
         if hashlib.sha256(ids.tobytes()).hexdigest() != record['ids_sha256']:
             raise ValueError('original query changed')
         docs.append(np.ascontiguousarray(ids, dtype=np.uint64))
-        values = codes[ids].astype(np.float64).sum(axis=0)
+        decoded = np.ascontiguousarray(codes[ids]).view(typed).reshape(len(ids), dim)
+        if args.stored_dtype == 'bfloat16':
+            decoded = (decoded.astype(np.uint32) << 16).view(np.float32)
+        if not np.isfinite(decoded).all():
+            raise ValueError('finite frozen features required for byte-exact timing oracle')
+        values = decoded.astype(np.float64).sum(axis=0)
         if args.mode == 'mean':
             values /= max(len(ids), 1)
         features.append(values.astype(np.float32))
@@ -82,8 +94,8 @@ def main():
                     if line.startswith('model name')), 'device': 'cpu', 'gpu': 'unused',
         'scope': 'Paired public NumPy bag calls including validation and C reduction; warm file cache, zero native cache. Excludes tokenization, classifier head and model inference. Ratios are descriptive, not confidence intervals.',
         'cost': 'Existing CPU resources; no GPU, training or paid API. Monetary/energy cost unmeasured.',
-        'trace_domain': metadata['domain'], 'rows': len(codes), 'dim': codes.shape[1],
-        'row_bytes': codes.shape[1] * 4, 'chunk_rows': args.chunk_rows, 'mode': args.mode,
+        'trace_domain': metadata['domain'], 'rows': len(codes), 'dim': dim,
+        'stored_dtype': args.stored_dtype, 'row_bytes': width, 'chunk_rows': args.chunk_rows, 'mode': args.mode,
         'repeat': args.repeat, 'rounds': args.rounds, 'warmup': args.warmup,
         'requests': len(docs), 'rows_per_document': [len(ids) for ids in docs],
         'raw_bag_fusion': args.raw_bag_fusion, 'hashes': hashes, 'results': []}
@@ -107,7 +119,7 @@ def main():
         for round_id in range(args.rounds):
             with NativeRows(args.table, args.baseline_library, raw_bag_fusion=args.raw_bag_fusion) as baseline, NativeRows(args.table, args.library, raw_bag_fusion=args.raw_bag_fusion) as candidate:
                 stores = {'baseline': baseline, 'candidate': candidate}
-                if any(s.header != {'n_rows': len(codes), 'row_bytes': codes.shape[1] * 4} for s in stores.values()):
+                if any(s.header != {'n_rows': len(codes), 'row_bytes': width} for s in stores.values()):
                     raise ValueError('table/source shape mismatch')
                 report['decoders'] = {name: store.decoder_name for name, store in stores.items()}
                 output = {name: [np.empty_like(expected) for _, _, expected in requests] for name in stores}
@@ -121,7 +133,8 @@ def main():
                         for name in order:
                             store = stores[name]; out = output[name][i]
                             started = time.perf_counter_ns()
-                            store.embedding_bag_array(ids, offsets, mode=args.mode, chunk_rows=args.chunk_rows, out=out)
+                            store.embedding_bag_array(ids, offsets, dtype=args.stored_dtype,
+                                mode=args.mode, chunk_rows=args.chunk_rows, out=out)
                             elapsed = (time.perf_counter_ns() - started) / 1000.
                             if out.tobytes() != expected.tobytes():
                                 raise ValueError('FP32 feature bytes differ from source FP64 reference: ' + name)

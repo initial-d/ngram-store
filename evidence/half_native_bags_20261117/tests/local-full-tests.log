@@ -1,0 +1,64 @@
+.............sssssssss...ssssss...s..s....ssssss............sss...ssssss....s..retime-long 20 24
+.....{'llm_cpu_complete': 1, 'total': 12}
+{'llm_cpu_complete': 2, 'total': 12}
+{'llm_cpu_complete': 3, 'total': 12}
+{'llm_cpu_complete': 4, 'total': 12}
+{'llm_cpu_complete': 5, 'total': 12}
+{'llm_cpu_complete': 6, 'total': 12}
+{'llm_cpu_complete': 7, 'total': 12}
+{'llm_cpu_complete': 8, 'total': 12}
+{'llm_cpu_complete': 9, 'total': 12}
+{'llm_cpu_complete': 10, 'total': 12}
+{'llm_cpu_complete': 11, 'total': 12}
+{'llm_cpu_complete': 12, 'total': 12}
+..ssssssssssssssssssss.............s........ss...........................sssssssss.......ss...s........ssss.sssss.....sssssssssss....{'phase': 'retime-llm-gpu', 'complete': 1, 'expected': 12, 'current_failures': 0, 'gpu': 1}
+{'phase': 'retime-llm-gpu', 'complete': 2, 'expected': 12, 'current_failures': 0, 'gpu': 0}
+{'phase': 'retime-llm-gpu', 'complete': 3, 'expected': 12, 'current_failures': 0, 'gpu': 4}
+{'phase': 'retime-llm-gpu', 'complete': 4, 'expected': 12, 'current_failures': 0, 'gpu': 5}
+{'phase': 'retime-llm-gpu', 'complete': 5, 'expected': 12, 'current_failures': 0, 'gpu': 3}
+{'phase': 'retime-llm-gpu', 'complete': 6, 'expected': 12, 'current_failures': 0, 'gpu': 2}
+{'phase': 'retime-llm-gpu', 'complete': 7, 'expected': 12, 'current_failures': 0, 'gpu': 1}
+{'phase': 'retime-llm-gpu', 'complete': 8, 'expected': 12, 'current_failures': 0, 'gpu': 0}
+{'phase': 'retime-llm-gpu', 'complete': 9, 'expected': 12, 'current_failures': 0, 'gpu': 4}
+{'phase': 'retime-llm-gpu', 'complete': 10, 'expected': 12, 'current_failures': 0, 'gpu': 5}
+{'phase': 'retime-llm-gpu', 'complete': 11, 'expected': 12, 'current_failures': 0, 'gpu': 3}
+{'phase': 'retime-llm-gpu', 'complete': 12, 'expected': 12, 'current_failures': 0, 'gpu': 2}
+.....s..sss..................s...........s...s.......s.......s{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 5852, "build_seconds": 0.0008949157781898975}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 4745, "build_seconds": 0.0011102915741503239}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 10448, "build_seconds": 0.4132065000012517}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 5049, "build_seconds": 0.00855050003156066}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 3220, "build_seconds": 0.00924400007352233}
+{"backend": "precomputed-hybrid-source", "complete_model_bytes": 5715}
+{"backend": "precomputed-hybrid-int8", "complete_model_bytes": 4985}
+{"backend": "precomputed-hybrid-ngram-int8", "complete_model_bytes": 5275}
+.s{"counts": {"original_rows": 3004, "selected_category_rows": 3003, "empty_rows": 1, "ag_input_overlap_rows": 1, "duplicate_rows": 1, "conflicting_category_duplicate_rows": 1}, "phase_stats": {"validation": {"documents": 600, "tokens": 1200, "oov_tokens": 600, "oov_heavy_documents": 600, "attempted_oov_ngrams": 4200, "missing_oov_ngrams": 4199, "truncated_documents": 0, "class_1": 600, "unique_oov_types": 600, "date_min": "2016-12-31", "date_max": "2017-01-01"}, "test": {"documents": 2400, "tokens": 4800, "oov_tokens": 2400, "oov_heavy_documents": 2400, "attempted_oov_ngrams": 16800, "missing_oov_ngrams": 16797, "truncated_documents": 0, "class_1": 2400, "unique_oov_types": 2400, "date_min": "2016-12-31", "date_max": "2017-01-01"}}}
+......s.......s.sssusage: worker [-h] --phase {retime-long,retime-llm-cpu} --job JOB --output
+              OUTPUT --plan PLAN [--upstream UPSTREAM] --lane LANE --cohort
+              {parallel-shared-host,serial-reference} [--cache CACHE]
+              [--cached {0,1}] [--index {datrie,hash}] [--requests REQUESTS]
+              {worker}
+worker: error: Fresh output and empty CUDA_VISIBLE_DEVICES required
+.{'phase': 'retime-long', 'complete': 20, 'expected': 24}
+{'phase': 'retime-long', 'serial_references': 1, 'expected': 16}
+{'phase': 'retime-long', 'complete': 20, 'expected': 24}
+{'phase': 'retime-long', 'serial_references': 1, 'expected': 16}
+{'phase': 'retime-long', 'complete': 20, 'expected': 24}
+..................ssss.ssssssssss.{"seed": 3, "backend": "source-resident", "complete_model_bytes": 2012, "build_seconds": 0.0009892093949019909}
+{"seed": 3, "backend": "source-mmap", "complete_model_bytes": 2007, "build_seconds": 0.001018209382891655}
+{"seed": 3, "backend": "linear-fused", "complete_model_bytes": 2010, "build_seconds": 0.0048519158735871315}
+{"seed": 3, "backend": "fp16", "complete_model_bytes": 2883, "build_seconds": 0.0011694589629769325}
+{"seed": 3, "backend": "int8", "complete_model_bytes": 2946, "build_seconds": 0.0014667087234556675}
+{"seed": 3, "backend": "ngram-bounded", "complete_model_bytes": 7999, "build_seconds": 0.02949858270585537}
+{"seed": 3, "backend": "ngram-int8", "complete_model_bytes": 3606, "build_seconds": 0.005267874803394079}
+{"seed": 3, "backend": "precomputed-words", "complete_model_bytes": 1670, "build_seconds": 0.012103707995265722}
+....{"seed": 7, "backend": "source-mmap", "complete_model_bytes": 2014, "build_seconds": 0.0015060827136039734}
+{"seed": 7, "backend": "ngram-bounded", "complete_model_bytes": 8006, "build_seconds": 0.030420958064496517}
+{"seed": 7, "backend": "ngram-int8", "complete_model_bytes": 3612, "build_seconds": 0.006734333001077175}
+.s.ssssssssssssssssssssssss..{"retimed": 1, "expected": 40, "failures": 0}
+{"retimed": 21, "expected": 40, "failures": 0}
+{"retimed": 21, "expected": 40, "failures": 0}
+........sssssss
+----------------------------------------------------------------------
+Ran 383 tests in 15.589s
+
+OK (skipped=149)

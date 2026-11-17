@@ -690,6 +690,32 @@ static float row_float(const unsigned char *p, int dtype) {
     return value;
 }
 
+/* FP16 subnormals are exact multiples of 2^-24. Converting the ten-bit
+ * mantissa and scaling by this power of two avoids a normalization loop and
+ * exposes independent dimensions to vectorization. Assemble sign separately
+ * to retain negative zero and preserve infinity/NaN payload bits. */
+#ifndef MEFT_DISABLE_HALF_BAG_VECTOR
+static float row_half(const unsigned char *p) {
+    uint32_t half = (uint32_t)p[0] | (uint32_t)p[1] << 8;
+    uint32_t magnitude = half & 0x7fffu;
+    float subnormal = (float)(magnitude & 0x3ffu) * 0x1p-24f;
+    uint32_t subnormal_bits;
+    memcpy(&subnormal_bits, &subnormal, sizeof(subnormal_bits));
+    uint32_t tiny = 0u - (uint32_t)(magnitude < 0x400u);
+    uint32_t special = 0u - (uint32_t)(magnitude >= 0x7c00u);
+    uint32_t normal_bits = (magnitude << 13) + 0x38000000u;
+    uint32_t special_bits = 0x7f800000u | (magnitude & 0x3ffu) << 13;
+    /* Integer masks keep the dimension loop free of lane-dependent branches.
+     * The speculative mantissa scaling is exact and finite for every input. */
+    uint32_t bits = (tiny & subnormal_bits) |
+        (~tiny & ((special & special_bits) | (~special & normal_bits)));
+    bits |= (half & 0x8000u) << 16;
+    float value;
+    memcpy(&value, &bits, sizeof(value));
+    return value;
+}
+#endif
+
 static int embedding_bag(meft_rows *s, const uint64_t *ids, size_t count,
                            const uint64_t *offsets, size_t bags, int dtype, int mean,
                            uint64_t padding_id, size_t chunk_rows,
@@ -795,6 +821,20 @@ static int embedding_bag(meft_rows *s, const uint64_t *ids, size_t count,
                     memcpy(&value, &bits, sizeof(value));
                     sum[j] += (double)value * scale;
                 }
+            } else
+#endif
+#ifndef MEFT_DISABLE_HALF_BAG_VECTOR
+            if (dtype == 3) {
+                for (size_t j = 0; j < dim; ++j) {
+                    const unsigned char *p = row + j * 2;
+                    uint32_t bits = ((uint32_t)p[0] | (uint32_t)p[1] << 8) << 16;
+                    float value;
+                    memcpy(&value, &bits, sizeof(value));
+                    sum[j] += (double)value * scale;
+                }
+            } else if (dtype == 2) {
+                for (size_t j = 0; j < dim; ++j)
+                    sum[j] += (double)row_half(row + j * 2) * scale;
             } else
 #endif
             for (size_t j = 0; j < dim; ++j)
