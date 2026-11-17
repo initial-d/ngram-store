@@ -1,0 +1,22 @@
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:103:11: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:392:23: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:407:19: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:459:27: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:617:30: optimized: loop vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:617:30: optimized:  loop versioned for vectorization because of possible aliasing
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:617:30: optimized: loop vectorized using 8 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:610:38: optimized: loop vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:610:38: optimized:  loop versioned for vectorization because of possible aliasing
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:468:20: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:583:38: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:843:30: optimized: loop vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:812:38: optimized: loop vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:824:38: optimized: loop vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:793:38: optimized: loop vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:721:20: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:848:20: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:640:20: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:660:20: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:660:70: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:967:24: optimized: basic block part vectorized using 16 byte vectors
+/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c:1004:25: optimized: basic block part vectorized using 16 byte vectors

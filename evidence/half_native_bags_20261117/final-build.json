@@ -1,0 +1,30 @@
+{
+  "commit": "d80f44c6b597a78d29215f12bb284175c1c94c45",
+  "command": [
+    "cc",
+    "-std=c11",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-fPIC",
+    "-shared",
+    "/llm-align/duyimin/ngram-half-bags-20261117/final-runtime/native/meft_rows.c",
+    "-lz",
+    "-I/llm-align/duyimin/ngram-sparse-xor-20261115/include",
+    "-DMEFT_USE_LZ4",
+    "-DMEFT_USE_ZSTD",
+    "-DMEFT_USE_LIBDEFLATE",
+    "-l:liblz4.so.1",
+    "-l:libzstd.so.1",
+    "-l:libdeflate.so.0",
+    "-fopt-info-vec-optimized=/llm-align/duyimin/ngram-half-bags-20261117/final-results/vectorization.log",
+    "-o",
+    "/llm-align/duyimin/ngram-half-bags-20261117/lib/candidate-final.so"
+  ],
+  "source_sha256": "b39b006b17b9258a6c38ee628d842a1e4228eed961b587556be07b5a4d7d6c72",
+  "library_sha256": "7c036e9c01cd815ff4f277a16e94cf106813fb78634e422ac3a5c2f32f9aeb31",
+  "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "initial_build_manifest_sha256": "f4de4c823af5254b11bb6069686a2b23fb41ae90cfd64f08f42002df59e29ca0",
+  "input_scope": "Exactly the initial frozen tables/codes/traces; full hashes inherited, feature and trace checks repeated."
+}

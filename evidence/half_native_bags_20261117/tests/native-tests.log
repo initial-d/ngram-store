@@ -1,0 +1,17 @@
+cc1: fatal error: /llm-align/duyimin/ngram-half-bags-20261117/runtime/examples/native_gather.c: 没有那个文件或目录
+compilation terminated.
+E...........
+======================================================================
+ERROR: setUpClass (tests.test_native_rows.NativeRowsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/llm-align/duyimin/ngram-half-bags-20261117/runtime/tests/test_native_rows.py", line 713, in setUpClass
+    subprocess.run([os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+  File "/llm-align/duyimin/miniconda3/envs/gemma4/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-I/llm-align/duyimin/ngram-half-bags-20261117/runtime/native', '/llm-align/duyimin/ngram-half-bags-20261117/runtime/examples/native_gather.c', '/llm-align/duyimin/ngram-half-bags-20261117/runtime/native/meft_rows.c', '-lz', '-O3', '-o', '/tmp/tmp4od9ey30/gather']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 11 tests in 19.677s
+
+FAILED (errors=1)
